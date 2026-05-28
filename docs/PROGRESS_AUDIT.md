@@ -2,7 +2,7 @@
 
 Date: 2026-05-28  
 Branch: `dev`  
-Status: Phase 0 complete, Phase 1 not started
+Status: Phase 1 implementation complete; browser visual QA pending user-run server
 
 ## Branch And Repo
 
@@ -46,6 +46,30 @@ Status: Phase 0 complete, Phase 1 not started
 | Temporary default cursor | Done for Phase 0 testing |
 | Index head metadata | Done from roadmap Phase 5 spec |
 
+## Phase 1 Checklist
+
+| Task | Result |
+|---|---|
+| `vite-plugin-glsl` dependency and Vite wiring | Confirmed already present |
+| GLSL shader module declaration | Done |
+| Iridescent background shaders | Done |
+| Particle field shaders | Done |
+| Refusal ripple shaders | Done |
+| `SceneRoot` TresCanvas shell | Done |
+| `#constellation-section` scroll rig | Done, `400vh` |
+| ScrollTrigger camera path | Done |
+| Iridescent hue loop | Done, `(delta / 8) * 360` |
+| Hardware-tiered particle field | Done, `10k/5k/2k` |
+| Refusal ripple timing | Done, 30s cycle / 3s active / max `0.08` |
+| 9 constellation nodes | Done from `projects.ts` |
+| Manual node raycaster interaction | Done, every-other pointermove |
+| Hover node scale | Done, `1.4x` |
+| Hover cluster brightness | Done, `+40%` |
+| Connector projection layer | Done, pauses while overlay is open |
+| Hover-only projected node label | Done, `[ENTER ->]` stub |
+| Plain mode scene gate | Done |
+| Phase 2 overlays/sections/sliders | Not added |
+
 ## Current Stack
 
 | Package | Version |
@@ -74,6 +98,17 @@ Status: Phase 0 complete, Phase 1 not started
 | Assets | `public/favicon.svg`, `public/og.png` |
 | Head metadata | `index.html` Open Graph, canonical, favicon, font preconnects |
 
+## Phase 1 Files Added
+
+| Area | Files |
+|---|---|
+| Scene root | `src/components/scene/SceneRoot.vue` |
+| Scene controllers | `CameraPathController`, `IridescentBackground`, `ParticleField`, `RefusalRipple` |
+| Constellation UI | `ConstellationNodes`, `ConnectorLines`, `NodeLabel` |
+| Composables | `useCameraPath.ts`, `useNodeInteraction.ts`, `useParticleField.ts` |
+| Shaders | `iridescent.*.glsl`, `particle.*.glsl`, `refusalRipple.*.glsl` |
+| Types | `src/types/glsl.d.ts` |
+
 ## Verification
 
 | Check | Result |
@@ -83,6 +118,7 @@ Status: Phase 0 complete, Phase 1 not started
 | `npm.cmd run build` | Pass |
 | `npm.cmd audit --audit-level=moderate` | Pass, 0 vulnerabilities |
 | Manual app run | User confirmed app runs fine |
+| Phase 1 browser visual QA | Pending; Codex did not start server by request |
 
 ## Issues Found And Resolved
 
@@ -97,6 +133,8 @@ Status: Phase 0 complete, Phase 1 not started
 | TypeScript 6 deprecated `baseUrl` warning | Removed `baseUrl`, kept `paths` alias |
 | CSS font `@import` order warning | Moved font imports before style rules |
 | Cursor hidden before Phase 3 component | Added temporary default cursor in `App.vue` for Phase 0 testing |
+| `useCameraPath` narrowed camera too loosely for TS | Stored narrowed camera before nested updater |
+| Particle shader uniform indexing risk | Replaced dynamic uniform-array index with fixed branch lookup |
 
 ## Upgrade Notes
 
@@ -119,6 +157,8 @@ Status: Phase 0 complete, Phase 1 not started
 | TresJS/Three API drift risk | Do not upgrade casually during 3D work |
 | Project links are intentionally empty | Add only confirmed public links later |
 | Custom cursor CSS exists before component | Phase 3 adds moving cursor component |
+| Three.js bundle exceeds 500 kB warning | Expected after Phase 1 3D stack; monitor later |
+| Phase 1 manual FPS/hover/scroll visual checks | Pending user-run server |
 
 ## Phase 0 Data Decisions
 
@@ -133,4 +173,4 @@ Status: Phase 0 complete, Phase 1 not started
 
 ## Next Step
 
-Start Phase 1 exactly from the roadmap: Three.js world, iridescent background, particle field, refusal ripple, camera path, constellation nodes, and node interaction gate.
+Run the app locally for Phase 1 visual QA, then move to Phase 2 only if scene render, scroll flight, hover labels, connectors, particles, ripple, and plain mode all look correct.

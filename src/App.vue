@@ -3,6 +3,7 @@ import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { sliderConfigs } from '@/data/projects'
 import { usePlainMode } from '@/composables/usePlainMode'
 import { useProjectStore } from '@/stores/projectStore'
+import SceneRoot from '@/components/scene/SceneRoot.vue'
 import GlassPanel from '@/components/shared/GlassPanel.vue'
 import GeistChip from '@/components/shared/GeistChip.vue'
 import MetricCountUp from '@/components/shared/MetricCountUp.vue'
@@ -31,13 +32,15 @@ onUnmounted(() => {
 
 <template>
   <main
-    class="min-h-screen px-6 py-10 text-[color:var(--ice)]"
+    class="min-h-screen text-[color:var(--ice)]"
     :class="{ 'plain-mode': isPlain }"
   >
-    <section class="mx-auto flex min-h-[88vh] max-w-6xl flex-col justify-center gap-10">
+    <SceneRoot />
+
+    <section class="mx-auto flex min-h-[88vh] max-w-6xl flex-col justify-center gap-10 px-6 py-10">
       <div class="grid gap-5">
         <p class="type-mono text-[length:var(--text-xs)] uppercase tracking-[0.18em] text-[color:var(--gold)]">
-          Phase 0 / Design system
+          Phase 0 / Visual test surface
         </p>
         <h1 class="type-display max-w-5xl leading-none tracking-[0.08em]">
           PARTH TIWARI
