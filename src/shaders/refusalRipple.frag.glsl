@@ -7,8 +7,8 @@ varying vec2 vUv;
 
 void main() {
   float dist = distance(vUv, vec2(0.5));
-  float wave = smoothstep(0.035, 0.0, abs(dist - uTime * 0.32));
-  float envelope = smoothstep(0.0, 0.2, uTime) * (1.0 - smoothstep(2.2, 3.0, uTime));
-  float alpha = wave * envelope * uActive * 0.08;
-  gl_FragColor = vec4(0.792, 0.659, 0.298, alpha);
+  float wave = smoothstep(0.018, 0.0, abs(dist - uTime * 0.24));
+  float envelope = smoothstep(0.0, 0.35, uTime) * (1.0 - smoothstep(2.0, 3.0, uTime));
+  float alpha = wave * envelope * uActive * 0.018;
+  gl_FragColor = vec4(0.62, 0.76, 0.82, alpha);
 }

@@ -51,11 +51,12 @@ function handleSelect(projectId: string) {
   >
     <div class="sticky top-0 h-screen overflow-hidden bg-[color:var(--bg)]">
       <TresCanvas
-        class="absolute inset-0 h-full w-full"
+        class="absolute inset-0 z-0 h-full w-full"
         :alpha="true"
         :antialias="true"
-        clear-color="#0c1a20"
+        clear-color="#010409"
         :dpr="dpr"
+        :enable-provide-bridge="false"
         :output-color-space="SRGBColorSpace"
         power-preference="high-performance"
         render-mode="always"
@@ -64,9 +65,9 @@ function handleSelect(projectId: string) {
       >
         <TresPerspectiveCamera
           :args="[45, 1, 0.1, 100]"
-          :position="[0, 10, 28]"
+          :position="[0, 6, 22]"
         />
-        <TresAmbientLight :intensity="0.25" />
+        <TresAmbientLight :intensity="0.12" />
         <CameraPathController />
         <CameraLight />
         <IridescentBackground />

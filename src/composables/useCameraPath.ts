@@ -1,10 +1,9 @@
-import { onUnmounted } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import * as THREE from 'three'
 
 const CAMERA_POINTS = [
-  new THREE.Vector3(0, 10, 28),
+  new THREE.Vector3(0, 6, 22),
   new THREE.Vector3(2, 8, 22),
   new THREE.Vector3(-1, 5, 15),
   new THREE.Vector3(0, 2, 6),
@@ -48,7 +47,5 @@ export function useCameraPath(camera: THREE.Camera | undefined) {
   }
 
   requestAnimationFrame(() => ScrollTrigger.refresh())
-  onUnmounted(cleanup)
-
   return cleanup
 }

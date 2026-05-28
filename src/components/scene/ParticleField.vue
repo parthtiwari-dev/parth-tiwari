@@ -25,3 +25,5 @@ onUnmounted(() => {
   particleField.dispose()
 })
 </script>
+
+<template></template>

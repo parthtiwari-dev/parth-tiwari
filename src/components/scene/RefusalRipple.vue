@@ -6,7 +6,7 @@ import fragmentShader from '@/shaders/refusalRipple.frag.glsl'
 import vertexShader from '@/shaders/refusalRipple.vert.glsl'
 
 const { camera, scene } = useTres()
-const geometry = new THREE.PlaneGeometry(18, 18)
+const geometry = new THREE.PlaneGeometry(11, 11)
 const uniforms = {
   uTime: { value: 0 },
   uActive: { value: 0 },
@@ -17,7 +17,7 @@ const material = new THREE.ShaderMaterial({
   uniforms,
   transparent: true,
   depthWrite: false,
-  blending: THREE.AdditiveBlending,
+  blending: THREE.NormalBlending,
   side: THREE.DoubleSide,
 })
 const mesh = new THREE.Mesh(geometry, material)
@@ -49,3 +49,5 @@ onUnmounted(() => {
   material.dispose()
 })
 </script>
+
+<template></template>

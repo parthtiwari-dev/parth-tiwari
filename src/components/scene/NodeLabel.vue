@@ -65,7 +65,7 @@ onUnmounted(() => {
   <div
     v-if="project"
     v-show="labelPosition.visible"
-    class="pointer-events-none absolute left-0 top-0 max-w-[18rem] rounded border border-[color:var(--ice-faint)] bg-[rgba(12,26,32,0.72)] px-4 py-3 text-[color:var(--ice)] shadow-[0_18px_60px_rgba(0,0,0,0.35)] backdrop-blur-md"
+    class="pointer-events-none absolute left-0 top-0 z-30 max-w-[18rem] rounded border border-[color:var(--ice-faint)] bg-[rgba(2,6,11,0.82)] px-4 py-3 text-[color:var(--ice)] shadow-[0_18px_60px_rgba(0,0,0,0.45)] backdrop-blur-md"
     :style="{
       transform: `translate3d(${labelPosition.x + 18}px, ${labelPosition.y - 18}px, 0)`,
     }"

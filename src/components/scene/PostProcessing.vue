@@ -15,14 +15,23 @@ function syncComposerSize() {
     return
   }
 
-  composer.setSize(sizes.width.value, sizes.height.value, false)
+  const width = sizes.width.value
+  const height = sizes.height.value
+
+  if (width <= 0 || height <= 0) {
+    return
+  }
+
+  composer.setSize(width, height, false)
 }
 
 function createComposer() {
   const activeRenderer = renderer.value
   const activeCamera = camera.value
+  const width = sizes.width.value
+  const height = sizes.height.value
 
-  if (composer || !activeRenderer || !activeCamera) {
+  if (composer || !activeRenderer || !activeCamera || width <= 0 || height <= 0) {
     return
   }
 
@@ -34,9 +43,9 @@ function createComposer() {
     new EffectPass(
       activeCamera,
       new BloomEffect({
-        luminanceThreshold: 0.18,
-        luminanceSmoothing: 0.06,
-        intensity: 1.6,
+        luminanceThreshold: 0.62,
+        luminanceSmoothing: 0.08,
+        intensity: 0.58,
         mipmapBlur: true,
       }),
     ),
@@ -46,7 +55,7 @@ function createComposer() {
   const renderHandle = loop.render(({ delta }) => {
     const frameComposer = composer
 
-    if (!frameComposer) {
+    if (!frameComposer || sizes.width.value <= 0 || sizes.height.value <= 0) {
       return
     }
 
@@ -78,3 +87,5 @@ onUnmounted(() => {
   composer = null
 })
 </script>
+
+<template></template>

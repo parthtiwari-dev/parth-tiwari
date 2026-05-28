@@ -6,7 +6,7 @@ import fragmentShader from '@/shaders/iridescent.frag.glsl'
 import vertexShader from '@/shaders/iridescent.vert.glsl'
 
 const { camera, scene } = useTres()
-const geometry = new THREE.PlaneGeometry(1, 1)
+const geometry = new THREE.SphereGeometry(90, 64, 32)
 const uniforms = {
   uTime: { value: 0 },
   uHueShift: { value: 0 },
@@ -17,13 +17,13 @@ const material = new THREE.ShaderMaterial({
   uniforms,
   depthTest: false,
   depthWrite: false,
-  side: THREE.DoubleSide,
+  side: THREE.BackSide,
 })
 const mesh = new THREE.Mesh(geometry, material)
-const cameraDirection = new THREE.Vector3()
 
 mesh.name = 'EvidenceBoundIridescentBackground'
 mesh.renderOrder = -100
+mesh.frustumCulled = false
 
 onMounted(() => {
   scene.value.add(mesh)
@@ -38,10 +38,7 @@ const loopStop = useRenderLoop().onLoop(({ delta }) => {
 
   uniforms.uTime.value += delta
   uniforms.uHueShift.value = (uniforms.uHueShift.value + (delta / 8) * 360) % 360
-  activeCamera.getWorldDirection(cameraDirection)
-  mesh.position.copy(activeCamera.position).addScaledVector(cameraDirection, 60)
-  mesh.quaternion.copy(activeCamera.quaternion)
-  mesh.scale.set(80, 45, 1)
+  mesh.position.copy(activeCamera.position)
 })
 
 onUnmounted(() => {
@@ -51,3 +48,5 @@ onUnmounted(() => {
   material.dispose()
 })
 </script>
+
+<template></template>

@@ -126,22 +126,37 @@ onUnmounted(() => {
 <template>
   <svg
     aria-hidden="true"
-    class="pointer-events-none absolute inset-0 h-full w-full"
+    class="pointer-events-none absolute inset-0 z-20 h-full w-full overflow-visible"
     data-constellation-connectors
+    style="mix-blend-mode: screen;"
   >
     <line
       v-for="line in lines"
       v-show="line.visible"
       :key="line.id"
+      class="constellation-line"
       :x1="line.x1"
       :y1="line.y1"
       :x2="line.x2"
       :y2="line.y2"
       stroke="var(--ice-faint)"
+      stroke-dasharray="3 9"
       stroke-linecap="round"
-      stroke-width="1"
+      stroke-width="1.15"
       vector-effect="non-scaling-stroke"
-      opacity="0.08"
+      opacity="0.14"
     />
   </svg>
 </template>
+
+<style scoped>
+.constellation-line {
+  animation: constellation-dash 18s linear infinite;
+}
+
+@keyframes constellation-dash {
+  to {
+    stroke-dashoffset: -96;
+  }
+}
+</style>

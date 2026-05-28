@@ -2,7 +2,7 @@
 
 Date: 2026-05-28  
 Branch: `dev`  
-Status: Phase 1 VFX calibration implemented; browser visual QA pending user-run server
+Status: Phase 1 browser-led visual QA loop complete; ready for user visual review
 
 ## Branch And Repo
 
@@ -45,7 +45,7 @@ Status: Phase 1 VFX calibration implemented; browser visual QA pending user-run 
 | 1200x630 OG image | Done |
 | Temporary default cursor | Done for Phase 0 testing |
 | Index head metadata | Done from roadmap Phase 5 spec |
-| Temporary glass shimmer test surface | Done; remove after visual QA |
+| Glass shimmer test surface | Done through the Phase 0 `GlassPanel`; temporary fixed test block removed after QA |
 
 ## Phase 1 Checklist
 
@@ -60,8 +60,8 @@ Status: Phase 1 VFX calibration implemented; browser visual QA pending user-run 
 | `#constellation-section` scroll rig | Done, `400vh` |
 | ScrollTrigger camera path | Done |
 | Iridescent hue loop | Done, `(delta / 8) * 360` |
-| Hardware-tiered particle field | Done, `10k/5k/2k` |
-| Refusal ripple timing | Done, 30s cycle / 3s active / max `0.08` |
+| Hardware-tiered particle field | Done, `10k/5k/2k` with hybrid ambient/aura distribution |
+| Refusal ripple timing | Done, 30s cycle / 3s active / max `0.018` after visual retune |
 | 9 constellation nodes | Done from `projects.ts` |
 | Manual node raycaster interaction | Done, every-other pointermove |
 | Hover node scale | Done, `1.4x` |
@@ -76,21 +76,53 @@ Status: Phase 1 VFX calibration implemented; browser visual QA pending user-run 
 | Task | Result |
 |---|---|
 | Direct `postprocessing` composer | Done with `EffectComposer`, `RenderPass`, `EffectPass`, `BloomEffect` |
-| Bloom configuration | Done: threshold `0.18`, smoothing `0.06`, intensity `1.6`, mipmap blur |
+| Bloom configuration | Retuned: threshold `0.62`, smoothing `0.08`, intensity `0.58`, mipmap blur |
 | Node materials | Upgraded to `MeshStandardMaterial` |
 | Node emissive status colors | Done |
 | Camera-follow point light | Done |
-| Ambient light reduction | Done, `0.55` -> `0.25` |
-| Per-node atmosphere rings | Done, camera-facing, status colored |
-| Particle size tiers | Done: micro/mid/foreground |
-| Particle alpha tiers | Done |
-| Particle warmth interpolation | Done: ice -> warm-white |
-| Particle drift rhythm | Done with per-particle phase and speed |
-| Particle parallax | Done in shader after model-space drift |
-| `aSize` point sizing | Done: `uPointSize * aSize * distanceScale * vBrightness` |
-| Iridescent background strength | Done: saturation `0.22`, mix `0.48` |
-| Background depth gradient/noise | Done |
-| Connector opacity | Done, `0.08` |
+| Ambient light reduction | Done, `0.55` -> `0.12` |
+| Per-node atmosphere | Done, camera-facing soft discs; hard target rings removed |
+| Connector opacity | Deliberate visual deviation: `0.14` for readability |
+
+## Phase 1 Roadmap Realignment
+
+| Task | Result |
+|---|---|
+| Rectangular background plane | Replaced with camera-centered inward sky dome |
+| Canonical `ParticleField` path | Restored |
+| Single particle geometry | Reworked internally as 72% ambient field / 28% constellation aura |
+| Ambient particle hover behavior | Stable, sentinel cluster `-1` |
+| Aura hover behavior | Cluster brightness affects local aura only |
+| Particle size/alpha | Reduced to avoid white snow/cotton blobs |
+| Normal `/` route | Shows constellation, transition band, and Phase 0 test surface |
+| `?plain=1` | Skips 3D and shows fallback content |
+| Glass realism | Tuned lower fill, stronger blur/saturation, highlight, restrained shadow |
+
+## Phase 1 Visual Lock Pass
+
+| Task | Result |
+|---|---|
+| Darker blue-black scene palette | Done, `--bg: #010409` with lift/bridge tokens |
+| Sky dome color calibration | Done, darker navy base with restrained iridescence |
+| Atmosphere-only node halos | Done, soft additive glow discs replacing bullseye rings |
+| Sparse premium particle field | Done, `72%` ambient field / `28%` project aura |
+| Project aura caps | Done, particle size/alpha reduced to avoid blobs |
+| Bridge to Phase 0 | Done, longer `44vh` dark gradient bridge matched to sky-dome color |
+
+## Phase 1 Decisive Visual Fix
+
+| Task | Result |
+|---|---|
+| Cold star distribution | Done, 92%+ particles now ice-white/blue with rare warm/gold stars |
+| Bright star tier | Done, ~0.2% rare stars with subtle shader twinkle |
+| Near-black void | Done, sky dome atmosphere mix capped near `0.04` with stronger vignette |
+| Jewel node calibration | Done, smaller visible node bodies, tighter bloom, capped atmosphere opacity |
+| Gold contrast punch | Done, complete nodes use stronger emissive and tiny local warm lights |
+| Connector visibility | Done, z-index fixed, opacity raised to `0.14`, subtle dash animation added |
+| Hover label reliability | Done, label z-index raised and invisible node hit targets added |
+| Camera arrival | Done, start moved to `(0, 6, 22)` |
+| Browser screenshot sweep | Done, 11 scroll stops plus hover and plain-mode screenshots in `.phase1-qa-6` |
+| Refusal ripple visual wash | Fixed, large warm radial artifact reduced to a tiny cool low-opacity ripple |
 
 ## Current Stack
 
@@ -148,7 +180,7 @@ Status: Phase 1 VFX calibration implemented; browser visual QA pending user-run 
 | `npm.cmd run build` | Pass |
 | `npm.cmd audit --audit-level=moderate` | Pass, 0 vulnerabilities |
 | Manual app run | User confirmed app runs fine |
-| Phase 1 browser visual QA | Pending; Codex did not start server by request |
+| Phase 1 browser visual QA | Pass for structure and interaction; Codex ran an isolated Vite/Chrome sweep and stopped the temp server |
 
 ## Issues Found And Resolved
 
@@ -165,9 +197,24 @@ Status: Phase 1 VFX calibration implemented; browser visual QA pending user-run 
 | Cursor hidden before Phase 3 component | Added temporary default cursor in `App.vue` for Phase 0 testing |
 | `useCameraPath` narrowed camera too loosely for TS | Stored narrowed camera before nested updater |
 | Particle shader uniform indexing risk | Replaced dynamic uniform-array index with fixed branch lookup |
-| Flat node visuals | Added bloom, standard materials, emissive color, key light, and atmosphere rings |
+| Flat node visuals | Added bloom, standard materials, emissive color, key light, and soft atmosphere discs |
 | Uniform star field | Added size/alpha/warmth tiers plus organic drift and parallax |
 | Flat background | Increased iridescence and added depth/noise variation |
+| Visible background rectangle | Replaced finite plane with inward sky dome |
+| Particle snow/cotton look | Reworked canonical particle field with ambient/aura distribution and lower alpha |
+| Phase 1 to Phase 0 hard transition | Added temporary dark transition band before Phase 0 test surface |
+| Roadmap drift from split particle system | Restored canonical `ParticleField` files and removed split-system files |
+| Green-gray scene wash | Shifted Phase 1 palette toward darker blue-black while preserving CRYO-GOLD accents |
+| Bullseye halo look | Replaced hard ring geometry with soft atmosphere-only shader discs |
+| Fairy-light particle warmth | Inverted particle warmth distribution toward cold ice-white stars |
+| Bloated node glow | Raised bloom threshold, reduced bloom intensity, reduced node visual radius |
+| Invisible/weak connectors | Raised connector overlay z-index and opacity, added dash animation |
+| Hover labels unreliable | Added larger invisible hit targets and deferred renderer event binding |
+| Helicopter-like camera start | Lowered start point to `(0, 6, 22)` |
+| Dev console framebuffer warnings | Guarded post-processing composer until renderer size is non-zero |
+| Renderless component template warnings | Added empty templates to renderless scene controllers |
+| Huge refusal ripple wash | Reduced geometry, opacity, and blending so it stays subliminal |
+| Temporary fixed glass rectangle | Removed after Phase 0 `GlassPanel` verified the glass treatment |
 
 ## Upgrade Notes
 
@@ -192,8 +239,9 @@ Status: Phase 1 VFX calibration implemented; browser visual QA pending user-run 
 | Project links are intentionally empty | Add only confirmed public links later |
 | Custom cursor CSS exists before component | Phase 3 adds moving cursor component |
 | Three.js bundle exceeds 500 kB warning | Expected after Phase 1 3D/post-processing stack; monitor later |
-| Phase 1 manual FPS/hover/scroll visual checks | Pending user-run server |
-| Temporary glass test surface exists | Remove after confirming shimmer/backdrop visually |
+| Phase 1 manual FPS/hover/scroll visual checks | Browser screenshot sweep completed; user subjective review still needed |
+| Dev-only TresJS lifecycle warnings | Observed in Vite dev mode; no page errors and production build is clean |
+| External font network in sandbox | Headless QA reported `ERR_NETWORK_ACCESS_DENIED` for remote fonts; expected in restricted sandbox |
 
 ## Phase 0 Data Decisions
 
@@ -208,4 +256,4 @@ Status: Phase 1 VFX calibration implemented; browser visual QA pending user-run 
 
 ## Next Step
 
-Run the app locally for Phase 1 visual QA, then move to Phase 2 only if scene render, scroll flight, hover labels, connectors, particles, ripple, and plain mode all look correct.
+Review the `.phase1-qa-6` screenshots in the running app, then move to Phase 2 only if the cinematic constellation direction feels right.

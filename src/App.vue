@@ -40,8 +40,8 @@ onUnmounted(() => {
     <div
       v-if="!isPlain"
       aria-hidden="true"
-      class="glass-panel pointer-events-none fixed bottom-6 right-6 z-10 h-20 w-64 opacity-60"
-      data-temporary-glass-test="remove-after-phase-1-visual-qa"
+      class="h-[44vh]"
+      style="background: linear-gradient(180deg, #071826 0%, var(--bg-bridge) 52%, var(--bg) 100%);"
     />
 
     <section class="mx-auto flex min-h-[88vh] max-w-6xl flex-col justify-center gap-10 px-6 py-10">

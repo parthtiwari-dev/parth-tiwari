@@ -14,3 +14,5 @@ onUnmounted(() => {
   cleanupCameraPath?.()
 })
 </script>
+
+<template></template>

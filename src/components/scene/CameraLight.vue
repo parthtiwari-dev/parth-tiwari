@@ -30,3 +30,5 @@ onUnmounted(() => {
   scene.value.remove(light)
 })
 </script>
+
+<template></template>
