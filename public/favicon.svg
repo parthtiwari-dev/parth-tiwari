@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="EvidenceBound">
+  <rect width="64" height="64" fill="#0c1a20"/>
+  <path d="M32 7 53.7 19.5V44.5L32 57 10.3 44.5V19.5Z" fill="none" stroke="#d8eaf0" stroke-width="3"/>
+  <path d="M48 41 42 47" stroke="#0c1a20" stroke-width="7" stroke-linecap="round"/>
+  <path d="M49 40 41 48" stroke="#d8eaf0" stroke-width="2" stroke-linecap="round"/>
+  <text x="32" y="38" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="16" font-weight="600" fill="#d8eaf0">EB</text>
+</svg>
