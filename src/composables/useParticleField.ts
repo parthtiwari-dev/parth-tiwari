@@ -58,6 +58,11 @@ export function useParticleField(projects: Project[]) {
   const count = getParticleCount()
   const positions = new Float32Array(count * 3)
   const clusterIndices = new Float32Array(count)
+  const sizes = new Float32Array(count)
+  const alphas = new Float32Array(count)
+  const warmth = new Float32Array(count)
+  const phases = new Float32Array(count)
+  const driftSpeeds = new Float32Array(count)
   const clusterBrightness = Array.from({ length: projects.length }, () => 1)
   const random = seededRandom('evidencebound-particles')
 
@@ -77,11 +82,35 @@ export function useParticleField(projects: Project[]) {
     positions[positionIndex + 1] = project.node.position.y + offsetY
     positions[positionIndex + 2] = project.node.position.z + offsetZ
     clusterIndices[index] = clusterIndex
+
+    const tier = random()
+
+    if (tier < 0.7) {
+      sizes[index] = 0.4 + random() * 0.4
+      alphas[index] = 0.14 + random() * 0.08
+      driftSpeeds[index] = 0.18 + random() * 0.12
+    } else if (tier < 0.94) {
+      sizes[index] = 1 + random() * 0.8
+      alphas[index] = 0.38 + random() * 0.14
+      driftSpeeds[index] = 0.22 + random() * 0.16
+    } else {
+      sizes[index] = 2.5 + random() * 2
+      alphas[index] = 0.62 + random() * 0.18
+      driftSpeeds[index] = 0.28 + random() * 0.2
+    }
+
+    warmth[index] = random()
+    phases[index] = random() * Math.PI * 2
   }
 
   const geometry = new THREE.BufferGeometry()
   geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
   geometry.setAttribute('aClusterIndex', new THREE.BufferAttribute(clusterIndices, 1))
+  geometry.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1))
+  geometry.setAttribute('aAlpha', new THREE.BufferAttribute(alphas, 1))
+  geometry.setAttribute('aWarmth', new THREE.BufferAttribute(warmth, 1))
+  geometry.setAttribute('aPhase', new THREE.BufferAttribute(phases, 1))
+  geometry.setAttribute('aDriftSpeed', new THREE.BufferAttribute(driftSpeeds, 1))
 
   const material = new THREE.ShaderMaterial({
     vertexShader,
@@ -89,8 +118,7 @@ export function useParticleField(projects: Project[]) {
     uniforms: {
       uTime: { value: 0 },
       uClusterBrightness: { value: clusterBrightness },
-      uPointSize: { value: 1.65 },
-      uColor: { value: new THREE.Color('#d8eaf0') },
+      uPointSize: { value: 1 },
     },
     transparent: true,
     depthWrite: false,

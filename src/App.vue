@@ -37,6 +37,13 @@ onUnmounted(() => {
   >
     <SceneRoot />
 
+    <div
+      v-if="!isPlain"
+      aria-hidden="true"
+      class="glass-panel pointer-events-none fixed bottom-6 right-6 z-10 h-20 w-64 opacity-60"
+      data-temporary-glass-test="remove-after-phase-1-visual-qa"
+    />
+
     <section class="mx-auto flex min-h-[88vh] max-w-6xl flex-col justify-center gap-10 px-6 py-10">
       <div class="grid gap-5">
         <p class="type-mono text-[length:var(--text-xs)] uppercase tracking-[0.18em] text-[color:var(--gold)]">

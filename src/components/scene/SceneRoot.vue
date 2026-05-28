@@ -6,11 +6,13 @@ import { usePlainMode } from '@/composables/usePlainMode'
 import { projects } from '@/data/projects'
 import { useOverlayStore } from '@/stores/overlayStore'
 import CameraPathController from '@/components/scene/CameraPathController.vue'
+import CameraLight from '@/components/scene/CameraLight.vue'
 import ConstellationNodes from '@/components/scene/ConstellationNodes.vue'
 import ConnectorLines from '@/components/scene/ConnectorLines.vue'
 import IridescentBackground from '@/components/scene/IridescentBackground.vue'
 import NodeLabel from '@/components/scene/NodeLabel.vue'
 import ParticleField from '@/components/scene/ParticleField.vue'
+import PostProcessing from '@/components/scene/PostProcessing.vue'
 import RefusalRipple from '@/components/scene/RefusalRipple.vue'
 
 const { isPlain } = usePlainMode()
@@ -64,8 +66,9 @@ function handleSelect(projectId: string) {
           :args="[45, 1, 0.1, 100]"
           :position="[0, 10, 28]"
         />
-        <TresAmbientLight :intensity="0.55" />
+        <TresAmbientLight :intensity="0.25" />
         <CameraPathController />
+        <CameraLight />
         <IridescentBackground />
         <ParticleField :hovered-cluster-index="hoveredClusterIndex" />
         <RefusalRipple />
@@ -73,6 +76,7 @@ function handleSelect(projectId: string) {
           @hover="handleHover"
           @select="handleSelect"
         />
+        <PostProcessing />
       </TresCanvas>
 
       <ConnectorLines

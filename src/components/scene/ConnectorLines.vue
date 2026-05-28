@@ -141,7 +141,7 @@ onUnmounted(() => {
       stroke-linecap="round"
       stroke-width="1"
       vector-effect="non-scaling-stroke"
-      opacity="0.42"
+      opacity="0.08"
     />
   </svg>
 </template>

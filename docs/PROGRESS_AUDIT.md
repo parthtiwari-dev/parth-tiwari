@@ -2,7 +2,7 @@
 
 Date: 2026-05-28  
 Branch: `dev`  
-Status: Phase 1 implementation complete; browser visual QA pending user-run server
+Status: Phase 1 VFX calibration implemented; browser visual QA pending user-run server
 
 ## Branch And Repo
 
@@ -45,6 +45,7 @@ Status: Phase 1 implementation complete; browser visual QA pending user-run serv
 | 1200x630 OG image | Done |
 | Temporary default cursor | Done for Phase 0 testing |
 | Index head metadata | Done from roadmap Phase 5 spec |
+| Temporary glass shimmer test surface | Done; remove after visual QA |
 
 ## Phase 1 Checklist
 
@@ -70,6 +71,27 @@ Status: Phase 1 implementation complete; browser visual QA pending user-run serv
 | Plain mode scene gate | Done |
 | Phase 2 overlays/sections/sliders | Not added |
 
+## Phase 1 VFX Calibration
+
+| Task | Result |
+|---|---|
+| Direct `postprocessing` composer | Done with `EffectComposer`, `RenderPass`, `EffectPass`, `BloomEffect` |
+| Bloom configuration | Done: threshold `0.18`, smoothing `0.06`, intensity `1.6`, mipmap blur |
+| Node materials | Upgraded to `MeshStandardMaterial` |
+| Node emissive status colors | Done |
+| Camera-follow point light | Done |
+| Ambient light reduction | Done, `0.55` -> `0.25` |
+| Per-node atmosphere rings | Done, camera-facing, status colored |
+| Particle size tiers | Done: micro/mid/foreground |
+| Particle alpha tiers | Done |
+| Particle warmth interpolation | Done: ice -> warm-white |
+| Particle drift rhythm | Done with per-particle phase and speed |
+| Particle parallax | Done in shader after model-space drift |
+| `aSize` point sizing | Done: `uPointSize * aSize * distanceScale * vBrightness` |
+| Iridescent background strength | Done: saturation `0.22`, mix `0.48` |
+| Background depth gradient/noise | Done |
+| Connector opacity | Done, `0.08` |
+
 ## Current Stack
 
 | Package | Version |
@@ -82,6 +104,7 @@ Status: Phase 1 implementation complete; browser visual QA pending user-run serv
 | GSAP | 3.15.0 |
 | Three.js | 0.165.0 |
 | @tresjs/core | 4.3.1 |
+| postprocessing | 6.38.0 |
 | vite-plugin-glsl | 1.6.0 |
 | vue-tsc | 2.2.12 |
 
@@ -109,6 +132,13 @@ Status: Phase 1 implementation complete; browser visual QA pending user-run serv
 | Shaders | `iridescent.*.glsl`, `particle.*.glsl`, `refusalRipple.*.glsl` |
 | Types | `src/types/glsl.d.ts` |
 
+## Phase 1 VFX Files Added
+
+| Area | Files |
+|---|---|
+| Post-processing | `src/components/scene/PostProcessing.vue` |
+| Lighting | `src/components/scene/CameraLight.vue` |
+
 ## Verification
 
 | Check | Result |
@@ -135,6 +165,9 @@ Status: Phase 1 implementation complete; browser visual QA pending user-run serv
 | Cursor hidden before Phase 3 component | Added temporary default cursor in `App.vue` for Phase 0 testing |
 | `useCameraPath` narrowed camera too loosely for TS | Stored narrowed camera before nested updater |
 | Particle shader uniform indexing risk | Replaced dynamic uniform-array index with fixed branch lookup |
+| Flat node visuals | Added bloom, standard materials, emissive color, key light, and atmosphere rings |
+| Uniform star field | Added size/alpha/warmth tiers plus organic drift and parallax |
+| Flat background | Increased iridescence and added depth/noise variation |
 
 ## Upgrade Notes
 
@@ -144,6 +177,7 @@ Status: Phase 1 implementation complete; browser visual QA pending user-run serv
 | Vite | Upgraded to 8; build/typecheck/audit pass |
 | TypeScript | Upgraded to 6 with Vite 8 toolchain |
 | GSAP | Upgraded within 3.x |
+| postprocessing | Added direct `6.38.0`; skipped Tres wrapper to preserve pinned Three/Tres stack |
 | Three.js | Kept pinned at 0.165.0 |
 | TresJS | Kept pinned at 4.3.1 |
 | Pinia | Kept on 2.x for roadmap compatibility |
@@ -157,8 +191,9 @@ Status: Phase 1 implementation complete; browser visual QA pending user-run serv
 | TresJS/Three API drift risk | Do not upgrade casually during 3D work |
 | Project links are intentionally empty | Add only confirmed public links later |
 | Custom cursor CSS exists before component | Phase 3 adds moving cursor component |
-| Three.js bundle exceeds 500 kB warning | Expected after Phase 1 3D stack; monitor later |
+| Three.js bundle exceeds 500 kB warning | Expected after Phase 1 3D/post-processing stack; monitor later |
 | Phase 1 manual FPS/hover/scroll visual checks | Pending user-run server |
+| Temporary glass test surface exists | Remove after confirming shimmer/backdrop visually |
 
 ## Phase 0 Data Decisions
 
