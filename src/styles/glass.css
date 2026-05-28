@@ -1,0 +1,52 @@
+.glass-panel {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(216, 234, 240, 0.14);
+  background: var(--surface-glass);
+  backdrop-filter: blur(12px);
+}
+
+.glass-panel::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: '';
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(232, 200, 106, 0.08) var(--shimmer-pos),
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 240ms var(--ease-in-out);
+}
+
+.glass-panel:hover {
+  background: var(--surface-glass-hover);
+}
+
+.glass-panel:hover::after {
+  opacity: 1;
+  animation: glass-shimmer 1.6s var(--ease-out-expo);
+}
+
+@keyframes glass-shimmer {
+  from {
+    --shimmer-pos: -100%;
+  }
+  to {
+    --shimmer-pos: 200%;
+  }
+}
+
+@supports not (background: paint(something)) {
+  .glass-panel::after {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.03) 50%,
+      transparent 100%
+    );
+    animation: none;
+  }
+}

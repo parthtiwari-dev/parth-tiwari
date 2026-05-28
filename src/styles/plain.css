@@ -1,0 +1,41 @@
+.plain-mode {
+  --bg: #ffffff;
+  --surface-glass: transparent;
+  --surface-glass-hover: transparent;
+  --ice: #111111;
+  --ice-muted: #333333;
+  --ice-faint: #666666;
+  --gold: #7a5a00;
+  --gold-glow: #7a5a00;
+  --cold: #444444;
+  --cold-text: #555555;
+  color: #111111;
+  background: #ffffff;
+}
+
+.plain-mode *,
+.plain-mode *::before,
+.plain-mode *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+.plain-mode .glass-panel {
+  border-color: #d9d9d9;
+  background: #ffffff;
+  backdrop-filter: none;
+}
+
+.plain-mode .glass-panel::after {
+  display: none;
+}
+
+.plain-mode,
+.plain-mode a,
+.plain-mode button,
+.plain-mode input,
+.plain-mode textarea,
+.plain-mode select {
+  cursor: auto;
+}

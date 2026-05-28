@@ -6,7 +6,7 @@ Systems that act only after the evidence agrees.
 
 The build source of truth is [docs/EVIDENCEBOUND_BUILD_ROADMAP.md](docs/EVIDENCEBOUND_BUILD_ROADMAP.md).
 
-The current implementation is in **Phase -1: Project Bootstrap + Lockdown**. Phase 0 starts only after this scaffold remains healthy.
+The current implementation has completed **Phase 0: Design System And Data Foundation**. Phase 1 starts only after this foundation remains healthy.
 
 ## Stack
 
@@ -56,7 +56,7 @@ npm.cmd run preview
 ## Phase Gates
 
 - Phase -1 gate: scaffold builds, typechecks, audits cleanly, and branch is `dev`.
-- Phase 0 gate: tokens, typography, glass/plain styles, types, project data, stores, shared primitives, favicon, and OG image compile with zero TypeScript errors.
+- Phase 0 gate: tokens, typography, glass/plain styles, types, project data, stores, shared primitives, favicon, and OG image compile with zero TypeScript errors. Complete.
 - Later phase gates remain exactly as defined in the roadmap.
 
 ## Environment

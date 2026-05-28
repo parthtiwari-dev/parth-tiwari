@@ -1,0 +1,37 @@
+:root {
+  --bg: #0c1a20;
+  --surface-glass: rgba(240, 244, 247, 0.06);
+  --surface-glass-hover: rgba(240, 244, 247, 0.10);
+
+  --ice: #d8eaf0;
+  --ice-muted: #7fa8b8;
+  --ice-faint: #2e4f5e;
+
+  --teal-deep: #0d3d47;
+  --teal-active: #1a6b7a;
+
+  --gold: #c9a84c;
+  --gold-glow: #e8c86a;
+
+  --cold: #2a3d4a;
+  --cold-text: #4a6070;
+
+  --amber: #d4956a;
+  --amber-glow: #e8b08a;
+
+  --text-hero: clamp(3rem, 8vw, 8rem);
+  --text-2xl: clamp(2rem, 4vw, 3.5rem);
+  --text-xl: clamp(1.5rem, 2.5vw, 2.5rem);
+  --text-base: 1rem;
+  --text-sm: 0.875rem;
+  --text-xs: 0.75rem;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@property --shimmer-pos {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: -100%;
+}
