@@ -1,0 +1,1305 @@
+# EVIDENCEBOUND — parth-tiwari Build Roadmap
+
+---
+
+## Confirmed Tech Stack
+
+| Layer | Technology | Version |
+|---|---|---|
+| Framework | Vue 3 (Composition API, `<script setup>`) | ^3.4.x |
+| Build | Vite | ^5.x |
+| Language | TypeScript | ^5.4.x |
+| 3D | Three.js | ^0.165.x |
+| 3D Vue wrapper | TresJS | pin to latest stable at init — document in README |
+| Animation | GSAP (no Club plugins) | ^3.12.x |
+| Scroll animation | GSAP ScrollTrigger | ^3.12.x |
+| State | Pinia | ^2.x |
+| Styling | Tailwind CSS | v4.x |
+| Fonts | Spectral + Inter (Google Fonts CDN), Geist Mono (Vercel CDN) | — |
+| Deployment | Vercel | free tier, static |
+
+No SplitText. No Howler.js. No Temporal in frontend code (backend only, listed in capability map as skill). Audio deferred to v2.
+
+---
+
+## Full File and Folder Structure
+
+```
+parth-tiwari/
+├── public/
+│   ├── favicon.svg                        # EB hexagonal mark, generated as SVG code
+│   └── og.png                             # 1200×630 static OG image — CRYO-GOLD field + EVIDENCEBOUND · Parth Tiwari in Spectral
+│
+├── src/
+│   ├── types/
+│   │   ├── project.ts                     # All project interfaces (canonical)
+│   │   ├── slider.ts                      # CostOfIntelligence slider interface
+│   │   └── node.ts                        # Constellation node spatial config
+│   │
+│   ├── data/
+│   │   └── projects.ts                    # All 9 Project objects, typed. Single source of truth.
+│   │
+│   ├── stores/
+│   │   ├── projectStore.ts                # Project data, active project, overlay state
+│   │   ├── overlayStore.ts                # Film strip open/closed, active panel index
+│   │   └── sliderStore.ts                 # 5 slider values, read by Three.js render loop
+│   │
+│   ├── composables/
+│   │   ├── usePlainMode.ts                # Reads window.location.search at init, returns readonly isPlain
+│   │   ├── useCharacterSplit.ts           # Manual char-split typewriter, no SplitText
+│   │   ├── useBootSequence.ts             # Boot line stagger, skip logic, reduced-motion gate
+│   │   ├── useCameraPath.ts               # CatmullRomCurve3 definition + ScrollTrigger scrub
+│   │   ├── useParticleField.ts            # BufferGeometry points, simplex noise drift, cluster zones
+│   │   ├── useNodeInteraction.ts          # Raycaster hover/click on constellation nodes
+│   │   ├── useScrollTrigger.ts            # Shared ScrollTrigger registration/cleanup wrapper
+│   │   └── useCountUp.ts                  # GSAP .to() count-up for metrics, gold sweep
+│   │
+│   ├── shaders/
+│   │   ├── iridescent.vert.glsl           # Pass-through vertex shader for background plane
+│   │   ├── iridescent.frag.glsl           # @property hue-shift iridescence on 3D background
+│   │   ├── particle.vert.glsl             # Particle size, opacity, cluster brightness uniform
+│   │   ├── particle.frag.glsl             # Soft circle point sprite
+│   │   ├── refusalRipple.vert.glsl        # Radial wave displacement from world center
+│   │   └── refusalRipple.frag.glsl        # Opacity envelope for ripple, uTime driven
+│   │
+│   ├── styles/
+│   │   ├── tokens.css                     # All CRYO-GOLD CSS custom properties
+│   │   ├── typography.css                 # Font-face imports, --text-* scale, role assignments
+│   │   ├── glass.css                      # .glass-panel: backdrop-filter, @property shimmer
+│   │   ├── cursor.css                     # cursor: none on html, custom cursor element styles
+│   │   └── plain.css                      # ?plain=1 overrides — white bg, zero animation, Tailwind only
+│   │
+│   ├── components/
+│   │   │
+│   │   ├── boot/
+│   │   │   └── BootSequence.vue           # Terminal lines, stagger, skip button, reduced-motion gate
+│   │   │
+│   │   ├── cursor/
+│   │   │   └── CustomCursor.vue           # Global cursor element: crosshair / ENTER circle / ⊘
+│   │   │
+│   │   ├── hero/
+│   │   │   ├── HeroSection.vue            # Full-viewport wrapper, name + tagline + scroll cue
+│   │   │   ├── HeroName.vue               # Spectral 300 light, letter-spacing 0.08em
+│   │   │   ├── HeroTagline.vue            # useCharacterSplit typewriter on mount
+│   │   │   └── EvidenceDataBar.vue        # Fixed bottom bar, always visible after 1 scroll unit
+│   │   │
+│   │   ├── scene/
+│   │   │   ├── SceneRoot.vue              # TresCanvas, renderer config, postprocessing if any
+│   │   │   ├── ParticleField.vue          # useParticleField, BufferGeometry, particle shader
+│   │   │   ├── IridescentBackground.vue   # Full-scene background plane, iridescent shader
+│   │   │   ├── RefusalRipple.vue          # ShaderMaterial plane, uTime, 30s interval trigger
+│   │   │   ├── ConstellationNodes.vue     # 9 instanced spheres, raycaster, hover/click states
+│   │   │   ├── ConnectorLines.vue         # SVG-overlay lines between related nodes (DOM, not 3D)
+│   │   │   └── NodeLabel.vue              # Per-node: name + tagline + [ENTER →], clip-path wipe
+│   │   │
+│   │   ├── constellation/
+│   │   │   ├── ConstellationSection.vue   # Scroll container, camera path trigger, legend
+│   │   │   └── ConstellationLegend.vue    # ● COMPLETE  ◎ ACTIVE  ○ EXPERIENCE — Geist Mono
+│   │   │
+│   │   ├── overlay/
+│   │   │   ├── ProjectOverlay.vue         # Full-viewport overlay, clip-path entrance, close
+│   │   │   ├── FilmStripHeader.vue        # EVIDENCEBOUND › [NAME] · [01/04] · [← →] · [✕]
+│   │   │   ├── FilmStrip.vue              # Horizontal 4-panel container, scroll/key navigation
+│   │   │   └── panels/
+│   │   │       ├── PanelProblem.vue       # Spectral quote + SVG broken-flow animation
+│   │   │       ├── PanelArchitecture.vue  # Animated architecture diagram, stack chips
+│   │   │       ├── PanelProof.vue         # Metrics count-up OR milestone progress (status-gated)
+│   │   │       └── PanelBoundary.vue      # Refusal line, will/refuses lists, cursor swap, links
+│   │   │
+│   │   ├── cost/
+│   │   │   ├── CostOfIntelligence.vue     # Pinned section wrapper, glass panel, intro text
+│   │   │   └── CostSlider.vue             # Individual slider: label, Geist Mono value, gold track
+│   │   │
+│   │   ├── deployment-log/
+│   │   │   ├── DeploymentLog.vue          # Section header, card list
+│   │   │   └── DeploymentCard.vue         # Glass card, timeline rail, badge, bullets, chips
+│   │   │
+│   │   ├── training-data/
+│   │   │   ├── TrainingData.vue           # Section header, card list
+│   │   │   └── TrainingCard.vue           # Smaller glass card, institution, degree, chips
+│   │   │
+│   │   ├── capability-map/
+│   │   │   ├── CapabilityMap.vue          # Section header, 5-column grid
+│   │   │   └── CapabilityGroup.vue        # Group header + skill chips, hover → highlight nodes
+│   │   │
+│   │   ├── about/
+│   │   │   ├── AboutSection.vue           # Two-column layout wrapper
+│   │   │   ├── ThesisStatement.vue        # Spectral --text-xl thesis + 2×2 proof chips
+│   │   │   ├── WhoamiTerminal.vue         # Geist Mono auto-type whoami output
+│   │   │   └── ContactLine.vue            # Email + GitHub, copy-on-click, CopiedToast
+│   │   │
+│   │   └── shared/
+│   │       ├── GlassPanel.vue             # backdrop-filter glass surface, @property shimmer
+│   │       ├── GeistChip.vue              # Tiny Geist Mono pill — stack, metric, status variants
+│   │       ├── MetricCountUp.vue          # useCountUp wrapper, gold sweep background-clip
+│   │       ├── StatusBadge.vue            # [● ACTIVE] / [◎ IN FIELD] / [✓ COMPLETE]
+│   │       └── CopiedToast.vue            # [copied] toast, 1.5s auto-dismiss
+│   │
+│   ├── App.vue                            # Root: BootSequence gate, CustomCursor, SceneRoot, sections
+│   └── main.ts                            # createApp, Pinia, GSAP plugin registration
+│
+├── index.html                             # Font preconnect links, meta tags, canonical
+├── vite.config.ts                         # glsl plugin, path aliases, build config
+├── tsconfig.json
+├── tailwind.config.ts
+└── README.md                              # TresJS pinned version, build/deploy instructions
+```
+
+---
+
+## TypeScript Data Model
+
+### `src/types/project.ts`
+
+```typescript
+export type ProjectStatus = 'complete' | 'active' | 'in-progress' | 'experience'
+
+export type NodeSize =
+  | 'large'
+  | 'medium-large'
+  | 'medium'
+  | 'medium-small'
+  | 'small'
+  | 'tiny'
+
+export interface ProjectMetric {
+  label: string       // e.g. "RAGAS Faithfulness"
+  value: number       // raw number for count-up: 0.9753
+  display: string     // formatted display: "0.9753"
+  unit?: string       // optional suffix: "%", "ms", "$"
+}
+
+export interface ProjectMilestone {
+  label: string       // e.g. "MTC data"
+  status: 'complete' | 'active' | 'roadmap'
+  detail?: string     // e.g. "v0.2"
+}
+
+export interface ArchitectureNode {
+  id: string
+  label: string
+  description: string        // shown on hover
+  stackChips?: string[]      // chips floating near this box
+  connections: string[]      // ids of nodes this connects to
+  position: { x: number; y: number }  // percentage-based, 0–100
+}
+
+export interface BoundaryItem {
+  side: 'will' | 'refuses'
+  text: string
+}
+
+export interface PanelProblem {
+  quote: string              // Spectral italic large quote
+  brokenFlowId: string       // key for which SVG animation component to render
+}
+
+export interface PanelArchitecture {
+  nodes: ArchitectureNode[]
+  summary?: string
+}
+
+export interface PanelProof {
+  // complete projects
+  metrics?: ProjectMetric[]
+  radialMetricId?: string    // which radial gauge SVG to render
+  caveat?: string            // known-limitation chip
+  // in-progress projects
+  milestones?: ProjectMilestone[]
+  progressPercent?: number
+}
+
+export interface PanelBoundary {
+  items: BoundaryItem[]
+}
+
+export interface ProjectPanels {
+  problem: PanelProblem
+  architecture: PanelArchitecture
+  proof: PanelProof
+  boundary: PanelBoundary
+}
+
+export interface ProjectLinks {
+  github?: string
+  liveUI?: string
+  liveAPI?: string
+}
+
+export interface ConstellationNodeConfig {
+  position: { x: number; y: number; z: number }  // world space
+  size: NodeSize
+  relatedIds: string[]   // project ids for connector lines
+}
+
+export interface SliderResponse {
+  sliderId: SliderKey
+  affects: 'color' | 'size' | 'both'
+}
+
+export interface Project {
+  id: string                        // slug: 'secondself', 'medrag', etc.
+  name: string                      // display name: 'SecondSelf'
+  tagline: string                   // one-line label shown in node hover
+  status: ProjectStatus
+  stack: string[]
+  links: ProjectLinks
+  panels: ProjectPanels
+  node: ConstellationNodeConfig
+  sliderResponse?: SliderResponse
+}
+```
+
+### `src/types/slider.ts`
+
+```typescript
+export type SliderKey =
+  | 'evidenceStrictness'
+  | 'latencyBudget'
+  | 'costPerQuery'
+  | 'alertBudget'
+  | 'automationVsControl'
+
+export interface SliderConfig {
+  key: SliderKey
+  labelLeft: string
+  labelRight: string
+  metricLabel: string          // e.g. "precision"
+  metricValue: string          // actual value from project: "92.06%"
+  metricContext: string        // e.g. "at 0.5% alert budget"
+  affectedProjectId: string    // which constellation node reacts
+}
+```
+
+### `src/types/node.ts`
+
+```typescript
+export type NodeRingState = 'solid' | 'pulsing-amber' | 'blinking-live' | 'static-faint'
+
+export interface NodeRuntimeState {
+  projectId: string
+  scale: number               // base scale, modified by slider
+  colorState: 'gold' | 'teal-active' | 'ice-muted' | 'ice-faint' | 'amber'
+  ringState: NodeRingState
+  clusterBrightness: number   // 0.0–1.0
+  hovered: boolean
+  active: boolean             // camera has arrived here
+}
+```
+
+---
+
+## World Space Layout
+
+### 9 Node Positions (Three.js XYZ)
+
+Camera path: `(0,10,28) → (2,8,22) → (−1,5,15) → (0,2,6) → (0,1,−3)`
+Camera flies in from high-and-behind, arcs down into the field, lands near SecondSelf.
+
+| Project | x | y | z | Size |
+|---|---|---|---|---|
+| SecondSelf | 0 | 0 | 2 | large |
+| Vivid | −5 | 0.5 | 4 | large |
+| QueryPilot | 5 | 0.3 | 4 | medium-large |
+| UPI Fraud Engine | −4 | −0.3 | 8 | medium |
+| MedRAG | 3.5 | 1.0 | 8 | medium |
+| OncoVerse | 1.5 | 2.5 | 12 | medium-small |
+| Order Supervisor | −6 | 0.2 | 16 | small |
+| Fraud Risk Intel | 5.0 | −0.5 | 16 | small |
+| Oracle Auto Provision | −2 | 1.5 | 20 | tiny |
+
+### Connector Lines (SVG overlay, not 3D geometry)
+
+| From | To | Rationale |
+|---|---|---|
+| SecondSelf | MedRAG | Evidence-grounded retrieval |
+| SecondSelf | QueryPilot | Correction loop architecture |
+| QueryPilot | UPI Fraud Engine | Constraint enforcement pattern |
+| MedRAG | Fraud Risk Intel | Explainability focus |
+| Vivid | OncoVerse | Shared Three.js/diffusion tooling |
+| Oracle Auto Provision | SecondSelf | Infrastructure dependency |
+
+Connector opacity: 0.08, color: `--ice-faint`. Drawn as SVG `<line>` elements projected from 3D world coords to screen coords via `camera.project()` each frame.
+
+**`isPaused` flag:** `SceneRoot.vue` exposes a boolean `isPaused` that is set to `true` when `overlayStore.isOpen === true`. While `isPaused`, the `camera.project()` SVG sync in `ConnectorLines.vue` is skipped — the overlay covers the constellation entirely, so projection is wasted work. Reset to `false` on overlay close.
+
+---
+
+## CRYO-GOLD Token File
+
+### `src/styles/tokens.css`
+
+```css
+:root {
+  /* ── BACKGROUND ── */
+  --bg:                #0c1a20;
+  --surface-glass:     rgba(240, 244, 247, 0.06);
+  --surface-glass-hover: rgba(240, 244, 247, 0.10);
+
+  /* ── ICE SCALE ── */
+  --ice:               #d8eaf0;
+  --ice-muted:         #7fa8b8;
+  --ice-faint:         #2e4f5e;
+
+  /* ── TEAL DEPTH ── */
+  --teal-deep:         #0d3d47;
+  --teal-active:       #1a6b7a;
+
+  /* ── GOLD ── */
+  --gold:              #c9a84c;
+  --gold-glow:         #e8c86a;
+
+  /* ── COLD / REFUSAL ── */
+  --cold:              #2a3d4a;
+  --cold-text:         #4a6070;
+
+  /* ── AMBER (in-progress only) ── */
+  --amber:             #d4956a;
+  --amber-glow:        #e8b08a;
+
+  /* ── TYPOGRAPHY SCALE ── */
+  --text-hero:         clamp(3rem, 8vw, 8rem);
+  --text-2xl:          clamp(2rem, 4vw, 3.5rem);
+  --text-xl:           clamp(1.5rem, 2.5vw, 2.5rem);
+  --text-base:         1rem;
+  --text-sm:           0.875rem;
+  --text-xs:           0.75rem;
+
+  /* ── TIMING ── */
+  --ease-out-expo:     cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:       cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@property --shimmer-pos {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: -100%;
+}
+```
+
+---
+
+## Typography Assignments
+
+| Role | Font | Size Token | Weight | Context |
+|---|---|---|---|---|
+| Display / Hero | Spectral | `--text-hero` | 300 | Site name, hero headline |
+| Section titles | Spectral italic | `--text-2xl` | 400 | Project names, section heads |
+| Thesis / About | Spectral | `--text-xl` | 300 | About statement |
+| Body / UI | Inter | `--text-base` | 400/500 | Descriptions, bullets, body |
+| Code / Metrics | Geist Mono | `--text-sm` | 400 | Stack names, metric values, status |
+| Labels / Stamps | Inter uppercase | `--text-xs` | 600 | STATUS: LIVE, badge text |
+| Typewriter output | Geist Mono | `--text-sm` | 400 | Boot sequence, whoami terminal |
+
+---
+
+## Phase 0 — Design System
+
+**Goal:** All tokens, typography, glass surface, primitive shared components, and data model defined and committed before any 3D or section work begins.
+
+**Effort:** 2–3 days
+
+### Deliverables
+
+1. `src/styles/tokens.css` — full CRYO-GOLD token set
+2. `src/styles/typography.css` — `@import` Google Fonts, Geist Mono, all role assignments
+3. `src/styles/glass.css` — `.glass-panel` class: `backdrop-filter: blur(12px)`, `background: var(--surface-glass)`, `@property` shimmer on `::after`
+4. `src/styles/cursor.css` — `html { cursor: none }`, custom cursor element, state classes
+5. `src/styles/plain.css` — `?plain=1` full override: `--bg: #ffffff`, all animations to `none`, Tailwind-only layout
+6. `vite.config.ts` — `vite-plugin-glsl` for shader imports, `@` alias to `src/`
+7. `src/types/project.ts`, `src/types/slider.ts`, `src/types/node.ts` — all interfaces
+8. `src/data/projects.ts` — all 9 `Project` objects populated to 100% (data-first rule)
+9. `src/composables/usePlainMode.ts`
+11. Shared components: `GlassPanel.vue`, `GeistChip.vue`, `MetricCountUp.vue`, `StatusBadge.vue`, `CopiedToast.vue`
+12. `public/favicon.svg` — EB hexagonal mark
+
+### EB Logo SVG Specification
+
+Hexagon with flat top. 6 vertices. One edge on the lower-right has a 2px break — a diagonal line cuts across it at 45° inward, representing the refusal boundary. `EB` centered in Geist Mono inside. Monochrome: stroke `var(--ice)`, fill transparent. Renders cleanly at 16px and 400px.
+
+### `src/composables/usePlainMode.ts`
+
+```typescript
+import { readonly, ref } from 'vue'
+
+const isPlain = ref(false)
+
+export function usePlainMode() {
+  if (typeof window !== 'undefined') {
+    const params = new URLSearchParams(window.location.search)
+    isPlain.value = params.has('plain') && params.get('plain') === '1'
+  }
+  return { isPlain: readonly(isPlain) }
+}
+```
+
+### Acceptance Criteria — Phase 0
+
+- [ ] All CSS variables render correctly in browser DevTools
+- [ ] `.glass-panel` shimmer animates on a test div
+- [ ] `usePlainMode()` returns `true` at `localhost:5173?plain=1`, `false` otherwise
+- [ ] All 9 `Project` objects pass TypeScript strict compile with zero `any`
+- [ ] `favicon.svg` renders at 16px and 32px without aliasing
+- [ ] `public/og.png` exists at 1200×630, readable at thumbnail size
+
+---
+
+## Phase 1 — Core 3D Infrastructure
+
+**Goal:** Three.js world alive and stable. Particle field drifting. Camera path defined. Shaders compiling. No content yet — just the world.
+
+**Effort:** 5–7 days
+
+### Build Order
+
+1. `SceneRoot.vue` — TresCanvas, renderer settings (antialias, alpha, tone mapping)
+2. `IridescentBackground.vue` — full-scene background plane with iridescent fragment shader
+3. `useParticleField.ts` + `ParticleField.vue` — particle counts by hardware tier
+4. `RefusalRipple.vue` — ShaderMaterial, uTime, 30s interval
+5. `useCameraPath.ts` — CatmullRomCurve3, ScrollTrigger scrub
+6. `ConstellationNodes.vue` — 9 instanced spheres at defined world positions, size mapping
+7. `useNodeInteraction.ts` — Raycaster, hover state, click dispatch
+
+### Particle Count by Hardware Tier
+
+```typescript
+function getParticleCount(): number {
+  const cores = navigator.hardwareConcurrency ?? 4
+  if (cores >= 12) return 10_000
+  if (cores >= 6)  return 5_000
+  return 2_000
+}
+```
+
+### GLSL Shader Contracts
+
+**`iridescent.frag.glsl`**
+- Uniforms: `uTime: float`, `uHueShift: float` (driven by CSS `@property` value read via JS at 60fps)
+- Output: Subtle iridescent shimmer on a dark `#0c1a20` base. Hue cycles 0°→360° over 8s. Max saturation 15% to stay subliminal.
+- Technique: `mix(baseColor, hsl(uHueShift, 0.15, 0.12), 0.3)`
+
+**`particle.vert.glsl`**
+- Attributes: `position`, `aClusterIndex`
+- Uniforms: `uTime`, `uClusterBrightness[9]` (per-cluster brightness for hover effect), `uPointSize`
+- Output: Simplex noise drift on position, size by cluster importance
+
+**`refusalRipple.frag.glsl`**
+- Uniforms: `uTime`, `uActive: float` (0 or 1, set to 1 every 30s for 3s duration)
+- Output: Radial wave from `vec2(0.5, 0.5)`, opacity envelope max 0.08
+
+### Camera Path
+
+```typescript
+// src/composables/useCameraPath.ts
+import * as THREE from 'three'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+const CONTROL_POINTS = [
+  new THREE.Vector3(0, 10, 28),
+  new THREE.Vector3(2, 8, 22),
+  new THREE.Vector3(-1, 5, 15),
+  new THREE.Vector3(0, 2, 6),
+  new THREE.Vector3(0, 1, -3),
+]
+
+export function useCameraPath(camera: THREE.Camera) {
+  const curve = new THREE.CatmullRomCurve3(CONTROL_POINTS)
+  const progress = { t: 0 }
+
+  ScrollTrigger.create({
+    trigger: '#constellation-section',
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: 1.5,
+    onUpdate: (self) => {
+      progress.t = self.progress
+      const point = curve.getPoint(progress.t)
+      camera.position.copy(point)
+      // Camera always looks toward SecondSelf node (0, 0, 2) with slight offset
+      const lookTarget = new THREE.Vector3(0, 0, 2)
+      camera.lookAt(lookTarget)
+    }
+  })
+
+  return { curve, progress }
+}
+```
+
+### Node Size to Three.js Radius Mapping
+
+| Size | Sphere Radius |
+|---|---|
+| large | 0.35 |
+| medium-large | 0.28 |
+| medium | 0.22 |
+| medium-small | 0.18 |
+| small | 0.14 |
+| tiny | 0.09 |
+
+### Acceptance Criteria — Phase 1
+
+- [ ] Scene renders at 60fps on target hardware (Chrome, 1080p, mid-tier laptop)
+- [ ] Particle field drifts visibly without jitter
+- [ ] Camera travels along path as user scrolls through constellation section
+- [ ] All 9 nodes visible at correct positions
+- [ ] Node hover: scale 1.4×, cluster brighten, label appears (stub label, content later)
+- [ ] Refusal ripple fires every 30s, opacity never exceeds 0.08
+- [ ] Iridescent background hue-shifts subtly over 8s loop
+- [ ] No console errors. Zero TypeScript errors.
+
+---
+
+## Phase 2 — Sections
+
+**Goal:** All 11 content sections built, populated with real data, and rendering correctly. 3D interactions connected. No micro-interactions yet — those are Phase 3.
+
+**Effort:** 7–10 days
+
+### Build Order (strict — data-before-components rule)
+
+1. Boot Sequence
+2. Hero + EvidenceDataBar
+3. Constellation section wrapper + legend
+4. Project Overlay + FilmStrip (all 9 projects × 4 panels)
+5. Cost of Intelligence (sliders + reactive 3D binding)
+6. Deployment Log
+7. Training Data
+8. Capability Map
+9. About + Contact
+
+---
+
+### Section 1 — Boot Sequence
+
+**Component:** `BootSequence.vue`
+
+Lines pulled dynamically from `projects.ts`:
+
+```
+> initializing evidence field...    ████████░░  80%
+> loading [n] systems...            ████████████ 100%
+> all gates standing by
+```
+
+Where `[n]` is `projects.length` from the store.
+
+- `prefers-reduced-motion: reduce` → skip directly to world, no boot
+- `usePlainMode().isPlain === true` → skip directly to world
+- Skip button appears at 0.5s, positioned bottom-right, Geist Mono `--text-xs`
+- On skip: `gsap.to(bootEl, { opacity: 0, duration: 0.3 })` then `display: none`
+- GSAP timeline: each line `opacity: 0 → 1`, stagger 200ms, starts at page load
+
+---
+
+### Section 2 — Hero
+
+**Components:** `HeroSection.vue`, `HeroName.vue`, `HeroTagline.vue`
+
+- `HeroName.vue`: `PARTH TIWARI` in Spectral 300, `--text-hero`, letter-spacing `0.08em`. No entrance animation — exists on world snap.
+- `HeroTagline.vue`: Uses `useCharacterSplit` — on mount, types each character at 18ms interval. `isPlain` gates: render full string immediately.
+- Scroll indicator: `↓ scroll to enter the field` in Geist Mono `--text-xs`, `--ice-faint`. Pulsing `opacity: 0.4 → 1.0 → 0.4` at 2s interval. Removed on first `wheel` or `touchmove` event.
+
+**`useCharacterSplit.ts`**
+
+```typescript
+export function useCharacterSplit(
+  text: string,
+  msPerChar: number,
+  onComplete?: () => void
+) {
+  const displayed = ref('')
+  let i = 0
+  const tick = () => {
+    if (i < text.length) {
+      displayed.value += text[i++]
+      setTimeout(tick, msPerChar)
+    } else {
+      onComplete?.()
+    }
+  }
+  return { displayed, start: tick }
+}
+```
+
+---
+
+### Section 3 — Evidence Data Bar
+
+**Component:** `EvidenceDataBar.vue`
+
+- Fixed, bottom of viewport. `position: fixed; bottom: 0; left: 0; right: 0; z-index: 100`
+- Hidden until user scrolls 1 scroll unit (`ScrollTrigger` with `start: 'top -1px'`)
+- `backdrop-filter: blur(8px)` behind it
+- Content (static copy, manually updated):
+
+```
+[FIELD ONLINE]  avg faithfulness 0.91  ·  9 systems  ·  4 refusals enforced  ·  $0.17 total inference cost
+```
+
+- Numbers: `--gold`. Text: `--ice-faint`. All Geist Mono `--text-xs`.
+- On page load, numbers count up once from 0 using `useCountUp`. After that, static.
+- `isPlain` gates: render as static text div, `background: #f9f9f9`, no blur.
+
+---
+
+### Section 4 — Project Overlay (Film Strip)
+
+**Components:** `ProjectOverlay.vue`, `FilmStrip.vue`, `FilmStripHeader.vue`, panels ×4
+
+Triggered by clicking any constellation node via `overlayStore.open(projectId)`.
+
+**Entrance animation (Phase 3):** `clip-path: inset(100% 0 0 0) → inset(0 0 0 0)`, 400ms `--ease-out-expo`.
+
+**Film strip navigation:**
+- Desktop: ← → arrow keys, mouse scroll within overlay
+- Mobile: swipe gesture (touch delta threshold 50px)
+- Panel counter in header: `[01 / 04]` updates reactively
+
+**Panel transitions:** `clip-path: inset(0 100% 0 0) → inset(0 0 0 0)`, 400ms `--ease-out-expo`.
+
+**PanelProblem.vue:**
+- Left 50%: Spectral italic at `--text-2xl`, `--cold` temperature. Quote pulled from `panels.problem.quote`.
+- Right 50%: SVG broken-flow animation keyed by `panels.problem.brokenFlowId`. Each project has its own SVG component: `BrokenFlowHallucination.vue`, `BrokenFlowSQLFail.vue`, `BrokenFlowFraud.vue`, etc.
+- SVG animation: `stroke-dashoffset` from `stroke-dasharray` length → 0 on panel enter
+
+**PanelArchitecture.vue:**
+- Positioned boxes from `panels.architecture.nodes[*].position` (percentage-based)
+- Connecting lines: SVG `<line>` elements between box centers
+- Stagger entrance: GSAP `stagger: 80ms` per box, then lines draw
+- Stack chips: Geist Mono `--text-xs`, `--gold` border, float near their node
+- Hover a box: scale `1.05`, show `.description`
+
+**PanelProof.vue — Status gate:**
+
+```typescript
+const isInProgress = computed(() =>
+  props.project.status === 'in-progress' || props.project.status === 'active'
+)
+```
+
+- `isInProgress === false`: 3 metrics as giant Geist Mono, count-up on panel enter, radial gauge SVG in --gold, caveat chip in `--cold-text` if `caveat` exists
+- `isInProgress === true`: milestone list with status indicators + progress bar in `--gold`/`--amber`
+
+**PanelBoundary.vue:**
+- Full bleed. Horizontal refusal line at vertical center, `--gold`, 1px stroke
+- Pulse: `opacity: 0.6 → 1.0 → 0.6`, 2.4s infinite
+- Left column: "will do" list in Spectral
+- Right column: "refuses" list in Geist Mono with strikethrough
+- On `mouseover` of the refusal line: 200ms flash to full `--ice`, cursor becomes `⊘`
+- On `cursor: ⊘` zone: `cursor: not-allowed` CSS class applied to the line hit area
+- Links: GitHub / Live API / Live UI in Geist Mono `--text-xs`, `--gold` on hover, only rendered if `links[key]` exists
+
+---
+
+### Section 5 — Cost of Intelligence
+
+**Components:** `CostOfIntelligence.vue`, `CostSlider.vue`
+
+**ScrollTrigger config:**
+```javascript
+ScrollTrigger.create({
+  trigger: '#cost-section',
+  start: 'top top',
+  end: '+=120%',
+  pin: true,
+  anticipatePin: 1,
+  // Separate instance from camera path — no overlap
+})
+```
+
+**5 Sliders — Full Specification:**
+
+| sliderId | labelLeft | labelRight | metricLabel | metricValue | metricContext | affectedProjectId |
+|---|---|---|---|---|---|---|
+| evidenceStrictness | Permissive | Bounded | refusal rate | ~20% | adversarial inputs | medrag |
+| latencyBudget | Fast | Accurate | correction depth | +5.7pp | on 82-query benchmark | querypilot |
+| costPerQuery | Cheap | Rich | cost per storyboard | $0.04–0.08 | RunPod A40 | vivid |
+| alertBudget | Aggressive | Conservative | precision | 92.06% | at 0.5% alert budget | upi-fraud |
+| automationVsControl | Autonomous | Supervised | apply mode | human-gated | Telegram review queue | secondself |
+
+**Reactive 3D binding:**
+- `sliderStore` holds 5 values (0.0–1.0)
+- Three.js render loop reads `sliderStore` directly each frame via Pinia
+- `ConstellationNodes.vue` maps slider value to node scale delta (±0.3×) and color lerp
+- No Vue reactivity in the render loop — store values read as raw refs
+
+---
+
+### Section 6 — Deployment Log
+
+**Component:** `DeploymentLog.vue`, `DeploymentCard.vue`
+
+Section header: `// DEPLOYMENT LOG` — Geist Mono, `--text-xs`, `--ice-faint`
+
+**Card — Stick and Dot:**
+```
+[● ACTIVE]    Stick and Dot                      Mar 2026 →
+AI and ML Development Intern  ·  Remote  ·  Early-stage AI
+
+▸  Shipped end-to-end AI storyboard generation platform
+   FLUX.1-dev · PuLID · LoRA · Groq · FastAPI
+   [10+ beta users] [4-shot identity consistency] [production]
+
+▸  Shipped full company web platform in 3 weeks
+   Next.js · Supabase · RLS · Role-based dashboards
+   [writer] [reader] [SME] [business] [commission marketplace]
+```
+
+Left border: 2px vertical line in `--gold` for active, `--ice-faint` for past.
+
+---
+
+### Section 7 — Training Data
+
+**Component:** `TrainingData.vue`, `TrainingCard.vue`
+
+Section header: `// TRAINING DATA` — Geist Mono, `--text-xs`, `--ice-faint`
+
+Two smaller glass cards:
+
+```
+Great Learning · Bangalore                    Jul 2025 – Feb 2026
+Post Graduate Program · Data Science · GenAI
+[specialization: GenAI] [PGP certified]
+```
+
+```
+IPS Academy · Indore                               2021 – 2025
+B.Tech Computer Science · AI and ML
+[CGPA: 6.4] [work speaks louder]
+```
+
+---
+
+### Section 8 — Capability Map
+
+**Component:** `CapabilityMap.vue`, `CapabilityGroup.vue`
+
+Section header: `CAPABILITY MAP` — Spectral italic `--text-2xl`
+
+**5 Groups (Geist Mono group headers, Inter skill chips):**
+
+| Group | Skills |
+|---|---|
+| GENAI + LLMS | LangGraph, LangChain, RAG hybrid+BM25, RAGAS eval, multi-agent orchestration, prompt engineering, Groq, OpenAI API |
+| DIFFUSION + VISION | FLUX.1-dev, PuLID, LoRA fine-tuning, img2img pipelines, Diffusers, PyTorch, CLIP scoring |
+| ML ENGINEERING | XGBoost, Isolation Forest, Autoencoder, SHAP, backtesting, leakage-safe feature engineering, ROC-AUC, class imbalance handling |
+| SYSTEMS + INFRA | FastAPI, Docker, PostgreSQL, Qdrant, ChromaDB, DuckDB, SentenceTransformers, Temporal, n8n, GitHub Actions, Python, SQL |
+| FRONTEND | Next.js, React 19, Vue 3, TresJS, Three.js/R3F, Tailwind CSS v4, Supabase, Streamlit |
+
+**Hover on any chip:**
+- Highlight (scale 1.1×, `--gold` border) the chip
+- Simultaneously highlight the constellation nodes for projects that use that skill
+- Node highlight: ring brightens to `--teal-active`, 400ms transition, auto-resets
+
+**Cross-reference map (in `projects.ts`):**
+Each `Project` has a `stack: string[]`. `CapabilityGroup.vue` reads all projects, filters by skill name match, dispatches node highlight via `projectStore`.
+
+---
+
+### Section 9 — About + Contact
+
+**Components:** `AboutSection.vue`, `ThesisStatement.vue`, `WhoamiTerminal.vue`, `ContactLine.vue`
+
+**Left column — ThesisStatement.vue:**
+Thesis text in Spectral `--text-xl`. Beneath: 2×2 grid of proof chips (Geist Mono `--text-sm`):
+```
+9 systems shipped            0 hallucinations in SQL evals
+$0.168 total RAG cost        Mar 2026 → Present
+```
+
+**Right column — WhoamiTerminal.vue:**
+Uses `useCharacterSplit`. Auto-types on scroll enter. `useAge()` for the age value.
+
+```
+> whoami
+Parth Tiwari, Bengaluru
+B.Tech CSE AI/ML · Great Learning GenAI PGP
+AI/ML Intern @ Stick and Dot (Mar 2026 → )
+> cat interests.txt
+evidence-grounded RAG · agent workflows
+diffusion inference · production pragmatism
+```
+
+**ContactLine.vue:**
+Two lines, Geist Mono `--text-sm`:
+- `parthti2003@gmail.com` — click copies, shows `CopiedToast`
+- `github.com/parthtiwari-dev` — click copies, shows `CopiedToast`
+
+---
+
+### Acceptance Criteria — Phase 2
+
+- [ ] All 9 film strip overlays open and navigate correctly
+- [ ] All 4 panels render for all 9 projects with real data
+- [ ] In-progress projects (OncoVerse) show milestone panel not metrics panel
+- [ ] Sliders visibly affect corresponding 3D nodes
+- [ ] All section headers use correct naming (DEPLOYMENT LOG, TRAINING DATA, CAPABILITY MAP)
+- [ ] CGPA chip renders as specified
+- [ ] All live links render only when `links[key]` exists (no broken anchors)
+- [ ] Zero TypeScript errors. Zero missing data fields.
+
+---
+
+## Phase 3 — Interactions and Micro-interactions
+
+**Goal:** Every interaction described in the brief is implemented. Custom cursor, hover states, count-ups, typewriter, refusal line behavior, scroll milestones, film strip keyboard nav.
+
+**Effort:** 3–5 days
+
+---
+
+### Animation Timeline Map
+
+#### Boot Sequence (0.0s → 2.2s, wall clock)
+
+| Time | Event | Trigger |
+|---|---|---|
+| 0.0s | Black screen | Page load |
+| 0.2s | Line 1 fades in | GSAP timeline, delay 200ms |
+| 0.4s | Line 2 fades in | Stagger +200ms |
+| 0.6s | Line 3 fades in | Stagger +200ms |
+| 0.5s | Skip button appears | `setTimeout(500)` |
+| 2.2s | Terminal fades out | GSAP `opacity: 0`, 300ms |
+| 2.5s | World snaps in | Boot complete event |
+| Skip | Terminal fades 300ms | Click or keydown |
+| reduced-motion | World immediate | `prefers-reduced-motion` check |
+
+#### Hero (after world snap)
+
+| Event | Animation | Trigger |
+|---|---|---|
+| World snap | Name renders — no animation | Immediate |
+| World snap + 100ms | Tagline typewriter starts | `useCharacterSplit.start()` |
+| Scroll indicator | Opacity pulse 0.4→1.0→0.4, 2s | CSS keyframes, auto-start |
+| First scroll | Scroll indicator fades | `wheel` / `touchmove` event |
+| Scroll 1 unit | Evidence data bar slides up | ScrollTrigger |
+
+#### Constellation (scroll-driven)
+
+| Event | Animation | Trigger |
+|---|---|---|
+| Scroll into constellation section | Camera begins moving along path | ScrollTrigger scrub |
+| Node enters viewport (camera approach) | Node opacity 0→1, 600ms | Distance threshold from camera |
+| Hover node | Scale 1.4×, cluster +40%, label wipe | Raycaster `onPointerEnter` |
+| Un-hover node | Scale back 1×, cluster reset | Raycaster `onPointerLeave` |
+| Hover node | Gold ring expands + fades outward | CSS keyframe on label DOM element |
+| Click node | Camera lerps to node, 600ms | `onPointerDown` |
+| Click node | Overlay slides up, 400ms | After camera lerp completes |
+| Each 25% scroll | Particle field hue offset ±2° | ScrollTrigger milestone callbacks |
+
+#### Project Overlay
+
+| Event | Animation | Trigger |
+|---|---|---|
+| Open | `clip-path: inset(100%→0)`, 400ms | `overlayStore.open()` |
+| Panel enter | `clip-path: inset(0 100%→0 0)` | Panel index change |
+| Architecture panel enter | Boxes appear, stagger 80ms | Panel visible |
+| Architecture lines | `stroke-dashoffset` draw | After box stagger completes |
+| Proof panel enter | Metric count-up 0→value | `IntersectionObserver` |
+| Gold sweep on count-up | `background-clip: text` gradient left→right | Alongside count-up GSAP tween |
+| Boundary line | `opacity: 0.6→1.0→0.6`, 2.4s infinite | Panel visible |
+| Cursor over boundary | Flash to `--ice`, cursor → `⊘` | `mouseover` on line hit area |
+| Close | `clip-path: inset(0→100%)`, 300ms | `overlayStore.close()` or ✕ or Escape |
+
+#### Cost of Intelligence
+
+| Event | Animation | Trigger |
+|---|---|---|
+| Scroll into pin zone | Glass panel slides up from bottom | ScrollTrigger pin entrance |
+| Slider drag | Pinia store update | `input` event, 60fps |
+| Store update | Three.js node color/scale lerp | Render loop reads store |
+| Metric readout | Updates instantly on drag | Computed from slider value |
+
+#### DOM Sections (DEPLOYMENT LOG, TRAINING DATA, CAPABILITY MAP, ABOUT)
+
+| Event | Animation | Trigger |
+|---|---|---|
+| Section enters viewport | Cards fade + translate-Y 24px→0, stagger 150ms | `IntersectionObserver` |
+| Capability chip hover | Scale 1.1×, `--gold` border | CSS `:hover` |
+| Chip hover | Matching constellation nodes ring brightens | `projectStore` dispatch |
+| Contact line click | Copy to clipboard | `navigator.clipboard.writeText()` |
+| Contact copy | `CopiedToast` appears, 1.5s, fades | Toast mount + auto-unmount |
+| WhoamiTerminal enters viewport | Typewriter starts | `IntersectionObserver` |
+| Proof chips enter viewport | No count-up — static | Fade-in only |
+
+#### Custom Cursor (`CustomCursor.vue`)
+
+State machine — 3 states:
+
+| State | Appearance | Condition |
+|---|---|---|
+| Default | `+` crosshair, 20px, `--ice` | Anywhere |
+| Enter | Circle 40px + `ENTER` in `--text-xs` | Over hoverable element (`.cursor-enter`) |
+| Refuse | `⊘` symbol, `--cold-text` | Over refusal line (`.cursor-refuse`) |
+
+Implementation: one `<div id="custom-cursor">` in `App.vue`, positioned via `mousemove` with `transform: translate(x, y)`. State toggled by event delegation — elements add class `.cursor-enter` or `.cursor-refuse`. CSS transitions on width/height for the circle expansion.
+
+---
+
+### Scroll Milestone Hue Offsets
+
+```typescript
+ScrollTrigger.create({
+  trigger: '#constellation-section',
+  start: 'top top',
+  end: 'bottom bottom',
+  onUpdate: (self) => {
+    // Every 25% scroll increment, nudge particle field hue
+    const milestone = Math.floor(self.progress * 4) / 4
+    particleStore.setHueOffset(milestone * 8) // 0°, 2°, 4°, 6° — imperceptible
+  }
+})
+```
+
+---
+
+### Acceptance Criteria — Phase 3
+
+- [ ] Custom cursor tracks mouse precisely, no lag
+- [ ] Cursor state transitions correctly for all 3 states
+- [ ] Boot sequence skippable via click and keypress
+- [ ] Typewriter runs correctly in hero and whoami terminal
+- [ ] Constellation hover/click states behave as specified
+- [ ] Camera path scrub has no jitter
+- [ ] Film strip ← → key navigation works; swipe works on mobile
+- [ ] Architecture SVG lines draw on panel enter
+- [ ] Metric count-up fires on Proof panel enter, not before
+- [ ] Refusal line pulse and cursor swap work
+- [ ] Cost sliders update 3D scene in real time, no perceptible lag
+- [ ] Capability chip hover highlights correct constellation nodes
+
+---
+
+## Phase 4 — Mobile Fallback, Plain Mode, and Performance
+
+**Goal:** Full responsive strategy implemented. `?plain=1` works end-to-end. Performance budget met. Cross-browser testing done.
+
+**Effort:** 3–4 days
+
+---
+
+### Responsive Strategy
+
+| Viewport | Treatment |
+|---|---|
+| ≥ 1280px (Desktop) | Full experience. All 3D, all animations, film strip overlay. |
+| 768px – 1279px (Tablet) | 3D canvas active, particles reduced to 5,000. Film strip becomes vertical scroll. Sliders work. |
+| < 768px (Mobile) | Canvas replaced by CSS gradient + `@property` shimmer. Projects shown as minimal Tailwind cards. All content intact. |
+| `?plain=1` | Pure Tailwind, `--bg: #ffffff`, zero JS animation, zero 3D. For PDF export / low-power devices. |
+
+### Mobile Canvas Replacement
+
+When `window.innerWidth < 768`:
+- `SceneRoot.vue` renders `null` (conditional render, not `display: none`)
+- A CSS gradient background replaces it:
+
+```css
+.mobile-bg {
+  background: linear-gradient(135deg, #0c1a20 0%, #0d3d47 50%, #0c1a20 100%);
+  animation: shimmer-drift 8s ease-in-out infinite;
+}
+
+@keyframes shimmer-drift {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
+}
+```
+
+### Mobile Project Cards
+
+Replace film strip overlay. Each project card:
+- `GlassPanel.vue` base
+- `StatusBadge.vue` top-left
+- Project name in Spectral `--text-xl`
+- Tagline in Inter `--text-sm`
+- Stack chips row in Geist Mono
+- Key metric (first metric from `panels.proof.metrics[0]`) in `--gold`
+- GitHub/Live links as `<a>` tags, Geist Mono `--text-xs`
+- Tap to expand: shows problem quote + boundary items
+- No 3D, no camera, no film strip
+
+### `?plain=1` Mode
+
+`usePlainMode().isPlain === true` gates:
+1. Boot sequence: skipped entirely
+2. `SceneRoot.vue`: not mounted
+3. All GSAP animations: not registered
+4. `CustomCursor.vue`: not mounted (system cursor restored)
+5. `EvidenceDataBar.vue`: renders as static `div`, no `backdrop-filter`, no count-up
+6. `plain.css` applied: white background, black text, standard font sizes
+7. All sections render as pure HTML/Tailwind — full content, zero JS animation
+
+This mode is linkable: `evidencebound.dev?plain=1`. Suitable for PDF print via browser `Ctrl+P`.
+
+### `@supports` Guard for `@property`
+
+```css
+@supports not (background: paint(something)) {
+  /* Safari < 15.4 fallback */
+  .glass-panel::after {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255,255,255,0.03) 50%,
+      transparent 100%
+    );
+    animation: none;
+  }
+}
+```
+
+---
+
+### Performance Budget per Section
+
+| Section | Budget | Primary cost | Mitigation |
+|---|---|---|---|
+| Boot | < 50ms paint | None — text only | — |
+| Hero + Particle field | < 4ms/frame (3D) | BufferGeometry 10k pts | Hardware-tiered particle count |
+| Constellation (scroll) | < 4ms/frame | Raycaster, camera path | Raycaster runs on `pointermove` not every frame |
+| Film strip overlay | < 200ms open | clip-path GPU composite | Use `will-change: clip-path` on overlay element |
+| Cost of Intelligence | < 2ms/frame | Slider → store → render loop | Store reads are direct ref access, no reactivity in loop |
+| DEPLOYMENT LOG | < 100ms enter | IntersectionObserver + stagger | Cards stagger avoids layout thrash |
+| CAPABILITY MAP | < 100ms enter | Chip hover dispatches | Debounce node highlight at 50ms |
+| About | < 50ms | Typewriter interval | `clearTimeout` on unmount |
+| Total JS bundle | < 350KB gzipped | Three.js is large | Code-split 3D chunk separately |
+| Three.js chunk | < 600KB gzipped | Core + TresJS | Tree-shake, no unused Three.js modules |
+| Fonts | < 80KB | 3 font families | `font-display: swap`, preconnect in `<head>` |
+
+### Vite Build Config
+
+```typescript
+// vite.config.ts
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import glsl from 'vite-plugin-glsl'
+import { fileURLToPath } from 'url'
+
+export default defineConfig({
+  plugins: [vue(), glsl()],
+  resolve: {
+    alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) }
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'three':  ['three', '@tresjs/core'],
+          'gsap':   ['gsap'],
+          'vendor': ['pinia', 'vue'],
+        }
+      }
+    }
+  }
+})
+```
+
+### Acceptance Criteria — Phase 4
+
+- [ ] Mobile layout renders all 9 projects as cards at 375px width
+- [ ] `?plain=1` shows all content with zero JS animation, white background
+- [ ] `@supports` fallback renders without error in Safari < 15.4
+- [ ] Total JS bundle < 350KB gzipped (audited with `npx vite-bundle-visualizer`)
+- [ ] Lighthouse Performance score ≥ 85 on desktop
+- [ ] Lighthouse Performance score ≥ 70 on mobile
+- [ ] `prefers-reduced-motion` skips boot, disables particle drift, disables count-up
+- [ ] No horizontal scroll at any viewport width
+- [ ] Film strip keyboard nav disabled on mobile (touch only)
+
+---
+
+## Phase 5 — Deploy
+
+**Goal:** Site live on Vercel, meta tags correct, README complete.
+
+**Effort:** 1 day
+
+### `index.html` Head
+
+```html
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EVIDENCEBOUND — Parth Tiwari</title>
+  <meta name="description"
+    content="Systems that act only after the evidence agrees. AI Engineer, GenAI Application Developer." />
+  <meta property="og:title" content="EVIDENCEBOUND — Parth Tiwari" />
+  <meta property="og:description"
+    content="Systems that act only after the evidence agrees." />
+  <meta property="og:url" content="https://parth-tiwari.vercel.app" />
+  <meta property="og:image" content="https://parth-tiwari.vercel.app/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <link rel="canonical" href="https://parth-tiwari.vercel.app" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <!-- Font preconnects -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+</head>
+```
+
+### `vercel.json`
+
+```json
+{
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    }
+  ]
+}
+```
+
+### README Sections
+
+1. Project name, tagline, live URL
+2. TresJS pinned version and why it is pinned
+3. `npm install` + `npm run dev`
+4. `npm run build` + `npm run preview`
+5. `?plain=1` usage note
+6. Environment variables (none in v1 — site is fully static)
+7. Deploy: push to `main` → Vercel auto-deploys
+8. v2 roadmap items: audio, custom domain, OG image
+
+### Acceptance Criteria — Phase 5
+
+- [ ] Site live at `parth-tiwari.vercel.app`
+- [ ] `og:title`, `og:description`, and `og:image` render correctly in link previews (test with [opengraph.xyz](https://www.opengraph.xyz))
+- [ ] `favicon.svg` displays in browser tabs
+- [ ] `Cache-Control: immutable` on all hashed asset files
+- [ ] `README.md` contains TresJS pinned version
+
+---
+
+## Known Risks and Mitigations (Confirmed)
+
+| Risk | Description | Mitigation | Status |
+|---|---|---|---|
+| RISK 1 | 10k particles + shader + ScrollTrigger on mid-tier | `hardwareConcurrency`-tiered particle count: 10k/5k/2k | Accepted |
+| RISK 2 | TresJS breaking changes between minor versions | Pin to latest stable at project init, document in README | Accepted |
+| RISK 3 | Film strip built before project data complete | TypeScript data model and all 9 project objects fully populated before any film strip component build begins | Accepted |
+| RISK 4 | Nested scroll: camera path + pinned section | Separate ScrollTrigger instances, explicit start/end, no overlap, `anticipatePin: 1` | Accepted |
+| RISK 5 | `@property` no-support in Safari < 15.4 | `@supports` guard with static gradient fallback | Accepted |
+| RISK 6 (new) | Raycaster runs every `mousemove` — expensive with 9 nodes | Raycaster only tests against the 9 node meshes, not the particle field. Throttle to every other `pointermove` event. | Mitigated |
+| RISK 7 (new) | Connector lines require 3D→2D projection every frame | Project connector lines via SVG overlay using `camera.project()` in the render loop. 6 lines only — negligible cost. | Mitigated |
+| RISK 8 (new) | Film strip keyboard navigation conflicts with browser default scroll | `e.preventDefault()` on ← → keys only while overlay is open. Overlay tracks `overlayStore.isOpen`. | Mitigated |
+
+---
+
+## Build Execution Order (Strict)
+
+```
+Phase 0:
+  tokens.css → typography.css → glass.css → cursor.css → plain.css
+  → vite.config.ts
+  → src/types/* (all 3 type files)
+  → src/data/projects.ts (all 9 projects, 100% populated)
+  → src/composables/usePlainMode.ts + useAge.ts
+  → shared components (GlassPanel, GeistChip, MetricCountUp, StatusBadge, CopiedToast)
+  → public/favicon.svg
+  → GATE: TypeScript compile with zero errors before Phase 1 begins
+
+Phase 1:
+  SceneRoot.vue → IridescentBackground.vue → shaders (all 6)
+  → useParticleField.ts → ParticleField.vue
+  → RefusalRipple.vue
+  → useCameraPath.ts
+  → ConstellationNodes.vue
+  → useNodeInteraction.ts
+  → GATE: 60fps confirmed on target hardware
+
+Phase 2:
+  BootSequence.vue
+  → HeroSection + HeroName + HeroTagline
+  → EvidenceDataBar.vue
+  → ConstellationSection + ConstellationLegend
+  → ProjectOverlay + FilmStrip + all 4 panel components
+  → CostOfIntelligence + CostSlider (sliders first, 3D binding second)
+  → DeploymentLog + DeploymentCard
+  → TrainingData + TrainingCard
+  → CapabilityMap + CapabilityGroup
+  → AboutSection + ThesisStatement + WhoamiTerminal + ContactLine
+  → GATE: all 9 overlays render with real data, zero broken links
+
+Phase 3:
+  CustomCursor.vue
+  → useCharacterSplit.ts → typewriter in HeroTagline + WhoamiTerminal
+  → useBootSequence.ts → boot stagger + skip
+  → useCountUp.ts → EvidenceDataBar count-up + PanelProof count-up
+  → All hover states (nodes, chips, cards)
+  → Film strip keyboard + swipe navigation
+  → Scroll milestone hue offsets
+  → Refusal line cursor swap
+  → IntersectionObserver section entrances
+  → GATE: every interaction in brief is implemented and tested
+
+Phase 4:
+  Mobile layout (< 768px) — canvas off, project cards
+  → Tablet layout (768px – 1279px) — reduced particles, vertical film strip
+  → usePlainMode gates applied to all components
+  → plain.css complete
+  → @supports guard
+  → Performance audit: bundle size, Lighthouse, frame rate
+  → GATE: all acceptance criteria met
+
+Phase 5:
+  index.html meta tags
+  → vercel.json
+  → README.md
+  → Vercel deploy
+  → GATE: site live, link preview correct, favicon visible
+```
+
+---
+
+## Pinia Store Interfaces
+
+### `projectStore.ts`
+
+```typescript
+interface ProjectStoreState {
+  projects: Project[]
+  highlightedProjectIds: string[]  // from capability chip hover
+}
+```
+
+### `overlayStore.ts`
+
+```typescript
+interface OverlayStoreState {
+  isOpen: boolean
+  activeProjectId: string | null
+  activePanelIndex: number  // 0–3
+}
+```
+
+### `sliderStore.ts`
+
+```typescript
+interface SliderStoreState {
+  values: Record<SliderKey, number>  // all 0.0–1.0
+}
+```
+
+---
+
+## Estimated Total Effort
+
+| Phase | Days |
+|---|---|
+| Phase 0 — Design System | 2–3 |
+| Phase 1 — Core 3D | 5–7 |
+| Phase 2 — Sections | 7–10 |
+| Phase 3 — Interactions | 3–5 |
+| Phase 4 — Polish + Mobile | 3–4 |
+| Phase 5 — Deploy | 1 |
+| **Total** | **35–40 days** |
+
+Adjusted from the initial 21–30 day estimate to account for concurrent job search, SecondSelf v2 maintenance, and ongoing debugging work. Full-time uninterrupted focus was the original assumption — that condition does not hold. 35–40 days at realistic pacing. Each phase gate still enforced.
