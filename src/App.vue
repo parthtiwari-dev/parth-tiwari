@@ -40,14 +40,13 @@ onUnmounted(() => {
     <div
       v-if="!isPlain"
       aria-hidden="true"
-      class="h-[44vh]"
-      style="background: linear-gradient(180deg, #071826 0%, var(--bg-bridge) 52%, var(--bg) 100%);"
+      class="phase-bridge h-[118vh]"
     />
 
-    <section class="mx-auto flex min-h-[88vh] max-w-6xl flex-col justify-center gap-10 px-6 py-10">
+    <section class="phase-zero-console mx-auto flex min-h-[92vh] max-w-6xl flex-col justify-center gap-10 px-6 py-10">
       <div class="grid gap-5">
         <p class="type-mono text-[length:var(--text-xs)] uppercase tracking-[0.18em] text-[color:var(--gold)]">
-          Phase 0 / Visual test surface
+          Phase 0 / Evidence console surface
         </p>
         <h1 class="type-display max-w-5xl leading-none tracking-[0.08em]">
           PARTH TIWARI

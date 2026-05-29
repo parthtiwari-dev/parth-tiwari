@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue'
-import { useRenderLoop, useTres } from '@tresjs/core'
+import { useLoop, useTres } from '@tresjs/core'
 import * as THREE from 'three'
 import fragmentShader from '@/shaders/iridescent.frag.glsl'
 import vertexShader from '@/shaders/iridescent.vert.glsl'
@@ -29,7 +29,7 @@ onMounted(() => {
   scene.value.add(mesh)
 })
 
-const loopStop = useRenderLoop().onLoop(({ delta }) => {
+const loopStop = useLoop().onBeforeRender(({ delta }) => {
   const activeCamera = camera.value
 
   if (!activeCamera) {

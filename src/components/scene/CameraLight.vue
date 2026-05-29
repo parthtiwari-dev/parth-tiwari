@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue'
-import { useRenderLoop, useTres } from '@tresjs/core'
+import { useLoop, useTres } from '@tresjs/core'
 import * as THREE from 'three'
 
 const { camera, scene } = useTres()
@@ -14,7 +14,7 @@ onMounted(() => {
   scene.value.add(light)
 })
 
-const loopStop = useRenderLoop().onLoop(() => {
+const loopStop = useLoop().onBeforeRender(() => {
   const activeCamera = camera.value
 
   if (!activeCamera) {

@@ -9,7 +9,12 @@ void main() {
   vec2 center = gl_PointCoord - vec2(0.5);
   float dist = length(center);
   float core = smoothstep(0.48, 0.015, dist);
-  core = pow(core, mix(3.2, 1.75, vTwinkle));
+  core = pow(core, mix(4.1, 1.8, vTwinkle));
+  float horizontalRay = exp(-abs(center.y) * 84.0) * smoothstep(0.48, 0.02, abs(center.x));
+  float verticalRay = exp(-abs(center.x) * 84.0) * smoothstep(0.48, 0.02, abs(center.y));
+  float diagonalRayA = exp(-abs(center.x - center.y) * 68.0) * smoothstep(0.46, 0.02, dist);
+  float diagonalRayB = exp(-abs(center.x + center.y) * 68.0) * smoothstep(0.46, 0.02, dist);
+  float diffraction = (horizontalRay + verticalRay + (diagonalRayA + diagonalRayB) * 0.28) * smoothstep(0.62, 0.95, vTwinkle);
   vec3 ice = vec3(0.847, 0.918, 0.941);
   vec3 coldWhite = vec3(0.94, 0.98, 1.0);
   vec3 warmWhite = vec3(0.961, 0.91, 0.784);
@@ -20,5 +25,6 @@ void main() {
   color = mix(color, warmWhite, warmMix * (1.0 - goldMix));
   color = mix(color, gold, goldMix);
 
-  gl_FragColor = vec4(color, core * vAlpha * vBrightness);
+  float alpha = (core + diffraction * 0.35) * vAlpha * vBrightness;
+  gl_FragColor = vec4(color, alpha);
 }

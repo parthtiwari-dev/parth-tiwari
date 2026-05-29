@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue'
-import { useRenderLoop, useTres } from '@tresjs/core'
+import { useLoop, useTres } from '@tresjs/core'
 import * as THREE from 'three'
 import { projects } from '@/data/projects'
 import {
@@ -24,6 +24,7 @@ group.name = 'EvidenceBoundConstellationNodes'
 
 type NodeMesh = THREE.Mesh<THREE.SphereGeometry, THREE.MeshStandardMaterial>
 type HaloMesh = THREE.Mesh<THREE.PlaneGeometry, THREE.ShaderMaterial>
+type GlintMesh = THREE.Mesh<THREE.PlaneGeometry, THREE.ShaderMaterial>
 type HitMesh = THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>
 
 interface SceneNode {
@@ -31,6 +32,7 @@ interface SceneNode {
   clusterIndex: number
   mesh: NodeMesh
   halo: HaloMesh
+  glint: GlintMesh
   hitMesh: HitMesh
   localLight: THREE.PointLight | null
   baseRadius: number
@@ -38,7 +40,7 @@ interface SceneNode {
   runtimeState: NodeRuntimeState
 }
 
-const NODE_VISUAL_SCALE = 0.36
+const NODE_VISUAL_SCALE = 0.32
 
 const radiusBySize: Record<Project['node']['size'], number> = {
   large: 0.35,
@@ -59,10 +61,10 @@ const colorByStatus: Record<
     state: NodeRuntimeState['colorState']
   }
 > = {
-  complete: { hex: '#c9a84c', bodyHex: '#5a4216', emissiveIntensity: 1.7, atmosphereOpacity: 0.046, state: 'gold' },
-  active: { hex: '#1a6b7a', bodyHex: '#062f3a', emissiveIntensity: 0.95, atmosphereOpacity: 0.036, state: 'teal-active' },
-  'in-progress': { hex: '#d4956a', bodyHex: '#54301f', emissiveIntensity: 0.74, atmosphereOpacity: 0.034, state: 'amber' },
-  experience: { hex: '#2e4f5e', bodyHex: '#071923', emissiveIntensity: 0.3, atmosphereOpacity: 0.022, state: 'ice-faint' },
+  complete: { hex: '#c9a84c', bodyHex: '#4c3510', emissiveIntensity: 1.95, atmosphereOpacity: 0.052, state: 'gold' },
+  active: { hex: '#18a2b8', bodyHex: '#042d38', emissiveIntensity: 1.22, atmosphereOpacity: 0.042, state: 'teal-active' },
+  'in-progress': { hex: '#d4956a', bodyHex: '#4c2818', emissiveIntensity: 0.86, atmosphereOpacity: 0.036, state: 'amber' },
+  experience: { hex: '#6da8bd', bodyHex: '#071923', emissiveIntensity: 0.36, atmosphereOpacity: 0.024, state: 'ice-faint' },
 }
 
 const ringByStatus: Record<ProjectStatus, NodeRuntimeState['ringState']> = {
@@ -115,6 +117,49 @@ function createAtmosphereMaterial(color: string, opacity: number) {
   })
 }
 
+function createGlintMaterial(color: string) {
+  return new THREE.ShaderMaterial({
+    vertexShader: `
+      varying vec2 vUv;
+
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    `,
+    fragmentShader: `
+      precision highp float;
+
+      uniform vec3 uColor;
+      uniform float uOpacity;
+      varying vec2 vUv;
+
+      void main() {
+        vec2 center = vUv - vec2(0.5);
+        float core = exp(-dot(center, center) * 180.0);
+        float rayX = exp(-abs(center.y) * 92.0) * smoothstep(0.48, 0.03, abs(center.x));
+        float rayY = exp(-abs(center.x) * 92.0) * smoothstep(0.48, 0.03, abs(center.y));
+        float alpha = (core + (rayX + rayY) * 0.34) * uOpacity;
+
+        if (alpha < 0.002) {
+          discard;
+        }
+
+        gl_FragColor = vec4(uColor, alpha);
+      }
+    `,
+    uniforms: {
+      uColor: { value: new THREE.Color(color) },
+      uOpacity: { value: 0.0 },
+    },
+    transparent: true,
+    depthWrite: false,
+    depthTest: false,
+    blending: THREE.AdditiveBlending,
+    side: THREE.DoubleSide,
+  })
+}
+
 const sceneNodes: SceneNode[] = projects.map((project, clusterIndex) => {
   const baseRadius = radiusBySize[project.node.size]
   const visualRadius = baseRadius * NODE_VISUAL_SCALE
@@ -124,14 +169,16 @@ const sceneNodes: SceneNode[] = projects.map((project, clusterIndex) => {
     color: statusColor.bodyHex,
     emissive: statusColor.hex,
     emissiveIntensity: statusColor.emissiveIntensity,
-    metalness: 0.82,
-    roughness: 0.2,
+    metalness: 0.9,
+    roughness: 0.16,
     transparent: true,
     opacity: project.status === 'experience' ? 0.48 : 0.96,
   })
   const atmosphereSize = visualRadius * 5.2
   const haloGeometry = new THREE.PlaneGeometry(atmosphereSize, atmosphereSize, 1, 1)
   const haloMaterial = createAtmosphereMaterial(statusColor.hex, statusColor.atmosphereOpacity)
+  const glintGeometry = new THREE.PlaneGeometry(visualRadius * 5.6, visualRadius * 5.6, 1, 1)
+  const glintMaterial = createGlintMaterial(statusColor.hex)
   const hitRadius = Math.max(baseRadius * 1.35, visualRadius + 0.14)
   const hitGeometry = new THREE.SphereGeometry(hitRadius, 16, 8)
   const hitMaterial = new THREE.MeshBasicMaterial({
@@ -142,18 +189,22 @@ const sceneNodes: SceneNode[] = projects.map((project, clusterIndex) => {
   })
   const mesh = new THREE.Mesh(geometry, material)
   const halo = new THREE.Mesh(haloGeometry, haloMaterial)
+  const glint = new THREE.Mesh(glintGeometry, glintMaterial)
   const hitMesh = new THREE.Mesh(hitGeometry, hitMaterial)
   const localLight = project.status === 'complete'
-    ? new THREE.PointLight(statusColor.hex, 0.18, 2, 2)
+    ? new THREE.PointLight(statusColor.hex, 0.24, 2.3, 2)
     : null
 
   mesh.name = `EvidenceBoundNode:${project.id}`
   halo.name = `EvidenceBoundNodeHalo:${project.id}`
+  glint.name = `EvidenceBoundNodeGlint:${project.id}`
   hitMesh.name = `EvidenceBoundNodeHit:${project.id}`
   mesh.position.set(project.node.position.x, project.node.position.y, project.node.position.z)
   halo.position.copy(mesh.position)
+  glint.position.copy(mesh.position)
   hitMesh.position.copy(mesh.position)
   halo.renderOrder = 4
+  glint.renderOrder = 6
   hitMesh.renderOrder = 5
 
   if (localLight) {
@@ -163,6 +214,7 @@ const sceneNodes: SceneNode[] = projects.map((project, clusterIndex) => {
 
   group.add(halo)
   group.add(mesh)
+  group.add(glint)
   group.add(hitMesh)
 
   if (localLight) {
@@ -174,6 +226,7 @@ const sceneNodes: SceneNode[] = projects.map((project, clusterIndex) => {
     clusterIndex,
     mesh,
     halo,
+    glint,
     hitMesh,
     localLight,
     baseRadius,
@@ -224,7 +277,7 @@ onMounted(() => {
   stopInteraction = interaction.start()
 })
 
-const loopStop = useRenderLoop().onLoop(() => {
+const loopStop = useLoop().onBeforeRender(() => {
   const activeCamera = camera.value
 
   sceneNodes.forEach((node) => {
@@ -232,16 +285,23 @@ const loopStop = useRenderLoop().onLoop(() => {
     node.runtimeState.scale = THREE.MathUtils.lerp(node.runtimeState.scale, targetScale, 0.14)
     node.mesh.scale.setScalar(node.runtimeState.scale)
     node.halo.scale.setScalar(THREE.MathUtils.lerp(node.halo.scale.x, targetScale, 0.1))
+    node.glint.scale.setScalar(THREE.MathUtils.lerp(node.glint.scale.x, targetScale, 0.12))
     node.hitMesh.scale.setScalar(node.runtimeState.scale)
     node.halo.material.uniforms.uOpacity.value = THREE.MathUtils.lerp(
       node.halo.material.uniforms.uOpacity.value,
       node.runtimeState.hovered ? node.atmosphereOpacity * 1.25 : node.atmosphereOpacity,
       0.08,
     )
+    node.glint.material.uniforms.uOpacity.value = THREE.MathUtils.lerp(
+      node.glint.material.uniforms.uOpacity.value,
+      node.runtimeState.hovered ? 0.26 : node.project.status === 'experience' ? 0.035 : 0.09,
+      0.08,
+    )
     node.mesh.material.opacity = node.runtimeState.active ? 1 : node.project.status === 'experience' ? 0.48 : 0.96
 
     if (activeCamera) {
       node.halo.quaternion.copy(activeCamera.quaternion)
+      node.glint.quaternion.copy(activeCamera.quaternion)
     }
   })
 })
@@ -256,6 +316,8 @@ onUnmounted(() => {
     node.mesh.material.dispose()
     node.halo.geometry.dispose()
     node.halo.material.dispose()
+    node.glint.geometry.dispose()
+    node.glint.material.dispose()
     node.hitMesh.geometry.dispose()
     node.hitMesh.material.dispose()
   })

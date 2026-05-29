@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue'
-import { useRenderLoop, useTres } from '@tresjs/core'
+import { useLoop, useTres } from '@tresjs/core'
 import { projects } from '@/data/projects'
 import { useParticleField } from '@/composables/useParticleField'
 
@@ -15,7 +15,7 @@ onMounted(() => {
   scene.value.add(particleField.points)
 })
 
-const loopStop = useRenderLoop().onLoop(({ delta }) => {
+const loopStop = useLoop().onBeforeRender(({ delta }) => {
   particleField.update(delta, props.hoveredClusterIndex)
 })
 

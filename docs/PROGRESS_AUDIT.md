@@ -1,8 +1,8 @@
 # EVIDENCEBOUND Progress Audit
 
-Date: 2026-05-28  
-Branch: `dev`  
-Status: Phase 1 browser-led visual QA loop complete; ready for user visual review
+Date: 2026-05-29
+Branch: `dev`
+Status: Phase 1.5 visual fidelity lock complete; ready for user visual review
 
 ## Branch And Repo
 
@@ -90,7 +90,7 @@ Status: Phase 1 browser-led visual QA loop complete; ready for user visual revie
 |---|---|
 | Rectangular background plane | Replaced with camera-centered inward sky dome |
 | Canonical `ParticleField` path | Restored |
-| Single particle geometry | Reworked internally as 72% ambient field / 28% constellation aura |
+| Single particle geometry | Reworked internally as 84% ambient field / 16% constellation aura |
 | Ambient particle hover behavior | Stable, sentinel cluster `-1` |
 | Aura hover behavior | Cluster brightness affects local aura only |
 | Particle size/alpha | Reduced to avoid white snow/cotton blobs |
@@ -105,9 +105,9 @@ Status: Phase 1 browser-led visual QA loop complete; ready for user visual revie
 | Darker blue-black scene palette | Done, `--bg: #010409` with lift/bridge tokens |
 | Sky dome color calibration | Done, darker navy base with restrained iridescence |
 | Atmosphere-only node halos | Done, soft additive glow discs replacing bullseye rings |
-| Sparse premium particle field | Done, `72%` ambient field / `28%` project aura |
+| Sparse premium particle field | Done, `84%` ambient field / `16%` project aura |
 | Project aura caps | Done, particle size/alpha reduced to avoid blobs |
-| Bridge to Phase 0 | Done, longer `44vh` dark gradient bridge matched to sky-dome color |
+| Bridge to Phase 0 | Done, overlapped `118vh` dark gradient bridge matched to sky-dome color |
 
 ## Phase 1 Decisive Visual Fix
 
@@ -121,8 +121,22 @@ Status: Phase 1 browser-led visual QA loop complete; ready for user visual revie
 | Connector visibility | Done, z-index fixed, opacity raised to `0.14`, subtle dash animation added |
 | Hover label reliability | Done, label z-index raised and invisible node hit targets added |
 | Camera arrival | Done, start moved to `(0, 6, 22)` |
-| Browser screenshot sweep | Done, 11 scroll stops plus hover and plain-mode screenshots in `.phase1-qa-6` |
+| Browser screenshot sweep | Done, 11 scroll stops plus hover and plain-mode screenshots; latest kept in `.phase1-qa-15` |
 | Refusal ripple visual wash | Fixed, large warm radial artifact reduced to a tiny cool low-opacity ripple |
+
+## Phase 1.5 Visual Fidelity Lock
+
+| Task | Result |
+|---|---|
+| Visual target | Locked as cinematic evidence constellation inside a deep blue-black nebula |
+| Nebula depth | Upgraded sky-dome shader with procedural blue/cyan wisps, stronger vignette, subtle grain |
+| Micro-star density | Increased within canonical `ParticleField`; still below snow/cotton density |
+| Star realism | Added colder distribution, rare bright stars, and subtle shader diffraction glints |
+| Project nodes | Tuned as smaller crisp named-star jewels with tighter glow and glints |
+| Phase 0 framing | Reframed as evidence console surface, not final landing content |
+| Glass realism | Added layered cracked/refraction overlay, sharper border, stronger blur/saturation |
+| Scroll transition | Extended bridge overlap to fade the constellation into Phase 0 instead of cutting |
+| Browser feedback loop | Completed iterative sweeps; latest evidence in untracked `.phase1-qa-15` |
 
 ## Current Stack
 
@@ -180,7 +194,8 @@ Status: Phase 1 browser-led visual QA loop complete; ready for user visual revie
 | `npm.cmd run build` | Pass |
 | `npm.cmd audit --audit-level=moderate` | Pass, 0 vulnerabilities |
 | Manual app run | User confirmed app runs fine |
-| Phase 1 browser visual QA | Pass for structure and interaction; Codex ran an isolated Vite/Chrome sweep and stopped the temp server |
+| Phase 1 browser visual QA | Pass for structure and interaction; Codex ran isolated Vite/Chrome sweeps and stopped the temp server |
+| Latest visual sweep | Pass: `.phase1-qa-15` contains 11 scroll stops, hover probe, plain-mode screenshot, and summary |
 
 ## Issues Found And Resolved
 
@@ -215,6 +230,10 @@ Status: Phase 1 browser-led visual QA loop complete; ready for user visual revie
 | Renderless component template warnings | Added empty templates to renderless scene controllers |
 | Huge refusal ripple wash | Reduced geometry, opacity, and blending so it stays subliminal |
 | Temporary fixed glass rectangle | Removed after Phase 0 `GlassPanel` verified the glass treatment |
+| Flat Phase 1.5 sky | Added procedural nebula wisps without reintroducing a rectangular plane |
+| Sparse visual field | Increased micro-star visibility while keeping roadmap particle count tiers |
+| Hard Phase 1 to Phase 0 cut | Replaced short bridge with an overlapped long fade layer |
+| Card-like glass | Added crack/refraction overlay and stronger glass optics |
 
 ## Upgrade Notes
 
@@ -256,4 +275,4 @@ Status: Phase 1 browser-led visual QA loop complete; ready for user visual revie
 
 ## Next Step
 
-Review the `.phase1-qa-6` screenshots in the running app, then move to Phase 2 only if the cinematic constellation direction feels right.
+Review the `.phase1-qa-15` screenshots and the running app, then move to Phase 2 only if the cinematic constellation direction feels right.

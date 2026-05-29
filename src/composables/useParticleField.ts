@@ -58,14 +58,14 @@ function assignStarWarmth(random: () => number, coldChance: number) {
   const roll = random()
 
   if (roll < coldChance) {
-    return random() * 0.05
+    return random() * 0.035
   }
 
-  if (roll < coldChance + 0.04) {
-    return 0.42 + random() * 0.18
+  if (roll < coldChance + 0.025) {
+    return 0.34 + random() * 0.18
   }
 
-  return 0.88 + random() * 0.12
+  return 0.82 + random() * 0.16
 }
 
 function assignAmbientParticle(
@@ -82,31 +82,31 @@ function assignAmbientParticle(
 ) {
   const positionIndex = index * 3
 
-  positions[positionIndex] = (random() - 0.5) * 72
-  positions[positionIndex + 1] = (random() - 0.48) * 34
-  positions[positionIndex + 2] = -12 + random() * 54
+  positions[positionIndex] = (random() - 0.5) * 58
+  positions[positionIndex + 1] = (random() - 0.48) * 27
+  positions[positionIndex + 2] = -9 + random() * 45
   clusterIndices[index] = -1
 
   const tier = random()
 
-  if (tier < 0.955) {
-    sizes[index] = 0.24 + random() * 0.24
-    alphas[index] = 0.04 + random() * 0.024
+  if (tier < 0.94) {
+    sizes[index] = 0.3 + random() * 0.26
+    alphas[index] = 0.088 + random() * 0.038
     driftSpeeds[index] = 0.045 + random() * 0.04
     twinkles[index] = 0
-  } else if (tier < 0.998) {
-    sizes[index] = 0.46 + random() * 0.28
-    alphas[index] = 0.065 + random() * 0.032
+  } else if (tier < 0.992) {
+    sizes[index] = 0.54 + random() * 0.38
+    alphas[index] = 0.16 + random() * 0.065
     driftSpeeds[index] = 0.055 + random() * 0.045
-    twinkles[index] = 0.16 + random() * 0.14
+    twinkles[index] = 0.2 + random() * 0.2
   } else {
-    sizes[index] = 0.82 + random() * 0.36
-    alphas[index] = 0.2 + random() * 0.1
+    sizes[index] = 1.08 + random() * 0.7
+    alphas[index] = 0.36 + random() * 0.16
     driftSpeeds[index] = 0.065 + random() * 0.045
-    twinkles[index] = 0.75 + random() * 0.25
+    twinkles[index] = 0.82 + random() * 0.18
   }
 
-  warmth[index] = assignStarWarmth(random, 0.94)
+  warmth[index] = assignStarWarmth(random, 0.965)
   phases[index] = random() * Math.PI * 2
 }
 
@@ -129,7 +129,7 @@ function assignAuraParticle(
   const radius = clusterRadius(project.node.size)
   const theta = random() * Math.PI * 2
   const phi = Math.acos(2 * random() - 1)
-  const spread = radius * (0.34 + random() * 1.08)
+  const spread = radius * (0.42 + random() * 1.28)
   const positionIndex = index * 3
 
   positions[positionIndex] = project.node.position.x + Math.sin(phi) * Math.cos(theta) * spread
@@ -139,28 +139,28 @@ function assignAuraParticle(
 
   const tier = random()
 
-  if (tier < 0.92) {
-    sizes[index] = 0.22 + random() * 0.18
-    alphas[index] = 0.038 + random() * 0.024
+  if (tier < 0.88) {
+    sizes[index] = 0.22 + random() * 0.2
+    alphas[index] = 0.045 + random() * 0.032
     twinkles[index] = 0.04 + random() * 0.08
-  } else if (tier < 0.998) {
-    sizes[index] = 0.36 + random() * 0.2
-    alphas[index] = 0.055 + random() * 0.026
+  } else if (tier < 0.996) {
+    sizes[index] = 0.42 + random() * 0.26
+    alphas[index] = 0.075 + random() * 0.04
     twinkles[index] = 0.1 + random() * 0.12
   } else {
-    sizes[index] = 0.64 + random() * 0.2
-    alphas[index] = 0.16 + random() * 0.1
-    twinkles[index] = 0.65 + random() * 0.25
+    sizes[index] = 0.75 + random() * 0.32
+    alphas[index] = 0.22 + random() * 0.12
+    twinkles[index] = 0.72 + random() * 0.22
   }
 
-  warmth[index] = assignStarWarmth(random, 0.92)
+  warmth[index] = assignStarWarmth(random, 0.95)
   phases[index] = random() * Math.PI * 2
   driftSpeeds[index] = 0.08 + random() * 0.08
 }
 
 export function useParticleField(projects: Project[]) {
   const count = getParticleCount()
-  const ambientCount = Math.floor(count * 0.72)
+  const ambientCount = Math.floor(count * 0.84)
   const positions = new Float32Array(count * 3)
   const clusterIndices = new Float32Array(count)
   const sizes = new Float32Array(count)
@@ -221,7 +221,7 @@ export function useParticleField(projects: Project[]) {
     uniforms: {
       uTime: { value: 0 },
       uClusterBrightness: { value: clusterBrightness },
-      uPointSize: { value: 1.7 },
+      uPointSize: { value: 2.28 },
     },
     transparent: true,
     depthWrite: false,

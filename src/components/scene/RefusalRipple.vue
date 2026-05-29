@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue'
-import { useRenderLoop, useTres } from '@tresjs/core'
+import { useLoop, useTres } from '@tresjs/core'
 import * as THREE from 'three'
 import fragmentShader from '@/shaders/refusalRipple.frag.glsl'
 import vertexShader from '@/shaders/refusalRipple.vert.glsl'
 
 const { camera, scene } = useTres()
-const geometry = new THREE.PlaneGeometry(11, 11)
+const geometry = new THREE.PlaneGeometry(7, 7)
 const uniforms = {
   uTime: { value: 0 },
   uActive: { value: 0 },
@@ -30,7 +30,7 @@ onMounted(() => {
   scene.value.add(mesh)
 })
 
-const loopStop = useRenderLoop().onLoop(({ elapsed }) => {
+const loopStop = useLoop().onBeforeRender(({ elapsed }) => {
   const activeCamera = camera.value
   const cycleTime = elapsed % 30
 

@@ -44,10 +44,10 @@ void main() {
   vec4 driftedViewPosition = modelViewMatrix * vec4(driftedPosition, 1.0);
   float parallaxScale = 1.0 + (18.0 / max(1.0, -driftedViewPosition.z)) * mix(0.008, 0.026, isAmbient);
   vec4 mvPosition = modelViewMatrix * vec4(position + (drift * parallaxScale), 1.0);
-  float distanceScale = clamp(30.0 / max(1.0, -mvPosition.z), 0.28, 1.55);
+  float distanceScale = clamp(30.0 / max(1.0, -mvPosition.z), 0.34, 1.75);
   float twinkle = 1.0 + aTwinkle * sin((uTime * 5.2) + (aPhase * 3.1)) * 0.28;
 
-  gl_PointSize = uPointSize * aSize * distanceScale * brightness * twinkle;
+  gl_PointSize = uPointSize * aSize * distanceScale * brightness * twinkle * mix(1.0, 1.45, aTwinkle);
   gl_Position = projectionMatrix * mvPosition;
 
   vAlpha = aAlpha;
