@@ -92,22 +92,11 @@ function handleSelect(projectId: string) {
         :visible="Boolean(hoveredProject)"
       />
 
-      <!-- Hint text: fades out after 5s, tells first-time visitor what to do -->
       <p
-        class="pointer-events-none absolute bottom-8 left-1/2 z-30 -translate-x-1/2 font-mono text-xs uppercase tracking-[0.18em] text-[color:var(--ice-faint)] opacity-0"
-        style="animation: eb-hint-fade 5s ease-out 1.8s forwards;"
+        class="pointer-events-none absolute left-6 top-6 z-30 font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ice-muted)] opacity-55"
       >
-        hover nodes to explore
+        EVIDENCEBOUND / 9 SYSTEMS
       </p>
     </div>
   </section>
 </template>
-
-<style scoped>
-@keyframes eb-hint-fade {
-  0%   { opacity: 0; }
-  15%  { opacity: 0.55; }
-  70%  { opacity: 0.55; }
-  100% { opacity: 0; }
-}
-</style>

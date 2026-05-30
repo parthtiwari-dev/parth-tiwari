@@ -54,16 +54,16 @@ void main() {
   float drift = uTime * 0.009;
 
   // ── BASE: 3-band vertical gradient ─────────────────────────────────────────
-  // zenith = cosmic black, mid = rich indigo-violet, nadir = subtle dark teal
+  // zenith = cosmic black, mid = deep navy, nadir = subtle dark teal
   vec3 zenithColor = vec3(0.000, 0.002, 0.010);
-  vec3 midColor    = vec3(0.010, 0.008, 0.052);
-  vec3 nadirColor  = vec3(0.002, 0.016, 0.038);
+  vec3 midColor    = vec3(0.004, 0.012, 0.036);
+  vec3 nadirColor  = vec3(0.001, 0.012, 0.032);
   float verticalDepth = smoothstep(0.08, 0.92, vUv.y);
   float vignette = smoothstep(1.04, 0.18, distance(vUv, vec2(0.52, 0.5)));
 
   vec3 color = mix(zenithColor, midColor, smoothstep(0.0, 0.55, verticalDepth));
   color = mix(color, nadirColor, smoothstep(0.55, 1.0, verticalDepth) * 0.6);
-  color *= mix(0.30, 1.0, vignette);
+  color *= mix(0.24, 0.88, vignette);
 
   // ── NEBULA CLOUDS: 2.5× boost + color variation + centre zone ──────────────
   vec2 nebulaUv = vUv;
@@ -76,13 +76,13 @@ void main() {
   float centerWisp = smoothstep(0.62, 0.90, cloudC) * smoothstep(0.70, 0.12, distance(vUv, vec2(0.50, 0.48)));
 
   // Left wisp tints blue, right wisp tints violet, centre neutral
-  vec3 blueNebula   = vec3(0.006, 0.040, 0.18);   // blue-ward
-  vec3 violetNebula = vec3(0.022, 0.010, 0.20);   // violet-ward
-  vec3 centreNebula = vec3(0.010, 0.025, 0.14);   // neutral
+  vec3 blueNebula   = vec3(0.004, 0.032, 0.13);   // blue-ward
+  vec3 violetNebula = vec3(0.010, 0.010, 0.09);   // desaturated violet
+  vec3 centreNebula = vec3(0.006, 0.020, 0.10);   // neutral
 
-  color += blueNebula   * (leftWisp   * 0.55) * vignette;  // was 0.22
-  color += violetNebula * (rightWisp  * 0.65) * vignette;  // was 0.26
-  color += centreNebula * (centerWisp * 0.40) * vignette;  // new centre zone
+  color += blueNebula   * (leftWisp   * 0.45) * vignette;
+  color += violetNebula * (rightWisp  * 0.36) * vignette;
+  color += centreNebula * (centerWisp * 0.28) * vignette;
 
   // ── AURORA-LIKE UNDULATING BANDS ────────────────────────────────────────────
   // 2 thin flowing bands of teal-cyan — the "alive sky" quality from reference
@@ -119,15 +119,15 @@ void main() {
   float mwDust3 = fbm(mwUv * vec2(24.0, 8.5) + vec2(drift * 0.06, drift * 0.04));
   float mwIntensity = mwBand * (0.40 + mwDust1 * 0.38 + mwDust2 * 0.14 + mwDust3 * 0.08);
   mwIntensity = pow(clamp(mwIntensity, 0.0, 1.0), 0.82) * vignette;
-  vec3 mwCore  = vec3(0.09, 0.06, 0.28);
-  vec3 mwEdge  = vec3(0.02, 0.04, 0.15);
+  vec3 mwCore  = vec3(0.035, 0.040, 0.145);
+  vec3 mwEdge  = vec3(0.010, 0.025, 0.090);
   vec3 mwColor = mix(mwEdge, mwCore, smoothstep(0.16, 0.0, abs(mwUv.y)));
-  color += mwColor * mwIntensity * 1.1;  // was 0.75
+  color += mwColor * mwIntensity * 0.62;
 
   // ── SECONDARY GALACTIC CORE ─────────────────────────────────────────────────
   // Soft bright ellipse at band centre — matches real MW core photographs
   float coreGlow = exp(-dot(mwUv * vec2(5.0, 12.0), mwUv * vec2(5.0, 12.0)));
-  color += vec3(0.06, 0.04, 0.18) * coreGlow * 0.55 * vignette;
+  color += vec3(0.025, 0.030, 0.10) * coreGlow * 0.32 * vignette;
 
   // ── IRIDESCENT MICRO-SHIMMER (original, kept subtle) ───────────────────────
   float radialNoise = (

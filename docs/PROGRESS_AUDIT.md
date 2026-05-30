@@ -2,7 +2,7 @@
 
 Date: 2026-05-29
 Branch: `dev`
-Status: Phase 1.6 constellation composition lock complete; ready for user visual review
+Status: Phase 1.8 camera correction complete; ready for user visual review
 
 ## Branch And Repo
 
@@ -151,6 +151,23 @@ Status: Phase 1.6 constellation composition lock complete; ready for user visual
 | Phase 0 handoff | Added scroll-progress scene fade plus masked console background to remove the hard shelf transition |
 | Browser feedback loop | Latest evidence in untracked `.phase1-qa-18`; hover probes pass at mid and late scroll |
 
+## Phase 1.8 Minimal Visual Polish
+
+| Task | Result |
+|---|---|
+| Purple sky wash | Reduced by shifting the sky shader toward deep navy and lowering violet/Milky Way intensity |
+| Edge-node framing | Initially tested a conservative no-flip endpoint; replaced in the follow-up camera correction below |
+| First-screen context | Replaced tutorial hint with restrained `EVIDENCEBOUND / 9 SYSTEMS` corner label |
+
+## Phase 1.8 Camera Correction
+
+| Task | Result |
+|---|---|
+| Cinematic fly-through | Restored the dramatic negative-Z endpoint so the scroll can arrive through the constellation instead of flattening out early |
+| Smooth turn | Replaced the abrupt flip behavior with a moving look target from SecondSelf toward the constellation center |
+| Final reveal | Pulled the endpoint slightly farther back to `(0, 2.1, -7.2)` so the 9-node constellation reads more fully in the final visible frame |
+| Handoff timing | Delayed the scene fade to keep the final constellation visible longer before Phase 0 takes over |
+
 ## Current Stack
 
 | Package | Version |
@@ -208,7 +225,7 @@ Status: Phase 1.6 constellation composition lock complete; ready for user visual
 | `npm.cmd audit --audit-level=moderate` | Pass, 0 vulnerabilities |
 | Manual app run | User confirmed app runs fine |
 | Phase 1 browser visual QA | Pass for structure and interaction; Codex ran isolated Vite/Chrome sweeps and stopped the temp server |
-| Latest visual sweep | Pass: `.phase1-qa-18` contains scroll stops, hover probes, plain-mode screenshot, and summary |
+| Latest visual sweep | Pass: Phase 1.8 camera correction browser QA captured 20 scroll stops in `.phase1-qa-22`; hover probes pass at early, mid, and late visible constellation positions; `?plain=1` still skips 3D |
 
 ## Issues Found And Resolved
 
