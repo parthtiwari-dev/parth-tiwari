@@ -86,7 +86,6 @@ export function useNodeInteraction(options: NodeInteractionOptions) {
   }
 
   function start() {
-    let canvas: HTMLCanvasElement | null = null
     let frameId = 0
 
     function attach() {
@@ -97,24 +96,18 @@ export function useNodeInteraction(options: NodeInteractionOptions) {
         return
       }
 
-      canvas = renderer.domElement
-      canvas.addEventListener('pointermove', handlePointerMove, { passive: true })
-      canvas.addEventListener('pointerdown', handlePointerDown)
-      canvas.addEventListener('pointerleave', handlePointerLeave)
+      window.addEventListener('pointermove', handlePointerMove, { passive: true })
+      window.addEventListener('pointerdown', handlePointerDown)
+      window.addEventListener('blur', handlePointerLeave)
     }
 
     attach()
 
     return () => {
       cancelAnimationFrame(frameId)
-
-      if (!canvas) {
-        return
-      }
-
-      canvas.removeEventListener('pointermove', handlePointerMove)
-      canvas.removeEventListener('pointerdown', handlePointerDown)
-      canvas.removeEventListener('pointerleave', handlePointerLeave)
+      window.removeEventListener('pointermove', handlePointerMove)
+      window.removeEventListener('pointerdown', handlePointerDown)
+      window.removeEventListener('blur', handlePointerLeave)
     }
   }
 

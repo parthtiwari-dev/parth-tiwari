@@ -14,10 +14,33 @@ body {
   background: var(--bg);
 }
 
+#constellation-section {
+  --constellation-fade: 0;
+}
+
+.constellation-viewport::after {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  content: '';
+  opacity: var(--constellation-fade);
+  background:
+    radial-gradient(circle at 54% 14%, rgba(11, 182, 214, 0.08), transparent 36%),
+    linear-gradient(
+      180deg,
+      rgba(5, 11, 18, 0) 0%,
+      rgba(4, 12, 22, 0.12) 38%,
+      rgba(3, 8, 15, 0.58) 76%,
+      var(--bg) 100%
+    );
+}
+
 .phase-bridge {
   position: relative;
   z-index: 2;
   overflow: hidden;
+  pointer-events: none;
   margin-top: -96vh;
   -webkit-mask-image: linear-gradient(
     180deg,
@@ -36,14 +59,14 @@ body {
     #000 100%
   );
   background:
-    radial-gradient(circle at 58% 2%, rgba(11, 182, 214, 0.12), transparent 44%),
-    radial-gradient(circle at 30% 18%, rgba(42, 91, 150, 0.1), transparent 40%),
+    radial-gradient(circle at 58% 2%, rgba(11, 182, 214, 0.08), transparent 46%),
+    radial-gradient(circle at 30% 18%, rgba(42, 91, 150, 0.08), transparent 42%),
     linear-gradient(
       180deg,
       rgba(1, 4, 9, 0) 0%,
-      rgba(4, 18, 31, 0.16) 24%,
-      rgba(5, 20, 34, 0.42) 58%,
-      rgba(3, 11, 20, 0.82) 84%,
+      rgba(3, 14, 28, 0.14) 22%,
+      rgba(4, 18, 34, 0.34) 58%,
+      rgba(2, 10, 20, 0.78) 86%,
       var(--bg) 100%
     );
 }
@@ -52,6 +75,7 @@ body {
 .phase-zero-console::before {
   position: absolute;
   inset: 0;
+  z-index: 1;
   pointer-events: none;
   content: '';
   background-image:
@@ -60,19 +84,45 @@ body {
   background-position: 0 0, 34px 22px;
   background-size: 130px 130px, 190px 190px;
   opacity: 0.13;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.45) 20%, #000 52%);
+  mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.45) 20%, #000 52%);
 }
 
 .phase-zero-console {
   position: relative;
+  overflow: hidden;
+  background: transparent;
+}
+
+.phase-zero-console::after {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  content: '';
   background:
     radial-gradient(circle at 72% 0%, rgba(11, 182, 214, 0.08), transparent 32%),
     radial-gradient(circle at 20% 30%, rgba(42, 91, 150, 0.08), transparent 34%),
     linear-gradient(180deg, var(--bg) 0%, #02060c 100%);
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.1) 8%,
+    rgba(0, 0, 0, 0.72) 34%,
+    #000 58%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.1) 8%,
+    rgba(0, 0, 0, 0.72) 34%,
+    #000 58%
+  );
 }
 
 .phase-zero-console > * {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 button {

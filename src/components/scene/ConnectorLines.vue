@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref, computed } from 'vue'
 import type { TresContext } from '@tresjs/core'
 import * as THREE from 'three'
 import { projects } from '@/data/projects'
@@ -7,6 +7,7 @@ import { projects } from '@/data/projects'
 const props = defineProps<{
   context: TresContext | null
   paused: boolean
+  hoveredProjectId: string | null  // NEW prop — pass from SceneRoot
 }>()
 
 interface ConnectorProjection {
@@ -16,6 +17,7 @@ interface ConnectorProjection {
   x2: number
   y2: number
   visible: boolean
+  isActive: boolean  // true when one of its endpoints is hovered
 }
 
 interface ConnectorPair {
@@ -58,8 +60,18 @@ const lines = ref<ConnectorProjection[]>(
     x2: 0,
     y2: 0,
     visible: false,
+    isActive: false,
   })),
 )
+
+// Derived: set of project IDs related to the currently hovered node
+const relatedToHovered = computed<Set<string>>(() => {
+  const hid = props.hoveredProjectId
+  if (!hid) return new Set()
+  const project = projectById.get(hid)
+  if (!project) return new Set()
+  return new Set([hid, ...project.node.relatedIds])
+})
 
 const projectedPosition = new THREE.Vector3()
 let frameId = 0
@@ -96,9 +108,15 @@ function projectNode(projectId: string) {
 
 function updateLines() {
   if (!props.paused) {
+    const related = relatedToHovered.value
+
     lines.value = connectorPairs.map((pair) => {
       const from = projectNode(pair.fromId)
       const to = projectNode(pair.toId)
+      const isActive =
+        related.size > 0 &&
+        related.has(pair.fromId) &&
+        related.has(pair.toId)
 
       return {
         id: pair.id,
@@ -107,6 +125,7 @@ function updateLines() {
         x2: to?.x ?? 0,
         y2: to?.y ?? 0,
         visible: Boolean(from && to),
+        isActive,
       }
     })
   }
@@ -132,7 +151,7 @@ onUnmounted(() => {
   >
     <line
       v-for="line in lines"
-      v-show="line.visible"
+      v-show="line.visible && line.isActive"
       :key="line.id"
       class="constellation-line"
       :x1="line.x1"
@@ -140,23 +159,10 @@ onUnmounted(() => {
       :x2="line.x2"
       :y2="line.y2"
       stroke="var(--ice-faint)"
-      stroke-dasharray="3 9"
       stroke-linecap="round"
-      stroke-width="1.15"
+      stroke-width="1.1"
       vector-effect="non-scaling-stroke"
-      opacity="0.14"
+      opacity="0.32"
     />
   </svg>
 </template>
-
-<style scoped>
-.constellation-line {
-  animation: constellation-dash 18s linear infinite;
-}
-
-@keyframes constellation-dash {
-  to {
-    stroke-dashoffset: -96;
-  }
-}
-</style>

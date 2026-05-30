@@ -49,7 +49,7 @@ function handleSelect(projectId: string) {
     class="relative h-[400vh]"
     :data-selected-project-id="selectedProjectId ?? undefined"
   >
-    <div class="sticky top-0 h-screen overflow-hidden bg-[color:var(--bg)]">
+    <div class="constellation-viewport sticky top-0 h-screen overflow-hidden bg-[color:var(--bg)]">
       <TresCanvas
         class="absolute inset-0 z-0 h-full w-full"
         :alpha="true"
@@ -80,15 +80,34 @@ function handleSelect(projectId: string) {
         <PostProcessing />
       </TresCanvas>
 
+      <!-- Pass hoveredProjectId so lines only show for related nodes -->
       <ConnectorLines
         :context="tresContext"
         :paused="connectorsPaused"
+        :hovered-project-id="hoveredProjectId"
       />
       <NodeLabel
         :context="tresContext"
         :project="hoveredProject"
         :visible="Boolean(hoveredProject)"
       />
+
+      <!-- Hint text: fades out after 5s, tells first-time visitor what to do -->
+      <p
+        class="pointer-events-none absolute bottom-8 left-1/2 z-30 -translate-x-1/2 font-mono text-xs uppercase tracking-[0.18em] text-[color:var(--ice-faint)] opacity-0"
+        style="animation: eb-hint-fade 5s ease-out 1.8s forwards;"
+      >
+        hover nodes to explore
+      </p>
     </div>
   </section>
 </template>
+
+<style scoped>
+@keyframes eb-hint-fade {
+  0%   { opacity: 0; }
+  15%  { opacity: 0.55; }
+  70%  { opacity: 0.55; }
+  100% { opacity: 0; }
+}
+</style>

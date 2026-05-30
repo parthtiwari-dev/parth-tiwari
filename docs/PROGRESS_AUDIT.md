@@ -2,7 +2,7 @@
 
 Date: 2026-05-29
 Branch: `dev`
-Status: Phase 1.5 visual fidelity lock complete; ready for user visual review
+Status: Phase 1.6 constellation composition lock complete; ready for user visual review
 
 ## Branch And Repo
 
@@ -138,6 +138,19 @@ Status: Phase 1.5 visual fidelity lock complete; ready for user visual review
 | Scroll transition | Extended bridge overlap to fade the constellation into Phase 0 instead of cutting |
 | Browser feedback loop | Completed iterative sweeps; latest evidence in untracked `.phase1-qa-15` |
 
+## Phase 1.6 Constellation Composition Lock
+
+| Task | Result |
+|---|---|
+| Late-scroll hover | Fixed by moving node raycast listeners to `window` so bridge/console overlap cannot block hover |
+| Hover label placement | Fixed by clamping projected labels inside the viewport |
+| Connector style | Changed from animated dotted graph lines to continuous faint hairlines |
+| Space depth | Added procedural far-star layer in the sky dome and retuned particle split to 88% ambient / 12% aura |
+| Node palette | Tuned gold/teal/amber/ice toward tighter jewel colors with lower halo dominance |
+| Final camera composition | Tuned final camera point and eased the final look target toward the constellation center |
+| Phase 0 handoff | Added scroll-progress scene fade plus masked console background to remove the hard shelf transition |
+| Browser feedback loop | Latest evidence in untracked `.phase1-qa-18`; hover probes pass at mid and late scroll |
+
 ## Current Stack
 
 | Package | Version |
@@ -195,7 +208,7 @@ Status: Phase 1.5 visual fidelity lock complete; ready for user visual review
 | `npm.cmd audit --audit-level=moderate` | Pass, 0 vulnerabilities |
 | Manual app run | User confirmed app runs fine |
 | Phase 1 browser visual QA | Pass for structure and interaction; Codex ran isolated Vite/Chrome sweeps and stopped the temp server |
-| Latest visual sweep | Pass: `.phase1-qa-15` contains 11 scroll stops, hover probe, plain-mode screenshot, and summary |
+| Latest visual sweep | Pass: `.phase1-qa-18` contains scroll stops, hover probes, plain-mode screenshot, and summary |
 
 ## Issues Found And Resolved
 
@@ -234,6 +247,9 @@ Status: Phase 1.5 visual fidelity lock complete; ready for user visual review
 | Sparse visual field | Increased micro-star visibility while keeping roadmap particle count tiers |
 | Hard Phase 1 to Phase 0 cut | Replaced short bridge with an overlapped long fade layer |
 | Card-like glass | Added crack/refraction overlay and stronger glass optics |
+| Late-scroll hover blocked by overlap | Moved pointer listeners to `window`; bridge remains `pointer-events: none` |
+| Hover card clipping near viewport edge | Clamped projected label coordinates |
+| Shelf-like console handoff | Added camera-progress fade overlay and masked Phase 0 background fade-in |
 
 ## Upgrade Notes
 
@@ -275,4 +291,4 @@ Status: Phase 1.5 visual fidelity lock complete; ready for user visual review
 
 ## Next Step
 
-Review the `.phase1-qa-15` screenshots and the running app, then move to Phase 2 only if the cinematic constellation direction feels right.
+Review the `.phase1-qa-18` screenshots and the running app, then move to Phase 2 only if the cinematic constellation direction feels right.

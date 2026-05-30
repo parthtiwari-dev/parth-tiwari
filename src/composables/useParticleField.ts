@@ -82,32 +82,37 @@ function assignAmbientParticle(
 ) {
   const positionIndex = index * 3
 
-  positions[positionIndex] = (random() - 0.5) * 58
-  positions[positionIndex + 1] = (random() - 0.48) * 27
-  positions[positionIndex + 2] = -9 + random() * 45
+  // Volume tightened from 70×34×66 to 48×28×42.
+  // Same count in a smaller volume = meaningfully denser field in view.
+  positions[positionIndex]     = (random() - 0.5) * 48   // was 70
+  positions[positionIndex + 1] = (random() - 0.48) * 28  // was 34
+  positions[positionIndex + 2] = -2 + random() * 42       // was 66
   clusterIndices[index] = -1
 
   const tier = random()
 
   if (tier < 0.94) {
-    sizes[index] = 0.3 + random() * 0.26
-    alphas[index] = 0.088 + random() * 0.038
+    // Faint background field — alpha raised so particles aren't invisible
+    sizes[index]      = 0.26 + random() * 0.24
+    alphas[index]     = 0.12 + random() * 0.10  // was 0.07 + 0.034 (max 0.22)
     driftSpeeds[index] = 0.045 + random() * 0.04
-    twinkles[index] = 0
+    twinkles[index]   = 0
   } else if (tier < 0.992) {
-    sizes[index] = 0.54 + random() * 0.38
-    alphas[index] = 0.16 + random() * 0.065
+    // Mid-brightness — clearly visible individuals
+    sizes[index]      = 0.48 + random() * 0.34
+    alphas[index]     = 0.18 + random() * 0.12  // was 0.13 + 0.06 (max 0.30)
     driftSpeeds[index] = 0.055 + random() * 0.045
-    twinkles[index] = 0.2 + random() * 0.2
+    twinkles[index]   = 0.2 + random() * 0.2
   } else {
-    sizes[index] = 1.08 + random() * 0.7
-    alphas[index] = 0.36 + random() * 0.16
+    // Rare bright stars
+    sizes[index]      = 1.08 + random() * 0.7
+    alphas[index]     = 0.48 + random() * 0.24  // was 0.36 + 0.16 (max 0.72)
     driftSpeeds[index] = 0.065 + random() * 0.045
-    twinkles[index] = 0.82 + random() * 0.18
+    twinkles[index]   = 0.82 + random() * 0.18
   }
 
-  warmth[index] = assignStarWarmth(random, 0.965)
-  phases[index] = random() * Math.PI * 2
+  warmth[index]  = assignStarWarmth(random, 0.975)
+  phases[index]  = random() * Math.PI * 2
 }
 
 function assignAuraParticle(
@@ -129,10 +134,10 @@ function assignAuraParticle(
   const radius = clusterRadius(project.node.size)
   const theta = random() * Math.PI * 2
   const phi = Math.acos(2 * random() - 1)
-  const spread = radius * (0.42 + random() * 1.28)
+  const spread = radius * (0.36 + random() * 1.04)
   const positionIndex = index * 3
 
-  positions[positionIndex] = project.node.position.x + Math.sin(phi) * Math.cos(theta) * spread
+  positions[positionIndex]     = project.node.position.x + Math.sin(phi) * Math.cos(theta) * spread
   positions[positionIndex + 1] = project.node.position.y + Math.sin(phi) * Math.sin(theta) * spread
   positions[positionIndex + 2] = project.node.position.z + Math.cos(phi) * spread
   clusterIndices[index] = clusterIndex
@@ -140,35 +145,35 @@ function assignAuraParticle(
   const tier = random()
 
   if (tier < 0.88) {
-    sizes[index] = 0.22 + random() * 0.2
-    alphas[index] = 0.045 + random() * 0.032
+    sizes[index]  = 0.22 + random() * 0.2
+    alphas[index] = 0.036 + random() * 0.026
     twinkles[index] = 0.04 + random() * 0.08
   } else if (tier < 0.996) {
-    sizes[index] = 0.42 + random() * 0.26
-    alphas[index] = 0.075 + random() * 0.04
+    sizes[index]  = 0.42 + random() * 0.26
+    alphas[index] = 0.058 + random() * 0.034
     twinkles[index] = 0.1 + random() * 0.12
   } else {
-    sizes[index] = 0.75 + random() * 0.32
+    sizes[index]  = 0.75 + random() * 0.32
     alphas[index] = 0.22 + random() * 0.12
     twinkles[index] = 0.72 + random() * 0.22
   }
 
-  warmth[index] = assignStarWarmth(random, 0.95)
-  phases[index] = random() * Math.PI * 2
+  warmth[index]      = assignStarWarmth(random, 0.96)
+  phases[index]      = random() * Math.PI * 2
   driftSpeeds[index] = 0.08 + random() * 0.08
 }
 
 export function useParticleField(projects: Project[]) {
   const count = getParticleCount()
-  const ambientCount = Math.floor(count * 0.84)
-  const positions = new Float32Array(count * 3)
+  const ambientCount = Math.floor(count * 0.88)
+  const positions    = new Float32Array(count * 3)
   const clusterIndices = new Float32Array(count)
-  const sizes = new Float32Array(count)
-  const alphas = new Float32Array(count)
-  const warmth = new Float32Array(count)
-  const phases = new Float32Array(count)
-  const driftSpeeds = new Float32Array(count)
-  const twinkles = new Float32Array(count)
+  const sizes        = new Float32Array(count)
+  const alphas       = new Float32Array(count)
+  const warmth       = new Float32Array(count)
+  const phases       = new Float32Array(count)
+  const driftSpeeds  = new Float32Array(count)
+  const twinkles     = new Float32Array(count)
   const clusterBrightness = Array.from({ length: projects.length }, () => 1)
   const random = seededRandom('evidencebound-particles-hybrid')
 
@@ -206,22 +211,22 @@ export function useParticleField(projects: Project[]) {
   }
 
   const geometry = new THREE.BufferGeometry()
-  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+  geometry.setAttribute('position',      new THREE.BufferAttribute(positions, 3))
   geometry.setAttribute('aClusterIndex', new THREE.BufferAttribute(clusterIndices, 1))
-  geometry.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1))
-  geometry.setAttribute('aAlpha', new THREE.BufferAttribute(alphas, 1))
-  geometry.setAttribute('aWarmth', new THREE.BufferAttribute(warmth, 1))
-  geometry.setAttribute('aPhase', new THREE.BufferAttribute(phases, 1))
-  geometry.setAttribute('aDriftSpeed', new THREE.BufferAttribute(driftSpeeds, 1))
-  geometry.setAttribute('aTwinkle', new THREE.BufferAttribute(twinkles, 1))
+  geometry.setAttribute('aSize',         new THREE.BufferAttribute(sizes, 1))
+  geometry.setAttribute('aAlpha',        new THREE.BufferAttribute(alphas, 1))
+  geometry.setAttribute('aWarmth',       new THREE.BufferAttribute(warmth, 1))
+  geometry.setAttribute('aPhase',        new THREE.BufferAttribute(phases, 1))
+  geometry.setAttribute('aDriftSpeed',   new THREE.BufferAttribute(driftSpeeds, 1))
+  geometry.setAttribute('aTwinkle',      new THREE.BufferAttribute(twinkles, 1))
 
   const material = new THREE.ShaderMaterial({
     vertexShader,
     fragmentShader,
     uniforms: {
-      uTime: { value: 0 },
+      uTime:             { value: 0 },
       uClusterBrightness: { value: clusterBrightness },
-      uPointSize: { value: 2.28 },
+      uPointSize:        { value: 3.0 },  // was 2.22
     },
     transparent: true,
     depthWrite: false,

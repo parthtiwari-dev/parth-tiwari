@@ -19,6 +19,10 @@ const labelPosition = ref({
 const projectedPosition = new THREE.Vector3()
 let frameId = 0
 
+function clamp(value: number, min: number, max: number) {
+  return Math.min(Math.max(value, min), max)
+}
+
 function updatePosition() {
   const context = props.context
   const project = props.project
@@ -43,9 +47,12 @@ function updatePosition() {
     .set(project.node.position.x, project.node.position.y, project.node.position.z)
     .project(camera)
 
+  const projectedX = (projectedPosition.x * 0.5 + 0.5) * rect.width + rect.left
+  const projectedY = (-projectedPosition.y * 0.5 + 0.5) * rect.height + rect.top
+
   labelPosition.value = {
-    x: (projectedPosition.x * 0.5 + 0.5) * rect.width,
-    y: (-projectedPosition.y * 0.5 + 0.5) * rect.height,
+    x: clamp(projectedX + 18, 16, window.innerWidth - 320),
+    y: clamp(projectedY - 18, 16, window.innerHeight - 152),
     visible: projectedPosition.z >= -1 && projectedPosition.z <= 1,
   }
 
@@ -67,7 +74,7 @@ onUnmounted(() => {
     v-show="labelPosition.visible"
     class="pointer-events-none absolute left-0 top-0 z-30 max-w-[18rem] rounded border border-[color:var(--ice-faint)] bg-[rgba(2,6,11,0.82)] px-4 py-3 text-[color:var(--ice)] shadow-[0_18px_60px_rgba(0,0,0,0.45)] backdrop-blur-md"
     :style="{
-      transform: `translate3d(${labelPosition.x + 18}px, ${labelPosition.y - 18}px, 0)`,
+      transform: `translate3d(${labelPosition.x}px, ${labelPosition.y}px, 0)`,
     }"
   >
     <p class="type-label text-[color:var(--gold)]">
