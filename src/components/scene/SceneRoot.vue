@@ -21,7 +21,7 @@ const tresContext = shallowRef<TresContext | null>(null)
 const hoveredProjectId = ref<string | null>(null)
 const hoveredClusterIndex = ref<number | null>(null)
 const selectedProjectId = ref<string | null>(null)
-const dpr: [number, number] = [1, 1.75]
+const dpr: [number, number] = [1, 1.25]
 
 const hoveredProject = computed(() => {
   return projects.find((project) => project.id === hoveredProjectId.value) ?? null

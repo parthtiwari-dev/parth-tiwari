@@ -2,7 +2,7 @@
 
 Date: 2026-05-29
 Branch: `dev`
-Status: Phase 1.8 camera correction complete; ready for user visual review
+Status: Phase 1 performance gate passed; ready to plan Phase 2
 
 ## Branch And Repo
 
@@ -168,6 +168,16 @@ Status: Phase 1.8 camera correction complete; ready for user visual review
 | Final reveal | Pulled the endpoint slightly farther back to `(0, 2.1, -7.2)` so the 9-node constellation reads more fully in the final visible frame |
 | Handoff timing | Delayed the scene fade to keep the final constellation visible longer before Phase 0 takes over |
 
+## Phase 1 Performance Lock
+
+| Task | Result |
+|---|---|
+| DPR cap | Lowered Tres canvas DPR cap from `1.75` to `1.25` |
+| Chrome target | User-confirmed Chrome now reaches about `60fps`, satisfying the Phase 1 target browser gate |
+| Brave target | User-confirmed Brave now holds around `50fps+`, acceptable for Phase 1 |
+| Comet browser | Observed around `30fps`; treated as non-target browser/compositor overhead and not a Phase 1 blocker |
+| UI impact | No roadmap UI/scene refactor; visual composition preserved |
+
 ## Current Stack
 
 | Package | Version |
@@ -226,6 +236,7 @@ Status: Phase 1.8 camera correction complete; ready for user visual review
 | Manual app run | User confirmed app runs fine |
 | Phase 1 browser visual QA | Pass for structure and interaction; Codex ran isolated Vite/Chrome sweeps and stopped the temp server |
 | Latest visual sweep | Pass: Phase 1.8 camera correction browser QA captured 20 scroll stops in `.phase1-qa-22`; hover probes pass at early, mid, and late visible constellation positions; `?plain=1` still skips 3D |
+| Phase 1 FPS gate | Pass: DPR cap `1.25` gives user-confirmed Chrome ~`60fps`; Brave ~`50fps+`; Comet excluded as non-target |
 
 ## Issues Found And Resolved
 
@@ -308,4 +319,4 @@ Status: Phase 1.8 camera correction complete; ready for user visual review
 
 ## Next Step
 
-Review the `.phase1-qa-18` screenshots and the running app, then move to Phase 2 only if the cinematic constellation direction feels right.
+Phase 1 is visually and performance-acceptable on the target Chrome path. Next: read the roadmap Phase 2 section and make the Phase 2 execution plan before adding overlays/sections/sliders.
