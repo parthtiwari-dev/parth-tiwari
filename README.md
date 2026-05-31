@@ -6,7 +6,7 @@ Systems that act only after the evidence agrees.
 
 The build source of truth is [docs/EVIDENCEBOUND_BUILD_ROADMAP.md](docs/EVIDENCEBOUND_BUILD_ROADMAP.md).
 
-The current implementation has completed **Phase 0: Design System And Data Foundation**. Phase 1 starts only after this foundation remains healthy.
+The current implementation has completed **Phase 1: Core 3D Infrastructure**. Phase 2 planning is next.
 
 ## Stack
 
@@ -17,6 +17,7 @@ The current implementation has completed **Phase 0: Design System And Data Found
 | Language | TypeScript 6.0.3 | Upgraded with Vite 8 toolchain |
 | 3D | Three.js 0.165.0 | Pinned to roadmap-safe line |
 | 3D Vue wrapper | @tresjs/core 4.3.1 | Pinned and documented as required |
+| Post-processing | postprocessing 6.38.0 | Direct composer path for bloom |
 | Animation | GSAP 3.15.0 | Upgraded within GSAP 3 |
 | State | Pinia 2.3.1 | Roadmap-compatible |
 | Styling | Tailwind CSS 4.3.0 | Roadmap-compatible |
@@ -24,6 +25,14 @@ The current implementation has completed **Phase 0: Design System And Data Found
 | Deployment | Vercel static | Planned for Phase 5 |
 
 Vite and TypeScript were upgraded because the scaffold typechecked and built cleanly, and `npm audit` required a Vite major upgrade for a clean dependency graph. Three.js and TresJS stay pinned because the 3D layer is higher risk.
+
+## Current Status
+
+- Phase -1 complete: repo, branch, scaffold, dependency lock, baseline checks.
+- Phase 0 complete: design tokens, typography, glass/plain styles, canonical project data, Pinia stores, shared primitives, favicon, OG image, and head metadata.
+- Phase 1 complete: TresJS scene shell, sky dome, particles, refusal ripple, scroll camera path, 9 project nodes, connector projection, hover labels, bloom, node glow, and Phase 0 handoff.
+- Phase 1 performance gate passed on the target Chrome path after capping canvas DPR at `1.25`.
+- Next step: read the roadmap Phase 2 section and plan overlays/sections/sliders before implementation.
 
 ## Setup
 
@@ -57,7 +66,16 @@ npm.cmd run preview
 
 - Phase -1 gate: scaffold builds, typechecks, audits cleanly, and branch is `dev`.
 - Phase 0 gate: tokens, typography, glass/plain styles, types, project data, stores, shared primitives, favicon, and OG image compile with zero TypeScript errors. Complete.
+- Phase 1 gate: cinematic constellation renders, scroll camera path works, all 9 nodes are visible, hover labels work, `?plain=1` skips 3D, Chrome reaches about 60fps, and checks pass. Complete.
 - Later phase gates remain exactly as defined in the roadmap.
+
+## Performance Notes
+
+- Chrome is the target browser for the Phase 1 FPS gate.
+- Chrome is user-confirmed at about `60fps` after the DPR cap change.
+- Brave is user-confirmed around `50fps+`.
+- Comet is treated as a non-target browser/compositor outlier for now.
+- The current performance fix preserves the UI and visual composition.
 
 ## Environment
 
