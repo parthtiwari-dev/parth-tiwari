@@ -1,7 +1,9 @@
-const overlayReadyProjectIds = ['secondself', 'stick-and-dot'] as const
+import { projects } from '@/data/projects'
+
+const overlayReadyProjectIds = projects.map((project) => project.id)
 
 export function isOverlayReadyProject(projectId: string) {
-  return overlayReadyProjectIds.includes(projectId as (typeof overlayReadyProjectIds)[number])
+  return overlayReadyProjectIds.includes(projectId)
 }
 
 export { overlayReadyProjectIds }

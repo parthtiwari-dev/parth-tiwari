@@ -5,22 +5,88 @@ const props = defineProps<{
   id: string
 }>()
 
-const variant = computed(() => {
-  if (props.id.includes('storyboard')) {
-    return {
+interface FlowVariant {
+  labelA: string
+  labelB: string
+  labelC: string
+  points: string
+}
+
+const flowVariants: Array<{ match: string; variant: FlowVariant }> = [
+  {
+    match: 'storyboard',
+    variant: {
       labelA: 'brief',
       labelB: 'identity drift',
       labelC: 'shipped artifact',
       points: '18,118 98,74 174,106 256,48 338,86',
-    }
-  }
+    },
+  },
+  {
+    match: 'sql',
+    variant: {
+      labelA: 'question',
+      labelB: 'schema drift',
+      labelC: 'checked query',
+      points: '18,92 82,54 142,78 202,118 270,62 338,98',
+    },
+  },
+  {
+    match: 'fraud',
+    variant: {
+      labelA: 'transaction',
+      labelB: 'leakage risk',
+      labelC: 'budgeted alert',
+      points: '18,120 76,88 126,112 182,46 246,78 338,54',
+    },
+  },
+  {
+    match: 'medical',
+    variant: {
+      labelA: 'query',
+      labelB: 'unsupported claim',
+      labelC: 'cited answer',
+      points: '18,74 88,112 154,58 214,70 282,116 338,86',
+    },
+  },
+  {
+    match: 'atlas',
+    variant: {
+      labelA: 'topic',
+      labelB: 'content gap',
+      labelC: 'source boundary',
+      points: '18,96 98,44 164,56 218,108 286,74 338,118',
+    },
+  },
+  {
+    match: 'workflow',
+    variant: {
+      labelA: 'event',
+      labelB: 'llm authority',
+      labelC: 'durable rule',
+      points: '18,56 78,88 138,52 198,92 258,58 338,104',
+    },
+  },
+  {
+    match: 'infra',
+    variant: {
+      labelA: 'capacity',
+      labelB: 'retry loop',
+      labelC: 'safe notify',
+      points: '18,112 76,70 134,112 194,70 254,112 338,70',
+    },
+  },
+]
 
-  return {
-    labelA: 'claim',
-    labelB: 'missing evidence',
-    labelC: 'bounded output',
-    points: '18,88 92,50 168,96 248,62 338,112',
-  }
+const fallbackVariant: FlowVariant = {
+  labelA: 'claim',
+  labelB: 'missing evidence',
+  labelC: 'bounded output',
+  points: '18,88 92,50 168,96 248,62 338,112',
+}
+
+const variant = computed(() => {
+  return flowVariants.find((entry) => props.id.includes(entry.match))?.variant ?? fallbackVariant
 })
 </script>
 
