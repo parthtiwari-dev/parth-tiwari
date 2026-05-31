@@ -23,6 +23,9 @@
   --amber: #d4956a;
   --amber-glow: #e8b08a;
 
+  --utility: #ff5a3d;
+  --utility-glow: #ffb061;
+
   --text-hero: clamp(3rem, 8vw, 8rem);
   --text-2xl: clamp(2rem, 4vw, 3.5rem);
   --text-xl: clamp(1.5rem, 2.5vw, 2.5rem);

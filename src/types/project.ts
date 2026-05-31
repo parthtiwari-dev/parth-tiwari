@@ -2,6 +2,16 @@ import type { SliderKey } from './slider'
 
 export type ProjectStatus = 'complete' | 'active' | 'in-progress' | 'experience'
 
+export type ProjectNodeKind =
+  | 'personal-project'
+  | 'work-experience'
+  | 'utility'
+  | 'current-build'
+
+export type ProjectOrigin = 'personal' | 'work'
+
+export type ProjectWeight = 'flagship' | 'major' | 'minor'
+
 export type NodeSize =
   | 'large'
   | 'medium-large'
@@ -66,6 +76,16 @@ export interface ProjectPanels {
   boundary: PanelBoundary
 }
 
+export interface ProjectArtifact {
+  id: string
+  name: string
+  label: string
+  summary: string
+  stack?: string[]
+  proof?: string[]
+  boundary?: string[]
+}
+
 export interface ProjectLinks {
   github?: string
   liveUI?: string
@@ -88,9 +108,13 @@ export interface Project {
   name: string
   tagline: string
   status: ProjectStatus
+  nodeKind: ProjectNodeKind
+  origin: ProjectOrigin
+  weight: ProjectWeight
   stack: string[]
   links: ProjectLinks
   panels: ProjectPanels
+  artifacts?: ProjectArtifact[]
   node: ConstellationNodeConfig
   sliderResponse?: SliderResponse
 }

@@ -1,8 +1,8 @@
 # EVIDENCEBOUND Progress Audit
 
-Date: 2026-05-29
+Date: 2026-05-31
 Branch: `dev`
-Status: Phase 1 performance gate passed; ready to plan Phase 2
+Status: Phase 1.9 constellation IA lock complete; ready to plan Phase 2 overlays
 
 ## Branch And Repo
 
@@ -78,7 +78,7 @@ Status: Phase 1 performance gate passed; ready to plan Phase 2
 | Direct `postprocessing` composer | Done with `EffectComposer`, `RenderPass`, `EffectPass`, `BloomEffect` |
 | Bloom configuration | Retuned: threshold `0.62`, smoothing `0.08`, intensity `0.58`, mipmap blur |
 | Node materials | Upgraded to `MeshStandardMaterial` |
-| Node emissive status colors | Done |
+| Node emissive colors | Done; Phase 1.9 switched visible color semantics to `nodeKind` |
 | Camera-follow point light | Done |
 | Ambient light reduction | Done, `0.55` -> `0.12` |
 | Per-node atmosphere | Done, camera-facing soft discs; hard target rings removed |
@@ -177,6 +177,25 @@ Status: Phase 1 performance gate passed; ready to plan Phase 2
 | Brave target | User-confirmed Brave now holds around `50fps+`, acceptable for Phase 1 |
 | Comet browser | Observed around `30fps`; treated as non-target browser/compositor overhead and not a Phase 1 blocker |
 | UI impact | No roadmap UI/scene refactor; visual composition preserved |
+
+## Phase 1.9 Constellation IA Lock
+
+| Task | Result |
+|---|---|
+| Node kinds | Added `personal-project`, `work-experience`, `utility`, and `current-build` metadata |
+| Node weights | Added `flagship`, `major`, and `minor` evidence-weight metadata |
+| Vivid standalone node | Replaced by the `Stick and Dot` work-experience node |
+| Vivid artifact | Preserved as the featured creative AI artifact under `Stick and Dot` |
+| Stick and Dot App | Preserved as a product-platform artifact under `Stick and Dot` |
+| Project count | Still exactly 9 constellation nodes |
+| Slider binding | `costPerQuery` now targets `stick-and-dot` |
+| Connector graph | `Stick and Dot` now connects to `OncoVerse` |
+| Scene readout | Added quiet constellation index with simple color dots and visitor-facing labels |
+| Node colors | Switched visible colors from lifecycle `status` to IA `nodeKind` so personal/work/current/utility are readable |
+| Utility color | Shifted utility nodes to hot ember so they separate from background stars and read as real tooling evidence |
+| Small-node visibility | Added a post-scale visibility floor for `medium-small`, `small`, and `tiny` nodes plus wider ambient particle clearance around minor nodes |
+| Sky-dome seam | Replaced UV-anchored nebula bands with direction-based triplanar noise/star layers so camera turns no longer expose a back-wall convergence |
+| Roadmap | Updated Phase 2 language for project and work-experience overlays |
 
 ## Current Stack
 
@@ -311,12 +330,13 @@ Status: Phase 1 performance gate passed; ready to plan Phase 2
 | Item | Decision |
 |---|---|
 | Project count | Exactly 9 projects |
-| Vivid status | `complete`, because the storyboard platform shipped |
+| Stick and Dot node | `complete` work-experience node with Vivid and Stick and Dot App artifacts |
+| Vivid status | Featured artifact under Stick and Dot; storyboard platform shipped |
 | Oracle Auto Provision status | `experience`, because it is a small infra utility |
 | OncoVerse proof | Milestones with `progressPercent: 20` |
-| Stick and Dot App | Not a 10th node; represented in Vivid/deployment context later |
+| Stick and Dot App | Not a 10th node; represented as product evidence under Stick and Dot |
 | Public links | Empty unless a safe public link is confirmed |
 
 ## Next Step
 
-Phase 1 is visually and performance-acceptable on the target Chrome path. Next: read the roadmap Phase 2 section and make the Phase 2 execution plan before adding overlays/sections/sliders.
+Phase 1 is visually and performance-acceptable on the target Chrome path, and Phase 1.9 has locked the constellation information architecture. Next: plan Phase 2 overlays/sections/sliders against the `Project` + `artifacts` model.

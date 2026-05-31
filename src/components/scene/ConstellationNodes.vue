@@ -10,7 +10,7 @@ import {
   useNodeInteraction,
 } from '@/composables/useNodeInteraction'
 import type { NodeRuntimeState } from '@/types/node'
-import type { Project, ProjectStatus } from '@/types/project'
+import type { Project, ProjectNodeKind, ProjectStatus } from '@/types/project'
 
 const emit = defineEmits<{
   hover: [payload: { projectId: string | null; clusterIndex: number | null }]
@@ -56,8 +56,24 @@ const radiusBySize: Record<Project['node']['size'], number> = {
   tiny: 0.09,
 }
 
-const colorByStatus: Record<
-  ProjectStatus,
+const minimumVisibleRadiusBySize: Record<Project['node']['size'], number> = {
+  large: 0,
+  'medium-large': 0,
+  medium: 0,
+  'medium-small': 0.094,
+  small: 0.086,
+  tiny: 0.074,
+}
+
+function visualRadiusForProject(project: Project) {
+  const scaledRadius = radiusBySize[project.node.size] * NODE_VISUAL_SCALE
+  const visibilityFloor = minimumVisibleRadiusBySize[project.node.size]
+
+  return Math.max(scaledRadius, visibilityFloor)
+}
+
+const colorByNodeKind: Record<
+  ProjectNodeKind,
   {
     hex: string
     bodyHex: string
@@ -68,7 +84,7 @@ const colorByStatus: Record<
     state: NodeRuntimeState['colorState']
   }
 > = {
-  complete: {
+  'personal-project': {
     hex: '#d7b35a',
     bodyHex: '#3a2a14',
     emissiveIntensity: 1.72,
@@ -77,32 +93,32 @@ const colorByStatus: Record<
     glintRestOpacity: 0.12,
     state: 'gold',
   },
-  active: {
-    hex: '#0f9db3',
+  'work-experience': {
+    hex: '#18a9bc',
     bodyHex: '#032733',
-    emissiveIntensity: 1.12,
+    emissiveIntensity: 1.34,
     atmosphereOpacity: 0.072,
     coronaOpacity: 0.01,
     glintRestOpacity: 0.08,
     state: 'teal-active',
   },
-  'in-progress': {
+  'current-build': {
     hex: '#c78a62',
     bodyHex: '#3f2519',
-    emissiveIntensity: 0.74,
+    emissiveIntensity: 0.88,
     atmosphereOpacity: 0.06,
     coronaOpacity: 0.008,
-    glintRestOpacity: 0.052,
+    glintRestOpacity: 0.06,
     state: 'amber',
   },
-  experience: {
-    hex: '#76a8bc',
-    bodyHex: '#06151d',
-    emissiveIntensity: 0.32,
-    atmosphereOpacity: 0.04,
-    coronaOpacity: 0.006,
-    glintRestOpacity: 0.03,
-    state: 'ice-faint',
+  utility: {
+    hex: '#ff5a3d',
+    bodyHex: '#2b0b06',
+    emissiveIntensity: 1.08,
+    atmosphereOpacity: 0.078,
+    coronaOpacity: 0.014,
+    glintRestOpacity: 0.08,
+    state: 'ember',
   },
 }
 
@@ -244,26 +260,26 @@ function createGlintMaterial(color: string) {
 
 const sceneNodes: SceneNode[] = projects.map((project, clusterIndex) => {
   const baseRadius = radiusBySize[project.node.size]
-  const visualRadius = baseRadius * NODE_VISUAL_SCALE
-  const statusColor = colorByStatus[project.status]
+  const visualRadius = visualRadiusForProject(project)
+  const nodeColor = colorByNodeKind[project.nodeKind]
   const geometry = new THREE.SphereGeometry(visualRadius, 48, 24)
   const material = new THREE.MeshStandardMaterial({
-    color: statusColor.bodyHex,
-    emissive: statusColor.hex,
-    emissiveIntensity: statusColor.emissiveIntensity,
-    metalness: project.status === 'complete' ? 0.5 : 0.9,
-    roughness: project.status === 'complete' ? 0.35 : 0.16,
+    color: nodeColor.bodyHex,
+    emissive: nodeColor.hex,
+    emissiveIntensity: nodeColor.emissiveIntensity,
+    metalness: project.nodeKind === 'utility' ? 0.72 : 0.5,
+    roughness: project.nodeKind === 'utility' ? 0.24 : 0.35,
     transparent: true,
-    opacity: project.status === 'experience' ? 0.48 : 0.96,
+    opacity: project.nodeKind === 'utility' ? 0.72 : 0.96,
   })
   const atmosphereSize = visualRadius * 5.2
   const haloGeometry = new THREE.PlaneGeometry(atmosphereSize, atmosphereSize, 1, 1)
-  const haloMaterial = createAtmosphereMaterial(statusColor.hex, statusColor.atmosphereOpacity)
-  const coronaSize = visualRadius * (project.status === 'complete' || project.status === 'active' ? 12 : 10)
+  const haloMaterial = createAtmosphereMaterial(nodeColor.hex, nodeColor.atmosphereOpacity)
+  const coronaSize = visualRadius * (project.weight === 'flagship' ? 12 : 10)
   const coronaGeometry = new THREE.PlaneGeometry(coronaSize, coronaSize, 1, 1)
-  const coronaMaterial = createCoronaMaterial(statusColor.hex, statusColor.coronaOpacity)
+  const coronaMaterial = createCoronaMaterial(nodeColor.hex, nodeColor.coronaOpacity)
   const glintGeometry = new THREE.PlaneGeometry(visualRadius * 5.6, visualRadius * 5.6, 1, 1)
-  const glintMaterial = createGlintMaterial(statusColor.hex)
+  const glintMaterial = createGlintMaterial(nodeColor.hex)
   const hitRadius = Math.max(baseRadius * 1.35, visualRadius + 0.14)
   const hitGeometry = new THREE.SphereGeometry(hitRadius, 16, 8)
   const hitMaterial = new THREE.MeshBasicMaterial({
@@ -277,9 +293,17 @@ const sceneNodes: SceneNode[] = projects.map((project, clusterIndex) => {
   const corona = new THREE.Mesh(coronaGeometry, coronaMaterial)
   const glint = new THREE.Mesh(glintGeometry, glintMaterial)
   const hitMesh = new THREE.Mesh(hitGeometry, hitMaterial)
-  const localLightIntensity = project.status === 'complete' ? 0.3 : project.status === 'active' ? 0.06 : 0
+  const localLightIntensity = project.nodeKind === 'personal-project'
+    ? 0.26
+    : project.nodeKind === 'work-experience'
+      ? 0.12
+      : project.nodeKind === 'current-build'
+        ? 0.08
+        : project.nodeKind === 'utility'
+          ? 0.07
+          : 0
   const localLight = localLightIntensity > 0
-    ? new THREE.PointLight(statusColor.hex, localLightIntensity, project.status === 'complete' ? 2.4 : 1.6, 2)
+    ? new THREE.PointLight(nodeColor.hex, localLightIntensity, project.weight === 'flagship' ? 2.4 : 1.6, 2)
     : null
 
   mesh.name = `EvidenceBoundNode:${project.id}`
@@ -322,14 +346,14 @@ const sceneNodes: SceneNode[] = projects.map((project, clusterIndex) => {
     hitMesh,
     localLight,
     baseRadius,
-    baseEmissiveIntensity: statusColor.emissiveIntensity,
-    atmosphereOpacity: statusColor.atmosphereOpacity,
-    coronaOpacity: statusColor.coronaOpacity,
-    glintRestOpacity: statusColor.glintRestOpacity,
+    baseEmissiveIntensity: nodeColor.emissiveIntensity,
+    atmosphereOpacity: nodeColor.atmosphereOpacity,
+    coronaOpacity: nodeColor.coronaOpacity,
+    glintRestOpacity: nodeColor.glintRestOpacity,
     runtimeState: {
       projectId: project.id,
       scale: 1,
-      colorState: statusColor.state,
+      colorState: nodeColor.state,
       ringState: ringByStatus[project.status],
       clusterBrightness: 1,
       hovered: false,
@@ -411,7 +435,7 @@ const loopStop = useLoop().onBeforeRender(({ elapsed }) => {
       node.runtimeState.hovered ? 0.22 : node.glintRestOpacity,
       0.08,
     )
-    node.mesh.material.opacity = node.runtimeState.active ? 1 : node.project.status === 'experience' ? 0.48 : 0.96
+    node.mesh.material.opacity = node.runtimeState.active ? 1 : node.project.nodeKind === 'utility' ? 0.72 : 0.96
 
     if (activeCamera) {
       node.corona.quaternion.copy(activeCamera.quaternion)

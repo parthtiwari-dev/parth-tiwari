@@ -54,6 +54,30 @@ function clusterRadius(size: Project['node']['size']) {
   return radiusBySize[size]
 }
 
+function nodeClearanceRadius(project: Project) {
+  const radiusBySize: Record<Project['node']['size'], number> = {
+    large: 1.18,
+    'medium-large': 1.04,
+    medium: 0.9,
+    'medium-small': 0.86,
+    small: 0.84,
+    tiny: 0.8,
+  }
+
+  return radiusBySize[project.node.size]
+}
+
+function isInsideNodeClearance(x: number, y: number, z: number, projects: Project[]) {
+  return projects.some((project) => {
+    const clearance = nodeClearanceRadius(project)
+    const dx = x - project.node.position.x
+    const dy = y - project.node.position.y
+    const dz = z - project.node.position.z
+
+    return dx * dx + dy * dy + dz * dz < clearance * clearance
+  })
+}
+
 function assignStarWarmth(random: () => number, coldChance: number) {
   const roll = random()
 
@@ -79,14 +103,28 @@ function assignAmbientParticle(
   driftSpeeds: Float32Array,
   twinkles: Float32Array,
   random: () => number,
+  projects: Project[],
 ) {
   const positionIndex = index * 3
+  let x = 0
+  let y = 0
+  let z = 0
 
   // Volume tightened from 70×34×66 to 48×28×42.
   // Same count in a smaller volume = meaningfully denser field in view.
-  positions[positionIndex]     = (random() - 0.5) * 48   // was 70
-  positions[positionIndex + 1] = (random() - 0.48) * 28  // was 34
-  positions[positionIndex + 2] = -2 + random() * 42       // was 66
+  for (let attempt = 0; attempt < 8; attempt += 1) {
+    x = (random() - 0.5) * 48
+    y = (random() - 0.48) * 28
+    z = -2 + random() * 42
+
+    if (!isInsideNodeClearance(x, y, z, projects)) {
+      break
+    }
+  }
+
+  positions[positionIndex] = x
+  positions[positionIndex + 1] = y
+  positions[positionIndex + 2] = z
   clusterIndices[index] = -1
 
   const tier = random()
@@ -190,6 +228,7 @@ export function useParticleField(projects: Project[]) {
         driftSpeeds,
         twinkles,
         random,
+        projects,
       )
       continue
     }

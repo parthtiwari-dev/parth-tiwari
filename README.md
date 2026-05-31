@@ -6,7 +6,7 @@ Systems that act only after the evidence agrees.
 
 The build source of truth is [docs/EVIDENCEBOUND_BUILD_ROADMAP.md](docs/EVIDENCEBOUND_BUILD_ROADMAP.md).
 
-The current implementation has completed **Phase 1: Core 3D Infrastructure**. Phase 2 planning is next.
+The current implementation has completed **Phase 1.9: Constellation Information Architecture Lock**. Phase 2 planning is next.
 
 ## Stack
 
@@ -32,7 +32,8 @@ Vite and TypeScript were upgraded because the scaffold typechecked and built cle
 - Phase 0 complete: design tokens, typography, glass/plain styles, canonical project data, Pinia stores, shared primitives, favicon, OG image, and head metadata.
 - Phase 1 complete: TresJS scene shell, sky dome, particles, refusal ripple, scroll camera path, 9 project nodes, connector projection, hover labels, bloom, node glow, and Phase 0 handoff.
 - Phase 1 performance gate passed on the target Chrome path after capping canvas DPR at `1.25`.
-- Next step: read the roadmap Phase 2 section and plan overlays/sections/sliders before implementation.
+- Phase 1.9 complete: node kind/weight metadata is locked, Vivid is now a featured artifact under the Stick and Dot work-experience node, and the constellation readout explains kind/weight.
+- Next step: plan Phase 2 overlays/sections/sliders against the project + artifact model before implementation.
 
 ## Setup
 
@@ -67,6 +68,7 @@ npm.cmd run preview
 - Phase -1 gate: scaffold builds, typechecks, audits cleanly, and branch is `dev`.
 - Phase 0 gate: tokens, typography, glass/plain styles, types, project data, stores, shared primitives, favicon, and OG image compile with zero TypeScript errors. Complete.
 - Phase 1 gate: cinematic constellation renders, scroll camera path works, all 9 nodes are visible, hover labels work, `?plain=1` skips 3D, Chrome reaches about 60fps, and checks pass. Complete.
+- Phase 1.9 gate: constellation information architecture is locked before overlays: node kind, origin, weight, and child artifacts compile cleanly. Complete.
 - Later phase gates remain exactly as defined in the roadmap.
 
 ## Performance Notes

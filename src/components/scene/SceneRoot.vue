@@ -97,6 +97,76 @@ function handleSelect(projectId: string) {
       >
         EVIDENCEBOUND / 9 SYSTEMS
       </p>
+
+      <div class="constellation-index pointer-events-none absolute bottom-6 right-6 z-30 hidden md:block">
+        <p class="constellation-index__title">CONSTELLATION INDEX</p>
+        <p><span class="constellation-index__dot constellation-index__dot--personal"></span> personal project</p>
+        <p><span class="constellation-index__dot constellation-index__dot--work"></span> work experience</p>
+        <p><span class="constellation-index__dot constellation-index__dot--current"></span> currently building</p>
+        <p><span class="constellation-index__dot constellation-index__dot--utility"></span> utility / tooling</p>
+        <p class="constellation-index__note">bigger node = stronger evidence</p>
+      </div>
     </div>
   </section>
 </template>
+
+<style scoped>
+.constellation-index {
+  min-width: 12.5rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--ice-faint) 56%, transparent);
+  border-radius: 0.375rem;
+  background: color-mix(in srgb, var(--bg) 58%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--ice) 10%, transparent),
+    0 1rem 2.5rem rgb(0 0 0 / 0.22);
+  backdrop-filter: blur(14px) saturate(1.24);
+  color: var(--ice-muted);
+  font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  line-height: 1.7;
+  opacity: 0.74;
+  text-transform: uppercase;
+}
+
+.constellation-index__title {
+  color: var(--gold-glow);
+  margin-bottom: 0.25rem;
+}
+
+.constellation-index__dot {
+  aspect-ratio: 1;
+  border-radius: 999px;
+  box-shadow: 0 0 0.55rem currentColor;
+  display: inline-block;
+  margin-right: 0.45rem;
+  transform: translateY(0.04rem);
+  width: 0.42rem;
+}
+
+.constellation-index__dot--personal {
+  background: var(--gold);
+  color: var(--gold);
+}
+
+.constellation-index__dot--work {
+  background: var(--teal-active);
+  color: var(--teal-active);
+}
+
+.constellation-index__dot--current {
+  background: var(--amber);
+  color: var(--amber);
+}
+
+.constellation-index__dot--utility {
+  background: var(--utility);
+  color: var(--utility);
+}
+
+.constellation-index__note {
+  color: color-mix(in srgb, var(--ice-muted) 70%, transparent);
+  margin-top: 0.2rem;
+}
+</style>

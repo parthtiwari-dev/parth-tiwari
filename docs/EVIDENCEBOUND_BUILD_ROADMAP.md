@@ -154,6 +154,16 @@ parth-tiwari/
 ```typescript
 export type ProjectStatus = 'complete' | 'active' | 'in-progress' | 'experience'
 
+export type ProjectNodeKind =
+  | 'personal-project'
+  | 'work-experience'
+  | 'utility'
+  | 'current-build'
+
+export type ProjectOrigin = 'personal' | 'work'
+
+export type ProjectWeight = 'flagship' | 'major' | 'minor'
+
 export type NodeSize =
   | 'large'
   | 'medium-large'
@@ -220,6 +230,16 @@ export interface ProjectPanels {
   boundary: PanelBoundary
 }
 
+export interface ProjectArtifact {
+  id: string
+  name: string
+  label: string
+  summary: string
+  stack?: string[]
+  proof?: string[]
+  boundary?: string[]
+}
+
 export interface ProjectLinks {
   github?: string
   liveUI?: string
@@ -242,9 +262,13 @@ export interface Project {
   name: string                      // display name: 'SecondSelf'
   tagline: string                   // one-line label shown in node hover
   status: ProjectStatus
+  nodeKind: ProjectNodeKind         // personal-project, work-experience, utility, current-build
+  origin: ProjectOrigin             // personal or work evidence
+  weight: ProjectWeight             // flagship, major, minor; maps to visual importance
   stack: string[]
   links: ProjectLinks
   panels: ProjectPanels
+  artifacts?: ProjectArtifact[]     // child evidence under work/experience nodes
   node: ConstellationNodeConfig
   sliderResponse?: SliderResponse
 }
@@ -299,7 +323,7 @@ Camera flies in from high-and-behind, arcs down into the field, lands near Secon
 | Project | x | y | z | Size |
 |---|---|---|---|---|
 | SecondSelf | 0 | 0 | 2 | large |
-| Vivid | −5 | 0.5 | 4 | large |
+| Stick and Dot | −5 | 0.5 | 4 | large |
 | QueryPilot | 5 | 0.3 | 4 | medium-large |
 | UPI Fraud Engine | −4 | −0.3 | 8 | medium |
 | MedRAG | 3.5 | 1.0 | 8 | medium |
@@ -316,12 +340,80 @@ Camera flies in from high-and-behind, arcs down into the field, lands near Secon
 | SecondSelf | QueryPilot | Correction loop architecture |
 | QueryPilot | UPI Fraud Engine | Constraint enforcement pattern |
 | MedRAG | Fraud Risk Intel | Explainability focus |
-| Vivid | OncoVerse | Shared Three.js/diffusion tooling |
+| Stick and Dot | OncoVerse | Shared Three.js/diffusion tooling |
 | Oracle Auto Provision | SecondSelf | Infrastructure dependency |
 
 Connector opacity: 0.08, color: `--ice-faint`. Drawn as SVG `<line>` elements projected from 3D world coords to screen coords via `camera.project()` each frame.
 
 **`isPaused` flag:** `SceneRoot.vue` exposes a boolean `isPaused` that is set to `true` when `overlayStore.isOpen === true`. While `isPaused`, the `camera.project()` SVG sync in `ConnectorLines.vue` is skipped — the overlay covers the constellation entirely, so projection is wasted work. Reset to `false` on overlay close.
+
+---
+
+## Phase 1.9 — Constellation Information Architecture Lock
+
+This phase locks what each constellation node means before Phase 2 overlays are built.
+
+### Node Kinds
+
+Every node has a `nodeKind`:
+
+| Kind | Meaning |
+|---|---|
+| `personal-project` | A self-owned system or portfolio project |
+| `work-experience` | A company/internship/work container node with child artifacts |
+| `utility` | A small infrastructure/tooling artifact |
+| `current-build` | An active product direction still under construction |
+
+### Node Weight
+
+Every node has a `weight`:
+
+| Weight | Meaning |
+|---|---|
+| `flagship` | Identity-level evidence; largest visual importance |
+| `major` | Strong portfolio system evidence |
+| `minor` | Supporting evidence, utility, or earlier/smaller work |
+
+### Stick and Dot Work Node
+
+`Stick and Dot` replaces `Vivid` as the standalone constellation node. `Vivid` remains a featured child artifact inside that work-experience node.
+
+Stick and Dot node:
+
+- `id`: `stick-and-dot`
+- `nodeKind`: `work-experience`
+- `origin`: `work`
+- `weight`: `flagship`
+- Tagline: `AI/ML Development Intern: Vivid storyboard AI + editorial platform.`
+- Child artifacts:
+  - `Vivid`
+  - `Stick and Dot App`
+
+Phase 2 overlays must support both project overlays and work-experience overlays. The Stick and Dot overlay uses:
+
+1. Role/problem
+2. Vivid architecture
+3. Stick and Dot App/product evidence
+4. Boundaries and what not to claim
+
+### Constellation Readout
+
+The scene includes a quiet readout:
+
+```
+CONSTELLATION INDEX
+[gold dot] personal project
+[teal dot] work experience
+[amber dot] currently building
+[ember dot] utility / tooling
+bigger node = stronger evidence
+```
+
+Node color follows `nodeKind`; status remains lifecycle/proof state. This keeps `SecondSelf` gold as a personal flagship even while its status is `active`, and keeps `Stick and Dot` teal as work experience even when its evidence is complete.
+
+No 10th node is added for Stick and Dot App. It is evidence under the Stick and Dot work node.
+
+Sky-dome shader rule: large nebula and star layers must use direction-based or triplanar procedural coordinates, not sphere UV bands, so every camera angle has complete depth and no back-wall seam or pole convergence.
 
 ---
 
@@ -537,6 +629,8 @@ export function useCameraPath(camera: THREE.Camera) {
 | small | 0.14 |
 | tiny | 0.09 |
 
+Renderer rule: keep data sizes as above, but apply a small-size visibility floor after `NODE_VISUAL_SCALE` so `medium-small`, `small`, and `tiny` nodes remain distinguishable from the star field. This preserves the evidence-weight hierarchy while preventing minor nodes from disappearing in dense space scenes.
+
 ### Acceptance Criteria — Phase 1
 
 - [ ] Scene renders at 60fps on target hardware (Chrome, 1080p, mid-tier laptop)
@@ -561,7 +655,7 @@ export function useCameraPath(camera: THREE.Camera) {
 1. Boot Sequence
 2. Hero + EvidenceDataBar
 3. Constellation section wrapper + legend
-4. Project Overlay + FilmStrip (all 9 projects × 4 panels)
+4. Project/Experience Overlay + FilmStrip (all 9 nodes × 4 panels)
 5. Cost of Intelligence (sliders + reactive 3D binding)
 6. Deployment Log
 7. Training Data
@@ -643,11 +737,19 @@ export function useCharacterSplit(
 
 ---
 
-### Section 4 — Project Overlay (Film Strip)
+### Section 4 — Project / Experience Overlay (Film Strip)
 
 **Components:** `ProjectOverlay.vue`, `FilmStrip.vue`, `FilmStripHeader.vue`, panels ×4
 
-Triggered by clicking any constellation node via `overlayStore.open(projectId)`.
+Triggered by clicking any constellation node via `overlayStore.open(projectId)`. The overlay label and copy adapt to `project.nodeKind`, so personal projects and work-experience nodes use the same film-strip shell without pretending they are the same kind of evidence.
+
+**Work-experience node rule:** A `work-experience` node can include `artifacts[]`. For `stick-and-dot`, Vivid and Stick and Dot App are child artifacts inside the one work node, not additional constellation nodes.
+
+**Stick and Dot panel mapping:**
+- Panel 1: role/problem
+- Panel 2: Vivid architecture
+- Panel 3: Stick and Dot App/product evidence
+- Panel 4: boundaries/what not to claim
 
 **Entrance animation (Phase 3):** `clip-path: inset(100% 0 0 0) → inset(0 0 0 0)`, 400ms `--ease-out-expo`.
 
@@ -714,7 +816,7 @@ ScrollTrigger.create({
 |---|---|---|---|---|---|---|
 | evidenceStrictness | Permissive | Bounded | refusal rate | ~20% | adversarial inputs | medrag |
 | latencyBudget | Fast | Accurate | correction depth | +5.7pp | on 82-query benchmark | querypilot |
-| costPerQuery | Cheap | Rich | cost per storyboard | $0.04–0.08 | RunPod A40 | vivid |
+| costPerQuery | Cheap | Rich | cost per storyboard | $0.04–0.08 | RunPod A40 | stick-and-dot |
 | alertBudget | Aggressive | Conservative | precision | 92.06% | at 0.5% alert budget | upi-fraud |
 | automationVsControl | Autonomous | Supervised | apply mode | human-gated | Telegram review queue | secondself |
 
@@ -747,6 +849,8 @@ AI and ML Development Intern  ·  Remote  ·  Early-stage AI
 ```
 
 Left border: 2px vertical line in `--gold` for active, `--ice-faint` for past.
+
+This deployment-log card expands the same `stick-and-dot` work-experience node from the constellation. `Vivid` and `Stick and Dot App` stay as child artifacts/evidence, not separate nodes.
 
 ---
 
@@ -810,7 +914,7 @@ $0.168 total RAG cost        Mar 2026 → Present
 ```
 
 **Right column — WhoamiTerminal.vue:**
-Uses `useCharacterSplit`. Auto-types on scroll enter. `useAge()` for the age value.
+Uses `useCharacterSplit`. Auto-types on scroll enter. No age composable; output stays direct and public-safe.
 
 ```
 > whoami
@@ -1201,7 +1305,7 @@ Phase 0:
   → vite.config.ts
   → src/types/* (all 3 type files)
   → src/data/projects.ts (all 9 projects, 100% populated)
-  → src/composables/usePlainMode.ts + useAge.ts
+  → src/composables/usePlainMode.ts
   → shared components (GlassPanel, GeistChip, MetricCountUp, StatusBadge, CopiedToast)
   → public/favicon.svg
   → GATE: TypeScript compile with zero errors before Phase 1 begins
