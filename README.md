@@ -6,7 +6,7 @@ Systems that act only after the evidence agrees.
 
 The build source of truth is [docs/EVIDENCEBOUND_BUILD_ROADMAP.md](docs/EVIDENCEBOUND_BUILD_ROADMAP.md).
 
-The current implementation has completed **Phase 2 Step 1: Boot Sequence**. The next Phase 2 step is the first real hero/data layer.
+The current implementation has completed **Phase 2 Step 2: Hero Layer**. The next Phase 2 step is the constellation wrapper/overlay path.
 
 ## Stack
 
@@ -34,7 +34,8 @@ Vite and TypeScript were upgraded because the scaffold typechecked and built cle
 - Phase 1 performance gate passed on the target Chrome path after capping canvas DPR at `1.25`.
 - Phase 1.9 complete: node kind/weight metadata is locked, Vivid is now a featured artifact under the Stick and Dot work-experience node, and the constellation readout explains kind/weight.
 - Phase 2 Step 1 complete: boot overlay runs on normal page loads, uses the live project count, supports skip/Escape, and is skipped for `?plain=1` plus reduced-motion users.
-- Next step: build the Phase 2 HeroSection and EvidenceDataBar against the project + artifact model.
+- Phase 2 Step 2 complete: lower-left cinematic Hero renders over the constellation, the Phase 0 console is removed from normal `/`, and the bottom data bar was intentionally removed after visual review.
+- Next step: continue Phase 2 with constellation wrapper/legend cleanup and then project/experience overlays.
 
 ## Setup
 
@@ -71,6 +72,7 @@ npm.cmd run preview
 - Phase 1 gate: cinematic constellation renders, scroll camera path works, all 9 nodes are visible, hover labels work, `?plain=1` skips 3D, Chrome reaches about 60fps, and checks pass. Complete.
 - Phase 1.9 gate: constellation information architecture is locked before overlays: node kind, origin, weight, and child artifacts compile cleanly. Complete.
 - Phase 2 Step 1 gate: boot overlay fades into the warmed constellation, supports skip/Escape, and skips for plain/reduced-motion paths. Complete.
+- Phase 2 Step 2 gate: Hero is readable over the tuned constellation, normal `/` no longer shows the Phase 0 scaffold, and end-scroll handoff shading is removed. Complete.
 - Later phase gates remain exactly as defined in the roadmap.
 
 ## Performance Notes

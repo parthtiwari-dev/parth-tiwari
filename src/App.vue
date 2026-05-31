@@ -4,6 +4,7 @@ import { sliderConfigs } from '@/data/projects'
 import { usePlainMode } from '@/composables/usePlainMode'
 import { useProjectStore } from '@/stores/projectStore'
 import BootSequence from '@/components/sections/BootSequence.vue'
+import HeroSection from '@/components/sections/HeroSection.vue'
 import SceneRoot from '@/components/scene/SceneRoot.vue'
 import GlassPanel from '@/components/shared/GlassPanel.vue'
 import GeistChip from '@/components/shared/GeistChip.vue'
@@ -15,9 +16,12 @@ const { isPlain } = usePlainMode()
 const projectStore = useProjectStore()
 const cursorPosition = ref({ x: -100, y: -100 })
 const bootComplete = ref(isPlain.value)
+const isDebug = ref(false)
 
 const featuredProjects = computed(() => projectStore.projects.slice(0, 4))
 const firstMetric = computed(() => projectStore.getById('querypilot')?.panels.proof.metrics?.[0])
+const showPhaseZeroConsole = computed(() => isPlain.value || isDebug.value)
+const showPhaseBridge = computed(() => !isPlain.value && isDebug.value)
 
 function handlePointerMove(event: PointerEvent) {
   cursorPosition.value = { x: event.clientX, y: event.clientY }
@@ -28,6 +32,8 @@ function handleBootComplete() {
 }
 
 onMounted(() => {
+  const params = new URLSearchParams(window.location.search)
+  isDebug.value = params.get('debug') === '1'
   window.addEventListener('pointermove', handlePointerMove, { passive: true })
 })
 
@@ -49,13 +55,21 @@ onUnmounted(() => {
       @complete="handleBootComplete"
     />
 
+    <HeroSection
+      v-if="bootComplete || isPlain"
+      :is-plain="isPlain"
+    />
+
     <div
-      v-if="!isPlain"
+      v-if="showPhaseBridge"
       aria-hidden="true"
       class="phase-bridge h-[118vh]"
     />
 
-    <section class="phase-zero-console mx-auto flex min-h-[92vh] max-w-6xl flex-col justify-center gap-10 px-6 py-10">
+    <section
+      v-if="showPhaseZeroConsole"
+      class="phase-zero-console mx-auto flex min-h-[92vh] max-w-6xl flex-col justify-center gap-10 px-6 py-10"
+    >
       <div class="grid gap-5">
         <p class="type-mono text-[length:var(--text-xs)] uppercase tracking-[0.18em] text-[color:var(--gold)]">
           Phase 0 / Evidence console surface

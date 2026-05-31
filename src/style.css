@@ -14,28 +14,6 @@ body {
   background: var(--bg);
 }
 
-#constellation-section {
-  --constellation-fade: 0;
-}
-
-.constellation-viewport::after {
-  position: absolute;
-  inset: 0;
-  z-index: 30;
-  pointer-events: none;
-  content: '';
-  opacity: var(--constellation-fade);
-  background:
-    radial-gradient(circle at 54% 14%, rgba(11, 182, 214, 0.08), transparent 36%),
-    linear-gradient(
-      180deg,
-      rgba(5, 11, 18, 0) 0%,
-      rgba(4, 12, 22, 0.12) 38%,
-      rgba(3, 8, 15, 0.58) 76%,
-      var(--bg) 100%
-    );
-}
-
 .phase-bridge {
   position: relative;
   z-index: 2;

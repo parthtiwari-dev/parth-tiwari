@@ -2,7 +2,7 @@
 
 Date: 2026-05-31
 Branch: `dev`
-Status: Phase 2 Step 1 boot sequence complete; ready for HeroSection and EvidenceDataBar
+Status: Phase 2 Step 2 hero layer complete; ready for constellation wrapper/overlay work
 
 ## Branch And Repo
 
@@ -209,6 +209,17 @@ Status: Phase 2 Step 1 boot sequence complete; ready for HeroSection and Evidenc
 | Accessibility | Terminal status uses `role="status"` / `aria-live="polite"` and skip is a real button |
 | Scope | No HeroSection, EvidenceDataBar, overlays, sliders, or camera/scene visual changes |
 
+## Phase 2 Step 2 Hero Layer
+
+| Task | Result |
+|---|---|
+| Hero layer | Added lower-left cinematic `PARTH TIWARI` over the constellation |
+| Tagline | Added `useCharacterSplit` typewriter at roadmap `18ms` timing |
+| Scroll cue | Added pulsing `scroll to enter the field` cue, hidden after interaction |
+| Phase 0 scaffold | Removed from normal `/`; still available through plain/debug wiring if needed |
+| Bottom data bar | Intentionally removed after visual review because it cluttered the constellation |
+| End-scroll shading | Removed old Phase 0 handoff fade so the final constellation no longer darkens |
+
 ## Current Stack
 
 | Package | Version |
@@ -244,6 +255,13 @@ Status: Phase 2 Step 1 boot sequence complete; ready for HeroSection and Evidenc
 |---|---|
 | Boot overlay | `src/components/sections/BootSequence.vue` |
 | Boot state/timing | `src/composables/useBootSequence.ts` |
+
+## Phase 2 Step 2 Files Added
+
+| Area | Files |
+|---|---|
+| Hero | `src/components/sections/HeroSection.vue`, `HeroName.vue`, `HeroTagline.vue` |
+| Text animation | `src/composables/useCharacterSplit.ts` |
 
 ## Phase 1 Files Added
 
@@ -360,4 +378,4 @@ Status: Phase 2 Step 1 boot sequence complete; ready for HeroSection and Evidenc
 
 ## Next Step
 
-Phase 2 Step 1 is complete. Next: build the Phase 2 HeroSection and EvidenceDataBar against the `Project` + `artifacts` model, then continue toward overlays/sections/sliders.
+Phase 2 Step 2 is complete. Next: continue Phase 2 with constellation wrapper/legend cleanup and then project/experience overlays against the `Project` + `artifacts` model.

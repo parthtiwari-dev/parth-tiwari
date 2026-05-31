@@ -25,6 +25,7 @@ export function useBootSequence(options: UseBootSequenceOptions) {
   let timeline: gsap.core.Timeline | null = null
   let skipTimer: number | null = null
   let completeTimer: number | null = null
+  let fadeFallbackTimer: number | null = null
   let completeDispatched = false
 
   function clearTimers() {
@@ -36,6 +37,11 @@ export function useBootSequence(options: UseBootSequenceOptions) {
     if (completeTimer !== null) {
       window.clearTimeout(completeTimer)
       completeTimer = null
+    }
+
+    if (fadeFallbackTimer !== null) {
+      window.clearTimeout(fadeFallbackTimer)
+      fadeFallbackTimer = null
     }
   }
 
@@ -72,6 +78,8 @@ export function useBootSequence(options: UseBootSequenceOptions) {
       ease: 'power2.out',
       onComplete: complete,
     })
+
+    fadeFallbackTimer = window.setTimeout(complete, FADE_DURATION_SECONDS * 1000 + 80)
   }
 
   function skip() {

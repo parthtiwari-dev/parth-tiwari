@@ -23,18 +23,15 @@ export function useCameraPath(camera: THREE.Camera | undefined) {
   const activeCamera = camera
   const path = new THREE.CatmullRomCurve3(CAMERA_POINTS, false, 'catmullrom', 0.5)
   const cameraProgress = { value: 0 }
-  const section = document.getElementById('constellation-section')
   const lookTarget = new THREE.Vector3()
 
   function updateCamera() {
     const point = path.getPoint(cameraProgress.value)
     const turnMix = THREE.MathUtils.smoothstep(cameraProgress.value, TURN_START, TURN_END)
-    const handoffFade = THREE.MathUtils.smoothstep(cameraProgress.value, 0.96, 1)
 
     activeCamera.position.copy(point)
     lookTarget.copy(LOOK_AT_POINT).lerp(FINAL_LOOK_AT_POINT, turnMix)
     activeCamera.lookAt(lookTarget)
-    section?.style.setProperty('--constellation-fade', handoffFade.toFixed(3))
   }
 
   updateCamera()
@@ -52,7 +49,6 @@ export function useCameraPath(camera: THREE.Camera | undefined) {
   })
 
   const cleanup = () => {
-    section?.style.setProperty('--constellation-fade', '0')
     tween.scrollTrigger?.kill()
     tween.kill()
   }
