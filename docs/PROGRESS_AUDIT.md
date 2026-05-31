@@ -363,6 +363,7 @@ Status: Phase 2 Step 2 hero layer complete; ready for constellation wrapper/over
 | Dev-only TresJS lifecycle warnings | Observed in Vite dev mode; no page errors and production build is clean |
 | External font network in sandbox | Headless QA reported `ERR_NETWORK_ACCESS_DENIED` for remote fonts; expected in restricted sandbox |
 | Boot visual QA | Browser verification still needs a live local dev session after implementation; static build and type gates pass |
+| Overlay project links | Add a contextual link/action row later: GitHub, live UI, API docs, demo video, write-up, or deployment link only when each project has a confirmed safe public URL |
 
 ## Phase 0 Data Decisions
 
