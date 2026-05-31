@@ -399,6 +399,16 @@ Status: Phase 2 Step 2 hero layer complete; ready for constellation wrapper/over
 | Diagram | `BrokenFlowDiagram.vue` |
 | Gate | `src/data/overlayReady.ts` derives all ready ids from canonical project data |
 
+## Phase 2 Section 5 Cost Of Intelligence Deferral
+
+| Item | Status |
+|---|---|
+| Decision | Deferred; do not add a standalone section after the constellation |
+| Reason | A separate Cost section breaks the cinematic constellation flow and feels redundant |
+| Future placement | Fold tradeoff controls into project panels later, likely as per-project evidence/tradeoff treatment |
+| Data retained | Existing `sliderConfigs`, `sliderStore`, and `sliderResponse` fields remain for future panel integration |
+| Removed | Standalone Cost section wiring and temporary Cost components |
+
 ## Next Step
 
-Phase 2 project/experience overlay section is complete for all 9 nodes. Next: user manual QA of all overlays, then continue Phase 2 with the Cost of Intelligence section.
+Cost of Intelligence is deferred into future project-panel polish. Next: continue Phase 2 with the Deployment Log.
