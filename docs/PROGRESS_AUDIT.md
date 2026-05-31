@@ -2,7 +2,7 @@
 
 Date: 2026-05-31
 Branch: `dev`
-Status: Phase 1.9 constellation IA lock complete; ready to plan Phase 2 overlays
+Status: Phase 2 Step 1 boot sequence complete; ready for HeroSection and EvidenceDataBar
 
 ## Branch And Repo
 
@@ -197,6 +197,18 @@ Status: Phase 1.9 constellation IA lock complete; ready to plan Phase 2 overlays
 | Sky-dome seam | Replaced UV-anchored nebula bands with direction-based triplanar noise/star layers so camera turns no longer expose a back-wall convergence |
 | Roadmap | Updated Phase 2 language for project and work-experience overlays |
 
+## Phase 2 Step 1 Boot Sequence
+
+| Task | Result |
+|---|---|
+| `BootSequence.vue` | Added full-screen fixed near-black CRYO-GOLD terminal overlay |
+| `useBootSequence.ts` | Added timed line reveal, skip reveal, auto fade, Escape handling, and reduced-motion skip |
+| Live project count | Boot line reads `projectStore.projectCount` instead of hardcoding `9` |
+| Scene warmup | `SceneRoot` remains mounted behind the boot overlay |
+| Plain mode | `?plain=1` skips boot and 3D, preserving fallback content |
+| Accessibility | Terminal status uses `role="status"` / `aria-live="polite"` and skip is a real button |
+| Scope | No HeroSection, EvidenceDataBar, overlays, sliders, or camera/scene visual changes |
+
 ## Current Stack
 
 | Package | Version |
@@ -226,6 +238,13 @@ Status: Phase 1.9 constellation IA lock complete; ready to plan Phase 2 overlays
 | Assets | `public/favicon.svg`, `public/og.png` |
 | Head metadata | `index.html` Open Graph, canonical, favicon, font preconnects |
 
+## Phase 2 Step 1 Files Added
+
+| Area | Files |
+|---|---|
+| Boot overlay | `src/components/sections/BootSequence.vue` |
+| Boot state/timing | `src/composables/useBootSequence.ts` |
+
 ## Phase 1 Files Added
 
 | Area | Files |
@@ -252,6 +271,7 @@ Status: Phase 1.9 constellation IA lock complete; ready to plan Phase 2 overlays
 | `npm.cmd run typecheck` | Pass |
 | `npm.cmd run build` | Pass |
 | `npm.cmd audit --audit-level=moderate` | Pass, 0 vulnerabilities |
+| `git diff --check` | Pass |
 | Manual app run | User confirmed app runs fine |
 | Phase 1 browser visual QA | Pass for structure and interaction; Codex ran isolated Vite/Chrome sweeps and stopped the temp server |
 | Latest visual sweep | Pass: Phase 1.8 camera correction browser QA captured 20 scroll stops in `.phase1-qa-22`; hover probes pass at early, mid, and late visible constellation positions; `?plain=1` still skips 3D |
@@ -324,6 +344,7 @@ Status: Phase 1.9 constellation IA lock complete; ready to plan Phase 2 overlays
 | Phase 1 manual FPS/hover/scroll visual checks | Browser screenshot sweep completed; user subjective review still needed |
 | Dev-only TresJS lifecycle warnings | Observed in Vite dev mode; no page errors and production build is clean |
 | External font network in sandbox | Headless QA reported `ERR_NETWORK_ACCESS_DENIED` for remote fonts; expected in restricted sandbox |
+| Boot visual QA | Browser verification still needs a live local dev session after implementation; static build and type gates pass |
 
 ## Phase 0 Data Decisions
 
@@ -339,4 +360,4 @@ Status: Phase 1.9 constellation IA lock complete; ready to plan Phase 2 overlays
 
 ## Next Step
 
-Phase 1 is visually and performance-acceptable on the target Chrome path, and Phase 1.9 has locked the constellation information architecture. Next: plan Phase 2 overlays/sections/sliders against the `Project` + `artifacts` model.
+Phase 2 Step 1 is complete. Next: build the Phase 2 HeroSection and EvidenceDataBar against the `Project` + `artifacts` model, then continue toward overlays/sections/sliders.

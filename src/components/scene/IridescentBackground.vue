@@ -6,7 +6,7 @@ import fragmentShader from '@/shaders/iridescent.frag.glsl'
 import vertexShader from '@/shaders/iridescent.vert.glsl'
 
 const { camera, scene } = useTres()
-const geometry = new THREE.SphereGeometry(90, 64, 32)
+const geometry = new THREE.SphereGeometry(90, 48, 24)
 const uniforms = {
   uTime: { value: 0 },
   uHueShift: { value: 0 },

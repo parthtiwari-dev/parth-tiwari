@@ -53,7 +53,7 @@ function handleSelect(projectId: string) {
       <TresCanvas
         class="absolute inset-0 z-0 h-full w-full"
         :alpha="true"
-        :antialias="true"
+        :antialias="false"
         clear-color="#010409"
         :dpr="dpr"
         :enable-provide-bridge="false"

@@ -3,6 +3,7 @@ import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { sliderConfigs } from '@/data/projects'
 import { usePlainMode } from '@/composables/usePlainMode'
 import { useProjectStore } from '@/stores/projectStore'
+import BootSequence from '@/components/sections/BootSequence.vue'
 import SceneRoot from '@/components/scene/SceneRoot.vue'
 import GlassPanel from '@/components/shared/GlassPanel.vue'
 import GeistChip from '@/components/shared/GeistChip.vue'
@@ -13,12 +14,17 @@ import CopiedToast from '@/components/shared/CopiedToast.vue'
 const { isPlain } = usePlainMode()
 const projectStore = useProjectStore()
 const cursorPosition = ref({ x: -100, y: -100 })
+const bootComplete = ref(isPlain.value)
 
 const featuredProjects = computed(() => projectStore.projects.slice(0, 4))
 const firstMetric = computed(() => projectStore.getById('querypilot')?.panels.proof.metrics?.[0])
 
 function handlePointerMove(event: PointerEvent) {
   cursorPosition.value = { x: event.clientX, y: event.clientY }
+}
+
+function handleBootComplete() {
+  bootComplete.value = true
 }
 
 onMounted(() => {
@@ -36,6 +42,12 @@ onUnmounted(() => {
     :class="{ 'plain-mode': isPlain }"
   >
     <SceneRoot />
+
+    <BootSequence
+      v-if="!isPlain && !bootComplete"
+      :project-count="projectStore.projectCount"
+      @complete="handleBootComplete"
+    />
 
     <div
       v-if="!isPlain"

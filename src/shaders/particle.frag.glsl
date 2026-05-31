@@ -1,4 +1,4 @@
-precision highp float;
+precision mediump float;
 
 varying float vAlpha;
 varying float vBrightness;
