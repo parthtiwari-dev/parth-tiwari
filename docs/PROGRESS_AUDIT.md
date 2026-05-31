@@ -376,6 +376,28 @@ Status: Phase 2 Step 2 hero layer complete; ready for constellation wrapper/over
 | Stick and Dot App | Not a 10th node; represented as product evidence under Stick and Dot |
 | Public links | Empty unless a safe public link is confirmed |
 
+## Phase 2 Section 3/4 Overlay Slice
+
+| Item | Status |
+|---|---|
+| Scope | Same-page film-strip overlay vertical slice |
+| Overlay-ready nodes | `secondself`, `stick-and-dot` |
+| Data source | `src/data/projects.ts`, verified against safe README/docs from the real SecondSelf, Vivid, and Stick and Dot App folders |
+| Click behavior | Ready nodes open `overlayStore.open(projectId)`; other nodes keep hover-only context |
+| Panels | Problem, Architecture, Proof, Boundary |
+| Navigation | Close, Escape, arrow buttons, keyboard arrows, wheel, touch swipe |
+| Routes | No router or project detail pages added |
+| Visual scope | No 3D, particle, camera, hero, boot, or cursor rebuild |
+
+## Phase 2 Overlay Files Added
+
+| Area | Files |
+|---|---|
+| Overlay shell | `ProjectOverlay.vue`, `FilmStrip.vue`, `FilmStripHeader.vue` |
+| Panels | `PanelProblem.vue`, `PanelArchitecture.vue`, `PanelProof.vue`, `PanelBoundary.vue` |
+| Diagram | `BrokenFlowDiagram.vue` |
+| Gate | `src/data/overlayReady.ts` |
+
 ## Next Step
 
-Phase 2 Step 2 is complete. Next: continue Phase 2 with constellation wrapper/legend cleanup and then project/experience overlays against the `Project` + `artifacts` model.
+Phase 2 overlay shell is now started with a two-node proof slice. Next: user manual QA of SecondSelf and Stick and Dot overlays, then scale the same shell to the remaining 7 nodes after the standard is approved.

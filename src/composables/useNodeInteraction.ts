@@ -13,6 +13,7 @@ interface NodeInteractionOptions {
   getCamera: () => THREE.Camera | undefined
   getRenderer: () => THREE.WebGLRenderer | undefined
   getNodes: () => NodeMeshEntry[]
+  isEnabled?: () => boolean
   onHover: (projectId: string | null, clusterIndex: number | null) => void
   onSelect: (projectId: string) => void
 }
@@ -64,6 +65,11 @@ export function useNodeInteraction(options: NodeInteractionOptions) {
   }
 
   function handlePointerMove(event: PointerEvent) {
+    if (options.isEnabled && !options.isEnabled()) {
+      setHover(null)
+      return
+    }
+
     pointerMoveTick = (pointerMoveTick + 1) % 2
 
     if (pointerMoveTick === 1) {
@@ -74,6 +80,10 @@ export function useNodeInteraction(options: NodeInteractionOptions) {
   }
 
   function handlePointerDown(event: PointerEvent) {
+    if (options.isEnabled && !options.isEnabled()) {
+      return
+    }
+
     const entry = pick(event)
 
     if (entry) {

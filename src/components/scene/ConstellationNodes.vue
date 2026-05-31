@@ -17,6 +17,10 @@ const emit = defineEmits<{
   select: [projectId: string]
 }>()
 
+const props = defineProps<{
+  interactionPaused?: boolean
+}>()
+
 const { camera, renderer, scene } = useTres()
 const group = new THREE.Group()
 
@@ -372,6 +376,7 @@ const interaction = useNodeInteraction({
   getCamera: () => camera.value,
   getRenderer: () => renderer.value,
   getNodes: () => interactionEntries,
+  isEnabled: () => !props.interactionPaused,
   onHover(projectId, clusterIndex) {
     sceneNodes.forEach((node) => {
       node.runtimeState.hovered = node.project.id === projectId

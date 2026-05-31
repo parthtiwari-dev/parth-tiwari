@@ -5,6 +5,7 @@ import { usePlainMode } from '@/composables/usePlainMode'
 import { useProjectStore } from '@/stores/projectStore'
 import BootSequence from '@/components/sections/BootSequence.vue'
 import HeroSection from '@/components/sections/HeroSection.vue'
+import ProjectOverlay from '@/components/overlay/ProjectOverlay.vue'
 import SceneRoot from '@/components/scene/SceneRoot.vue'
 import GlassPanel from '@/components/shared/GlassPanel.vue'
 import GeistChip from '@/components/shared/GeistChip.vue'
@@ -59,6 +60,8 @@ onUnmounted(() => {
       v-if="bootComplete || isPlain"
       :is-plain="isPlain"
     />
+
+    <ProjectOverlay v-if="!isPlain" />
 
     <div
       v-if="showPhaseBridge"

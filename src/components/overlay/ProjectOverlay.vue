@@ -1,0 +1,230 @@
+<script setup lang="ts">
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { isOverlayReadyProject } from '@/data/overlayReady'
+import FilmStrip, { filmStripPanelCount } from '@/components/overlay/FilmStrip.vue'
+import FilmStripHeader from '@/components/overlay/FilmStripHeader.vue'
+import { useOverlayStore } from '@/stores/overlayStore'
+import { useProjectStore } from '@/stores/projectStore'
+
+const overlayStore = useOverlayStore()
+const projectStore = useProjectStore()
+const overlayRoot = ref<HTMLElement | null>(null)
+const touchStartX = ref<number | null>(null)
+let lastWheelAt = 0
+
+const activeProject = computed(() => {
+  const projectId = overlayStore.activeProjectId
+
+  if (!projectId || !isOverlayReadyProject(projectId)) {
+    return null
+  }
+
+  return projectStore.getById(projectId) ?? null
+})
+
+function closeOverlay() {
+  overlayStore.close()
+}
+
+function nextPanel() {
+  overlayStore.nextPanel()
+}
+
+function previousPanel() {
+  overlayStore.previousPanel()
+}
+
+function handleKeydown(event: KeyboardEvent) {
+  if (!overlayStore.isOpen) {
+    return
+  }
+
+  if (event.key === 'Escape') {
+    event.preventDefault()
+    closeOverlay()
+  }
+
+  if (event.key === 'ArrowRight') {
+    event.preventDefault()
+    nextPanel()
+  }
+
+  if (event.key === 'ArrowLeft') {
+    event.preventDefault()
+    previousPanel()
+  }
+}
+
+function handleWheel(event: WheelEvent) {
+  if (Math.abs(event.deltaY) < 18) {
+    return
+  }
+
+  const now = window.performance.now()
+
+  if (now - lastWheelAt < 520) {
+    event.preventDefault()
+    return
+  }
+
+  lastWheelAt = now
+  event.preventDefault()
+
+  if (event.deltaY > 0) {
+    nextPanel()
+  } else {
+    previousPanel()
+  }
+}
+
+function handleTouchStart(event: TouchEvent) {
+  touchStartX.value = event.touches[0]?.clientX ?? null
+}
+
+function handleTouchEnd(event: TouchEvent) {
+  const startX = touchStartX.value
+  const endX = event.changedTouches[0]?.clientX
+
+  touchStartX.value = null
+
+  if (startX === null || typeof endX !== 'number') {
+    return
+  }
+
+  const deltaX = endX - startX
+
+  if (Math.abs(deltaX) < 50) {
+    return
+  }
+
+  if (deltaX < 0) {
+    nextPanel()
+  } else {
+    previousPanel()
+  }
+}
+
+watch(
+  () => overlayStore.isOpen,
+  async (isOpen) => {
+    if (!isOpen) {
+      return
+    }
+
+    await nextTick()
+    overlayRoot.value?.focus()
+  },
+)
+
+watch(activeProject, (project) => {
+  if (overlayStore.isOpen && !project) {
+    overlayStore.close()
+  }
+})
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeydown)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown)
+})
+</script>
+
+<template>
+  <Transition name="project-overlay">
+    <section
+      v-if="overlayStore.isOpen && activeProject"
+      ref="overlayRoot"
+      class="project-overlay"
+      role="dialog"
+      aria-modal="true"
+      :aria-label="`${activeProject.name} evidence overlay`"
+      tabindex="-1"
+      @wheel="handleWheel"
+      @touchstart.passive="handleTouchStart"
+      @touchend="handleTouchEnd"
+    >
+      <div class="project-overlay__scrim" aria-hidden="true" />
+      <div class="project-overlay__shell glass-panel">
+        <FilmStripHeader
+          :project="activeProject"
+          :panel-index="overlayStore.activePanelIndex"
+          :total-panels="filmStripPanelCount"
+          @close="closeOverlay"
+          @previous="previousPanel"
+          @next="nextPanel"
+        />
+
+        <FilmStrip
+          :project="activeProject"
+          :active-panel-index="overlayStore.activePanelIndex"
+          @set-panel="overlayStore.setPanel"
+        />
+      </div>
+    </section>
+  </Transition>
+</template>
+
+<style scoped>
+.project-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: clamp(0.75rem, 2vw, 1.5rem);
+  color: var(--ice);
+  outline: none;
+}
+
+.project-overlay__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 28% 12%, rgba(11, 182, 214, 0.12), transparent 36%),
+    radial-gradient(circle at 78% 12%, rgba(232, 200, 106, 0.08), transparent 34%),
+    rgba(0, 2, 5, 0.64);
+  backdrop-filter: blur(10px) saturate(1.08);
+}
+
+.project-overlay__shell {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: min(92rem, calc(100vw - 1.5rem));
+  max-height: min(50rem, calc(100vh - 1.5rem));
+  gap: 1rem;
+  padding: clamp(1rem, 2.2vw, 1.75rem);
+}
+
+.project-overlay-enter-active,
+.project-overlay-leave-active {
+  transition:
+    opacity 260ms var(--ease-in-out),
+    clip-path 320ms var(--ease-out-expo);
+}
+
+.project-overlay-enter-from,
+.project-overlay-leave-to {
+  opacity: 0;
+  clip-path: inset(100% 0 0 0);
+}
+
+.project-overlay-enter-to,
+.project-overlay-leave-from {
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+}
+
+@media (max-width: 720px) {
+  .project-overlay {
+    align-items: stretch;
+    padding: 0.5rem;
+  }
+
+  .project-overlay__shell {
+    max-height: calc(100vh - 1rem);
+  }
+}
+</style>

@@ -8,7 +8,15 @@ const props = defineProps<{
   context: TresContext | null
   project: Project | null
   visible: boolean
+  canOpen: boolean
 }>()
+
+const nodeKindLabel: Record<Project['nodeKind'], string> = {
+  'personal-project': 'PERSONAL PROJECT',
+  'work-experience': 'WORK EXPERIENCE',
+  'current-build': 'CURRENT BUILD',
+  utility: 'UTILITY / TOOLING',
+}
 
 const labelPosition = ref({
   x: 0,
@@ -84,7 +92,7 @@ onUnmounted(() => {
       {{ project.tagline }}
     </p>
     <p class="type-mono mt-3 text-[length:var(--text-xs)] uppercase tracking-[0.16em] text-[color:var(--ice-faint)]">
-      [ENTER -&gt;]
+      {{ canOpen ? '[CLICK -> OPEN]' : nodeKindLabel[project.nodeKind] }}
     </p>
   </div>
 </template>

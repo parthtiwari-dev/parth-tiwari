@@ -3,6 +3,7 @@ import { computed, shallowRef, ref } from 'vue'
 import { TresCanvas, type TresContext } from '@tresjs/core'
 import { ACESFilmicToneMapping, SRGBColorSpace } from 'three'
 import { usePlainMode } from '@/composables/usePlainMode'
+import { isOverlayReadyProject } from '@/data/overlayReady'
 import { projects } from '@/data/projects'
 import { useOverlayStore } from '@/stores/overlayStore'
 import CameraPathController from '@/components/scene/CameraPathController.vue'
@@ -26,6 +27,9 @@ const dpr: [number, number] = [1, 1.25]
 const hoveredProject = computed(() => {
   return projects.find((project) => project.id === hoveredProjectId.value) ?? null
 })
+const hoveredProjectCanOpen = computed(() => {
+  return hoveredProject.value ? isOverlayReadyProject(hoveredProject.value.id) : false
+})
 const connectorsPaused = computed(() => overlayStore.isOpen)
 
 function handleReady(context: TresContext) {
@@ -39,6 +43,10 @@ function handleHover(payload: { projectId: string | null; clusterIndex: number |
 
 function handleSelect(projectId: string) {
   selectedProjectId.value = projectId
+
+  if (isOverlayReadyProject(projectId)) {
+    overlayStore.open(projectId)
+  }
 }
 </script>
 
@@ -74,6 +82,7 @@ function handleSelect(projectId: string) {
         <ParticleField :hovered-cluster-index="hoveredClusterIndex" />
         <RefusalRipple />
         <ConstellationNodes
+          :interaction-paused="overlayStore.isOpen"
           @hover="handleHover"
           @select="handleSelect"
         />
@@ -90,6 +99,7 @@ function handleSelect(projectId: string) {
         :context="tresContext"
         :project="hoveredProject"
         :visible="Boolean(hoveredProject)"
+        :can-open="hoveredProjectCanOpen"
       />
 
       <p
