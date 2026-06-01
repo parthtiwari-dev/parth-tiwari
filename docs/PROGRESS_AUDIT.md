@@ -492,4 +492,4 @@ Status: Phase 2 single-world overlay path active; project links panel, evidence 
 
 ## Next Step
 
-Phase 3 is complete. Next phase should start with Phase 4 mobile/plain-mode/performance hardening unless final copy/link polish is requested first.
+Phase 3 is complete. Phase 4 roadmap has been realigned around a mobile living-starfield dossier, complete plain mode, mobile overlay polish, and performance hardening.

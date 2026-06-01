@@ -315,8 +315,6 @@ export interface NodeRuntimeState {
 }
 ```
 
----
-
 ## World Space Layout
 
 ### 9 Node Positions (Three.js XYZ)
@@ -1190,24 +1188,68 @@ ScrollTrigger.create({
 
 ---
 
-## Phase 4 — Mobile Fallback, Plain Mode, and Performance
+## Phase 4 - Mobile Identity, Plain Mode, and Performance
 
-**Goal:** Full responsive strategy implemented. `?plain=1` works end-to-end. Performance budget met. Cross-browser testing done.
+**Goal:** Preserve the EVIDENCEBOUND identity on phones without forcing the desktop WebGL constellation into a small viewport. Mobile should feel like the same living evidence field translated into a handheld dossier. `?plain=1` must be complete, printable, white, and animation-free. Performance and cross-browser fallbacks are finalized.
 
-**Effort:** 3–4 days
+**Effort:** 4-6 days
 
 ---
+
+### Phase 4 Realignment - Mobile Identity
+
+Desktop remains the full cinematic constellation: boot, hero, 3D field, node overlays, evidence overlays, custom cursor, and Phase 3 micro-interactions.
+
+Mobile is not a plain fallback and not a generic card page. It becomes a **living starfield dossier**:
+
+- boot sequence still opens the field unless `?plain=1` or reduced-motion is active
+- hero appears first and keeps the same name/tagline identity
+- a mobile-friendly animated star background stays behind the whole journey
+- projects and experience scroll over that starfield
+- evidence navigation becomes phone-native
+- project overlays remain available, but their layout is polished for touch
+- a minimal footer dock repeats the important actions for users who scroll naturally
+
+`?plain=1` is separate from mobile. It is the practical export/low-power mode: white background, complete content, no boot, no 3D, no animation.
+
+### Recruiter and Simple User Lens
+
+| User mindset | What they need fast | Phase 4 response |
+|---|---|---|
+| Simple visitor | "What is this site and what should I do?" | Hero first, then a clear systems list over the same starfield mood. No hidden puzzle required. |
+| Recruiter on phone | Name, role signal, proof, links, resume, and skim speed | Project cards expose evidence immediately; overlays remain for depth; resume/about/training/capability stay one tap away. |
+| Technical reviewer | Evidence that claims are bounded and real | Cards surface proof/boundary/links; project overlay keeps problem/architecture/proof/boundary/links. |
+| Low-power phone user | Smooth enough to read, no overheating | No Three.js/WebGL on mobile; use capped 2D canvas/CSS starfield with reduced-motion fallback. |
+| Time-poor user | Quick exits after browsing | Bottom footer dock repeats About, Experience, Training, Capability, Resume. |
+
+This direction keeps the creative identity but reduces cognitive load. The user sees the spectacle first, then receives a readable sequence of evidence.
 
 ### Responsive Strategy
 
 | Viewport | Treatment |
 |---|---|
 | ≥ 1280px (Desktop) | Full experience. All 3D, all animations, film strip overlay. |
-| 768px – 1279px (Tablet) | 3D canvas active, particles reduced to 5,000. Film strip becomes vertical scroll. Sliders work. |
-| < 768px (Mobile) | Canvas replaced by CSS gradient + `@property` shimmer. Projects shown as minimal Tailwind cards. All content intact. |
-| `?plain=1` | Pure Tailwind, `--bg: #ffffff`, zero JS animation, zero 3D. For PDF export / low-power devices. |
+| 768px - 1279px (Tablet) | Prefer full experience if performance holds; reduce DPR/particles and ensure overlays become vertical/touch-safe. |
+| < 768px (Mobile) | Do not mount the Three.js scene. Render the mobile starfield dossier with all projects, evidence navigation, and mobile-polished overlays. |
+| `?plain=1` | Pure static content, `--bg: #ffffff`, zero JS animation, zero 3D/starfield. For PDF export / low-power devices. |
 
-### Mobile Canvas Replacement
+### Mobile Starfield Dossier
+
+Create a mobile-specific background instead of forcing WebGL:
+
+- `MobileStarField.vue`
+- fixed behind page content
+- lightweight 2D `<canvas>` star layer plus CSS nebula gradient
+- target 150-300 stars depending device width and hardware
+- rare cyan/gold bright stars, mostly cold micro-stars
+- slow twinkle and subtle scroll parallax
+- DPR capped around `1.25`
+- no new dependencies
+- reduced-motion: render one static frame and stop animation loop
+
+The mobile starfield should feel alive, but content must stay readable. It is atmosphere, not the primary interaction.
+
+### Legacy Mobile Canvas Replacement (Superseded)
 
 When `window.innerWidth < 768`:
 - `SceneRoot.vue` renders `null` (conditional render, not `display: none`)
@@ -1225,18 +1267,75 @@ When `window.innerWidth < 768`:
 }
 ```
 
+### Mobile Content Flow
+
+1. **Boot**
+   - Same brand moment as desktop.
+   - Skip for `?plain=1` and reduced-motion.
+
+2. **Hero**
+   - `PARTH TIWARI`
+   - same tagline
+   - minimal scroll cue
+   - starfield visible behind it
+
+3. **Mobile Evidence Rail**
+   - compact horizontal pill rail after the hero has begun scrolling
+   - actions: Experience, Training, Capability, About, Resume
+   - no full desktop top bar on narrow screens
+   - active state remains gold-accented
+
+4. **Systems / Projects**
+   - all 9 projects render as premium mobile cards
+   - cards preserve node kind, weight, status, proof, stack, and links
+   - flagship/major/minor weight is visible through card hierarchy, not huge layout shifts
+
+5. **Work/Experience Emphasis**
+   - Stick and Dot remains readable as work experience
+   - Vivid and Stick and Dot App stay as child artifacts/evidence under that work node
+
+6. **Footer Dock**
+   - small final action area for users who scroll to the bottom
+   - About, Experience, Training, Capability, Resume
+   - social links may live here too if About does not fully cover the need
+
 ### Mobile Project Cards
 
-Replace film strip overlay. Each project card:
+Each mobile card is the skim layer. It does not replace the project overlay, which remains the depth layer. Each card:
 - `GlassPanel.vue` base
 - `StatusBadge.vue` top-left
 - Project name in Spectral `--text-xl`
 - Tagline in Inter `--text-sm`
+- node kind, status, and evidence weight treatment
 - Stack chips row in Geist Mono
-- Key metric (first metric from `panels.proof.metrics[0]`) in `--gold`
+- Key metric or first milestone in `--gold`
 - GitHub/Live links as `<a>` tags, Geist Mono `--text-xs`
-- Tap to expand: shows problem quote + boundary items
-- No 3D, no camera, no film strip
+- Tap to open the same project overlay, mobile-polished
+- Optional inline expand: shows problem quote + boundary summary
+- No 3D and no camera on mobile
+
+### Mobile Project Overlay Polish
+
+Keep the same-page overlay model, but make it touch-safe:
+
+- full-viewport mobile sheet
+- smaller header and tighter title scale
+- panel tabs become horizontal scroll chips
+- architecture panel becomes vertical flow
+- proof, boundary, and links remain readable
+- wheel/keyboard navigation disabled on mobile
+- touch/swipe and explicit buttons remain
+- no horizontal overflow
+
+### Evidence Overlays on Mobile
+
+Experience, Training, Capability, About, and Resume remain same-world overlays/sheets:
+
+- Experience becomes a vertical timeline
+- Training stays two compact records
+- Capability stays chip-based but with larger tap targets
+- About remains text over the starfield identity, not a generic bio card
+- Resume opens the Drive preview if configured, with an external-open fallback
 
 ### `?plain=1` Mode
 
@@ -1245,9 +1344,11 @@ Replace film strip overlay. Each project card:
 2. `SceneRoot.vue`: not mounted
 3. All GSAP animations: not registered
 4. `CustomCursor.vue`: not mounted (system cursor restored)
-5. `EvidenceDataBar.vue`: renders as static `div`, no `backdrop-filter`, no count-up
+5. `MobileStarField.vue`: not mounted
 6. `plain.css` applied: white background, black text, standard font sizes
-7. All sections render as pure HTML/Tailwind — full content, zero JS animation
+7. Full content renders as pure HTML/Tailwind: hero, about, all 9 projects, project proof/boundary/links, experience, training, capability, and resume link/preview fallback
+
+Realigned requirement: plain mode must render the complete current portfolio content, including hero, about, all 9 projects, project proof/boundary/links, experience, training, capability, and resume link/preview fallback.
 
 This mode is linkable: `evidencebound.dev?plain=1`. Suitable for PDF print via browser `Ctrl+P`.
 
@@ -1264,6 +1365,16 @@ This mode is linkable: `evidencebound.dev?plain=1`. Suitable for PDF print via b
       transparent 100%
     );
     animation: none;
+  }
+}
+```
+
+Also guard `backdrop-filter` so older Safari/browser contexts still render usable glass:
+
+```css
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-panel {
+    background: color-mix(in srgb, var(--bg) 86%, black);
   }
 }
 ```
@@ -1285,6 +1396,16 @@ This mode is linkable: `evidencebound.dev?plain=1`. Suitable for PDF print via b
 | Total JS bundle | < 350KB gzipped | Three.js is large | Code-split 3D chunk separately |
 | Three.js chunk | < 600KB gzipped | Core + TresJS | Tree-shake, no unused Three.js modules |
 | Fonts | < 80KB | 3 font families | `font-display: swap`, preconnect in `<head>` |
+
+Realigned Phase 4 additions:
+
+| Surface | Budget | Primary cost | Mitigation |
+|---|---|---|---|
+| Mobile starfield | < 2ms/frame target | 2D canvas twinkle | Cap stars, cap DPR, pause when hidden, static under reduced-motion |
+| Mobile cards | No layout jank | Card stack and chips | Use CSS grid/flow, no heavy observers |
+| Mobile project overlay | < 200ms open | Scrollable panel/tabs | Active panel only; keyboard nav off on mobile |
+| Plain mode | Static | None | No animated mounts; no 3D/starfield |
+| Cost of Intelligence | Deferred | Standalone section removed | Future placement is inside project overlays, not a Phase 4 route section |
 
 ### Vite Build Config
 
@@ -1314,7 +1435,35 @@ export default defineConfig({
 })
 ```
 
-### Acceptance Criteria — Phase 4
+### Implementation Order
+
+1. Add viewport mode detection.
+2. Gate `SceneRoot` off for mobile and plain mode.
+3. Build `MobileStarField.vue`.
+4. Build `MobileExperience.vue` with hero, evidence rail, project cards, and footer dock.
+5. Polish project overlay mobile layout.
+6. Build/complete `PlainExperience.vue`.
+7. Add Safari/support fallbacks.
+8. Run performance/build/Lighthouse checks.
+
+### Acceptance Criteria - Phase 4 Realigned
+
+- [ ] Desktop experience remains visually unchanged unless a bug fix is required
+- [ ] Mobile opens with boot -> hero -> living starfield dossier
+- [ ] Mobile does not mount the Three.js scene below 768px
+- [ ] Mobile layout renders all 9 projects as readable cards at 375px width
+- [ ] Mobile project cards expose proof, stack, kind, status/weight, and confirmed links
+- [ ] Mobile project overlay is usable by touch with no horizontal overflow
+- [ ] Mobile evidence rail and footer dock expose Experience, Training, Capability, About, Resume
+- [ ] `?plain=1` shows complete content with zero animation, white background, and no 3D/starfield
+- [ ] `@supports` fallbacks render without error in older Safari/browser contexts
+- [ ] Lighthouse Performance score >= 85 on desktop
+- [ ] Lighthouse Performance score >= 70 on mobile
+- [ ] `prefers-reduced-motion` skips boot and disables twinkle, typewriter, count-up, and looping decorative motion
+- [ ] No horizontal scroll at any viewport width
+- [ ] Film strip keyboard nav disabled on mobile; touch/successive buttons remain
+
+Legacy acceptance criteria from the initial roadmap:
 
 - [ ] Mobile layout renders all 9 projects as cards at 375px width
 - [ ] `?plain=1` shows all content with zero JS animation, white background
