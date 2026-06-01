@@ -132,20 +132,37 @@ export const filmStripPanelCount = 5
 .film-panel-enter-active,
 .film-panel-leave-active {
   transition:
+    clip-path 240ms var(--ease-out-expo),
     opacity 160ms var(--ease-in-out),
-    transform 180ms var(--ease-out-expo);
+    transform 220ms var(--ease-out-expo);
 }
 
 .film-panel-enter-from,
 .film-panel-leave-to {
+  clip-path: inset(0 100% 0 0);
   opacity: 0;
-  transform: translateY(0.35rem);
+  transform: translateX(0.7rem);
 }
 
 .film-panel-enter-to,
 .film-panel-leave-from {
+  clip-path: inset(0 0 0 0);
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .film-panel-enter-active,
+  .film-panel-leave-active {
+    transition: none;
+  }
+
+  .film-panel-enter-from,
+  .film-panel-leave-to {
+    clip-path: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @media (max-width: 720px) {

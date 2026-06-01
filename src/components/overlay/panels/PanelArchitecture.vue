@@ -17,10 +17,17 @@ const edges = computed(() => {
   })
 })
 
-function nodeStyle(node: ArchitectureNode) {
+function nodeStyle(node: ArchitectureNode, index: number) {
   return {
     left: `${node.position.x}%`,
     top: `${node.position.y}%`,
+    '--node-index': String(index),
+  }
+}
+
+function edgeStyle(index: number) {
+  return {
+    '--edge-index': String(index),
   }
 }
 </script>
@@ -35,20 +42,22 @@ function nodeStyle(node: ArchitectureNode) {
     <div class="architecture-map" aria-label="Architecture map">
       <svg class="architecture-map__edges" viewBox="0 0 100 100" aria-hidden="true">
         <line
-          v-for="edge in edges"
+          v-for="(edge, index) in edges"
           :key="`${edge.source.id}-${edge.target.id}`"
           :x1="edge.source.position.x"
           :y1="edge.source.position.y"
           :x2="edge.target.position.x"
           :y2="edge.target.position.y"
+          pathLength="1"
+          :style="edgeStyle(index)"
         />
       </svg>
 
       <div
-        v-for="node in project.panels.architecture.nodes"
+        v-for="(node, index) in project.panels.architecture.nodes"
         :key="node.id"
         class="architecture-node"
-        :style="nodeStyle(node)"
+        :style="nodeStyle(node, index)"
       >
         <h3>{{ node.label }}</h3>
         <p>{{ node.description }}</p>
@@ -121,6 +130,10 @@ function nodeStyle(node: ArchitectureNode) {
   stroke-linecap: round;
   stroke-opacity: 0.58;
   stroke-width: 0.35;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: architecture-line-draw 520ms var(--ease-out-expo) forwards;
+  animation-delay: calc(220ms + var(--edge-index) * 80ms);
 }
 
 .architecture-node {
@@ -129,10 +142,13 @@ function nodeStyle(node: ArchitectureNode) {
   width: min(15.5rem, 30vw);
   gap: 0.55rem;
   padding: 0.75rem;
-  transform: translate(-50%, -50%);
   border: 1px solid color-mix(in srgb, var(--ice-faint) 68%, transparent);
   background: color-mix(in srgb, var(--bg) 74%, transparent);
+  opacity: 0;
   box-shadow: 0 1rem 3rem rgb(0 0 0 / 0.22);
+  transform: translate(-50%, calc(-50% + 0.6rem)) scale(0.98);
+  animation: architecture-node-enter 360ms var(--ease-out-expo) forwards;
+  animation-delay: calc(var(--node-index) * 80ms);
   transition:
     border-color 180ms var(--ease-in-out),
     transform 180ms var(--ease-in-out);
@@ -234,11 +250,54 @@ function nodeStyle(node: ArchitectureNode) {
     left: auto !important;
     top: auto !important;
     width: auto;
-    transform: none;
+    transform: translateY(0.6rem) scale(0.98);
+    animation-name: architecture-node-enter-mobile;
   }
 
   .architecture-node:hover {
     transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .architecture-map__edges line,
+  .architecture-node {
+    animation: none;
+  }
+
+  .architecture-map__edges line {
+    stroke-dashoffset: 0;
+  }
+
+  .architecture-node {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media (max-width: 820px) and (prefers-reduced-motion: reduce) {
+  .architecture-node {
+    transform: none;
+  }
+}
+
+@keyframes architecture-node-enter {
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes architecture-line-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes architecture-node-enter-mobile {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 </style>

@@ -473,10 +473,10 @@ Status: Phase 2 single-world overlay path active; project links panel, evidence 
 | 2 | Cursor interaction classes | Implemented | Buttons/links are detected by delegation; node hover sends scene cursor intent; refusal targets use `.cursor-refuse` |
 | 3 | Node label wipe and hover ring | Planned | Make hover labels feel intentional without changing node layout |
 | 4 | Node click camera lerp | Planned | Add subtle pre-overlay camera move only if it does not disturb scroll feel |
-| 5 | Architecture panel motion | Planned | Stagger boxes and draw architecture connector lines on panel enter |
-| 6 | Proof metric motion | Planned | Count-up and gold sweep should fire only when the Proof panel is visible |
-| 7 | Boundary/refusal behavior | Started | Refusal cursor state is wired; pulse/line treatment remains for a later Phase 3 pass |
-| 8 | Film-strip panel transitions | Planned | Add side-wipe motion between panels while keeping keyboard/wheel/swipe navigation |
+| 5 | Architecture panel motion | Implemented | Architecture boxes stagger and connector lines draw on panel enter |
+| 6 | Proof metric motion | Implemented | Proof metrics count up on panel mount, then settle to exact source display with gold sweep |
+| 7 | Boundary/refusal behavior | Implemented | Refusal cursor state and subtle boundary pulse are wired |
+| 8 | Film-strip panel transitions | Implemented | Panels use a restrained side-wipe while existing keyboard/wheel/swipe navigation remains |
 | 9 | Scroll milestone hue offsets | Planned | Add subtle particle hue nudges at 25% scroll milestones |
 | 10 | Evidence overlay entrances | Planned | Fade/translate Training, Capability, Experience, and About content without adding sections |
 | 11 | Reduced-motion audit | Planned | Ensure boot, cursor, overlay, and panel motion degrade cleanly |
@@ -492,4 +492,4 @@ Status: Phase 2 single-world overlay path active; project links panel, evidence 
 
 ## Next Step
 
-Continue Phase 3 with node label polish, film-strip panel motion, architecture line draw, proof count-ups, and refusal pulse treatment.
+Continue Phase 3 with node label polish, optional node click camera lerp, scroll milestone hue offsets, and reduced-motion polish audit.

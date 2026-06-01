@@ -123,6 +123,17 @@ ul {
   line-height: 1.55;
 }
 
+.cursor-refuse {
+  color: color-mix(in srgb, var(--ice-muted) 88%, var(--cold-text));
+  text-shadow: 0 0 0 color-mix(in srgb, var(--cold-text) 0%, transparent);
+  animation: boundary-refusal-pulse 2.4s var(--ease-in-out) infinite;
+}
+
+.cursor-refuse:hover {
+  color: var(--cold-text);
+  text-shadow: 0 0 1.1rem color-mix(in srgb, var(--cold-text) 28%, transparent);
+}
+
 .artifact-boundary {
   color: var(--ice-muted);
 }
@@ -135,6 +146,25 @@ ul {
   .boundary-columns,
   .artifact-boundary {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-refuse {
+    animation: none;
+  }
+}
+
+@keyframes boundary-refusal-pulse {
+  0%,
+  100% {
+    opacity: 0.68;
+    text-shadow: 0 0 0 color-mix(in srgb, var(--cold-text) 0%, transparent);
+  }
+
+  50% {
+    opacity: 1;
+    text-shadow: 0 0 0.9rem color-mix(in srgb, var(--cold-text) 18%, transparent);
   }
 }
 </style>

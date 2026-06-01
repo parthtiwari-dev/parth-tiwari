@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import type { Project } from '@/types/project'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
+import type { Project, ProjectMetric } from '@/types/project'
 
 const props = defineProps<{
   project: Project
@@ -13,6 +13,7 @@ const completedMilestones = computed(() => {
   return milestones.value.filter((milestone) => milestone.status === 'complete').length
 })
 const proofSignalCount = computed(() => metrics.value.length || milestones.value.length)
+const animationProgress = ref(0)
 const progressStyle = computed(() => {
   const explicitProgress = proof.value.progressPercent
 
@@ -26,13 +27,101 @@ const progressStyle = computed(() => {
 
   return { width: `${(completedMilestones.value / milestones.value.length) * 100}%` }
 })
+
+let frameId = 0
+let startTime = 0
+const duration = 820
+
+const easedProgress = computed(() => {
+  return 1 - Math.pow(1 - animationProgress.value, 3)
+})
+
+const proofSignalDisplay = computed(() => {
+  if (animationProgress.value >= 0.995) {
+    return proofSignalCount.value
+  }
+
+  return Math.round(proofSignalCount.value * easedProgress.value)
+})
+
+function decimalsFor(value: number) {
+  if (Number.isInteger(value)) {
+    return 0
+  }
+
+  if (Math.abs(value) < 1) {
+    return 3
+  }
+
+  if (Math.abs(value) < 10) {
+    return 1
+  }
+
+  return 2
+}
+
+function formatInterimMetric(metric: ProjectMetric) {
+  if (animationProgress.value >= 0.995) {
+    return metric.display
+  }
+
+  const nextValue = metric.value * easedProgress.value
+  const decimals = decimalsFor(metric.value)
+  const formatted = decimals === 0 ? String(Math.round(nextValue)) : nextValue.toFixed(decimals)
+
+  if (metric.unit === '$') {
+    return `$${formatted}`
+  }
+
+  if (metric.unit === '%') {
+    return `${formatted}%`
+  }
+
+  if (metric.unit === 'ms') {
+    return `~${Math.round(nextValue)}ms`
+  }
+
+  if (metric.unit === 'min') {
+    return `${Math.round(nextValue)} min`
+  }
+
+  return formatted
+}
+
+function metricStyle(index: number) {
+  return {
+    '--metric-index': String(index),
+  }
+}
+
+function tick(now: number) {
+  if (!startTime) {
+    startTime = now
+  }
+
+  animationProgress.value = Math.min(1, (now - startTime) / duration)
+
+  if (animationProgress.value < 1) {
+    frameId = requestAnimationFrame(tick)
+  }
+}
+
+onMounted(() => {
+  frameId = requestAnimationFrame(tick)
+})
+
+onUnmounted(() => {
+  if (frameId) {
+    cancelAnimationFrame(frameId)
+  }
+})
 </script>
 
 <template>
   <article class="panel-proof">
     <div class="proof-orbit">
       <p>proof signals</p>
-      <strong>{{ proofSignalCount }}</strong>
+      <strong>{{ proofSignalDisplay }}</strong>
       <span>{{ project.status }}</span>
     </div>
 
@@ -40,9 +129,13 @@ const progressStyle = computed(() => {
       <p class="panel-label">Proof</p>
 
       <div v-if="metrics.length" class="metric-grid">
-        <section v-for="metric in metrics" :key="metric.label">
+        <section
+          v-for="(metric, index) in metrics"
+          :key="metric.label"
+          :style="metricStyle(index)"
+        >
           <p>{{ metric.label }}</p>
-          <strong>{{ metric.display }}</strong>
+          <strong>{{ formatInterimMetric(metric) }}</strong>
         </section>
       </div>
 
@@ -147,6 +240,13 @@ const progressStyle = computed(() => {
   padding-top: 0.85rem;
 }
 
+.metric-grid section {
+  opacity: 0;
+  transform: translateY(0.55rem);
+  animation: proof-metric-enter 320ms var(--ease-out-expo) forwards;
+  animation-delay: calc(var(--metric-index) * 90ms);
+}
+
 .metric-grid p,
 .proof-caveat {
   margin: 0;
@@ -155,13 +255,20 @@ const progressStyle = computed(() => {
 }
 
 .metric-grid strong {
+  position: relative;
   display: block;
   margin-top: 0.35rem;
-  color: var(--gold-glow);
+  overflow: hidden;
+  background: linear-gradient(90deg, var(--gold), var(--gold-glow) 48%, var(--ice) 78%);
+  background-clip: text;
+  background-size: 220% 100%;
+  color: transparent;
   font-family: Spectral, Georgia, serif;
   font-size: clamp(2rem, 3.5vw, 3.8rem);
   font-weight: 300;
   line-height: 1;
+  animation: proof-gold-sweep 900ms var(--ease-out-expo) both;
+  animation-delay: calc(120ms + var(--metric-index) * 90ms);
 }
 
 .milestone-progress {
@@ -241,6 +348,42 @@ const progressStyle = computed(() => {
 
   .milestone-list section {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .metric-grid section,
+  .metric-grid strong {
+    animation: none;
+  }
+
+  .metric-grid section {
+    opacity: 1;
+    transform: none;
+  }
+
+  .metric-grid strong {
+    background: none;
+    color: var(--gold-glow);
+  }
+}
+
+@keyframes proof-metric-enter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes proof-gold-sweep {
+  0% {
+    background-position: 110% 0;
+    filter: brightness(0.82);
+  }
+
+  100% {
+    background-position: 0 0;
+    filter: brightness(1);
   }
 }
 </style>
