@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 
-export type EvidenceOverlayKind = 'experience' | 'training' | 'capability' | 'contact'
+export type EvidenceOverlayKind = 'experience' | 'training' | 'capability' | 'about' | 'resume'
 
 export const useEvidenceOverlayStore = defineStore('evidenceOverlay', () => {
   const activeKind = ref<EvidenceOverlayKind | null>(null)

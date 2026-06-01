@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { lockBodyScroll, unlockBodyScroll } from '@/composables/useBodyScrollLock'
+import AboutSignal from '@/components/evidence/AboutSignal.vue'
 import CapabilityMap from '@/components/evidence/CapabilityMap.vue'
-import ContactOverlay from '@/components/evidence/ContactOverlay.vue'
 import ExperienceLog from '@/components/evidence/ExperienceLog.vue'
+import ResumeOverlay from '@/components/evidence/ResumeOverlay.vue'
 import TrainingData from '@/components/evidence/TrainingData.vue'
 import { useEvidenceOverlayStore, type EvidenceOverlayKind } from '@/stores/evidenceOverlayStore'
 
@@ -27,10 +28,15 @@ const overlayMeta: Record<EvidenceOverlayKind, { eyebrow: string; title: string;
     title: 'Capability',
     ariaLabel: 'Capability map overlay',
   },
-  contact: {
-    eyebrow: 'EVIDENCEBOUND / CONTACT',
-    title: 'Contact',
-    ariaLabel: 'Contact overlay',
+  about: {
+    eyebrow: 'EVIDENCEBOUND / ABOUT',
+    title: 'About',
+    ariaLabel: 'About signal overlay',
+  },
+  resume: {
+    eyebrow: 'EVIDENCEBOUND / RESUME',
+    title: 'Resume',
+    ariaLabel: 'Resume overlay',
   },
 }
 
@@ -69,9 +75,11 @@ function setBodyScrollLock(shouldLock: boolean) {
 }
 
 watch(
-  () => evidenceOverlayStore.isOpen,
+  () => [evidenceOverlayStore.isOpen, evidenceOverlayStore.activeKind] as const,
   async (isOpen) => {
-    if (isOpen) {
+    const [isCurrentlyOpen, activeKind] = isOpen
+
+    if (isCurrentlyOpen && activeKind !== 'about') {
       setBodyScrollLock(true)
       await nextTick()
       overlayRoot.value?.focus()
@@ -79,6 +87,11 @@ watch(
     }
 
     setBodyScrollLock(false)
+
+    if (isCurrentlyOpen) {
+      await nextTick()
+      overlayRoot.value?.focus()
+    }
   },
 )
 
@@ -98,13 +111,20 @@ onUnmounted(() => {
       v-if="evidenceOverlayStore.isOpen"
       ref="overlayRoot"
       class="evidence-overlay"
+      :class="{ 'evidence-overlay--about': evidenceOverlayStore.activeKind === 'about' }"
       role="dialog"
       aria-modal="true"
       :aria-label="activeMeta.ariaLabel"
       tabindex="-1"
     >
       <div class="evidence-overlay__scrim" aria-hidden="true" />
-      <div class="evidence-overlay__shell glass-panel">
+
+      <AboutSignal
+        v-if="evidenceOverlayStore.activeKind === 'about'"
+        @close="closeOverlay"
+      />
+
+      <div v-else class="evidence-overlay__shell glass-panel">
         <header class="evidence-overlay__header">
           <div>
             <p>{{ activeMeta.eyebrow }}</p>
@@ -119,7 +139,7 @@ onUnmounted(() => {
           <ExperienceLog v-if="evidenceOverlayStore.activeKind === 'experience'" />
           <TrainingData v-else-if="evidenceOverlayStore.activeKind === 'training'" />
           <CapabilityMap v-else-if="evidenceOverlayStore.activeKind === 'capability'" />
-          <ContactOverlay v-else-if="evidenceOverlayStore.activeKind === 'contact'" />
+          <ResumeOverlay v-else-if="evidenceOverlayStore.activeKind === 'resume'" />
         </div>
       </div>
     </section>
@@ -147,6 +167,19 @@ onUnmounted(() => {
     radial-gradient(circle at 76% 20%, rgba(232, 200, 106, 0.07), transparent 34%),
     rgba(0, 2, 5, 0.68);
   backdrop-filter: blur(10px) saturate(1.08);
+}
+
+.evidence-overlay--about {
+  z-index: 49;
+  place-items: start center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 4.75rem 1.5rem 0;
+}
+
+.evidence-overlay--about .evidence-overlay__scrim {
+  background: transparent;
+  backdrop-filter: none;
 }
 
 .evidence-overlay__shell {

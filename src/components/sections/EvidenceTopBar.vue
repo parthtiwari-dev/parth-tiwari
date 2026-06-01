@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { isResumeConfigured } from '@/data/resume'
 import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
 import type { EvidenceOverlayKind } from '@/stores/evidenceOverlayStore'
 
@@ -17,11 +18,14 @@ const actions: TopBarAction[] = [
   { label: 'Experience', kind: 'experience' },
   { label: 'Training', kind: 'training' },
   { label: 'Capability', kind: 'capability' },
-  { label: 'About', disabled: true },
-  { label: 'Contact', kind: 'contact' },
+  { label: 'About', kind: 'about' },
 ]
 
-const resumeAction: TopBarAction = { label: 'Resume', disabled: true }
+const resumeAction: TopBarAction = {
+  label: 'Resume',
+  kind: 'resume',
+  disabled: !isResumeConfigured,
+}
 
 const isVisible = computed(() => scrollY.value > revealThreshold.value)
 
@@ -68,6 +72,7 @@ onUnmounted(() => {
           type="button"
           :disabled="action.disabled"
           :aria-disabled="action.disabled ? 'true' : undefined"
+          :class="{ 'is-active': evidenceOverlayStore.activeKind === action.kind }"
           @click="handleAction(action)"
         >
           {{ action.label }}
@@ -77,8 +82,10 @@ onUnmounted(() => {
       <button
         type="button"
         class="evidence-top-bar__resume"
+        :class="{ 'is-active': evidenceOverlayStore.activeKind === resumeAction.kind }"
         :disabled="resumeAction.disabled"
-        aria-disabled="true"
+        :aria-disabled="resumeAction.disabled ? 'true' : undefined"
+        @click="handleAction(resumeAction)"
       >
         {{ resumeAction.label }}
       </button>
@@ -146,14 +153,20 @@ onUnmounted(() => {
 }
 
 .evidence-top-bar button:hover,
-.evidence-top-bar button:focus-visible {
+.evidence-top-bar button:focus-visible,
+.evidence-top-bar button.is-active {
   border-color: color-mix(in srgb, var(--gold) 72%, transparent);
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--gold) 16%, transparent), transparent 58%),
-    color-mix(in srgb, var(--bg) 50%, transparent);
+    linear-gradient(135deg, color-mix(in srgb, var(--gold) 22%, transparent), transparent 58%),
+    color-mix(in srgb, var(--bg) 46%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--gold) 20%, transparent),
+    0 0.85rem 1.8rem rgb(0 0 0 / 0.22),
+    0 0 1.4rem color-mix(in srgb, var(--gold) 18%, transparent);
   color: var(--gold-glow);
   outline: none;
-  transform: translateY(-1px);
+  padding-inline: 1rem;
+  transform: translateY(-1px) scale(1.06);
 }
 
 .evidence-top-bar button:disabled {

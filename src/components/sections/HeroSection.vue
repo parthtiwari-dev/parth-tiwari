@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
 import HeroName from '@/components/sections/HeroName.vue'
 import HeroTagline from '@/components/sections/HeroTagline.vue'
 
@@ -8,10 +9,15 @@ const props = defineProps<{
 }>()
 
 const tagline = 'Systems that act only after the evidence, schema, budget, and workflow state agree.'
+const evidenceOverlayStore = useEvidenceOverlayStore()
 const scrollY = ref(0)
 const hasInteracted = ref(false)
 
 const heroOpacity = computed(() => {
+  if (evidenceOverlayStore.isOpen) {
+    return 0
+  }
+
   if (props.isPlain || typeof window === 'undefined') {
     return 1
   }

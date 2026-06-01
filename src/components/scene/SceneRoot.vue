@@ -113,7 +113,10 @@ function handleSelect(projectId: string) {
         :can-open="hoveredProjectCanOpen"
       />
 
-      <div class="constellation-index pointer-events-none absolute bottom-6 right-6 z-30 hidden md:block">
+      <div
+        v-if="evidenceOverlayStore.activeKind !== 'about'"
+        class="constellation-index pointer-events-none absolute bottom-6 right-6 z-30 hidden md:block"
+      >
         <p class="constellation-index__title">CONSTELLATION INDEX</p>
         <p><span class="constellation-index__dot constellation-index__dot--personal"></span> personal project</p>
         <p><span class="constellation-index__dot constellation-index__dot--work"></span> work experience</p>

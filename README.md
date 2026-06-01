@@ -6,7 +6,7 @@ Systems that act only after the evidence agrees.
 
 The build source of truth is [docs/EVIDENCEBOUND_BUILD_ROADMAP.md](docs/EVIDENCEBOUND_BUILD_ROADMAP.md).
 
-The current implementation has completed the **Phase 2 single-world overlay path** through the Hero, project film strips, the Links/Launch panel, the evidence top bar, and the Experience, Training, Capability, and Contact overlays.
+The current implementation has completed the **Phase 2 single-world overlay path** through the Hero, project film strips, the Links/Launch panel, the evidence top bar, Experience/Training/Capability, the constellation-native About signal with social links, and the Drive-backed Resume overlay.
 
 ## Stack
 
@@ -35,8 +35,9 @@ Vite and TypeScript were upgraded because the scaffold typechecked and built cle
 - Phase 1.9 complete: node kind/weight metadata is locked, Vivid is now a featured artifact under the Stick and Dot work-experience node, and the constellation readout explains kind/weight.
 - Phase 2 Step 1 complete: boot overlay runs on normal page loads, uses the live project count, supports skip/Escape, and is skipped for `?plain=1` plus reduced-motion users.
 - Phase 2 Step 2 complete: lower-left cinematic Hero renders over the constellation, the Phase 0 console is removed from normal `/`, and the bottom data bar was intentionally removed after visual review.
-- Phase 2 realignment complete so far: same-page project overlays now use 5 panels, the top evidence bar appears after the Hero handoff, and Experience, Training, Capability, and Contact open over the constellation.
-- Next step: populate confirmed public project links, then decide whether About or Resume should be unlocked.
+- Phase 2 realignment complete so far: same-page project overlays now use 5 panels, the top evidence bar appears after the Hero handoff, Experience/Training/Capability open over the constellation, and About appears as a scrollable human signal with social links over the frozen field.
+- Resume overlay is implemented with Google Drive preview support and derives the preview URL from `src/data/resume.ts`.
+- Next step: populate confirmed public project links and polish overlay language.
 
 ## Setup
 
@@ -74,7 +75,7 @@ npm.cmd run preview
 - Phase 1.9 gate: constellation information architecture is locked before overlays: node kind, origin, weight, and child artifacts compile cleanly. Complete.
 - Phase 2 Step 1 gate: boot overlay fades into the warmed constellation, supports skip/Escape, and skips for plain/reduced-motion paths. Complete.
 - Phase 2 Step 2 gate: Hero is readable over the tuned constellation, normal `/` no longer shows the Phase 0 scaffold, and end-scroll handoff shading is removed. Complete.
-- Phase 2 realignment gate: Project overlays render 5 panels, the Links/Launch panel renders only safe confirmed URLs, and Experience/Training/Capability/Contact open as same-world overlays instead of standalone sections. Complete.
+- Phase 2 realignment gate: Project overlays render 5 panels, the Links/Launch panel renders only safe confirmed URLs, Experience/Training/Capability open as same-world overlays, and About opens as a constellation-native signal with social links. Complete.
 - Later phase gates remain exactly as defined in the roadmap.
 
 ## Performance Notes

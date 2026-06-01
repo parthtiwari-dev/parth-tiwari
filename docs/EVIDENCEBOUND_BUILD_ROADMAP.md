@@ -953,7 +953,7 @@ Two lines, Geist Mono `--text-sm`:
 
 ## Phase 2 Realignment Addendum - Single-World Evidence Interface
 
-**Decision:** The constellation remains the full portfolio stage. Do not add standalone scroll sections after the constellation. Experience, Training Data, Capability Map, About, Contact, Resume, and future Cost of Intelligence work open as overlays or direct actions from the same constellation world.
+**Decision:** The constellation remains the full portfolio stage. Do not add standalone scroll sections after the constellation. Experience, Training Data, Capability Map, About, Resume, and future Cost of Intelligence work open as overlays or direct actions from the same constellation world.
 
 This addendum supersedes the placement of Sections 5-9 as standalone page sections. The original section specs remain useful for content, tone, and data, but their rendering surface changes from "below the constellation" to "over the constellation."
 
@@ -962,9 +962,9 @@ This addendum supersedes the placement of Sections 5-9 as standalone page sectio
 1. Project overlays become 5-panel film strips.
 2. Top Evidence Bar appears after the hero scrolls away and stays fixed over the constellation.
 3. Experience becomes a work timeline overlay opened from the top bar.
-4. Training Data, Capability Map, and Contact become top-bar overlays.
-5. About stays disabled until the personal narrative is intentionally written.
-6. Resume is a top-bar action, not a scroll section, and stays disabled until a confirmed resume file/link exists.
+4. Training Data and Capability Map become top-bar overlays.
+5. About opens as a constellation-native human signal, not as another card/grid overlay, and carries contact/social links.
+6. Resume is a top-bar action, not a scroll section, and stays disabled until a confirmed Drive source exists.
 7. Cost of Intelligence is deferred into future per-project panel tradeoff treatment, not a standalone section.
 
 ### Project Overlay Panel 5 - Links / Launch
@@ -986,15 +986,15 @@ The top evidence bar is not visible during the hero-first moment. It appears onc
 Layout:
 
 ```text
-EVIDENCEBOUND / 9 SYSTEMS      [EXPERIENCE] [TRAINING] [CAPABILITY] [ABOUT] [CONTACT] [RESUME]
+EVIDENCEBOUND / 9 SYSTEMS      [EXPERIENCE] [TRAINING] [CAPABILITY] [ABOUT] [RESUME]
 ```
 
 Behavior:
 - Fixed to the top of the viewport over the constellation.
 - Low-height glass/mono rail; it should feel like an instrument surface, not a marketing navbar.
 - Buttons open overlays above the constellation.
-- Current implementation enables `[EXPERIENCE]`, `[TRAINING]`, `[CAPABILITY]`, and `[CONTACT]`; `[ABOUT]` and `[RESUME]` remain disabled until their content/link exists.
-- `RESUME` is a direct action once a confirmed resume file/link exists.
+- Current implementation enables `[EXPERIENCE]`, `[TRAINING]`, `[CAPABILITY]`, `[ABOUT]`, and `[RESUME]`. Contact/social links live inside About rather than as a separate top-bar overlay.
+- `RESUME` opens a Drive-backed PDF renderer once a confirmed resume file/link exists.
 - `?plain=1` renders equivalent plain links/content without glass or animation.
 
 ### Experience Overlay
@@ -1021,19 +1021,42 @@ Boundary:
 
 The Experience overlay may also surface confirmed public links, but only when safe public URLs exist. Vivid and Stick and Dot App remain child artifacts under the `stick-and-dot` work node, not separate constellation nodes. If real deployment/release history becomes useful later, it can become its own separate overlay.
 
-### Training / Capability / Contact Overlays
+### Training / Capability Overlays
 
-Training, Capability, and Contact use the same-world evidence overlay shell as Experience:
+Training and Capability use the same-world evidence overlay shell as Experience:
 
 - Training renders the Great Learning and IPS Academy records as compact glass timeline cards. The CGPA chip is included exactly as a training proof chip, not hidden or overexplained.
 - Capability renders five skill groups. Skill hover maps against `project.stack`, shows matching projects inside the overlay, and dispatches `projectStore.highlight(projectIds)` so matching constellation nodes glow subtly behind the glass.
-- Contact renders public-safe email, GitHub, and LinkedIn rows with copy/open actions. Copy feedback uses the existing `CopiedToast` primitive.
 
 Performance behavior:
 
-- Experience, Training, and Contact pause the 3D scene while open.
+- Experience and Training pause the 3D scene while open.
 - Capability keeps the render loop active only so hover highlights are visible.
+- About freezes the constellation at the clicked scroll frame, leaves the top bar above it, and scrolls the human signal layer over the stopped field.
 - Pointer interaction and connector projection remain paused for all evidence overlays.
+
+### About Signal
+
+About is not rendered in the regular glass evidence shell. It appears as a human signal over the constellation itself:
+
+- No card, panel, left rule, blur, or dark replacement screen sits behind the About copy.
+- The frozen constellation itself remains the background; text readability comes from typography and shadow only.
+- Social links for GitHub, LinkedIn, Email, and X sit inside About as a prominent link band. Do not invent the X URL; keep it disabled until confirmed.
+- A short human note introduces Parth in first person.
+- Compact signal facts replace the old whoami terminal treatment so the lower section feels designed rather than command-line filler.
+- Close works through Escape and the visible `[x]` control.
+- The layer begins below the fixed top bar and remains internally scrollable.
+
+The tone should stay human, specific, and non-corporate. Avoid generic "passionate developer" resume language.
+
+### Resume Renderer
+
+Resume is configured through `src/data/resume.ts`.
+
+- `driveSource` may be a Google Drive file ID, a `/file/d/.../view` link, or a Drive URL with an `id=` parameter.
+- The renderer uses `https://drive.google.com/file/d/{id}/preview`.
+- The iframe mounts only when the Resume overlay opens.
+- The top-bar Resume button remains disabled until a valid Drive file ID is resolved; once configured, the preview URL is derived from the source rather than hardcoded.
 
 ---
 
