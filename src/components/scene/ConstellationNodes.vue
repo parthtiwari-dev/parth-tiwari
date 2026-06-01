@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue'
+import { computed, onMounted, onUnmounted } from 'vue'
 import { useLoop, useTres } from '@tresjs/core'
 import * as THREE from 'three'
 import { projects } from '@/data/projects'
@@ -19,6 +19,7 @@ const emit = defineEmits<{
 
 const props = defineProps<{
   interactionPaused?: boolean
+  highlightedProjectIds?: string[]
 }>()
 
 const { camera, renderer, scene } = useTres()
@@ -50,6 +51,7 @@ interface SceneNode {
 }
 
 const NODE_VISUAL_SCALE = 0.48
+const highlightedProjectIdSet = computed(() => new Set(props.highlightedProjectIds ?? []))
 
 const radiusBySize: Record<Project['node']['size'], number> = {
   large: 0.35,
@@ -409,7 +411,9 @@ const loopStop = useLoop().onBeforeRender(({ elapsed }) => {
 
   sceneNodes.forEach((node, i) => {
     const pulseWave = Math.sin(elapsed * 0.9 + nodePhaseOffsets[i])
-    const targetScale = node.runtimeState.hovered ? NODE_HOVER_SCALE : 1
+    const isHighlighted = highlightedProjectIdSet.value.has(node.project.id)
+    const targetScale = node.runtimeState.hovered ? NODE_HOVER_SCALE : isHighlighted ? 1.16 : 1
+    const highlightBoost = isHighlighted ? 1.18 : 1
     node.runtimeState.scale = THREE.MathUtils.lerp(node.runtimeState.scale, targetScale, 0.14)
     const microBreathScale = 1 + 0.015 * pulseWave
     const visualScale = node.runtimeState.scale * microBreathScale
@@ -417,7 +421,7 @@ const loopStop = useLoop().onBeforeRender(({ elapsed }) => {
 
     node.mesh.material.emissiveIntensity = THREE.MathUtils.lerp(
       node.mesh.material.emissiveIntensity,
-      node.baseEmissiveIntensity * (1 + 0.28 * pulseWave),
+      node.baseEmissiveIntensity * highlightBoost * (1 + 0.28 * pulseWave),
       0.06,
     )
     node.mesh.scale.setScalar(visualScale)
@@ -427,17 +431,17 @@ const loopStop = useLoop().onBeforeRender(({ elapsed }) => {
     node.hitMesh.scale.setScalar(node.runtimeState.scale)
     node.corona.material.uniforms.uOpacity.value = THREE.MathUtils.lerp(
       node.corona.material.uniforms.uOpacity.value,
-      (node.runtimeState.hovered ? node.coronaOpacity * 1.4 : node.coronaOpacity) * (1 + 0.1 * pulseWave),
+      (node.runtimeState.hovered ? node.coronaOpacity * 1.4 : isHighlighted ? node.coronaOpacity * 1.25 : node.coronaOpacity) * (1 + 0.1 * pulseWave),
       0.08,
     )
     node.halo.material.uniforms.uOpacity.value = THREE.MathUtils.lerp(
       node.halo.material.uniforms.uOpacity.value,
-      (node.runtimeState.hovered ? node.atmosphereOpacity * 1.25 : node.atmosphereOpacity) * (1 + 0.12 * pulseWave),
+      (node.runtimeState.hovered ? node.atmosphereOpacity * 1.25 : isHighlighted ? node.atmosphereOpacity * 1.18 : node.atmosphereOpacity) * (1 + 0.12 * pulseWave),
       0.08,
     )
     node.glint.material.uniforms.uOpacity.value = THREE.MathUtils.lerp(
       node.glint.material.uniforms.uOpacity.value,
-      node.runtimeState.hovered ? 0.22 : node.glintRestOpacity,
+      node.runtimeState.hovered ? 0.22 : isHighlighted ? Math.max(node.glintRestOpacity, 0.14) : node.glintRestOpacity,
       0.08,
     )
     node.mesh.material.opacity = node.runtimeState.active ? 1 : node.project.nodeKind === 'utility' ? 0.72 : 0.96

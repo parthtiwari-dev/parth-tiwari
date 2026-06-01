@@ -962,9 +962,10 @@ This addendum supersedes the placement of Sections 5-9 as standalone page sectio
 1. Project overlays become 5-panel film strips.
 2. Top Evidence Bar appears after the hero scrolls away and stays fixed over the constellation.
 3. Experience becomes a work timeline overlay opened from the top bar.
-4. Training Data, Capability Map, About, and Contact become top-bar overlays later.
-5. Resume is a top-bar action, not a scroll section.
-6. Cost of Intelligence is deferred into future per-project panel tradeoff treatment, not a standalone section.
+4. Training Data, Capability Map, and Contact become top-bar overlays.
+5. About stays disabled until the personal narrative is intentionally written.
+6. Resume is a top-bar action, not a scroll section, and stays disabled until a confirmed resume file/link exists.
+7. Cost of Intelligence is deferred into future per-project panel tradeoff treatment, not a standalone section.
 
 ### Project Overlay Panel 5 - Links / Launch
 
@@ -992,7 +993,7 @@ Behavior:
 - Fixed to the top of the viewport over the constellation.
 - Low-height glass/mono rail; it should feel like an instrument surface, not a marketing navbar.
 - Buttons open overlays above the constellation.
-- Initial implementation enables `[EXPERIENCE]`; later top-bar overlays remain disabled until their content exists.
+- Current implementation enables `[EXPERIENCE]`, `[TRAINING]`, `[CAPABILITY]`, and `[CONTACT]`; `[ABOUT]` and `[RESUME]` remain disabled until their content/link exists.
 - `RESUME` is a direct action once a confirmed resume file/link exists.
 - `?plain=1` renders equivalent plain links/content without glass or animation.
 
@@ -1019,6 +1020,20 @@ Boundary:
 ```
 
 The Experience overlay may also surface confirmed public links, but only when safe public URLs exist. Vivid and Stick and Dot App remain child artifacts under the `stick-and-dot` work node, not separate constellation nodes. If real deployment/release history becomes useful later, it can become its own separate overlay.
+
+### Training / Capability / Contact Overlays
+
+Training, Capability, and Contact use the same-world evidence overlay shell as Experience:
+
+- Training renders the Great Learning and IPS Academy records as compact glass timeline cards. The CGPA chip is included exactly as a training proof chip, not hidden or overexplained.
+- Capability renders five skill groups. Skill hover maps against `project.stack`, shows matching projects inside the overlay, and dispatches `projectStore.highlight(projectIds)` so matching constellation nodes glow subtly behind the glass.
+- Contact renders public-safe email, GitHub, and LinkedIn rows with copy/open actions. Copy feedback uses the existing `CopiedToast` primitive.
+
+Performance behavior:
+
+- Experience, Training, and Contact pause the 3D scene while open.
+- Capability keeps the render loop active only so hover highlights are visible.
+- Pointer interaction and connector projection remain paused for all evidence overlays.
 
 ---
 

@@ -15,10 +15,10 @@ const revealThreshold = ref(220)
 
 const actions: TopBarAction[] = [
   { label: 'Experience', kind: 'experience' },
-  { label: 'Training', disabled: true },
-  { label: 'Capability', disabled: true },
+  { label: 'Training', kind: 'training' },
+  { label: 'Capability', kind: 'capability' },
   { label: 'About', disabled: true },
-  { label: 'Contact', disabled: true },
+  { label: 'Contact', kind: 'contact' },
 ]
 
 const resumeAction: TopBarAction = { label: 'Resume', disabled: true }

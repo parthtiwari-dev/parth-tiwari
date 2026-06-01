@@ -7,6 +7,7 @@ import { isOverlayReadyProject } from '@/data/overlayReady'
 import { projects } from '@/data/projects'
 import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
 import { useOverlayStore } from '@/stores/overlayStore'
+import { useProjectStore } from '@/stores/projectStore'
 import CameraPathController from '@/components/scene/CameraPathController.vue'
 import CameraLight from '@/components/scene/CameraLight.vue'
 import ConstellationNodes from '@/components/scene/ConstellationNodes.vue'
@@ -21,6 +22,7 @@ import ScenePauseController from '@/components/scene/ScenePauseController.vue'
 const { isPlain } = usePlainMode()
 const overlayStore = useOverlayStore()
 const evidenceOverlayStore = useEvidenceOverlayStore()
+const projectStore = useProjectStore()
 const tresContext = shallowRef<TresContext | null>(null)
 const hoveredProjectId = ref<string | null>(null)
 const hoveredClusterIndex = ref<number | null>(null)
@@ -34,6 +36,9 @@ const hoveredProjectCanOpen = computed(() => {
   return hoveredProject.value ? isOverlayReadyProject(hoveredProject.value.id) : false
 })
 const sceneInteractionPaused = computed(() => overlayStore.isOpen || evidenceOverlayStore.isOpen)
+const sceneAnimationPaused = computed(() => {
+  return overlayStore.isOpen || (evidenceOverlayStore.isOpen && evidenceOverlayStore.activeKind !== 'capability')
+})
 const connectorsPaused = computed(() => sceneInteractionPaused.value)
 
 function handleReady(context: TresContext) {
@@ -80,7 +85,7 @@ function handleSelect(projectId: string) {
           :position="[0, 6, 22]"
         />
         <TresAmbientLight :intensity="0.12" />
-        <ScenePauseController :paused="sceneInteractionPaused" />
+        <ScenePauseController :paused="sceneAnimationPaused" />
         <CameraPathController />
         <CameraLight />
         <IridescentBackground />
@@ -88,6 +93,7 @@ function handleSelect(projectId: string) {
         <RefusalRipple />
         <ConstellationNodes
           :interaction-paused="sceneInteractionPaused"
+          :highlighted-project-ids="projectStore.highlightedProjectIds"
           @hover="handleHover"
           @select="handleSelect"
         />

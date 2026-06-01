@@ -2,7 +2,7 @@
 
 Date: 2026-06-01
 Branch: `dev`
-Status: Phase 2 single-world overlay path active; project links panel, evidence top bar, and Experience overlay implemented
+Status: Phase 2 single-world overlay path active; project links panel, evidence top bar, and Experience/Training/Capability/Contact overlays implemented
 
 ## Branch And Repo
 
@@ -229,12 +229,24 @@ Status: Phase 2 single-world overlay path active; project links panel, evidence 
 | Link policy | Renders only confirmed fields from `project.links`; no fake anchors or private URLs |
 | Supported link fields | `github`, `liveUI`, `liveAPI`, `apiDocs`, `demoVideo`, `caseStudy`, `docs`, `deployment` |
 | Top Evidence Bar | Added as a fixed low-height glass rail after the Hero fade threshold |
-| Enabled top action | `[EXPERIENCE]` opens the work-experience overlay |
-| Deferred top actions | Training, Capability, About, Contact, and Resume are visible but disabled until their content/link is confirmed |
+| Enabled top actions | `[EXPERIENCE]`, `[TRAINING]`, `[CAPABILITY]`, and `[CONTACT]` open same-world overlays |
+| Deferred top actions | About and Resume are visible but disabled until their content/link is confirmed |
 | Experience overlay | Implemented as a same-page work timeline overlay, not a standalone section below the constellation |
 | Initial deployment data | Stick and Dot work node, with Vivid and Stick and Dot App child artifacts |
-| Scene behavior | Evidence overlay pauses constellation interaction and connector projection, same as project overlay |
+| Scene behavior | Evidence overlay pauses constellation interaction and connector projection; Capability keeps the render loop active only for highlight feedback |
 | Routes | No router or separate pages added |
+
+## Phase 2.4 Training, Capability, Contact Overlays
+
+| Item | Status |
+|---|---|
+| Training overlay | Added two formal training records as glass timeline cards, including the CGPA chip |
+| Capability overlay | Added five capability groups with hover-to-project matching from `project.stack` |
+| Contact overlay | Added email, GitHub, and LinkedIn rows with copy/open actions and `CopiedToast` feedback |
+| Top bar | Training, Capability, and Contact enabled; About and Resume remain disabled |
+| Constellation highlight | Capability hover dispatches `projectStore.highlight(projectIds)` and softly emphasizes matching nodes |
+| Performance policy | Training, Experience, and Contact pause the scene; Capability remains animated only while skill highlight is useful |
+| Routes | Still no router or standalone scroll sections |
 
 ## Current Stack
 
@@ -424,6 +436,9 @@ Status: Phase 2 single-world overlay path active; project links panel, evidence 
 | Site overlay state | `src/stores/evidenceOverlayStore.ts` |
 | Evidence overlay shell | `src/components/evidence/EvidenceOverlay.vue` |
 | Experience | `src/components/evidence/ExperienceLog.vue` |
+| Training | `src/components/evidence/TrainingData.vue`, `src/data/training.ts` |
+| Capability | `src/components/evidence/CapabilityMap.vue`, `src/data/capabilities.ts` |
+| Contact | `src/components/evidence/ContactOverlay.vue`, `src/data/contact.ts` |
 | Link vocabulary | `src/data/projectLinks.ts` |
 
 ## Phase 2 Section 5 Cost Of Intelligence Deferral
@@ -438,4 +453,4 @@ Status: Phase 2 single-world overlay path active; project links panel, evidence 
 
 ## Next Step
 
-Populate confirmed project links, then continue Phase 2 with the next top-bar overlay: Training Data, Capability Map, About, Contact, or Resume.
+Populate confirmed project links, then decide whether the next Phase 2 pass should unlock About, Resume, or polish the overlay language.

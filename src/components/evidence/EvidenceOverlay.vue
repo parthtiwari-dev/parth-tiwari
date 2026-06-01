@@ -1,12 +1,44 @@
 <script setup lang="ts">
-import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { lockBodyScroll, unlockBodyScroll } from '@/composables/useBodyScrollLock'
+import CapabilityMap from '@/components/evidence/CapabilityMap.vue'
+import ContactOverlay from '@/components/evidence/ContactOverlay.vue'
 import ExperienceLog from '@/components/evidence/ExperienceLog.vue'
-import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
+import TrainingData from '@/components/evidence/TrainingData.vue'
+import { useEvidenceOverlayStore, type EvidenceOverlayKind } from '@/stores/evidenceOverlayStore'
 
 const evidenceOverlayStore = useEvidenceOverlayStore()
 const overlayRoot = ref<HTMLElement | null>(null)
 let hasScrollLock = false
+
+const overlayMeta: Record<EvidenceOverlayKind, { eyebrow: string; title: string; ariaLabel: string }> = {
+  experience: {
+    eyebrow: 'EVIDENCEBOUND / EXPERIENCE',
+    title: 'Experience',
+    ariaLabel: 'Experience evidence overlay',
+  },
+  training: {
+    eyebrow: 'EVIDENCEBOUND / TRAINING',
+    title: 'Training',
+    ariaLabel: 'Training evidence overlay',
+  },
+  capability: {
+    eyebrow: 'EVIDENCEBOUND / CAPABILITY',
+    title: 'Capability',
+    ariaLabel: 'Capability map overlay',
+  },
+  contact: {
+    eyebrow: 'EVIDENCEBOUND / CONTACT',
+    title: 'Contact',
+    ariaLabel: 'Contact overlay',
+  },
+}
+
+const activeMeta = computed(() => {
+  return evidenceOverlayStore.activeKind
+    ? overlayMeta[evidenceOverlayStore.activeKind]
+    : overlayMeta.experience
+})
 
 function closeOverlay() {
   evidenceOverlayStore.close()
@@ -68,23 +100,26 @@ onUnmounted(() => {
       class="evidence-overlay"
       role="dialog"
       aria-modal="true"
-      aria-label="Experience"
+      :aria-label="activeMeta.ariaLabel"
       tabindex="-1"
     >
       <div class="evidence-overlay__scrim" aria-hidden="true" />
       <div class="evidence-overlay__shell glass-panel">
         <header class="evidence-overlay__header">
           <div>
-            <p>EVIDENCEBOUND / EXPERIENCE</p>
-            <h2>Experience</h2>
+            <p>{{ activeMeta.eyebrow }}</p>
+            <h2>{{ activeMeta.title }}</h2>
           </div>
-          <button type="button" aria-label="Close Experience" @click="closeOverlay">
+          <button type="button" :aria-label="`Close ${activeMeta.title}`" @click="closeOverlay">
             [x]
           </button>
         </header>
 
         <div class="evidence-overlay__body scroll-surface">
           <ExperienceLog v-if="evidenceOverlayStore.activeKind === 'experience'" />
+          <TrainingData v-else-if="evidenceOverlayStore.activeKind === 'training'" />
+          <CapabilityMap v-else-if="evidenceOverlayStore.activeKind === 'capability'" />
+          <ContactOverlay v-else-if="evidenceOverlayStore.activeKind === 'contact'" />
         </div>
       </div>
     </section>
