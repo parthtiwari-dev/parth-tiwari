@@ -30,8 +30,7 @@ export const socialLinks: SocialLink[] = [
   {
     kind: 'x',
     label: 'X',
-    value: 'add handle',
-    href: '',
-    disabled: true,
+    value: 'Parth___tiwari',
+    href: 'https://x.com/Parth___tiwari',
   },
 ]
