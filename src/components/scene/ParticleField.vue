@@ -6,6 +6,7 @@ import { useParticleField } from '@/composables/useParticleField'
 
 const props = defineProps<{
   hoveredClusterIndex: number | null
+  hueOffset?: number
 }>()
 
 const { scene } = useTres()
@@ -16,7 +17,7 @@ onMounted(() => {
 })
 
 const loopStop = useLoop().onBeforeRender(({ delta }) => {
-  particleField.update(delta, props.hoveredClusterIndex)
+  particleField.update(delta, props.hoveredClusterIndex, props.hueOffset ?? 0)
 })
 
 onUnmounted(() => {

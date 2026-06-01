@@ -107,6 +107,11 @@ function tick(now: number) {
 }
 
 onMounted(() => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    animationProgress.value = 1
+    return
+  }
+
   frameId = requestAnimationFrame(tick)
 })
 

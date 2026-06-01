@@ -1,9 +1,21 @@
 precision mediump float;
 
+uniform float uHueOffset;
+
 varying float vAlpha;
 varying float vBrightness;
 varying float vWarmth;
 varying float vTwinkle;
+
+vec3 hueRotate(vec3 color, float angle) {
+  const vec3 weights = vec3(0.299, 0.587, 0.114);
+  float cosAngle = cos(angle);
+  float sinAngle = sin(angle);
+
+  return color * cosAngle
+    + cross(weights, color) * sinAngle
+    + weights * dot(weights, color) * (1.0 - cosAngle);
+}
 
 void main() {
   vec2 center = gl_PointCoord - vec2(0.5);
@@ -24,6 +36,7 @@ void main() {
   vec3 color = mix(ice, coldWhite, 0.35);
   color = mix(color, warmWhite, warmMix * (1.0 - goldMix));
   color = mix(color, gold, goldMix);
+  color = clamp(hueRotate(color, radians(uHueOffset)), 0.0, 1.0);
 
   float alpha = (core + diffraction * 0.35) * vAlpha * vBrightness;
   gl_FragColor = vec4(color, alpha);

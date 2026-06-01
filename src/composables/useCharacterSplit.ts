@@ -36,6 +36,15 @@ export function useCharacterSplit(
 
   function start() {
     clearTimer()
+
+    if (
+      typeof window !== 'undefined'
+      && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      complete()
+      return
+    }
+
     displayed.value = ''
     index = 0
     tick()

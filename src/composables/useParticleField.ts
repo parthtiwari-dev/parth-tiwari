@@ -266,6 +266,7 @@ export function useParticleField(projects: Project[]) {
       uTime:             { value: 0 },
       uClusterBrightness: { value: clusterBrightness },
       uPointSize:        { value: 3.0 },  // was 2.22
+      uHueOffset:        { value: 0 },
     },
     transparent: true,
     depthWrite: false,
@@ -276,8 +277,13 @@ export function useParticleField(projects: Project[]) {
   points.name = 'EvidenceBoundParticleField'
   points.frustumCulled = false
 
-  function update(delta: number, hoveredClusterIndex: number | null) {
+  function update(delta: number, hoveredClusterIndex: number | null, hueOffset = 0) {
     material.uniforms.uTime.value += delta
+    material.uniforms.uHueOffset.value = THREE.MathUtils.lerp(
+      material.uniforms.uHueOffset.value,
+      hueOffset,
+      0.025,
+    )
 
     clusterBrightness.forEach((brightness, index) => {
       const target = hoveredClusterIndex === index ? 1.4 : 1

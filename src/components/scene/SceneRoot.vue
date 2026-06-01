@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, shallowRef, ref } from 'vue'
+import { computed, onMounted, onUnmounted, shallowRef, ref } from 'vue'
 import { TresCanvas, type TresContext } from '@tresjs/core'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ACESFilmicToneMapping, SRGBColorSpace } from 'three'
 import { usePlainMode } from '@/composables/usePlainMode'
 import { isOverlayReadyProject } from '@/data/overlayReady'
@@ -27,7 +28,9 @@ const tresContext = shallowRef<TresContext | null>(null)
 const hoveredProjectId = ref<string | null>(null)
 const hoveredClusterIndex = ref<number | null>(null)
 const selectedProjectId = ref<string | null>(null)
+const particleHueOffset = ref(0)
 const dpr: [number, number] = [1, 1.25]
+let hueMilestoneTrigger: ScrollTrigger | null = null
 
 const hoveredProject = computed(() => {
   return projects.find((project) => project.id === hoveredProjectId.value) ?? null
@@ -40,6 +43,11 @@ const sceneAnimationPaused = computed(() => {
   return overlayStore.isOpen || (evidenceOverlayStore.isOpen && evidenceOverlayStore.activeKind !== 'capability')
 })
 const connectorsPaused = computed(() => sceneInteractionPaused.value)
+
+function prefersReducedMotion() {
+  return typeof window !== 'undefined'
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}
 
 function handleReady(context: TresContext) {
   tresContext.value = context
@@ -61,6 +69,28 @@ function handleSelect(projectId: string) {
     overlayStore.open(projectId)
   }
 }
+
+onMounted(() => {
+  if (isPlain.value || prefersReducedMotion()) {
+    return
+  }
+
+  requestAnimationFrame(() => {
+    hueMilestoneTrigger = ScrollTrigger.create({
+      trigger: '#constellation-section',
+      start: 'top top',
+      end: 'bottom bottom',
+      onUpdate: (self) => {
+        const milestone = Math.min(4, Math.floor(self.progress * 4))
+        particleHueOffset.value = milestone * 1.4
+      },
+    })
+  })
+})
+
+onUnmounted(() => {
+  hueMilestoneTrigger?.kill()
+})
 </script>
 
 <template>
@@ -93,7 +123,10 @@ function handleSelect(projectId: string) {
         <CameraPathController />
         <CameraLight />
         <IridescentBackground />
-        <ParticleField :hovered-cluster-index="hoveredClusterIndex" />
+        <ParticleField
+          :hovered-cluster-index="hoveredClusterIndex"
+          :hue-offset="particleHueOffset"
+        />
         <RefusalRipple />
         <ConstellationNodes
           :interaction-paused="sceneInteractionPaused"
