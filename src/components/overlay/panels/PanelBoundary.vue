@@ -35,7 +35,7 @@ const refuseItems = computed(() => {
       <section>
         <p>refuses</p>
         <ul>
-          <li v-for="item in refuseItems" :key="item.text">{{ item.text }}</li>
+          <li v-for="item in refuseItems" :key="item.text" class="cursor-refuse">{{ item.text }}</li>
         </ul>
       </section>
     </div>
@@ -44,7 +44,7 @@ const refuseItems = computed(() => {
       <section v-for="artifact in project.artifacts" :key="artifact.id">
         <h4>{{ artifact.name }}</h4>
         <ul>
-          <li v-for="item in artifact.boundary" :key="item">{{ item }}</li>
+          <li v-for="item in artifact.boundary" :key="item" class="cursor-refuse">{{ item }}</li>
         </ul>
       </section>
     </div>

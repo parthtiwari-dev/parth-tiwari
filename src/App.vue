@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { sliderConfigs } from '@/data/projects'
 import { usePlainMode } from '@/composables/usePlainMode'
 import { useProjectStore } from '@/stores/projectStore'
 import BootSequence from '@/components/sections/BootSequence.vue'
+import CustomCursor from '@/components/interaction/CustomCursor.vue'
 import EvidenceOverlay from '@/components/evidence/EvidenceOverlay.vue'
 import EvidenceTopBar from '@/components/sections/EvidenceTopBar.vue'
 import HeroSection from '@/components/sections/HeroSection.vue'
@@ -17,7 +18,6 @@ import CopiedToast from '@/components/shared/CopiedToast.vue'
 
 const { isPlain } = usePlainMode()
 const projectStore = useProjectStore()
-const cursorPosition = ref({ x: -100, y: -100 })
 const bootComplete = ref(isPlain.value)
 const isDebug = ref(false)
 
@@ -26,10 +26,6 @@ const firstMetric = computed(() => projectStore.getById('querypilot')?.panels.pr
 const showPhaseZeroConsole = computed(() => isPlain.value || isDebug.value)
 const showPhaseBridge = computed(() => !isPlain.value && isDebug.value)
 
-function handlePointerMove(event: PointerEvent) {
-  cursorPosition.value = { x: event.clientX, y: event.clientY }
-}
-
 function handleBootComplete() {
   bootComplete.value = true
 }
@@ -37,11 +33,6 @@ function handleBootComplete() {
 onMounted(() => {
   const params = new URLSearchParams(window.location.search)
   isDebug.value = params.get('debug') === '1'
-  window.addEventListener('pointermove', handlePointerMove, { passive: true })
-})
-
-onUnmounted(() => {
-  window.removeEventListener('pointermove', handlePointerMove)
 })
 </script>
 
@@ -144,13 +135,6 @@ onUnmounted(() => {
     </section>
 
     <CopiedToast :show="false" />
-    <div
-      v-if="!isPlain"
-      id="custom-cursor"
-      aria-hidden="true"
-      :style="{ left: `${cursorPosition.x}px`, top: `${cursorPosition.y}px` }"
-    >
-      +
-    </div>
+    <CustomCursor v-if="!isPlain" />
   </main>
 </template>

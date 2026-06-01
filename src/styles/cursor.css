@@ -1,46 +1,140 @@
-html {
-  cursor: none;
-}
-
-a,
-button,
-input,
-textarea,
-select,
-.cursor-enter {
-  cursor: none;
-}
-
 .cursor-refuse {
   cursor: not-allowed;
 }
 
 #custom-cursor {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: var(--cursor-y, -100px);
+  left: var(--cursor-x, -100px);
   z-index: 10000;
   width: 20px;
   height: 20px;
   pointer-events: none;
   color: var(--ice);
-  display: grid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   place-items: center;
   font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
-  font-size: 20px;
+  font-size: 19px;
   line-height: 1;
-  transform: translate(-50%, -50%);
+  opacity: 0;
+  mix-blend-mode: screen;
+  text-shadow:
+    0 0 0.75rem color-mix(in srgb, var(--ice) 40%, transparent),
+    0 0 1.6rem color-mix(in srgb, var(--active-glow) 18%, transparent);
+  transform: translate3d(-50%, -50%, 0);
   transition:
-    width 160ms var(--ease-in-out),
-    height 160ms var(--ease-in-out),
-    color 160ms var(--ease-in-out);
+    width 140ms var(--ease-out-expo),
+    height 140ms var(--ease-out-expo),
+    border-color 140ms var(--ease-in-out),
+    color 140ms var(--ease-in-out),
+    opacity 120ms linear,
+    transform 120ms var(--ease-in-out);
 }
 
-#custom-cursor.is-enter {
+#custom-cursor.is-visible {
+  opacity: 1;
+}
+
+#custom-cursor::before,
+#custom-cursor::after {
+  position: absolute;
+  pointer-events: none;
+  content: '';
+  opacity: 0;
+  transition:
+    opacity 140ms var(--ease-in-out),
+    transform 160ms var(--ease-out-expo);
+}
+
+#custom-cursor::before {
+  inset: 0;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  box-shadow:
+    inset 0 0 0.8rem color-mix(in srgb, currentColor 16%, transparent),
+    0 0 1.2rem color-mix(in srgb, currentColor 18%, transparent);
+  transform: scale(0.72);
+}
+
+#custom-cursor::after {
+  inset: -5px;
+  border-radius: 999px;
+  background:
+    linear-gradient(currentColor 0 0) center / 1px 100% no-repeat,
+    linear-gradient(90deg, currentColor 0 0) center / 100% 1px no-repeat;
+  opacity: 0.18;
+}
+
+#custom-cursor.is-enter,
+#custom-cursor.is-refuse {
   width: 40px;
   height: 40px;
 }
 
+#custom-cursor.is-enter {
+  color: var(--gold-glow);
+}
+
+#custom-cursor.is-enter::before {
+  opacity: 0.92;
+  transform: scale(1);
+}
+
+#custom-cursor.is-enter::after {
+  opacity: 0.08;
+}
+
 #custom-cursor.is-refuse {
   color: var(--cold-text);
+}
+
+#custom-cursor.is-refuse::before {
+  opacity: 0.78;
+  transform: scale(1);
+}
+
+#custom-cursor.is-refuse::after {
+  opacity: 0;
+}
+
+.custom-cursor__glyph {
+  position: relative;
+  z-index: 1;
+  display: inline-grid;
+  place-items: center;
+  width: 1em;
+  height: 1em;
+}
+
+.custom-cursor__label {
+  position: absolute;
+  top: calc(100% + 0.32rem);
+  left: 50%;
+  color: currentColor;
+  font-size: 0.54rem;
+  letter-spacing: 0.16em;
+  opacity: 0.78;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html,
+  a,
+  button:not(:disabled),
+  input:not(:disabled),
+  textarea:not(:disabled),
+  select:not(:disabled),
+  .cursor-enter,
+  .cursor-refuse {
+    cursor: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
+  #custom-cursor {
+    display: none;
+  }
 }

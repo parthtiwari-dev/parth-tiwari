@@ -465,6 +465,31 @@ Status: Phase 2 single-world overlay path active; project links panel, evidence 
 | Data retained | Existing `sliderConfigs`, `sliderStore`, and `sliderResponse` fields remain for future panel integration |
 | Removed | Standalone Cost section wiring and temporary Cost components |
 
+## Phase 3 Interaction Backlog
+
+| # | Item | Status | Notes |
+|---|---|---|---|
+| 1 | Custom cursor component | Implemented | Replaced temporary cursor with desktop/reduced-motion-safe `Default`, `Enter`, and `Refuse` states |
+| 2 | Cursor interaction classes | Implemented | Buttons/links are detected by delegation; node hover sends scene cursor intent; refusal targets use `.cursor-refuse` |
+| 3 | Node label wipe and hover ring | Planned | Make hover labels feel intentional without changing node layout |
+| 4 | Node click camera lerp | Planned | Add subtle pre-overlay camera move only if it does not disturb scroll feel |
+| 5 | Architecture panel motion | Planned | Stagger boxes and draw architecture connector lines on panel enter |
+| 6 | Proof metric motion | Planned | Count-up and gold sweep should fire only when the Proof panel is visible |
+| 7 | Boundary/refusal behavior | Started | Refusal cursor state is wired; pulse/line treatment remains for a later Phase 3 pass |
+| 8 | Film-strip panel transitions | Planned | Add side-wipe motion between panels while keeping keyboard/wheel/swipe navigation |
+| 9 | Scroll milestone hue offsets | Planned | Add subtle particle hue nudges at 25% scroll milestones |
+| 10 | Evidence overlay entrances | Planned | Fade/translate Training, Capability, Experience, and About content without adding sections |
+| 11 | Reduced-motion audit | Planned | Ensure boot, cursor, overlay, and panel motion degrade cleanly |
+| 12 | Phase 3 performance gate | Planned | Keep visuals premium without reintroducing heavy scene rebuilds or redundant bars |
+
+## Phase 3 UI Decisions
+
+| Item | Decision |
+|---|---|
+| EvidenceDataBar | Keep deferred/removed from the normal constellation route unless redesigned into a non-redundant overlay detail |
+| Cost of Intelligence | Keep deferred as a future project-panel/tradeoff treatment, not a standalone post-constellation section |
+| Phase 3 priority | Interactions first: cursor, film-strip motion, proof motion, refusal behavior |
+
 ## Next Step
 
-Populate confirmed project links, then polish overlay language before moving deeper into Phase 3 interaction work.
+Continue Phase 3 with node label polish, film-strip panel motion, architecture line draw, proof count-ups, and refusal pulse treatment.

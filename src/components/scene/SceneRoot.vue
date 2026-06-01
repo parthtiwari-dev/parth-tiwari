@@ -48,6 +48,10 @@ function handleReady(context: TresContext) {
 function handleHover(payload: { projectId: string | null; clusterIndex: number | null }) {
   hoveredProjectId.value = payload.projectId
   hoveredClusterIndex.value = payload.clusterIndex
+
+  window.dispatchEvent(new CustomEvent('evidence-cursor-intent', {
+    detail: { state: payload.projectId ? 'enter' : 'default' },
+  }))
 }
 
 function handleSelect(projectId: string) {
