@@ -124,7 +124,7 @@ onUnmounted(() => {
         @close="closeOverlay"
       />
 
-      <div v-else class="evidence-overlay__shell glass-panel">
+      <div v-else :key="evidenceOverlayStore.activeKind ?? 'evidence'" class="evidence-overlay__shell glass-panel">
         <header class="evidence-overlay__header">
           <div>
             <p>{{ activeMeta.eyebrow }}</p>
@@ -192,6 +192,7 @@ onUnmounted(() => {
   gap: 1rem;
   overflow: hidden;
   padding: clamp(1rem, 2.2vw, 1.75rem);
+  animation: evidence-shell-content-enter 260ms var(--ease-out-expo) both;
 }
 
 .evidence-overlay__header {
@@ -199,6 +200,9 @@ onUnmounted(() => {
   align-items: flex-start;
   justify-content: space-between;
   gap: 1.5rem;
+  opacity: 0;
+  transform: translateY(0.45rem);
+  animation: evidence-content-enter 260ms var(--ease-out-expo) 70ms forwards;
 }
 
 .evidence-overlay__header p {
@@ -247,6 +251,9 @@ onUnmounted(() => {
   background:
     linear-gradient(115deg, rgba(216, 234, 240, 0.045), transparent 38%),
     color-mix(in srgb, var(--bg) 54%, transparent);
+  opacity: 0;
+  transform: translateY(0.65rem);
+  animation: evidence-content-enter 300ms var(--ease-out-expo) 130ms forwards;
 }
 
 .evidence-overlay-enter-active,
@@ -280,6 +287,37 @@ onUnmounted(() => {
 
   .evidence-overlay__header {
     flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .evidence-overlay__shell,
+  .evidence-overlay__header,
+  .evidence-overlay__body {
+    animation: none;
+  }
+
+  .evidence-overlay__header,
+  .evidence-overlay__body {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes evidence-shell-content-enter {
+  from {
+    filter: brightness(0.9);
+  }
+
+  to {
+    filter: brightness(1);
+  }
+}
+
+@keyframes evidence-content-enter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 </style>

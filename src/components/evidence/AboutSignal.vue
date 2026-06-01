@@ -122,6 +122,7 @@ const socialIconPaths: Record<SocialLinkKind, string> = {
   font-size: var(--text-xs);
   letter-spacing: 0.12em;
   padding: 0.38rem 0.55rem;
+  animation: about-signal-enter 220ms var(--ease-out-expo) 80ms both;
 }
 
 .about-signal__close:hover,
@@ -135,6 +136,7 @@ const socialIconPaths: Record<SocialLinkKind, string> = {
   display: grid;
   gap: clamp(0.9rem, 2.2vw, 1.35rem);
   max-width: 64rem;
+  animation: about-signal-enter 320ms var(--ease-out-expo) both;
 }
 
 .about-signal h2 {
@@ -175,6 +177,7 @@ const socialIconPaths: Record<SocialLinkKind, string> = {
   gap: 0.85rem;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   width: min(62rem, 100%);
+  animation: about-signal-enter 300ms var(--ease-out-expo) 150ms both;
 }
 
 .about-signal__link {
@@ -320,6 +323,7 @@ const socialIconPaths: Record<SocialLinkKind, string> = {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   max-width: 70rem;
   text-shadow: 0 0.08rem 0.65rem rgb(1 4 9 / 0.9);
+  animation: about-signal-enter 300ms var(--ease-out-expo) 220ms both;
 }
 
 .about-signal__fact {
@@ -360,6 +364,28 @@ const socialIconPaths: Record<SocialLinkKind, string> = {
   .about-signal__links,
   .about-signal__facts {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-signal__close,
+  .about-signal__hero,
+  .about-signal__links,
+  .about-signal__facts,
+  .about-signal__cursor {
+    animation: none;
+  }
+}
+
+@keyframes about-signal-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.55rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

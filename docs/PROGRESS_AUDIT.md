@@ -471,14 +471,14 @@ Status: Phase 2 single-world overlay path active; project links panel, evidence 
 |---|---|---|---|
 | 1 | Custom cursor component | Implemented | Replaced temporary cursor with desktop/reduced-motion-safe `Default`, `Enter`, and `Refuse` states |
 | 2 | Cursor interaction classes | Implemented | Buttons/links are detected by delegation; node hover sends scene cursor intent; refusal targets use `.cursor-refuse` |
-| 3 | Node label wipe and hover ring | Planned | Make hover labels feel intentional without changing node layout |
+| 3 | Node label wipe and hover treatment | Implemented | Hover labels now use a DOM-only wipe, gold scan hairline, and attached edge glint without changing layout |
 | 4 | Node click camera lerp | Rejected | Trial felt worse than direct overlay open; keep node click immediate and avoid disturbing the stable scroll camera |
 | 5 | Architecture panel motion | Implemented | Architecture boxes stagger and connector lines draw on panel enter |
 | 6 | Proof metric motion | Implemented | Proof metrics count up on panel mount, then settle to exact source display with gold sweep |
 | 7 | Boundary/refusal behavior | Implemented | Refusal cursor state and subtle boundary pulse are wired |
 | 8 | Film-strip panel transitions | Implemented | Panels use a restrained side-wipe while existing keyboard/wheel/swipe navigation remains |
 | 9 | Scroll milestone hue offsets | Implemented | Particle-only hue offset at 25% milestones; sky/nebula and camera are untouched |
-| 10 | Evidence overlay entrances | Planned | Fade/translate Training, Capability, Experience, and About content without adding sections |
+| 10 | Evidence overlay entrances | Implemented | Evidence overlay header/body and About content fade/translate in lightly with reduced-motion fallback |
 | 11 | Reduced-motion audit | Implemented | Boot/cursor/CSS motion already guarded; typewriter and proof counters now complete immediately under reduced motion |
 | 12 | Phase 3 performance gate | Planned | Keep visuals premium without reintroducing heavy scene rebuilds or redundant bars |
 
@@ -492,4 +492,4 @@ Status: Phase 2 single-world overlay path active; project links panel, evidence 
 
 ## Next Step
 
-Continue Phase 3 with node label polish and final interaction tuning only; keep rejected click camera lerp out unless the visual direction changes.
+Continue Phase 3 with the final performance gate and interaction tuning only; keep rejected click camera lerp out unless the visual direction changes.

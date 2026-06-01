@@ -77,22 +77,158 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div
-    v-if="project"
-    v-show="labelPosition.visible"
-    class="pointer-events-none absolute left-0 top-0 z-30 max-w-[18rem] rounded border border-[color:var(--ice-faint)] bg-[rgba(2,6,11,0.82)] px-4 py-3 text-[color:var(--ice)] shadow-[0_18px_60px_rgba(0,0,0,0.45)] backdrop-blur-md"
-    :style="{
-      transform: `translate3d(${labelPosition.x}px, ${labelPosition.y}px, 0)`,
-    }"
-  >
-    <p class="type-label text-[color:var(--gold)]">
-      {{ project.name }}
-    </p>
-    <p class="type-body mt-1 text-[length:var(--text-sm)] leading-snug text-[color:var(--ice-muted)]">
-      {{ project.tagline }}
-    </p>
-    <p class="type-mono mt-3 text-[length:var(--text-xs)] uppercase tracking-[0.16em] text-[color:var(--ice-faint)]">
-      {{ canOpen ? '[CLICK -> OPEN]' : nodeKindLabel[project.nodeKind] }}
-    </p>
-  </div>
+  <Transition name="node-label">
+    <div
+      v-if="project && labelPosition.visible"
+      :key="project.id"
+      class="node-label pointer-events-none absolute left-0 top-0 z-30"
+      :style="{
+        transform: `translate3d(${labelPosition.x}px, ${labelPosition.y}px, 0)`,
+      }"
+    >
+      <div class="node-label__card">
+        <p class="type-label text-[color:var(--gold)]">
+          {{ project.name }}
+        </p>
+        <p class="type-body mt-1 text-[length:var(--text-sm)] leading-snug text-[color:var(--ice-muted)]">
+          {{ project.tagline }}
+        </p>
+        <p class="type-mono mt-3 text-[length:var(--text-xs)] uppercase tracking-[0.16em] text-[color:var(--ice-faint)]">
+          {{ canOpen ? '[CLICK -> OPEN]' : nodeKindLabel[project.nodeKind] }}
+        </p>
+      </div>
+    </div>
+  </Transition>
 </template>
+
+<style scoped>
+.node-label {
+  max-width: 18rem;
+}
+
+.node-label__card {
+  position: relative;
+  overflow: hidden;
+  padding: 0.75rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--ice-faint) 72%, transparent);
+  border-radius: 0.25rem;
+  background:
+    linear-gradient(115deg, color-mix(in srgb, var(--ice) 8%, transparent), transparent 44%),
+    rgba(2, 6, 11, 0.82);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--ice) 12%, transparent),
+    0 18px 60px rgba(0, 0, 0, 0.45),
+    0 0 2rem color-mix(in srgb, var(--gold) 8%, transparent);
+  color: var(--ice);
+  backdrop-filter: blur(14px) saturate(1.18);
+}
+
+.node-label__card::before,
+.node-label__card::after {
+  position: absolute;
+  pointer-events: none;
+  content: '';
+}
+
+.node-label__card::before {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, var(--gold-glow), transparent);
+  box-shadow: 0 0 1rem color-mix(in srgb, var(--gold) 42%, transparent);
+  transform: translateY(-100%);
+  animation: node-label-hairline 520ms var(--ease-out-expo) forwards;
+}
+
+.node-label__card::after {
+  top: 0;
+  right: 0;
+  width: 42%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-glow));
+  box-shadow: 0 0 0.9rem color-mix(in srgb, var(--gold) 36%, transparent);
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: right;
+  animation: node-label-edge-glint 520ms var(--ease-out-expo) 80ms forwards;
+}
+
+.node-label-enter-active,
+.node-label-leave-active {
+  transition:
+    opacity 130ms var(--ease-in-out),
+    filter 160ms var(--ease-in-out);
+}
+
+.node-label-enter-from,
+.node-label-leave-to {
+  opacity: 0;
+  filter: blur(3px);
+}
+
+.node-label-enter-active .node-label__card {
+  animation: node-label-wipe 180ms var(--ease-out-expo) forwards;
+  clip-path: inset(0 100% 0 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .node-label-enter-active,
+  .node-label-leave-active {
+    transition: none;
+  }
+
+  .node-label-enter-from,
+  .node-label-leave-to {
+    opacity: 1;
+    filter: none;
+  }
+
+  .node-label-enter-active .node-label__card,
+  .node-label__card::before,
+  .node-label__card::after {
+    animation: none;
+  }
+
+  .node-label-enter-active .node-label__card {
+    clip-path: none;
+  }
+
+  .node-label__card::before {
+    transform: none;
+  }
+
+  .node-label__card::after {
+    opacity: 0.62;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes node-label-wipe {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes node-label-hairline {
+  to {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes node-label-edge-glint {
+  0% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  38% {
+    opacity: 0.75;
+  }
+
+  100% {
+    opacity: 0.42;
+    transform: scaleX(1);
+  }
+}
+</style>
