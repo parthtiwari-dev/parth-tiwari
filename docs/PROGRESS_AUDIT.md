@@ -490,6 +490,17 @@ Status: Phase 2 single-world overlay path active; project links panel, evidence 
 | Cost of Intelligence | Keep deferred as a future project-panel/tradeoff treatment, not a standalone post-constellation section |
 | Phase 3 priority | Interactions first: cursor, film-strip motion, proof motion, refusal behavior |
 
+## Phase 4 Step 1 Mobile Best-Experience Interstitial
+
+| Item | Status |
+|---|---|
+| Scope | Mobile-only post-boot interstitial |
+| Desktop path | Unchanged: boot completes directly into hero/top bar |
+| Mobile path | Boot completes, then a 3s desktop-best-experience notice appears before hero |
+| Plain mode | `?plain=1` skips boot and the notice |
+| Reduced motion | Skips the notice and enters the page immediately |
+| Visual treatment | CSS-only CRYO-GOLD field-mode notice with scan line, stars, and small constellation motif |
+
 ## Next Step
 
-Phase 3 is complete. Phase 4 roadmap has been realigned around a mobile living-starfield dossier, complete plain mode, mobile overlay polish, and performance hardening.
+Phase 4 has started. Next mobile work is the living starfield dossier: gate desktop WebGL off on phones, add the lightweight mobile starfield, then build the mobile hero/project evidence flow.

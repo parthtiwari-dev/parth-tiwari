@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { sliderConfigs } from '@/data/projects'
 import { usePlainMode } from '@/composables/usePlainMode'
 import { useProjectStore } from '@/stores/projectStore'
@@ -8,6 +8,7 @@ import CustomCursor from '@/components/interaction/CustomCursor.vue'
 import EvidenceOverlay from '@/components/evidence/EvidenceOverlay.vue'
 import EvidenceTopBar from '@/components/sections/EvidenceTopBar.vue'
 import HeroSection from '@/components/sections/HeroSection.vue'
+import MobileBestExperienceNotice from '@/components/sections/MobileBestExperienceNotice.vue'
 import ProjectOverlay from '@/components/overlay/ProjectOverlay.vue'
 import SceneRoot from '@/components/scene/SceneRoot.vue'
 import GlassPanel from '@/components/shared/GlassPanel.vue'
@@ -16,23 +17,75 @@ import MetricCountUp from '@/components/shared/MetricCountUp.vue'
 import StatusBadge from '@/components/shared/StatusBadge.vue'
 import CopiedToast from '@/components/shared/CopiedToast.vue'
 
+const MOBILE_QUERY = '(max-width: 767px)'
+const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)'
+
+function getMediaQueryMatches(query: string) {
+  return typeof window !== 'undefined' && window.matchMedia(query).matches
+}
+
 const { isPlain } = usePlainMode()
 const projectStore = useProjectStore()
 const bootComplete = ref(isPlain.value)
 const isDebug = ref(false)
+const isMobileViewport = ref(getMediaQueryMatches(MOBILE_QUERY))
+const prefersReducedMotion = ref(getMediaQueryMatches(REDUCED_MOTION_QUERY))
+const mobileNoticeComplete = ref(
+  isPlain.value
+  || !getMediaQueryMatches(MOBILE_QUERY)
+  || getMediaQueryMatches(REDUCED_MOTION_QUERY),
+)
 
 const featuredProjects = computed(() => projectStore.projects.slice(0, 4))
 const firstMetric = computed(() => projectStore.getById('querypilot')?.panels.proof.metrics?.[0])
 const showPhaseZeroConsole = computed(() => isPlain.value || isDebug.value)
 const showPhaseBridge = computed(() => !isPlain.value && isDebug.value)
+const shouldOfferMobileNotice = computed(() => (
+  !isPlain.value
+  && isMobileViewport.value
+  && !prefersReducedMotion.value
+))
+const showMobileNotice = computed(() => (
+  bootComplete.value
+  && shouldOfferMobileNotice.value
+  && !mobileNoticeComplete.value
+))
+const experienceReady = computed(() => isPlain.value || (bootComplete.value && !showMobileNotice.value))
 
 function handleBootComplete() {
   bootComplete.value = true
 }
 
+function handleMobileNoticeComplete() {
+  mobileNoticeComplete.value = true
+}
+
+let mobileMediaQuery: MediaQueryList | null = null
+let reducedMotionMediaQuery: MediaQueryList | null = null
+
+function syncMediaState() {
+  isMobileViewport.value = getMediaQueryMatches(MOBILE_QUERY)
+  prefersReducedMotion.value = getMediaQueryMatches(REDUCED_MOTION_QUERY)
+
+  if (isPlain.value || !isMobileViewport.value || prefersReducedMotion.value) {
+    mobileNoticeComplete.value = true
+  }
+}
+
 onMounted(() => {
   const params = new URLSearchParams(window.location.search)
   isDebug.value = params.get('debug') === '1'
+
+  mobileMediaQuery = window.matchMedia(MOBILE_QUERY)
+  reducedMotionMediaQuery = window.matchMedia(REDUCED_MOTION_QUERY)
+  syncMediaState()
+  mobileMediaQuery.addEventListener('change', syncMediaState)
+  reducedMotionMediaQuery.addEventListener('change', syncMediaState)
+})
+
+onUnmounted(() => {
+  mobileMediaQuery?.removeEventListener('change', syncMediaState)
+  reducedMotionMediaQuery?.removeEventListener('change', syncMediaState)
 })
 </script>
 
@@ -49,12 +102,17 @@ onMounted(() => {
       @complete="handleBootComplete"
     />
 
+    <MobileBestExperienceNotice
+      v-if="showMobileNotice"
+      @complete="handleMobileNoticeComplete"
+    />
+
     <HeroSection
-      v-if="bootComplete || isPlain"
+      v-if="experienceReady"
       :is-plain="isPlain"
     />
 
-    <EvidenceTopBar v-if="!isPlain && bootComplete" />
+    <EvidenceTopBar v-if="!isPlain && experienceReady" />
 
     <ProjectOverlay v-if="!isPlain" />
     <EvidenceOverlay v-if="!isPlain" />
