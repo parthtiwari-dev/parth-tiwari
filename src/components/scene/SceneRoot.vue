@@ -5,6 +5,7 @@ import { ACESFilmicToneMapping, SRGBColorSpace } from 'three'
 import { usePlainMode } from '@/composables/usePlainMode'
 import { isOverlayReadyProject } from '@/data/overlayReady'
 import { projects } from '@/data/projects'
+import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
 import { useOverlayStore } from '@/stores/overlayStore'
 import CameraPathController from '@/components/scene/CameraPathController.vue'
 import CameraLight from '@/components/scene/CameraLight.vue'
@@ -15,9 +16,11 @@ import NodeLabel from '@/components/scene/NodeLabel.vue'
 import ParticleField from '@/components/scene/ParticleField.vue'
 import PostProcessing from '@/components/scene/PostProcessing.vue'
 import RefusalRipple from '@/components/scene/RefusalRipple.vue'
+import ScenePauseController from '@/components/scene/ScenePauseController.vue'
 
 const { isPlain } = usePlainMode()
 const overlayStore = useOverlayStore()
+const evidenceOverlayStore = useEvidenceOverlayStore()
 const tresContext = shallowRef<TresContext | null>(null)
 const hoveredProjectId = ref<string | null>(null)
 const hoveredClusterIndex = ref<number | null>(null)
@@ -30,7 +33,8 @@ const hoveredProject = computed(() => {
 const hoveredProjectCanOpen = computed(() => {
   return hoveredProject.value ? isOverlayReadyProject(hoveredProject.value.id) : false
 })
-const connectorsPaused = computed(() => overlayStore.isOpen)
+const sceneInteractionPaused = computed(() => overlayStore.isOpen || evidenceOverlayStore.isOpen)
+const connectorsPaused = computed(() => sceneInteractionPaused.value)
 
 function handleReady(context: TresContext) {
   tresContext.value = context
@@ -76,13 +80,14 @@ function handleSelect(projectId: string) {
           :position="[0, 6, 22]"
         />
         <TresAmbientLight :intensity="0.12" />
+        <ScenePauseController :paused="sceneInteractionPaused" />
         <CameraPathController />
         <CameraLight />
         <IridescentBackground />
         <ParticleField :hovered-cluster-index="hoveredClusterIndex" />
         <RefusalRipple />
         <ConstellationNodes
-          :interaction-paused="overlayStore.isOpen"
+          :interaction-paused="sceneInteractionPaused"
           @hover="handleHover"
           @select="handleSelect"
         />
@@ -101,12 +106,6 @@ function handleSelect(projectId: string) {
         :visible="Boolean(hoveredProject)"
         :can-open="hoveredProjectCanOpen"
       />
-
-      <p
-        class="pointer-events-none absolute left-6 top-6 z-30 font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--ice-muted)] opacity-55"
-      >
-        EVIDENCEBOUND / 9 SYSTEMS
-      </p>
 
       <div class="constellation-index pointer-events-none absolute bottom-6 right-6 z-30 hidden md:block">
         <p class="constellation-index__title">CONSTELLATION INDEX</p>

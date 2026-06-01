@@ -1,0 +1,209 @@
+<script setup lang="ts">
+import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import ExperienceLog from '@/components/evidence/ExperienceLog.vue'
+import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
+
+const evidenceOverlayStore = useEvidenceOverlayStore()
+const overlayRoot = ref<HTMLElement | null>(null)
+let previousBodyOverflow = ''
+let previousDocumentOverflow = ''
+
+function closeOverlay() {
+  evidenceOverlayStore.close()
+}
+
+function handleKeydown(event: KeyboardEvent) {
+  if (!evidenceOverlayStore.isOpen) {
+    return
+  }
+
+  if (event.key === 'Escape') {
+    event.preventDefault()
+    closeOverlay()
+  }
+}
+
+watch(
+  () => evidenceOverlayStore.isOpen,
+  async (isOpen) => {
+    if (isOpen) {
+      previousBodyOverflow = document.body.style.overflow
+      previousDocumentOverflow = document.documentElement.style.overflow
+      document.body.style.overflow = 'hidden'
+      document.documentElement.style.overflow = 'hidden'
+      await nextTick()
+      overlayRoot.value?.focus()
+      return
+    }
+
+    document.body.style.overflow = previousBodyOverflow
+    document.documentElement.style.overflow = previousDocumentOverflow
+  },
+)
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeydown)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown)
+  document.body.style.overflow = previousBodyOverflow
+  document.documentElement.style.overflow = previousDocumentOverflow
+})
+</script>
+
+<template>
+  <Transition name="evidence-overlay">
+    <section
+      v-if="evidenceOverlayStore.isOpen"
+      ref="overlayRoot"
+      class="evidence-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Experience"
+      tabindex="-1"
+    >
+      <div class="evidence-overlay__scrim" aria-hidden="true" />
+      <div class="evidence-overlay__shell glass-panel">
+        <header class="evidence-overlay__header">
+          <div>
+            <p>EVIDENCEBOUND / EXPERIENCE</p>
+            <h2>Experience</h2>
+          </div>
+          <button type="button" aria-label="Close Experience" @click="closeOverlay">
+            [x]
+          </button>
+        </header>
+
+        <div class="evidence-overlay__body scroll-surface">
+          <ExperienceLog v-if="evidenceOverlayStore.activeKind === 'experience'" />
+        </div>
+      </div>
+    </section>
+  </Transition>
+</template>
+
+<style scoped>
+.evidence-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 82;
+  display: grid;
+  place-items: center;
+  overscroll-behavior: contain;
+  padding: clamp(0.75rem, 2vw, 1.5rem);
+  color: var(--ice);
+  outline: none;
+}
+
+.evidence-overlay__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 24% 10%, rgba(11, 182, 214, 0.12), transparent 36%),
+    radial-gradient(circle at 76% 20%, rgba(232, 200, 106, 0.07), transparent 34%),
+    rgba(0, 2, 5, 0.68);
+  backdrop-filter: blur(10px) saturate(1.08);
+}
+
+.evidence-overlay__shell {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  width: min(86rem, calc(100vw - 1.5rem));
+  max-height: min(50rem, calc(100vh - 1.5rem));
+  gap: 1rem;
+  overflow: hidden;
+  padding: clamp(1rem, 2.2vw, 1.75rem);
+}
+
+.evidence-overlay__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.evidence-overlay__header p {
+  margin: 0 0 0.35rem;
+  color: var(--gold);
+  font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: var(--text-xs);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.evidence-overlay__header h2 {
+  margin: 0;
+  color: var(--ice);
+  font-family: Spectral, Georgia, serif;
+  font-size: clamp(2rem, 4.4vw, 4.8rem);
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  line-height: 0.92;
+}
+
+.evidence-overlay__header button {
+  border: 1px solid color-mix(in srgb, var(--ice-faint) 68%, transparent);
+  background: color-mix(in srgb, var(--bg) 54%, transparent);
+  color: var(--ice);
+  cursor: pointer;
+  font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  padding: 0.38rem 0.55rem;
+}
+
+.evidence-overlay__header button:hover,
+.evidence-overlay__header button:focus-visible {
+  border-color: var(--gold);
+  color: var(--gold-glow);
+  outline: none;
+}
+
+.evidence-overlay__body {
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  border: 1px solid color-mix(in srgb, var(--ice-faint) 52%, transparent);
+  background:
+    linear-gradient(115deg, rgba(216, 234, 240, 0.045), transparent 38%),
+    color-mix(in srgb, var(--bg) 54%, transparent);
+}
+
+.evidence-overlay-enter-active,
+.evidence-overlay-leave-active {
+  transition:
+    opacity 260ms var(--ease-in-out),
+    clip-path 320ms var(--ease-out-expo);
+}
+
+.evidence-overlay-enter-from,
+.evidence-overlay-leave-to {
+  opacity: 0;
+  clip-path: inset(100% 0 0 0);
+}
+
+.evidence-overlay-enter-to,
+.evidence-overlay-leave-from {
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+}
+
+@media (max-width: 720px) {
+  .evidence-overlay {
+    align-items: stretch;
+    padding: 0.5rem;
+  }
+
+  .evidence-overlay__shell {
+    max-height: calc(100vh - 1rem);
+  }
+
+  .evidence-overlay__header {
+    flex-direction: column;
+  }
+}
+</style>

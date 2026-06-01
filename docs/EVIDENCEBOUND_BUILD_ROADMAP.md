@@ -110,9 +110,8 @@ parth-tiwari/
 │   │   │   ├── CostOfIntelligence.vue     # Pinned section wrapper, glass panel, intro text
 │   │   │   └── CostSlider.vue             # Individual slider: label, Geist Mono value, gold track
 │   │   │
-│   │   ├── deployment-log/
-│   │   │   ├── DeploymentLog.vue          # Section header, card list
-│   │   │   └── DeploymentCard.vue         # Glass card, timeline rail, badge, bullets, chips
+│   │   ├── experience/
+│   │   │   └── ExperienceLog.vue          # Work timeline overlay, artifacts, public-safe boundaries
 │   │   │
 │   │   ├── training-data/
 │   │   │   ├── TrainingData.vue           # Section header, card list
@@ -244,6 +243,11 @@ export interface ProjectLinks {
   github?: string
   liveUI?: string
   liveAPI?: string
+  apiDocs?: string
+  demoVideo?: string
+  caseStudy?: string
+  docs?: string
+  deployment?: string
 }
 
 export interface ConstellationNodeConfig {
@@ -657,7 +661,7 @@ Renderer rule: keep data sizes as above, but apply a small-size visibility floor
 3. Constellation section wrapper + legend
 4. Project/Experience Overlay + FilmStrip (all 9 nodes × 4 panels)
 5. Cost of Intelligence (sliders + reactive 3D binding)
-6. Deployment Log
+6. Experience Overlay
 7. Training Data
 8. Capability Map
 9. About + Contact
@@ -828,29 +832,27 @@ ScrollTrigger.create({
 
 ---
 
-### Section 6 — Deployment Log
+### Section 6 — Experience Overlay
 
-**Component:** `DeploymentLog.vue`, `DeploymentCard.vue`
+**Component:** `ExperienceLog.vue`
 
-Section header: `// DEPLOYMENT LOG` — Geist Mono, `--text-xs`, `--ice-faint`
+Opened from `[EXPERIENCE]` in the top evidence bar. This is a same-world overlay, not a standalone section below the constellation.
 
-**Card — Stick and Dot:**
+Initial work entry:
 ```
-[● ACTIVE]    Stick and Dot                      Mar 2026 →
+[CURRENT]    Stick and Dot                      Mar 2026 ->
 AI and ML Development Intern  ·  Remote  ·  Early-stage AI
 
-▸  Shipped end-to-end AI storyboard generation platform
-   FLUX.1-dev · PuLID · LoRA · Groq · FastAPI
-   [10+ beta users] [4-shot identity consistency] [production]
+At Stick and Dot, I worked on creative AI workflows and product surfaces.
 
-▸  Shipped full company web platform in 3 weeks
-   Next.js · Supabase · RLS · Role-based dashboards
-   [writer] [reader] [SME] [business] [commission marketplace]
+Artifacts:
+- Vivid: storyboard generation system
+- Stick and Dot App: role-based editorial platform
 ```
 
-Left border: 2px vertical line in `--gold` for active, `--ice-faint` for past.
+The overlay uses a timeline layout so future internships/jobs can be added without adding more constellation nodes or page sections.
 
-This deployment-log card expands the same `stick-and-dot` work-experience node from the constellation. `Vivid` and `Stick and Dot App` stay as child artifacts/evidence, not separate nodes.
+The experience entry expands the same `stick-and-dot` work-experience node from the constellation. `Vivid` and `Stick and Dot App` stay as child artifacts/evidence, not separate nodes.
 
 ---
 
@@ -936,13 +938,87 @@ Two lines, Geist Mono `--text-sm`:
 ### Acceptance Criteria — Phase 2
 
 - [ ] All 9 film strip overlays open and navigate correctly
-- [ ] All 4 panels render for all 9 projects with real data
+- [ ] All 5 panels render for all 9 projects with real data
+- [ ] Links / Launch panel renders only confirmed safe public links
+- [ ] Top Evidence Bar appears only after the hero scroll/fade handoff
+- [ ] Experience opens as an overlay, not a standalone section below the constellation
 - [ ] In-progress projects (OncoVerse) show milestone panel not metrics panel
-- [ ] Sliders visibly affect corresponding 3D nodes
-- [ ] All section headers use correct naming (DEPLOYMENT LOG, TRAINING DATA, CAPABILITY MAP)
+- [ ] Cost of Intelligence is deferred into project-panel tradeoff treatment
+- [ ] All overlay headers use correct naming (EXPERIENCE, TRAINING DATA, CAPABILITY MAP)
 - [ ] CGPA chip renders as specified
 - [ ] All live links render only when `links[key]` exists (no broken anchors)
 - [ ] Zero TypeScript errors. Zero missing data fields.
+
+---
+
+## Phase 2 Realignment Addendum - Single-World Evidence Interface
+
+**Decision:** The constellation remains the full portfolio stage. Do not add standalone scroll sections after the constellation. Experience, Training Data, Capability Map, About, Contact, Resume, and future Cost of Intelligence work open as overlays or direct actions from the same constellation world.
+
+This addendum supersedes the placement of Sections 5-9 as standalone page sections. The original section specs remain useful for content, tone, and data, but their rendering surface changes from "below the constellation" to "over the constellation."
+
+### Realigned Phase 2 Build Order
+
+1. Project overlays become 5-panel film strips.
+2. Top Evidence Bar appears after the hero scrolls away and stays fixed over the constellation.
+3. Experience becomes a work timeline overlay opened from the top bar.
+4. Training Data, Capability Map, About, and Contact become top-bar overlays later.
+5. Resume is a top-bar action, not a scroll section.
+6. Cost of Intelligence is deferred into future per-project panel tradeoff treatment, not a standalone section.
+
+### Project Overlay Panel 5 - Links / Launch
+
+The project film strip changes from 4 panels to 5:
+
+1. Problem
+2. Architecture
+3. Proof
+4. Boundary
+5. Links / Launch
+
+Panel 5 renders only confirmed safe public links from `project.links`. It must not invent links, expose private URLs, or render empty buttons. Supported link kinds may expand beyond the current `github`, `liveUI`, and `liveAPI` fields to include demo video, case study/write-up, docs, deployment, or resume reference.
+
+### Top Evidence Bar
+
+The top evidence bar is not visible during the hero-first moment. It appears once the hero has faded or the user has entered the constellation.
+
+Layout:
+
+```text
+EVIDENCEBOUND / 9 SYSTEMS      [EXPERIENCE] [TRAINING] [CAPABILITY] [ABOUT] [CONTACT] [RESUME]
+```
+
+Behavior:
+- Fixed to the top of the viewport over the constellation.
+- Low-height glass/mono rail; it should feel like an instrument surface, not a marketing navbar.
+- Buttons open overlays above the constellation.
+- Initial implementation enables `[EXPERIENCE]`; later top-bar overlays remain disabled until their content exists.
+- `RESUME` is a direct action once a confirmed resume file/link exists.
+- `?plain=1` renders equivalent plain links/content without glass or animation.
+
+### Experience Overlay
+
+Experience is opened from `[EXPERIENCE]`, not rendered below the constellation.
+
+Initial content is the Stick and Dot work-experience entry:
+
+```text
+// EXPERIENCE
+
+[CURRENT]   Stick and Dot                      Mar 2026 ->
+AI/ML Development Intern  ·  Remote  ·  Early-stage AI
+
+At Stick and Dot, I worked on creative AI workflows and product surfaces.
+
+Artifacts:
+- Vivid: storyboard generation system
+- Stick and Dot App: role-based editorial platform
+
+Boundary:
+- Private company data, endpoints, keys, account details, and internal strategy omitted.
+```
+
+The Experience overlay may also surface confirmed public links, but only when safe public URLs exist. Vivid and Stick and Dot App remain child artifacts under the `stick-and-dot` work node, not separate constellation nodes. If real deployment/release history becomes useful later, it can become its own separate overlay.
 
 ---
 
@@ -1016,7 +1092,7 @@ Two lines, Geist Mono `--text-sm`:
 | Store update | Three.js node color/scale lerp | Render loop reads store |
 | Metric readout | Updates instantly on drag | Computed from slider value |
 
-#### DOM Sections (DEPLOYMENT LOG, TRAINING DATA, CAPABILITY MAP, ABOUT)
+#### DOM / Overlay Sections (EXPERIENCE, TRAINING DATA, CAPABILITY MAP, ABOUT)
 
 | Event | Animation | Trigger |
 |---|---|---|
@@ -1165,7 +1241,7 @@ This mode is linkable: `evidencebound.dev?plain=1`. Suitable for PDF print via b
 | Constellation (scroll) | < 4ms/frame | Raycaster, camera path | Raycaster runs on `pointermove` not every frame |
 | Film strip overlay | < 200ms open | clip-path GPU composite | Use `will-change: clip-path` on overlay element |
 | Cost of Intelligence | < 2ms/frame | Slider → store → render loop | Store reads are direct ref access, no reactivity in loop |
-| DEPLOYMENT LOG | < 100ms enter | IntersectionObserver + stagger | Cards stagger avoids layout thrash |
+| EXPERIENCE | < 100ms enter | Overlay open + timeline/card stagger | Cards stagger avoids layout thrash |
 | CAPABILITY MAP | < 100ms enter | Chip hover dispatches | Debounce node highlight at 50ms |
 | About | < 50ms | Typewriter interval | `clearTimeout` on unmount |
 | Total JS bundle | < 350KB gzipped | Three.js is large | Code-split 3D chunk separately |
@@ -1326,7 +1402,7 @@ Phase 2:
   → ConstellationSection + ConstellationLegend
   → ProjectOverlay + FilmStrip + all 4 panel components
   → CostOfIntelligence + CostSlider (sliders first, 3D binding second)
-  → DeploymentLog + DeploymentCard
+  → ExperienceLog
   → TrainingData + TrainingCard
   → CapabilityMap + CapabilityGroup
   → AboutSection + ThesisStatement + WhoamiTerminal + ContactLine

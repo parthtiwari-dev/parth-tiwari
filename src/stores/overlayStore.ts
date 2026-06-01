@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
+const maxPanelIndex = 4
+
 export const useOverlayStore = defineStore('overlay', () => {
   const isOpen = ref(false)
   const activeProjectId = ref<string | null>(null)
@@ -19,7 +21,7 @@ export const useOverlayStore = defineStore('overlay', () => {
   }
 
   function setPanel(index: number) {
-    activePanelIndex.value = Math.min(Math.max(index, 0), 3)
+    activePanelIndex.value = Math.min(Math.max(index, 0), maxPanelIndex)
   }
 
   function nextPanel() {

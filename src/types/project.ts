@@ -90,6 +90,11 @@ export interface ProjectLinks {
   github?: string
   liveUI?: string
   liveAPI?: string
+  apiDocs?: string
+  demoVideo?: string
+  caseStudy?: string
+  docs?: string
+  deployment?: string
 }
 
 export interface ConstellationNodeConfig {

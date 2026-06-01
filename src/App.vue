@@ -4,6 +4,8 @@ import { sliderConfigs } from '@/data/projects'
 import { usePlainMode } from '@/composables/usePlainMode'
 import { useProjectStore } from '@/stores/projectStore'
 import BootSequence from '@/components/sections/BootSequence.vue'
+import EvidenceOverlay from '@/components/evidence/EvidenceOverlay.vue'
+import EvidenceTopBar from '@/components/sections/EvidenceTopBar.vue'
 import HeroSection from '@/components/sections/HeroSection.vue'
 import ProjectOverlay from '@/components/overlay/ProjectOverlay.vue'
 import SceneRoot from '@/components/scene/SceneRoot.vue'
@@ -61,7 +63,10 @@ onUnmounted(() => {
       :is-plain="isPlain"
     />
 
+    <EvidenceTopBar v-if="!isPlain && bootComplete" />
+
     <ProjectOverlay v-if="!isPlain" />
+    <EvidenceOverlay v-if="!isPlain" />
 
     <div
       v-if="showPhaseBridge"

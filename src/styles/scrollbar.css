@@ -1,0 +1,73 @@
+:root {
+  scrollbar-color: color-mix(in srgb, var(--ice-faint) 72%, transparent) color-mix(in srgb, var(--bg) 72%, transparent);
+  scrollbar-width: thin;
+}
+
+* {
+  scrollbar-color: color-mix(in srgb, var(--ice-faint) 72%, transparent) color-mix(in srgb, var(--bg) 72%, transparent);
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 0.55rem;
+  height: 0.55rem;
+}
+
+::-webkit-scrollbar-track {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--ice-faint) 12%, transparent), transparent 42%),
+    color-mix(in srgb, var(--bg) 74%, transparent);
+}
+
+::-webkit-scrollbar-thumb {
+  min-height: 3rem;
+  border: 2px solid color-mix(in srgb, var(--bg) 78%, transparent);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--ice) 72%, transparent), color-mix(in srgb, var(--ice-faint) 92%, transparent));
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--ice) 24%, transparent),
+    0 0 0.8rem color-mix(in srgb, var(--teal-active) 16%, transparent);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--gold-glow) 78%, transparent), color-mix(in srgb, var(--gold) 86%, transparent));
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--ice) 20%, transparent),
+    0 0 1rem color-mix(in srgb, var(--gold) 24%, transparent);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--bg);
+}
+
+.scroll-surface {
+  scrollbar-color: color-mix(in srgb, var(--ice-muted) 64%, transparent) color-mix(in srgb, var(--bg) 82%, transparent);
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+}
+
+.scroll-surface::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+.scroll-surface::-webkit-scrollbar-track {
+  border-left: 1px solid color-mix(in srgb, var(--ice-faint) 34%, transparent);
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+}
+
+.scroll-surface::-webkit-scrollbar-thumb {
+  border: 1px solid color-mix(in srgb, var(--bg) 80%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--ice) 70%, transparent), color-mix(in srgb, var(--ice-muted) 72%, transparent));
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--ice) 18%, transparent),
+    0 0 0.7rem color-mix(in srgb, var(--teal-active) 12%, transparent);
+}
+
+.scroll-surface::-webkit-scrollbar-thumb:hover {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--gold-glow) 74%, transparent), color-mix(in srgb, var(--gold) 78%, transparent));
+}

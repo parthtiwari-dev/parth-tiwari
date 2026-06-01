@@ -1,8 +1,8 @@
 # EVIDENCEBOUND Progress Audit
 
-Date: 2026-05-31
+Date: 2026-06-01
 Branch: `dev`
-Status: Phase 2 Step 2 hero layer complete; ready for constellation wrapper/overlay work
+Status: Phase 2 single-world overlay path active; project links panel, evidence top bar, and Experience overlay implemented
 
 ## Branch And Repo
 
@@ -220,6 +220,22 @@ Status: Phase 2 Step 2 hero layer complete; ready for constellation wrapper/over
 | Bottom data bar | Intentionally removed after visual review because it cluttered the constellation |
 | End-scroll shading | Removed old Phase 0 handoff fade so the final constellation no longer darkens |
 
+## Phase 2 Realigned Evidence Navigation
+
+| Item | Status |
+|---|---|
+| Project film strip | Expanded from 4 panels to 5 panels |
+| Links / Launch panel | Added for all 9 project overlays |
+| Link policy | Renders only confirmed fields from `project.links`; no fake anchors or private URLs |
+| Supported link fields | `github`, `liveUI`, `liveAPI`, `apiDocs`, `demoVideo`, `caseStudy`, `docs`, `deployment` |
+| Top Evidence Bar | Added as a fixed low-height glass rail after the Hero fade threshold |
+| Enabled top action | `[EXPERIENCE]` opens the work-experience overlay |
+| Deferred top actions | Training, Capability, About, Contact, and Resume are visible but disabled until their content/link is confirmed |
+| Experience overlay | Implemented as a same-page work timeline overlay, not a standalone section below the constellation |
+| Initial deployment data | Stick and Dot work node, with Vivid and Stick and Dot App child artifacts |
+| Scene behavior | Evidence overlay pauses constellation interaction and connector projection, same as project overlay |
+| Routes | No router or separate pages added |
+
 ## Current Stack
 
 | Package | Version |
@@ -363,7 +379,8 @@ Status: Phase 2 Step 2 hero layer complete; ready for constellation wrapper/over
 | Dev-only TresJS lifecycle warnings | Observed in Vite dev mode; no page errors and production build is clean |
 | External font network in sandbox | Headless QA reported `ERR_NETWORK_ACCESS_DENIED` for remote fonts; expected in restricted sandbox |
 | Boot visual QA | Browser verification still needs a live local dev session after implementation; static build and type gates pass |
-| Overlay project links | Add a contextual link/action row later: GitHub, live UI, API docs, demo video, write-up, or deployment link only when each project has a confirmed safe public URL |
+| Overlay project links | Populate `project.links` only after each GitHub, live UI, API docs, demo video, write-up, or deployment URL is confirmed safe and public |
+| Disabled top-bar actions | Training, Capability, About, Contact, and Resume need real content/link before enabling |
 
 ## Phase 0 Data Decisions
 
@@ -385,7 +402,7 @@ Status: Phase 2 Step 2 hero layer complete; ready for constellation wrapper/over
 | Overlay-ready nodes | All 9 constellation nodes |
 | Data source | `src/data/projects.ts`, verified against safe README/docs from the real project folders and discovery docs |
 | Click behavior | Every node opens `overlayStore.open(projectId)` |
-| Panels | Problem, Architecture, Proof, Boundary |
+| Panels | Problem, Architecture, Proof, Boundary, Links/Launch |
 | Navigation | Close, Escape, arrow buttons, keyboard arrows, wheel, touch swipe |
 | Routes | No router or project detail pages added |
 | Visual scope | No 3D, particle, camera, hero, boot, or cursor rebuild |
@@ -395,9 +412,19 @@ Status: Phase 2 Step 2 hero layer complete; ready for constellation wrapper/over
 | Area | Files |
 |---|---|
 | Overlay shell | `ProjectOverlay.vue`, `FilmStrip.vue`, `FilmStripHeader.vue` |
-| Panels | `PanelProblem.vue`, `PanelArchitecture.vue`, `PanelProof.vue`, `PanelBoundary.vue` |
+| Panels | `PanelProblem.vue`, `PanelArchitecture.vue`, `PanelProof.vue`, `PanelBoundary.vue`, `PanelLinks.vue` |
 | Diagram | `BrokenFlowDiagram.vue` |
 | Gate | `src/data/overlayReady.ts` derives all ready ids from canonical project data |
+
+## Phase 2 Evidence Navigation Files Added
+
+| Area | Files |
+|---|---|
+| Top bar | `src/components/sections/EvidenceTopBar.vue` |
+| Site overlay state | `src/stores/evidenceOverlayStore.ts` |
+| Evidence overlay shell | `src/components/evidence/EvidenceOverlay.vue` |
+| Experience | `src/components/evidence/ExperienceLog.vue` |
+| Link vocabulary | `src/data/projectLinks.ts` |
 
 ## Phase 2 Section 5 Cost Of Intelligence Deferral
 
@@ -411,4 +438,4 @@ Status: Phase 2 Step 2 hero layer complete; ready for constellation wrapper/over
 
 ## Next Step
 
-Cost of Intelligence is deferred into future project-panel polish. Next: continue Phase 2 with the Deployment Log.
+Populate confirmed project links, then continue Phase 2 with the next top-bar overlay: Training Data, Capability Map, About, Contact, or Resume.

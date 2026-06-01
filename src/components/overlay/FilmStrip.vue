@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import PanelArchitecture from '@/components/overlay/panels/PanelArchitecture.vue'
 import PanelBoundary from '@/components/overlay/panels/PanelBoundary.vue'
+import PanelLinks from '@/components/overlay/panels/PanelLinks.vue'
 import PanelProblem from '@/components/overlay/panels/PanelProblem.vue'
 import PanelProof from '@/components/overlay/panels/PanelProof.vue'
 import type { Project } from '@/types/project'
@@ -20,13 +21,14 @@ const panels = [
   { label: 'Architecture', component: PanelArchitecture },
   { label: 'Proof', component: PanelProof },
   { label: 'Boundary', component: PanelBoundary },
+  { label: 'Links', component: PanelLinks },
 ] as const
 
 const activePanel = computed(() => panels[props.activePanelIndex] ?? panels[0])
 </script>
 
 <script lang="ts">
-export const filmStripPanelCount = 4
+export const filmStripPanelCount = 5
 </script>
 
 <template>
@@ -44,7 +46,7 @@ export const filmStripPanelCount = 4
       </button>
     </nav>
 
-    <div class="film-strip__frame">
+    <div class="film-strip__frame scroll-surface">
       <component :is="activePanel.component" :project="project" />
     </div>
   </div>
