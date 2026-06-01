@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { lockBodyScroll, unlockBodyScroll } from '@/composables/useBodyScrollLock'
 import ExperienceLog from '@/components/evidence/ExperienceLog.vue'
 import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
 
 const evidenceOverlayStore = useEvidenceOverlayStore()
 const overlayRoot = ref<HTMLElement | null>(null)
-let previousBodyOverflow = ''
-let previousDocumentOverflow = ''
+let hasScrollLock = false
 
 function closeOverlay() {
   evidenceOverlayStore.close()
@@ -23,21 +23,30 @@ function handleKeydown(event: KeyboardEvent) {
   }
 }
 
+function setBodyScrollLock(shouldLock: boolean) {
+  if (shouldLock && !hasScrollLock) {
+    lockBodyScroll()
+    hasScrollLock = true
+    return
+  }
+
+  if (!shouldLock && hasScrollLock) {
+    unlockBodyScroll()
+    hasScrollLock = false
+  }
+}
+
 watch(
   () => evidenceOverlayStore.isOpen,
   async (isOpen) => {
     if (isOpen) {
-      previousBodyOverflow = document.body.style.overflow
-      previousDocumentOverflow = document.documentElement.style.overflow
-      document.body.style.overflow = 'hidden'
-      document.documentElement.style.overflow = 'hidden'
+      setBodyScrollLock(true)
       await nextTick()
       overlayRoot.value?.focus()
       return
     }
 
-    document.body.style.overflow = previousBodyOverflow
-    document.documentElement.style.overflow = previousDocumentOverflow
+    setBodyScrollLock(false)
   },
 )
 
@@ -47,8 +56,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('keydown', handleKeydown)
-  document.body.style.overflow = previousBodyOverflow
-  document.documentElement.style.overflow = previousDocumentOverflow
+  setBodyScrollLock(false)
 })
 </script>
 

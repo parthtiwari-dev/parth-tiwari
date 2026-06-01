@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import PanelArchitecture from '@/components/overlay/panels/PanelArchitecture.vue'
 import PanelBoundary from '@/components/overlay/panels/PanelBoundary.vue'
 import PanelLinks from '@/components/overlay/panels/PanelLinks.vue'
@@ -16,6 +16,8 @@ const emit = defineEmits<{
   setPanel: [index: number]
 }>()
 
+const frameRef = ref<HTMLElement | null>(null)
+
 const panels = [
   { label: 'Problem', component: PanelProblem },
   { label: 'Architecture', component: PanelArchitecture },
@@ -25,6 +27,20 @@ const panels = [
 ] as const
 
 const activePanel = computed(() => panels[props.activePanelIndex] ?? panels[0])
+
+watch(
+  () => props.activePanelIndex,
+  async () => {
+    await nextTick()
+
+    if (!frameRef.value) {
+      return
+    }
+
+    frameRef.value.scrollTop = 0
+    frameRef.value.scrollLeft = 0
+  },
+)
 </script>
 
 <script lang="ts">
@@ -46,8 +62,14 @@ export const filmStripPanelCount = 5
       </button>
     </nav>
 
-    <div class="film-strip__frame scroll-surface">
-      <component :is="activePanel.component" :project="project" />
+    <div ref="frameRef" class="film-strip__frame">
+      <Transition name="film-panel" mode="out-in">
+        <component
+          :is="activePanel.component"
+          :key="activePanel.label"
+          :project="project"
+        />
+      </Transition>
     </div>
   </div>
 </template>
@@ -95,8 +117,7 @@ export const filmStripPanelCount = 5
 
 .film-strip__frame {
   position: relative;
-  min-height: min(42rem, calc(100vh - 15rem));
-  overflow: auto;
+  overflow: visible;
   padding: clamp(1.25rem, 3vw, 2.25rem);
   border: 1px solid color-mix(in srgb, var(--ice-faint) 58%, transparent);
   background:
@@ -108,10 +129,28 @@ export const filmStripPanelCount = 5
   backdrop-filter: blur(18px) saturate(1.26);
 }
 
+.film-panel-enter-active,
+.film-panel-leave-active {
+  transition:
+    opacity 160ms var(--ease-in-out),
+    transform 180ms var(--ease-out-expo);
+}
+
+.film-panel-enter-from,
+.film-panel-leave-to {
+  opacity: 0;
+  transform: translateY(0.35rem);
+}
+
+.film-panel-enter-to,
+.film-panel-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 @media (max-width: 720px) {
   .film-strip__frame {
     min-height: auto;
-    max-height: calc(100vh - 13rem);
   }
 }
 </style>

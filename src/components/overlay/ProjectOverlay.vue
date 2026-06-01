@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { lockBodyScroll, unlockBodyScroll } from '@/composables/useBodyScrollLock'
 import { isOverlayReadyProject } from '@/data/overlayReady'
 import FilmStrip, { filmStripPanelCount } from '@/components/overlay/FilmStrip.vue'
 import FilmStripHeader from '@/components/overlay/FilmStripHeader.vue'
@@ -11,6 +12,7 @@ const projectStore = useProjectStore()
 const overlayRoot = ref<HTMLElement | null>(null)
 const touchStartX = ref<number | null>(null)
 let lastWheelAt = 0
+let hasScrollLock = false
 
 const activeProject = computed(() => {
   const projectId = overlayStore.activeProjectId
@@ -32,6 +34,34 @@ function nextPanel() {
 
 function previousPanel() {
   overlayStore.previousPanel()
+}
+
+function setBodyScrollLock(shouldLock: boolean) {
+  if (shouldLock && !hasScrollLock) {
+    lockBodyScroll()
+    hasScrollLock = true
+    return
+  }
+
+  if (!shouldLock && hasScrollLock) {
+    unlockBodyScroll()
+    hasScrollLock = false
+  }
+}
+
+function canScrollOverlay(deltaY: number) {
+  const root = overlayRoot.value
+  const scrollTolerance = 2
+
+  if (!root) {
+    return false
+  }
+
+  if (deltaY > 0) {
+    return root.scrollTop + root.clientHeight < root.scrollHeight - scrollTolerance
+  }
+
+  return root.scrollTop > scrollTolerance
 }
 
 function handleKeydown(event: KeyboardEvent) {
@@ -60,9 +90,13 @@ function handleWheel(event: WheelEvent) {
     return
   }
 
+  if (canScrollOverlay(event.deltaY)) {
+    return
+  }
+
   const now = window.performance.now()
 
-  if (now - lastWheelAt < 520) {
+  if (now - lastWheelAt < 680) {
     event.preventDefault()
     return
   }
@@ -107,12 +141,14 @@ function handleTouchEnd(event: TouchEvent) {
 watch(
   () => overlayStore.isOpen,
   async (isOpen) => {
-    if (!isOpen) {
+    if (isOpen) {
+      setBodyScrollLock(true)
+      await nextTick()
+      overlayRoot.value?.focus()
       return
     }
 
-    await nextTick()
-    overlayRoot.value?.focus()
+    setBodyScrollLock(false)
   },
 )
 
@@ -128,6 +164,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('keydown', handleKeydown)
+  setBodyScrollLock(false)
 })
 </script>
 
@@ -171,8 +208,9 @@ onUnmounted(() => {
   position: fixed;
   inset: 0;
   z-index: 80;
-  display: grid;
-  place-items: center;
+  display: block;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: clamp(0.75rem, 2vw, 1.5rem);
   color: var(--ice);
   outline: none;
@@ -193,8 +231,9 @@ onUnmounted(() => {
   z-index: 1;
   display: grid;
   width: min(92rem, calc(100vw - 1.5rem));
-  max-height: min(50rem, calc(100vh - 1.5rem));
+  min-height: min(50rem, calc(100vh - 1.5rem));
   gap: 1rem;
+  margin: 0 auto;
   padding: clamp(1rem, 2.2vw, 1.75rem);
 }
 
@@ -219,12 +258,11 @@ onUnmounted(() => {
 
 @media (max-width: 720px) {
   .project-overlay {
-    align-items: stretch;
     padding: 0.5rem;
   }
 
   .project-overlay__shell {
-    max-height: calc(100vh - 1rem);
+    min-height: calc(100vh - 1rem);
   }
 }
 </style>
