@@ -480,7 +480,7 @@ Status: Phase 2 single-world overlay path active; project links panel, evidence 
 | 9 | Scroll milestone hue offsets | Implemented | Particle-only hue offset at 25% milestones; sky/nebula and camera are untouched |
 | 10 | Evidence overlay entrances | Implemented | Evidence overlay header/body and About content fade/translate in lightly with reduced-motion fallback |
 | 11 | Reduced-motion audit | Implemented | Boot/cursor/CSS motion already guarded; typewriter and proof counters now complete immediately under reduced motion |
-| 12 | Phase 3 performance gate | Planned | Keep visuals premium without reintroducing heavy scene rebuilds or redundant bars |
+| 12 | Phase 3 performance gate | Implemented | Typecheck/build/audit/diff-check pass; manual UX checks passed on user side; known Three.js chunk warning accepted |
 
 ## Phase 3 UI Decisions
 
@@ -492,4 +492,4 @@ Status: Phase 2 single-world overlay path active; project links panel, evidence 
 
 ## Next Step
 
-Continue Phase 3 with the final performance gate and interaction tuning only; keep rejected click camera lerp out unless the visual direction changes.
+Phase 3 is complete. Next phase should start with Phase 4 mobile/plain-mode/performance hardening unless final copy/link polish is requested first.
