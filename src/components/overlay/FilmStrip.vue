@@ -19,11 +19,11 @@ const emit = defineEmits<{
 const frameRef = ref<HTMLElement | null>(null)
 
 const panels = [
-  { label: 'Problem', component: PanelProblem },
-  { label: 'Architecture', component: PanelArchitecture },
-  { label: 'Proof', component: PanelProof },
-  { label: 'Boundary', component: PanelBoundary },
-  { label: 'Links', component: PanelLinks },
+  { label: 'Problem', shortLabel: 'Prob', component: PanelProblem },
+  { label: 'Architecture', shortLabel: 'Arch', component: PanelArchitecture },
+  { label: 'Proof', shortLabel: 'Proof', component: PanelProof },
+  { label: 'Boundary', shortLabel: 'Bound', component: PanelBoundary },
+  { label: 'Links', shortLabel: 'Links', component: PanelLinks },
 ] as const
 
 const activePanel = computed(() => panels[props.activePanelIndex] ?? panels[0])
@@ -57,8 +57,9 @@ export const filmStripPanelCount = 5
         :class="{ 'is-active': index === activePanelIndex }"
         @click="emit('setPanel', index)"
       >
-        <span>{{ String(index + 1).padStart(2, '0') }}</span>
-        {{ panel.label }}
+        <span class="film-strip__panel-number">{{ String(index + 1).padStart(2, '0') }}</span>
+        <span class="film-strip__label-full">{{ panel.label }}</span>
+        <span class="film-strip__label-short">{{ panel.shortLabel }}</span>
       </button>
     </nav>
 
@@ -87,31 +88,81 @@ export const filmStripPanelCount = 5
 }
 
 .film-strip__nav button {
+  position: relative;
   border: 1px solid color-mix(in srgb, var(--ice-faint) 48%, transparent);
-  background: color-mix(in srgb, var(--bg) 48%, transparent);
+  background:
+    linear-gradient(180deg, rgb(216 234 240 / 0.035), transparent),
+    color-mix(in srgb, var(--bg) 48%, transparent);
   color: var(--ice-muted);
   cursor: pointer;
   font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
   font-size: var(--text-xs);
   letter-spacing: 0.12em;
-  padding: 0.5rem 0.68rem;
+  min-height: 2.75rem;
+  padding: 0.58rem 0.78rem;
   text-transform: uppercase;
+  transition:
+    border-color 160ms var(--ease-in-out),
+    background 160ms var(--ease-in-out),
+    color 160ms var(--ease-in-out),
+    transform 160ms var(--ease-in-out);
 }
 
-.film-strip__nav span {
+.film-strip__nav button::before,
+.film-strip__nav button::after {
+  position: absolute;
+  left: 0.55rem;
+  right: 0.55rem;
+  height: 1px;
+  pointer-events: none;
+  content: '';
+  background: var(--gold);
+  opacity: 0;
+  transform: scaleX(0.42);
+  transition:
+    opacity 160ms var(--ease-in-out),
+    transform 180ms var(--ease-out-expo);
+}
+
+.film-strip__nav button::before {
+  top: -1px;
+}
+
+.film-strip__nav button::after {
+  bottom: -1px;
+}
+
+.film-strip__panel-number {
   color: var(--ice-faint);
   margin-right: 0.45rem;
+}
+
+.film-strip__label-short {
+  display: none;
 }
 
 .film-strip__nav button:hover,
 .film-strip__nav button:focus-visible,
 .film-strip__nav button.is-active {
   border-color: color-mix(in srgb, var(--gold) 72%, transparent);
+  background:
+    linear-gradient(180deg, rgb(232 200 106 / 0.06), transparent),
+    color-mix(in srgb, var(--bg) 52%, transparent);
   color: var(--ice);
   outline: none;
 }
 
-.film-strip__nav button.is-active span {
+.film-strip__nav button:hover {
+  transform: translateY(-1px);
+}
+
+.film-strip__nav button.is-active::before,
+.film-strip__nav button.is-active::after {
+  opacity: 0.78;
+  transform: scaleX(1);
+}
+
+.film-strip__nav button.is-active .film-strip__panel-number {
   color: var(--gold);
 }
 
@@ -132,23 +183,20 @@ export const filmStripPanelCount = 5
 .film-panel-enter-active,
 .film-panel-leave-active {
   transition:
-    clip-path 240ms var(--ease-out-expo),
-    opacity 160ms var(--ease-in-out),
-    transform 220ms var(--ease-out-expo);
+    opacity 150ms var(--ease-in-out),
+    transform 170ms var(--ease-out-expo);
 }
 
 .film-panel-enter-from,
 .film-panel-leave-to {
-  clip-path: inset(0 100% 0 0);
   opacity: 0;
-  transform: translateX(0.7rem);
+  transform: translate3d(0.55rem, 0, 0);
 }
 
 .film-panel-enter-to,
 .film-panel-leave-from {
-  clip-path: inset(0 0 0 0);
   opacity: 1;
-  transform: translateX(0);
+  transform: translate3d(0, 0, 0);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -159,15 +207,64 @@ export const filmStripPanelCount = 5
 
   .film-panel-enter-from,
   .film-panel-leave-to {
-    clip-path: none;
     opacity: 1;
     transform: none;
   }
 }
 
 @media (max-width: 720px) {
+  .film-strip__nav {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.32rem;
+    margin-inline: 0;
+    overflow: visible;
+    padding: 0;
+  }
+
+  .film-strip__nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .film-strip__nav button {
+    display: grid;
+    min-width: 0;
+    min-height: 3.65rem;
+    align-content: center;
+    justify-items: center;
+    gap: 0.22rem;
+    padding: 0.5rem 0.2rem;
+    letter-spacing: 0.09em;
+    scroll-snap-align: none;
+  }
+
+  .film-strip__panel-number {
+    margin-right: 0;
+    font-size: 0.72rem;
+  }
+
+  .film-strip__label-full {
+    display: none;
+  }
+
+  .film-strip__label-short {
+    display: inline;
+    max-width: 100%;
+    overflow: hidden;
+    font-size: 0.58rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .film-strip__nav button::before,
+  .film-strip__nav button::after {
+    left: 0.32rem;
+    right: 0.32rem;
+  }
+
   .film-strip__frame {
     min-height: auto;
+    padding: 1rem;
   }
 }
 </style>

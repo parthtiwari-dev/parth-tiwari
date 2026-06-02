@@ -36,15 +36,36 @@ const panelCounter = computed(() => {
     </div>
 
     <div class="film-strip-header__controls">
-      <span aria-live="polite">{{ panelCounter }}</span>
-      <button type="button" aria-label="Previous overlay panel" @click="emit('previous')">
-        [<-]
+      <span class="film-strip-header__counter" aria-live="polite">{{ panelCounter }}</span>
+      <button
+        type="button"
+        class="film-strip-header__button"
+        aria-label="Previous overlay panel"
+        @click="emit('previous')"
+      >
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M15 5 8 12l7 7" />
+        </svg>
       </button>
-      <button type="button" aria-label="Next overlay panel" @click="emit('next')">
-        [->]
+      <button
+        type="button"
+        class="film-strip-header__button"
+        aria-label="Next overlay panel"
+        @click="emit('next')"
+      >
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <path d="m9 5 7 7-7 7" />
+        </svg>
       </button>
-      <button type="button" aria-label="Close overlay" @click="emit('close')">
-        [x]
+      <button
+        type="button"
+        class="film-strip-header__button film-strip-header__button--close"
+        aria-label="Close overlay"
+        @click="emit('close')"
+      >
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <path d="m6 6 12 12M18 6 6 18" />
+        </svg>
       </button>
     </div>
   </header>
@@ -87,32 +108,67 @@ h2 {
 .film-strip-header__controls {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.55rem;
   color: var(--ice-muted);
   font-size: var(--text-xs);
   letter-spacing: 0.14em;
   white-space: nowrap;
 }
 
-button {
+.film-strip-header__counter {
+  margin-right: 0.25rem;
+  color: color-mix(in srgb, var(--ice-muted) 84%, transparent);
+}
+
+.film-strip-header__button {
+  position: relative;
+  display: grid;
+  width: 2.65rem;
+  height: 2.65rem;
+  place-items: center;
   border: 1px solid color-mix(in srgb, var(--ice-faint) 68%, transparent);
-  background: color-mix(in srgb, var(--bg) 54%, transparent);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 0%, rgb(216 234 240 / 0.08), transparent 58%),
+    color-mix(in srgb, var(--bg) 44%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.08),
+    0 0.65rem 1.5rem rgb(0 0 0 / 0.18);
   color: var(--ice);
   cursor: pointer;
-  letter-spacing: 0.12em;
-  padding: 0.38rem 0.55rem;
+  padding: 0;
   transition:
     border-color 160ms var(--ease-in-out),
     color 160ms var(--ease-in-out),
-    background 160ms var(--ease-in-out);
+    background 160ms var(--ease-in-out),
+    box-shadow 160ms var(--ease-in-out),
+    transform 160ms var(--ease-in-out);
 }
 
-button:hover,
-button:focus-visible {
+.film-strip-header__button svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.film-strip-header__button--close {
+  border-radius: 0.45rem;
+}
+
+.film-strip-header__button:hover,
+.film-strip-header__button:focus-visible {
   border-color: var(--gold);
   background: color-mix(in srgb, var(--gold) 12%, transparent);
   color: var(--gold-glow);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.12),
+    0 0 1.1rem rgb(232 200 106 / 0.18);
   outline: none;
+  transform: translateY(-1px);
 }
 
 @media (max-width: 760px) {
@@ -122,6 +178,12 @@ button:focus-visible {
 
   .film-strip-header__controls {
     flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .film-strip-header__button {
+    width: 2.95rem;
+    height: 2.95rem;
   }
 }
 </style>

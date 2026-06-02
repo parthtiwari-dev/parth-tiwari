@@ -535,6 +535,16 @@ Status: Phase 2 single-world overlay path active; project links panel, evidence 
 | Placement | Corrected to live over the fixed mobile star world instead of below it |
 | Desktop impact | Desktop constellation and project overlay flow unchanged |
 
+## Project Overlay Polish Pass
+
+| Item | Status |
+|---|---|
+| Scope | Shared desktop/mobile 5-panel project overlay polish |
+| Controls | Replaced raw bracket text controls with glass icon buttons for previous, next, and close |
+| Film strip | Added active-panel hairlines, quieter inactive tabs, all-five-visible mobile step tabs, and softer panel transitions |
+| Links panel | Upgraded links into stronger action cards with external-link affordance and clearer empty state |
+| Data/model impact | None; existing 5-panel overlay and project links schema remain unchanged |
+
 ## Next Step
 
 Phase 4 is in mobile execution. Next mobile work is project overlay touch polish, then footer dock/plain-mode completion.
