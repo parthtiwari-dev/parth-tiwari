@@ -11,6 +11,7 @@ import HeroSection from '@/components/sections/HeroSection.vue'
 import MobileBestExperienceNotice from '@/components/sections/MobileBestExperienceNotice.vue'
 import ProjectOverlay from '@/components/overlay/ProjectOverlay.vue'
 import MobileStarWorld from '@/components/scene/MobileStarWorld.vue'
+import MobileSystemsIndex from '@/components/sections/MobileSystemsIndex.vue'
 import SceneRoot from '@/components/scene/SceneRoot.vue'
 import GlassPanel from '@/components/shared/GlassPanel.vue'
 import GeistChip from '@/components/shared/GeistChip.vue'
@@ -115,6 +116,8 @@ onUnmounted(() => {
     />
 
     <EvidenceTopBar v-if="!isPlain && experienceReady" />
+
+    <MobileSystemsIndex v-if="!isPlain && isMobileViewport && experienceReady" />
 
     <ProjectOverlay v-if="!isPlain" />
     <EvidenceOverlay v-if="!isPlain" />

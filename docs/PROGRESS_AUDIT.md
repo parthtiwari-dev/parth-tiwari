@@ -523,6 +523,18 @@ Status: Phase 2 single-world overlay path active; project links panel, evidence 
 | Resume | Gold-accented drawer action on mobile |
 | Brand | Keeps subtle `EVIDENCEBOUND / 9 SYSTEMS` signal at top-left |
 
+## Phase 4 Step 4 Mobile Systems Index
+
+| Item | Status |
+|---|---|
+| Scope | Mobile-only project entry layer over the dedicated star world |
+| Data source | Reuses canonical `projects.ts` |
+| Panels | No new panels; each card opens the existing 5-panel `ProjectOverlay` |
+| Grouping | Personal Projects, Work Experience, Utility / Tooling; sorted by evidence weight |
+| Card treatment | Glass evidence records with kind, weight, one-line proof, stack chips, and `open evidence ->` |
+| Placement | Corrected to live over the fixed mobile star world instead of below it |
+| Desktop impact | Desktop constellation and project overlay flow unchanged |
+
 ## Next Step
 
-Phase 4 has started. Next mobile work is the mobile evidence/navigation layer: refine the phone rail/sidebar, then build the dedicated Systems cards/buttons over the calibrated star world.
+Phase 4 is in mobile execution. Next mobile work is project overlay touch polish, then footer dock/plain-mode completion.

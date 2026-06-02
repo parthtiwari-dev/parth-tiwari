@@ -235,14 +235,16 @@ onUnmounted(() => {
 
 <style scoped>
 .mobile-star-world {
-  position: relative;
-  min-height: 400vh;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
   background: var(--bg);
+  pointer-events: none;
 }
 
 .mobile-star-world__viewport {
-  position: sticky;
-  top: 0;
+  position: absolute;
+  inset: 0;
   height: 100vh;
   height: 100svh;
   overflow: hidden;

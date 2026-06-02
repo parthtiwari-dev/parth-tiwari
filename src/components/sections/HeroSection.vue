@@ -22,7 +22,8 @@ const heroOpacity = computed(() => {
     return 1
   }
 
-  const fadeDistance = window.innerHeight * 0.58
+  const isMobileViewport = window.matchMedia('(max-width: 767px)').matches
+  const fadeDistance = window.innerHeight * (isMobileViewport ? 0.42 : 0.58)
   return Math.max(0, Math.min(1, 1 - scrollY.value / fadeDistance))
 })
 
