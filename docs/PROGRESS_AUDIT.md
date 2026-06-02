@@ -501,6 +501,17 @@ Status: Phase 2 single-world overlay path active; project links panel, evidence 
 | Reduced motion | Skips the notice and enters the page immediately |
 | Visual treatment | CSS-only CRYO-GOLD field-mode notice with scan line, stars, and small constellation motif |
 
+## Phase 4 Step 2 Mobile World Calibration
+
+| Item | Status |
+|---|---|
+| Direction | Revised after visual review: do not reuse the desktop constellation scene on mobile |
+| Mobile world | Added `MobileStarWorld.vue`, a portrait-first 2D canvas/CSS starfield behind the mobile flow |
+| Desktop scene | `SceneRoot` no longer mounts below 768px, so project nodes/connectors/labels/raycast are removed from mobile |
+| Star treatment | Strongly densified far micro-star layer, brighter cold pinpoints, rare cyan/gold bright points, subtle glints, scroll parallax, no project-node blobs |
+| Reduced motion | Mobile star world renders one static frame and stops looping motion |
+| Desktop impact | Desktop `SceneRoot`, nodes, connector hover, project overlays, and cursor path remain unchanged |
+
 ## Next Step
 
-Phase 4 has started. Next mobile work is the living starfield dossier: gate desktop WebGL off on phones, add the lightweight mobile starfield, then build the mobile hero/project evidence flow.
+Phase 4 has started. Next mobile work is the mobile evidence/navigation layer: refine the phone rail/sidebar, then build the dedicated Systems cards/buttons over the calibrated star world.

@@ -10,6 +10,7 @@ import EvidenceTopBar from '@/components/sections/EvidenceTopBar.vue'
 import HeroSection from '@/components/sections/HeroSection.vue'
 import MobileBestExperienceNotice from '@/components/sections/MobileBestExperienceNotice.vue'
 import ProjectOverlay from '@/components/overlay/ProjectOverlay.vue'
+import MobileStarWorld from '@/components/scene/MobileStarWorld.vue'
 import SceneRoot from '@/components/scene/SceneRoot.vue'
 import GlassPanel from '@/components/shared/GlassPanel.vue'
 import GeistChip from '@/components/shared/GeistChip.vue'
@@ -94,7 +95,8 @@ onUnmounted(() => {
     class="min-h-screen text-[color:var(--ice)]"
     :class="{ 'plain-mode': isPlain }"
   >
-    <SceneRoot />
+    <SceneRoot v-if="!isPlain && !isMobileViewport" />
+    <MobileStarWorld v-if="!isPlain && isMobileViewport" />
 
     <BootSequence
       v-if="!isPlain && !bootComplete"
@@ -193,6 +195,6 @@ onUnmounted(() => {
     </section>
 
     <CopiedToast :show="false" />
-    <CustomCursor v-if="!isPlain" />
+    <CustomCursor v-if="!isPlain && !isMobileViewport" />
   </main>
 </template>

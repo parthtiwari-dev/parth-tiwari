@@ -265,7 +265,7 @@ export function useParticleField(projects: Project[]) {
     uniforms: {
       uTime:             { value: 0 },
       uClusterBrightness: { value: clusterBrightness },
-      uPointSize:        { value: 3.0 },  // was 2.22
+      uPointSize:        { value: 3.0 },
       uHueOffset:        { value: 0 },
     },
     transparent: true,

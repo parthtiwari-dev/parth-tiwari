@@ -5,8 +5,8 @@ const emit = defineEmits<{
   complete: []
 }>()
 
-const AUTO_DISMISS_MS = 3000
-const FADE_DURATION_MS = 300
+const AUTO_DISMISS_MS = 3500
+const FADE_DURATION_MS = 400
 
 const continueButton = ref<HTMLButtonElement | null>(null)
 const isExiting = ref(false)
@@ -96,10 +96,10 @@ onUnmounted(() => {
         Mobile field mode
       </p>
       <h1 id="mobile-best-experience-title" class="mobile-best-experience__title">
-        For the full constellation, visit on desktop.
+        Mobile field mode active.
       </h1>
       <p id="mobile-best-experience-description" class="mobile-best-experience__copy">
-        This phone version keeps the evidence field alive, but the 3D constellation is built for a larger screen.
+        Desktop unlocks the full constellation controls. This phone view keeps the starfield alive for fast evidence browsing.
       </p>
       <button
         ref="continueButton"
