@@ -558,6 +558,16 @@ Status: Phase 2 single-world overlay path active; project links panel, evidence 
 | Capability | Copy and interaction now support tap as well as hover |
 | Training / Experience | Added mobile spacing, type scale, and stacked-card polish without changing data |
 
+## Phase 4 Step 5 Mobile Footer Dock
+
+| Item | Status |
+|---|---|
+| Scope | Mobile-only final action dock after the systems index |
+| Desktop impact | None; footer dock is not rendered on desktop |
+| Actions | Resume and About as primary actions; Training, Capability, and Experience as secondary shortcuts |
+| Socials | Reuses existing `socialLinks.ts` for GitHub, LinkedIn, Email, and X |
+| Composition | Full-width translucent mobile footer band over the star world; hides with project cards when About is open |
+
 ## Next Step
 
 Phase 4 is in mobile execution. Next mobile work is project overlay touch polish, then footer dock/plain-mode completion.

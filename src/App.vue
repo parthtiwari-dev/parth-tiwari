@@ -10,6 +10,7 @@ import EvidenceOverlay from '@/components/evidence/EvidenceOverlay.vue'
 import EvidenceTopBar from '@/components/sections/EvidenceTopBar.vue'
 import HeroSection from '@/components/sections/HeroSection.vue'
 import MobileBestExperienceNotice from '@/components/sections/MobileBestExperienceNotice.vue'
+import MobileFooterDock from '@/components/sections/MobileFooterDock.vue'
 import ProjectOverlay from '@/components/overlay/ProjectOverlay.vue'
 import MobileStarWorld from '@/components/scene/MobileStarWorld.vue'
 import MobileSystemsIndex from '@/components/sections/MobileSystemsIndex.vue'
@@ -130,6 +131,7 @@ onUnmounted(() => {
     <EvidenceTopBar v-if="!isPlain && experienceReady" />
 
     <MobileSystemsIndex v-if="showMobileSystemsIndex" />
+    <MobileFooterDock v-if="showMobileSystemsIndex" />
 
     <ProjectOverlay v-if="!isPlain" />
     <EvidenceOverlay v-if="!isPlain" />

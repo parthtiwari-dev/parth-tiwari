@@ -174,7 +174,7 @@ function openProject(projectId: string) {
   z-index: 35;
   display: none;
   min-height: 220vh;
-  padding: 148vh 1rem 8rem;
+  padding: 148vh 1rem 3rem;
   pointer-events: auto;
 }
 
