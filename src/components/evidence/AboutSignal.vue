@@ -10,7 +10,7 @@ defineEmits<{
 
 const isComplete = ref(false)
 const bodyText = computed(() => aboutSignal.paragraphs.join('\n\n'))
-const { displayed, start, complete } = useCharacterSplit(bodyText.value, 9, () => {
+const { displayed, start, complete } = useCharacterSplit(bodyText.value, 0, () => {
   isComplete.value = true
 })
 

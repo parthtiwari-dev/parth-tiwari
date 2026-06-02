@@ -8,7 +8,7 @@ const props = defineProps<{
 }>()
 
 const isComplete = ref(props.isPlain)
-const { displayed, start, complete } = useCharacterSplit(props.text, 18, () => {
+const { displayed, start, complete } = useCharacterSplit(props.text, 8, () => {
   isComplete.value = true
 })
 
