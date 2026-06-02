@@ -77,9 +77,9 @@ function setBodyScrollLock(shouldLock: boolean) {
 watch(
   () => [evidenceOverlayStore.isOpen, evidenceOverlayStore.activeKind] as const,
   async (isOpen) => {
-    const [isCurrentlyOpen, activeKind] = isOpen
+    const [isCurrentlyOpen] = isOpen
 
-    if (isCurrentlyOpen && activeKind !== 'about') {
+    if (isCurrentlyOpen) {
       setBodyScrollLock(true)
       await nextTick()
       overlayRoot.value?.focus()
@@ -87,11 +87,6 @@ watch(
     }
 
     setBodyScrollLock(false)
-
-    if (isCurrentlyOpen) {
-      await nextTick()
-      overlayRoot.value?.focus()
-    }
   },
 )
 
@@ -130,8 +125,15 @@ onUnmounted(() => {
             <p>{{ activeMeta.eyebrow }}</p>
             <h2>{{ activeMeta.title }}</h2>
           </div>
-          <button type="button" :aria-label="`Close ${activeMeta.title}`" @click="closeOverlay">
-            [x]
+          <button
+            type="button"
+            class="evidence-overlay__close"
+            :aria-label="`Close ${activeMeta.title}`"
+            @click="closeOverlay"
+          >
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="m6 6 12 12M18 6 6 18" />
+            </svg>
           </button>
         </header>
 
@@ -170,7 +172,7 @@ onUnmounted(() => {
 }
 
 .evidence-overlay--about {
-  z-index: 49;
+  z-index: 82;
   place-items: start center;
   overflow-y: auto;
   overflow-x: hidden;
@@ -224,22 +226,51 @@ onUnmounted(() => {
   line-height: 0.92;
 }
 
-.evidence-overlay__header button {
+.evidence-overlay__close {
+  display: grid;
+  width: 2.65rem;
+  height: 2.65rem;
+  flex: 0 0 auto;
+  place-items: center;
   border: 1px solid color-mix(in srgb, var(--ice-faint) 68%, transparent);
-  background: color-mix(in srgb, var(--bg) 54%, transparent);
+  border-radius: 0.45rem;
+  background:
+    radial-gradient(circle at 50% 0%, rgb(216 234 240 / 0.08), transparent 58%),
+    color-mix(in srgb, var(--bg) 44%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.08),
+    0 0.65rem 1.5rem rgb(0 0 0 / 0.18);
   color: var(--ice);
   cursor: pointer;
-  font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
-  font-size: var(--text-xs);
-  letter-spacing: 0.12em;
-  padding: 0.38rem 0.55rem;
+  padding: 0;
+  transition:
+    border-color 160ms var(--ease-in-out),
+    color 160ms var(--ease-in-out),
+    background 160ms var(--ease-in-out),
+    box-shadow 160ms var(--ease-in-out),
+    transform 160ms var(--ease-in-out);
 }
 
-.evidence-overlay__header button:hover,
-.evidence-overlay__header button:focus-visible {
+.evidence-overlay__close svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.evidence-overlay__close:hover,
+.evidence-overlay__close:focus-visible {
   border-color: var(--gold);
+  background: color-mix(in srgb, var(--gold) 12%, transparent);
   color: var(--gold-glow);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.12),
+    0 0 1.1rem rgb(232 200 106 / 0.18);
   outline: none;
+  transform: translateY(-1px);
 }
 
 .evidence-overlay__body {
@@ -278,15 +309,42 @@ onUnmounted(() => {
 @media (max-width: 720px) {
   .evidence-overlay {
     align-items: stretch;
-    padding: 0.5rem;
+    padding: max(0.45rem, env(safe-area-inset-top)) 0.45rem 0.45rem;
   }
 
   .evidence-overlay__shell {
-    max-height: calc(100vh - 1rem);
+    width: 100%;
+    max-height: calc(100svh - 0.9rem);
+    gap: 0.75rem;
+    padding: 0.85rem;
   }
 
   .evidence-overlay__header {
-    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .evidence-overlay__header p {
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+  }
+
+  .evidence-overlay__header h2 {
+    max-width: calc(100vw - 5.5rem);
+    font-size: clamp(2.35rem, 13vw, 4.4rem);
+    letter-spacing: 0.035em;
+  }
+
+  .evidence-overlay__close {
+    position: absolute;
+    top: 0.85rem;
+    right: 0.85rem;
+    width: 2.85rem;
+    height: 2.85rem;
+  }
+
+  .evidence-overlay__body {
+    padding: 0.9rem;
   }
 }
 

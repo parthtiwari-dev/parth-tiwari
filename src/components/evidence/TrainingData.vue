@@ -176,6 +176,14 @@ import { trainingRecords } from '@/data/training'
 }
 
 @media (max-width: 620px) {
+  .training-data {
+    gap: 1.15rem;
+  }
+
+  .training-data h2 {
+    font-size: clamp(2.75rem, 15vw, 4.5rem);
+  }
+
   .training-data__timeline {
     padding-left: 0;
   }
@@ -183,6 +191,20 @@ import { trainingRecords } from '@/data/training'
   .training-data__timeline::before,
   .training-card__marker {
     display: none;
+  }
+
+  .training-card {
+    min-height: auto;
+    padding: 0.95rem;
+  }
+
+  .training-card h3 {
+    font-size: clamp(2.15rem, 11vw, 3.35rem);
+  }
+
+  .training-card__meta span,
+  .training-card__chips span {
+    font-size: 0.66rem;
   }
 }
 </style>

@@ -545,6 +545,19 @@ Status: Phase 2 single-world overlay path active; project links panel, evidence 
 | Links panel | Upgraded links into stronger action cards with external-link affordance and clearer empty state |
 | Data/model impact | None; existing 5-panel overlay and project links schema remain unchanged |
 
+## Mobile Evidence Overlay Polish Pass
+
+| Item | Status |
+|---|---|
+| Scope | Mobile polish for About, Resume, Experience, Training, Capability, and evidence drawer close controls |
+| Overlay ownership | Evidence top bar hides while an evidence overlay is open; About now body-locks like other overlays |
+| Close controls | Replaced remaining `[x]` controls with glass icon buttons |
+| About | Tightened mobile text/social/facts layout while keeping the constellation-backed writing treatment |
+| About backdrop | Mobile project cards unmount while About is open so About sits over the pure star world, not the current card section |
+| Resume | Mobile prioritizes the Drive action and then shows the embedded preview |
+| Capability | Copy and interaction now support tap as well as hover |
+| Training / Experience | Added mobile spacing, type scale, and stacked-card polish without changing data |
+
 ## Next Step
 
 Phase 4 is in mobile execution. Next mobile work is project overlay touch polish, then footer dock/plain-mode completion.

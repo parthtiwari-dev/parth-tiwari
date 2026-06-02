@@ -317,12 +317,39 @@ ul {
 }
 
 @media (max-width: 620px) {
+  .experience-log {
+    gap: 1.2rem;
+  }
+
+  h2 {
+    font-size: clamp(3.2rem, 17vw, 5.4rem);
+  }
+
+  h3 {
+    font-size: clamp(2.1rem, 11vw, 3.4rem);
+  }
+
   .experience-entry {
     grid-template-columns: 1fr;
   }
 
   .experience-entry__rail {
     display: none;
+  }
+
+  .experience-entry__main,
+  .artifact-card,
+  .experience-log__footer {
+    padding: 0.9rem;
+  }
+
+  .experience-entry__body {
+    gap: 0.8rem;
+  }
+
+  .artifact-card__chips,
+  .experience-log__footer > div {
+    gap: 0.35rem;
   }
 }
 </style>

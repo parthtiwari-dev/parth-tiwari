@@ -2,6 +2,7 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { sliderConfigs } from '@/data/projects'
 import { usePlainMode } from '@/composables/usePlainMode'
+import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
 import { useProjectStore } from '@/stores/projectStore'
 import BootSequence from '@/components/sections/BootSequence.vue'
 import CustomCursor from '@/components/interaction/CustomCursor.vue'
@@ -27,6 +28,7 @@ function getMediaQueryMatches(query: string) {
 }
 
 const { isPlain } = usePlainMode()
+const evidenceOverlayStore = useEvidenceOverlayStore()
 const projectStore = useProjectStore()
 const bootComplete = ref(isPlain.value)
 const isDebug = ref(false)
@@ -47,12 +49,22 @@ const shouldOfferMobileNotice = computed(() => (
   && isMobileViewport.value
   && !prefersReducedMotion.value
 ))
+const isAboutOverlayOpen = computed(() => (
+  evidenceOverlayStore.isOpen
+  && evidenceOverlayStore.activeKind === 'about'
+))
 const showMobileNotice = computed(() => (
   bootComplete.value
   && shouldOfferMobileNotice.value
   && !mobileNoticeComplete.value
 ))
 const experienceReady = computed(() => isPlain.value || (bootComplete.value && !showMobileNotice.value))
+const showMobileSystemsIndex = computed(() => (
+  !isPlain.value
+  && isMobileViewport.value
+  && experienceReady.value
+  && !isAboutOverlayOpen.value
+))
 
 function handleBootComplete() {
   bootComplete.value = true
@@ -117,7 +129,7 @@ onUnmounted(() => {
 
     <EvidenceTopBar v-if="!isPlain && experienceReady" />
 
-    <MobileSystemsIndex v-if="!isPlain && isMobileViewport && experienceReady" />
+    <MobileSystemsIndex v-if="showMobileSystemsIndex" />
 
     <ProjectOverlay v-if="!isPlain" />
     <EvidenceOverlay v-if="!isPlain" />

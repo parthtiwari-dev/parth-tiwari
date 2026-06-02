@@ -50,7 +50,7 @@ onUnmounted(() => {
       <p class="panel-label">Skill Atlas</p>
       <h2>Capability map.</h2>
       <p>
-        Hover a capability to see where it is used across the constellation. The map is evidence-first: skills only light up projects when the stack data says they belong there.
+        Hover or tap a capability to see where it is used across the constellation. The map is evidence-first: skills only light up projects when the stack data says they belong there.
       </p>
     </header>
 
@@ -74,6 +74,7 @@ onUnmounted(() => {
               :class="{ 'is-active': activeSkill === skill }"
               @focus="setActiveSkill(skill)"
               @mouseenter="setActiveSkill(skill)"
+              @click="setActiveSkill(skill)"
               @blur="clearActiveSkill"
             >
               {{ skill }}
@@ -271,6 +272,39 @@ onUnmounted(() => {
 
   .capability-map__readout {
     position: relative;
+  }
+}
+
+@media (max-width: 620px) {
+  .capability-map {
+    gap: 1.15rem;
+  }
+
+  .capability-map h2 {
+    font-size: clamp(2.6rem, 15vw, 4.25rem);
+  }
+
+  .capability-map__intro {
+    gap: 0.65rem;
+  }
+
+  .capability-group,
+  .capability-map__readout {
+    padding: 0.85rem;
+  }
+
+  .capability-group {
+    min-height: auto;
+  }
+
+  .capability-group__chips button {
+    min-height: 2.45rem;
+    padding: 0.48rem 0.62rem;
+  }
+
+  .capability-map__readout {
+    gap: 0.7rem;
+    order: -1;
   }
 }
 </style>

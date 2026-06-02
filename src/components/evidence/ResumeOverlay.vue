@@ -151,4 +151,43 @@ import {
   color: var(--ice);
   outline: none;
 }
+
+@media (max-width: 620px) {
+  .resume-overlay {
+    gap: 0.9rem;
+  }
+
+  .resume-overlay h2 {
+    font-size: clamp(2.7rem, 14vw, 4.25rem);
+  }
+
+  .resume-overlay__intro p:not(.panel-label) {
+    display: none;
+  }
+
+  .resume-overlay__actions {
+    order: 2;
+    justify-content: stretch;
+  }
+
+  .resume-overlay__actions a {
+    display: block;
+    width: 100%;
+    padding: 0.78rem 0.9rem;
+    text-align: center;
+  }
+
+  .resume-overlay__viewer {
+    order: 3;
+    min-height: 62vh;
+  }
+
+  .resume-overlay__viewer iframe {
+    height: 62vh;
+  }
+
+  .resume-overlay__empty {
+    min-height: 18rem;
+  }
+}
 </style>

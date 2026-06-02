@@ -43,7 +43,9 @@ const socialIconPaths: Record<SocialLinkKind, string> = {
       aria-label="Close About"
       @click="$emit('close')"
     >
-      [x]
+      <svg aria-hidden="true" viewBox="0 0 24 24">
+        <path d="m6 6 12 12M18 6 6 18" />
+      </svg>
     </button>
 
     <section class="about-signal__hero">
@@ -114,22 +116,50 @@ const socialIconPaths: Record<SocialLinkKind, string> = {
   position: absolute;
   top: clamp(1rem, 2vw, 1.5rem);
   right: clamp(1rem, 3vw, 2.2rem);
+  display: grid;
+  width: 2.65rem;
+  height: 2.65rem;
+  place-items: center;
   border: 1px solid color-mix(in srgb, var(--ice-faint) 68%, transparent);
-  background: color-mix(in srgb, var(--bg) 54%, transparent);
+  border-radius: 0.45rem;
+  background:
+    radial-gradient(circle at 50% 0%, rgb(216 234 240 / 0.08), transparent 58%),
+    color-mix(in srgb, var(--bg) 34%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.08),
+    0 0.65rem 1.5rem rgb(0 0 0 / 0.18);
   color: var(--ice);
   cursor: pointer;
-  font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
-  font-size: var(--text-xs);
-  letter-spacing: 0.12em;
-  padding: 0.38rem 0.55rem;
+  padding: 0;
   animation: about-signal-enter 220ms var(--ease-out-expo) 80ms both;
+  transition:
+    border-color 160ms var(--ease-in-out),
+    color 160ms var(--ease-in-out),
+    background 160ms var(--ease-in-out),
+    box-shadow 160ms var(--ease-in-out),
+    transform 160ms var(--ease-in-out);
+}
+
+.about-signal__close svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
 }
 
 .about-signal__close:hover,
 .about-signal__close:focus-visible {
   border-color: var(--gold);
+  background: color-mix(in srgb, var(--gold) 12%, transparent);
   color: var(--gold-glow);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.12),
+    0 0 1.1rem rgb(232 200 106 / 0.18);
   outline: none;
+  transform: translateY(-1px);
 }
 
 .about-signal__hero {
@@ -358,12 +388,58 @@ const socialIconPaths: Record<SocialLinkKind, string> = {
 
 @media (max-width: 620px) {
   .about-signal {
-    padding-top: 5.5rem;
+    min-height: calc(100svh - 4.75rem);
+    gap: 1.8rem;
+    padding: 4.4rem 0.4rem 4rem;
+  }
+
+  .about-signal__close {
+    position: fixed;
+    top: max(0.95rem, env(safe-area-inset-top));
+    right: 1rem;
+    z-index: 2;
+    width: 2.85rem;
+    height: 2.85rem;
+  }
+
+  .about-signal h2 {
+    max-width: 9ch;
+    font-size: clamp(4.2rem, 22vw, 6.2rem);
+  }
+
+  .about-signal__typed {
+    min-height: 16em;
+    font-size: clamp(1.22rem, 6.4vw, 1.72rem);
+    line-height: 1.42;
   }
 
   .about-signal__links,
   .about-signal__facts {
     grid-template-columns: 1fr;
+  }
+
+  .about-signal__links {
+    gap: 0.7rem;
+  }
+
+  .about-signal__link {
+    min-height: 4.7rem;
+    padding: 0.65rem 0.7rem;
+  }
+
+  .about-signal__link-icon {
+    width: 2.65rem;
+  }
+
+  .about-signal__facts {
+    gap: 0.45rem;
+  }
+
+  .about-signal__fact {
+    grid-template-columns: minmax(7.8rem, 0.42fr) minmax(0, 1fr);
+    align-items: baseline;
+    gap: 0.7rem;
+    padding: 0.7rem 0;
   }
 }
 

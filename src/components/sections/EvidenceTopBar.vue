@@ -28,7 +28,7 @@ const resumeAction: TopBarAction = {
   disabled: !isResumeConfigured,
 }
 
-const isVisible = computed(() => scrollY.value > revealThreshold.value)
+const isVisible = computed(() => scrollY.value > revealThreshold.value && !evidenceOverlayStore.isOpen)
 
 function updateScrollState() {
   revealThreshold.value = window.innerHeight * 0.58
@@ -145,7 +145,9 @@ onUnmounted(() => {
                 aria-label="Close evidence navigation"
                 @click="closeMobileMenu"
               >
-                [x]
+                <svg aria-hidden="true" viewBox="0 0 24 24">
+                  <path d="m6 6 12 12M18 6 6 18" />
+                </svg>
               </button>
             </div>
 
@@ -432,11 +434,23 @@ onUnmounted(() => {
   }
 
   .mobile-evidence-drawer__close {
+    display: grid;
+    width: 2rem;
     min-height: 2rem;
-    padding: 0.4rem 0.65rem;
+    place-items: center;
+    padding: 0;
     border-radius: 0.125rem;
     color: var(--ice);
-    font-size: 0.6875rem;
+  }
+
+  .mobile-evidence-drawer__close svg {
+    width: 0.95rem;
+    height: 0.95rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
   }
 
   .mobile-evidence-drawer__items {
