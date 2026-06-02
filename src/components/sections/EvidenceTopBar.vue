@@ -13,6 +13,7 @@ interface TopBarAction {
 const evidenceOverlayStore = useEvidenceOverlayStore()
 const scrollY = ref(0)
 const revealThreshold = ref(220)
+const isMobileMenuOpen = ref(false)
 
 const actions: TopBarAction[] = [
   { label: 'Experience', kind: 'experience' },
@@ -40,17 +41,34 @@ function handleAction(action: TopBarAction) {
   }
 
   evidenceOverlayStore.open(action.kind)
+  isMobileMenuOpen.value = false
+}
+
+function toggleMobileMenu() {
+  isMobileMenuOpen.value = !isMobileMenuOpen.value
+}
+
+function closeMobileMenu() {
+  isMobileMenuOpen.value = false
+}
+
+function handleKeydown(event: KeyboardEvent) {
+  if (event.key === 'Escape') {
+    closeMobileMenu()
+  }
 }
 
 onMounted(() => {
   updateScrollState()
   window.addEventListener('scroll', updateScrollState, { passive: true })
   window.addEventListener('resize', updateScrollState, { passive: true })
+  window.addEventListener('keydown', handleKeydown)
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', updateScrollState)
   window.removeEventListener('resize', updateScrollState)
+  window.removeEventListener('keydown', handleKeydown)
 })
 </script>
 
@@ -64,6 +82,19 @@ onUnmounted(() => {
       <p class="evidence-top-bar__brand">
         EVIDENCEBOUND / 9 SYSTEMS
       </p>
+
+      <button
+        type="button"
+        class="evidence-top-bar__mobile-menu-button"
+        :aria-expanded="isMobileMenuOpen"
+        aria-controls="mobile-evidence-drawer"
+        aria-label="Open evidence navigation"
+        @click="toggleMobileMenu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
 
       <div class="evidence-top-bar__actions">
         <button
@@ -89,6 +120,62 @@ onUnmounted(() => {
       >
         {{ resumeAction.label }}
       </button>
+
+      <Transition name="mobile-evidence-drawer">
+        <div
+          v-if="isMobileMenuOpen"
+          class="mobile-evidence-drawer"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Evidence navigation menu"
+        >
+          <button
+            type="button"
+            class="mobile-evidence-drawer__scrim"
+            aria-label="Close evidence navigation"
+            @click="closeMobileMenu"
+          ></button>
+
+          <div id="mobile-evidence-drawer" class="mobile-evidence-drawer__panel">
+            <div class="mobile-evidence-drawer__header">
+              <p>Evidencebound</p>
+              <button
+                type="button"
+                class="mobile-evidence-drawer__close"
+                aria-label="Close evidence navigation"
+                @click="closeMobileMenu"
+              >
+                [x]
+              </button>
+            </div>
+
+            <div class="mobile-evidence-drawer__items">
+              <button
+                v-for="action in actions"
+                :key="`mobile-${action.label}`"
+                type="button"
+                :disabled="action.disabled"
+                :aria-disabled="action.disabled ? 'true' : undefined"
+                :class="{ 'is-active': evidenceOverlayStore.activeKind === action.kind }"
+                @click="handleAction(action)"
+              >
+                {{ action.label }}
+              </button>
+
+              <button
+                type="button"
+                class="mobile-evidence-drawer__resume"
+                :class="{ 'is-active': evidenceOverlayStore.activeKind === resumeAction.kind }"
+                :disabled="resumeAction.disabled"
+                :aria-disabled="resumeAction.disabled ? 'true' : undefined"
+                @click="handleAction(resumeAction)"
+              >
+                {{ resumeAction.label }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </Transition>
     </nav>
   </Transition>
 </template>
@@ -122,6 +209,11 @@ onUnmounted(() => {
   justify-content: center;
   grid-column: 2;
   gap: 0.5rem;
+}
+
+.evidence-top-bar__mobile-menu-button,
+.mobile-evidence-drawer {
+  display: none;
 }
 
 .evidence-top-bar button,
@@ -225,22 +317,188 @@ onUnmounted(() => {
 
 @media (max-width: 820px) {
   .evidence-top-bar {
-    inset-inline: 1rem;
-    grid-template-columns: 1fr;
-    gap: 0.55rem;
+    inset: max(0.85rem, env(safe-area-inset-top)) 0 auto;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    padding-inline: 1rem;
   }
 
   .evidence-top-bar__brand {
+    font-size: 0.625rem;
+    letter-spacing: 0.2em;
     line-height: 1.2;
+    max-width: calc(100vw - 5.5rem);
+    opacity: 0.54;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  .evidence-top-bar__actions {
-    grid-column: 1;
-    justify-content: flex-start;
-  }
-
+  .evidence-top-bar__actions,
   .evidence-top-bar__resume {
-    justify-self: start;
+    display: none;
   }
+
+  .evidence-top-bar__mobile-menu-button {
+    display: inline-grid;
+    place-items: center;
+    justify-self: end;
+    width: 2.35rem;
+    min-height: 2.35rem;
+    padding: 0;
+    border-color: color-mix(in srgb, var(--ice-faint) 46%, transparent);
+    border-radius: 999px;
+    background:
+      radial-gradient(circle at 50% 10%, color-mix(in srgb, var(--ice) 12%, transparent), transparent 58%),
+      color-mix(in srgb, var(--bg) 48%, transparent);
+    backdrop-filter: blur(18px) saturate(1.18);
+  }
+
+  .evidence-top-bar__mobile-menu-button span {
+    display: block;
+    width: 0.86rem;
+    height: 1px;
+    margin-block: 0.12rem;
+    background: color-mix(in srgb, var(--ice-muted) 86%, var(--ice));
+    box-shadow: 0 0 0.8rem color-mix(in srgb, var(--ice-muted) 28%, transparent);
+  }
+
+  .evidence-top-bar__mobile-menu-button:hover,
+  .evidence-top-bar__mobile-menu-button:focus-visible,
+  .evidence-top-bar__mobile-menu-button[aria-expanded='true'] {
+    border-color: color-mix(in srgb, var(--gold) 66%, transparent);
+    color: var(--gold-glow);
+    outline: none;
+    transform: none;
+  }
+
+  .evidence-top-bar__mobile-menu-button[aria-expanded='true'] span {
+    background: var(--gold-glow);
+  }
+
+  .mobile-evidence-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    display: block;
+    pointer-events: auto;
+  }
+
+  .mobile-evidence-drawer__scrim {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    min-height: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: rgb(0 3 8 / 0.035);
+    backdrop-filter: blur(0.25px);
+  }
+
+  .mobile-evidence-drawer__panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: grid;
+    align-content: start;
+    gap: 1.2rem;
+    width: min(19.5rem, calc(100vw - 2rem));
+    min-height: 100%;
+    min-height: 100svh;
+    padding: max(1.1rem, env(safe-area-inset-top)) 1rem 1rem;
+    border-left: 1px solid color-mix(in srgb, var(--ice-faint) 48%, transparent);
+    background:
+      radial-gradient(circle at 20% 12%, color-mix(in srgb, var(--gold) 7%, transparent), transparent 12rem),
+      linear-gradient(180deg, rgb(4 16 29 / 0.34), rgb(1 4 9 / 0.28));
+    box-shadow:
+      -1rem 0 3rem rgb(0 0 0 / 0.12),
+      inset 1px 0 0 color-mix(in srgb, var(--ice) 10%, transparent);
+    backdrop-filter: blur(8px) saturate(1.18);
+  }
+
+  .mobile-evidence-drawer__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .mobile-evidence-drawer__header p {
+    margin: 0;
+    color: var(--gold-glow);
+    font-size: 0.625rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .mobile-evidence-drawer__close {
+    min-height: 2rem;
+    padding: 0.4rem 0.65rem;
+    border-radius: 0.125rem;
+    color: var(--ice);
+    font-size: 0.6875rem;
+  }
+
+  .mobile-evidence-drawer__items {
+    display: grid;
+    gap: 0.6rem;
+    padding-top: 0.35rem;
+  }
+
+  .mobile-evidence-drawer__items button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.78rem 0.85rem;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-align: left;
+    text-transform: uppercase;
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--ice) 5%, transparent), transparent 64%),
+      rgb(1 4 9 / 0.2);
+  }
+
+  .mobile-evidence-drawer__items button::after {
+    color: color-mix(in srgb, var(--ice-muted) 54%, transparent);
+    content: '->';
+  }
+
+  .mobile-evidence-drawer__items button.is-active::after,
+  .mobile-evidence-drawer__items button:focus-visible::after {
+    color: var(--gold-glow);
+  }
+
+  .mobile-evidence-drawer__resume {
+    margin-top: 0.3rem;
+    border-color: color-mix(in srgb, var(--gold) 58%, transparent);
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--gold) 18%, transparent), transparent 64%),
+      rgb(1 4 9 / 0.22);
+    color: var(--gold-glow);
+  }
+}
+
+.mobile-evidence-drawer-enter-active,
+.mobile-evidence-drawer-leave-active {
+  transition: opacity 180ms linear;
+}
+
+.mobile-evidence-drawer-enter-active .mobile-evidence-drawer__panel,
+.mobile-evidence-drawer-leave-active .mobile-evidence-drawer__panel {
+  transition: transform 260ms var(--ease-out-expo);
+}
+
+.mobile-evidence-drawer-enter-from,
+.mobile-evidence-drawer-leave-to {
+  opacity: 0;
+}
+
+.mobile-evidence-drawer-enter-from .mobile-evidence-drawer__panel,
+.mobile-evidence-drawer-leave-to .mobile-evidence-drawer__panel {
+  transform: translateX(100%);
 }
 </style>

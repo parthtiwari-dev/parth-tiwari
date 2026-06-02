@@ -512,6 +512,17 @@ Status: Phase 2 single-world overlay path active; project links panel, evidence 
 | Reduced motion | Mobile star world renders one static frame and stops looping motion |
 | Desktop impact | Desktop `SceneRoot`, nodes, connector hover, project overlays, and cursor path remain unchanged |
 
+## Phase 4 Step 3 Mobile Evidence Rail Polish
+
+| Item | Status |
+|---|---|
+| Scope | Mobile-only navigation polish for `EvidenceTopBar` |
+| Desktop impact | Desktop top bar layout, centered actions, and right Resume placement unchanged |
+| Mobile rail | Superseded; wrapped/horizontal pills were too bulky over the mobile starfield |
+| Mobile drawer | Added compact hamburger trigger and right-side glass evidence drawer |
+| Resume | Gold-accented drawer action on mobile |
+| Brand | Keeps subtle `EVIDENCEBOUND / 9 SYSTEMS` signal at top-left |
+
 ## Next Step
 
 Phase 4 has started. Next mobile work is the mobile evidence/navigation layer: refine the phone rail/sidebar, then build the dedicated Systems cards/buttons over the calibrated star world.
