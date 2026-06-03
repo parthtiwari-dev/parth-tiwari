@@ -8,9 +8,13 @@ import ResumeOverlay from '@/components/evidence/ResumeOverlay.vue'
 import TrainingData from '@/components/evidence/TrainingData.vue'
 import { useEvidenceOverlayStore, type EvidenceOverlayKind } from '@/stores/evidenceOverlayStore'
 
+const MOBILE_QUERY = '(max-width: 820px)'
+
 const evidenceOverlayStore = useEvidenceOverlayStore()
 const overlayRoot = ref<HTMLElement | null>(null)
+const isMobileViewport = ref(false)
 let hasScrollLock = false
+let mobileMediaQuery: MediaQueryList | null = null
 
 const overlayMeta: Record<EvidenceOverlayKind, { eyebrow: string; title: string; ariaLabel: string }> = {
   experience: {
@@ -74,27 +78,40 @@ function setBodyScrollLock(shouldLock: boolean) {
   }
 }
 
+function syncMobileViewport() {
+  isMobileViewport.value = typeof window !== 'undefined'
+    && window.matchMedia(MOBILE_QUERY).matches
+}
+
+function shouldLockOverlayScroll(isOpen: boolean, activeKind: EvidenceOverlayKind | null) {
+  return isOpen && (activeKind !== 'about' || isMobileViewport.value)
+}
+
 watch(
-  () => [evidenceOverlayStore.isOpen, evidenceOverlayStore.activeKind] as const,
-  async (isOpen) => {
-    const [isCurrentlyOpen] = isOpen
+  () => [
+    evidenceOverlayStore.isOpen,
+    evidenceOverlayStore.activeKind,
+    isMobileViewport.value,
+  ] as const,
+  async ([isCurrentlyOpen, activeKind]) => {
+    setBodyScrollLock(shouldLockOverlayScroll(isCurrentlyOpen, activeKind))
 
     if (isCurrentlyOpen) {
-      setBodyScrollLock(true)
       await nextTick()
       overlayRoot.value?.focus()
-      return
     }
-
-    setBodyScrollLock(false)
   },
 )
 
 onMounted(() => {
+  mobileMediaQuery = window.matchMedia(MOBILE_QUERY)
+  syncMobileViewport()
+  mobileMediaQuery.addEventListener('change', syncMobileViewport)
   window.addEventListener('keydown', handleKeydown)
 })
 
 onUnmounted(() => {
+  mobileMediaQuery?.removeEventListener('change', syncMobileViewport)
   window.removeEventListener('keydown', handleKeydown)
   setBodyScrollLock(false)
 })
@@ -172,7 +189,7 @@ onUnmounted(() => {
 }
 
 .evidence-overlay--about {
-  z-index: 82;
+  z-index: 49;
   place-items: start center;
   overflow-y: auto;
   overflow-x: hidden;
@@ -310,6 +327,10 @@ onUnmounted(() => {
   .evidence-overlay {
     align-items: stretch;
     padding: max(0.45rem, env(safe-area-inset-top)) 0.45rem 0.45rem;
+  }
+
+  .evidence-overlay--about {
+    z-index: 82;
   }
 
   .evidence-overlay__shell {

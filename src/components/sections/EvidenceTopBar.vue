@@ -4,6 +4,8 @@ import { isResumeConfigured } from '@/data/resume'
 import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
 import type { EvidenceOverlayKind } from '@/stores/evidenceOverlayStore'
 
+const MOBILE_QUERY = '(max-width: 820px)'
+
 interface TopBarAction {
   label: string
   kind?: EvidenceOverlayKind
@@ -13,7 +15,9 @@ interface TopBarAction {
 const evidenceOverlayStore = useEvidenceOverlayStore()
 const scrollY = ref(0)
 const revealThreshold = ref(220)
+const isMobileViewport = ref(false)
 const isMobileMenuOpen = ref(false)
+let mobileMediaQuery: MediaQueryList | null = null
 
 const actions: TopBarAction[] = [
   { label: 'Experience', kind: 'experience' },
@@ -28,11 +32,25 @@ const resumeAction: TopBarAction = {
   disabled: !isResumeConfigured,
 }
 
-const isVisible = computed(() => scrollY.value > revealThreshold.value && !evidenceOverlayStore.isOpen)
+const isVisible = computed(() => {
+  if (scrollY.value <= revealThreshold.value) {
+    return false
+  }
+
+  if (!evidenceOverlayStore.isOpen) {
+    return true
+  }
+
+  return !isMobileViewport.value && evidenceOverlayStore.activeKind === 'about'
+})
 
 function updateScrollState() {
   revealThreshold.value = window.innerHeight * 0.58
   scrollY.value = window.scrollY
+}
+
+function syncMobileViewport() {
+  isMobileViewport.value = window.matchMedia(MOBILE_QUERY).matches
 }
 
 function handleAction(action: TopBarAction) {
@@ -59,13 +77,17 @@ function handleKeydown(event: KeyboardEvent) {
 }
 
 onMounted(() => {
+  mobileMediaQuery = window.matchMedia(MOBILE_QUERY)
+  syncMobileViewport()
   updateScrollState()
+  mobileMediaQuery.addEventListener('change', syncMobileViewport)
   window.addEventListener('scroll', updateScrollState, { passive: true })
   window.addEventListener('resize', updateScrollState, { passive: true })
   window.addEventListener('keydown', handleKeydown)
 })
 
 onUnmounted(() => {
+  mobileMediaQuery?.removeEventListener('change', syncMobileViewport)
   window.removeEventListener('scroll', updateScrollState)
   window.removeEventListener('resize', updateScrollState)
   window.removeEventListener('keydown', handleKeydown)
