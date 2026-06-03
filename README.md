@@ -1,97 +1,194 @@
-# EVIDENCEBOUND - Parth Tiwari
+# EVIDENCEBOUND
 
-Systems that act only after the evidence agrees.
+**A cinematic AI engineering portfolio for Parth Tiwari.**
 
-## Roadmap Source
+EVIDENCEBOUND is a single-page portfolio built around a living evidence constellation. Instead of presenting projects as a flat list, it turns each system into a node with its own problem, architecture, proof, boundaries, and launch links.
 
-The build source of truth is [docs/EVIDENCEBOUND_BUILD_ROADMAP.md](docs/EVIDENCEBOUND_BUILD_ROADMAP.md).
+[Live Website](https://parth-tiwari-1.vercel.app/)
 
-Live site: [parth-tiwari.vercel.app](https://parth-tiwari.vercel.app)
+![EVIDENCEBOUND preview](public/og.png)
 
-The current implementation has completed the cinematic constellation, project film strips, top evidence overlays, mobile star-world path, Drive-backed Resume renderer, and Phase 5 production/SEO hardening. Remaining content work is limited to confirmed public links plus final language/grammar polish.
+## Why This Exists
 
-## Stack
+Most AI portfolios show a few cards, a resume, and a long list of tools. This one is built to make the work feel inspectable.
 
-| Layer | Current choice | Roadmap note |
-|---|---|---|
-| Framework | Vue 3.5.35 | Upgraded within Vue 3 |
-| Build | Vite 8.0.14 | Upgraded from roadmap Vite 5 to clear audit findings |
-| Language | TypeScript 6.0.3 | Upgraded with Vite 8 toolchain |
-| 3D | Three.js 0.165.0 | Pinned to roadmap-safe line |
-| 3D Vue wrapper | @tresjs/core 4.3.1 | Pinned and documented as required |
-| Post-processing | postprocessing 6.38.0 | Direct composer path for bloom |
-| Animation | GSAP 3.15.0 | Upgraded within GSAP 3 |
-| State | Pinia 2.3.1 | Roadmap-compatible |
-| Styling | Tailwind CSS 4.3.0 | Roadmap-compatible |
-| Shader imports | vite-plugin-glsl 1.6.0 | Roadmap-compatible |
-| Deployment | Vercel static | Live with SPA rewrites and cache headers |
+The site is designed around one principle:
 
-Vite and TypeScript were upgraded because the scaffold typechecked and built cleanly, and `npm audit` required a Vite major upgrade for a clean dependency graph. Three.js and TresJS stay pinned because the 3D layer is higher risk.
+> Systems should act only after the evidence, schema, budget, and workflow state agree.
 
-## Current Status
+That idea shows up in the interface itself. Projects are not just listed; they are explored as evidence objects. Each node opens into a film-strip style panel with:
 
-- Phase -1 complete: repo, branch, scaffold, dependency lock, baseline checks.
-- Phase 0 complete: design tokens, typography, glass/plain styles, canonical project data, Pinia stores, shared primitives, favicon, OG image, and head metadata.
-- Phase 1 complete: TresJS scene shell, sky dome, particles, refusal ripple, scroll camera path, 9 project nodes, connector projection, hover labels, bloom, node glow, and Phase 0 handoff.
-- Phase 1 performance gate passed on the target Chrome path after capping canvas DPR at `1.25`.
-- Phase 1.9 complete: node kind/weight metadata is locked, Vivid is now a featured artifact under the Stick and Dot work-experience node, and the constellation readout explains kind/weight.
-- Phase 2 Step 1 complete: boot overlay runs on normal page loads, uses the live project count, supports skip/Escape, and is skipped for `?plain=1` plus reduced-motion users.
-- Phase 2 Step 2 complete: lower-left cinematic Hero renders over the constellation, the Phase 0 console is removed from normal `/`, and the bottom data bar was intentionally removed after visual review.
-- Phase 2 realignment complete: same-page project overlays now use 5 panels, the top evidence bar appears after the Hero handoff, Experience/Training/Capability open over the constellation, and About appears as a scrollable human signal with social links over the frozen field.
-- Resume overlay is implemented with Google Drive preview support and derives the preview URL from `src/data/resume.ts`.
-- Phase 4 complete: mobile keeps the identity with a dedicated animated star world, drawer navigation, mobile project cards that reuse the same project overlay, and a compact footer band.
-- Phase 5 hardening complete: `vercel.json`, robots, sitemap, expanded head metadata, Twitter/OG cards, JSON-LD, and a complete `?plain=1` static crawl/print fallback.
-- Next step: populate the remaining confirmed public project links and polish site language.
+- the problem the system is solving
+- the architecture behind it
+- the proof or evaluation signal
+- the boundaries and refusal rules
+- public links when they are safe to expose
 
-## Setup
+The result is part portfolio, part interactive system map, and part proof archive.
 
-Use `npm.cmd` in PowerShell on this machine because `npm.ps1` is blocked by execution policy.
+## Highlights
+
+- **Desktop constellation experience** with a WebGL starfield, scroll-driven camera motion, glowing project nodes, hover labels, and same-page project overlays.
+- **Mobile-specific star world** built for portrait screens, with mobile project cards, drawer navigation, and the same evidence overlays reused from desktop.
+- **Film-strip project overlays** for all 9 systems, including personal projects, work experience, current builds, and utility/tooling nodes.
+- **Evidence overlays** for experience, training, capabilities, about, and resume.
+- **Drive-backed resume renderer** so the resume can be updated through a Google Drive link instead of editing the site every time.
+- **Plain static fallback** at `/?plain=1` for print, low-power viewing, and crawlable content.
+- **Production SEO setup** with Open Graph, Twitter cards, canonical metadata, JSON-LD, robots, sitemap, and Vercel cache headers.
+
+## Tech Stack
+
+![Vue](https://img.shields.io/badge/Vue-3.5-42B883?style=for-the-badge&logo=vue.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-6-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Three.js](https://img.shields.io/badge/Three.js-0.165-111111?style=for-the-badge&logo=three.js&logoColor=white)
+![TresJS](https://img.shields.io/badge/TresJS-4.3-0EA5E9?style=for-the-badge)
+![Pinia](https://img.shields.io/badge/Pinia-2-F7D336?style=for-the-badge)
+![GSAP](https://img.shields.io/badge/GSAP-3-88CE02?style=for-the-badge)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38BDF8?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-Static-000000?style=for-the-badge&logo=vercel&logoColor=white)
+
+## Core Ideas
+
+### Evidence Constellation
+
+The primary desktop experience is a scrollable constellation of project nodes. Node size communicates evidence weight. Node color communicates project type:
+
+- personal project
+- work experience
+- currently building
+- utility / tooling
+
+Clicking a node opens the project evidence overlay without leaving the page.
+
+### Same-World Overlays
+
+The site does not route users away to separate project pages. Project panels, training, capability, experience, about, and resume all open inside the same visual world. This keeps the portfolio feeling like one coherent interface instead of a collection of detached pages.
+
+### Mobile Identity
+
+Mobile does not try to force the desktop WebGL constellation into a cramped screen. It uses a dedicated animated star world and a card-based systems index while preserving the same visual language and project overlay content.
+
+### Plain Mode
+
+`/?plain=1` renders a complete static version of the portfolio with no 3D, no boot sequence, and no animation. It is useful for print, quick scanning, and low-power environments.
+
+## Project Structure
+
+```text
+src/
+  components/
+    evidence/       Evidence overlays: experience, training, capability, about, resume
+    overlay/        Project film-strip overlay and panel views
+    scene/          Desktop constellation, shaders, particles, nodes, labels
+    sections/       Hero, top bar, mobile systems index, mobile footer, plain fallback
+    shared/         Reusable UI primitives
+  composables/      Interaction, animation, scroll, plain-mode, and body-lock helpers
+  data/             Canonical project, training, capability, social, resume data
+  shaders/          GLSL shaders for sky, particles, and ripple effects
+  stores/           Pinia stores for projects, overlays, sliders, and evidence surfaces
+  styles/           Tokens, typography, glass, cursor, and plain-mode styles
+  types/            Project, node, and slider interfaces
+```
+
+## Local Setup
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the dev server:
+
+```bash
+npm run dev
+```
+
+On Windows PowerShell, if `npm.ps1` is blocked by execution policy, use:
 
 ```bash
 npm.cmd install
 npm.cmd run dev
 ```
 
-## Checks
+## Quality Checks
+
+```bash
+npm run typecheck
+npm run build
+npm audit --audit-level=moderate
+```
+
+Windows PowerShell equivalent:
 
 ```bash
 npm.cmd run typecheck
 npm.cmd run build
 npm.cmd audit --audit-level=moderate
-npm.cmd run preview
 ```
 
-## Build Rules
+Preview the production build:
 
-- Keep `docs/EVIDENCEBOUND_BUILD_ROADMAP.md` as the implementation source of truth.
-- Preserve `docs/PORTFOLIO_DISCOVERY_AND_IDEAS.md` as research/context.
-- Use TypeScript objects for content; `src/data/projects.ts` will be the single source of truth from Phase 0 onward.
-- Do not add markdown-driven project content unless the roadmap changes.
-- Keep v1 static and Vercel-ready.
-- Exclude audio, Howler.js, GSAP SplitText, and Temporal frontend code from v1.
-- Treat `?plain=1` as the complete static crawl/print fallback path.
+```bash
+npm run preview
+```
 
-## Phase Gates
+## Deployment
 
-- Phase -1 gate: scaffold builds, typechecks, audits cleanly, and branch is `dev`.
-- Phase 0 gate: tokens, typography, glass/plain styles, types, project data, stores, shared primitives, favicon, and OG image compile with zero TypeScript errors. Complete.
-- Phase 1 gate: cinematic constellation renders, scroll camera path works, all 9 nodes are visible, hover labels work, `?plain=1` skips 3D, Chrome reaches about 60fps, and checks pass. Complete.
-- Phase 1.9 gate: constellation information architecture is locked before overlays: node kind, origin, weight, and child artifacts compile cleanly. Complete.
-- Phase 2 Step 1 gate: boot overlay fades into the warmed constellation, supports skip/Escape, and skips for plain/reduced-motion paths. Complete.
-- Phase 2 Step 2 gate: Hero is readable over the tuned constellation, normal `/` no longer shows the Phase 0 scaffold, and end-scroll handoff shading is removed. Complete.
-- Phase 2 realignment gate: Project overlays render 5 panels, the Links/Launch panel renders only safe confirmed URLs, Experience/Training/Capability open as same-world overlays, and About opens as a constellation-native signal with social links. Complete.
-- Phase 4 gate: Mobile keeps the star-world identity without mounting the desktop 3D scene, uses drawer navigation, exposes project cards, reuses the same overlays, and keeps desktop unchanged. Complete.
-- Phase 5 gate: Live Vercel deployment has SPA rewrites, cache headers, robots/sitemap, production metadata, JSON-LD, and complete `?plain=1` fallback. Complete.
-- Later phase gates remain exactly as defined in the roadmap.
+The site is deployed on Vercel:
 
-## Performance Notes
+[https://parth-tiwari-1.vercel.app/](https://parth-tiwari-1.vercel.app/)
 
-- Chrome is the target browser for the Phase 1 FPS gate.
-- Chrome is user-confirmed at about `60fps` after the DPR cap change.
-- Brave is user-confirmed around `50fps+`.
-- Comet is treated as a non-target browser/compositor outlier for now.
-- The current performance fix preserves the UI and visual composition.
+The app is fully static. No environment variables are required for the current version.
 
-## Environment
+`vercel.json` handles:
 
-No environment variables are required for v1.
+- SPA rewrites to `index.html`
+- immutable caching for built assets
+- cache headers for public image/icon assets
+
+## SEO And Crawl Support
+
+Production metadata lives in `index.html`:
+
+- title and description
+- canonical URL
+- Open Graph image
+- Twitter summary card
+- theme color
+- JSON-LD for `Person`, `WebSite`, and `ProfilePage`
+
+Public crawl files:
+
+- `public/robots.txt`
+- `public/sitemap.xml`
+
+Static fallback:
+
+- `/?plain=1`
+
+## Updating Content
+
+Most portfolio content is data-driven.
+
+| Content | File |
+|---|---|
+| Projects, panels, node metadata, links | `src/data/projects.ts` |
+| Training records | `src/data/training.ts` |
+| Capability groups | `src/data/capabilities.ts` |
+| About copy | `src/data/about.ts` |
+| Social links | `src/data/socialLinks.ts` |
+| Resume Drive link | `src/data/resume.ts` |
+
+Project links should only be added when they are public and safe to expose. Private repos, company endpoints, account data, credentials, and unreviewed deployment URLs should stay out of the portfolio.
+
+## Browser Notes
+
+Chrome is the target browser for the WebGL performance path. The desktop constellation uses a capped device pixel ratio to keep the experience smooth without flattening the visual identity.
+
+Reduced-motion users skip or simplify motion-heavy experiences where possible.
+
+## License
+
+This is a personal portfolio project for Parth Tiwari. The code and content are not currently published under an open-source license.
