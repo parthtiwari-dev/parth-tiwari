@@ -93,7 +93,14 @@ src/
 
 ## Local Setup
 
-Install dependencies:
+This project was bootstrapped as a Vite + Vue + TypeScript app and then locked around the 3D stack used by the portfolio. The current dependency setup is intentionally conservative:
+
+- Three.js and TresJS are pinned because the constellation scene, shaders, and post-processing depend on their current behavior.
+- Vite and TypeScript are on the newer clean-audit toolchain used by the production build.
+- `package-lock.json` is committed, so installs should reproduce the same dependency graph.
+- No environment variables are required for the current static version.
+
+Install dependencies from the lockfile:
 
 ```bash
 npm install
@@ -111,6 +118,22 @@ On Windows PowerShell, if `npm.ps1` is blocked by execution policy, use:
 npm.cmd install
 npm.cmd run dev
 ```
+
+If dependency state ever gets strange locally, reset only the generated install artifacts and reinstall:
+
+```bash
+rm -rf node_modules
+npm install
+```
+
+Windows PowerShell equivalent:
+
+```powershell
+Remove-Item -Recurse -Force node_modules
+npm.cmd install
+```
+
+Do not casually upgrade `three` or `@tresjs/core`; treat those as visual/runtime dependencies and test the constellation carefully after any change.
 
 ## Quality Checks
 

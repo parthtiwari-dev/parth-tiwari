@@ -28,6 +28,21 @@ coverage
 # Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 .phase*/**
+
+# Local planning, audit, and agent workflow notes
+docs/EVIDENCEBOUND_BUILD_ROADMAP.md
+docs/PORTFOLIO_DISCOVERY_AND_IDEAS.md
+docs/SKILL.md
+docs/skill-2.md
+docs/*ROADMAP*.md
+docs/*DISCOVERY*.md
+docs/*SKILL*.md
+docs/skill*.md
+.codex-*.cjs
+.codex-*.js
+.phase*-qa*/**
+*.zip
+
 # Bower dependency directory (https://bower.io/)
 bower_components
 
