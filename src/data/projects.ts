@@ -268,7 +268,11 @@ export const projects: Project[] = [
       'SentenceTransformers',
       'sqlparse',
     ],
-    links: {},
+    links: {
+      github: 'https://github.com/parthtiwari-dev/querypilot',
+      liveAPI: 'https://querypilot-backend.onrender.com',
+      apiDocs: 'https://querypilot-backend.onrender.com/docs',
+    },
     panels: {
       problem: {
         quote: 'A SQL agent should fail inside a critic, not inside production data.',
@@ -363,7 +367,9 @@ export const projects: Project[] = [
       'SHAP',
       'Python',
     ],
-    links: {},
+    links: {
+      github: 'https://github.com/parthtiwari-dev/upi-fraud-engine',
+    },
     panels: {
       problem: {
         quote: 'A fraud model is only useful if time, leakage, alerts, and latency stay honest.',
@@ -460,7 +466,9 @@ export const projects: Project[] = [
       'OpenAI API',
       'LlamaParse',
     ],
-    links: {},
+    links: {
+      github: 'https://github.com/parthtiwari-dev/Evidence-Bound-Drug-RAG',
+    },
     panels: {
       problem: {
         quote: 'In medical retrieval, a refusal can be the safest correct answer.',

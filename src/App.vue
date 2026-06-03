@@ -12,6 +12,7 @@ import HeroSection from '@/components/sections/HeroSection.vue'
 import MobileBestExperienceNotice from '@/components/sections/MobileBestExperienceNotice.vue'
 import MobileFooterDock from '@/components/sections/MobileFooterDock.vue'
 import ProjectOverlay from '@/components/overlay/ProjectOverlay.vue'
+import PlainExperience from '@/components/sections/PlainExperience.vue'
 import MobileStarWorld from '@/components/scene/MobileStarWorld.vue'
 import MobileSystemsIndex from '@/components/sections/MobileSystemsIndex.vue'
 import SceneRoot from '@/components/scene/SceneRoot.vue'
@@ -43,7 +44,7 @@ const mobileNoticeComplete = ref(
 
 const featuredProjects = computed(() => projectStore.projects.slice(0, 4))
 const firstMetric = computed(() => projectStore.getById('querypilot')?.panels.proof.metrics?.[0])
-const showPhaseZeroConsole = computed(() => isPlain.value || isDebug.value)
+const showPhaseZeroConsole = computed(() => !isPlain.value && isDebug.value)
 const showPhaseBridge = computed(() => !isPlain.value && isDebug.value)
 const shouldOfferMobileNotice = computed(() => (
   !isPlain.value
@@ -129,6 +130,8 @@ onUnmounted(() => {
     />
 
     <EvidenceTopBar v-if="!isPlain && experienceReady" />
+
+    <PlainExperience v-if="isPlain && experienceReady" />
 
     <MobileSystemsIndex v-if="showMobileSystemsIndex" />
     <MobileFooterDock v-if="showMobileSystemsIndex" />

@@ -1482,7 +1482,7 @@ Legacy acceptance criteria from the initial roadmap:
 
 ## Phase 5 — Deploy
 
-**Goal:** Site live on Vercel, meta tags correct, README complete.
+**Goal:** Site live on Vercel with production metadata, crawl hints, structured identity data, and a complete static fallback.
 
 **Effort:** 1 day
 
@@ -1527,6 +1527,16 @@ Legacy acceptance criteria from the initial roadmap:
 }
 ```
 
+### Production SEO Additions
+
+Required final hardening:
+
+1. `public/robots.txt` allows normal crawling and points to the sitemap.
+2. `public/sitemap.xml` contains the canonical root URL.
+3. `index.html` includes descriptive title/description, canonical URL, Open Graph, Twitter card, theme color, robots, author, and image alt metadata.
+4. `index.html` includes JSON-LD for `Person`, `WebSite`, and `ProfilePage` with GitHub, LinkedIn, X, and email identity.
+5. `?plain=1` renders the complete static crawl/print fallback: hero, about, all 9 projects, proof/boundaries/links, training, capabilities, resume, and social links.
+
 ### README Sections
 
 1. Project name, tagline, live URL
@@ -1541,10 +1551,13 @@ Legacy acceptance criteria from the initial roadmap:
 ### Acceptance Criteria — Phase 5
 
 - [ ] Site live at `parth-tiwari.vercel.app`
-- [ ] `og:title`, `og:description`, and `og:image` render correctly in link previews (test with [opengraph.xyz](https://www.opengraph.xyz))
+- [ ] `og:title`, `og:description`, Twitter card, and `og:image` render correctly in link previews
+- [ ] JSON-LD validates as Person/WebSite/ProfilePage structured data
+- [ ] `robots.txt` and `sitemap.xml` are available from the public root
 - [ ] `favicon.svg` displays in browser tabs
 - [ ] `Cache-Control: immutable` on all hashed asset files
-- [ ] `README.md` contains TresJS pinned version
+- [ ] `?plain=1` shows complete static content with no 3D/starfield animation
+- [ ] `README.md` contains TresJS pinned version and live URL
 
 ---
 

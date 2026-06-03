@@ -16,7 +16,7 @@ export const trainingRecords: TrainingRecord[] = [
     location: 'Bangalore',
     period: 'Jul 2025 - Feb 2026',
     program: 'Post Graduate Program',
-    focus: 'Data Science · GenAI',
+    focus: 'Data Science - GenAI',
     proofChips: ['specialization: GenAI', 'PGP certified'],
     note: 'Structured the GenAI, retrieval, evaluation, and applied data-science base behind the evidence systems.',
   },

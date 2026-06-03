@@ -1,8 +1,8 @@
 # EVIDENCEBOUND Progress Audit
 
-Date: 2026-06-01
+Date: 2026-06-03
 Branch: `dev`
-Status: Phase 2 single-world overlay path active; project links panel, evidence top bar, Experience/Training/Capability, About signal with social links, and Drive-ready Resume renderer implemented
+Status: Phase 5 production/SEO hardening complete; live Vercel path, mobile star-world path, project overlays, evidence overlays, static crawl fallback, and Drive-ready Resume renderer implemented
 
 ## Branch And Repo
 
@@ -568,6 +568,20 @@ Status: Phase 2 single-world overlay path active; project links panel, evidence 
 | Socials | Reuses existing `socialLinks.ts` for GitHub, LinkedIn, Email, and X |
 | Composition | Full-width translucent mobile footer band over the star world; hides with project cards when About is open |
 
+## Phase 5 Production And SEO Hardening
+
+| Item | Status |
+|---|---|
+| Live URL | Documented as `https://parth-tiwari.vercel.app` |
+| Vercel config | Added SPA rewrite to `index.html` plus immutable cache headers for built assets |
+| Robots | Added `public/robots.txt` with sitemap pointer |
+| Sitemap | Added `public/sitemap.xml` for the root profile page |
+| Head metadata | Expanded title, description, canonical, robots, theme color, Open Graph, Twitter card, and image alt metadata |
+| Structured data | Added JSON-LD graph for `Person`, `WebSite`, and `ProfilePage` with GitHub, LinkedIn, X, and email identity |
+| Static fallback | Converted `?plain=1` from Phase 0 console fallback into a complete crawlable/printable portfolio route |
+| Debug console | Phase 0 verification console is now debug-only through `?debug=1` |
+| Project links | Added only confirmed public-safe links; unconfirmed demos/APIs remain empty by design |
+
 ## Next Step
 
-Phase 4 is in mobile execution. Next mobile work is project overlay touch polish, then footer dock/plain-mode completion.
+Coding is effectively complete for v1. Remaining work is content polish: confirmed project links, final grammar/tone pass, and any live-site copy edits after review.
