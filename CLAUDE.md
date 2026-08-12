@@ -92,7 +92,6 @@ The project count appears as hardcoded prose in `EvidenceTopBar.vue` and `Mobile
 
 Do not build on these; remove them when you are in the neighbourhood:
 
-- `src/stores/sliderStore.ts` — never imported. Related: `sliderConfigs`, and `sliderResponse` on 5 projects.
 - `isOverlayReadyProject` — always returns `true`; three call sites branch on it as if it gates something.
 - `CopiedToast` — mounted with a literal `:show="false"`.
 - `RefusalRipple` — renders at alpha ×0.004 on an unconnected 30-second timer.
@@ -101,6 +100,16 @@ Do not build on these; remove them when you are in the neighbourhood:
 - `NodeRuntimeState.ringState` / `colorState` — written every frame, read by nothing.
 
 **Used but undefined** (silently no-ops, should be fixed not removed): `--active-glow`, and `--font-mono` / `--font-display` / `--font-body` in `PlainExperience.vue`.
+
+**Dormant but not dead:** `sliderStore`, `sliderConfigs`, and `sliderResponse` are unused today but are being revived as the Cost of Intelligence control inside the Proof panel (`docs/PLAN.md` 3.8). Do not delete them.
+
+---
+
+## Naming
+
+The site is **EPHEMERIS**. `EVIDENCEBOUND` is retired — if you find it in the boot sequence, top bar, overlay eyebrows, `index.html` metadata, or `og.png`, it is stale and should be updated.
+
+An ephemeris is a table of computed positions of celestial bodies. The name states the design rule: positions are derived from data, never placed by hand.
 
 ---
 

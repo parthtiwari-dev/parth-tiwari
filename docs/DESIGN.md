@@ -18,6 +18,12 @@ This is not an aesthetic preference. The site's entire argument is *evidence* �
 
 The standard to hold this to is **Shirley Wu's *Legends*** (`shirleywu.studio/legends`) — 51 female Nobel laureates rendered as 3D crystals whose *form is generated from each laureate's Wikipedia data*. The geometry is the encoding, not a decoration wrapped around a label. That is the bar.
 
+### The name
+
+**EPHEMERIS.** An ephemeris is a table giving the computed positions of celestial bodies at given times.
+
+It names the rule above rather than restating the thesis: positions are *computed*, never authored. It is astronomical without being decorative, and unlike `EVIDENCEBOUND` it does not ask a visitor to decode a second concept alongside the universe — it describes the universe they are already looking at.
+
 ---
 
 ## 2. The mapping

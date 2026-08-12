@@ -36,26 +36,28 @@ Independent of the redesign. Ships alone, immediately.
 | 0.11 | Enable Vercel Web Analytics — currently returns no data, so no UX claim is measurable | AUDIT S9 |
 | 0.12 | Fix canonical URL mismatch (trailing slash), stale `sitemap.xml` lastmod, and add `?plain=1` to the sitemap | AUDIT S2, S3, S4 |
 | 0.13 | Add security headers to `vercel.json` | AUDIT S6 |
-| 0.14 | Delete dead code: `sliderStore`, `isOverlayReadyProject`, `CopiedToast`, 7 unused tokens | ARCHITECTURE §11 |
+| 0.14 | Delete dead code: `isOverlayReadyProject`, `CopiedToast`, 7 unused tokens. **Keep `sliderStore`** — it is revived in 3.8. | ARCHITECTURE §11 |
 
 **Exit:** typecheck and build clean; keyboard can reach every project; plain mode ships no WebGL engine.
 
 ---
 
-## Phase 1 — Content honesty
+## Phase 1 — Content honesty and rename
 
-Small, high-leverage, and it needs a human decision rather than code.
+Small, high-leverage, mostly data rather than code.
 
-| # | Task |
-|---|---|
-| 1.1 | Confirm which of the six live Vercel deployments (`oncoverse`, `vivid`, `stick-and-dot-app`, `beatmind`, `tathya`, `support-core`) are public-safe to link |
-| 1.2 | Populate `links` for every confirmed project |
-| 1.3 | Add a date field per project — required for orbital angle in Phase 3 |
-| 1.4 | Derive the "9 systems" strings from `projectStore.projectCount` instead of hardcoding |
+| # | Task | State |
+|---|---|---|
+| 1.1 | Link `vivid-alpha.vercel.app`, `tathya-1.vercel.app`, `support-core-nine.vercel.app` | confirmed |
+| 1.2 | Leave `stick-and-dot-app` unlinked (owner exclusion), `beatmind` (deploy `BLOCKED`), `oncoverse` (deploy `ERROR`) | confirmed |
+| 1.3 | Add a date field per project — required for orbital angle in Phase 3 | awaiting owner dates |
+| 1.4 | Decide per-project whether `tathya`, `beatmind`, `support-core` become portfolio nodes | awaiting owner |
+| 1.5 | **Rename EVIDENCEBOUND → EPHEMERIS** across boot sequence, top bar, overlay eyebrows, `index.html` title/OG/Twitter/JSON-LD, `og.png`, README | ready |
+| 1.6 | Derive the "9 systems" strings from `projectStore.projectCount` instead of hardcoding | ready |
 
-**Blocked on:** owner confirmation for 1.1 and 1.3. Everything else in the plan can proceed without it.
+**Verification rule for any link, now and later:** resolve the real production alias from the Vercel project (never assume `<name>.vercel.app` — that check would have shipped a stranger's site), confirm it returns 200 without auth, confirm it belongs to this account.
 
-**Why this matters disproportionately:** the site's entire argument is evidence, and six of nine projects currently render "Pending verification" while being deployed and publicly reachable.
+**Why this matters disproportionately:** the site's entire argument is evidence, and it currently shows "Pending verification" on projects that are deployed and reachable.
 
 ---
 
@@ -92,6 +94,7 @@ Where the universe starts meaning something.
 | 3.5 | Moons: `stack[]` rendered as satellites; shared technologies visibly recur |
 | 3.6 | Schematic ↔ true-scale toggle, with the current mode always labelled |
 | 3.7 | Apparent magnitude derivation feeding label priority |
+| 3.8 | **Cost of Intelligence** revived inside the Proof panel — drag a budget/latency slider, watch the metric respond. `sliderConfigs` and `sliderResponse` stop being dead data. |
 
 **Exit:** adding a project requires adding a data record and nothing else.
 
@@ -177,9 +180,10 @@ Everything here is cuttable. Nothing here is load-bearing. That is deliberate �
 
 ## Open decisions
 
-Carried from `PRD.md` §7. None block Phase 0 or 2.
+Resolved: the rename to EPHEMERIS, real dates for chronology, Cost of Intelligence revived in the Proof panel, and the confirmed link set. See `PRD.md` §7.
 
-1. **Project dates** — needed for orbital angle (3.1). Without them, angle falls back to a stable derived ordering.
-2. **Which live URLs are public-safe** — blocks 1.1.
-3. **Whether `EVIDENCEBOUND` survives** — it is strong, and it is a second thing to decode alongside the universe metaphor.
-4. **Whether "Cost of Intelligence" returns** — either build it into project panels or delete `sliderConfigs` and `sliderResponse` outright.
+Still open, none blocking Phase 0 or 2:
+
+1. **Project dates** — owner supplying. Blocks 3.1 only.
+2. **`tathya` / `beatmind` / `support-core`** — owner sorting per-project. Any addition past nine nodes blocks on 3.4.
+3. **Whether Vivid ships** — it is Stick and Dot company work like the excluded app. Linked per instruction; revisit if the exclusion was categorical.

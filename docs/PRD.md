@@ -164,11 +164,41 @@ The site's entire argument is evidence. Shipping it with its strongest evidence 
 
 ---
 
-## 7. Open questions
+## 7. Resolved decisions
 
-Carried into `PLAN.md` rather than blocking:
+### The site is renamed to EPHEMERIS
 
-1. **Project dates.** Orbital angle encodes chronology, but `projects.ts` has no date field. Needs either a `started`/`shipped` date per project, or angle falls back to a stable derived ordering.
-2. **Which live URLs are safe to publish.** Six projects have Vercel deployments. Each needs an explicit yes before it ships.
-3. **Whether the `EVIDENCEBOUND` name survives.** It is strong and it is also a second thing for a visitor to decode alongside the universe metaphor.
-4. **Whether the "Cost of Intelligence" slider concept returns.** The data model still carries `sliderConfigs` and `sliderResponse`; the UI was deferred and never built. Either build it into project panels or delete the dead data.
+An ephemeris is a table of computed positions of celestial bodies at given times. It names exactly what the site does — **positions derived from data, not placed by hand** — and carries the evidence thesis without restating it.
+
+`EVIDENCEBOUND` is retired. It appears in the boot sequence, the top bar, both overlay eyebrows, OG metadata, and JSON-LD; all of it changes together.
+
+### Chronology uses real dates
+
+A date field is added per project. Orbital angle encodes it directly, so reading the system clockwise reads the career. Falling back to a derived ordering was rejected — it would have made chronology the one axis in the universe that wasn't actually true, which contradicts the governing rule.
+
+### Cost of Intelligence is revived inside the project panels
+
+Rather than deleting `sliderConfigs` and `sliderResponse`, the tradeoff control is built into the Proof panel: drag a budget or latency slider, watch the metric respond. It is the one interactive idea in the original design that reinforces the evidence thesis rather than decorating it.
+
+### Links: verified, not assumed
+
+Checking the obvious aliases would have shipped a stranger's site — `vivid.vercel.app` is **not** this account's project. Verified production state:
+
+| Project | Production URL | Ships |
+|---|---|---|
+| vivid | `vivid-alpha.vercel.app` | yes |
+| tathya | `tathya-1.vercel.app` | yes |
+| support-core | `support-core-nine.vercel.app` | yes |
+| stick-and-dot-app | `stick-and-dot-app.vercel.app` | **no** — excluded by owner |
+| beatmind | `beatmind-theta.vercel.app` | no — 404, latest deploy `BLOCKED` |
+| oncoverse | — | no — latest production deploy in `ERROR` state |
+
+**OncoVerse has never successfully deployed to production.** Its empty links panel is currently accurate, not an oversight.
+
+Any URL added later gets the same treatment: resolve the real production alias, confirm it returns 200 without auth, confirm it belongs to this account.
+
+## 8. Open questions
+
+1. **Project dates.** Owner is supplying them. Month and year per project is sufficient.
+2. **`tathya`, `beatmind`, `support-core`** are live deployments with no portfolio entry. Some are new projects, some are not portfolio-grade; the owner is sorting them per-project. Any addition past nine nodes requires fixing the hardcoded `uClusterBrightness[9]` shader array (`PLAN.md` 3.4).
+3. **Whether Vivid should ship at all.** It is Stick and Dot company work, same as the app that was excluded. Linked per instruction, but if the exclusion was about company work generally rather than that one repo, both come out.

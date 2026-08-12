@@ -53,6 +53,24 @@ The owner selected both "rebuild the scene, keep the content" and "full rewrite.
 
 `projects.ts` is 886 lines of genuinely good, hard-won content. It is a liability only where it hardcodes 3D coordinates.
 
+### The site is renamed EPHEMERIS
+
+`EVIDENCEBOUND` is retired. An ephemeris is a table of computed positions of celestial bodies at given times — it names exactly what the site does, **positions derived from data rather than placed by hand**, and carries the evidence thesis without restating it.
+
+Rejected alternatives and why: *BARYCENTER* (precise for "I am the center", harder to say), *PARALLAX* (perfect concept — deriving fact from observation — but heavily used in tech), *SIDEREAL* (evocative, but names a frame of reference rather than what the site does).
+
+The name is load-bearing in the boot sequence, top bar, both overlay eyebrows, `index.html` title/OG/Twitter/JSON-LD, and `og.png`. It all changes together.
+
+### Chronology uses real dates, not a derived order
+
+Deriving angle from `status` + `weight` was offered and rejected: it would have made chronology the one axis in the universe that wasn't actually true. Under the governing rule of §1 that is not a shortcut, it is a contradiction.
+
+### Cost of Intelligence is revived, not deleted
+
+`sliderConfigs` and `sliderResponse` were dead data feeding a UI deferred twice and never built. Rather than deleting them, the tradeoff control goes into the Proof panel — drag a budget or latency slider, watch the metric respond.
+
+It is the one interactive idea in the original design that reinforces the evidence thesis rather than decorating it. **`sliderStore` is therefore explicitly excluded from the Phase 0 dead-code sweep.**
+
 ### All craft layers in scope, all cuttable
 
 Sound, loading choreography, micro-interactions, and cinematic post-FX are all in. They are deliberately confined to `PLAN.md` Phase 6, last and individually removable.
@@ -140,12 +158,11 @@ The full reference index with what to take from each is `DESIGN.md` §12. The th
 
 ## Open questions
 
-Unresolved, and none of them block Phase 0 or Phase 2:
+Unresolved, none blocking Phase 0 or Phase 2:
 
-1. **Project dates.** Orbital angle encodes chronology; `projects.ts` has no date field. Without one, angle falls back to a stable derived ordering.
-2. **Which live Vercel deployments are public-safe to link.** Six projects show "Pending verification" while being deployed and reachable. Needs an explicit yes per URL.
-3. **Whether `EVIDENCEBOUND` survives.** It is a strong name and it is a second thing for a visitor to decode alongside the universe metaphor.
-4. **Whether "Cost of Intelligence" returns.** `sliderConfigs` and `sliderResponse` are dead data supporting a UI that was deferred and never built. Either build it into project panels or delete it.
+1. **Project dates.** Owner is supplying month/year per project. Blocks orbital angle (3.1) only.
+2. **`tathya`, `beatmind`, `support-core`** are live deployments with no portfolio entry. Owner is sorting them per-project. Anything that pushes past nine nodes must first fix `uClusterBrightness[9]`.
+3. **Whether Vivid ships at all.** It is Stick and Dot company work, same as the app the owner excluded. Currently linked per instruction — revisit if the exclusion was about company work generally rather than that one repo.
 
 ---
 
@@ -153,6 +170,21 @@ Unresolved, and none of them block Phase 0 or Phase 2:
 
 Team `parthtiwari-devs-projects`. Portfolio project is `parth-tiwari`.
 
-Other live projects in the same account, several of which correspond to portfolio entries currently showing no links: `oncoverse`, `vivid`, `stick-and-dot-app`, `beatmind`, `tathya`, `support-core`.
+### Never assume `<project>.vercel.app`
+
+This nearly caused a real mistake. `vivid.vercel.app` returns 200 and **belongs to someone else** — this account's project is at `vivid-alpha.vercel.app`. Short aliases are claimed globally, first come first served.
+
+**Always** resolve the production alias from the Vercel project's `domains` array, confirm 200 without auth, and confirm ownership. Verified state at baseline:
+
+| Project | Production URL | Ships |
+|---|---|---|
+| vivid | `vivid-alpha.vercel.app` | yes |
+| tathya | `tathya-1.vercel.app` | yes |
+| support-core | `support-core-nine.vercel.app` | yes |
+| stick-and-dot-app | `stick-and-dot-app.vercel.app` | no — owner exclusion |
+| beatmind | `beatmind-theta.vercel.app` | no — 404, latest deploy `BLOCKED` |
+| oncoverse | none resolving | no — latest production deploy in `ERROR` |
+
+**OncoVerse has never successfully deployed to production.** Its empty links panel is accurate, not an oversight. Do not "fix" it by inventing a URL.
 
 **Web Analytics returns no data** — not enabled. Until it is, no claim about how the site is actually used is measurable, and none should be made.
