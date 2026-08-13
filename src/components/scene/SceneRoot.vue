@@ -31,6 +31,7 @@ const selectedProjectId = ref<string | null>(null)
 const particleHueOffset = ref(0)
 const dpr: [number, number] = [1, 1.25]
 let hueMilestoneTrigger: ScrollTrigger | null = null
+let hueMilestoneFrame = 0
 
 const hoveredProject = computed(() => {
   return projects.find((project) => project.id === hoveredProjectId.value) ?? null
@@ -75,7 +76,8 @@ onMounted(() => {
     return
   }
 
-  requestAnimationFrame(() => {
+  hueMilestoneFrame = requestAnimationFrame(() => {
+    hueMilestoneFrame = 0
     hueMilestoneTrigger = ScrollTrigger.create({
       trigger: '#constellation-section',
       start: 'top top',
@@ -89,7 +91,13 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
+  if (hueMilestoneFrame) {
+    cancelAnimationFrame(hueMilestoneFrame)
+    hueMilestoneFrame = 0
+  }
+
   hueMilestoneTrigger?.kill()
+  hueMilestoneTrigger = null
 })
 </script>
 
