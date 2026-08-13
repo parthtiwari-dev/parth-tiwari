@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import ContactPanel from '@/components/conversion/ContactPanel.vue'
+import ServicesBlock from '@/components/conversion/ServicesBlock.vue'
 import { aboutSignal } from '@/data/about'
 import { capabilityGroups } from '@/data/capabilities'
 import { projects } from '@/data/projects'
@@ -7,7 +9,10 @@ import { resolveProjectLinks } from '@/data/projectLinks'
 import { resumeOpenUrl, isResumeConfigured } from '@/data/resume'
 import { socialLinks } from '@/data/socialLinks'
 import { trainingRecords } from '@/data/training'
+import { useProjectStore } from '@/stores/projectStore'
 import type { Project } from '@/types/project'
+
+const projectStore = useProjectStore()
 
 const kindLabels: Record<Project['nodeKind'], string> = {
   'personal-project': 'Personal project',
@@ -49,13 +54,24 @@ const groupedProjects = computed(() => [
     aria-label="Static portfolio fallback"
   >
     <header class="plain-experience__header">
-      <p class="plain-experience__eyebrow">Static Evidence Index</p>
+      <p class="plain-experience__eyebrow">EPHEMERIS / Static Evidence Index</p>
       <h2>Evidence-bound AI systems by Parth Tiwari</h2>
       <p>
         This plain route contains the complete crawlable and printable version of the portfolio:
-        projects, work evidence, training, capabilities, resume, and contact links.
+        services, {{ projectStore.projectCount }} systems, work evidence, training, capabilities,
+        resume, and every contact channel.
       </p>
     </header>
+
+    <!-- Services and contact lead, because plain mode is where a crawler and a
+         skeptical visitor on a slow connection actually read the offer. -->
+    <section class="plain-experience__section" aria-label="Services">
+      <ServicesBlock />
+    </section>
+
+    <section class="plain-experience__section" aria-label="Contact">
+      <ContactPanel />
+    </section>
 
     <section class="plain-experience__section" aria-labelledby="plain-about-title">
       <p class="plain-experience__eyebrow">About</p>
@@ -122,6 +138,22 @@ const groupedProjects = computed(() => [
           </p>
         </div>
 
+        <!-- Screenshot then outcome, ahead of the evidence panels (DESIGN.md 2b).
+             Both render only from real supplied data — no placeholder image paths,
+             no inferred outcome copy. -->
+        <figure
+          v-for="image in project.images ?? []"
+          :key="image.src"
+          class="plain-experience__figure"
+        >
+          <img :src="image.src" :alt="image.alt" loading="lazy" />
+          <figcaption v-if="image.caption">{{ image.caption }}</figcaption>
+        </figure>
+
+        <p v-if="project.outcome" class="plain-experience__outcome">
+          {{ project.outcome }}
+        </p>
+
         <p><strong>Problem:</strong> {{ project.panels.problem.quote }}</p>
         <p v-if="project.panels.architecture.summary">
           <strong>Architecture:</strong> {{ project.panels.architecture.summary }}
@@ -174,6 +206,14 @@ const groupedProjects = computed(() => [
               :key="artifact.id"
             >
               {{ artifact.name }} - {{ artifact.summary }}
+              <a
+                v-if="artifact.url"
+                :href="artifact.url"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Open {{ artifact.name }}
+              </a>
             </li>
           </ul>
         </div>
@@ -340,6 +380,35 @@ const groupedProjects = computed(() => [
 
 .plain-experience__facts dd {
   margin: 0;
+}
+
+.plain-experience__figure {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+}
+
+.plain-experience__figure img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #d9d9d9;
+}
+
+.plain-experience__figure figcaption {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.plain-experience__outcome {
+  font-size: 1.125rem;
+}
+
+.plain-experience__artifacts a {
+  margin-left: 0.4rem;
+  white-space: nowrap;
 }
 
 .plain-experience__links {

@@ -1,12 +1,12 @@
-# EVIDENCEBOUND
+# EPHEMERIS
 
 **A cinematic AI engineering portfolio for Parth Tiwari.**
 
-EVIDENCEBOUND is a single-page portfolio built around a living evidence constellation. Instead of presenting projects as a flat list, it turns each system into a node with its own problem, architecture, proof, boundaries, and launch links.
+EPHEMERIS is a single-page portfolio built around a living evidence constellation. An ephemeris is a table of computed positions of celestial bodies, and the name states the design rule: positions are derived from data, never placed by hand. Instead of presenting projects as a flat list, it turns each system into a node with its own problem, architecture, proof, boundaries, and launch links.
 
 [Live Website](https://parth-tiwari-1.vercel.app/)
 
-![EVIDENCEBOUND preview](public/og.png)
+![EPHEMERIS preview](public/og.png)
 
 ## Why This Exists
 
@@ -30,10 +30,11 @@ The result is part portfolio, part interactive system map, and part proof archiv
 
 - **Desktop constellation experience** with a WebGL starfield, scroll-driven camera motion, glowing project nodes, hover labels, and same-page project overlays.
 - **Mobile-specific star world** built for portrait screens, with mobile project cards, drawer navigation, and the same evidence overlays reused from desktop.
-- **Film-strip project overlays** for all 9 systems, including personal projects, work experience, current builds, and utility/tooling nodes.
+- **Film-strip project overlays** for every system in `src/data/projects.ts`, including personal projects, work experience, current builds, and utility/tooling nodes.
 - **Evidence overlays** for experience, training, capabilities, about, and resume.
 - **Drive-backed resume renderer** so the resume can be updated through a Google Drive link instead of editing the site every time.
-- **Plain static fallback** at `/?plain=1` for print, low-power viewing, and crawlable content.
+- **Conversion layer** with a ranked contact surface (booking, message form, email, WhatsApp), a three-offer services block, and a persistent booking action that is one tap from every screen.
+- **Plain static fallback** at `/?plain=1` for print, low-power viewing, and crawlable content. It contains everything the full experience does, services and contact included.
 - **Production SEO setup** with Open Graph, Twitter cards, canonical metadata, JSON-LD, robots, sitemap, and Vercel cache headers.
 
 ## Tech Stack
@@ -78,13 +79,15 @@ Mobile does not try to force the desktop WebGL constellation into a cramped scre
 ```text
 src/
   components/
+    conversion/     Booking CTA, contact panel, services block
     evidence/       Evidence overlays: experience, training, capability, about, resume
     overlay/        Project film-strip overlay and panel views
     scene/          Desktop constellation, shaders, particles, nodes, labels
     sections/       Hero, top bar, mobile systems index, mobile footer, plain fallback
     shared/         Reusable UI primitives
   composables/      Interaction, animation, scroll, plain-mode, and body-lock helpers
-  data/             Canonical project, training, capability, social, resume data
+  config/           Site URL, site name, booking and contact constants
+  data/             Canonical project, training, capability, social, service, resume data
   shaders/          GLSL shaders for sky, particles, and ripple effects
   stores/           Pinia stores for projects, overlays, sliders, and evidence surfaces
   styles/           Tokens, typography, glass, cursor, and plain-mode styles
@@ -173,6 +176,15 @@ The app is fully static. No environment variables are required for the current v
 
 ## SEO And Crawl Support
 
+The site URL and site name live in one place, `src/config/site.ts`. `index.html`
+is static HTML served before any JS runs, so it cannot import that constant and
+mirrors it instead — `src/config/site.ts` lists every line in `index.html` that has
+to change alongside it, plus `public/sitemap.xml` and `public/robots.txt`.
+
+The production alias is resolved from the Vercel project's `domains` array, never
+guessed from the project name. `parth-tiwari.vercel.app` is a different owner's
+site; ours is `parth-tiwari-1.vercel.app`.
+
 Production metadata lives in `index.html`:
 
 - title and description
@@ -197,6 +209,8 @@ Most portfolio content is data-driven.
 
 | Content | File |
 |---|---|
+| Site URL, site name, booking link, contact channels | `src/config/site.ts` |
+| Services and offer copy | `src/data/services.ts` |
 | Projects, panels, node metadata, links | `src/data/projects.ts` |
 | Training records | `src/data/training.ts` |
 | Capability groups | `src/data/capabilities.ts` |
@@ -204,7 +218,9 @@ Most portfolio content is data-driven.
 | Social links | `src/data/socialLinks.ts` |
 | Resume Drive link | `src/data/resume.ts` |
 
-Project links should only be added when they are public and safe to expose. Private repos, company endpoints, account data, credentials, and unreviewed deployment URLs should stay out of the portfolio.
+Project links should only be added when they are public and safe to expose. Private repos, company endpoints, account data, credentials, and unreviewed deployment URLs should stay out of the portfolio. Vercel aliases are confirmed against the project's own `domains` array before they are linked, because short `*.vercel.app` names are claimed globally and may belong to someone else.
+
+Testimonials, metrics, and client names are never written by hand. The testimonial slot renders nothing until a real, attributed quote exists.
 
 ## Browser Notes
 

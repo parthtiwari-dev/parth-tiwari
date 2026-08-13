@@ -48,11 +48,13 @@ export function useCameraPath(camera: THREE.Camera | undefined) {
     onUpdate: updateCamera,
   })
 
+  const refreshFrame = requestAnimationFrame(() => ScrollTrigger.refresh())
+
   const cleanup = () => {
+    cancelAnimationFrame(refreshFrame)
     tween.scrollTrigger?.kill()
     tween.kill()
   }
 
-  requestAnimationFrame(() => ScrollTrigger.refresh())
   return cleanup
 }

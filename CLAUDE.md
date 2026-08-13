@@ -52,7 +52,12 @@ There is no test runner and no linter configured. Type checking and a clean buil
 
 **Never add a project link that is not confirmed public and safe.** Private repos, company endpoints, internal URLs, account data, and unreviewed deployments stay out. An empty links panel is correct behavior, not a bug to paper over.
 
-**Never assume `<project>.vercel.app` is ours.** Short aliases are claimed globally — `vivid.vercel.app` returns 200 and belongs to someone else; ours is `vivid-alpha.vercel.app`. Always resolve the production alias from the Vercel project's `domains` array, confirm 200 without auth, and confirm ownership before linking.
+**Never assume `<project>.vercel.app` is ours.** Short aliases are claimed globally. This has already bitten twice:
+
+- `vivid.vercel.app` returns 200 and belongs to someone else; ours is `vivid-alpha.vercel.app`.
+- **`parth-tiwari.vercel.app` is not ours either** — this very site lives at `parth-tiwari-1.vercel.app`. Every canonical, OG and JSON-LD URL pointed at the stranger's host until it was caught.
+
+Always resolve the production alias from the Vercel project's `domains` array, confirm 200 without auth, and confirm ownership before linking.
 
 **Never invent social proof.** No fabricated testimonials, no estimated metrics, no implied clients. The testimonial slot stays empty until a real quote exists. A site whose thesis is evidence cannot fake its own.
 

@@ -74,22 +74,47 @@ const relatedToHovered = computed<Set<string>>(() => {
 })
 
 const projectedPosition = new THREE.Vector3()
+const fromPoint = { x: 0, y: 0 }
+const toPoint = { x: 0, y: 0 }
+const cachedRect = { width: 0, height: 0 }
+
 let frameId = 0
+let rectDirty = true
+let measuredElement: HTMLCanvasElement | null = null
 
-function projectNode(projectId: string) {
-  const context = props.context
-  const project = projectById.get(projectId)
-  const camera = context?.camera.value
-  const renderer = context?.renderer.value
+function invalidateRect() {
+  rectDirty = true
+}
 
-  if (!project || !camera || !renderer) {
-    return null
+function readRect(renderer: THREE.WebGLRenderer) {
+  const element = renderer.domElement
+
+  if (rectDirty || element !== measuredElement) {
+    const rect = element.getBoundingClientRect()
+
+    if (rect.width <= 0 || rect.height <= 0) {
+      return null
+    }
+
+    cachedRect.width = rect.width
+    cachedRect.height = rect.height
+    measuredElement = element
+    rectDirty = false
   }
 
-  const rect = renderer.domElement.getBoundingClientRect()
+  return cachedRect.width > 0 && cachedRect.height > 0 ? cachedRect : null
+}
 
-  if (rect.width <= 0 || rect.height <= 0) {
-    return null
+function projectNode(
+  projectId: string,
+  rect: { width: number; height: number },
+  target: { x: number; y: number },
+) {
+  const camera = props.context?.camera.value
+  const project = projectById.get(projectId)
+
+  if (!project || !camera) {
+    return false
   }
 
   projectedPosition
@@ -97,47 +122,102 @@ function projectNode(projectId: string) {
     .project(camera)
 
   if (projectedPosition.z < -1 || projectedPosition.z > 1) {
-    return null
+    return false
   }
 
-  return {
-    x: (projectedPosition.x * 0.5 + 0.5) * rect.width,
-    y: (-projectedPosition.y * 0.5 + 0.5) * rect.height,
-  }
+  target.x = (projectedPosition.x * 0.5 + 0.5) * rect.width
+  target.y = (-projectedPosition.y * 0.5 + 0.5) * rect.height
+  return true
+}
+
+function deactivateAll() {
+  lines.value.forEach((line) => {
+    if (line.isActive) {
+      line.isActive = false
+    }
+  })
 }
 
 function updateLines() {
-  if (!props.paused) {
-    const related = relatedToHovered.value
+  frameId = requestAnimationFrame(updateLines)
 
-    lines.value = connectorPairs.map((pair) => {
-      const from = projectNode(pair.fromId)
-      const to = projectNode(pair.toId)
-      const isActive =
-        related.size > 0 &&
-        related.has(pair.fromId) &&
-        related.has(pair.toId)
-
-      return {
-        id: pair.id,
-        x1: from?.x ?? 0,
-        y1: from?.y ?? 0,
-        x2: to?.x ?? 0,
-        y2: to?.y ?? 0,
-        visible: Boolean(from && to),
-        isActive,
-      }
-    })
+  if (props.paused) {
+    return
   }
 
-  frameId = requestAnimationFrame(updateLines)
+  const related = relatedToHovered.value
+
+  if (related.size === 0) {
+    deactivateAll()
+    return
+  }
+
+  const renderer = props.context?.renderer.value
+
+  if (!renderer) {
+    deactivateAll()
+    return
+  }
+
+  const rect = readRect(renderer)
+
+  if (!rect) {
+    deactivateAll()
+    return
+  }
+
+  connectorPairs.forEach((pair, index) => {
+    const line = lines.value[index]
+    const isActive = related.has(pair.fromId) && related.has(pair.toId)
+
+    if (!isActive) {
+      if (line.isActive) {
+        line.isActive = false
+      }
+
+      return
+    }
+
+    const hasFrom = projectNode(pair.fromId, rect, fromPoint)
+    const hasTo = projectNode(pair.toId, rect, toPoint)
+    const x1 = hasFrom ? fromPoint.x : 0
+    const y1 = hasFrom ? fromPoint.y : 0
+    const x2 = hasTo ? toPoint.x : 0
+    const y2 = hasTo ? toPoint.y : 0
+
+    if (line.x1 !== x1) {
+      line.x1 = x1
+    }
+
+    if (line.y1 !== y1) {
+      line.y1 = y1
+    }
+
+    if (line.x2 !== x2) {
+      line.x2 = x2
+    }
+
+    if (line.y2 !== y2) {
+      line.y2 = y2
+    }
+
+    if (line.visible !== (hasFrom && hasTo)) {
+      line.visible = hasFrom && hasTo
+    }
+
+    if (!line.isActive) {
+      line.isActive = true
+    }
+  })
 }
 
 onMounted(() => {
+  window.addEventListener('resize', invalidateRect, { passive: true })
   frameId = requestAnimationFrame(updateLines)
 })
 
 onUnmounted(() => {
+  window.removeEventListener('resize', invalidateRect)
   cancelAnimationFrame(frameId)
 })
 </script>

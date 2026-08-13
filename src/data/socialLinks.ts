@@ -1,3 +1,5 @@
+import { CONTACT_EMAIL, CONTACT_EMAIL_HREF } from '@/config/site'
+
 export type SocialLinkKind = 'email' | 'github' | 'linkedin' | 'x'
 
 export interface SocialLink {
@@ -24,8 +26,8 @@ export const socialLinks: SocialLink[] = [
   {
     kind: 'email',
     label: 'Email',
-    value: 'parthti2003@gmail.com',
-    href: 'mailto:parthti2003@gmail.com',
+    value: CONTACT_EMAIL,
+    href: CONTACT_EMAIL_HREF,
   },
   {
     kind: 'x',

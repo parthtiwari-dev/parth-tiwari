@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
 import type { TresContext } from '@tresjs/core'
 import * as THREE from 'three'
 import type { Project } from '@/types/project'
@@ -25,29 +25,74 @@ const labelPosition = ref({
 })
 
 const projectedPosition = new THREE.Vector3()
+const cachedRect = { left: 0, top: 0, width: 0, height: 0 }
+
 let frameId = 0
+let rectDirty = true
+let measuredElement: HTMLCanvasElement | null = null
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max)
 }
 
+function invalidateRect() {
+  rectDirty = true
+}
+
+function readRect(renderer: THREE.WebGLRenderer) {
+  const element = renderer.domElement
+
+  if (rectDirty || element !== measuredElement) {
+    const rect = element.getBoundingClientRect()
+
+    if (rect.width <= 0 || rect.height <= 0) {
+      return null
+    }
+
+    cachedRect.left = rect.left
+    cachedRect.top = rect.top
+    cachedRect.width = rect.width
+    cachedRect.height = rect.height
+    measuredElement = element
+    rectDirty = false
+  }
+
+  return cachedRect.width > 0 && cachedRect.height > 0 ? cachedRect : null
+}
+
+function setLabelPosition(x: number, y: number, visible: boolean) {
+  const current = labelPosition.value
+
+  if (current.x !== x) {
+    current.x = x
+  }
+
+  if (current.y !== y) {
+    current.y = y
+  }
+
+  if (current.visible !== visible) {
+    current.visible = visible
+  }
+}
+
 function updatePosition() {
+  frameId = requestAnimationFrame(updatePosition)
+
   const context = props.context
   const project = props.project
   const camera = context?.camera.value
   const renderer = context?.renderer.value
 
   if (!props.visible || !project || !camera || !renderer) {
-    labelPosition.value = { x: 0, y: 0, visible: false }
-    frameId = requestAnimationFrame(updatePosition)
+    setLabelPosition(0, 0, false)
     return
   }
 
-  const rect = renderer.domElement.getBoundingClientRect()
+  const rect = readRect(renderer)
 
-  if (rect.width <= 0 || rect.height <= 0) {
-    labelPosition.value = { x: 0, y: 0, visible: false }
-    frameId = requestAnimationFrame(updatePosition)
+  if (!rect) {
+    setLabelPosition(0, 0, false)
     return
   }
 
@@ -58,21 +103,54 @@ function updatePosition() {
   const projectedX = (projectedPosition.x * 0.5 + 0.5) * rect.width + rect.left
   const projectedY = (-projectedPosition.y * 0.5 + 0.5) * rect.height + rect.top
 
-  labelPosition.value = {
-    x: clamp(projectedX + 18, 16, window.innerWidth - 320),
-    y: clamp(projectedY - 18, 16, window.innerHeight - 152),
-    visible: projectedPosition.z >= -1 && projectedPosition.z <= 1,
+  setLabelPosition(
+    clamp(projectedX + 18, 16, window.innerWidth - 320),
+    clamp(projectedY - 18, 16, window.innerHeight - 152),
+    projectedPosition.z >= -1 && projectedPosition.z <= 1,
+  )
+}
+
+function stopLoop() {
+  if (frameId) {
+    cancelAnimationFrame(frameId)
+    frameId = 0
+  }
+}
+
+function startLoop() {
+  if (frameId) {
+    return
   }
 
   frameId = requestAnimationFrame(updatePosition)
 }
 
+watch(
+  () => props.visible && Boolean(props.project),
+  (active) => {
+    if (active) {
+      startLoop()
+      return
+    }
+
+    stopLoop()
+    setLabelPosition(0, 0, false)
+  },
+)
+
 onMounted(() => {
-  frameId = requestAnimationFrame(updatePosition)
+  window.addEventListener('resize', invalidateRect, { passive: true })
+  window.addEventListener('scroll', invalidateRect, { passive: true })
+
+  if (props.visible && props.project) {
+    startLoop()
+  }
 })
 
 onUnmounted(() => {
-  cancelAnimationFrame(frameId)
+  window.removeEventListener('resize', invalidateRect)
+  window.removeEventListener('scroll', invalidateRect)
+  stopLoop()
 })
 </script>
 

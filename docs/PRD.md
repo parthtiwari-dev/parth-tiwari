@@ -134,7 +134,9 @@ A single WebGL world replaces the desktop-scene / mobile-canvas split, with came
 
 ### 7.5 Domain readiness
 
-The site stays on `parth-tiwari.vercel.app` for now, with `parthtiwari.com` planned.
+The site stays on `parth-tiwari-1.vercel.app` for now, with `parthtiwari.com` planned.
+
+**Note the `-1`.** `parth-tiwari.vercel.app` is **not** this account's — it is absent from the Vercel project's `domains` array and serves a different site. Every canonical, `og:url`, `og:image` and JSON-LD `@id` in `index.html` previously pointed there, meaning the site was telling crawlers its canonical home belonged to a stranger. This is the same trap as `vivid.vercel.app`, and it is why the verification rule exists.
 
 **The site URL becomes a single exported constant** consumed by canonical, OG, Twitter, JSON-LD and the sitemap. Buying the domain then becomes a one-line change rather than a hunt across eight files. A `vercel.app` subdomain is a real trust penalty on a ₹1L pitch, and this makes removing it trivial whenever it happens.
 
