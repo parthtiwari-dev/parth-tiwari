@@ -21,6 +21,28 @@ The site as it stands is feature-complete and genuinely well-built. The redesign
 
 ## Decisions made, and why
 
+### The site is a lead generator, not a CV
+
+**This reframe arrived after the first docs were written and it supersedes them.** The original PRD optimised for a recruiter being impressed. The actual goal is **paid client work at ₹50k–1L per project**, with traffic arriving from cold outreach.
+
+Jobs remain a real but secondary goal. The ordering is deliberate and load-bearing: **a recruiter converts fine from a client-focused site** — working demos and clear outcomes are what they want too. **A client does not convert from a recruiter-focused site.** CGPA, training records and architecture diagrams do not answer "can I trust this person with ₹1 lakh." The higher bar generalises downward, so the site is client-led and the recruiter path is one tap away.
+
+Do not rebalance this toward a job-seeking framing without a deliberate decision. It was considered and rejected.
+
+### The commercial goal justifies the ambition rather than competing with it
+
+The offer is *AI engineering plus genuine interaction craft*. Most AI freelancers ship an ugly Streamlit app; that combination is the differentiator and it is what supports ₹1L over ₹30k.
+
+Which means **the portfolio being an extraordinary interactive artifact is the proof of the claim**, delivered before a word is read. The universe is the demo, not decoration.
+
+The constraint this creates: impress in three seconds, get out of the way in sixty. **The conversion path must work with the 3D entirely bypassed.** If the universe is the only route to contact, it is a toll booth.
+
+### Show before telling
+
+The site has **no `<img>` tags at all**. For the buyer it now serves, that is a bigger defect than anything in the technical audit.
+
+Projects invert to screenshot → outcome → live demo → the existing evidence panels. Those panels are strong; they are simply the wrong opening move for someone deciding whether to spend money.
+
 ### The universe encodes data, or it gets cut
 
 The governing rule. Position, size, angle, speed, moons, cluster, and label priority are all derived from project data. Nothing is hand-placed.
@@ -129,6 +151,11 @@ The current build gates `SceneRoot` with `v-if`, which stops it *mounting* — t
 | A physics playground | Bruno Simon's car is brilliant and is a different site. This one must be readable in 40 seconds. |
 | A router with per-project pages | Overlays in one world are the existing identity and they work. Deep links go through query params. |
 | Node click → camera lerp | Already tried and rejected during the original build (`PROGRESS_AUDIT.md` Phase 3 item 4) — it felt worse than opening the overlay directly. Do not re-propose without new evidence. |
+| Two separate paths for clients and recruiters | A fork-in-the-road makes every visitor choose before they know anything. One client-led site serves both; the reverse does not. |
+| Published pricing | Owner targets both Indian SMBs and Western startups. Fixed prices destroy the ability to price by client and geography. Every path leads to a conversation instead. |
+| Four co-equal contact buttons | All four channels ship, but ranked — booking primary, form secondary, email and WhatsApp always-visible. Equal weighting dilutes intent. |
+| Buying a domain now | Deferred by the owner. `parthtiwari.com` is planned. Site URL is a single constant so the swap is one line — do not scatter the URL again. |
+| Fabricated testimonials or invented metrics | Never. The slot stays honestly empty until a real quote exists. The site's entire thesis is evidence. |
 
 ---
 

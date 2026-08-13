@@ -6,11 +6,21 @@ Working instructions for this repository. Read `docs/ARCHITECTURE.md` before tou
 
 ## What this project is
 
-A personal portfolio for Parth Tiwari, built as a navigable universe rather than a page of cards. Nine projects exist as objects in 3D space. The organising principle is stated in the site itself and should govern code decisions too:
+A personal portfolio for Parth Tiwari, built as a navigable universe rather than a page of cards. Nine projects exist as objects in 3D space.
+
+**It is a lead generator, not a CV.** The goal is paid client work at ₹50k–1L per project, with traffic arriving from cold outreach. Job offers are a real but secondary goal. When a decision trades off between impressing a recruiter and converting a client, **the client wins** — see `docs/PRD.md` §1 for why that ordering serves both.
+
+The organising principle is stated in the site itself and governs code decisions too:
 
 > Systems should act only after the evidence, schema, budget, and workflow state agree.
 
 Practically, that means: **do not add a visual that does not encode something true.** A star's position, size, color, and motion each carry meaning. Decoration that pretends to be data is the specific failure mode this project exists to avoid.
+
+### Two rules that follow from the commercial goal
+
+**Never gate contact behind the experience.** A booking action stays one tap from every screen, at every breakpoint, in every mode. The universe impresses; it must never be the only route to hiring him.
+
+**Show before telling.** A screenshot outranks a paragraph; a working demo outranks a screenshot. Projects open with a visual and an outcome — the problem/architecture/proof/boundary panels are the second layer, not the opening move.
 
 ---
 
@@ -41,6 +51,12 @@ There is no test runner and no linter configured. Type checking and a clean buil
 **`particle.vert.glsl` hardcodes `uniform float uClusterBrightness[9]`** and reads it through a 9-branch if-chain, because GLSL ES 1.0 forbids dynamic indexing. **Adding a 10th project breaks this silently.** If the project count changes, that array length and the branch chain must change with it.
 
 **Never add a project link that is not confirmed public and safe.** Private repos, company endpoints, internal URLs, account data, and unreviewed deployments stay out. An empty links panel is correct behavior, not a bug to paper over.
+
+**Never assume `<project>.vercel.app` is ours.** Short aliases are claimed globally — `vivid.vercel.app` returns 200 and belongs to someone else; ours is `vivid-alpha.vercel.app`. Always resolve the production alias from the Vercel project's `domains` array, confirm 200 without auth, and confirm ownership before linking.
+
+**Never invent social proof.** No fabricated testimonials, no estimated metrics, no implied clients. The testimonial slot stays empty until a real quote exists. A site whose thesis is evidence cannot fake its own.
+
+**The site URL lives in exactly one constant.** It feeds canonical, OG, Twitter, JSON-LD and the sitemap. `parthtiwari.com` is planned — do not scatter the URL across files again.
 
 ---
 

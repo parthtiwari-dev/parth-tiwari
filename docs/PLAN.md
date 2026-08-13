@@ -8,10 +8,11 @@ Read `DESIGN.md` first. This document is sequencing, not rationale.
 
 ## Sequencing principle
 
-Two rules govern the order:
+Three rules govern the order:
 
-1. **Fix what is broken before building what is new.** Several defects in `AUDIT.md` (keyboard lockout, plain mode downloading 767 kB of Three.js, orphaned render loops) are cheap to fix and independently valuable. They ship first, and they ship on `main` without waiting for the universe.
-2. **The engine before the art.** Camera-as-data, one clock, derived layout, and quality tiers are load-bearing. Building visual polish on the current four-clock, hand-placed foundation means building it twice.
+1. **Fix what is broken before building what is new.** Several defects in `AUDIT.md` (keyboard lockout, plain mode downloading 767 kB of Three.js, orphaned render loops) are cheap to fix and independently valuable. They ship first, without waiting for the universe.
+2. **Revenue before rendering.** Screenshots, outcomes and a booking button are what convert a lead. The engine rewrite is invisible to a buyer. Phase 1.5 therefore lands *before* Phase 2, so the site starts earning while the universe is still being built.
+3. **The engine before the art.** Camera-as-data, one clock, derived layout, and quality tiers are load-bearing. Building visual polish on the current four-clock, hand-placed foundation means building it twice.
 
 Each phase ends with the site deployable. No phase leaves `main` in a worse state than it found it.
 
@@ -58,6 +59,29 @@ Small, high-leverage, mostly data rather than code.
 **Verification rule for any link, now and later:** resolve the real production alias from the Vercel project (never assume `<name>.vercel.app` — that check would have shipped a stranger's site), confirm it returns 200 without auth, confirm it belongs to this account.
 
 **Why this matters disproportionately:** the site's entire argument is evidence, and it currently shows "Pending verification" on projects that are deployed and reachable.
+
+---
+
+## Phase 1.5 — Proof and conversion
+
+**The highest-commercial-value phase in the plan.** It is deliberately early, ahead of the engine rewrite, because it converts leads on the *current* site while the universe is still being built.
+
+| # | Task | Blocked on |
+|---|---|---|
+| 1.5.1 | Capture screenshots of `vivid-alpha`, `tathya-1`, `support-core-nine` at desktop and mobile via Playwright; commit as optimised assets | — |
+| 1.5.2 | Add an `images` field to the project model; render screenshot-first in the overlay | 1.5.1 |
+| 1.5.3 | Add an `outcome` field — what it does, for whom, plain language | owner |
+| 1.5.4 | Services block: three ranked offers in outcome language | — |
+| 1.5.5 | Persistent booking CTA, one tap from every screen at every breakpoint | booking tool choice |
+| 1.5.6 | Contact form with a serverless endpoint | — |
+| 1.5.7 | Email and WhatsApp as always-visible direct channels | — |
+| 1.5.8 | About: photo + first-person intro | owner photo |
+| 1.5.9 | Reserve a testimonial slot; leave it honestly empty until one exists | owner |
+| 1.5.10 | Site URL as a single exported constant consumed by canonical, OG, Twitter, JSON-LD, sitemap | — |
+
+**Why before Phase 2:** the engine rewrite is invisible to a buyer. Screenshots, outcomes and a booking button are the entire difference between a site that generates leads and one that does not. If the project stalls after this phase, it has still paid for itself.
+
+**No prices anywhere.** Every path leads to a conversation.
 
 ---
 
@@ -175,6 +199,9 @@ Everything here is cuttable. Nothing here is load-bearing. That is deliberate �
 | **Three.js/TresJS pinned.** Some techniques may want newer APIs. | Work within 0.165. Any upgrade is its own PR with full visual QA. |
 | **No tests.** Typecheck and build are the only gates. | Phase 7 is manual and explicit. Consider adding Vitest for the derivation logic in Phase 3 — pure functions, easy to test, and the highest-value thing to protect. |
 | **Firecrawl quota.** Research ran on WebSearch/WebFetch instead. | Already mitigated — the depth came from engineering write-ups rather than scraped listicles. Reference index in `DESIGN.md` §12 is complete. |
+| **No social proof.** Zero testimonials, zero client names, zero usage numbers. The strongest conversion lever is entirely absent. | Cannot be engineered. Phase 1.5.9 reserves the slot honestly rather than faking it. Flagged as owner homework, ranked first. |
+| **The universe delays revenue.** A long build before the site converts anything. | Phase 1.5 ships proof and booking on the *current* site. Revenue capability does not wait on the engine. |
+| **Ambition reads as unserious to a business buyer.** A founder may want a contractor, not an artist. | The plain-language headline, outcomes, screenshots and one-tap booking all work without the 3D. The universe impresses; it never gates. |
 
 ---
 
