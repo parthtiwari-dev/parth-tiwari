@@ -28,7 +28,11 @@ export default defineConfig({
           if (id.includes('node_modules/gsap')) {
             return 'gsap'
           }
-          if (id.includes('node_modules/pinia') || id.includes('node_modules/vue')) {
+          if (
+            id.includes('node_modules/pinia')
+            || id.includes('node_modules/vue/')
+            || id.includes('node_modules/@vue/')
+          ) {
             return 'vendor'
           }
         },
