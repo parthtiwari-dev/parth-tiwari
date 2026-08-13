@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://parth-tiwari.vercel.app/sitemap.xml
+Sitemap: https://parth-tiwari-1.vercel.app/sitemap.xml

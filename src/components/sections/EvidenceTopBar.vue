@@ -41,7 +41,7 @@ const resumeAction: TopBarAction = {
   disabled: !isResumeConfigured,
 }
 
-const brandLine = computed(() => `EVIDENCEBOUND / ${projectStore.projectCount} SYSTEMS`)
+const brandLine = computed(() => `EPHEMERIS / ${projectStore.projectCount} SYSTEMS`)
 
 const mobileMenuLabel = computed(() => (
   isMobileMenuOpen.value ? 'Close evidence navigation' : 'Open evidence navigation'
@@ -219,7 +219,7 @@ onUnmounted(() => {
 
           <div id="mobile-evidence-drawer" class="mobile-evidence-drawer__panel">
             <div class="mobile-evidence-drawer__header">
-              <p>Evidencebound</p>
+              <p>Ephemeris</p>
               <button
                 type="button"
                 class="mobile-evidence-drawer__close"

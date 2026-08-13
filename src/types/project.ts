@@ -84,6 +84,25 @@ export interface ProjectArtifact {
   stack?: string[]
   proof?: string[]
   boundary?: string[]
+  /**
+   * Public deployment for this artifact specifically, where the parent project as
+   * a whole does not have one. Only ever a URL confirmed public, reachable without
+   * auth, and owned by this account (CLAUDE.md).
+   */
+  url?: string
+}
+
+/**
+ * A screenshot of the product working. Layer 1 of the project model (DESIGN.md 2b)
+ * — the opening move, ahead of the outcome line and the evidence panels.
+ *
+ * `alt` is required, not optional: an image with no alt text is a dead end for
+ * screen readers and for plain mode, which is the SEO backstop.
+ */
+export interface ProjectImage {
+  src: string
+  alt: string
+  caption?: string
 }
 
 export interface ProjectLinks {
@@ -117,6 +136,22 @@ export interface Project {
   origin: ProjectOrigin
   weight: ProjectWeight
   stack: string[]
+  /**
+   * What it did, for whom, in plain language. Layer 2 of the project model
+   * (DESIGN.md 2b) and the line a client reads instead of the tagline.
+   *
+   * Optional because it is owner-supplied copy (PRD.md 11.3) — an absent outcome
+   * renders nothing. It is never inferred from the architecture panels, because a
+   * guessed outcome is an invented claim.
+   */
+  outcome?: string
+  /**
+   * Screenshots of the product working. Layer 1 of the project model.
+   *
+   * Optional because captures are produced outside the codebase. Empty until real
+   * files exist in `public/` — no placeholder paths.
+   */
+  images?: ProjectImage[]
   links: ProjectLinks
   panels: ProjectPanels
   artifacts?: ProjectArtifact[]

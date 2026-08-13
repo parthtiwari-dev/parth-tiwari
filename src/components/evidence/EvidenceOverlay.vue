@@ -21,27 +21,27 @@ let mobileMediaQuery: MediaQueryList | null = null
 
 const overlayMeta: Record<EvidenceOverlayKind, { eyebrow: string; title: string; ariaLabel: string }> = {
   experience: {
-    eyebrow: 'EVIDENCEBOUND / EXPERIENCE',
+    eyebrow: 'EPHEMERIS / EXPERIENCE',
     title: 'Experience',
     ariaLabel: 'Experience evidence overlay',
   },
   training: {
-    eyebrow: 'EVIDENCEBOUND / TRAINING',
+    eyebrow: 'EPHEMERIS / TRAINING',
     title: 'Training',
     ariaLabel: 'Training evidence overlay',
   },
   capability: {
-    eyebrow: 'EVIDENCEBOUND / CAPABILITY',
+    eyebrow: 'EPHEMERIS / CAPABILITY',
     title: 'Capability',
     ariaLabel: 'Capability map overlay',
   },
   about: {
-    eyebrow: 'EVIDENCEBOUND / ABOUT',
+    eyebrow: 'EPHEMERIS / ABOUT',
     title: 'About',
     ariaLabel: 'About signal overlay',
   },
   resume: {
-    eyebrow: 'EVIDENCEBOUND / RESUME',
+    eyebrow: 'EPHEMERIS / RESUME',
     title: 'Resume',
     ariaLabel: 'Resume overlay',
   },
