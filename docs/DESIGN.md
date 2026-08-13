@@ -6,6 +6,16 @@ This is the primary design document. `PRD.md` says what we are building and why;
 
 ---
 
+## 0. What this is for
+
+The site generates leads for paid project work. See `PRD.md` for the buyer and the funnel.
+
+That commercial goal is what justifies the ambition rather than competing with it. The offer being sold is *AI engineering plus genuine interaction craft* — a combination most AI freelancers cannot claim. **The portfolio being an extraordinary interactive artifact is the proof of that claim**, delivered before a word is read. The universe is the demo, not the decoration.
+
+The constraint it creates: the experience must impress in three seconds and get out of the way in sixty. Everything below is designed against both halves of that.
+
+---
+
 ## 1. The idea
 
 **A person is not a list of projects. A person is a system with a center of mass.**
@@ -55,6 +65,47 @@ Default is schematic. The toggle is one control, always visible at system scale.
 `neal.fun/size-of-space` is the most effective scale piece on the web and it never asks you to comprehend 10²⁶ metres. It shows each object **next to the previous one**, forty times in a row. You only ever process "this is bigger than that."
 
 Applied here: when the camera approaches a project, the previously-focused project stays in frame, receding. Depth is felt as a chain of comparisons rather than an impossible single tableau. This costs nothing and does more emotional work than any shader.
+
+---
+
+## 2b. The conversion layer
+
+The universe is the top of the funnel. It is not the funnel.
+
+A visitor arriving from cold outreach — on a phone, skeptical, sixty seconds of patience — must be able to land, be impressed, and book a call **without ever flying through space**. If the universe is the only route to contact, it becomes a toll booth and the site stops earning.
+
+### Show before telling
+
+The site currently contains **no images at all**. For the buyer it now serves, that is the largest single defect in the product, larger than anything in the technical audit.
+
+Every project inverts its opening:
+
+| | Layer | Note |
+|---|---|---|
+| 1 | **Screenshot** | The product, working. Non-negotiable. |
+| 2 | **Outcome** | What it does, for whom, in plain language |
+| 3 | **Try it live** | Where a deployment resolves publicly |
+| 4 | Problem / Architecture / Proof / Boundary | The existing panels — excellent, and the *second* layer |
+
+The evidence panels are not being demoted because they are weak. They are strong, and they are the wrong opening move for someone deciding whether to spend money. A technical buyer reaches them one scroll later; a client never has to.
+
+### Persistent contact
+
+A booking action is reachable in one tap from every screen, at every breakpoint, in both guided and free modes. It does not hide behind the About overlay, and it does not require reaching the end of a scroll narrative.
+
+Ranked, not equal — four co-equal buttons dilute intent:
+
+1. **Booking link** — primary
+2. **Contact form** — for those not ready to talk
+3. **Email** and **WhatsApp** — always visible, direct
+
+No prices. Every path leads to a conversation.
+
+### Trust surface
+
+A photo and a first-person intro. Clients hire people, and there is currently no image of Parth anywhere on the site.
+
+Testimonials have no home in the current design because none exist. The layout reserves the slot rather than pretending otherwise — an empty, honest space is correct, and it becomes the highest-value thing to fill.
 
 ---
 

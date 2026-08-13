@@ -4,201 +4,228 @@ What the site is for, who it serves, and what "done" means.
 
 ---
 
-## 1. The problem with the current site
+## 1. The goal
 
-It is genuinely ambitious and genuinely well-built, and it still fails at its job in three specific ways:
+**The site exists to generate qualified leads for paid project work.**
 
-1. **A recruiter with 40 seconds cannot get what they need.** The path to any project runs through a 2.2s boot sequence, a hero, and 400vh of scroll before a single node is clickable. There is no index, no "show me the work" shortcut, and on desktop no keyboard path to a project at all.
-2. **The universe is decoration, not information.** All nine node positions are hand-typed coordinates. Nothing about where a star sits, how big it is, or how it moves says anything true about the work. It looks like data and isn't — which is the exact failure mode a site about *evidence* cannot afford.
-3. **Mobile is told it is the lesser version.** A blocking 3.5-second interstitial announces "Desktop unlocks the full constellation controls" before showing a decorative 2D starfield with no nodes. Most people who open a portfolio link open it on a phone.
+Target engagement: ₹50,000–₹1,00,000 per project. Traffic arrives largely from cold outreach — the site is the thing that has to convert a stranger's curiosity into a conversation.
 
-The redesign fixes these three things. Everything else is in service of them.
+A secondary goal is job offers. It is genuinely secondary, and the ordering matters: **a recruiter converts perfectly well from a client-focused site**, because working demos and clear outcomes are exactly what they want to see too. A client does **not** convert from a recruiter-focused site — CGPA, training records and architecture diagrams do not answer *"can I trust this person with ₹1 lakh."*
 
----
-
-## 2. Who this is for
-
-**Primary — the hiring engineer or founder.** Arrives from a LinkedIn message, a GitHub profile, or a cold application. Skeptical by default. Wants to answer one question fast: *is this person's work real?* They will spend 30–90 seconds unless something earns more. They may well be on a phone, on transit, at 40% battery.
-
-**Secondary — the recruiter or non-technical screener.** Needs role, stack, availability, and a resume. Should never have to understand the metaphor to find these.
-
-**Tertiary — the peer.** Another engineer or designer who found this because it was shared as *a nice site*. Will explore, inspect, look at the source, and possibly amplify it. This visitor is why the craft ceiling is high — but they are never the reason to make the primary visitor work harder.
-
-The design tension this creates is the central one: **the experience must be extraordinary without being a toll booth.**
+So the site is client-led throughout, with resume and experience always one tap away. The higher bar generalises downward.
 
 ---
 
-## 3. Principles
+## 2. Why the current site does not do this
 
-**Every visual encodes something true.** Position, size, color, motion, and sound each carry meaning derived from project data. If a property cannot be justified by data, it is decoration and gets cut. This is the site's thesis applied to its own construction.
+It is well-built and it is optimised for the wrong buyer.
 
-**Legibility is the ceiling, not the floor.** The universe is not a puzzle. A first-time visitor should understand what they are looking at within seconds, without a legend. If the metaphor needs explaining, it has failed.
+**There are no images anywhere.** Not one `<img>` tag in the entire codebase. Nine projects are described in prose — problem, architecture, proof, boundary. A recruiter will read that. **A client will not.** They want to see the thing working. This is the single largest gap and it is larger than anything in the technical audit.
 
-**Mobile is a different choreography, not a smaller one.** Touch gets an interaction model designed for touch — drag to orbit, tap to select, pinch to scale. Not a shrunken desktop, not a fallback, and never an apology.
+**It sells engineering, not outcomes.** *"Self-correcting Text-to-SQL API with schema retrieval and critic gates"* tells a client nothing about what it did for anyone. No time saved, no cost removed, no users served.
 
-**No dead ends for keyboard or screen readers.** Every project reachable by mouse is reachable by keyboard, on every breakpoint. This is a hard requirement, not a nice-to-have — the current site fails it completely on desktop.
+**There is no offer.** No services, no availability, no indication that hiring is possible. Contact is buried inside an About overlay.
 
-**Never autoplay sound.** Muted by default, one obvious toggle, and the preference survives every transition.
+**There is no proof of trust.** No testimonials, no client names, no numbers from real usage.
 
-**Restraint over richness.** Apple's most-copied scroll moment is 148 JPEGs on a canvas, and their product pages are silent. Premium is frame-perfection and editing, not accumulation. Anything that cannot hold its frame budget gets cut rather than shipped degraded.
+**The strongest asset is unlinked.** Six of nine projects render "Pending verification" while three are deployed and publicly usable right now.
 
 ---
 
-## 4. What we are building
+## 3. The buyer
 
-### 4.1 One universe, all screens
+**Primary — the decision-maker who can sign.** A founder, a small-business owner, or an agency lead. Arrives from a cold email or DM, on a phone, mildly skeptical, giving the link maybe sixty seconds. They are not evaluating code quality. They are answering three questions in order: *is this person real, can they actually build, and what would this cost me in risk?*
 
-A single WebGL world replaces the current desktop-scene / mobile-canvas split. Camera choreography, particle density, post-processing, and input model adapt per device and per detected quality tier — but it is one scene, one codebase, one set of nodes.
+**Secondary — the recruiter or hiring engineer.** Wants role, stack, availability, resume. Served by the same page without the client path being compromised for them.
 
-This removes, in a single move: the 768–820px dead zone, the WebGL context destruction on resize, the byte-for-byte duplicated star renderer, and the "mobile is lesser" framing.
+Geography is mixed — Indian SMBs and Western startups both. The design target is the **skeptical Western founder on mobile**, because that is the least forgiving case and everything else is easier.
 
-### 4.2 The mapping
+---
 
-Every axis encodes a real property:
+## 4. Positioning
 
-| Visual axis | Encodes | Derived from |
+> **I build AI products people actually want to use.**
+
+Three offers, deliberately ranked rather than presented as equals:
+
+| Rank | Offer | Evidence behind it |
 |---|---|---|
-| Orbital radius | **Maturity** — shipped and live sits close, early exploration sits far | `status` + whether links resolve to something live |
-| Body size | **Evidence depth** — how much can actually be proven | `weight` + count of metrics, milestones, artifacts |
-| Orbital angle | **Chronology** — position in the timeline | project date |
-| Orbital speed | **Recency of contact** — active work visibly moves | `status` |
-| Moons | **Stack** — technologies orbiting the project that uses them | `stack[]` |
-| Spiral arm / cluster | **Domain** — RAG, agents, diffusion, fraud ML, medical | capability matching |
-| Zoom depth | **Navigation itself** | scroll / pinch |
+| **Lead** | Custom AI products, end to end | Eight of nine projects — RAG, agents, fraud ML, text-to-SQL, workflow supervision |
+| Second | AI automation for businesses | Order Supervisor, Oracle Auto Provision, Fraud Risk Intel |
+| Third | Creative interactive web + AI | OncoVerse, and this site itself |
 
-**Node positions are computed, never typed.** Adding a tenth project requires adding data, not coordinates.
+**The differentiator is the combination, not any single offer.** Most AI freelancers ship an ugly Streamlit app. Real AI engineering *plus* genuine interaction craft is rare, and it is what justifies ₹1L over ₹30k.
 
-### 4.3 Zoom as navigation
-
-Three scales, each revealing a different axis:
-
-- **Galaxy** — domains read as clusters. Overview, orientation, the shape of the whole body of work.
-- **System** — maturity as radius, depth as size. The default arrival state.
-- **Project** — moons resolve into the actual stack; the existing five-panel overlay opens.
-
-Zoom is implemented as **field-of-view change, not dolly**, to avoid near-plane clipping across the scale range. On approach to a node, global scene rotation is zeroed and the target rotates locally, to avoid float-precision drift.
-
-### 4.4 The 40-second path
-
-A persistent, always-available way to reach any project without traversing the universe:
-
-- A real DOM index of all nine projects, present in the document on every breakpoint
-- Keyboard-navigable, screen-reader-complete, crawlable
-- Visually quiet on desktop, primary on mobile
-- Deep-linkable per project
-
-This is the single most important addition. It is what lets the experience be ambitious *without* being a toll booth, and it fixes the keyboard lockout at the same time.
-
-### 4.5 Craft layers
-
-All four requested layers are in scope:
-
-**Sound** — ambient bed per zoom scale; a lowpass filter engaging when a project opens (sells "adjacent room" in one `BiquadFilterNode`); velocity-modulated random sample pools of 4–5 variants per interaction event so repeated hovers never sound identical. Muted by default, one toggle, preference persisted.
-
-**Loading choreography** — replaces the terminal boot. Tracks real asset progress and transitions *into* the universe as one continuous move with no cut. A synchronous visibility guard with an 8-second failsafe so a failed load never leaves a blank page.
-
-**Micro-interactions** — magnetic controls, cursor reacting to what it is over, text decode/scramble on reveal, hover states with real easing rather than linear transitions. Native CSS scroll-driven animation where it suffices; GSAP only where it does not.
-
-**Cinematic camera and post-FX** — depth of field racking focus onto the approached node, restrained chromatic aberration during fast motion, film grain, retuned bloom. All quality-tiered.
-
-**Additional layers not originally requested but in scope:**
-
-- **Dither in the sky shader** (`(hash(gl_FragCoord.xy) - 0.5) * 0.0045`). Deep space is nothing but dark gradients; without this it bands visibly on every display.
-- **`fwidth()`-based anti-aliasing** on orbit rings and connector lines so they hold 1px at every zoom level.
-- **A dev-only camera authoring GUI** that lets a pose be flown to and dumped as JSON per node. Every studio that does this well authors camera in-browser rather than re-exporting from Blender.
-- **A quality-tier system** as a first-class concept — one detection feeding particle count, shader complexity, post-FX chain, and DPR.
-
-### 4.6 Content honesty
-
-Six of nine projects currently render "Pending verification" while several are deployed and publicly reachable. Each live URL is confirmed public-safe, then linked.
-
-The site's entire argument is evidence. Shipping it with its strongest evidence unlinked is the most self-defeating thing in the current build, and the cheapest to fix.
+This is why the universe is not decoration. **The portfolio being an extraordinary interactive artifact is the proof of the differentiator** — it does sales work no case study can, because it demonstrates the claim before a word is read.
 
 ---
 
-## 5. Explicitly out of scope
+## 5. The funnel
 
-- A CMS or admin UI. Data stays in typed TypeScript files.
-- A router with real per-project pages. Deep links are query-param driven against the single page.
-- Multiplayer, visitor presence, or any realtime backend.
-- Blog, writing, or long-form article surfaces.
-- Analytics beyond Vercel's own.
-- Three.js or TresJS version upgrades. Both stay pinned; any upgrade is its own PR with a full visual QA pass.
+Three jobs, in sequence, with hard time budgets:
+
+| Stage | Budget | Job |
+|---|---|---|
+| **Impress** | 3 seconds | The universe proves creative capability instantly |
+| **Convince** | 60 seconds | Screenshots, outcomes and live demos prove they can build |
+| **Convert** | 1 tap | Booking, from anywhere on the page |
+
+**The conversion path must work independently of the 3D.** A visitor should be able to land, be impressed, and book a call without ever flying through space. If the universe is the only route to contact, the universe becomes a toll booth and the site stops converting.
 
 ---
 
-## 6. Success criteria
+## 6. Principles
+
+**Every visual encodes something true.** Position, size, colour, motion and sound derive from project data. Decoration that pretends to be data is the failure mode this project exists to avoid. This is unchanged and remains the governing rule.
+
+**Show before telling.** A screenshot outranks a paragraph. A working demo outranks a screenshot.
+
+**Outcomes before architecture.** What it did for whom, then how it was built. The existing evidence panels are excellent and become the second layer, not the opening move.
+
+**Never make a buyer hunt for how to hire you.**
+
+**Legibility is the ceiling.** If the metaphor needs explaining, it has failed.
+
+**Mobile is a different choreography, not a smaller one.** Most outreach links open on a phone.
+
+**No dead ends for keyboard or screen readers.** Every project reachable by mouse is reachable by keyboard, on every breakpoint.
+
+**Never autoplay sound.**
+
+**Restraint over richness.** Apple's most-copied scroll moment is 148 JPEGs on a canvas, and their product pages are silent.
+
+---
+
+## 7. What we are building
+
+### 7.1 The project model inverts
+
+Today a project opens with a problem quote and an architecture diagram. New order:
+
+| | Layer | Purpose |
+|---|---|---|
+| 1 | **Screenshot** | The thing, working. Non-negotiable. |
+| 2 | **Outcome** | What it does, for whom, in plain language |
+| 3 | **Try it live** | Where a real deployment exists |
+| 4 | Problem / Architecture / Proof / Boundary | The existing panels — second layer, for technical buyers |
+
+### 7.2 New surfaces
+
+- **Services block** — three offers, one leading, written in outcome language
+- **About with a photo** and a first-person intro. Clients hire people; there is currently no image of Parth anywhere on the site.
+- **Persistent booking CTA**, never more than one tap away on any screen
+
+### 7.3 Conversion hierarchy
+
+All four channels ship, ranked rather than presented as four equal buttons, which dilutes:
+
+| Priority | Channel | For |
+|---|---|---|
+| Primary | Booking link (Cal.com / Calendly) | High intent, no back-and-forth |
+| Secondary | Contact form | Not ready to talk yet |
+| Always visible | Email | Universal |
+| Always visible | WhatsApp | Especially effective for Indian SMB buyers |
+
+**No prices anywhere.** Every path leads to a conversation, which preserves the ability to price by client and geography.
+
+### 7.4 One universe, all screens
+
+A single WebGL world replaces the desktop-scene / mobile-canvas split, with camera choreography, density and input model adapting per device and quality tier. See `DESIGN.md`.
+
+### 7.5 Domain readiness
+
+The site stays on `parth-tiwari.vercel.app` for now, with `parthtiwari.com` planned.
+
+**The site URL becomes a single exported constant** consumed by canonical, OG, Twitter, JSON-LD and the sitemap. Buying the domain then becomes a one-line change rather than a hunt across eight files. A `vercel.app` subdomain is a real trust penalty on a ₹1L pitch, and this makes removing it trivial whenever it happens.
+
+---
+
+## 8. Out of scope
+
+- A CMS. Data stays in typed TypeScript files.
+- A router with real per-project pages. Deep links are query-param driven.
+- Multiplayer, presence, or any realtime backend.
+- Blog or long-form writing surfaces.
+- Three.js or TresJS upgrades. Both stay pinned.
+- Published pricing.
+
+---
+
+## 9. Success criteria
+
+### Commercial — the actual goal
+
+| # | Criterion |
+|---|---|
+| C1 | A stranger can reach a booking action within one tap from any screen |
+| C2 | A visitor can see a working product image within 5 seconds of first paint |
+| C3 | Every project with a live deployment links to it |
+| C4 | The site states what Parth builds, for whom, in plain language, above the fold |
+| C5 | A photo and first-person intro are present |
+| C6 | Outreach links open correctly on a phone with no interstitial |
 
 ### Must hold — non-negotiable
 
-| # | Criterion | Measured by |
-|---|---|---|
-| M1 | Every project reachable by keyboard alone, on every breakpoint | Manual tab-through on mobile, tablet, desktop |
-| M2 | Every modal traps focus and restores it to the trigger on close | Manual test per overlay |
-| M3 | `?plain=1` does not download the 3D stack | Network panel: no `three` chunk requested |
-| M4 | Mobile first load ships no WebGL engine it does not use | Network panel on a phone profile |
-| M5 | No blocking interstitial on any device | Absence of `MobileBestExperienceNotice` |
-| M6 | Reduced motion produces a genuinely static experience | No render loop running under the media query |
-| M7 | `npm run typecheck` and `npm run build` clean | CI-equivalent local run |
-| M8 | Plain mode contains every piece of content in the full experience | Content diff |
+| # | Criterion |
+|---|---|
+| M1 | Every project reachable by keyboard alone, on every breakpoint |
+| M2 | Every modal traps focus and restores it to the trigger on close |
+| M3 | `?plain=1` does not download the 3D stack |
+| M4 | Mobile ships no WebGL engine it does not use |
+| M5 | No blocking interstitial on any device |
+| M6 | Reduced motion produces a genuinely static experience |
+| M7 | `npm run typecheck` and `npm run build` clean |
+| M8 | Plain mode contains every piece of content in the full experience |
 
-### Should hold — performance
+### Performance
 
 | # | Target |
 |---|---|
-| P1 | 60fps sustained on desktop Chrome at the default quality tier |
-| P2 | ≥30fps on a mid-tier Android phone; no thermal runaway over 2 minutes |
-| P3 | Initial JS for the interactive route below the current 313 kB gzip, despite added features |
-| P4 | Zero forced layout reads inside any per-frame loop |
-| P5 | Render loop stops when the scene is off-screen or the tab is hidden |
-| P6 | Exactly one animation clock; no orphaned rAF chains |
-
-### Should hold — experience
-
-| # | Target |
-|---|---|
-| E1 | A visitor can reach any project's evidence within 15 seconds of first paint, without scrolling the universe |
-| E2 | The mapping is understandable without a legend |
-| E3 | Sound is off until asked for, and never surprises anyone |
-| E4 | Nothing on screen is decorative-pretending-to-be-data |
+| P1 | 60fps sustained on desktop Chrome at default tier |
+| P2 | ≥30fps on a mid-tier Android phone, no thermal runaway over 2 minutes |
+| P3 | Initial JS below the current 313 kB gzip despite added features |
+| P4 | Zero forced layout reads in any per-frame loop |
+| P5 | Render loop stops when off-screen or the tab is hidden |
+| P6 | Exactly one animation clock, no orphaned rAF chains |
 
 ---
 
-## 7. Resolved decisions
+## 10. Resolved decisions
 
-### The site is renamed to EPHEMERIS
+**Renamed to EPHEMERIS.** A table of computed positions of celestial bodies — it names the design rule (positions derived from data, never placed by hand) without restating the thesis. `EVIDENCEBOUND` is retired everywhere it appears.
 
-An ephemeris is a table of computed positions of celestial bodies at given times. It names exactly what the site does — **positions derived from data, not placed by hand** — and carries the evidence thesis without restating it.
+**Chronology uses real dates.** Deriving angle from `status` + `weight` was rejected: it would make chronology the one axis in the universe that isn't actually true.
 
-`EVIDENCEBOUND` is retired. It appears in the boot sequence, the top bar, both overlay eyebrows, OG metadata, and JSON-LD; all of it changes together.
+**Cost of Intelligence revived** inside the Proof panel rather than deleted. `sliderStore` is therefore excluded from the dead-code sweep.
 
-### Chronology uses real dates
-
-A date field is added per project. Orbital angle encodes it directly, so reading the system clockwise reads the career. Falling back to a derived ordering was rejected — it would have made chronology the one axis in the universe that wasn't actually true, which contradicts the governing rule.
-
-### Cost of Intelligence is revived inside the project panels
-
-Rather than deleting `sliderConfigs` and `sliderResponse`, the tradeoff control is built into the Proof panel: drag a budget or latency slider, watch the metric respond. It is the one interactive idea in the original design that reinforces the evidence thesis rather than decorating it.
-
-### Links: verified, not assumed
-
-Checking the obvious aliases would have shipped a stranger's site — `vivid.vercel.app` is **not** this account's project. Verified production state:
+**Links verified, never assumed.** Checking the obvious alias would have shipped a stranger's site — `vivid.vercel.app` does **not** belong to this account.
 
 | Project | Production URL | Ships |
 |---|---|---|
 | vivid | `vivid-alpha.vercel.app` | yes |
 | tathya | `tathya-1.vercel.app` | yes |
 | support-core | `support-core-nine.vercel.app` | yes |
-| stick-and-dot-app | `stick-and-dot-app.vercel.app` | **no** — excluded by owner |
-| beatmind | `beatmind-theta.vercel.app` | no — 404, latest deploy `BLOCKED` |
-| oncoverse | — | no — latest production deploy in `ERROR` state |
+| stick-and-dot-app | `stick-and-dot-app.vercel.app` | no — owner exclusion |
+| beatmind | `beatmind-theta.vercel.app` | no — 404, deploy `BLOCKED` |
+| oncoverse | none resolving | no — production deploy in `ERROR` |
 
-**OncoVerse has never successfully deployed to production.** Its empty links panel is currently accurate, not an oversight.
+**OncoVerse has never successfully deployed to production.** Its empty links panel is accurate.
 
-Any URL added later gets the same treatment: resolve the real production alias, confirm it returns 200 without auth, confirm it belongs to this account.
+---
 
-## 8. Open questions
+## 11. Owner homework
 
-1. **Project dates.** Owner is supplying them. Month and year per project is sufficient.
-2. **`tathya`, `beatmind`, `support-core`** are live deployments with no portfolio entry. Some are new projects, some are not portfolio-grade; the owner is sorting them per-project. Any addition past nine nodes requires fixing the hardcoded `uClusterBrightness[9]` shader array (`PLAN.md` 3.4).
-3. **Whether Vivid should ship at all.** It is Stick and Dot company work, same as the app that was excluded. Linked per instruction, but if the exclusion was about company work generally rather than that one repo, both come out.
+Four things the build cannot supply, in order of impact:
+
+1. **One testimonial.** From the Stick and Dot manager. A single quote will out-convert every feature in this plan — there is currently no third-party validation anywhere on the site.
+2. **A photo.** Clear, well-lit, looking at the camera. Does not need to be professional.
+3. **Outcome lines per project.** Who it was for, what changed. Rough is fine.
+4. **Dates.** Month and year per project, for orbital chronology.
+
+---
+
+## 12. Open questions
+
+1. **`tathya`, `beatmind`, `support-core`** are live with no portfolio entry. Owner sorting per-project. Anything past nine nodes requires fixing `uClusterBrightness[9]` first.
+2. **Whether Vivid ships.** It is Stick and Dot company work, same as the excluded app. Linked per instruction — revisit if that exclusion was categorical.
+3. **Which booking tool.** Cal.com is free and self-hostable; Calendly is more familiar to Western buyers.

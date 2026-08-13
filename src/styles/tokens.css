@@ -35,6 +35,20 @@
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Font stacks. Referenced by PlainExperience.vue and the scene chrome;
+     previously undefined, so those rules silently fell back to system defaults. */
+  --font-display: 'Spectral', ui-serif, Georgia, serif;
+  --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+
+  /* Focus/active glow. Referenced by cursor.css; previously undefined. */
+  --active-glow: rgba(232, 200, 106, 0.55);
+
+  /* Shared breakpoints. Do not introduce a tenth threshold —
+     see CLAUDE.md. Used by JS via matchMedia and mirrored in media queries. */
+  --bp-mobile: 767px;
+  --bp-tablet: 1024px;
 }
 
 @property --shimmer-pos {
