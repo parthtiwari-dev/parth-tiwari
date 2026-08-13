@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { lockBodyScroll, unlockBodyScroll } from '@/composables/useBodyScrollLock'
+import { useFocusTrap } from '@/composables/useFocusTrap'
 import AboutSignal from '@/components/evidence/AboutSignal.vue'
 import CapabilityMap from '@/components/evidence/CapabilityMap.vue'
 import ExperienceLog from '@/components/evidence/ExperienceLog.vue'
@@ -13,6 +14,8 @@ const MOBILE_QUERY = '(max-width: 820px)'
 const evidenceOverlayStore = useEvidenceOverlayStore()
 const overlayRoot = ref<HTMLElement | null>(null)
 const isMobileViewport = ref(false)
+// aria-modal="true" is declared on the shell; the trap is what makes it true.
+const focusTrap = useFocusTrap(overlayRoot)
 let hasScrollLock = false
 let mobileMediaQuery: MediaQueryList | null = null
 
@@ -93,13 +96,15 @@ watch(
     evidenceOverlayStore.activeKind,
     isMobileViewport.value,
   ] as const,
-  async ([isCurrentlyOpen, activeKind]) => {
+  ([isCurrentlyOpen, activeKind]) => {
     setBodyScrollLock(shouldLockOverlayScroll(isCurrentlyOpen, activeKind))
 
     if (isCurrentlyOpen) {
-      await nextTick()
-      overlayRoot.value?.focus()
+      void focusTrap.activate()
+      return
     }
+
+    focusTrap.deactivate()
   },
 )
 
@@ -114,6 +119,7 @@ onUnmounted(() => {
   mobileMediaQuery?.removeEventListener('change', syncMobileViewport)
   window.removeEventListener('keydown', handleKeydown)
   setBodyScrollLock(false)
+  focusTrap.deactivate()
 })
 </script>
 
@@ -175,7 +181,16 @@ onUnmounted(() => {
   overscroll-behavior: contain;
   padding: clamp(0.75rem, 2vw, 1.5rem);
   color: var(--ice);
+}
+
+/* Programmatic focus on open must not paint a ring; keyboard focus must. */
+.evidence-overlay:focus:not(:focus-visible) {
   outline: none;
+}
+
+.evidence-overlay:focus-visible {
+  outline: 2px solid var(--gold-glow);
+  outline-offset: -3px;
 }
 
 .evidence-overlay__scrim {

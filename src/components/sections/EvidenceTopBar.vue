@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+import { lockBodyScroll, unlockBodyScroll } from '@/composables/useBodyScrollLock'
+import { useFocusTrap } from '@/composables/useFocusTrap'
 import { isResumeConfigured } from '@/data/resume'
 import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
+import { useProjectStore } from '@/stores/projectStore'
 import type { EvidenceOverlayKind } from '@/stores/evidenceOverlayStore'
 
 const MOBILE_QUERY = '(max-width: 820px)'
@@ -13,11 +16,17 @@ interface TopBarAction {
 }
 
 const evidenceOverlayStore = useEvidenceOverlayStore()
+const projectStore = useProjectStore()
 const scrollY = ref(0)
 const revealThreshold = ref(220)
 const isMobileViewport = ref(false)
 const isMobileMenuOpen = ref(false)
+const drawerRoot = ref<HTMLElement | null>(null)
+// The drawer declares role="dialog" aria-modal="true"; the trap and the scroll
+// lock are what make that declaration honest (docs/AUDIT.md H3).
+const drawerFocusTrap = useFocusTrap(drawerRoot)
 let mobileMediaQuery: MediaQueryList | null = null
+let hasScrollLock = false
 
 const actions: TopBarAction[] = [
   { label: 'Experience', kind: 'experience' },
@@ -32,6 +41,12 @@ const resumeAction: TopBarAction = {
   disabled: !isResumeConfigured,
 }
 
+const brandLine = computed(() => `EVIDENCEBOUND / ${projectStore.projectCount} SYSTEMS`)
+
+const mobileMenuLabel = computed(() => (
+  isMobileMenuOpen.value ? 'Close evidence navigation' : 'Open evidence navigation'
+))
+
 const isVisible = computed(() => {
   if (scrollY.value <= revealThreshold.value) {
     return false
@@ -45,6 +60,14 @@ const isVisible = computed(() => {
 })
 
 function updateScrollState() {
+  // The scroll lock parks the body at `position: fixed`, which drives
+  // `window.scrollY` to 0 and fires a scroll event. Reading it here would drop
+  // `isVisible` below the reveal threshold and unmount the drawer the instant
+  // it opened, so freeze the reading for as long as the page cannot scroll.
+  if (isMobileMenuOpen.value) {
+    return
+  }
+
   revealThreshold.value = window.innerHeight * 0.58
   scrollY.value = window.scrollY
 }
@@ -76,6 +99,38 @@ function handleKeydown(event: KeyboardEvent) {
   }
 }
 
+function setBodyScrollLock(shouldLock: boolean) {
+  if (shouldLock && !hasScrollLock) {
+    lockBodyScroll()
+    hasScrollLock = true
+    return
+  }
+
+  if (!shouldLock && hasScrollLock) {
+    unlockBodyScroll()
+    hasScrollLock = false
+  }
+}
+
+watch(isMobileMenuOpen, (isOpen) => {
+  setBodyScrollLock(isOpen)
+
+  if (isOpen) {
+    void drawerFocusTrap.activate()
+    return
+  }
+
+  drawerFocusTrap.deactivate()
+})
+
+// The bar itself unmounts on scroll and on overlay open. Tear the drawer down
+// with it, or the trap and the scroll lock outlive their own DOM.
+watch(isVisible, (visible) => {
+  if (!visible) {
+    closeMobileMenu()
+  }
+})
+
 onMounted(() => {
   mobileMediaQuery = window.matchMedia(MOBILE_QUERY)
   syncMobileViewport()
@@ -91,6 +146,8 @@ onUnmounted(() => {
   window.removeEventListener('scroll', updateScrollState)
   window.removeEventListener('resize', updateScrollState)
   window.removeEventListener('keydown', handleKeydown)
+  drawerFocusTrap.deactivate()
+  setBodyScrollLock(false)
 })
 </script>
 
@@ -102,7 +159,7 @@ onUnmounted(() => {
       aria-label="Evidence navigation"
     >
       <p class="evidence-top-bar__brand">
-        EVIDENCEBOUND / 9 SYSTEMS
+        {{ brandLine }}
       </p>
 
       <button
@@ -110,7 +167,7 @@ onUnmounted(() => {
         class="evidence-top-bar__mobile-menu-button"
         :aria-expanded="isMobileMenuOpen"
         aria-controls="mobile-evidence-drawer"
-        aria-label="Open evidence navigation"
+        :aria-label="mobileMenuLabel"
         @click="toggleMobileMenu"
       >
         <span></span>
@@ -146,10 +203,12 @@ onUnmounted(() => {
       <Transition name="mobile-evidence-drawer">
         <div
           v-if="isMobileMenuOpen"
+          ref="drawerRoot"
           class="mobile-evidence-drawer"
           role="dialog"
           aria-modal="true"
           aria-label="Evidence navigation menu"
+          tabindex="-1"
         >
           <button
             type="button"
@@ -238,6 +297,17 @@ onUnmounted(() => {
 .evidence-top-bar__mobile-menu-button,
 .mobile-evidence-drawer {
   display: none;
+}
+
+/* The drawer takes programmatic focus on open so the dialog is announced;
+   suppress the ring only for that, keep a real one for keyboard focus. */
+.mobile-evidence-drawer:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.mobile-evidence-drawer:focus-visible {
+  outline: 2px solid var(--gold-glow);
+  outline-offset: -4px;
 }
 
 .evidence-top-bar button,
