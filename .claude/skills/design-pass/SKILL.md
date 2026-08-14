@@ -19,9 +19,10 @@ committed `DESIGN_LOCK.md`. After the lock exists, nothing re-litigates it.
 | 1 Target | `refs/design-md-all/<brand>/DESIGN.md` + the user's refero captures | the visual north star, as concrete tokens | 1–2 files |
 | 2 Dials | `vendor/taste-skill` | VARIANCE, MOTION_INTENSITY, VISUAL_DENSITY as explicit numbers | 3 integers |
 | 3 Candidates | `vendor/ui-ux-pro-max/data/*.csv` | *proposes* palettes and font pairs. Never authoritative. | on demand, grep only |
+| 3.5 Diverge | `references/divergence.md` | mutate the pattern so the result is not a copy | free |
 | 4 Detect | `vendor/impeccable/scripts/detector/` | deterministic anti-pattern findings | free, no API call |
 | 5 Method | `frontend-design` / `apple-design` built-ins | plan → critique → build → critique | free |
-| 6 Verify | Playwright | before/after screenshots at 3 breakpoints | ≤3 images per pass |
+| 6 Verify | Playwright or Claude-in-Chrome | before/after screenshots at 3 breakpoints | ≤3 images per pass |
 
 **Precedence when two sources disagree:** Ground > Lock > Detect > Target > Dials >
 Candidates. Ground always wins — a rule that makes the page prettier but wrong for the
@@ -37,9 +38,14 @@ Run once per project. Produces `DESIGN_LOCK.md` at the repo root.
    shortlist relevant to their domain (see `references/reference-picking.md`). If they have
    refero captures, read `references/refero-intake.md` instead — captures beat brand files.
 3. Set the three dials with the user (`references/dials.md`).
-4. Emit `DESIGN_LOCK.md` from `templates/DESIGN_LOCK.md`: 4–6 named colors with hex, a type
-   scale, spacing, motion budget, the signature element, and an explicit banned list.
-5. Stop. Do not write any code during `init`.
+4. **Diverge.** Run `references/divergence.md` — extract at most five *structural*
+   abstractions, then apply **two or more mutation operators**. This is mandatory. Skipping
+   it produces a worse copy of a famous website, which is this skill's primary failure mode.
+   Then drop any reference images from working context; build from the words.
+5. Emit `DESIGN_LOCK.md` from `templates/DESIGN_LOCK.md`: 4–6 named colors with hex, a type
+   scale, spacing, motion budget, the signature element, the mutations applied, and an
+   explicit banned list.
+6. Stop. Do not write any code during `init`.
 
 ### `/design-pass audit [url | path]`
 Read-only. Never edits.
@@ -77,8 +83,16 @@ the delta in findings count. If findings went up, say so.
    around it quiet. Both `frontend-design` and `apple-design` say this; it is the single
    highest-leverage rule in the whole kit.
 6. **No new dependencies** without asking. Most findings are CSS.
-7. **Never scrape a reference site.** See `references/refero-intake.md` — the user supplies
-   captures, this skill never fetches them.
+7. **Never scrape a reference site.** Check `robots.txt` before the first fetch of any host
+   (`references/chrome-capture.md`). If it disallows `anthropic-ai` / `ClaudeBot` / `GPTBot`,
+   route to capture intake instead — the user browses and saves, this skill reads their
+   files. `styles.refero.design` is disallowed sitewide.
+8. **Never ship a recognisable copy.** Run the clone check in `references/divergence.md`
+   Step 5 before build. If the target's designer would recognise their own work, apply
+   another mutation operator.
+9. **Prefer the outside-the-category reference.** The strongest design language for a
+   project comes from the most characteristic object in its own world — a mixing desk, a
+   contact sheet, a star chart — not from another website in the same vertical.
 
 ## Where things live
 
@@ -95,8 +109,10 @@ if that is unreachable, say so rather than inventing token values.
 ## References
 
 - `references/pipeline.md` — the full stage-by-stage with exact commands
+- `references/divergence.md` — **extract → abstract → mutate.** Read before any build.
 - `references/dials.md` — VARIANCE / MOTION_INTENSITY / VISUAL_DENSITY, and what each does
 - `references/reference-picking.md` — which brand file to target, by project type
+- `references/chrome-capture.md` — Claude-in-Chrome: breakpoint screenshots, robots checks
 - `references/refero-intake.md` — the human-curated refero workflow
 - `references/detectors.md` — running the impeccable detectors
 - `templates/DESIGN_LOCK.md` — the lock template

@@ -16,6 +16,25 @@ this rather than re-deriving.
 - **Borrowed structurally:** <2-3 sentences on what qualities, not what hex values>
 - **Explicitly NOT borrowed:** <the literal things being avoided>
 
+## Divergence
+
+Five structural abstractions taken from the target (no brand-identifying detail):
+
+1.
+2.
+3.
+4.
+5.
+
+Mutation operators applied (two minimum, from `references/divergence.md`):
+
+| Operator | What it changed |
+|---|---|
+| | |
+
+**Clone check:** would the target's designer recognise their own work here?
+Answer must be "no, but I see the shared logic". Recorded answer:
+
 ## Dials
 
 | Dial | Value | Why |
