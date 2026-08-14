@@ -158,9 +158,11 @@ onUnmounted(() => {
         :can-open="hoveredProjectCanOpen"
       />
 
+      <!-- bottom-24, not bottom-6: BookingCta.vue also docks bottom-right (fixed,
+           z-90) and would otherwise sit on top of this legend's last two lines. -->
       <div
         v-if="evidenceOverlayStore.activeKind !== 'about'"
-        class="constellation-index pointer-events-none absolute bottom-6 right-6 z-30 hidden md:block"
+        class="constellation-index pointer-events-none absolute bottom-24 right-6 z-30 hidden md:block"
       >
         <p class="constellation-index__title">CONSTELLATION INDEX</p>
         <p><span class="constellation-index__dot constellation-index__dot--personal"></span> personal project</p>
