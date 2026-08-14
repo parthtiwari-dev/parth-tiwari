@@ -1,26 +1,38 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, defineAsyncComponent, onMounted, onUnmounted, ref } from 'vue'
 import { sliderConfigs } from '@/data/projects'
 import { usePlainMode } from '@/composables/usePlainMode'
 import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
 import { useProjectStore } from '@/stores/projectStore'
 import BootSequence from '@/components/sections/BootSequence.vue'
+import BookingCta from '@/components/conversion/BookingCta.vue'
 import CustomCursor from '@/components/interaction/CustomCursor.vue'
 import EvidenceOverlay from '@/components/evidence/EvidenceOverlay.vue'
 import EvidenceTopBar from '@/components/sections/EvidenceTopBar.vue'
 import HeroSection from '@/components/sections/HeroSection.vue'
-import MobileBestExperienceNotice from '@/components/sections/MobileBestExperienceNotice.vue'
 import MobileFooterDock from '@/components/sections/MobileFooterDock.vue'
+import ProjectIndex from '@/components/sections/ProjectIndex.vue'
 import ProjectOverlay from '@/components/overlay/ProjectOverlay.vue'
 import PlainExperience from '@/components/sections/PlainExperience.vue'
-import MobileStarWorld from '@/components/scene/MobileStarWorld.vue'
 import MobileSystemsIndex from '@/components/sections/MobileSystemsIndex.vue'
-import SceneRoot from '@/components/scene/SceneRoot.vue'
 import GlassPanel from '@/components/shared/GlassPanel.vue'
 import GeistChip from '@/components/shared/GeistChip.vue'
 import MetricCountUp from '@/components/shared/MetricCountUp.vue'
 import StatusBadge from '@/components/shared/StatusBadge.vue'
 import CopiedToast from '@/components/shared/CopiedToast.vue'
+
+/**
+ * The 3D stack is code-split, not just render-gated (`docs/AUDIT.md` C1).
+ *
+ * `v-if` gates rendering, never the import graph — a static import here put
+ * three.js + @tresjs/core (767 kB raw / 208 kB gzip) and the postprocessing
+ * chain into the entry graph for every visitor, including `?plain=1`, every
+ * phone, and every reduced-motion user. `defineAsyncComponent` moves both scene
+ * roots behind a dynamic import so the chunk is fetched only when the matching
+ * `v-if` below actually resolves true.
+ */
+const SceneRoot = defineAsyncComponent(() => import('@/components/scene/SceneRoot.vue'))
+const MobileStarWorld = defineAsyncComponent(() => import('@/components/scene/MobileStarWorld.vue'))
 
 const MOBILE_QUERY = '(max-width: 767px)'
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)'
@@ -36,31 +48,32 @@ const bootComplete = ref(isPlain.value)
 const isDebug = ref(false)
 const isMobileViewport = ref(getMediaQueryMatches(MOBILE_QUERY))
 const prefersReducedMotion = ref(getMediaQueryMatches(REDUCED_MOTION_QUERY))
-const mobileNoticeComplete = ref(
-  isPlain.value
-  || !getMediaQueryMatches(MOBILE_QUERY)
-  || getMediaQueryMatches(REDUCED_MOTION_QUERY),
-)
 
 const featuredProjects = computed(() => projectStore.projects.slice(0, 4))
 const firstMetric = computed(() => projectStore.getById('querypilot')?.panels.proof.metrics?.[0])
 const showPhaseZeroConsole = computed(() => !isPlain.value && isDebug.value)
 const showPhaseBridge = computed(() => !isPlain.value && isDebug.value)
-const shouldOfferMobileNotice = computed(() => (
-  !isPlain.value
-  && isMobileViewport.value
-  && !prefersReducedMotion.value
-))
 const isAboutOverlayOpen = computed(() => (
   evidenceOverlayStore.isOpen
   && evidenceOverlayStore.activeKind === 'about'
 ))
-const showMobileNotice = computed(() => (
-  bootComplete.value
-  && shouldOfferMobileNotice.value
-  && !mobileNoticeComplete.value
+const experienceReady = computed(() => isPlain.value || bootComplete.value)
+
+/**
+ * Reduced motion means no render loop at all, not a slower one (PRD M6).
+ * `SceneRoot` drives an always-on TresJS loop, bloom, ten dynamic lights and a
+ * particle field, so the honest fallback is to not mount it — which, now that
+ * it is async, also means never fetching the chunk.
+ *
+ * `MobileStarWorld` stays: under reduced motion it paints one static frame and
+ * never schedules a rAF, so it is already a genuinely static backdrop.
+ */
+const showDesktopScene = computed(() => (
+  !isPlain.value
+  && !isMobileViewport.value
+  && !prefersReducedMotion.value
 ))
-const experienceReady = computed(() => isPlain.value || (bootComplete.value && !showMobileNotice.value))
+const showMobileScene = computed(() => !isPlain.value && isMobileViewport.value)
 const showMobileSystemsIndex = computed(() => (
   !isPlain.value
   && isMobileViewport.value
@@ -72,20 +85,12 @@ function handleBootComplete() {
   bootComplete.value = true
 }
 
-function handleMobileNoticeComplete() {
-  mobileNoticeComplete.value = true
-}
-
 let mobileMediaQuery: MediaQueryList | null = null
 let reducedMotionMediaQuery: MediaQueryList | null = null
 
 function syncMediaState() {
   isMobileViewport.value = getMediaQueryMatches(MOBILE_QUERY)
   prefersReducedMotion.value = getMediaQueryMatches(REDUCED_MOTION_QUERY)
-
-  if (isPlain.value || !isMobileViewport.value || prefersReducedMotion.value) {
-    mobileNoticeComplete.value = true
-  }
 }
 
 onMounted(() => {
@@ -110,18 +115,13 @@ onUnmounted(() => {
     class="min-h-screen text-[color:var(--ice)]"
     :class="{ 'plain-mode': isPlain }"
   >
-    <SceneRoot v-if="!isPlain && !isMobileViewport" />
-    <MobileStarWorld v-if="!isPlain && isMobileViewport" />
+    <SceneRoot v-if="showDesktopScene" />
+    <MobileStarWorld v-if="showMobileScene" />
 
     <BootSequence
       v-if="!isPlain && !bootComplete"
       :project-count="projectStore.projectCount"
       @complete="handleBootComplete"
-    />
-
-    <MobileBestExperienceNotice
-      v-if="showMobileNotice"
-      @complete="handleMobileNoticeComplete"
     />
 
     <HeroSection
@@ -135,6 +135,12 @@ onUnmounted(() => {
 
     <MobileSystemsIndex v-if="showMobileSystemsIndex" />
     <MobileFooterDock v-if="showMobileSystemsIndex" />
+
+    <!-- Keyboard and screen-reader route to all nine projects, every breakpoint. -->
+    <ProjectIndex v-if="!isPlain && experienceReady" />
+
+    <!-- Booking stays one tap from every screen, in every mode but plain. -->
+    <BookingCta v-if="!isPlain && experienceReady" />
 
     <ProjectOverlay v-if="!isPlain" />
     <EvidenceOverlay v-if="!isPlain" />

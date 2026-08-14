@@ -38,7 +38,7 @@ const shouldHide = computed(() => isComplete.value)
     class="boot-sequence"
     role="status"
     aria-live="polite"
-    aria-label="Evidence field boot sequence"
+    aria-label="EPHEMERIS boot sequence"
   >
     <div class="boot-sequence__field" aria-hidden="true">
       <span class="boot-sequence__aperture"></span>
@@ -46,6 +46,8 @@ const shouldHide = computed(() => isComplete.value)
     </div>
 
     <div class="boot-sequence__terminal">
+      <!-- The site is EPHEMERIS. EVIDENCEBOUND is retired (CLAUDE.md, PRD.md 10). -->
+      <p class="boot-sequence__wordmark">EPHEMERIS</p>
       <p
         v-for="(line, index) in bootLines"
         :key="line"
@@ -188,12 +190,19 @@ const shouldHide = computed(() => isComplete.value)
   opacity: 0.42;
 }
 
+.boot-sequence__wordmark,
 .boot-sequence__line,
 .boot-sequence__skip {
-  font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+.boot-sequence__wordmark {
+  margin: 0 0 0.2rem;
+  color: var(--gold-glow);
+  letter-spacing: 0.42em;
 }
 
 .boot-sequence__line {
@@ -206,15 +215,17 @@ const shouldHide = computed(() => isComplete.value)
   white-space: pre-wrap;
 }
 
-.boot-sequence__line:nth-child(1) {
+/* The wordmark is the terminal's first child, so the three boot lines are its
+   last three children. Indexed from the end to stay correct if the header changes. */
+.boot-sequence__line:nth-last-child(3) {
   color: color-mix(in srgb, var(--ice) 84%, var(--ice-muted));
 }
 
-.boot-sequence__line:nth-child(2) {
+.boot-sequence__line:nth-last-child(2) {
   color: color-mix(in srgb, var(--gold-glow) 92%, white);
 }
 
-.boot-sequence__line:nth-child(3) {
+.boot-sequence__line:nth-last-child(1) {
   color: color-mix(in srgb, var(--utility-glow) 82%, var(--ice));
 }
 
@@ -246,10 +257,15 @@ const shouldHide = computed(() => isComplete.value)
     padding: 0.85rem 0 0.85rem 1rem;
   }
 
+  .boot-sequence__wordmark,
   .boot-sequence__line,
   .boot-sequence__skip {
     font-size: 0.625rem;
     letter-spacing: 0.08em;
+  }
+
+  .boot-sequence__wordmark {
+    letter-spacing: 0.3em;
   }
 }
 

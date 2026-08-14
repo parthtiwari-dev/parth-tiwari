@@ -12,12 +12,22 @@ interface MobileStar {
   drift: number
   parallax: number
   glint: number
+  colorIndex: number
+  color: string
 }
 
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 
 const DPR_CAP = 1.35
 const FIELD_PADDING = 180
+const GLOW_SPRITE_RADIUS = 64
+const STAR_CHANNELS: ReadonlyArray<readonly [number, number, number]> = [
+  [232, 200, 106],
+  [142, 222, 245],
+  [216, 234, 240],
+]
+const STAR_FILLS = STAR_CHANNELS.map(([r, g, b]) => `rgb(${r}, ${g}, ${b})`)
+const glowSprites: (HTMLCanvasElement | null)[] = [null, null, null]
 const random = seededRandom('evidencebound-mobile-star-world-v1')
 const stars: MobileStar[] = []
 
@@ -49,16 +59,50 @@ function clamp(value: number, min: number, max: number) {
   return Math.max(min, Math.min(max, value))
 }
 
-function starColor(warmth: number, alpha: number) {
+function starColorIndex(warmth: number) {
   if (warmth > 0.94) {
-    return `rgba(232, 200, 106, ${alpha})`
+    return 0
   }
 
   if (warmth > 0.82) {
-    return `rgba(142, 222, 245, ${alpha})`
+    return 1
   }
 
-  return `rgba(216, 234, 240, ${alpha})`
+  return 2
+}
+
+function glowSprite(colorIndex: number) {
+  const cached = glowSprites[colorIndex]
+
+  if (cached) {
+    return cached
+  }
+
+  const sprite = document.createElement('canvas')
+  const size = GLOW_SPRITE_RADIUS * 2
+  sprite.width = size
+  sprite.height = size
+
+  const spriteContext = sprite.getContext('2d')
+
+  if (spriteContext) {
+    const [r, g, b] = STAR_CHANNELS[colorIndex]
+    const gradient = spriteContext.createRadialGradient(
+      GLOW_SPRITE_RADIUS,
+      GLOW_SPRITE_RADIUS,
+      0,
+      GLOW_SPRITE_RADIUS,
+      GLOW_SPRITE_RADIUS,
+      GLOW_SPRITE_RADIUS,
+    )
+    gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, 1)`)
+    gradient.addColorStop(1, 'rgba(0, 0, 0, 0)')
+    spriteContext.fillStyle = gradient
+    spriteContext.fillRect(0, 0, size, size)
+  }
+
+  glowSprites[colorIndex] = sprite
+  return sprite
 }
 
 function createStar(): MobileStar {
@@ -67,7 +111,7 @@ function createStar(): MobileStar {
   const mid = !bright && tier > 0.9
   const warmthRoll = random()
 
-  return {
+  const star: MobileStar = {
     x: random(),
     y: random(),
     radius: bright
@@ -86,7 +130,14 @@ function createStar(): MobileStar {
     drift: bright ? 0.18 + random() * 0.5 : random() * 0.34,
     parallax: bright ? 0.1 + random() * 0.12 : mid ? 0.05 + random() * 0.08 : 0.012 + random() * 0.045,
     glint: bright ? 0.5 + random() * 0.5 : mid && random() > 0.9 ? 0.2 + random() * 0.25 : 0,
+    colorIndex: 2,
+    color: STAR_FILLS[2],
   }
+
+  star.colorIndex = starColorIndex(star.warmth)
+  star.color = STAR_FILLS[star.colorIndex]
+
+  return star
 }
 
 function seedStars() {
@@ -120,7 +171,7 @@ function resize() {
   }
 
   seedStars()
-  render(performance.now())
+  renderFrame(performance.now())
 }
 
 function drawStar(ctx: CanvasRenderingContext2D, star: MobileStar, time: number) {
@@ -134,7 +185,8 @@ function drawStar(ctx: CanvasRenderingContext2D, star: MobileStar, time: number)
   const alpha = clamp(star.alpha * twinkle, 0, 0.86)
   const radius = star.radius
 
-  ctx.fillStyle = starColor(star.warmth, alpha)
+  ctx.globalAlpha = alpha
+  ctx.fillStyle = star.color
 
   if (radius < 0.24) {
     ctx.fillRect(x, y, 0.95, 0.95)
@@ -149,8 +201,10 @@ function drawStar(ctx: CanvasRenderingContext2D, star: MobileStar, time: number)
   if (star.glint > 0) {
     const glintAlpha = alpha * star.glint
     const glintSize = radius * (5.5 + star.glint * 4)
+    const glowRadius = radius * 8
 
-    ctx.strokeStyle = starColor(star.warmth, glintAlpha * 0.42)
+    ctx.globalAlpha = glintAlpha * 0.42
+    ctx.strokeStyle = star.color
     ctx.lineWidth = 0.55
     ctx.beginPath()
     ctx.moveTo(x - glintSize, y)
@@ -159,17 +213,18 @@ function drawStar(ctx: CanvasRenderingContext2D, star: MobileStar, time: number)
     ctx.lineTo(x, y + glintSize * 0.72)
     ctx.stroke()
 
-    const glow = ctx.createRadialGradient(x, y, 0, x, y, radius * 8)
-    glow.addColorStop(0, starColor(star.warmth, glintAlpha * 0.22))
-    glow.addColorStop(1, 'rgba(0, 0, 0, 0)')
-    ctx.fillStyle = glow
-    ctx.beginPath()
-    ctx.arc(x, y, radius * 8, 0, Math.PI * 2)
-    ctx.fill()
+    ctx.globalAlpha = glintAlpha * 0.22
+    ctx.drawImage(
+      glowSprite(star.colorIndex),
+      x - glowRadius,
+      y - glowRadius,
+      glowRadius * 2,
+      glowRadius * 2,
+    )
   }
 }
 
-function render(now: number) {
+function renderFrame(now: number) {
   if (!context) {
     return
   }
@@ -179,11 +234,35 @@ function render(now: number) {
   context.globalCompositeOperation = 'lighter'
 
   stars.forEach((star) => drawStar(context as CanvasRenderingContext2D, star, time))
+
+  context.globalAlpha = 1
   context.globalCompositeOperation = 'source-over'
+}
+
+function loop(now: number) {
+  animationFrame = 0
+  renderFrame(now)
 
   if (!reducedMotion) {
-    animationFrame = requestAnimationFrame(render)
+    animationFrame = requestAnimationFrame(loop)
   }
+}
+
+function stopLoop() {
+  if (animationFrame) {
+    cancelAnimationFrame(animationFrame)
+    animationFrame = 0
+  }
+}
+
+function startLoop() {
+  stopLoop()
+
+  if (reducedMotion) {
+    return
+  }
+
+  animationFrame = requestAnimationFrame(loop)
 }
 
 function handleScroll() {
@@ -192,13 +271,11 @@ function handleScroll() {
 
 function handleVisibilityChange() {
   if (document.hidden) {
-    cancelAnimationFrame(animationFrame)
+    stopLoop()
     return
   }
 
-  if (!reducedMotion) {
-    animationFrame = requestAnimationFrame(render)
-  }
+  startLoop()
 }
 
 onMounted(() => {
@@ -207,14 +284,11 @@ onMounted(() => {
   window.addEventListener('resize', resize, { passive: true })
   window.addEventListener('scroll', handleScroll, { passive: true })
   document.addEventListener('visibilitychange', handleVisibilityChange)
-
-  if (!reducedMotion) {
-    animationFrame = requestAnimationFrame(render)
-  }
+  startLoop()
 })
 
 onUnmounted(() => {
-  cancelAnimationFrame(animationFrame)
+  stopLoop()
   window.removeEventListener('resize', resize)
   window.removeEventListener('scroll', handleScroll)
   document.removeEventListener('visibilitychange', handleVisibilityChange)

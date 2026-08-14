@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { lockBodyScroll, unlockBodyScroll } from '@/composables/useBodyScrollLock'
+import { useFocusTrap } from '@/composables/useFocusTrap'
 import { isOverlayReadyProject } from '@/data/overlayReady'
 import FilmStrip, { filmStripPanelCount } from '@/components/overlay/FilmStrip.vue'
 import FilmStripHeader from '@/components/overlay/FilmStripHeader.vue'
@@ -11,6 +12,9 @@ const overlayStore = useOverlayStore()
 const projectStore = useProjectStore()
 const overlayRoot = ref<HTMLElement | null>(null)
 const touchStartX = ref<number | null>(null)
+// Declares role="dialog" aria-modal="true", so Tab has to stay inside it and
+// focus has to go back to the node or index button that opened it.
+const focusTrap = useFocusTrap(overlayRoot)
 let lastWheelAt = 0
 let hasScrollLock = false
 
@@ -140,15 +144,15 @@ function handleTouchEnd(event: TouchEvent) {
 
 watch(
   () => overlayStore.isOpen,
-  async (isOpen) => {
+  (isOpen) => {
     if (isOpen) {
       setBodyScrollLock(true)
-      await nextTick()
-      overlayRoot.value?.focus()
+      void focusTrap.activate()
       return
     }
 
     setBodyScrollLock(false)
+    focusTrap.deactivate()
   },
 )
 
@@ -165,6 +169,7 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('keydown', handleKeydown)
   setBodyScrollLock(false)
+  focusTrap.deactivate()
 })
 </script>
 
@@ -213,7 +218,17 @@ onUnmounted(() => {
   overscroll-behavior: contain;
   padding: clamp(0.75rem, 2vw, 1.5rem);
   color: var(--ice);
+}
+
+/* The shell takes programmatic focus on open; suppress the ring only for that
+   case, and keep a real, visible one for anything keyboard-driven. */
+.project-overlay:focus:not(:focus-visible) {
   outline: none;
+}
+
+.project-overlay:focus-visible {
+  outline: 2px solid var(--gold-glow);
+  outline-offset: -3px;
 }
 
 .project-overlay__scrim {

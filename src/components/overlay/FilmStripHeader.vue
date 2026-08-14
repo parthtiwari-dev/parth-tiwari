@@ -30,7 +30,7 @@ const panelCounter = computed(() => {
   <header class="film-strip-header">
     <div class="film-strip-header__identity">
       <p class="film-strip-header__eyebrow">
-        EVIDENCEBOUND / {{ kindLabel[project.nodeKind] }}
+        EPHEMERIS / {{ kindLabel[project.nodeKind] }}
       </p>
       <h2>{{ project.name }}</h2>
     </div>

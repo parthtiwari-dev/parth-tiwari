@@ -160,7 +160,14 @@ export const projects: Project[] = [
       'Supabase',
       'RLS',
     ],
-    links: {},
+    // Vivid is the live surface of this work node. Verified 2026-08-13: HTTP 200,
+    // publicly reachable with no auth, and resolved from the Vercel project's own
+    // `domains` array rather than guessed. `vivid.vercel.app` is a different
+    // owner's site and must never be linked here (CLAUDE.md).
+    // The Stick and Dot App deployment is excluded by the owner and stays out.
+    links: {
+      liveUI: 'https://vivid-alpha.vercel.app',
+    },
     panels: {
       problem: {
         quote: 'A work node should show shipped evidence, not just a title.',
@@ -227,6 +234,7 @@ export const projects: Project[] = [
         id: 'vivid',
         name: 'Vivid',
         label: 'Featured creative AI artifact',
+        url: 'https://vivid-alpha.vercel.app',
         summary: 'Cinematic storyboard AI using Groq planning, FLUX.1-dev, PuLID, LoRA routing, CLIP scoring, color grading, and PDF export.',
         stack: ['Groq', 'FLUX.1-dev', 'PuLID', 'LoRA', 'CLIP scoring', 'FastAPI', 'React', 'RunPod'],
         proof: ['4-shot storyboard pipeline', '10+ beta users', 'Cost-aware RunPod deployment path'],
@@ -557,6 +565,9 @@ export const projects: Project[] = [
       'Zustand',
       'Lucide React',
     ],
+    // Intentionally empty. OncoVerse has never successfully deployed to production
+    // — its latest production deploy is in ERROR state and no URL resolves. An
+    // empty links panel is the accurate result, not a gap to fill (PRD.md 10).
     links: {},
     panels: {
       problem: {

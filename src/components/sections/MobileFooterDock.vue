@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { isResumeConfigured } from '@/data/resume'
 import { socialLinks } from '@/data/socialLinks'
 import { useEvidenceOverlayStore, type EvidenceOverlayKind } from '@/stores/evidenceOverlayStore'
+import { useProjectStore } from '@/stores/projectStore'
 
 interface DockAction {
   label: string
@@ -11,6 +13,13 @@ interface DockAction {
 }
 
 const evidenceOverlayStore = useEvidenceOverlayStore()
+const projectStore = useProjectStore()
+
+// Derived, not typed in prose — the count and the year both went stale here
+// while `projectStore.projectCount` sat one import away (docs/AUDIT.md S8).
+const metaLine = computed(() => (
+  `${projectStore.projectCount} systems / public-safe evidence / ${new Date().getFullYear()}`
+))
 
 const primaryActions: DockAction[] = [
   {
@@ -97,7 +106,7 @@ function openOverlay(kind: EvidenceOverlayKind, disabled?: boolean) {
     </div>
 
     <p class="mobile-footer-dock__meta">
-      9 systems / public-safe evidence / 2026
+      {{ metaLine }}
     </p>
   </footer>
 </template>
