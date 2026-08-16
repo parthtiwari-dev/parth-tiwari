@@ -72,22 +72,15 @@ export const OG_IMAGE_URL = `${SITE_URL}/og.png`
 /**
  * Booking link — the primary conversion channel (PRD.md 7.3).
  *
- * TODO(owner): CONFIRM THE HANDLE BEFORE ENABLING.
- * `https://cal.com/parth-tiwari` returned HTTP 404 when checked on 2026-08-13,
- * which means the handle is not claimed yet. Cal.com vs Calendly is still an open
- * question (PRD.md 12.3).
- *
- * Until the handle is claimed and verified, `IS_BOOKING_CONFIRMED` stays false and
- * every booking surface falls back to email rather than shipping a link that 404s.
- * A dead booking button on a lead-generation site is worse than no booking button.
+ * `https://cal.com/parth-tiwari` returned HTTP 404 when first checked on
+ * 2026-08-13 (handle unclaimed). Owner claimed the handle and confirmed the
+ * page loads; re-verified 200 with a live Cal.com booking page title before
+ * this flag was flipped.
  */
 export const BOOKING_URL = 'https://cal.com/parth-tiwari'
 
-/**
- * Flip to `true` only after loading BOOKING_URL in a logged-out browser and
- * confirming it resolves to Parth's own booking page.
- */
-export const IS_BOOKING_CONFIRMED: boolean = false
+/** Confirmed live 2026-08-14 — see BOOKING_URL. */
+export const IS_BOOKING_CONFIRMED: boolean = true
 
 export const CONTACT_EMAIL = 'parthti2003@gmail.com'
 
