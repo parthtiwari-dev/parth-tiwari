@@ -51,6 +51,119 @@ export const sliderConfigs: SliderConfig[] = [
 
 export const projects: Project[] = [
   {
+    id: 'beatmind',
+    name: 'BeatMind',
+    tagline: 'Music platform that takes a track apart and lets you rebuild it.',
+    status: 'active',
+    nodeKind: 'current-build',
+    origin: 'work',
+    weight: 'flagship',
+    stack: [
+      'Next.js 16',
+      'React 19',
+      'Modal',
+      'ACE-Step',
+      'BS-RoFormer',
+      'Drizzle',
+      'Neon',
+      'Clerk',
+      'Cloudflare R2',
+      'AcoustID',
+    ],
+    outcome:
+      'Built solo in 24 days for an early-stage studio. Producers upload a track, get its stems, key, BPM and song structure back, and rebuild it in a section-by-stem editor that keeps every substitution in key and in tempo.',
+    // Verified 2026-08-17: live on its own production domain with production Clerk
+    // keys. The apex 308-redirects to www, so www is the canonical form — linking
+    // the apex is what silently broke Modal's webhook callbacks (see the Problem
+    // panel). Sign-up is invite-only for the closed pilot; the marketing surface
+    // is public.
+    links: {
+      liveUI: 'https://www.beatmind.tech',
+    },
+    panels: {
+      problem: {
+        quote: 'Production served every page correctly while the product did not work.',
+        brokenFlowId: 'beatmind-infra-silent-failure',
+      },
+      architecture: {
+        summary:
+          'A Next.js BFF over four independently deployed Modal services, joined by a resumable job state machine because GPU workers fail in ways nothing reports.',
+        nodes: [
+          {
+            id: 'upload',
+            label: 'Presigned Upload',
+            description: 'Audio goes straight to R2 through a presigned URL, so it never touches the serverless payload limit.',
+            stackChips: ['Cloudflare R2', 'Next.js'],
+            connections: ['pipeline'],
+            position: { x: 10, y: 40 },
+          },
+          {
+            id: 'pipeline',
+            label: 'Job State Machine',
+            description: 'Eight stages with lease tokens, per-stage timeouts, exponential retry and compare-and-swap transitions. Fencing tokens stop a stale worker overwriting a newer attempt.',
+            stackChips: ['Drizzle', 'Neon', 'HMAC webhooks'],
+            connections: ['workers', 'gate'],
+            position: { x: 38, y: 58 },
+          },
+          {
+            id: 'workers',
+            label: 'Four GPU Services',
+            description: 'Generation, two-pass separation, structure analysis and render, each deployed and scaled independently on Modal.',
+            stackChips: ['ACE-Step', 'BS-RoFormer', 'UVR-MDXNET'],
+            connections: ['editor'],
+            position: { x: 64, y: 34 },
+          },
+          {
+            id: 'gate',
+            label: 'Provenance Gate',
+            description: 'Export resolves a track’s full lineage across two independent signal paths. Anything unresolvable blocks; generated exports still need an AcoustID fingerprint check.',
+            stackChips: ['AcoustID', 'fail-closed'],
+            connections: [],
+            position: { x: 62, y: 82 },
+          },
+          {
+            id: 'editor',
+            label: 'Section × Stem Editor',
+            description: 'Regenerate one stem inside one arrangement section, repaint a dragged waveform region, retune project BPM and key. Camelot-wheel distance keeps substitutions harmonically valid.',
+            stackChips: ['wavesurfer.js', 'Zustand', 'TanStack Query'],
+            connections: [],
+            position: { x: 88, y: 58 },
+          },
+        ],
+      },
+      proof: {
+        metrics: [
+          { label: 'Solo build', value: 24, display: '24 days' },
+          { label: 'Commits', value: 307, display: '307' },
+          { label: 'Separation time', value: 23.4, display: '23.4s', unit: 's' },
+        ],
+        caveat:
+          'Separation went 70s to 23.4s on a 4-minute track after root-causing a missing libcublasLt.so.13 that had onnxruntime silently on CPU while the GPU idled. Re-verified on T4 and L4 separately, because the bug was an unchecked assumption.',
+        milestones: [
+          { label: 'Generation, separation, analysis and editor', status: 'complete', detail: 'shipped' },
+          { label: 'Production domain and production auth', status: 'complete', detail: 'www.beatmind.tech' },
+          { label: 'Fail-closed export gate with fingerprinting', status: 'complete', detail: 'AcoustID' },
+          { label: 'Closed pilot, 5–10 invited users', status: 'active', detail: 'at the gate' },
+        ],
+      },
+      boundary: {
+        items: [
+          { side: 'will', text: 'Show the durable job pipeline and the provenance gate as the real engineering.' },
+          { side: 'will', text: 'State that the closed pilot has not run yet, and that usage so far is zero.' },
+          { side: 'will', text: 'Describe the two invisible production failures and how they were found.' },
+          { side: 'refuses', text: 'Let a track be exported when its lineage cannot be fully resolved.' },
+          { side: 'refuses', text: 'Claim the models are mine — ACE-Step, BS-RoFormer and UVR-MDXNET are open source.' },
+          { side: 'refuses', text: 'Expose company-private endpoints, keys, or pilot user data.' },
+        ],
+      },
+    },
+    node: {
+      position: { x: 5.5, y: 1.2, z: -3 },
+      size: 'large',
+      relatedIds: ['stick-and-dot'],
+    },
+  },
+  {
     id: 'secondself',
     name: 'SecondSelf',
     tagline: 'Personal AI career OS with evidence-gated application workflows.',

@@ -50,9 +50,10 @@ Small, high-leverage, mostly data rather than code.
 | # | Task | State |
 |---|---|---|
 | 1.1 | Link `vivid-alpha.vercel.app`, `tathya-1.vercel.app`, `support-core-nine.vercel.app` | confirmed |
-| 1.2 | Leave `stick-and-dot-app` unlinked (owner exclusion), `beatmind` (deploy `BLOCKED`), `oncoverse` (deploy `ERROR`) | confirmed |
+| 1.2 | Leave `stick-and-dot-app` unlinked (owner exclusion) and `oncoverse` unlinked (deploy `ERROR`) | confirmed |
+| 1.2a | ~~`beatmind` deploy `BLOCKED`~~ — **stale, corrected 2026-08-17.** It is live on its own production domain (`www.beatmind.tech`, apex 308s to www) with production Clerk keys. Shipped as the tenth node, linked. | done |
 | 1.3 | Add a date field per project — required for orbital angle in Phase 3 | awaiting owner dates |
-| 1.4 | Decide per-project whether `tathya`, `beatmind`, `support-core` become portfolio nodes | awaiting owner |
+| 1.4 | Decide per-project whether `tathya` and `support-core` become portfolio nodes (`beatmind` resolved — shipped in 1.2a) | awaiting owner |
 | 1.5 | **Rename EVIDENCEBOUND → EPHEMERIS** across boot sequence, top bar, overlay eyebrows, `index.html` title/OG/Twitter/JSON-LD, `og.png`, README | ready |
 | 1.6 | Derive the "9 systems" strings from `projectStore.projectCount` instead of hardcoding | ready |
 

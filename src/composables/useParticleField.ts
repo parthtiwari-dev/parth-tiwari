@@ -262,6 +262,12 @@ export function useParticleField(projects: Project[]) {
   const material = new THREE.ShaderMaterial({
     vertexShader,
     fragmentShader,
+    // Sizes the shader's uClusterBrightness array to match the JS array above.
+    // Previously the shader declared a literal [9]; adding a tenth project grew
+    // this array while the declaration stayed put, which fails silently.
+    defines: {
+      CLUSTER_COUNT: Math.max(1, clusterBrightness.length),
+    },
     uniforms: {
       uTime:             { value: 0 },
       uClusterBrightness: { value: clusterBrightness },

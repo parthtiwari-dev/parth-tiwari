@@ -48,7 +48,7 @@ There is no test runner and no linter configured. Type checking and a clean buil
 
 **Do not upgrade `three` or `@tresjs/core`.** Both are pinned (`0.165.0` / `4.3.1`). The scene, shaders, and post-processing chain depend on current API behavior. If an upgrade becomes necessary, it is its own PR with a full visual QA pass — never a drive-by bump inside a feature change.
 
-**`particle.vert.glsl` hardcodes `uniform float uClusterBrightness[9]`** and reads it through a 9-branch if-chain, because GLSL ES 1.0 forbids dynamic indexing. **Adding a 10th project breaks this silently.** If the project count changes, that array length and the branch chain must change with it.
+**`particle.vert.glsl` sizes `uClusterBrightness` from a `CLUSTER_COUNT` define**, injected by `useParticleField.ts` from `projects.length`. It used to be a literal `[9]` read through a hand-unrolled if-chain, which broke silently on the tenth project — the JS uniform array grew and the declaration did not. GLSL ES 1.0 forbids indexing by an arbitrary expression, but a for-loop index over a constant bound *is* a constant-index-expression, so the lookup is a bounded loop and the project count is no longer baked into the shader. Verified in-browser at ten projects. **Do not reintroduce a literal length here.**
 
 **Never add a project link that is not confirmed public and safe.** Private repos, company endpoints, internal URLs, account data, and unreviewed deployments stay out. An empty links panel is correct behavior, not a bug to paper over.
 
@@ -101,11 +101,11 @@ Any interaction reachable by hover must also be reachable, **and dismissable**, 
 
 ## Content
 
-`src/data/projects.ts` is the single source of truth for the nine projects. Node metadata, panel copy, stack, links, and artifacts all live there. Prefer changing data over changing components.
+`src/data/projects.ts` is the single source of truth for the projects. Node metadata, panel copy, stack, links, and artifacts all live there. Prefer changing data over changing components.
 
 Supporting data files: `about.ts`, `training.ts`, `capabilities.ts`, `socialLinks.ts`, `resume.ts`, `projectLinks.ts`.
 
-The project count appears as hardcoded prose in `EvidenceTopBar.vue` and `MobileFooterDock.vue` ("9 SYSTEMS"). `BootSequence` derives it correctly from `projectStore.projectCount` — follow that example.
+**Never hardcode the project count in prose.** Every surface derives it from `projectStore.projectCount` — `EvidenceTopBar`, `MobileFooterDock`, `ProjectIndex`, `PlainExperience` and `BootSequence` all do this correctly now. There is no fixed number of projects anywhere in the codebase; keep it that way.
 
 ---
 
