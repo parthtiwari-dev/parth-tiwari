@@ -10,6 +10,7 @@ import {
   useNodeInteraction,
 } from '@/composables/useNodeInteraction'
 import type { NodeRuntimeState } from '@/types/node'
+import { readToken } from '@/utils/cssTokens'
 import type { Project, ProjectNodeKind, ProjectStatus } from '@/types/project'
 
 const emit = defineEmits<{
@@ -91,7 +92,7 @@ const colorByNodeKind: Record<
   }
 > = {
   'personal-project': {
-    hex: '#d7b35a',
+    hex: readToken('--node-personal', '#d7b35a'),
     bodyHex: '#3a2a14',
     emissiveIntensity: 1.72,
     atmosphereOpacity: 0.08,
@@ -100,7 +101,7 @@ const colorByNodeKind: Record<
     state: 'gold',
   },
   'work-experience': {
-    hex: '#18a9bc',
+    hex: readToken('--node-work', '#18a9bc'),
     bodyHex: '#032733',
     emissiveIntensity: 1.34,
     atmosphereOpacity: 0.072,
@@ -109,7 +110,7 @@ const colorByNodeKind: Record<
     state: 'teal-active',
   },
   'current-build': {
-    hex: '#c78a62',
+    hex: readToken('--node-build', '#c78a62'),
     bodyHex: '#3f2519',
     emissiveIntensity: 0.88,
     atmosphereOpacity: 0.06,
@@ -118,7 +119,7 @@ const colorByNodeKind: Record<
     state: 'amber',
   },
   utility: {
-    hex: '#ff5a3d',
+    hex: readToken('--node-utility', '#ff5a3d'),
     bodyHex: '#2b0b06',
     emissiveIntensity: 1.08,
     atmosphereOpacity: 0.078,

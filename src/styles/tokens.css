@@ -26,6 +26,27 @@
   --utility: #ff5a3d;
   --utility-glow: #ffb061;
 
+  /*
+   * Node colours — the single source of truth for BOTH the WebGL stars and the
+   * DOM legend that claims to describe them (CLAUDE.md: "the 3D layer must read
+   * the same palette as the DOM").
+   *
+   * These values are the ones tuned for emissive rendering in the scene. They
+   * were previously hardcoded in ConstellationNodes.vue while the legend used
+   * --gold / --teal-active / --amber, so three of the four swatches named a
+   * colour the star was not. On a site whose thesis is that every visual encodes
+   * something true, a legend that misdescribes the thing it points at is a
+   * correctness bug, not a style nit.
+   *
+   * Promoted rather than reconciled downward: the scene values are the tuned
+   * ones, so the legend adopts them instead of the stars being dulled to match
+   * approximate DOM tokens.
+   */
+  --node-personal: #d7b35a;
+  --node-work: #18a9bc;
+  --node-build: #c78a62;
+  --node-utility: #ff5a3d;
+
   --text-hero: clamp(3rem, 8vw, 8rem);
   --text-2xl: clamp(2rem, 4vw, 3.5rem);
   --text-xl: clamp(1.5rem, 2.5vw, 2.5rem);

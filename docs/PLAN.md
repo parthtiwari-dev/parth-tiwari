@@ -98,7 +98,7 @@ The load-bearing rewrite. Nothing visual changes for the visitor; everything dow
 | 2.3 | Adopt **Lenis** for scroll, feeding ScrollTrigger | DESIGN §4 |
 | 2.4 | **Quality tier system** — one detection feeding particle count, shader complexity, post-FX, DPR. Tier the sky shader, which is currently untiered. | DESIGN §8 |
 | 2.5 | **One scene across all breakpoints.** Delete `MobileStarWorld`; remove the mount/unmount breakpoint switch. Kills the 768–820px dead zone and the WebGL context churn. | DESIGN §9 |
-| 2.6 | **Tokens as single source of truth** for DOM and WebGL. Extend the Tailwind theme; migrate the 35 hardcoded `--ice` literals. Star colors read from the same palette as the legend. | ARCHITECTURE §7 |
+| 2.6 | **Tokens as single source of truth** for DOM and WebGL. **Node colours done 2026-08-17** — `--node-personal/work/build/utility` added to `tokens.css`; `ConstellationNodes` resolves them via `utils/cssTokens.ts` with the tuned hex as fallback, and the legend swatches in `SceneRoot` read the same four. This fixed a real correctness bug: three of four swatches named a colour their star was not. Values were *promoted upward* from the scene rather than reconciled downward, so the emissive tuning is unchanged and there is no visual regression. **Still open:** extending the Tailwind theme and migrating the remaining raw literals. | ARCHITECTURE §7 |
 | 2.7 | Replace `vh`-based scroll runways with pixel offsets | DESIGN §9 |
 | 2.8 | Dev-only Tweakpane camera authoring GUI that dumps poses to JSON | DESIGN §4 |
 | 2.9 | Collapse the two overlay booleans into one state machine; scroll lock and Escape handled once | ARCHITECTURE §3 |

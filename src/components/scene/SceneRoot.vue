@@ -211,23 +211,23 @@ onUnmounted(() => {
 }
 
 .constellation-index__dot--personal {
-  background: var(--gold);
-  color: var(--gold);
+  background: var(--node-personal);
+  color: var(--node-personal);
 }
 
 .constellation-index__dot--work {
-  background: var(--teal-active);
-  color: var(--teal-active);
+  background: var(--node-work);
+  color: var(--node-work);
 }
 
 .constellation-index__dot--current {
-  background: var(--amber);
-  color: var(--amber);
+  background: var(--node-build);
+  color: var(--node-build);
 }
 
 .constellation-index__dot--utility {
-  background: var(--utility);
-  color: var(--utility);
+  background: var(--node-utility);
+  color: var(--node-utility);
 }
 
 .constellation-index__note {
