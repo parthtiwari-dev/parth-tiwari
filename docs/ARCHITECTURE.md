@@ -166,7 +166,7 @@ Hover state is tracked **three ways simultaneously**: written onto `node.runtime
 
 **Inventory gap:** 3 of the 6 shader programs actually in the scene (halo, corona, glint) are not in `src/shaders/` — they live as inline template strings in `ConstellationNodes.vue:138-265`.
 
-**Hard limit:** `particle.vert.glsl:12` declares `uniform float uClusterBrightness[9]`, read via a 9-branch if-chain because GLSL ES 1.0 forbids dynamic indexing. **Adding a 10th project silently breaks this.**
+**~~Hard limit~~ — resolved 2026-08-17.** `particle.vert.glsl` used to declare `uniform float uClusterBrightness[9]` read via a 9-branch if-chain, and a tenth project broke it silently. It now sizes from a `CLUSTER_COUNT` define injected by `useParticleField.ts` from `projects.length`, with the lookup as a bounded loop — GLSL ES 1.0 forbids indexing by an arbitrary expression, but a for-loop index over a constant bound is a constant-index-expression. Verified in-browser at ten projects. There is no project-count limit in the shader any more.
 
 ---
 

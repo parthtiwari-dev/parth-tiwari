@@ -115,9 +115,11 @@ It is the fast, widely-recommended way to make CSS3D labels occlude behind WebGL
 
 Glowing stars are non-negotiable here, so occlusion uses raycast-against-the-nine-meshes with opacity fade instead. This decision was made once; do not rediscover it.
 
-### `uClusterBrightness[9]` is a hard project-count limit
+### `uClusterBrightness` was a hard project-count limit — fixed 2026-08-17
 
-`particle.vert.glsl:12` declares a fixed-size array read through a 9-branch if-chain, because GLSL ES 1.0 forbids dynamic indexing. **A tenth project breaks the shader silently** — no error, just wrong output.
+`particle.vert.glsl` declared a fixed `[9]` array read through a hand-unrolled 9-branch if-chain, so a tenth project grew the JS uniform array while the declaration stayed at nine — **failing silently**, no error, just wrong output.
+
+The array is now sized by a `CLUSTER_COUNT` define injected from `projects.length`, and the lookup is a `for` loop over that constant bound. GLSL ES 1.0 forbids indexing by an arbitrary expression, but a loop index over a constant bound *is* a constant-index-expression, so this is legal ES 1.0 and the shader no longer knows how many projects exist. **Do not reintroduce a literal length.**
 
 ### `vh` units and percentage scroll offsets break on mobile
 
@@ -188,7 +190,7 @@ The full reference index with what to take from each is `DESIGN.md` §12. The th
 Unresolved, none blocking Phase 0 or Phase 2:
 
 1. **Project dates.** Owner is supplying month/year per project. Blocks orbital angle (3.1) only.
-2. **`tathya`, `beatmind`, `support-core`** are live deployments with no portfolio entry. Owner is sorting them per-project. Anything that pushes past nine nodes must first fix `uClusterBrightness[9]`.
+2. **`tathya` and `support-core`** are live deployments with no portfolio entry. Owner is sorting them per-project. The nine-node shader limit that used to gate this is gone. **`beatmind` is resolved** — shipped as the tenth node 2026-08-17.
 3. **Whether Vivid ships at all.** It is Stick and Dot company work, same as the app the owner excluded. Currently linked per instruction — revisit if the exclusion was about company work generally rather than that one repo.
 
 ---
@@ -209,7 +211,7 @@ This nearly caused a real mistake. `vivid.vercel.app` returns 200 and **belongs 
 | tathya | `tathya-1.vercel.app` | yes |
 | support-core | `support-core-nine.vercel.app` | yes |
 | stick-and-dot-app | `stick-and-dot-app.vercel.app` | no — owner exclusion |
-| beatmind | `beatmind-theta.vercel.app` | no — 404, latest deploy `BLOCKED` |
+| beatmind | **`www.beatmind.tech`** (apex 308s to www) | **yes — linked 2026-08-17.** The old `beatmind-theta.vercel.app` 404 / `BLOCKED` reading is stale; it shipped to its own production domain with production Clerk keys. |
 | oncoverse | none resolving | no — latest production deploy in `ERROR` |
 
 **OncoVerse has never successfully deployed to production.** Its empty links panel is accurate, not an oversight. Do not "fix" it by inventing a URL.

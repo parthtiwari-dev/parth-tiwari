@@ -38,7 +38,7 @@ It names the rule above rather than restating the thesis: positions are *compute
 
 ## 2. The mapping
 
-Nine projects. Seven axes. Nothing arbitrary.
+Ten projects. Seven axes. Nothing arbitrary.
 
 | Axis | Encodes | Derived from | Why this axis |
 |---|---|---|---|
@@ -50,7 +50,7 @@ Nine projects. Seven axes. Nothing arbitrary.
 | **Cluster / arm** | Domain | capability matching | RAG, agents, diffusion, fraud ML, medical resolve as regions at galaxy scale. |
 | **Apparent magnitude** | Label priority | derived composite | Governs when a label appears. See §6. |
 
-**Positions are computed at runtime from data.** Adding a tenth project means adding a record, not typing coordinates. This also removes the hard limit currently baked into `particle.vert.glsl`, whose `uniform float uClusterBrightness[9]` breaks silently at ten projects.
+**Positions are computed at runtime from data.** Adding a project means adding a record, not typing coordinates. The hard limit that used to be baked into `particle.vert.glsl` — `uniform float uClusterBrightness[9]`, which broke silently at ten projects — was removed on 2026-08-17; the array is now sized from `projects.length` via a `CLUSTER_COUNT` define. Node *positions* are still literal coordinates in `projects.ts`; that is what this section remains about.
 
 ### The honesty problem, and the honest solution
 
