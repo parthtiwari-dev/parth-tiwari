@@ -244,5 +244,5 @@ It argues that four structural decisions must change, and they are the same four
 
 1. **Load what the visitor will actually use** — split the 3D stack behind a dynamic import (C1).
 2. **One scene across all breakpoints** — removes the mount/unmount context churn (H5), the dead zone (H6), and the duplicated mobile renderer (C3) in a single move.
-3. **Keyboard parity is not optional** — the DOM must carry a real, focusable representation of the nine projects on every breakpoint (C2).
+3. **Keyboard parity is not optional** — the DOM must carry a real, focusable representation of every project on every breakpoint (C2).
 4. **One frame loop** — kills the per-frame layout thrash, the orphan chains, and the never-stopping off-screen render (H1, H2, C3, M2).

@@ -47,7 +47,7 @@ Projects invert to screenshot → outcome → live demo → the existing evidenc
 
 The governing rule. Position, size, angle, speed, moons, cluster, and label priority are all derived from project data. Nothing is hand-placed.
 
-This came from noticing that all nine node positions in the current build are literal typed coordinates. A portfolio whose thesis is *evidence* cannot be built on meaningless decoration — it refutes itself. The bar is Shirley Wu's *Legends*, where 3D geometry is generated from each subject's data.
+This came from noticing that every node position in the current build is a literal typed coordinate. A portfolio whose thesis is *evidence* cannot be built on meaningless decoration — it refutes itself. The bar is Shirley Wu's *Legends*, where 3D geometry is generated from each subject's data.
 
 **Consequence:** adding a tenth project must require adding a data record and nothing else. If a change makes that untrue, the change is wrong.
 
@@ -190,7 +190,7 @@ The full reference index with what to take from each is `DESIGN.md` §12. The th
 Unresolved, none blocking Phase 0 or Phase 2:
 
 1. **Project dates.** Owner is supplying month/year per project. Blocks orbital angle (3.1) only.
-2. **`tathya` and `support-core`** are live deployments with no portfolio entry. Owner is sorting them per-project. The nine-node shader limit that used to gate this is gone. **`beatmind` is resolved** — shipped as the tenth node 2026-08-17.
+2. ~~**`tathya`, `beatmind`, `support-core`** have no portfolio entry.~~ **All three resolved 2026-08-17** — shipped as nodes, taking the set to twelve. The nine-node shader limit that used to gate this is gone (`CLUSTER_COUNT`). Only their Render/Streamlit backends stay unlinked, on cold-start and auth-wall grounds respectively.
 3. **Whether Vivid ships at all.** It is Stick and Dot company work, same as the app the owner excluded. Currently linked per instruction — revisit if the exclusion was about company work generally rather than that one repo.
 
 ---
@@ -208,8 +208,8 @@ This nearly caused a real mistake. `vivid.vercel.app` returns 200 and **belongs 
 | Project | Production URL | Ships |
 |---|---|---|
 | vivid | `vivid-alpha.vercel.app` | yes |
-| tathya | `tathya-1.vercel.app` | yes |
-| support-core | `support-core-nine.vercel.app` | yes |
+| tathya | `tathya-1.vercel.app` | **yes — linked 2026-08-17.** Live and actively ingesting; topics dated the current month. Render API (`tathya-zi9p.onrender.com`) NOT linked — free tier, 30–60s cold start. |
+| support-core | `support-core-nine.vercel.app` | **yes — linked 2026-08-17.** Serves the real app. Render backend NOT linked — a bare API root is not a demo. |
 | stick-and-dot-app | `stick-and-dot-app.vercel.app` | no — owner exclusion |
 | beatmind | **`www.beatmind.tech`** (apex 308s to www) | **yes — linked 2026-08-17.** The old `beatmind-theta.vercel.app` 404 / `BLOCKED` reading is stale; it shipped to its own production domain with production Clerk keys. |
 | oncoverse | none resolving | no — latest production deploy in `ERROR` |

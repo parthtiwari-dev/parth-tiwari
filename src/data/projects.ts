@@ -761,6 +761,119 @@ export const projects: Project[] = [
     },
   },
   {
+    id: 'tathya',
+    name: 'Tathya',
+    tagline: 'An autonomous record of India’s Union Government. No topic chosen by hand.',
+    status: 'in-progress',
+    nodeKind: 'personal-project',
+    origin: 'personal',
+    weight: 'major',
+    started: '2026-07',
+    stack: [
+      'Python',
+      'FastAPI',
+      'Next.js',
+      'Supabase',
+      'PostgreSQL',
+      'Gemini',
+      'clustering',
+      'Render',
+      'Vercel',
+    ],
+    outcome:
+      'Watches configured public sources continuously and clusters what it finds into sourced case files showing what government, media and citizens each said. It issues no verdict — the reader decides.',
+    // Verified 2026-08-17: live and actively ingesting, with topics dated this
+    // month. The Render API is intentionally not linked — free tier, sleeps after
+    // 15 minutes, 30-60s cold start. A link that might take a minute to answer is
+    // not evidence.
+    links: {
+      github: 'https://github.com/parthtiwari-dev/tathya',
+      liveUI: 'https://tathya-1.vercel.app',
+    },
+    panels: {
+      problem: {
+        quote: 'Every tracker of government is somebody choosing what counts.',
+        brokenFlowId: 'tathya-atlas-source-boundary',
+      },
+      architecture: {
+        summary:
+          'A five-stage pipeline from ingestion to persistence, fronted by a typed API. The editorial decision is removed by construction: sources are configured once, and nothing downstream picks topics.',
+        nodes: [
+          {
+            id: 'ingest',
+            label: 'Continuous Ingestion',
+            description: 'Configured public sources — government releases, media, citizen signal — watched on a schedule rather than sampled when someone remembers.',
+            stackChips: ['Python'],
+            connections: ['snapshot'],
+            position: { x: 8, y: 50 },
+          },
+          {
+            id: 'snapshot',
+            label: 'Snapshotting',
+            description: 'What a source said at a point in time is stored, so a later edit or deletion does not quietly rewrite the record.',
+            stackChips: ['Supabase', 'PostgreSQL'],
+            connections: ['cluster'],
+            position: { x: 30, y: 72 },
+          },
+          {
+            id: 'cluster',
+            label: 'Clustering',
+            description: 'Related signal across sources collapses into one topic. This is the step that replaces an editor, and it is where the system is most fallible.',
+            stackChips: ['clustering'],
+            connections: ['generate'],
+            position: { x: 54, y: 44 },
+          },
+          {
+            id: 'generate',
+            label: 'Case File Generation',
+            description: 'A deterministic extractive builder assembles the case file. A Gemini-grounded path exists for narrative titles and summaries but is not yet the default in the deployed persist step.',
+            stackChips: ['Gemini', 'extractive'],
+            connections: ['api'],
+            position: { x: 76, y: 70 },
+          },
+          {
+            id: 'api',
+            label: 'API v1 + Reader',
+            description: 'FastAPI typed against the frontend’s own type definitions, with a Next.js reader wired to the real API — no mock data anywhere in the deployed path.',
+            stackChips: ['FastAPI', 'Next.js', 'Vercel'],
+            connections: [],
+            position: { x: 92, y: 34 },
+          },
+        ],
+      },
+      proof: {
+        metrics: [
+          { label: 'Pipeline stages', value: 5, display: '5' },
+          { label: 'Commits', value: 62, display: '62' },
+        ],
+        milestones: [
+          { label: 'Ingestion, snapshotting, clustering, persistence', status: 'complete', detail: 'deployed' },
+          { label: 'API v1 typed against the frontend', status: 'complete', detail: 'FastAPI' },
+          { label: 'Reader wired to the real API, no mock data', status: 'complete', detail: 'Next.js' },
+          { label: 'Gemini-grounded generation as the default path', status: 'active', detail: 'extractive for now' },
+          { label: 'Manual audit gate', status: 'roadmap', detail: 'not yet run' },
+        ],
+        caveat:
+          'Live topics currently show cluster titles and templated summaries, not final generated case files — the deployed persist step still calls the deterministic extractive builder. The repo’s own docs track this rather than the README, which lags.',
+      },
+      boundary: {
+        items: [
+          { side: 'will', text: 'Show what each source actually said, with attribution, and let the reader decide.' },
+          { side: 'will', text: 'State that clustering is the fallible step, because it is the one replacing an editor.' },
+          { side: 'will', text: 'Say plainly that the Gemini-grounded path is built but not yet the deployed default.' },
+          { side: 'refuses', text: 'Issue a verdict, a rating, or a partisan framing of any topic.' },
+          { side: 'refuses', text: 'Choose topics by hand — the moment it does, it is a publication, not a record.' },
+          { side: 'refuses', text: 'Link the Render API as a demo while it cold-starts for a minute on the free tier.' },
+        ],
+      },
+    },
+    node: {
+      position: { x: 2.5, y: -2.4, z: 5.5 },
+      size: 'medium',
+      relatedIds: ['medrag', 'support-core'],
+    },
+  },
+  {
     id: 'oncoverse',
     name: 'OncoVerse',
     tagline: 'In-progress 3D cancer education atlas with source-backed boundaries.',

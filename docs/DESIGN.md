@@ -24,7 +24,7 @@ The site is a solar system in which Parth is the star and the work orbits him. T
 
 > **Every visual property is derived from project data. If a property cannot be justified by data, it is cut.**
 
-This is not an aesthetic preference. The site's entire argument is *evidence* — systems that act only after the evidence agrees. A portfolio making that argument in a universe of hand-placed, meaningless stars refutes itself. The current build places all nine node positions as literal typed coordinates. That is the single thing this redesign most needs to undo.
+This is not an aesthetic preference. The site's entire argument is *evidence* — systems that act only after the evidence agrees. A portfolio making that argument in a universe of hand-placed, meaningless stars refutes itself. The current build places every node position as a literal typed coordinate. That is the single thing this redesign most needs to undo.
 
 The standard to hold this to is **Shirley Wu's *Legends*** (`shirleywu.studio/legends`) — 51 female Nobel laureates rendered as 3D crystals whose *form is generated from each laureate's Wikipedia data*. The geometry is the encoding, not a decoration wrapped around a label. That is the bar.
 
@@ -38,7 +38,9 @@ It names the rule above rather than restating the thesis: positions are *compute
 
 ## 2. The mapping
 
-Ten projects. Seven axes. Nothing arbitrary.
+Twelve projects. Seven axes. Nothing arbitrary.
+
+*(The count is deliberately the only number in this document that names it. Everywhere else says "every project" — prose that hardcodes a count goes stale the moment one ships, which is exactly what happened to this file twice.)*
 
 | Axis | Encodes | Derived from | Why this axis |
 |---|---|---|---|
@@ -54,7 +56,7 @@ Ten projects. Seven axes. Nothing arbitrary.
 
 ### The honesty problem, and the honest solution
 
-True-scale orbital layout will look bad. A real solar system is 99.99% empty, and nine projects laid out at honest relative distance produce a sparse, unreadable field. Every space visualization hits this.
+True-scale orbital layout will look bad. A real solar system is 99.99% empty, and a dozen projects laid out at honest relative distance produce a sparse, unreadable field. Every space visualization hits this.
 
 `solarsystemscope.com` solves it correctly: **ship both, and label which one the viewer is in.** A schematic mode compresses distances for legibility; a true mode shows honest proportion. The toggle is not a settings afterthought — **the disclosure is itself part of the information design**. A site about evidence should be visibly candid about when it is compressing the truth for readability.
 
@@ -124,9 +126,9 @@ Transition between them is implicit — the moment the user drags, guided scrub 
 
 ### The 40-second path
 
-Independent of both modes, a real DOM index of all nine projects exists in the document on every breakpoint. Keyboard-navigable, screen-reader-complete, crawlable, deep-linkable.
+Independent of both modes, a real DOM index of every project exists in the document on every breakpoint. Keyboard-navigable, screen-reader-complete, crawlable, deep-linkable.
 
-Quiet on desktop, primary on mobile. **This is what fixes the current desktop keyboard lockout**, where the nine projects — the entire point of the site — are reachable only by `pointermove`.
+Quiet on desktop, primary on mobile. **This is what fixes the current desktop keyboard lockout**, where the projects — the entire point of the site — are reachable only by `pointermove`.
 
 ### The Snow Fall warning
 
@@ -231,7 +233,7 @@ The hardest solved-but-unobvious problem in the whole build.
 
 ### Positioning
 
-For nine nodes, skip `CSS2DRenderer` and project manually into Vue state:
+At this node count, skip `CSS2DRenderer` and project manually into Vue state:
 
 1. `vec.project(camera)` → NDC
 2. `x = (ndc.x * 0.5 + 0.5) * width`, `y = (-ndc.y * 0.5 + 0.5) * height`
