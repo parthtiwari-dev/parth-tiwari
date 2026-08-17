@@ -172,7 +172,9 @@ There is no router. Three modes, all on `/`:
 
 **Plain mode must stay complete.** It is the accessibility and SEO backstop — every piece of content reachable in the full experience must also be reachable there. When you add content, add it to `PlainExperience.vue` too.
 
-**The reverse is currently broken.** `ServicesBlock` and `ContactPanel` are mounted *only* inside `PlainExperience`, so the offer and the contact form exist at `?plain=1` and nowhere else. A visitor to the default experience gets the hero, top bar, project index, overlays and the corner `BookingCta` — no services, no form. The copy is written and good; it is simply not on the page anyone lands on. Tracked as `docs/PLAN.md` 1.5.11.
+**Both modes need their own copy.** `ServicesBlock` and `ContactPanel` render in plain mode via `PlainExperience` and in the full experience via `ConversionSection`. Adding a surface to one does not add it to the other.
+
+**Only `SceneRoot` puts height in the document.** The hero is `position: fixed`, `MobileStarWorld` is a fixed 100vh backdrop, and reduced-motion desktop mounts no scene — so `SceneRoot`'s `h-[400vh]` is the page's only scroll runway, on one path. Anything you append after the scene starts at document position 0 on mobile and under reduced motion, landing under the fixed hero. The `hero-runway` spacer in `App.vue` exists for exactly that.
 
 ---
 

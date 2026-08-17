@@ -89,7 +89,7 @@ This is why 1.1 shrank rather than grew: the confirmed-three became a confirmed-
 | 1.5.8 | About: photo + first-person intro | owner photo |
 | 1.5.9 | Reserve a testimonial slot; leave it honestly empty until one exists | owner |
 | 1.5.10 | Site URL as a single exported constant consumed by canonical, OG, Twitter, JSON-LD, sitemap | done |
-| 1.5.11 | **Mount `ServicesBlock` and `ContactPanel` in the full experience.** Both currently render only inside `PlainExperience`, so the offer and the contact form exist at `?plain=1` and nowhere else. The copy is written and good; it is simply not on the page a real visitor lands on. | — |
+| 1.5.11 | **Mount `ServicesBlock` and `ContactPanel` in the full experience.** Both rendered only inside `PlainExperience`, so the offer and the contact form existed at `?plain=1` and nowhere else. | **done** — `ConversionSection`, after the scene runway |
 
 **Why before Phase 2:** the engine rewrite is invisible to a buyer. Screenshots, outcomes and a booking button are the entire difference between a site that generates leads and one that does not. If the project stalls after this phase, it has still paid for itself.
 

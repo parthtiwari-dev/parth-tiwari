@@ -163,11 +163,13 @@ The safe form puts the hidden state inside the keyframes and fills `backwards`, 
 
 The same trap applies to `prefers-reduced-motion: reduce` wherever a reduced-motion rule kills an animation without restoring the final state.
 
-### The conversion layer is not mounted in the full experience
+### Only `SceneRoot` puts height in the document
 
-`ServicesBlock` and `ContactPanel` are rendered **only** inside `PlainExperience`, so they appear at `?plain=1` and nowhere else (`App.vue`). A visitor to the default experience sees the hero, the top bar, the project index, the overlays and the corner `BookingCta` — but no offer and no contact form.
+`HeroSection` is `position: fixed` and contributes no height. `MobileStarWorld` is a fixed 100vh backdrop. Reduced-motion desktop mounts no scene at all. **`SceneRoot`'s `h-[400vh]` is the only scroll runway in the page**, and it exists on exactly one path: desktop, non-mobile, no reduced-motion preference.
 
-The copy exists and is good; it simply is not on the page a real visitor lands on. This fails `PRD.md` C4 and is tracked as `PLAN.md` 1.5.11.
+So any DOM section added after the scene starts at document position 0 on mobile and under reduced motion, landing straight under the fixed hero. `ConversionSection` hit this on its first cut — the offer copy rendered underneath "PARTH TIWARI" on a phone. The fix is the `hero-runway` spacer in `App.vue`, gated on `!showDesktopScene`, sized in `svh` so mobile browser chrome does not push the hero cue under the fold.
+
+Resolved: `ServicesBlock` and `ContactPanel` used to render only inside `PlainExperience`, so the offer and contact form existed at `?plain=1` and nowhere else. `ConversionSection` now mounts both in the full experience (`PLAN.md` 1.5.11). Plain mode keeps its own copies — it must stay complete independently.
 
 ---
 
