@@ -59,6 +59,8 @@ There is no test runner and no linter configured. Type checking and a clean buil
 
 Always resolve the production alias from the Vercel project's `domains` array, confirm 200 without auth, and confirm ownership before linking.
 
+The currently verified set lives in `docs/PLAN.md` Phase 1. Two entries there are easy to get wrong: **BeatMind is `beatmind.tech`** (not the `beatmind-theta` alias older docs record as a 404), and **`support-core` must not be linked at all** — its frontend returns 200 but its backend is dead, so the demo breaks on first use.
+
 **Never invent social proof.** No fabricated testimonials, no estimated metrics, no implied clients. The testimonial slot stays empty until a real quote exists. A site whose thesis is evidence cannot fake its own.
 
 **The site URL lives in exactly one constant.** It feeds canonical, OG, Twitter, JSON-LD and the sitemap. `parthtiwari.com` is planned — do not scatter the URL across files again.
@@ -78,6 +80,30 @@ All color and spacing comes from `src/styles/tokens.css`. Do not hardcode a hex 
 This rule is currently violated heavily — `--ice` appears as a raw literal 35 times across 15 files. When you touch a file, replace the literals you find in it. Do not add new ones.
 
 Tailwind's config carries no theme extension, so tokens are reached via the escape-hatch form: `text-[color:var(--ice)]`. If you extend the Tailwind theme to fix this, migrate call sites in the same change rather than leaving two idioms alive.
+
+### Evidence surfaces use the observation log, not cards
+`src/components/common/ObservationLog.vue` is the signature element (`DESIGN_LOCK.md`). Every chrome surface that presents evidence — Services, Proof metrics and milestones, the project index, any future outcome or testimonial list — renders through it. **Card-grid treatment of data is banned**, because the log is distinctive precisely where a card grid is not.
+
+Pass `as="table"` for genuine data and `as="list"` for navigation. The index rail is a list of buttons; announcing it as a table would be worse for a screen reader while looking identical. The lock governs appearance, never semantics.
+
+The chrome carries **one accent** — `--gold`. `--teal-active`, `--amber` and `--utility` belong to the 3D node-kind legend and must not leak into 2D. No gradients, no drop-shadow-as-elevation, no pill radius: use `--radius-chrome`.
+
+### Never make content depend on an animation running
+`src/styles/plain.css` applies `animation: none !important` to everything under `.plain-mode`. An element whose visible state comes from an animation is therefore **invisible forever in plain mode** — the crawlable, accessible backstop.
+
+This already happened once, in the first cut of `ObservationLog`, and it hid the entire Services block. Typecheck and build were both clean. Put the hidden state inside the keyframes and fill `backwards`, so stripping the animation reveals the element:
+
+```css
+@media (prefers-reduced-motion: no-preference) {
+  .row { animation: enter 260ms var(--ease-out-expo) backwards; }
+}
+@keyframes enter {
+  from { opacity: 0; transform: translateY(0.4rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+```
+
+Typecheck and build cannot catch this. Render the page and read the DOM.
 
 ### The 3D layer must read the same palette as the DOM
 Star colors are currently hardcoded hexes in `ConstellationNodes.vue` that do not match the legend swatches describing them. Any new scene color reads from tokens.
@@ -145,6 +171,8 @@ There is no router. Three modes, all on `/`:
 | Debug | `?debug=1` | Legacy console surface |
 
 **Plain mode must stay complete.** It is the accessibility and SEO backstop — every piece of content reachable in the full experience must also be reachable there. When you add content, add it to `PlainExperience.vue` too.
+
+**The reverse is currently broken.** `ServicesBlock` and `ContactPanel` are mounted *only* inside `PlainExperience`, so the offer and the contact form exist at `?plain=1` and nowhere else. A visitor to the default experience gets the hero, top bar, project index, overlays and the corner `BookingCta` — no services, no form. The copy is written and good; it is simply not on the page anyone lands on. Tracked as `docs/PLAN.md` 1.5.11.
 
 ---
 

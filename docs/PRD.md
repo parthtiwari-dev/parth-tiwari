@@ -24,7 +24,7 @@ It is well-built and it is optimised for the wrong buyer.
 
 **It sells engineering, not outcomes.** *"Self-correcting Text-to-SQL API with schema retrieval and critic gates"* tells a client nothing about what it did for anyone. No time saved, no cost removed, no users served.
 
-**There is no offer.** No services, no availability, no indication that hiring is possible. Contact is buried inside an About overlay.
+**There is no offer *on the page a visitor lands on*.** `ServicesBlock` and `ContactPanel` have since been built and are good — but both are mounted only inside `PlainExperience`, so they render at `?plain=1` and nowhere else. The default experience still offers a visitor no services, no availability, and no contact form; only the corner booking button. The copy is written, reviewed and styled. It is simply not where anyone will see it. Tracked as `PLAN.md` 1.5.11.
 
 **There is no proof of trust.** No testimonials, no client names, no numbers from real usage.
 
@@ -128,6 +128,14 @@ All four channels ship, ranked rather than presented as four equal buttons, whic
 
 **No prices anywhere.** Every path leads to a conversation, which preserves the ability to price by client and geography.
 
+### 7.3b Engagement shape: project first, retainer after
+
+Owner-confirmed. An engagement starts as one scoped project with an agreed deliverable, and continues as a monthly retainer if it is worth continuing.
+
+This matters to the copy, not just the commercials. A retainer is sold on *reliability over time*, which is a harder claim than "can build" — and it is claimable here only because several systems (BeatMind, Tathya, SecondSelf) have actually been run and iterated rather than delivered once. Where a project makes that argument, it is the retainer evidence.
+
+Rendered as `engagementStages` in `services.ts`, below the three offers, as a two-row observation log. Still no prices — the sequence is the message.
+
 ### 7.4 One universe, all screens
 
 A single WebGL world replaces the desktop-scene / mobile-canvas split, with camera choreography, density and input model adapting per device and quality tier. See `DESIGN.md`.
@@ -205,11 +213,17 @@ The site stays on `parth-tiwari-1.vercel.app` for now, with `parthtiwari.com` pl
 | Project | Production URL | Ships |
 |---|---|---|
 | vivid | `vivid-alpha.vercel.app` | yes |
-| tathya | `tathya-1.vercel.app` | yes |
-| support-core | `support-core-nine.vercel.app` | yes |
+| tathya | `tathya-1.vercel.app` | yes — pending a node |
+| beatmind | `beatmind.tech` | yes — pending a node, with the caveat below |
+| support-core | `support-core-nine.vercel.app` | **no — backend dead** |
 | stick-and-dot-app | `stick-and-dot-app.vercel.app` | no — owner exclusion |
-| beatmind | `beatmind-theta.vercel.app` | no — 404, deploy `BLOCKED` |
 | oncoverse | none resolving | no — production deploy in `ERROR` |
+
+**Re-verified 2026-08-17** against each Vercel project's `domains` array plus a live request. Two rows changed:
+
+**BeatMind is live at `beatmind.tech`**, not the `beatmind-theta` alias this table previously recorded as a 404. The custom domain is attached and owned. One caveat that matters commercially: `/create` redirects to sign-in, so a cold visitor reaches a marketing page, not the product. Linking it proves the site exists; only a screenshot or demo video proves the product works.
+
+**support-core must not be linked.** Its frontend still returns 200, but the Render backend it depends on is gone — three requests, 180-second timeouts, no response. The chat widget loads and then fails on first message. A demo that breaks in front of a buyer is worse than an empty links panel, which is exactly the principle the empty-panel rule already encodes.
 
 **OncoVerse has never successfully deployed to production.** Its empty links panel is accurate.
 
@@ -228,6 +242,7 @@ Four things the build cannot supply, in order of impact:
 
 ## 12. Open questions
 
-1. **`tathya`, `beatmind`, `support-core`** are live with no portfolio entry. Owner sorting per-project. Anything past nine nodes requires fixing `uClusterBrightness[9]` first.
+1. **`tathya` and `beatmind`** are live with no portfolio entry. Owner sorting per-project. Anything past nine nodes requires fixing `uClusterBrightness[9]` first. (`support-core` has dropped off this list — its backend is dead.)
 2. **Whether Vivid ships.** It is Stick and Dot company work, same as the excluded app. Linked per instruction — revisit if that exclusion was categorical.
-3. **Which booking tool.** Cal.com is free and self-hostable; Calendly is more familiar to Western buyers.
+3. ~~**Which booking tool.**~~ **Resolved:** Cal.com, live at `cal.com/parth-tiwari` and re-verified 200. `IS_BOOKING_CONFIRMED` is `true`, so the CTA points at the booking page rather than falling back to email.
+4. **How BeatMind demonstrates itself**, given `/create` sits behind sign-in. A link alone shows a marketing page, not a working product.

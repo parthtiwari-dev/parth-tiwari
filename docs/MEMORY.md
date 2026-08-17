@@ -12,8 +12,8 @@ Update this when a decision changes. It is the file that stops the same debate h
 |---|---|
 | Baseline commit | `09d2229` |
 | Live site | Vercel project `parth-tiwari`, static SPA off `main` |
-| Redesign branch | `claude/portfolio-redesign-arch-zm9eq3` |
-| Status | Docs complete. No source changes yet. `PLAN.md` Phase 0 is the next work. |
+| Redesign branch | `claude/portfolio-codebase-review-g1tqzm` |
+| Status | Phase 0 largely shipped. `DESIGN_LOCK.md`'s observation-log signature element is now adopted across the chrome (`DESIGN_REVIEW.md` items 3 and 4). Phase 2 (the engine) has not started. |
 
 The site as it stands is feature-complete and genuinely well-built. The redesign is elevation, not rescue. Anyone who reads `AUDIT.md` and concludes "this is a mess" has misread it — the defects are concentrated in exactly the areas the original build never had a reason to look at.
 
@@ -137,6 +137,38 @@ The current build gates `SceneRoot` with `v-if`, which stops it *mounting* — t
 
 `AudioContext` starts `suspended`; `context.resume()` must be called inside a click/tap handler. This is why every good 3D site has a start button — the constraint generates the design rather than fighting it.
 
+### Never hide content behind an animation — `plain.css` strips them all
+
+`src/styles/plain.css` applies `animation: none !important` to every descendant of `.plain-mode`. Any element whose *visible* state depends on an animation running is therefore **permanently invisible in plain mode** — which is the crawlable, accessible, printable backstop the whole site falls back to.
+
+This is not hypothetical. The first cut of `ObservationLog` used the ordinary pattern:
+
+```css
+.row { opacity: 0; animation: enter 260ms forwards; }
+```
+
+That made the entire Services block and every Proof metric invisible at `?plain=1`. **Typecheck and build were both clean** — nothing catches this but rendering the page and reading the DOM.
+
+The safe form puts the hidden state inside the keyframes and fills `backwards`, so removing the animation reveals the element at its natural opacity:
+
+```css
+@media (prefers-reduced-motion: no-preference) {
+  .row { animation: enter 260ms var(--ease-out-expo) backwards; }
+}
+@keyframes enter {
+  from { opacity: 0; transform: translateY(0.4rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+```
+
+The same trap applies to `prefers-reduced-motion: reduce` wherever a reduced-motion rule kills an animation without restoring the final state.
+
+### The conversion layer is not mounted in the full experience
+
+`ServicesBlock` and `ContactPanel` are rendered **only** inside `PlainExperience`, so they appear at `?plain=1` and nowhere else (`App.vue`). A visitor to the default experience sees the hero, the top bar, the project index, the overlays and the corner `BookingCta` — but no offer and no contact form.
+
+The copy exists and is good; it simply is not on the page a real visitor lands on. This fails `PRD.md` C4 and is tracked as `PLAN.md` 1.5.11.
+
 ---
 
 ## Rejected, with reasons
@@ -206,11 +238,17 @@ This nearly caused a real mistake. `vivid.vercel.app` returns 200 and **belongs 
 | Project | Production URL | Ships |
 |---|---|---|
 | vivid | `vivid-alpha.vercel.app` | yes |
-| tathya | `tathya-1.vercel.app` | yes |
-| support-core | `support-core-nine.vercel.app` | yes |
+| tathya | `tathya-1.vercel.app` | yes — pending a node |
+| beatmind | `beatmind.tech` | yes — pending a node; `/create` is behind sign-in |
+| support-core | `support-core-nine.vercel.app` | **no — backend dead** |
 | stick-and-dot-app | `stick-and-dot-app.vercel.app` | no — owner exclusion |
-| beatmind | `beatmind-theta.vercel.app` | no — 404, latest deploy `BLOCKED` |
 | oncoverse | none resolving | no — latest production deploy in `ERROR` |
+
+Re-verified 2026-08-17. Two rows moved, and both moved for reasons worth remembering:
+
+**BeatMind is at `beatmind.tech`.** The older `beatmind-theta.vercel.app` record (404, deploy `BLOCKED`) is dead history — a custom domain was attached later. This is the failure mode of caching a URL in a doc: the record outlived the fact. Re-resolve from `domains` rather than trusting any table, including this one.
+
+**support-core is no longer linkable.** Its Vercel frontend still returns 200, so a source-only check passes, but the Render backend behind it is gone — three requests, 180s timeouts. The demo loads and dies on first message. **A 200 on the frontend is not evidence the product works**; that is a new lesson this table did not previously encode.
 
 **OncoVerse has never successfully deployed to production.** Its empty links panel is accurate, not an oversight. Do not "fix" it by inventing a URL.
 

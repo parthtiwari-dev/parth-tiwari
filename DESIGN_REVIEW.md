@@ -24,12 +24,13 @@ Not run. See Detector coverage above.
 
 Where the code disagrees with `DESIGN_LOCK.md`.
 
-| Token | Lock says | Code does | Location |
-|---|---|---|---|
-| CTA shape | Banned: "Pill-shaped CTAs at marketing scale... keep the tighter, more rectangular radius" (borrowed from Warp, not Vercel) | `BookingCta` renders as a full pill (`border-radius: 999px` equivalent) | `src/components/conversion/BookingCta.vue` — check the button's `border-radius` rule |
-| Data-surface treatment | Banned: "Card-grid layout for any evidence/proof/data surface... the observation log is the signature element specifically *because* it is not a card grid" | `ServicesBlock`, `ProjectIndex`, and the existing Proof panel all use card/list treatments, not the log motif | `src/components/conversion/ServicesBlock.vue`, `src/components/sections/ProjectIndex.vue`, `src/components/overlay/panels/PanelProof.vue` |
+| Token | Lock says | Code does | Location | State |
+|---|---|---|---|---|
+| CTA shape | Banned: "Pill-shaped CTAs at marketing scale... keep the tighter, more rectangular radius" (borrowed from Warp, not Vercel) | `BookingCta` renders as a full pill (`border-radius: 999px` equivalent) | `src/components/conversion/BookingCta.vue` | **RESOLVED** — now `var(--radius-chrome)`, with the gradient fill and drop-shadow removed too |
+| Data-surface treatment | Banned: "Card-grid layout for any evidence/proof/data surface... the observation log is the signature element specifically *because* it is not a card grid" | `ServicesBlock`, `ProjectIndex`, and the existing Proof panel all use card/list treatments, not the log motif | `ServicesBlock.vue`, `ProjectIndex.vue`, `PanelProof.vue` | **RESOLVED** — all three render through `ObservationLog` |
+| Second accent in 2D chrome | Banned: `--teal-active` / `--amber` / `--utility` "stay inside the 3D legend only" | `ProjectIndex` coloured each row by node kind using `--bg-cyan`, `--amber-glow`, `--utility-glow` | `src/components/sections/ProjectIndex.vue` | **RESOLVED** — found while applying the log; kind and status moved into the log's status column |
 
-Neither violation is a surprise — the lock was written *after* these components, specifically because building them first (Phase 0/1.5) and locking the visual language second was the right order for that work. They're recorded here as the concrete backlog the lock creates, not as mistakes.
+Neither of the first two violations was a surprise — the lock was written *after* these components, specifically because building them first (Phase 0/1.5) and locking the visual language second was the right order for that work. They were recorded as the concrete backlog the lock creates, not as mistakes, and that backlog is now cleared. The third was found during the work rather than during the audit.
 
 ## Judgment findings
 
@@ -45,7 +46,7 @@ Ranked worst first.
 
 - **What:** The left-edge rail is a thin vertical strip (`9 SYSTEMS INDEX` in tiny rotated mono text) with no visible affordance that it expands. In the 1440 and 834 screenshots it reads as a stray label, not a navigation control.
 - **Why it matters here:** `ProjectIndex` exists specifically to fix a total keyboard/screen-reader lockout (`docs/AUDIT.md` C2) — it is genuinely, technically reachable. But Ground also says a skeptical buyer needs to *find* the work fast on a 60-second budget, and right now a sighted mouse user would need to already know it's clickable to try it. Solving accessibility with something that reads as decoration to a sighted user is only half the fix.
-- **Fix (not applied — needs a visual pass, not a one-line change):** give the collapsed rail a visible hover/focus state that hints at expansion (e.g., a chevron, or a slight width grow on hover), and consider whether it should default open on first paint at desktop widths rather than requiring discovery.
+- **Fix: APPLIED.** The rail now carries a chevron that rotates when the panel opens, brightens on hover/focus, and the toggle grows its right padding toward the page to hint that it opens outward. All three are suppressed under `prefers-reduced-motion`. The "default open on desktop" half was deliberately *not* taken — it would cover the constellation on first paint, which is the one thing the first three seconds are for.
 
 ### 3. Two Vue lifecycle warnings appear on every desktop mount, and one screenshot pass showed the hero tagline stalling for 25+ seconds
 
@@ -58,12 +59,22 @@ Ranked worst first.
 
 Token-level first — a `:root` change often clears twenty component findings at once.
 
-| Order | Change | Level | Expected effect |
-|---|---|---|---|
-| 1 | Move `BookingCta` off the legend's corner, or give the legend a reserved bottom offset that clears it | component (CSS position) | Removes the only visible defect a careful visitor would notice in the first screen |
-| 2 | Verify the tagline-stall finding on real Chrome, not headless | investigation | Either closes the finding as environment-only, or surfaces a real Ground-relevant bug before a client ever hits it |
-| 3 | Give `ProjectIndex` a discoverable affordance | component | Converts "technically accessible" into "actually used" |
-| 4 | Bring `ServicesBlock`, `ProjectIndex`, and the Proof panel into the observation-log signature element | component, then possibly token | This is the bulk of `DESIGN_LOCK.md`'s actual payoff and is intentionally sequenced last — it's the biggest, most visible change and the one most worth the owner seeing a concept preview of first |
+| Order | Change | Level | Expected effect | State |
+|---|---|---|---|---|
+| 1 | Move `BookingCta` off the legend's corner, or give the legend a reserved bottom offset that clears it | component (CSS position) | Removes the only visible defect a careful visitor would notice in the first screen | APPLIED |
+| 2 | Verify the tagline-stall finding on real Chrome, not headless | investigation | Either closes the finding as environment-only, or surfaces a real Ground-relevant bug before a client ever hits it | **still open** — needs a GPU-accelerated browser, not this sandbox |
+| 3 | Give `ProjectIndex` a discoverable affordance | component | Converts "technically accessible" into "actually used" | APPLIED |
+| 4 | Bring `ServicesBlock`, `ProjectIndex`, and the Proof panel into the observation-log signature element | component, then possibly token | This is the bulk of `DESIGN_LOCK.md`'s actual payoff and is intentionally sequenced last — it's the biggest, most visible change and the one most worth the owner seeing a concept preview of first | APPLIED |
+
+## What applying item 4 turned up
+
+Two things worth recording, because neither was visible from the audit.
+
+**A shared `ObservationLog` component now owns the motif** (`src/components/common/ObservationLog.vue`) rather than each surface re-implementing it. It takes `as="table"` for genuine data surfaces and `as="list"` for the index rail. That distinction is deliberate: the rail is navigation, and announcing a list of buttons as a table would make it *worse* for a screen reader while looking identical. The lock governs the visual shape; it does not get to override correct semantics.
+
+**The entrance animation nearly shipped a blank page.** The obvious form — `opacity: 0` plus `animation: … forwards` — is unsafe in this codebase, because `plain.css` applies `animation: none !important` under `.plain-mode`. That combination made the whole Services block and every Proof metric permanently invisible at `?plain=1`, the crawlable and accessible backstop. **Typecheck and build were both clean**; only rendering the page and reading computed styles caught it. The safe form keeps the hidden state inside the keyframes with `backwards` fill. Recorded as a durable rule in `docs/MEMORY.md`.
+
+This is also a caveat on this document's own method: a judgment-based audit reading source will not find that class of defect. It needs a rendered DOM.
 
 ## Deliberately not changing
 

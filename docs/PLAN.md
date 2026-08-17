@@ -49,14 +49,25 @@ Small, high-leverage, mostly data rather than code.
 
 | # | Task | State |
 |---|---|---|
-| 1.1 | Link `vivid-alpha.vercel.app`, `tathya-1.vercel.app`, `support-core-nine.vercel.app` | confirmed |
-| 1.2 | Leave `stick-and-dot-app` unlinked (owner exclusion), `beatmind` (deploy `BLOCKED`), `oncoverse` (deploy `ERROR`) | confirmed |
+| 1.1 | Link `vivid-alpha.vercel.app` (done), `tathya-1.vercel.app` (needs a node first) | revised — see below |
+| 1.2 | Leave `stick-and-dot-app` unlinked (owner exclusion) and `oncoverse` (deploy `ERROR`) | confirmed |
 | 1.3 | Add a date field per project — required for orbital angle in Phase 3 | awaiting owner dates |
 | 1.4 | Decide per-project whether `tathya`, `beatmind`, `support-core` become portfolio nodes | awaiting owner |
 | 1.5 | **Rename EVIDENCEBOUND → EPHEMERIS** across boot sequence, top bar, overlay eyebrows, `index.html` title/OG/Twitter/JSON-LD, `og.png`, README | ready |
 | 1.6 | Derive the "9 systems" strings from `projectStore.projectCount` instead of hardcoding | ready |
 
 **Verification rule for any link, now and later:** resolve the real production alias from the Vercel project (never assume `<name>.vercel.app` — that check would have shipped a stranger's site), confirm it returns 200 without auth, confirm it belongs to this account.
+
+**Re-verified 2026-08-17**, resolved from each Vercel project's own `domains` array and checked over the network:
+
+| Project | Alias | Result |
+|---|---|---|
+| beatmind | `beatmind.tech` | **200, owned.** Supersedes the earlier `beatmind-theta.vercel.app` / deploy `BLOCKED` record. `/create` redirects to sign-in, so the *product* is not publicly reachable — a link alone will not prove it works. |
+| vivid | `vivid-alpha.vercel.app` | 200, owned. Already linked. |
+| tathya | `tathya-1.vercel.app` | 200, owned. Blocked on 1.4 — Tathya has no node yet. |
+| support-core | `support-core-nine.vercel.app` | **Do not link.** The frontend returns 200 but its backend `support-core.onrender.com` is dead (three attempts, 180s timeouts). Linking it ships a chat widget that fails on first message, which is worse than no link. |
+
+This is why 1.1 shrank rather than grew: the confirmed-three became a confirmed-one-plus-one-pending, and one of the original three turned out to be a broken demo.
 
 **Why this matters disproportionately:** the site's entire argument is evidence, and it currently shows "Pending verification" on projects that are deployed and reachable.
 
@@ -77,9 +88,12 @@ Small, high-leverage, mostly data rather than code.
 | 1.5.7 | Email and WhatsApp as always-visible direct channels | — |
 | 1.5.8 | About: photo + first-person intro | owner photo |
 | 1.5.9 | Reserve a testimonial slot; leave it honestly empty until one exists | owner |
-| 1.5.10 | Site URL as a single exported constant consumed by canonical, OG, Twitter, JSON-LD, sitemap | — |
+| 1.5.10 | Site URL as a single exported constant consumed by canonical, OG, Twitter, JSON-LD, sitemap | done |
+| 1.5.11 | **Mount `ServicesBlock` and `ContactPanel` in the full experience.** Both currently render only inside `PlainExperience`, so the offer and the contact form exist at `?plain=1` and nowhere else. The copy is written and good; it is simply not on the page a real visitor lands on. | — |
 
 **Why before Phase 2:** the engine rewrite is invisible to a buyer. Screenshots, outcomes and a booking button are the entire difference between a site that generates leads and one that does not. If the project stalls after this phase, it has still paid for itself.
+
+**1.5.11 is the cheapest item here and probably the most valuable.** Everything else in this phase needs assets or owner copy that does not exist yet. That one needs neither — the Services block and contact form are already written, already reviewed, already styled, and simply are not mounted where anyone can see them.
 
 **No prices anywhere.** Every path leads to a conversation.
 
@@ -209,8 +223,11 @@ Everything here is cuttable. Nothing here is load-bearing. That is deliberate �
 
 Resolved: the rename to EPHEMERIS, real dates for chronology, Cost of Intelligence revived in the Proof panel, and the confirmed link set. See `PRD.md` §7.
 
+Also resolved: **engagement shape**. Owner confirmed project-first, retainer-after — a scoped first project, then an ongoing monthly retainer if it is working. Lives in `services.ts` as `engagementStages` and renders below the offers. Still no prices anywhere.
+
 Still open, none blocking Phase 0 or 2:
 
 1. **Project dates** — owner supplying. Blocks 3.1 only.
-2. **`tathya` / `beatmind` / `support-core`** — owner sorting per-project. Any addition past nine nodes blocks on 3.4.
+2. **`tathya` / `beatmind`** — owner sorting per-project. Both are confirmed live and owned (see the Phase 1 verification table), so the blocker is now roster choice plus 3.4, not link verification. `support-core` is no longer a candidate: its backend is dead.
 3. **Whether Vivid ships** — it is Stick and Dot company work like the excluded app. Linked per instruction; revisit if the exclusion was categorical.
+4. **How BeatMind demonstrates itself.** The marketing page is public but `/create` is behind sign-in, so a node linking `beatmind.tech` proves the site exists rather than that the product works. Needs a screenshot, a demo video, or a public sandbox — this is the same "show before telling" problem as 1.5.1, not a links problem.

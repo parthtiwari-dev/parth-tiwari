@@ -260,7 +260,11 @@ Supporting data: `about.ts`, `training.ts`, `capabilities.ts` (5 groups, 45 skil
 
 ### Content gap
 
-**Only 3 of 9 projects have any populated `links`.** The other six render a "Pending verification" empty state — while several of those projects are deployed and publicly reachable on Vercel right now.
+**Only 4 of 9 projects have any populated `links`** (`querypilot`, `upi-fraud`, `medrag`, and `stick-and-dot` via `vivid-alpha.vercel.app`). The other five render a "Pending verification" empty state.
+
+Three of those five are empty *correctly*: `secondself` and `oracle-auto-provision` are private repositories, and `oncoverse` has never deployed. The remaining two — `order-supervisor` and `fraud-risk-intel` — are public repositories with nothing linked, and `order-supervisor` additionally has a working YouTube demo that the site does not surface. Those two are unclaimed evidence, not honest restraint.
+
+Separately, two live systems have no node at all to hold a link: `beatmind.tech` and `tathya-1.vercel.app`. Adding either past nine nodes blocks on `uClusterBrightness[9]` (`PLAN.md` 3.4).
 
 ---
 
