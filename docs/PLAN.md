@@ -49,17 +49,18 @@ Small, high-leverage, mostly data rather than code.
 
 | # | Task | State |
 |---|---|---|
-| 1.1 | Link `vivid-alpha.vercel.app`, `tathya-1.vercel.app`, `support-core-nine.vercel.app` | confirmed |
-| 1.2 | Leave `stick-and-dot-app` unlinked (owner exclusion) and `oncoverse` unlinked (deploy `ERROR`) | confirmed |
-| 1.2a | ~~`beatmind` deploy `BLOCKED`~~ — **stale, corrected 2026-08-17.** It is live on its own production domain (`www.beatmind.tech`, apex 308s to www) with production Clerk keys. Shipped as the tenth node, linked. | done |
-| 1.3 | Add a date field per project — required for orbital angle in Phase 3 | awaiting owner dates |
-| 1.4 | Decide per-project whether `tathya` and `support-core` become portfolio nodes (`beatmind` resolved — shipped in 1.2a) | awaiting owner |
-| 1.5 | **Rename EVIDENCEBOUND → EPHEMERIS** across boot sequence, top bar, overlay eyebrows, `index.html` title/OG/Twitter/JSON-LD, `og.png`, README | ready |
-| 1.6 | Derive the "9 systems" strings from `projectStore.projectCount` instead of hardcoding | ready |
+| 1.1 | Links resolved and verified. `vivid-alpha` and `www.beatmind.tech` linked. `support-core-nine` linked with its new node (1.4). **The Streamlit apps are deliberately NOT linked** — `upi-fraud-engine.streamlit.app` 303-redirects to `share.streamlit.io/-/auth/app`, so it fails the no-auth rule below; the same applies to the other hibernating Community Cloud apps. An empty links panel is correct behaviour. | done |
+| 1.2 | Leave `stick-and-dot-app` unlinked (owner exclusion) and `oncoverse` unlinked (deploy `ERROR`) | done |
+| 1.2a | ~~`beatmind` deploy `BLOCKED`~~ — **stale, corrected 2026-08-17.** Live on its own production domain (`www.beatmind.tech`, apex 308s to www) with production Clerk keys. Shipped as a node, linked. | done |
+| 1.3 | `started: 'YYYY-MM'` added to every project and to the `Project` type. **Derived from each repo's first commit**, not owner recall — one verifiable rule applied uniformly beats ten remembered dates, and it is documented as such on the type. Surfaced as text in plain mode; the orbital-angle encoding lands in 3.1. | done |
+| 1.4 | **Decided 2026-08-17.** `support-core` is in — a deployed, streaming support agent built to a real company brief is the single most commercially legible thing in the set for the buyer in `PRD.md` §3, and it verified as a live app with no auth wall. `tathya` stays out for now: 62 commits and the most recently active public repo, but a civic/government tracker does not read as a capability the target buyer is shopping for, and it dilutes a set that is otherwise about shipped AI systems. **Reversible in one array entry** — revisit if the audience widens. | done |
+| 1.5 | Rename EVIDENCEBOUND → EPHEMERIS. Copy, metadata and `package.json` done. **Two `seededRandom('evidencebound-…')` seeds are deliberately frozen** and now carry comments saying so — they are retired brand names but load-bearing values, and renaming them reshuffles the entire star field. | done |
+| 1.6 | Project count derived from `projectStore.projectCount` everywhere — `EvidenceTopBar`, `MobileFooterDock`, `ProjectIndex`, `PlainExperience`, `BootSequence`. No literal count remains in prose or in the shader (see the `CLUSTER_COUNT` fix). | done |
+
 
 **Verification rule for any link, now and later:** resolve the real production alias from the Vercel project (never assume `<name>.vercel.app` — that check would have shipped a stranger's site), confirm it returns 200 without auth, confirm it belongs to this account.
 
-**Why this matters disproportionately:** the site's entire argument is evidence, and it currently shows "Pending verification" on projects that are deployed and reachable.
+**Why this mattered disproportionately:** the site's entire argument is evidence, and it was showing "Pending verification" on projects that were deployed and reachable. That is now resolved in both directions — live work is linked, and work that only *looks* live (the hibernating Streamlit apps) is deliberately not, because a link that lands on an auth screen is a worse evidence failure than no link.
 
 ---
 

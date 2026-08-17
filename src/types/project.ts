@@ -135,6 +135,18 @@ export interface Project {
   nodeKind: ProjectNodeKind
   origin: ProjectOrigin
   weight: ProjectWeight
+  /**
+   * When work on this project started, as `YYYY-MM`. Drives orbital angle in
+   * Phase 3 — position around the ring is a clock, so reading the system
+   * clockwise reads the career (DESIGN.md 2).
+   *
+   * **Provenance: the first commit in the project's own repository.** Not
+   * owner-recalled, not the idea's birthday — a verifiable, uniformly-derived
+   * fact. It undercounts thinking time that happened before any code, and that
+   * is the honest trade: one consistent rule beats ten remembered dates. Where a
+   * repo is private the date comes from the local clone.
+   */
+  started: string
   stack: string[]
   /**
    * What it did, for whom, in plain language. Layer 2 of the project model

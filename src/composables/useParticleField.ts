@@ -213,6 +213,10 @@ export function useParticleField(projects: Project[]) {
   const driftSpeeds  = new Float32Array(count)
   const twinkles     = new Float32Array(count)
   const clusterBrightness = Array.from({ length: projects.length }, () => 1)
+  // FROZEN SEED. The string is a retired brand name, but it is also the input
+  // that determines every ambient star's position. Renaming it reshuffles the
+  // entire field. It stays as-is deliberately — see CLAUDE.md on the EPHEMERIS
+  // rename, which covers user-visible copy, not RNG seeds.
   const random = seededRandom('evidencebound-particles-hybrid')
 
   for (let index = 0; index < count; index += 1) {

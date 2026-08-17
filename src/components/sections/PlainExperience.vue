@@ -14,6 +14,18 @@ import type { Project } from '@/types/project'
 
 const projectStore = useProjectStore()
 
+/**
+ * `YYYY-MM` to "Mar 2026". Plain mode is the crawlable, printable backstop, so
+ * chronology belongs here as text — the orbital-angle encoding of the same field
+ * (DESIGN.md 2) is not reachable without WebGL.
+ */
+function formatStarted(value: string): string {
+  const [year, month] = value.split('-')
+  const index = Number(month) - 1
+  const names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  return names[index] ? `${names[index]} ${year}` : value
+}
+
 const kindLabels: Record<Project['nodeKind'], string> = {
   'personal-project': 'Personal project',
   'work-experience': 'Work experience',
@@ -135,6 +147,7 @@ const groupedProjects = computed(() => [
           </div>
           <p class="plain-experience__meta">
             {{ kindLabels[project.nodeKind] }} / {{ weightLabels[project.weight] }} / {{ project.status }}
+            <template v-if="project.started"> / started {{ formatStarted(project.started) }}</template>
           </p>
         </div>
 

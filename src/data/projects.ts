@@ -58,6 +58,7 @@ export const projects: Project[] = [
     nodeKind: 'current-build',
     origin: 'work',
     weight: 'flagship',
+    started: '2026-07',
     stack: [
       'Next.js 16',
       'React 19',
@@ -171,6 +172,7 @@ export const projects: Project[] = [
     nodeKind: 'personal-project',
     origin: 'personal',
     weight: 'flagship',
+    started: '2026-04',
     stack: [
       'RAG',
       'Qdrant',
@@ -259,6 +261,7 @@ export const projects: Project[] = [
     nodeKind: 'work-experience',
     origin: 'work',
     weight: 'flagship',
+    started: '2026-03',
     stack: [
       'FLUX.1-dev',
       'PuLID',
@@ -378,6 +381,7 @@ export const projects: Project[] = [
     nodeKind: 'personal-project',
     origin: 'personal',
     weight: 'major',
+    started: '2026-02',
     stack: [
       'FastAPI',
       'LangGraph',
@@ -478,6 +482,7 @@ export const projects: Project[] = [
     nodeKind: 'personal-project',
     origin: 'personal',
     weight: 'major',
+    started: '2026-01',
     stack: [
       'XGBoost',
       'DuckDB',
@@ -575,6 +580,7 @@ export const projects: Project[] = [
     nodeKind: 'personal-project',
     origin: 'personal',
     weight: 'major',
+    started: '2026-01',
     stack: [
       'RAG',
       'ChromaDB',
@@ -659,6 +665,102 @@ export const projects: Project[] = [
     sliderResponse: { sliderId: 'evidenceStrictness', affects: 'both' },
   },
   {
+    id: 'support-core',
+    name: 'Spur Chat',
+    tagline: 'Streaming AI support agent for a D2C brand, built to a company brief.',
+    status: 'complete',
+    nodeKind: 'personal-project',
+    origin: 'personal',
+    weight: 'minor',
+    started: '2026-06',
+    stack: [
+      'React',
+      'Vite',
+      'TypeScript',
+      'Node',
+      'Express',
+      'PostgreSQL',
+      'Supabase',
+      'GPT-4o-mini',
+      'SSE',
+    ],
+    outcome:
+      'Built to a real company brief as a take-home. A shopper asks about an order, a return or a product, and gets a streamed answer with the conversation persisted across reloads.',
+    // Verified 2026-08-17: serves the real app ("Lumio Support Chat") over HTTPS
+    // with no auth wall. The Render backend is deliberately not linked — a bare
+    // API root is not a demo, and Render free instances cold-start.
+    links: {
+      github: 'https://github.com/parthtiwari-dev/support-core',
+      liveUI: 'https://support-core-nine.vercel.app',
+    },
+    panels: {
+      problem: {
+        quote: 'A support bot that answers confidently from nothing is worse than no bot.',
+        brokenFlowId: 'support-workflow-llm-authority',
+      },
+      architecture: {
+        summary:
+          'A typed React client over an Express API that streams tokens as they arrive and persists the thread, so a reload does not lose the conversation.',
+        nodes: [
+          {
+            id: 'client',
+            label: 'Chat Client',
+            description: 'React + Vite + TypeScript. Renders tokens as they stream rather than waiting for a complete reply.',
+            stackChips: ['React', 'Vite', 'TypeScript'],
+            connections: ['api'],
+            position: { x: 14, y: 46 },
+          },
+          {
+            id: 'api',
+            label: 'Streaming API',
+            description: 'Express over server-sent events. The model call is one hop from the client with no queue in between, because a support reply that takes a round trip through a job system feels broken.',
+            stackChips: ['Node', 'Express', 'SSE'],
+            connections: ['model', 'store'],
+            position: { x: 48, y: 60 },
+          },
+          {
+            id: 'model',
+            label: 'GPT-4o-mini',
+            description: 'Scoped to the brand’s own catalogue and policies. Chosen for cost and latency — a support turn is short and high-volume, which is the wrong place for a frontier model.',
+            stackChips: ['OpenAI'],
+            connections: [],
+            position: { x: 80, y: 38 },
+          },
+          {
+            id: 'store',
+            label: 'Session Store',
+            description: 'Threads start in localStorage and are promoted to Postgres, so history survives a reload without forcing a signup before the first message.',
+            stackChips: ['PostgreSQL', 'Supabase'],
+            connections: [],
+            position: { x: 76, y: 80 },
+          },
+        ],
+      },
+      proof: {
+        milestones: [
+          { label: 'Streaming chat end to end', status: 'complete', detail: 'SSE' },
+          { label: 'Thread persistence across reloads', status: 'complete', detail: 'localStorage → Postgres' },
+          { label: 'Deployed frontend, backend and database', status: 'complete', detail: 'Vercel + Render + Supabase' },
+        ],
+        caveat:
+          'Built as a take-home against a company brief, for a fictional brand. Small by design — it is evidence of scoping and shipping to someone else’s spec, not of scale.',
+      },
+      boundary: {
+        items: [
+          { side: 'will', text: 'Show that a brief from a real company was scoped and shipped end to end.' },
+          { side: 'will', text: 'State plainly that the brand is fictional and the build is small.' },
+          { side: 'refuses', text: 'Claim production traffic or real customers — it has neither.' },
+          { side: 'refuses', text: 'Link the bare API root and call it a demo.' },
+        ],
+      },
+    },
+    node: {
+      position: { x: -7.5, y: -1.6, z: -2.5 },
+      size: 'medium-small',
+      relatedIds: ['medrag'],
+    },
+  },
+  {
     id: 'oncoverse',
     name: 'OncoVerse',
     tagline: 'In-progress 3D cancer education atlas with source-backed boundaries.',
@@ -666,6 +768,7 @@ export const projects: Project[] = [
     nodeKind: 'current-build',
     origin: 'personal',
     weight: 'major',
+    started: '2026-05',
     stack: [
       'React 19',
       'Vite',
@@ -758,6 +861,7 @@ export const projects: Project[] = [
     nodeKind: 'personal-project',
     origin: 'personal',
     weight: 'minor',
+    started: '2026-05',
     stack: [
       'Temporal',
       'FastAPI',
@@ -844,6 +948,7 @@ export const projects: Project[] = [
     nodeKind: 'personal-project',
     origin: 'personal',
     weight: 'minor',
+    started: '2025-12',
     stack: [
       'XGBoost',
       'PyTorch',
@@ -931,6 +1036,7 @@ export const projects: Project[] = [
     nodeKind: 'utility',
     origin: 'personal',
     weight: 'minor',
+    started: '2026-05',
     stack: [
       'Python',
       'OCI SDK',

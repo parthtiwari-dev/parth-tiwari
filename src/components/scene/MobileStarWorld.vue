@@ -28,6 +28,8 @@ const STAR_CHANNELS: ReadonlyArray<readonly [number, number, number]> = [
 ]
 const STAR_FILLS = STAR_CHANNELS.map(([r, g, b]) => `rgb(${r}, ${g}, ${b})`)
 const glowSprites: (HTMLCanvasElement | null)[] = [null, null, null]
+// FROZEN SEED — see useParticleField.ts. Renaming this reshuffles the mobile
+// star world. Retired brand name, load-bearing value.
 const random = seededRandom('evidencebound-mobile-star-world-v1')
 const stars: MobileStar[] = []
 
