@@ -9,7 +9,13 @@ attribute float aDriftSpeed;
 attribute float aTwinkle;
 
 uniform float uTime;
-uniform float uClusterBrightness[9];
+// CLUSTER_COUNT is injected as a #define from useParticleField.ts, sized to
+// projects.length. It was a literal 9 with a hand-unrolled if-chain, which broke
+// silently on the tenth project — the JS uniform array grew, the declaration did
+// not. GLSL ES 1.0 forbids indexing by an arbitrary expression, but a for-loop
+// index over a constant bound IS a constant-index-expression, so the lookup below
+// is legal and no longer has to know how many projects exist.
+uniform float uClusterBrightness[CLUSTER_COUNT];
 uniform float uPointSize;
 
 varying float vAlpha;
@@ -19,15 +25,11 @@ varying float vTwinkle;
 
 float getClusterBrightness(float cluster) {
   if (cluster < -0.5) return 1.0;
-  if (cluster < 0.5) return uClusterBrightness[0];
-  if (cluster < 1.5) return uClusterBrightness[1];
-  if (cluster < 2.5) return uClusterBrightness[2];
-  if (cluster < 3.5) return uClusterBrightness[3];
-  if (cluster < 4.5) return uClusterBrightness[4];
-  if (cluster < 5.5) return uClusterBrightness[5];
-  if (cluster < 6.5) return uClusterBrightness[6];
-  if (cluster < 7.5) return uClusterBrightness[7];
-  return uClusterBrightness[8];
+  int index = int(cluster + 0.5);
+  for (int i = 0; i < CLUSTER_COUNT; i++) {
+    if (i == index) return uClusterBrightness[i];
+  }
+  return 1.0;
 }
 
 void main() {
