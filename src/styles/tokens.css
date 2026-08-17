@@ -36,6 +36,12 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
 
+  /* Chrome corner radius. Deliberately tight: `DESIGN_LOCK.md` bans the
+     marketing-scale pill, so every 2D control reads rectangular. Circular
+     elements inside the 3D legend and the proof orbit are not chrome and keep
+     their own explicit radii. */
+  --radius-chrome: 0.25rem;
+
   /* Font stacks. Referenced by PlainExperience.vue and the scene chrome;
      previously undefined, so those rules silently fell back to system defaults. */
   --font-display: 'Spectral', ui-serif, Georgia, serif;

@@ -2,13 +2,21 @@
 /**
  * The offer, rendered outcome-first (PRD.md 4, 7.2).
  *
- * Ranked, not equal: the lead offer is visually dominant and the other two follow
- * it. Each offer names the projects that already prove it, so nothing here is a
- * claim without a node behind it.
+ * Ranked, not equal: the lead offer is visually dominant and the other two
+ * follow it. Each offer names the projects that already prove it, so nothing
+ * here is a claim without a node behind it.
+ *
+ * Rendered as an observation log rather than a card grid. `DESIGN_LOCK.md`
+ * bans card-grid treatment for any evidence surface — the log is the signature
+ * element precisely because it is not the shape every other portfolio uses, and
+ * a Services block built from bordered tiles undoes that divergence. Emphasis
+ * for the lead offer therefore comes from type scale and a gold ordinal, not
+ * from a tinted card with a gradient wash.
  */
 import { computed } from 'vue'
+import ObservationLog, { type ObservationRow } from '@/components/common/ObservationLog.vue'
 import { projects } from '@/data/projects'
-import { services } from '@/data/services'
+import { engagementStages, services } from '@/data/services'
 
 const projectNameById = computed(
   () => new Map(projects.map((project) => [project.id, project.name])),
@@ -21,6 +29,34 @@ function evidenceNames(ids: string[]) {
     return name ? [name] : []
   })
 }
+
+/** Evidence is resolved once per service so the template stays declarative. */
+const evidenceById = computed(
+  () => new Map(services.map((service) => [service.id, evidenceNames(service.evidenceProjectIds)])),
+)
+
+const serviceRows = computed<ObservationRow[]>(() =>
+  services.map((service) => ({
+    id: service.id,
+    label: service.label,
+    detail: service.outcome,
+    status: service.rank === 'lead' ? 'Mostly this' : undefined,
+    tone: 'complete' as const,
+    lead: service.rank === 'lead',
+  })),
+)
+
+const engagementRows = computed<ObservationRow[]>(() =>
+  engagementStages.map((stage) => ({
+    id: stage.id,
+    label: stage.label,
+    detail: stage.detail,
+  })),
+)
+
+const engagementMarkers = computed(() => engagementStages.map((stage) => stage.marker))
+
+const serviceById = computed(() => new Map(services.map((service) => [service.id, service])))
 </script>
 
 <template>
@@ -30,30 +66,38 @@ function evidenceNames(ids: string[]) {
       <h2 id="services-block-title">I build AI products people actually use.</h2>
     </header>
 
-    <ol class="services-block__list">
-      <li
-        v-for="service in services"
-        :key="service.id"
-        class="services-block__item"
-        :class="{ 'is-lead': service.rank === 'lead' }"
-      >
-        <p v-if="service.rank === 'lead'" class="services-block__flag">Mostly this</p>
-        <h3>{{ service.label }}</h3>
-        <p class="services-block__outcome">{{ service.outcome }}</p>
-        <p class="services-block__detail">{{ service.detail }}</p>
-        <p class="services-block__evidence">
-          <span>Evidence</span>
-          {{ evidenceNames(service.evidenceProjectIds).join(' / ') }}<template v-if="service.evidenceNote"> / {{ service.evidenceNote }}</template>
-        </p>
-      </li>
-    </ol>
+    <ObservationLog :rows="serviceRows" label="Services">
+      <template #row="{ row }">
+        <span class="services-block__label">{{ row.label }}</span>
+        <span class="services-block__outcome">{{ row.detail }}</span>
+        <span v-if="serviceById.get(row.id)?.detail" class="services-block__detail">
+          {{ serviceById.get(row.id)?.detail }}
+        </span>
+        <span class="services-block__evidence">
+          <span class="services-block__evidence-key">Evidence</span>
+          {{ evidenceById.get(row.id)?.join(' / ')
+          }}<template v-if="serviceById.get(row.id)?.evidenceNote">
+            / {{ serviceById.get(row.id)?.evidenceNote }}</template>
+        </span>
+      </template>
+    </ObservationLog>
+
+    <div class="services-block__engagement">
+      <p class="services-block__eyebrow">How it works</p>
+      <ObservationLog
+        :rows="engagementRows"
+        :indices="engagementMarkers"
+        label="How an engagement works"
+        dense
+      />
+    </div>
   </section>
 </template>
 
 <style scoped>
 .services-block {
   display: grid;
-  gap: 1.5rem;
+  gap: clamp(1.5rem, 4vw, 2.5rem);
   width: 100%;
 }
 
@@ -62,8 +106,7 @@ function evidenceNames(ids: string[]) {
   gap: 0.5rem;
 }
 
-.services-block__eyebrow,
-.services-block__flag {
+.services-block__eyebrow {
   margin: 0;
   color: var(--gold);
   font-family: var(--font-mono);
@@ -78,50 +121,29 @@ function evidenceNames(ids: string[]) {
   font-family: var(--font-display);
   font-size: var(--text-xl);
   font-weight: 300;
+  letter-spacing: -0.01em;
   line-height: 1.05;
 }
 
-.services-block h3 {
-  margin: 0;
+/* The lead row's emphasis is type scale alone — see the component comment. */
+.services-block__label {
   color: var(--ice);
   font-family: var(--font-display);
   font-size: var(--text-base);
   font-weight: 400;
-  line-height: 1.2;
+  line-height: 1.25;
 }
 
-.services-block__list {
-  display: grid;
-  gap: 1rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.services-block__item {
-  display: grid;
-  gap: 0.5rem;
-  padding: 1.1rem 1.15rem;
-  border: 1px solid color-mix(in srgb, var(--ice-faint) 44%, transparent);
-  border-radius: 0.4rem;
-  background: color-mix(in srgb, var(--bg) 42%, transparent);
-}
-
-.services-block__item.is-lead {
-  border-color: color-mix(in srgb, var(--gold) 58%, transparent);
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--gold) 12%, transparent), transparent 58%),
-    color-mix(in srgb, var(--bg) 42%, transparent);
-}
-
-.services-block__item.is-lead h3 {
+.is-lead .services-block__label {
   font-size: var(--text-xl);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
 }
 
 .services-block__outcome,
 .services-block__detail,
 .services-block__evidence {
-  margin: 0;
   font-family: var(--font-body);
   line-height: 1.6;
 }
@@ -141,7 +163,7 @@ function evidenceNames(ids: string[]) {
   font-size: var(--text-xs);
 }
 
-.services-block__evidence span {
+.services-block__evidence-key {
   margin-right: 0.4rem;
   color: var(--gold);
   font-family: var(--font-mono);
@@ -149,13 +171,8 @@ function evidenceNames(ids: string[]) {
   text-transform: uppercase;
 }
 
-@media (min-width: 768px) {
-  .services-block__list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .services-block__item.is-lead {
-    grid-column: 1 / -1;
-  }
+.services-block__engagement {
+  display: grid;
+  gap: 0.75rem;
 }
 </style>

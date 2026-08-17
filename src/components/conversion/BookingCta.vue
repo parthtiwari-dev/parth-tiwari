@@ -66,12 +66,13 @@ const ariaLabel = computed(() =>
   gap: 0.5rem;
   min-height: 2.75rem;
   padding: 0.6rem 1rem;
+  /* `DESIGN_LOCK.md` bans the marketing-scale pill (borrowed from Vercel, not
+     adopted) and bans gradient fills in the 2D chrome. Elevation comes from
+     surface-contrast plus a single hairline ring, never a blurred drop-shadow —
+     so the fill is flat, the ring is one hairline, and the radius is tight. */
   border: 1px solid color-mix(in srgb, var(--gold) 66%, transparent);
-  border-radius: 999px;
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--gold) 24%, transparent), transparent 62%),
-    color-mix(in srgb, var(--bg) 78%, transparent);
-  box-shadow: 0 0.5rem 1.75rem color-mix(in srgb, var(--bg) 55%, transparent);
+  border-radius: var(--radius-chrome);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
   color: var(--gold-glow);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
@@ -81,7 +82,7 @@ const ariaLabel = computed(() =>
   backdrop-filter: blur(10px) saturate(1.1);
   transition:
     border-color 0.24s var(--ease-out-expo),
-    box-shadow 0.24s var(--ease-out-expo),
+    background-color 0.24s var(--ease-out-expo),
     transform 0.24s var(--ease-out-expo);
 }
 
@@ -103,10 +104,12 @@ const ariaLabel = computed(() =>
   animation: booking-cta-pulse 2.8s var(--ease-in-out) infinite;
 }
 
+/* Hover lifts by contrast, not by shadow: the hairline brightens and the fill
+   gains a touch of the single accent. */
 .booking-cta:hover,
 .booking-cta:focus-visible {
   border-color: var(--gold-glow);
-  box-shadow: 0 0.5rem 2rem color-mix(in srgb, var(--gold) 26%, transparent);
+  background: color-mix(in srgb, var(--gold) 14%, var(--bg));
   transform: translateY(-1px);
 }
 

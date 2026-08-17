@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
+import ObservationLog, { type ObservationRow } from '@/components/common/ObservationLog.vue'
 import type { Project, ProjectMetric } from '@/types/project'
 
 const props = defineProps<{
@@ -88,11 +89,29 @@ function formatInterimMetric(metric: ProjectMetric) {
   return formatted
 }
 
-function metricStyle(index: number) {
-  return {
-    '--metric-index': String(index),
-  }
-}
+/**
+ * Metrics are the one genuinely tabular surface in the panel, so they render
+ * through the observation log with a real right-aligned value column
+ * (`DESIGN_LOCK.md` signature element). The interim value is recomputed while
+ * the count-up runs, which is why this is a computed rather than a static list.
+ */
+const metricRows = computed<ObservationRow[]>(() =>
+  metrics.value.map((metric) => ({
+    id: metric.label,
+    label: metric.label,
+    value: formatInterimMetric(metric),
+  })),
+)
+
+const milestoneRows = computed<ObservationRow[]>(() =>
+  milestones.value.map((milestone) => ({
+    id: milestone.label,
+    label: milestone.label,
+    detail: milestone.detail,
+    status: milestone.status,
+    tone: milestone.status,
+  })),
+)
 
 function tick(now: number) {
   if (!startTime) {
@@ -133,30 +152,18 @@ onUnmounted(() => {
     <div class="panel-proof__body">
       <p class="panel-label">Proof</p>
 
-      <div v-if="metrics.length" class="metric-grid">
-        <section
-          v-for="(metric, index) in metrics"
-          :key="metric.label"
-          :style="metricStyle(index)"
-        >
-          <p>{{ metric.label }}</p>
-          <strong>{{ formatInterimMetric(metric) }}</strong>
-        </section>
-      </div>
+      <ObservationLog
+        v-if="metricRows.length"
+        :rows="metricRows"
+        label="Measured"
+        value-label="Value"
+      />
 
-      <div v-if="milestones.length" class="milestone-list">
+      <div v-if="milestoneRows.length" class="milestone-list">
         <div class="milestone-progress" aria-hidden="true">
           <span :style="progressStyle"></span>
         </div>
-        <section v-for="milestone in milestones" :key="milestone.label">
-          <span :class="`milestone-status milestone-status--${milestone.status}`">
-            {{ milestone.status }}
-          </span>
-          <div>
-            <h3>{{ milestone.label }}</h3>
-            <p v-if="milestone.detail">{{ milestone.detail }}</p>
-          </div>
-        </section>
+        <ObservationLog :rows="milestoneRows" label="Milestones" />
       </div>
 
       <div v-if="project.artifacts?.length" class="artifact-proof">
@@ -203,7 +210,7 @@ onUnmounted(() => {
 .proof-orbit span {
   margin: 0;
   color: var(--ice-muted);
-  font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -211,14 +218,13 @@ onUnmounted(() => {
 
 .proof-orbit strong {
   color: var(--gold-glow);
-  font-family: Spectral, Georgia, serif;
+  font-family: var(--font-display);
   font-size: clamp(4rem, 8vw, 7rem);
   font-weight: 300;
   line-height: 0.8;
 }
 
 .panel-proof__body,
-.metric-grid,
 .milestone-list,
 .artifact-proof {
   display: grid;
@@ -228,52 +234,21 @@ onUnmounted(() => {
 .panel-label {
   margin: 0;
   color: var(--gold);
-  font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
-.metric-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.metric-grid section,
-.milestone-list section,
 .artifact-proof section {
   border-top: 1px solid color-mix(in srgb, var(--ice-faint) 58%, transparent);
   padding-top: 0.85rem;
 }
 
-.metric-grid section {
-  opacity: 0;
-  transform: translateY(0.55rem);
-  animation: proof-metric-enter 320ms var(--ease-out-expo) forwards;
-  animation-delay: calc(var(--metric-index) * 90ms);
-}
-
-.metric-grid p,
 .proof-caveat {
   margin: 0;
   color: var(--ice-muted);
   line-height: 1.5;
-}
-
-.metric-grid strong {
-  position: relative;
-  display: block;
-  margin-top: 0.35rem;
-  overflow: hidden;
-  background: linear-gradient(90deg, var(--gold), var(--gold-glow) 48%, var(--ice) 78%);
-  background-clip: text;
-  background-size: 220% 100%;
-  color: transparent;
-  font-family: Spectral, Georgia, serif;
-  font-size: clamp(2rem, 3.5vw, 3.8rem);
-  font-weight: 300;
-  line-height: 1;
-  animation: proof-gold-sweep 900ms var(--ease-out-expo) both;
-  animation-delay: calc(120ms + var(--metric-index) * 90ms);
 }
 
 .milestone-progress {
@@ -282,51 +257,21 @@ onUnmounted(() => {
   background: color-mix(in srgb, var(--ice-faint) 46%, transparent);
 }
 
+/* Solid rather than a gradient: `DESIGN_LOCK.md` bans gradient fills in the 2D
+   chrome, and the bar carries meaning, so a single accent reads it correctly. */
 .milestone-progress span {
   display: block;
   height: 100%;
-  background: linear-gradient(90deg, var(--gold), var(--teal-active));
+  background: var(--gold);
 }
 
-.milestone-list section {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: 9rem 1fr;
-}
-
-.milestone-status {
-  color: var(--ice-muted);
-  font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
-  font-size: var(--text-xs);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.milestone-status--complete {
-  color: var(--gold);
-}
-
-.milestone-status--active {
-  color: var(--teal-active);
-}
-
-.milestone-status--roadmap {
-  color: var(--ice-faint);
-}
-
-.milestone-list h3,
 .artifact-proof h3 {
   margin: 0;
   color: var(--ice);
-  font-family: Spectral, Georgia, serif;
+  font-family: var(--font-display);
   font-size: 1.55rem;
   font-weight: 400;
   line-height: 1.05;
-}
-
-.milestone-list p {
-  margin: 0.35rem 0 0;
-  color: var(--ice-muted);
 }
 
 .artifact-proof {
@@ -342,7 +287,6 @@ onUnmounted(() => {
 
 @media (max-width: 900px) {
   .panel-proof,
-  .metric-grid,
   .artifact-proof {
     grid-template-columns: 1fr;
   }
@@ -350,45 +294,8 @@ onUnmounted(() => {
   .proof-orbit {
     max-width: 18rem;
   }
-
-  .milestone-list section {
-    grid-template-columns: 1fr;
-  }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .metric-grid section,
-  .metric-grid strong {
-    animation: none;
-  }
-
-  .metric-grid section {
-    opacity: 1;
-    transform: none;
-  }
-
-  .metric-grid strong {
-    background: none;
-    color: var(--gold-glow);
-  }
-}
-
-@keyframes proof-metric-enter {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes proof-gold-sweep {
-  0% {
-    background-position: 110% 0;
-    filter: brightness(0.82);
-  }
-
-  100% {
-    background-position: 0 0;
-    filter: brightness(1);
-  }
-}
+/* Row entrance and reduced-motion handling now live in `ObservationLog`, which
+   owns every evidence surface in the chrome. */
 </style>

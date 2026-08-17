@@ -67,3 +67,38 @@ export const services: Service[] = [
 ]
 
 export const leadService = services.find((service) => service.rank === 'lead')
+
+/**
+ * How an engagement is structured: a scoped first project, then an ongoing
+ * monthly retainer if it is working. Owner-confirmed shape.
+ *
+ * This is deliberately about *sequence*, not price — `PRD.md` 7.3 keeps every
+ * path leading to a conversation, so no rate appears here or anywhere else.
+ * The retainer stage is evidenced by the projects that have actually been run
+ * and iterated over time rather than delivered once, which is the harder thing
+ * to prove and the reason it is claimable at all.
+ */
+export interface EngagementStage {
+  id: string
+  /** Short ordinal label for the log's index column. */
+  marker: string
+  label: string
+  detail: string
+}
+
+export const engagementStages: EngagementStage[] = [
+  {
+    id: 'project',
+    marker: 'I',
+    label: 'Start with one scoped project',
+    detail:
+      'A fixed, agreed scope with a working deliverable at the end of it. You see how the work goes before anything ongoing is discussed.',
+  },
+  {
+    id: 'retainer',
+    marker: 'II',
+    label: 'Continue on a monthly retainer',
+    detail:
+      'If it is worth continuing, I keep the system running and improving — new capability, evaluation as real usage arrives, and the operational work of keeping it healthy.',
+  },
+]
