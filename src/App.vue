@@ -6,6 +6,7 @@ import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
 import { useProjectStore } from '@/stores/projectStore'
 import BootSequence from '@/components/sections/BootSequence.vue'
 import BookingCta from '@/components/conversion/BookingCta.vue'
+import ConversionSection from '@/components/conversion/ConversionSection.vue'
 import CustomCursor from '@/components/interaction/CustomCursor.vue'
 import EvidenceOverlay from '@/components/evidence/EvidenceOverlay.vue'
 import EvidenceTopBar from '@/components/sections/EvidenceTopBar.vue'
@@ -133,6 +134,28 @@ onUnmounted(() => {
 
     <PlainExperience v-if="isPlain && experienceReady" />
 
+    <!--
+      `HeroSection` is `position: fixed`, so it contributes no height. Only
+      `SceneRoot` puts a scroll runway (400vh) in the document — `MobileStarWorld`
+      is a fixed 100vh backdrop, and reduced-motion desktop mounts no scene at
+      all. Without this spacer the conversion section below starts at document
+      position 0 in both of those cases and the hero renders straight on top of
+      the offer copy. Gives the hero the one screen it is designed to own.
+    -->
+    <div
+      v-if="!isPlain && experienceReady && !showDesktopScene"
+      aria-hidden="true"
+      class="hero-runway"
+    />
+
+    <!--
+      The offer and the contact form, for the experience a real visitor lands on
+      (`PLAN.md` 1.5.11). Both used to render only inside `PlainExperience`.
+      Sits after the scene's scroll runway, so the universe stays the arrival
+      and this stays the destination.
+    -->
+    <ConversionSection v-if="!isPlain && experienceReady" />
+
     <MobileSystemsIndex v-if="showMobileSystemsIndex" />
     <MobileFooterDock v-if="showMobileSystemsIndex" />
 
@@ -224,3 +247,23 @@ onUnmounted(() => {
     <CustomCursor v-if="!isPlain && !isMobileViewport" />
   </main>
 </template>
+
+<style scoped>
+/**
+ * `svh` rather than `vh`: on mobile, `vh` is the *largest* viewport height, so a
+ * `100vh` spacer is taller than the visible screen while the browser chrome is
+ * showing, and the hero cue gets pushed under the fold. `svh` is the smallest
+ * viewport, which is the one guaranteed visible. `docs/DESIGN.md` 9 rules out
+ * `vh` for scroll-driven offsets; this is a static spacer, so the concern is
+ * only sizing, not resize churn.
+ */
+.hero-runway {
+  height: 100svh;
+}
+
+@supports not (height: 100svh) {
+  .hero-runway {
+    height: 100vh;
+  }
+}
+</style>
