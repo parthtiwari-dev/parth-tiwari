@@ -161,3 +161,4 @@ vite.config.ts.timestamp-*
 .design-pass/
 inbox/refero/
 .shots/
+*-check.mjs
