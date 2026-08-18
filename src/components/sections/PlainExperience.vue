@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import ContactPanel from '@/components/conversion/ContactPanel.vue'
 import ServicesBlock from '@/components/conversion/ServicesBlock.vue'
-import { aboutSignal } from '@/data/about'
+import { aboutPortrait, aboutSignal } from '@/data/about'
 import { capabilityGroups } from '@/data/capabilities'
 import { projects } from '@/data/projects'
 import { resolveProjectLinks } from '@/data/projectLinks'
@@ -88,6 +88,14 @@ const groupedProjects = computed(() => [
     <section class="plain-experience__section" aria-labelledby="plain-about-title">
       <p class="plain-experience__eyebrow">About</p>
       <h3 id="plain-about-title">{{ aboutSignal.heading }}</h3>
+      <img
+        class="plain-experience__portrait"
+        :src="aboutPortrait.srcSmall"
+        :width="480"
+        :height="600"
+        :alt="aboutPortrait.alt"
+        loading="lazy"
+      />
       <p
         v-for="paragraph in aboutSignal.paragraphs"
         :key="paragraph"
@@ -409,6 +417,14 @@ const groupedProjects = computed(() => [
 
 .plain-experience__facts dd {
   margin: 0;
+}
+
+.plain-experience__portrait {
+  display: block;
+  width: 100%;
+  max-width: 15rem;
+  height: auto;
+  border: 1px solid currentColor;
 }
 
 .plain-experience__figure video {

@@ -112,7 +112,7 @@ New overlays need: `role="dialog"`, `aria-modal`, focus moved in on open, **focu
 
 Never use `outline: none` without an equally visible replacement focus indicator.
 
-Any interaction reachable by hover must also be reachable, **and dismissable**, by touch. `CapabilityMap` currently fails this — chips can be selected by tap but only cleared by `mouseleave`.
+Any interaction reachable by hover must also be reachable, **and dismissable**, by touch. `CapabilityMap` used to fail this and is the worked example: hover previews, tap pins, tapping the pinned control releases it, and a visible Clear control exists for anyone who has neither hover nor a second tap in mind. Copy that shape rather than inventing a new one.
 
 ---
 
@@ -130,14 +130,11 @@ Supporting data files: `about.ts`, `training.ts`, `capabilities.ts`, `socialLink
 
 ## Known dead code
 
-Do not build on these; remove them when you are in the neighbourhood:
+~~`isOverlayReadyProject`, `CopiedToast`, `RefusalRipple`, `NodeRuntimeState.ringState`/`colorState`, and the tokens `--bg-bridge`, `--surface-glass`, `--surface-glass-hover`, `--teal-deep`.~~ **All deleted 2026-08-18** (PLAN 0.14, which had been ticked once without being done).
 
-- `isOverlayReadyProject` — always returns `true`; three call sites branch on it as if it gates something. (PLAN 0.14 claimed this was deleted. It was not — verified 2026-08-18.)
-- `CopiedToast` — mounted with a literal `:show="false"`. (Same stale tick.)
-- `RefusalRipple` — renders at alpha ×0.004 on an unconnected 30-second timer.
-- `GlassPanel`, `GeistChip`, `StatusBadge`, `MetricCountUp` — reachable only via `?debug=1`.
-- Tokens `--bg-bridge`, `--surface-glass`, `--surface-glass-hover`, `--teal-deep`, `--cold`. (`--bg-lift` and `--bg-nebula` acquired real users and are no longer dead.)
-- `NodeRuntimeState.ringState` / `colorState` — written every frame, read by nothing.
+Still standing, and still fine:
+
+- `GlassPanel`, `GeistChip`, `StatusBadge`, `MetricCountUp` — reachable only via `?debug=1`, which is a documented mode rather than dead code. `--cold` stays because `GeistChip` reads it.
 
 ~~**Used but undefined**: `--active-glow`, `--font-mono`, `--font-display`, `--font-body`.~~ **Fixed** — all four are defined in `tokens.css`; verified 2026-08-18.
 
@@ -151,7 +148,11 @@ explains. Leave it, or delete it, but do not wire it to the scene.
 
 ## Naming
 
-The site is **EPHEMERIS**. `EVIDENCEBOUND` is retired — if you find it in the boot sequence, top bar, overlay eyebrows, `index.html` metadata, or `og.png`, it is stale and should be updated.
+The site is **EPHEMERIS**. `EVIDENCEBOUND` is retired.
+
+Swept 2026-08-18: copy, metadata, scene-graph object names, the favicon's `aria-label` and glyph, and **`og.png`, which still read EVIDENCEBOUND** on the card every share and unfurl renders. Regenerate that card with `npm run og` (`scripts/og.mjs`) rather than editing a binary by hand — it went stale for months precisely because nobody could rebuild it.
+
+The one deliberate survivor is `seededRandom('evidencebound-particles-hybrid')` in `useParticleField.ts`. It is a retired name but also the input that determines every ambient star's position; renaming it reshuffles the entire field. It carries a comment saying so.
 
 An ephemeris is a table of computed positions of celestial bodies. The name states the design rule: positions are derived from data, never placed by hand.
 
@@ -177,7 +178,7 @@ The sky shader (`iridescent.frag.glsl`) is the largest GPU cost in the app: 7 `t
 
 **All quality decisions come from `src/utils/qualityTier.ts`.** One detection feeds particle count, DPR, sky octaves and whether post-FX mounts. Do not add a second capability check — that fragmentation is exactly what 2.4 removed. Anything added to the sky shader is a performance decision and should scale with `SKY_OCTAVES`.
 
-Known leak to respect when editing `ConstellationNodes.vue`: `onUnmounted` disposes geometries and materials but **not the `PointLight`s**.
+`ConstellationNodes.vue`'s `onUnmounted` disposes geometries and materials **and removes the `PointLight`s from the graph** — the lights were the one thing it missed, and they have no GPU buffer to dispose but do hold a parent reference, so twelve of them survived every scene remount. Keep that call when editing the teardown.
 
 `ConnectorLines` still reallocates an array of objects per tick, triggering Vue reactivity for all pairs even though lines only render on hover. It no longer *runs* while paused or off-screen (2.1), so the cost is bounded — but the allocation itself is unfixed.
 
@@ -218,4 +219,6 @@ Do not open a pull request unless asked.
 
 Vercel, project `parth-tiwari`, static SPA off `main`. `vercel.json` handles the SPA rewrite and asset cache headers. No environment variables are required.
 
-Web Analytics is **not currently enabled**, so there is no real usage data behind any UX claim. Treat assertions about "how people use the site" as untested until it is. (`PLAN.md` 0.11 claimed this was done; de-ticked 2026-08-18.)
+Web Analytics is **half-wired**: `@vercel/analytics` is installed and `main.ts` calls `inject()` on every non-loopback host, but the dashboard toggle for the project is an owner action and is not confirmed on. Until it is, there is still no real usage data — treat assertions about "how people use the site" as untested.
+
+The loopback skip is deliberate. `/_vercel/insights/script.js` is served by Vercel's edge and exists nowhere else, so injecting it under `vite preview` 404s on every route at every viewport and makes `npm run shots` cry wolf.

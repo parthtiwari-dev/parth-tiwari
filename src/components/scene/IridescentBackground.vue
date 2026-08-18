@@ -27,7 +27,7 @@ const material = new THREE.ShaderMaterial({
 })
 const mesh = new THREE.Mesh(geometry, material)
 
-mesh.name = 'EvidenceBoundIridescentBackground'
+mesh.name = 'EphemerisIridescentBackground'
 mesh.renderOrder = -100
 mesh.frustumCulled = false
 

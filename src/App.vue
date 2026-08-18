@@ -21,7 +21,6 @@ import GlassPanel from '@/components/shared/GlassPanel.vue'
 import GeistChip from '@/components/shared/GeistChip.vue'
 import MetricCountUp from '@/components/shared/MetricCountUp.vue'
 import StatusBadge from '@/components/shared/StatusBadge.vue'
-import CopiedToast from '@/components/shared/CopiedToast.vue'
 
 /**
  * The 3D stack is code-split, not just render-gated (`docs/AUDIT.md` C1).
@@ -235,7 +234,6 @@ onUnmounted(() => {
       </GlassPanel>
     </section>
 
-    <CopiedToast :show="false" />
     <CustomCursor v-if="!isPlain && !isMobileViewport" />
   </main>
 </template>

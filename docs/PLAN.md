@@ -31,15 +31,32 @@ Independent of the redesign. Ships alone, immediately.
 | ✅ 0.5 | Stop `ConnectorLines` and `NodeLabel` re-allocating and reading layout every frame | AUDIT H1, H2 |
 | ✅ 0.6 | Cancel the leaking rAF in `SceneRoot`; track the untracked timers in `HeroTagline`, `AboutSignal`, `useCameraPath` | AUDIT H4, M4 |
 | ✅ 0.7 | Fix the `vendor` chunk rule so `@vue/*` scoped paths actually match | AUDIT M3 |
-| ✅ 0.8 | `npm audit fix` — 4 high-severity transitive vulnerabilities | AUDIT |
+| ✅ 0.8 | `npm audit fix` — 4 high-severity transitive vulnerabilities. **Regressed and re-fixed 2026-08-18:** the same count was back (postcss path traversal, vite `server.fs.deny` bypass, launch-editor NTLM disclosure), all dev-only. `npm audit` now reports 0. `three` and `@tresjs/core` verified unmoved at 0.165.0 / 4.3.1 afterwards. | AUDIT |
 | ✅ 0.9 | Define the missing CSS variables (`--font-mono`, `--font-display`, `--font-body`, `--active-glow`) | AUDIT |
 | ✅ 0.10 | Add reduced-motion to the scene mount condition so it genuinely produces a static experience | AUDIT C1 |
-| ⬜ 0.11 | Enable Vercel Web Analytics — currently returns no data, so no UX claim is measurable. **De-ticked 2026-08-18:** this was marked done and is not. `@vercel/analytics` is absent from `package.json`, `src/` and `index.html`, and `CLAUDE.md` says so in the same breath. Every claim in these docs about how people use the site remains unmeasured. | AUDIT S9 |
+| 🟡 0.11 | **Code side done 2026-08-18.** `@vercel/analytics` installed and `inject()` called from `main.ts` — the framework-agnostic entry, because there is no router here to hook. Skipped on loopback hosts: the insights script only exists on Vercel's edge, so injecting it locally made `vite preview` 404 on every route at every viewport and turned `npm run shots` into a harness reporting twenty errors it should ignore. **Still owner-blocked:** Web Analytics must also be enabled for the project in the Vercel dashboard, which cannot be done from the repo. Until that is on, every claim about how people use this site remains unmeasured. | AUDIT S9 |
 | ✅ 0.12 | Fix canonical URL mismatch (trailing slash), stale `sitemap.xml` lastmod, and add `?plain=1` to the sitemap | AUDIT S2, S3, S4 |
 | ✅ 0.13 | Add security headers to `vercel.json` | AUDIT S6 |
-| 🟡 0.14 | Delete dead code. **De-ticked 2026-08-18** — only partly done. `isOverlayReadyProject` is still in `data/overlayReady.ts` with three call sites branching on a function that always returns `true`; `CopiedToast` is still mounted at `App.vue` with a literal `:show="false"`; `--bg-bridge`, `--surface-glass`, `--surface-glass-hover`, `--teal-deep` and `--cold` are still defined and unused. `--bg-lift` and `--active-glow` acquired real users and should stay. **Keep `sliderStore`** — revived in 3.8. | ARCHITECTURE §11 |
+| ✅ 0.14 | **Actually done 2026-08-18**, having been ticked once without being done. Deleted: `data/overlayReady.ts` and `isOverlayReadyProject` with its three branching call sites (it always returned `true`, so `NodeLabel`'s `canOpen` prop and its `nodeKindLabel` fallback were dead too); `CopiedToast`; `RefusalRipple` and both its shaders, which mounted a per-frame loop callback and a transparent draw to render something invisible on an unconnected 30-second timer; `NodeRuntimeState.ringState` and `.colorState`, written at construction and read by nothing, plus the `ringByStatus` map and the `state` field feeding them. Tokens `--bg-bridge`, `--surface-glass`, `--surface-glass-hover`, `--teal-deep` removed. `--cold` kept — `GeistChip` genuinely reads it. `--bg-lift`, `--bg-nebula` and `--active-glow` all acquired real users. **Kept `sliderStore`** — revived in 3.8. | ARCHITECTURE §11 |
 
 **Exit:** typecheck and build clean; keyboard can reach every project; plain mode ships no WebGL engine.
+
+**Audited and closed out 2026-08-18.** Two rows here had been ticked without being done (0.11,
+0.14) and one had silently regressed (0.8). All three are now accurate. Alongside them, the
+smaller debts that had accumulated in `CLAUDE.md`'s known-issues list:
+
+- **`og.png` still said EVIDENCEBOUND** — the retired brand, on the card every share, unfurl and
+  search preview renders. Regenerated as EPHEMERIS by `scripts/og.mjs`, which exists precisely
+  because a binary nobody can regenerate is a binary nobody updates. The favicon's `aria-label`
+  and its `EB` glyph were stale for the same reason and are fixed.
+- **`CapabilityMap` was a touch trap** — chips selected on tap and cleared only on `mouseleave`,
+  which never fires on a phone, so the readout stuck on the first thing tapped and the
+  constellation stayed highlighted with it. Hover now previews, tap pins, tapping the pinned chip
+  releases, and there is a visible Clear control that a keyboard user gets too.
+- **The `PointLight`s leaked** on every scene unmount — no GPU buffer to dispose, but twelve live
+  scene-graph nodes kept their subtrees alive across `?plain=1` toggles and tier changes.
+- A `cdn.jsdelivr.net` preconnect survived the Geist Mono self-hosting, and
+  `CameraPose.activeNode` was a declared field no pose ever set.
 
 ---
 
@@ -76,8 +93,8 @@ Small, high-leverage, mostly data rather than code.
 | ✅ 1.5.4 | Built in `ServicesBlock.vue` + `data/services.ts`, three ranked offers in outcome language, each naming the projects that prove it. **Mounted in the full experience 2026-08-18 — see the note below.** |
 | ✅ 1.5.5 | `BookingCta.vue`, fixed, every breakpoint, every mode but plain. `IS_BOOKING_CONFIRMED` gates it so the button is never a broken promise. |
 | 🟡 1.5.6 | `ContactPanel.vue` ships a `mailto:` form and no serverless endpoint, **deliberately**: it needs no backend, no third-party form service, and cannot silently drop a lead the way an unwired form would. Revisit only if volume justifies it. **Mounted in the full experience 2026-08-18.** |
-| 🟡 1.5.7 | Email is always visible. WhatsApp is **owner-blocked**: `WHATSAPP_NUMBER` is empty and every WhatsApp affordance stays unrendered until it is filled, because a guessed number is worse than none. |
-| ❌ 1.5.8 | About photo. **Owner-blocked** — no photo field and no file. |
+| ✅ 1.5.7 | **Done 2026-08-18.** Email always visible; WhatsApp number supplied by the owner and live at `wa.me/917000181882`. `IS_WHATSAPP_CONFIGURED` still gates every affordance, so emptying the constant removes them cleanly rather than shipping a link to nowhere. |
+| ✅ 1.5.8 | **Done 2026-08-18.** Owner-supplied photo, cropped 4:5 from the original 3264x2448 and served at two widths via `srcset`, in `AboutSignal` and in plain mode. Deliberately not a headshot: the buyer is hiring someone to build a thing, and the brief was creativity rather than professionalism. `alt` describes the frame, not the vibe. |
 | ✅ 1.5.9 | Testimonial slot reserved and honestly empty in `ContactPanel.vue`. Stays that way until a real quote exists. |
 | ✅ 1.5.10 | `config/site.ts` is the single constant, feeding canonical/OG/Twitter/JSON-LD/sitemap. `index.html` cannot import TS, so its 13 occurrences are enumerated in that file and must move with it. |
 
@@ -87,6 +104,11 @@ services block and no contact panel at all, just the floating booking button. Ev
 did not think to append `?plain=1` got the least commercial version of a site whose stated purpose
 is generating paid client work. `ConversionClose.vue` now mounts both in flow after the
 constellation runway, where the scroll ends.
+
+**Status 2026-08-18 — the code side of Phase 1.5 is closed.** Eight of ten done, two are
+`🟡` for reasons no commit can clear: 1.5.3 needs nine outcome lines from the owner, and 0.11's
+other half is a toggle in the Vercel dashboard. 1.5.6's `mailto:` is a deliberate stop, not an
+omission.
 
 **One live demo is broken, and this is owner homework.** `support-core-nine.vercel.app` loads, but
 its backend at `support-core.onrender.com` returned nothing in 200s on three separate paths — not

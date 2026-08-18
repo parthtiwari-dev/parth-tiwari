@@ -11,7 +11,7 @@ import {
 } from '@/composables/useNodeInteraction'
 import type { NodeRuntimeState } from '@/types/node'
 import { readToken } from '@/utils/cssTokens'
-import type { Project, ProjectNodeKind, ProjectStatus } from '@/types/project'
+import type { Project, ProjectNodeKind } from '@/types/project'
 import { layoutFor } from '@/data/layout'
 import { advanceNodeMotion, livePosition } from '@/data/nodeMotion'
 import { useScaleModeStore } from '@/stores/scaleModeStore'
@@ -29,7 +29,7 @@ const props = defineProps<{
 const { camera, renderer, scene } = useTres()
 const group = new THREE.Group()
 
-group.name = 'EvidenceBoundConstellationNodes'
+group.name = 'EphemerisConstellationNodes'
 
 type NodeMesh = THREE.Mesh<THREE.SphereGeometry, THREE.MeshStandardMaterial>
 type HaloMesh = THREE.Mesh<THREE.PlaneGeometry, THREE.ShaderMaterial>
@@ -76,7 +76,6 @@ const colorByNodeKind: Record<
     atmosphereOpacity: number
     coronaOpacity: number
     glintRestOpacity: number
-    state: NodeRuntimeState['colorState']
   }
 > = {
   'personal-project': {
@@ -86,7 +85,6 @@ const colorByNodeKind: Record<
     atmosphereOpacity: 0.08,
     coronaOpacity: 0.012,
     glintRestOpacity: 0.12,
-    state: 'gold',
   },
   'work-experience': {
     hex: readToken('--node-work', '#18a9bc'),
@@ -95,7 +93,6 @@ const colorByNodeKind: Record<
     atmosphereOpacity: 0.072,
     coronaOpacity: 0.01,
     glintRestOpacity: 0.08,
-    state: 'teal-active',
   },
   'current-build': {
     hex: readToken('--node-build', '#c78a62'),
@@ -104,7 +101,6 @@ const colorByNodeKind: Record<
     atmosphereOpacity: 0.06,
     coronaOpacity: 0.008,
     glintRestOpacity: 0.06,
-    state: 'amber',
   },
   utility: {
     hex: readToken('--node-utility', '#ff5a3d'),
@@ -113,15 +109,7 @@ const colorByNodeKind: Record<
     atmosphereOpacity: 0.078,
     coronaOpacity: 0.014,
     glintRestOpacity: 0.08,
-    state: 'ember',
   },
-}
-
-const ringByStatus: Record<ProjectStatus, NodeRuntimeState['ringState']> = {
-  complete: 'solid',
-  active: 'blinking-live',
-  'in-progress': 'pulsing-amber',
-  experience: 'static-faint',
 }
 
 function createAtmosphereMaterial(color: string, opacity: number) {
@@ -302,11 +290,11 @@ const sceneNodes: SceneNode[] = projects.map((project, clusterIndex) => {
     ? new THREE.PointLight(nodeColor.hex, localLightIntensity, project.weight === 'flagship' ? 2.4 : 1.6, 2)
     : null
 
-  mesh.name = `EvidenceBoundNode:${project.id}`
-  halo.name = `EvidenceBoundNodeHalo:${project.id}`
-  corona.name = `EvidenceBoundNodeCorona:${project.id}`
-  glint.name = `EvidenceBoundNodeGlint:${project.id}`
-  hitMesh.name = `EvidenceBoundNodeHit:${project.id}`
+  mesh.name = `EphemerisNode:${project.id}`
+  halo.name = `EphemerisNodeHalo:${project.id}`
+  corona.name = `EphemerisNodeCorona:${project.id}`
+  glint.name = `EphemerisNodeGlint:${project.id}`
+  hitMesh.name = `EphemerisNodeHit:${project.id}`
   mesh.position.copy(derived.position)
   halo.position.copy(mesh.position)
   corona.position.copy(mesh.position)
@@ -318,7 +306,7 @@ const sceneNodes: SceneNode[] = projects.map((project, clusterIndex) => {
   hitMesh.renderOrder = 5
 
   if (localLight) {
-    localLight.name = `EvidenceBoundNodeLight:${project.id}`
+    localLight.name = `EphemerisNodeLight:${project.id}`
     localLight.position.copy(mesh.position)
   }
 
@@ -349,8 +337,6 @@ const sceneNodes: SceneNode[] = projects.map((project, clusterIndex) => {
     runtimeState: {
       projectId: project.id,
       scale: 1,
-      colorState: nodeColor.state,
-      ringState: ringByStatus[project.status],
       clusterBrightness: 1,
       hovered: false,
       active: false,
@@ -490,6 +476,16 @@ onUnmounted(() => {
     node.glint.material.dispose()
     node.hitMesh.geometry.dispose()
     node.hitMesh.material.dispose()
+
+    // The lights were the one thing this teardown missed. A PointLight holds no
+    // GPU buffer of its own, so there is nothing to `dispose()` — but it is a
+    // node in the scene graph with a parent reference, and up to twelve of them
+    // survived every unmount, keeping their whole subtree alive. The scene
+    // remounts on `?plain=1` toggles and quality-tier changes, so they
+    // accumulated (CLAUDE.md, known leak).
+    if (node.localLight) {
+      node.localLight.removeFromParent()
+    }
   })
 })
 </script>

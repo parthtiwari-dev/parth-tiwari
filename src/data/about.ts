@@ -3,6 +3,27 @@ export interface AboutFact {
   output: string[]
 }
 
+/**
+ * The owner's photo (PLAN.md 1.5.8).
+ *
+ * Deliberately not a headshot against a backdrop. The buyer this site is written
+ * for is hiring someone to build a thing, and a posed corporate portrait argues
+ * for a category of person this work is not — the brief was creativity, not
+ * professionalism. `alt` describes the frame, not the vibe, because a screen
+ * reader user is owed the picture rather than an adjective.
+ *
+ * Two sizes so a phone does not download a 900px image to render it at 220.
+ * Cropped to 4:5 from the original 3264x2448.
+ */
+export const aboutPortrait = {
+  src: '/media/parth-portrait.jpg',
+  srcSmall: '/media/parth-portrait-sm.jpg',
+  width: 900,
+  height: 1125,
+  alt: 'Parth Tiwari standing in front of river rapids at golden hour, in a black '
+    + 'tee, pale jeans, sunglasses and a cream cap, looking off to one side.',
+}
+
 export const aboutSignal = {
   heading: "Hi, I'm Parth.",
   paragraphs: [

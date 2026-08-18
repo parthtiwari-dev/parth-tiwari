@@ -4,7 +4,24 @@ import { capabilityGroups, normalizeCapability } from '@/data/capabilities'
 import { useProjectStore } from '@/stores/projectStore'
 
 const projectStore = useProjectStore()
-const activeSkill = ref<string | null>(null)
+
+/**
+ * Two states, not one, because there are two input modes.
+ *
+ * This used to be a single `activeSkill` set by `mouseenter`, `focus` *and*
+ * `click`, and cleared only by `mouseleave` on the container. On a touch device
+ * there is no `mouseleave`: a tap selected a chip and nothing on the page could
+ * ever deselect it. The readout stayed stuck on whatever was tapped first and
+ * the constellation stayed highlighted with it (CLAUDE.md — anything reachable
+ * by hover must be dismissable by touch).
+ *
+ * So hovering previews and clicking pins. A pin survives the pointer leaving,
+ * tapping the pinned chip again releases it, and there is a visible Clear
+ * control whenever one is held — which a keyboard user gets too.
+ */
+const hoveredSkill = ref<string | null>(null)
+const pinnedSkill = ref<string | null>(null)
+const activeSkill = computed(() => pinnedSkill.value ?? hoveredSkill.value)
 
 function stackMatchesSkill(stackItem: string, skill: string) {
   const normalizedStack = normalizeCapability(stackItem)
@@ -29,13 +46,35 @@ const activeProjects = computed(() => {
   return activeSkill.value ? projectsForSkill(activeSkill.value) : []
 })
 
-function setActiveSkill(skill: string) {
-  activeSkill.value = skill
+/** Pushes whatever is active now into the shared highlight, or clears it. */
+function syncHighlight() {
+  const skill = activeSkill.value
+  if (!skill) {
+    projectStore.clearHighlight()
+    return
+  }
   projectStore.highlight(projectsForSkill(skill).map((project) => project.id))
 }
 
-function clearActiveSkill() {
-  activeSkill.value = null
+function previewSkill(skill: string) {
+  hoveredSkill.value = skill
+  syncHighlight()
+}
+
+function endPreview() {
+  hoveredSkill.value = null
+  syncHighlight()
+}
+
+/** Tap or click: pin it, or release it if it is already the pinned one. */
+function togglePin(skill: string) {
+  pinnedSkill.value = pinnedSkill.value === skill ? null : skill
+  syncHighlight()
+}
+
+function clearAll() {
+  pinnedSkill.value = null
+  hoveredSkill.value = null
   projectStore.clearHighlight()
 }
 
@@ -45,7 +84,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <article class="capability-map" @mouseleave="clearActiveSkill">
+  <article class="capability-map" @mouseleave="endPreview">
     <header class="capability-map__intro">
       <p class="panel-label">Skill Atlas</p>
       <h2>Capability map.</h2>
@@ -71,11 +110,12 @@ onUnmounted(() => {
               v-for="skill in group.skills"
               :key="skill"
               type="button"
-              :class="{ 'is-active': activeSkill === skill }"
-              @focus="setActiveSkill(skill)"
-              @mouseenter="setActiveSkill(skill)"
-              @click="setActiveSkill(skill)"
-              @blur="clearActiveSkill"
+              :class="{ 'is-active': activeSkill === skill, 'is-pinned': pinnedSkill === skill }"
+              :aria-pressed="pinnedSkill === skill"
+              @focus="previewSkill(skill)"
+              @mouseenter="previewSkill(skill)"
+              @click="togglePin(skill)"
+              @blur="endPreview"
             >
               {{ skill }}
             </button>
@@ -86,6 +126,15 @@ onUnmounted(() => {
       <aside class="capability-map__readout" aria-live="polite">
         <p class="panel-label">Used In</p>
         <h3>{{ activeSkill ?? 'Select a capability' }}</h3>
+        <!-- The only dismissal a touch user has, and a keyboard user's too. -->
+        <button
+          v-if="pinnedSkill"
+          type="button"
+          class="capability-map__clear"
+          @click="clearAll"
+        >
+          Clear {{ pinnedSkill }}
+        </button>
         <ul v-if="activeProjects.length">
           <li v-for="project in activeProjects" :key="project.id">
             <span>{{ project.name }}</span>
@@ -101,6 +150,26 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+.capability-map__clear {
+  justify-self: start;
+  margin-top: 0.5rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  background: none;
+  color: var(--gold);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.capability-map__clear:focus-visible {
+  outline: 2px solid var(--gold-glow);
+  outline-offset: 2px;
+}
+
 .capability-map {
   display: grid;
   gap: clamp(1.2rem, 3vw, 2.2rem);

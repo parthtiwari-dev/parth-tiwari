@@ -1,17 +1,13 @@
 :root {
   --bg: #010409;
   --bg-lift: #04101d;
-  --bg-bridge: #000205;
   --bg-nebula: #071d34;
   --bg-cyan: #0bb6d6;
-  --surface-glass: rgba(240, 244, 247, 0.06);
-  --surface-glass-hover: rgba(240, 244, 247, 0.10);
 
   --ice: #d8eaf0;
   --ice-muted: #7fa8b8;
   --ice-faint: #2e4f5e;
 
-  --teal-deep: #0d3d47;
   --teal-active: #1a6b7a;
 
   --gold: #c9a84c;

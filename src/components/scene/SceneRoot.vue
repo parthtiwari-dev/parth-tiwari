@@ -6,7 +6,6 @@ import { ACESFilmicToneMapping, SRGBColorSpace } from 'three'
 import { usePlainMode } from '@/composables/usePlainMode'
 import { useSceneVisibility } from '@/composables/useSceneVisibility'
 import { useScrollRunway } from '@/composables/useScrollRunway'
-import { isOverlayReadyProject } from '@/data/overlayReady'
 import { projects } from '@/data/projects'
 import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
 import { useOverlayStore } from '@/stores/overlayStore'
@@ -24,7 +23,6 @@ import NodeLabel from '@/components/scene/NodeLabel.vue'
 import NodeMoons from '@/components/scene/NodeMoons.vue'
 import ParticleField from '@/components/scene/ParticleField.vue'
 import PostProcessing from '@/components/scene/PostProcessing.vue'
-import RefusalRipple from '@/components/scene/RefusalRipple.vue'
 import ScenePauseController from '@/components/scene/ScenePauseController.vue'
 
 const { isPlain } = usePlainMode()
@@ -60,9 +58,6 @@ let hueMilestoneFrame = 0
 const hoveredProject = computed(() => {
   return projects.find((project) => project.id === hoveredProjectId.value) ?? null
 })
-const hoveredProjectCanOpen = computed(() => {
-  return hoveredProject.value ? isOverlayReadyProject(hoveredProject.value.id) : false
-})
 const sceneInteractionPaused = computed(() => overlayStore.isOpen || evidenceOverlayStore.isOpen)
 const sceneAnimationPaused = computed(() => {
   // Not visible outranks everything: there is no reason to render a frame that
@@ -94,10 +89,7 @@ function handleHover(payload: { projectId: string | null; clusterIndex: number |
 
 function handleSelect(projectId: string) {
   selectedProjectId.value = projectId
-
-  if (isOverlayReadyProject(projectId)) {
-    overlayStore.open(projectId)
-  }
+  overlayStore.open(projectId)
 }
 
 onMounted(() => {
@@ -170,7 +162,6 @@ onUnmounted(() => {
           :hue-offset="particleHueOffset"
         />
         <NodeMoons v-if="moonsEnabled" />
-        <RefusalRipple />
         <ConstellationNodes
           :interaction-paused="sceneInteractionPaused"
           :highlighted-project-ids="projectStore.highlightedProjectIds"
@@ -195,7 +186,6 @@ onUnmounted(() => {
         :context="tresContext"
         :project="hoveredProject"
         :visible="Boolean(hoveredProject)"
-        :can-open="hoveredProjectCanOpen"
       />
 
       <!-- bottom-24, not bottom-6: BookingCta.vue also docks bottom-right (fixed,

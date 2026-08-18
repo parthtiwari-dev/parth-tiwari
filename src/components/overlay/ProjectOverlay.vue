@@ -3,7 +3,6 @@ import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { lockBodyScroll, unlockBodyScroll } from '@/composables/useBodyScrollLock'
 import { useEscapeStack } from '@/composables/useEscapeStack'
 import { useFocusTrap } from '@/composables/useFocusTrap'
-import { isOverlayReadyProject } from '@/data/overlayReady'
 import FilmStrip from '@/components/overlay/FilmStrip.vue'
 import FilmStripHeader from '@/components/overlay/FilmStripHeader.vue'
 import { useOverlayStore } from '@/stores/overlayStore'
@@ -22,7 +21,7 @@ let hasScrollLock = false
 const activeProject = computed(() => {
   const projectId = overlayStore.activeProjectId
 
-  if (!projectId || !isOverlayReadyProject(projectId)) {
+  if (!projectId) {
     return null
   }
 

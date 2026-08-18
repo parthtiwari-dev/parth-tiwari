@@ -265,7 +265,7 @@ export function useParticleField(projects: Project[]) {
   })
 
   const points = new THREE.Points(geometry, material)
-  points.name = 'EvidenceBoundParticleField'
+  points.name = 'EphemerisParticleField'
   points.frustumCulled = false
 
   function update(delta: number, hoveredClusterIndex: number | null, hueOffset = 0) {

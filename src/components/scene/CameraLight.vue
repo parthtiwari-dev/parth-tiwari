@@ -8,7 +8,7 @@ const light = new THREE.PointLight('#f5e8c8', 16, 70, 1.6)
 const cameraOffset = new THREE.Vector3(-2.2, 1.6, 2.4)
 const worldOffset = new THREE.Vector3()
 
-light.name = 'EvidenceBoundCameraKeyLight'
+light.name = 'EphemerisCameraKeyLight'
 
 onMounted(() => {
   scene.value.add(light)

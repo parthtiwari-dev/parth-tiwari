@@ -10,10 +10,12 @@
     "preview": "vite preview",
     "shots": "node scripts/shots.mjs",
     "budget": "node scripts/budget.mjs",
-    "capture": "node scripts/capture-demos.mjs"
+    "capture": "node scripts/capture-demos.mjs",
+    "og": "node scripts/og.mjs"
   },
   "dependencies": {
     "@tresjs/core": "4.3.1",
+    "@vercel/analytics": "^2.0.1",
     "gsap": "^3.13.0",
     "lenis": "^1.3.26",
     "pinia": "^2.3.1",

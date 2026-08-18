@@ -90,12 +90,15 @@ export const CONTACT_EMAIL_HREF = `mailto:${CONTACT_EMAIL}`
  * WhatsApp — an always-visible direct channel, especially effective for Indian
  * SMB buyers (PRD.md 7.3).
  *
- * TODO(owner): supply the number in international format, digits only, including
- * country code and no `+` or spaces (e.g. `919812345678`). Deliberately left
- * empty: a guessed phone number is worse than no phone number, so every WhatsApp
- * affordance stays unrendered until this is filled in.
+ * International format, digits only, no `+` and no spaces: country code 91
+ * followed by the ten-digit number. Supplied by the owner 2026-08-18.
+ *
+ * It stayed empty until then on purpose — a guessed phone number is worse than
+ * no phone number, and every WhatsApp affordance is still gated on
+ * `IS_WHATSAPP_CONFIGURED` so emptying this string removes them cleanly rather
+ * than shipping a link to nowhere.
  */
-export const WHATSAPP_NUMBER: string = ''
+export const WHATSAPP_NUMBER: string = '917000181882'
 
 export const IS_WHATSAPP_CONFIGURED: boolean = WHATSAPP_NUMBER.trim().length > 0
 

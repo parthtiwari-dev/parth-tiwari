@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { useCharacterSplit } from '@/composables/useCharacterSplit'
-import { aboutSignal } from '@/data/about'
+import { aboutPortrait, aboutSignal } from '@/data/about'
 import { socialLinks, type SocialLinkKind } from '@/data/socialLinks'
 
 defineEmits<{
@@ -49,10 +49,26 @@ const socialIconPaths: Record<SocialLinkKind, string> = {
     </button>
 
     <section class="about-signal__hero">
-      <h2 id="about-signal-title">{{ aboutSignal.heading }}</h2>
-      <p class="about-signal__typed" :aria-label="bodyText">
-        {{ displayed }}<span v-if="!isComplete" class="about-signal__cursor" aria-hidden="true">_</span>
-      </p>
+      <!-- `srcset` and `sizes` so a phone fetches the 480px file, not the 900px
+           one it would render at a quarter of the size. -->
+      <img
+        class="about-signal__portrait"
+        :src="aboutPortrait.src"
+        :srcset="`${aboutPortrait.srcSmall} 480w, ${aboutPortrait.src} 900w`"
+        sizes="(max-width: 720px) 40vw, 15rem"
+        :width="aboutPortrait.width"
+        :height="aboutPortrait.height"
+        :alt="aboutPortrait.alt"
+        loading="lazy"
+        decoding="async"
+      >
+
+      <div class="about-signal__hero-text">
+        <h2 id="about-signal-title">{{ aboutSignal.heading }}</h2>
+        <p class="about-signal__typed" :aria-label="bodyText">
+          {{ displayed }}<span v-if="!isComplete" class="about-signal__cursor" aria-hidden="true">_</span>
+        </p>
+      </div>
     </section>
 
     <nav class="about-signal__links" aria-label="Social links">
@@ -162,11 +178,38 @@ const socialIconPaths: Record<SocialLinkKind, string> = {
   transform: translateY(-1px);
 }
 
+.about-signal__portrait {
+  display: block;
+  width: clamp(7rem, 34vw, 15rem);
+  height: auto;
+  flex-shrink: 0;
+  border: 1px solid var(--ice-faint);
+  border-radius: 0.5rem;
+  object-fit: cover;
+}
+
+.about-signal__hero-text {
+  display: grid;
+  align-content: start;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
 .about-signal__hero {
   display: grid;
   gap: clamp(0.9rem, 2.2vw, 1.35rem);
   max-width: 64rem;
   animation: about-signal-enter 320ms var(--ease-out-expo) both;
+}
+
+/* Portrait beside the text once there is room for both; stacked below that,
+   where a 15rem image next to a 4rem heading leaves neither any width. */
+@media (min-width: 720px) {
+  .about-signal__hero {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    column-gap: clamp(1.25rem, 3vw, 2.25rem);
+  }
 }
 
 .about-signal h2 {

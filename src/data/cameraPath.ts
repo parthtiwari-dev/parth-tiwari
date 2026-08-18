@@ -21,12 +21,6 @@ export interface CameraPose {
   at: number
   position: THREE.Vector3
   target: THREE.Vector3
-  /**
-   * The project this pose is framing, if any. Not yet consumed — Phase 3 uses it
-   * to derive which node is "active" from camera position instead of from a
-   * separate hover/selection path. Recorded now because it is knowable now.
-   */
-  activeNode?: string
 }
 
 export const CAMERA_POSES: CameraPose[] = [
