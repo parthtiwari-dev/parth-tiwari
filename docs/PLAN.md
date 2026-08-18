@@ -93,7 +93,7 @@ The load-bearing rewrite. Nothing visual changes for the visitor; everything dow
 
 | # | Task | Source |
 |---|---|---|
-| ⬜ 2.1 | **One clock.** Single render loop owning the scene; scroll and time are inputs. Stops when off-screen or tab hidden. | DESIGN §8 |
+| 🟡 2.1 | **One clock — exit criterion met 2026-08-18, rewrite still open.** `useSceneVisibility.ts` stops the scene when the section scrolls out of view or the tab is hidden, via IntersectionObserver + `visibilitychange` — both event-driven, no polling. It previously rendered 10,000 particles, a 63-noise sky shader, ten lights and a bloom pass to paint frames nobody could see, four viewport-heights up the page. One signal now gates the TresJS loop *and* `ConnectorLines`, which reallocates an array every frame. **Still open:** the actual single-loop rewrite where scroll and time are inputs to one owner — the remaining rAFs in `NodeLabel`, `CustomCursor` and `PanelProof` are still independent. | DESIGN §8 |
 | ⬜ 2.2 | **Camera as data.** `{ scrollProgress, camera, target, activeNode }[]`; GSAP scrubs two plain mutable objects; render loop reads them. Scroll progress never touches reactive state. | DESIGN §4 |
 | ⬜ 2.3 | Adopt **Lenis** for scroll, feeding ScrollTrigger | DESIGN §4 |
 | ✅ 2.4 | **Quality tier system — done 2026-08-18.** `utils/qualityTier.ts` detects once and feeds all four knobs: particle count (10k/5k/2k), DPR (`[1,1.25]`/`[1,1.1]`/`[1,1]`), sky-shader octaves via a `SKY_OCTAVES` define (3/2/1 → 63/42/21 `noise()` calls per fragment), and whether bloom mounts at all. Replaces three disagreeing decisions and one that was never made. `prefers-reduced-motion` forces low — a stated preference, not a capability guess. Handsets are detected by coarse pointer + narrow viewport rather than core count, because mid-range phones report 8 cores and then thermally throttle. | DESIGN §8 |
@@ -105,7 +105,27 @@ The load-bearing rewrite. Nothing visual changes for the visitor; everything dow
 
 **Exit:** visually equivalent to today, running on one clock, one scene, derived tokens, at ≥ current frame rate on every tier.
 
-**Status 2026-08-18 — 2.4, 2.5, 2.7 and 2.9 done; 2.6 partial; 2.1, 2.2, 2.3, 2.8 open.**
+**Status 2026-08-18 — 2.4, 2.5, 2.7, 2.9 done; 2.1 and 2.6 partial; 2.2, 2.3, 2.8 open.**
+
+### Verification now exists
+
+`npm run shots` (`scripts/shots.mjs`, Playwright) captures `/` and `/?plain=1` at 390, 430,
+**800**, 834 and 1440 with correct device scale factor and a touch pointer, and reports any
+page error or failed request per viewport. The 800 entry is the documented 768–820 dead
+zone. The touch pointer matters specifically because `qualityTier.ts` branches on
+`(pointer: coarse)`, so a merely-narrow desktop window would take the wrong branch and prove
+nothing.
+
+This closes the gap that blocked the rest of the phase. The earlier warning — that
+`resize_window` moved the OS window without changing the captured viewport, and Chrome on
+Windows will not go below ~500px — is resolved: **2.5 is now verified at a real 390px
+viewport**, and the dead zone at 800px renders the full scene with no mobile navigation
+overlapping it.
+
+**Found while verifying, pre-existing, not yet fixed:** at 390px the `ProjectIndex` rail
+(bottom-left, `bottom: 5.5rem`) overlaps the hero sub-line by a few pixels. It predates all
+of this — the rail has been on every breakpoint since 0.2 — but it is on the buyer's device,
+so it belongs in Phase 6 craft rather than being forgotten.
 
 > ⚠️ **2.5 is unverified on a real mobile viewport.** `resize_window` via the browser
 > tooling moves the OS window but does not change the captured viewport, and Chrome on

@@ -4,6 +4,7 @@ import { TresCanvas, type TresContext } from '@tresjs/core'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ACESFilmicToneMapping, SRGBColorSpace } from 'three'
 import { usePlainMode } from '@/composables/usePlainMode'
+import { useSceneVisibility } from '@/composables/useSceneVisibility'
 import { useScrollRunway } from '@/composables/useScrollRunway'
 import { isOverlayReadyProject } from '@/data/overlayReady'
 import { projects } from '@/data/projects'
@@ -36,6 +37,10 @@ const particleHueOffset = ref(0)
 // Four viewport-heights of scroll track, in pixels rather than vh so mobile
 // browser chrome cannot resize it mid-scroll (PLAN.md 2.7).
 const runwayHeight = useScrollRunway(4)
+// One signal decides whether the scene runs at all (PLAN.md 2.1). Off-screen or
+// a hidden tab now stops it, not just an open overlay.
+const viewportEl = ref<HTMLElement | null>(null)
+const sceneVisible = useSceneVisibility(viewportEl)
 const quality = getQuality()
 const dpr: [number, number] = quality.dpr
 const postFxEnabled = quality.postFx
@@ -50,9 +55,14 @@ const hoveredProjectCanOpen = computed(() => {
 })
 const sceneInteractionPaused = computed(() => overlayStore.isOpen || evidenceOverlayStore.isOpen)
 const sceneAnimationPaused = computed(() => {
+  // Not visible outranks everything: there is no reason to render a frame that
+  // cannot be seen, whatever the overlay state is.
+  if (!sceneVisible.value) return true
   return overlayStore.isOpen || (evidenceOverlayStore.isOpen && evidenceOverlayStore.activeKind !== 'capability')
 })
-const connectorsPaused = computed(() => sceneInteractionPaused.value)
+// ConnectorLines reallocates an array of objects every frame (ARCHITECTURE §11),
+// so it is the loop that most benefits from stopping when unseen.
+const connectorsPaused = computed(() => sceneInteractionPaused.value || !sceneVisible.value)
 
 function prefersReducedMotion() {
   return typeof window !== 'undefined'
@@ -118,7 +128,10 @@ onUnmounted(() => {
     :style="{ height: runwayHeight || '400vh' }"
     :data-selected-project-id="selectedProjectId ?? undefined"
   >
-    <div class="constellation-viewport sticky top-0 h-screen overflow-hidden bg-[color:var(--bg)]">
+    <div
+      ref="viewportEl"
+      class="constellation-viewport sticky top-0 h-screen overflow-hidden bg-[color:var(--bg)]"
+    >
       <TresCanvas
         class="absolute inset-0 z-0 h-full w-full"
         :alpha="true"

@@ -160,3 +160,4 @@ vite.config.ts.timestamp-*
 # design-pass skill working files (screenshots, concept previews)
 .design-pass/
 inbox/refero/
+.shots/
