@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { gsap } from 'gsap'
 import { livePosition } from '@/data/nodeMotion'
+import { toWorld } from '@/data/sceneRig'
 import { useScaleModeStore } from '@/stores/scaleModeStore'
 import { onMounted, onUnmounted, ref, computed } from 'vue'
 import type { TresContext } from '@tresjs/core'
@@ -121,8 +122,10 @@ function projectNode(
     return false
   }
 
-  projectedPosition
-    .copy(livePosition(project.id, scaleModeStore.mode))
+  // Through the rig first (PLAN.md 4.3). `livePosition` is constellation-local;
+  // free-orbit rotates that whole space under the camera, so projecting the
+  // local vector would leave every label pinned where its star used to be.
+  toWorld(livePosition(project.id, scaleModeStore.mode), projectedPosition)
     .project(camera)
 
   if (projectedPosition.z < -1 || projectedPosition.z > 1) {

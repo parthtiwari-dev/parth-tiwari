@@ -44,6 +44,8 @@ There is no unit-test runner and no linter configured. Type checking, a clean bu
 
 **`npm run budget` is not optional.** It reads `dist/` and fails if the eager entry chunk exceeds its gzip ceiling or if `WebGLRenderer` appears in it. The lazy-3D boundary has broken *twice*, silently, and neither break failed typecheck, failed the build, or showed up in a screenshot — the first was a `manualChunks` rule that made Rolldown preload the chunk anyway, the second was `data/layout.ts` importing `three` for `Vector3` while `ProjectIndex` statically imports `layoutFor()`, which put 796.96 kB in front of every visitor including `?plain=1`. A number is the only thing that catches this.
 
+**`npm run nav` is the behaviour gate.** `scripts/nav-check.mjs` drives the real scene through the Phase 4 navigation contract — default mode, drag-to-free, resume tour, the three zoom scales, deep links, the comparison label, and the phone controls including touch-target size. A screenshot cannot prove any of that. Two defects passed typecheck, build *and* the viewport matrix and were caught only here. Run it after anything touching the camera, the rig, the overlay or the project index.
+
 **`npm run shots` is the third.** Playwright captures `/` and `/?plain=1` at 390, 430, 800, 834 and 1440 with the right device scale factor and a touch pointer, reporting page errors per viewport. Run it before and after anything touching the scene, layout or shaders:
 
 ```bash
@@ -168,6 +170,8 @@ There is no router. Three modes, all on `/`:
 | Plain | `?plain=1` | Static, crawlable, printable. No 3D, no animation. |
 | Debug | `?debug=1` | Legacy console surface |
 
+`?project=<id>` is orthogonal to all three: it restores that project's overlay and focuses its node (`useProjectDeepLink.ts`). It uses `replaceState`, never `pushState` — opening a panel is not navigation, and pushing history would make Back close an overlay instead of leaving the site. Unknown ids are ignored rather than opening an empty overlay, and the other parameters survive the rewrite.
+
 **Plain mode must stay complete.** It is the accessibility and SEO backstop — every piece of content reachable in the full experience must also be reachable there. When you add content, add it to `PlainExperience.vue` too.
 
 ---
@@ -181,6 +185,12 @@ The sky shader (`iridescent.frag.glsl`) is the largest GPU cost in the app: 7 `t
 `ConstellationNodes.vue`'s `onUnmounted` disposes geometries and materials **and removes the `PointLight`s from the graph** — the lights were the one thing it missed, and they have no GPU buffer to dispose but do hold a parent reference, so twelve of them survived every scene remount. Keep that call when editing the teardown.
 
 `ConnectorLines` still reallocates an array of objects per tick, triggering Vue reactivity for all pairs even though lines only render on hover. It no longer *runs* while paused or off-screen (2.1), so the cost is bounded — but the allocation itself is unfixed.
+
+**Navigation is two modes over one scene.** Guided (scroll drives the authored pose array) is the default arrival; free orbit is unlocked by the first drag, pinch or zoom-button press. `NavigationController.vue` is the **only** thing that writes the camera in either mode — they were never going to survive as two components, because both want the same transform and the handover has to be seamless within one frame.
+
+Free mode **rotates the rig, not the camera** (DESIGN §4). Everything in constellation space hangs off one `<TresGroup>`; `data/sceneRig.ts` registers it and `toWorld()` is the only sanctioned way to convert a local node position to a world one. The two DOM projectors (`NodeLabel`, `ConnectorLines`) compute screen positions by hand and **must** go through it — skip it and every label detaches from its star the moment anyone drags.
+
+The orbit state in `useFreeOrbit.ts` is a deliberately non-reactive module singleton. Do not put it in a store and do not `computed()` over it: it changes every frame, and a computed over a plain object is evaluated once and never invalidates. The reactive copy the DOM reads is `navigationStore.distance`, pushed from the render loop only when it has actually moved.
 
 **Two clocks, and that is the budget.** `gsap.ticker` steps Lenis, ScrollTrigger, `ConnectorLines` and `NodeLabel`; the TresJS `useLoop` renders the scene and applies the camera. `MobileStarWorld`'s rAF went with the file (2.5), and the DOM overlays moved onto the ticker (2.1).
 

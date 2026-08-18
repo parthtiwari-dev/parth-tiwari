@@ -11,7 +11,8 @@
     "shots": "node scripts/shots.mjs",
     "budget": "node scripts/budget.mjs",
     "capture": "node scripts/capture-demos.mjs",
-    "og": "node scripts/og.mjs"
+    "og": "node scripts/og.mjs",
+    "nav": "node scripts/nav-check.mjs"
   },
   "dependencies": {
     "@tresjs/core": "4.3.1",

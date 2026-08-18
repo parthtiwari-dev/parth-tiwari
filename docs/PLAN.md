@@ -258,14 +258,48 @@ encodes the data; the camera decides the shot. Verified at all five viewports.
 
 | # | Task |
 |---|---|
-| 4.1 | Guided mode: scroll drives the scripted path (default arrival) |
-| 4.2 | Free mode: drag to orbit, pinch/wheel to zoom; unlocked by direct manipulation, with a quiet "resume tour" affordance |
-| 4.3 | FOV-as-zoom; rotate-the-scene-not-the-camera |
-| 4.4 | Zero-out-rotation-on-approach for float precision |
-| 4.5 | Three zoom scales: galaxy → system → project |
-| 4.6 | Pairwise comparison — the previously-focused project stays in frame, receding |
-| 4.7 | Deep links per project via query param |
-| 4.8 | Explicit mobile controls (visible zoom, reset) alongside gestures |
+| ✅ 4.1 | **Done 2026-08-18** (largely by 2.2/2.3 — this phase inherited it and verified it). Scroll drives the scripted path and it is still the default arrival: nothing about free mode is reachable until the visitor asks for it. |
+| ✅ 4.2 | **Done 2026-08-18.** Drag to orbit, pinch to zoom, and the first manipulation flips the mode — no modal, no picker (DESIGN §3). A drag only counts past 4px, or every tap on a node would register as a one-pixel orbit and eat the click. **Plain wheel is deliberately left alone:** it is the guided path's only input, and hijacking it would break the tour for every mouse user who never intended to leave it, so wheel-zoom is `ctrl`+wheel — the trackpad pinch gesture. "Resume tour" appears only once there is a tour to resume. |
+| ✅ 4.3 | **Done 2026-08-18.** Free mode rotates the rig, not the camera: the camera stays on +z looking at the origin, so orbiting costs two Euler angles instead of a second camera to reconcile with the scripted one. Zoom moves distance *and* narrows FOV. Both live in `useFreeOrbit.ts`, deliberately non-reactive. |
+| ✅ 4.4 | **Done 2026-08-18, for a different reason than the plan gave.** The rig re-centres on the focused node so orbiting pivots around the subject rather than the origin it happens to be 13 units from. DESIGN §4 frames this as a float-precision fix inherited from 100,000 Stars, where one unit is a light year — **that reason does not apply at this scale and the code says so.** The constellation spans ~34 units; float32 resolves that to ~4e-6 units and there is nothing to drift. The interaction reason is real and independent, so the behaviour ships and the false rationale does not. |
+| ✅ 4.5 | **Done 2026-08-18.** Galaxy → system → project, as distances of 22 / 13 / 6. `22` is not a round number: it is where `CAMERA_POSES[0]` actually sits (21.3 units from its target). The first pass used 30, which put the arrival shot below its own galaxy threshold — the readout said "neighbourhood" over a shot of the whole constellation, and the first zoom press skipped a scale. The label is derived from live distance in both modes, so it cannot disagree with the camera. |
+| ✅ 4.6 | **Done 2026-08-18.** The previously-focused project keeps a quiet "Previously" label and the framing opens until both fit. Framing is computed from the geometry — centre biased 35% toward the predecessor, distance solved from the half-extent and the current FOV — because the first version guessed a multiple of the separation, under-shot, and left the ghost card clamped to the bottom of the screen with its star below the viewport. The ghost label also refuses to clamp: off screen means not shown, since a card pinned to an edge pointing at nothing is worse than no card. |
+| ✅ 4.7 | **Done 2026-08-18.** `?project=<id>`, via `history.replaceState` rather than a router — one query parameter does not justify the dependency. **`replaceState`, not `pushState`:** opening a project is not navigation, and pushing history would make Back close an overlay instead of leaving the site, which would trap someone who arrived from a cold-outreach link. Unknown ids are ignored rather than opening an empty overlay, and `?plain=1` / `?debug=1` survive the rewrite. |
+| ✅ 4.8 | **Done 2026-08-18.** Zoom in / zoom out / resume tour as real buttons at 44px, on every breakpoint, keyboard-reachable and labelled — gestures alone assume a visitor who already expects them. They step between the three named scales rather than nudging, so every press lands somewhere the readout can describe. On phones the cluster is a row above the booking dock: booking is never the thing that moves. |
+
+**Exit:** guided by default, free on demand, both over one scene, with every route to a
+project — star, keyboard rail, deep link — moving the same camera.
+
+**Status 2026-08-18 — Phase 4 complete. All eight items done.**
+
+### The seam was the whole problem
+
+Handing control from the scripted camera to free orbit has to be invisible, and two
+attempts at it were not. The rig quaternion is the *inverse of the camera's orientation,
+exactly* — that falls out of the arithmetic rather than being tuned — but the Euler
+decomposition used to carry it must be **XYZ, not the YXZ an orbit camera would use.** A
+roll-free `lookAt` camera is `Ry(a)·Rx(b)`; its inverse is `Rx(−b)·Ry(−a)`, and decomposing
+that as YXZ needs a non-zero Z term which the first version silently dropped. The result
+looked like a botched sign. Separately, the field of view had to be anchored to whatever the
+guided camera was already using, because an absolute distance→FOV curve wanted 39.7° where
+the authored camera sits at 45° and snapped on the first frame.
+
+Measured after the fix: **0.46% of sampled pixels differ across the handover**, and those are
+the hero tagline still typing and the nodes still orbiting between the two captures.
+
+### Verification now exists for behaviour, not just rendering
+
+`npm run nav` (`scripts/nav-check.mjs`) drives the real scene through fifteen assertions —
+default mode, drag-to-free, resume, scale stepping, deep links including a bad id and the
+`?plain=1` interaction, the comparison label appearing only on a genuine second focus, and
+the phone controls including their touch-target size.
+
+It earned its place immediately. Two defects passed typecheck, build and the whole viewport
+matrix and were caught only here: the scale readout was never fed in guided mode, so it
+reported "constellation" for the entire scripted path; and focus was wired to the scene's
+click handler, so opening a project from the keyboard rail — the accessible route, and the
+one 0.2 exists for — moved no camera at all. The overlay is now the single trigger, which is
+the one thing stars, rail and deep links all agree on.
 
 ---
 

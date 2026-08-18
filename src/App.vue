@@ -2,6 +2,7 @@
 import { computed, defineAsyncComponent, onMounted, onUnmounted, ref } from 'vue'
 import { sliderConfigs } from '@/data/projects'
 import { usePlainMode } from '@/composables/usePlainMode'
+import { useProjectDeepLink } from '@/composables/useProjectDeepLink'
 import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
 import { useProjectStore } from '@/stores/projectStore'
 import BootSequence from '@/components/sections/BootSequence.vue'
@@ -37,6 +38,9 @@ const SceneRoot = defineAsyncComponent(() => import('@/components/scene/SceneRoo
 // Interpolated scroll, stepped from GSAP's ticker (PLAN.md 2.3). App-level
 // because it owns the window scroller, and a no-op under reduced motion.
 useSmoothScroll()
+
+// `?project=<id>` restores an overlay and focuses its node (PLAN.md 4.7).
+useProjectDeepLink()
 
 const MOBILE_QUERY = '(max-width: 767px)'
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)'

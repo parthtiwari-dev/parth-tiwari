@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { gsap } from 'gsap'
 import { livePosition } from '@/data/nodeMotion'
+import { toWorld } from '@/data/sceneRig'
 import { useScaleModeStore } from '@/stores/scaleModeStore'
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import type { TresContext } from '@tresjs/core'
@@ -9,11 +10,22 @@ import type { Project } from '@/types/project'
 
 const scaleModeStore = useScaleModeStore()
 
-const props = defineProps<{
+/**
+ * `variant` exists for pairwise comparison (PLAN.md 4.6).
+ *
+ * When a second project is focused, the one before it does not vanish — it stays
+ * labelled and visibly receding. That is what makes relative size legible at
+ * all: "bigger node = stronger evidence" is a claim the legend makes, and it is
+ * only checkable against something else still in frame. The ghost card is
+ * deliberately quieter and carries no call to action, because it is context, not
+ * the current subject.
+ */
+const props = withDefaults(defineProps<{
   context: TresContext | null
   project: Project | null
   visible: boolean
-}>()
+  variant?: 'primary' | 'ghost'
+}>(), { variant: 'primary' })
 
 const labelPosition = ref({
   x: 0,
@@ -93,17 +105,35 @@ function updatePosition() {
     return
   }
 
-  projectedPosition
-    .copy(livePosition(project.id, scaleModeStore.mode))
+  // Through the rig first (PLAN.md 4.3). `livePosition` is constellation-local;
+  // free-orbit rotates that whole space under the camera, so projecting the
+  // local vector would leave every label pinned where its star used to be.
+  toWorld(livePosition(project.id, scaleModeStore.mode), projectedPosition)
     .project(camera)
 
   const projectedX = (projectedPosition.x * 0.5 + 0.5) * rect.width + rect.left
   const projectedY = (-projectedPosition.y * 0.5 + 0.5) * rect.height + rect.top
 
+  const inDepth = projectedPosition.z >= -1 && projectedPosition.z <= 1
+
+  // The hovered label clamps to the viewport: its star is on screen by
+  // definition — you just pointed at it — so nudging the card back inside keeps
+  // it readable near an edge. The comparison ghost (4.6) must NOT clamp. Its
+  // node is wherever the framing left it, and a card pinned to the edge of the
+  // screen while its star sits outside the frustum is a label pointing at
+  // nothing. Off screen means not shown.
+  if (props.variant === 'ghost') {
+    const onScreen = inDepth
+      && projectedX >= 0 && projectedX <= window.innerWidth
+      && projectedY >= 0 && projectedY <= window.innerHeight
+    setLabelPosition(projectedX + 14, projectedY - 14, onScreen)
+    return
+  }
+
   setLabelPosition(
     clamp(projectedX + 18, 16, window.innerWidth - 320),
     clamp(projectedY - 18, 16, window.innerHeight - 152),
-    projectedPosition.z >= -1 && projectedPosition.z <= 1,
+    inDepth,
   )
 }
 
@@ -153,12 +183,22 @@ onUnmounted(() => {
     <div
       v-if="project && labelPosition.visible"
       :key="project.id"
-      class="node-label pointer-events-none absolute left-0 top-0 z-30"
+      class="node-label pointer-events-none absolute left-0 top-0"
+      :class="variant === 'ghost' ? 'node-label--ghost z-20' : 'z-30'"
       :style="{
         transform: `translate3d(${labelPosition.x}px, ${labelPosition.y}px, 0)`,
       }"
     >
-      <div class="node-label__card">
+      <div v-if="variant === 'ghost'" class="node-label__card node-label__card--ghost">
+        <p class="type-mono text-[length:var(--text-xs)] uppercase tracking-[0.16em] text-ice-faint">
+          Previously
+        </p>
+        <p class="type-label mt-1 text-ice-muted">
+          {{ project.name }}
+        </p>
+      </div>
+
+      <div v-else class="node-label__card">
         <p class="type-label text-gold">
           {{ project.name }}
         </p>
@@ -174,6 +214,17 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+.node-label--ghost {
+  opacity: 0.55;
+}
+
+.node-label__card--ghost {
+  padding: 0.5rem 0.7rem;
+  border: 1px dashed var(--ice-faint);
+  border-radius: 0.35rem;
+  background: color-mix(in srgb, var(--bg) 76%, transparent);
+}
+
 .node-label {
   max-width: 18rem;
 }

@@ -13,7 +13,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
  * Now this only advances `scrollProgress`, a plain mutable object that is
  * deliberately not reactive: it changes every scroll tick, and pushing that
  * through Vue's reactivity would schedule a component update per tick for a
- * value only the render loop reads. `CameraPathController` samples it once per
+ * value only the render loop reads. `NavigationController` samples it once per
  * frame (`docs/PLAN.md` 2.1).
  */
 

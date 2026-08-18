@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { computed, defineAsyncComponent, onMounted, onUnmounted, shallowRef, ref } from 'vue'
+import { computed, defineAsyncComponent, onMounted, onUnmounted, shallowRef, ref, watch } from 'vue'
 import { TresCanvas, type TresContext } from '@tresjs/core'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ACESFilmicToneMapping, SRGBColorSpace } from 'three'
+import type * as THREE from 'three'
 import { usePlainMode } from '@/composables/usePlainMode'
 import { useSceneVisibility } from '@/composables/useSceneVisibility'
 import { useScrollRunway } from '@/composables/useScrollRunway'
@@ -14,7 +15,10 @@ import { useScaleModeStore } from '@/stores/scaleModeStore'
 import { getQuality } from '@/utils/qualityTier'
 // Async + debug-gated so Tweakpane never enters the production entry (2.8).
 const CameraAuthoring = defineAsyncComponent(() => import('@/components/scene/CameraAuthoring.vue'))
-import CameraPathController from '@/components/scene/CameraPathController.vue'
+import NavigationController from '@/components/scene/NavigationController.vue'
+import NavigationControls from '@/components/scene/NavigationControls.vue'
+import { registerSceneRig } from '@/data/sceneRig'
+import { useNavigationStore } from '@/stores/navigationStore'
 import CameraLight from '@/components/scene/CameraLight.vue'
 import ConstellationNodes from '@/components/scene/ConstellationNodes.vue'
 import ConnectorLines from '@/components/scene/ConnectorLines.vue'
@@ -29,7 +33,40 @@ const { isPlain } = usePlainMode()
 const overlayStore = useOverlayStore()
 const evidenceOverlayStore = useEvidenceOverlayStore()
 const projectStore = useProjectStore()
+const navigationStore = useNavigationStore()
 const tresContext = shallowRef<TresContext | null>(null)
+
+/**
+ * The group everything in constellation space hangs off (PLAN.md 4.3).
+ *
+ * `shallowRef`: this holds a Three.js Object3D whose transform is rewritten
+ * every frame, and a deep ref would make Vue walk the whole scene graph on each
+ * change. It is registered with `data/sceneRig.ts` so the DOM label and
+ * connector projectors can convert local node positions to world ones — they
+ * compute screen positions by hand and would otherwise ignore the rotation
+ * entirely, detaching every label from its star the moment anyone dragged.
+ */
+const rigRef = shallowRef<{ value?: THREE.Object3D } | THREE.Object3D | null>(null)
+const sceneRig = computed<THREE.Object3D | null>(() => {
+  const held = rigRef.value as (THREE.Object3D & { value?: THREE.Object3D }) | null
+  if (!held) return null
+  // TresJS hands back either the instance or a wrapper depending on the node.
+  return (held.value ?? held) as THREE.Object3D
+})
+
+watch(sceneRig, (rig) => registerSceneRig(rig), { immediate: true })
+
+/**
+ * The receding subject (4.6). Only while free mode actually has a focus — in
+ * guided mode there is no "previously", and showing one would be a claim about
+ * a comparison the viewer never made.
+ */
+const comparisonProject = computed(() => {
+  if (!navigationStore.isFree || !navigationStore.focusedProjectId) return null
+  const previous = navigationStore.previousProjectId
+  if (!previous || previous === hoveredProjectId.value) return null
+  return projectStore.getById(previous) ?? null
+})
 const hoveredProjectId = ref<string | null>(null)
 const hoveredClusterIndex = ref<number | null>(null)
 const selectedProjectId = ref<string | null>(null)
@@ -89,6 +126,9 @@ function handleHover(payload: { projectId: string | null; clusterIndex: number |
 
 function handleSelect(projectId: string) {
   selectedProjectId.value = projectId
+  // Focus follows from the overlay opening, not from this handler — see the
+  // watch in `NavigationController`. Doing it here too would have left the
+  // keyboard rail and deep links without a camera move.
   overlayStore.open(projectId)
 }
 
@@ -153,21 +193,35 @@ onUnmounted(() => {
         />
         <TresAmbientLight :intensity="0.12" />
         <ScenePauseController :paused="sceneAnimationPaused" />
-        <CameraPathController />
+        <NavigationController :rig="sceneRig" />
         <CameraAuthoring v-if="isDebug" />
         <CameraLight />
         <IridescentBackground />
-        <ParticleField
-          :hovered-cluster-index="hoveredClusterIndex"
-          :hue-offset="particleHueOffset"
-        />
-        <NodeMoons v-if="moonsEnabled" />
-        <ConstellationNodes
-          :interaction-paused="sceneInteractionPaused"
-          :highlighted-project-ids="projectStore.highlightedProjectIds"
-          @hover="handleHover"
-          @select="handleSelect"
-        />
+
+        <!--
+          The rig (PLAN.md 4.3). Free-orbit rotates the scene rather than the
+          camera, so everything positioned in constellation space hangs off this
+          group and inherits the rotation for free. `IridescentBackground` is
+          deliberately *outside* it — it is the sky, and a sky that rotates with
+          the thing you are orbiting stops reading as a backdrop.
+
+          `ref` rather than a bound `:rotation`: the transform changes every
+          frame and binding it would make TresJS diff the graph each time
+          (DESIGN.md §4). The controller mutates the object directly.
+        -->
+        <TresGroup ref="rigRef">
+          <ParticleField
+            :hovered-cluster-index="hoveredClusterIndex"
+            :hue-offset="particleHueOffset"
+          />
+          <NodeMoons v-if="moonsEnabled" />
+          <ConstellationNodes
+            :interaction-paused="sceneInteractionPaused"
+            :highlighted-project-ids="projectStore.highlightedProjectIds"
+            @hover="handleHover"
+            @select="handleSelect"
+          />
+        </TresGroup>
         <!--
           Bloom runs a full extra composer pass over the frame. On a low-tier
           handset that is the difference between a scene that scrolls and one
@@ -187,6 +241,34 @@ onUnmounted(() => {
         :project="hoveredProject"
         :visible="Boolean(hoveredProject)"
       />
+
+      <!--
+        Pairwise comparison (PLAN.md 4.6): the project focused before this one
+        stays labelled while it is still on screen, so the size difference the
+        legend describes has something to be a difference *from*. Hidden when it
+        is also the hovered node, which would stack two cards on one star.
+      -->
+      <NodeLabel
+        v-if="comparisonProject"
+        :context="tresContext"
+        :project="comparisonProject"
+        :visible="true"
+        variant="ghost"
+      />
+
+      <!--
+        Bottom-left is the only clear corner: ProjectIndex rails the left edge at
+        50% height, BookingCta docks bottom-right, and the legend sits above it.
+      -->
+      <!--
+        On phones this sits *above* the booking dock rather than beside it: at
+        390px the row and the CTA share the bottom band and the zoom-out button
+        ended up underneath "Book a call". Booking is never the thing that moves
+        (CLAUDE.md), so this does.
+      -->
+      <div class="nav-controls-dock absolute bottom-20 left-16 z-30 md:bottom-6 md:left-6">
+        <NavigationControls />
+      </div>
 
       <!-- bottom-24, not bottom-6: BookingCta.vue also docks bottom-right (fixed,
            z-90) and would otherwise sit on top of this legend's last two lines. -->
