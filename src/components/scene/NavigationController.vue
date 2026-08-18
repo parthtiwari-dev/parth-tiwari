@@ -61,6 +61,26 @@ let stopInput: (() => void) | null = null
 let lastGuidedProgress = Number.NaN
 let seeded = false
 
+/**
+ * Idle autopilot (PLAN.md 6.13).
+ *
+ * Someone who drags once and then stops — to read a label, or because they got
+ * up — is left staring at a frozen frame, which reads as a scene that has
+ * finished rather than one waiting. A slow drift keeps it alive.
+ *
+ * It nudges the *target* azimuth, not the current one, so it goes through the
+ * same damping as a drag and can never fight one: any real input resets the
+ * clock and the drift stops immediately. Guided mode is exempt — the scroll path
+ * is already the motion there, and a second source moving the camera would be
+ * the two-writers bug this component exists to prevent.
+ */
+const IDLE_AFTER_SECONDS = 12
+const IDLE_DRIFT_RATE = 0.028
+let idleSeconds = 0
+let lastTargetAzimuth = Number.NaN
+let lastTargetPolar = Number.NaN
+let lastTargetDistance = Number.NaN
+
 function overlayOwnsInput() {
   return overlayStore.isOpen || evidenceOverlayStore.isOpen
 }
@@ -71,6 +91,7 @@ function overlayOwnsInput() {
  * defaults happened to be.
  */
 function handOver() {
+  idleSeconds = 0
   if (!seeded) {
     sampleCameraPath(progress.value, sample)
     const active = camera.value as THREE.PerspectiveCamera | undefined
@@ -200,6 +221,32 @@ const loop = useLoop().onBeforeRender(({ delta }) => {
   }
 
   // --- free orbit -----------------------------------------------------------
+  //
+  // Idle is detected from the targets changing, not from a callback on each
+  // input. Gestures, the zoom buttons, focusing a project and the deep link all
+  // move the camera by different routes, and a hand-wired "I am an input" call
+  // on each of them is a list that the next control will be missing from. The
+  // targets are the one thing every route has to touch.
+  if (
+    Math.abs(orbit.targetAzimuth - lastTargetAzimuth) > 1e-6
+    || Math.abs(orbit.targetPolar - lastTargetPolar) > 1e-6
+    || Math.abs(orbit.targetDistance - lastTargetDistance) > 1e-4
+  ) {
+    idleSeconds = 0
+  }
+
+  idleSeconds += delta
+  if (idleSeconds > IDLE_AFTER_SECONDS && !overlayOwnsInput()) {
+    // Ease in over the second after the threshold rather than snapping to full
+    // speed, which would read as the page grabbing the camera back.
+    const ramp = Math.min((idleSeconds - IDLE_AFTER_SECONDS) / 1.5, 1)
+    orbit.targetAzimuth += IDLE_DRIFT_RATE * delta * ramp
+  }
+
+  lastTargetAzimuth = orbit.targetAzimuth
+  lastTargetPolar = orbit.targetPolar
+  lastTargetDistance = orbit.targetDistance
+
   syncFocusCentre()
   advanceOrbit(orbit, delta)
 

@@ -14,10 +14,11 @@ import { useScaleModeStore } from '@/stores/scaleModeStore'
 import { getQuality } from '@/utils/qualityTier'
 // Async + debug-gated so Tweakpane never enters the production entry (2.8).
 const CameraAuthoring = defineAsyncComponent(() => import('@/components/scene/CameraAuthoring.vue'))
+import CentreStar from '@/components/scene/CentreStar.vue'
 import NavigationController from '@/components/scene/NavigationController.vue'
+import NearFieldDust from '@/components/scene/NearFieldDust.vue'
 import NavigationControls from '@/components/scene/NavigationControls.vue'
 import { registerSceneRig } from '@/data/sceneRig'
-import CameraLight from '@/components/scene/CameraLight.vue'
 import ConstellationNodes from '@/components/scene/ConstellationNodes.vue'
 import ConnectorLines from '@/components/scene/ConnectorLines.vue'
 import IridescentBackground from '@/components/scene/IridescentBackground.vue'
@@ -186,11 +187,16 @@ onUnmounted(() => {
           :args="[45, 1, 0.1, 100]"
           :position="[0, 6, 22]"
         />
-        <TresAmbientLight :intensity="0.12" />
         <ScenePauseController :paused="sceneAnimationPaused" />
         <NavigationController :rig="sceneRig" />
         <CameraAuthoring v-if="isDebug" />
-        <CameraLight />
+        <!--
+          No lights. Nothing in this scene responds to one any more: the star
+          bodies are matcaps (6.8), the halos, coronas, glints, particles and sky
+          are all shader materials, and the moons are `MeshBasicMaterial`. The
+          twelve per-node PointLights, the camera key light and the ambient were
+          all still being uploaded and iterated per fragment for no output.
+        -->
         <IridescentBackground />
 
         <!--
@@ -205,6 +211,11 @@ onUnmounted(() => {
           (DESIGN.md §4). The controller mutates the object directly.
         -->
         <TresGroup ref="rigRef">
+          <!-- The origin every derived position is measured from (6.7). Inside
+               the rig, so it stays the centre of the thing you are orbiting. -->
+          <CentreStar />
+          <!-- Close to the viewer, so camera motion is legible at all (6.10). -->
+          <NearFieldDust />
           <ParticleField
             :hovered-cluster-index="hoveredClusterIndex"
             :hue-offset="particleHueOffset"

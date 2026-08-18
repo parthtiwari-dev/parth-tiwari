@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+import { useMagnetic } from '@/composables/useMagnetic'
+
 /**
  * The persistent booking action.
  *
@@ -43,10 +46,19 @@ const ariaLabel = computed(() =>
     ? 'Book a call with Parth Tiwari, opens the booking page in a new tab'
     : 'Email Parth Tiwari to start a conversation',
 )
+
+/**
+ * The booking control leans toward the cursor (6.12). It is the one action on
+ * the page that matters commercially, so it is the one that earns the extra
+ * few pixels of attention.
+ */
+const ctaRef = ref<HTMLElement | null>(null)
+useMagnetic(ctaRef, { radius: 110, strength: 6 })
 </script>
 
 <template>
   <a
+    ref="ctaRef"
     class="booking-cta"
     :class="`booking-cta--${props.placement}`"
     :href="href"

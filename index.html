@@ -99,6 +99,35 @@
         ]
       }
     </script>
+    <!--
+      Loading choreography (PLAN.md 6.1).
+
+      `#app` starts hidden so the visitor never sees the unstyled, unmounted
+      document flash before Vue paints — the boot sequence is meant to be the
+      first thing on screen, and a frame of raw DOM in front of it undoes the
+      whole arrival.
+
+      **The failsafe is the important half.** Hiding content behind JS means a
+      script that never runs leaves a permanently blank page: a CDN failure, a
+      blocked bundle, an old browser that trips on a syntax error. The timer
+      reveals everything after 8 seconds no matter what, so the worst case is a
+      slow, ugly page rather than no page. It is cancelled the moment the app
+      actually mounts.
+    -->
+    <style>
+      #app { opacity: 0; }
+      #app.is-ready, .no-js #app { opacity: 1; transition: opacity 420ms ease; }
+      @media (prefers-reduced-motion: reduce) {
+        #app.is-ready { transition: none; }
+      }
+    </style>
+    <script>
+      window.__ephemerisReveal = function () {
+        var app = document.getElementById('app')
+        if (app) app.classList.add('is-ready')
+      }
+      window.__ephemerisFailsafe = window.setTimeout(window.__ephemerisReveal, 8000)
+    </script>
   </head>
   <body>
     <div id="app"></div>

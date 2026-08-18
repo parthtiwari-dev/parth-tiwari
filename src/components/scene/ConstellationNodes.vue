@@ -14,6 +14,7 @@ import { readToken } from '@/utils/cssTokens'
 import type { Project, ProjectNodeKind } from '@/types/project'
 import { layoutFor } from '@/data/layout'
 import { registerNodeMeshes } from '@/data/nodeMeshes'
+import { disposeMatcaps, starMatcap } from '@/utils/matcap'
 import { advanceNodeMotion, livePosition } from '@/data/nodeMotion'
 import { useScaleModeStore } from '@/stores/scaleModeStore'
 
@@ -32,7 +33,7 @@ const group = new THREE.Group()
 
 group.name = 'EphemerisConstellationNodes'
 
-type NodeMesh = THREE.Mesh<THREE.SphereGeometry, THREE.MeshStandardMaterial>
+type NodeMesh = THREE.Mesh<THREE.SphereGeometry, THREE.MeshMatcapMaterial>
 type HaloMesh = THREE.Mesh<THREE.PlaneGeometry, THREE.ShaderMaterial>
 type CoronaMesh = THREE.Mesh<THREE.PlaneGeometry, THREE.ShaderMaterial>
 type GlintMesh = THREE.Mesh<THREE.PlaneGeometry, THREE.ShaderMaterial>
@@ -46,9 +47,12 @@ interface SceneNode {
   corona: CoronaMesh
   glint: GlintMesh
   hitMesh: HitMesh
-  localLight: THREE.PointLight | null
   baseRadius: number
   baseEmissiveIntensity: number
+  /** Live multiplier on the matcap; the animated stand-in for emissive. */
+  brightness: number
+  /** White. The hue is baked into the matcap — see the note at construction. */
+  bodyColor: THREE.Color
   atmosphereOpacity: number
   coronaOpacity: number
   glintRestOpacity: number
@@ -72,7 +76,6 @@ const colorByNodeKind: Record<
   ProjectNodeKind,
   {
     hex: string
-    bodyHex: string
     emissiveIntensity: number
     atmosphereOpacity: number
     coronaOpacity: number
@@ -81,7 +84,6 @@ const colorByNodeKind: Record<
 > = {
   'personal-project': {
     hex: readToken('--node-personal', '#d7b35a'),
-    bodyHex: '#3a2a14',
     emissiveIntensity: 1.72,
     atmosphereOpacity: 0.08,
     coronaOpacity: 0.012,
@@ -89,7 +91,6 @@ const colorByNodeKind: Record<
   },
   'work-experience': {
     hex: readToken('--node-work', '#18a9bc'),
-    bodyHex: '#032733',
     emissiveIntensity: 1.34,
     atmosphereOpacity: 0.072,
     coronaOpacity: 0.01,
@@ -97,7 +98,6 @@ const colorByNodeKind: Record<
   },
   'current-build': {
     hex: readToken('--node-build', '#c78a62'),
-    bodyHex: '#3f2519',
     emissiveIntensity: 0.88,
     atmosphereOpacity: 0.06,
     coronaOpacity: 0.008,
@@ -105,7 +105,6 @@ const colorByNodeKind: Record<
   },
   utility: {
     hex: readToken('--node-utility', '#ff5a3d'),
-    bodyHex: '#2b0b06',
     emissiveIntensity: 1.08,
     atmosphereOpacity: 0.078,
     coronaOpacity: 0.014,
@@ -184,7 +183,10 @@ function createCoronaMaterial(color: string, opacity: number) {
           discard;
         }
 
-        gl_FragColor = vec4(uColor, alpha);
+        // Same dither as the sky (6.9): this is a wide, very low-alpha gradient
+        // over a dark background, which is precisely where banding shows.
+        float grain = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453);
+        gl_FragColor = vec4(uColor + (grain - 0.5) * 0.0045, alpha);
       }
     `,
     uniforms: {
@@ -248,12 +250,15 @@ const sceneNodes: SceneNode[] = projects.map((project, clusterIndex) => {
   const visualRadius = visualRadiusForProject(project)
   const nodeColor = colorByNodeKind[project.nodeKind]
   const geometry = new THREE.SphereGeometry(visualRadius, 48, 24)
-  const material = new THREE.MeshStandardMaterial({
-    color: nodeColor.bodyHex,
-    emissive: nodeColor.hex,
-    emissiveIntensity: nodeColor.emissiveIntensity,
-    metalness: project.nodeKind === 'utility' ? 0.72 : 0.5,
-    roughness: project.nodeKind === 'utility' ? 0.24 : 0.35,
+  // Matcap, not Standard (PLAN.md 6.8). `color` multiplies the texture and is
+  // allowed past 1 into the half-float buffer, which is where the emissive term
+  // and its animation moved to — see the brightness lerp in the render loop.
+  const material = new THREE.MeshMatcapMaterial({
+    matcap: starMatcap(nodeColor.hex),
+    // White, not the node colour: the tint already lives in the matcap, and
+    // multiplying by it a second time squares the hue — saturated golds came
+    // back visibly darker and more orange than the swatch describing them.
+    color: new THREE.Color(1, 1, 1).multiplyScalar(nodeColor.emissiveIntensity),
     transparent: true,
     opacity: project.nodeKind === 'utility' ? 0.72 : 0.96,
   })
@@ -278,18 +283,6 @@ const sceneNodes: SceneNode[] = projects.map((project, clusterIndex) => {
   const corona = new THREE.Mesh(coronaGeometry, coronaMaterial)
   const glint = new THREE.Mesh(glintGeometry, glintMaterial)
   const hitMesh = new THREE.Mesh(hitGeometry, hitMaterial)
-  const localLightIntensity = project.nodeKind === 'personal-project'
-    ? 0.26
-    : project.nodeKind === 'work-experience'
-      ? 0.12
-      : project.nodeKind === 'current-build'
-        ? 0.08
-        : project.nodeKind === 'utility'
-          ? 0.07
-          : 0
-  const localLight = localLightIntensity > 0
-    ? new THREE.PointLight(nodeColor.hex, localLightIntensity, project.weight === 'flagship' ? 2.4 : 1.6, 2)
-    : null
 
   mesh.name = `EphemerisNode:${project.id}`
   halo.name = `EphemerisNodeHalo:${project.id}`
@@ -306,10 +299,6 @@ const sceneNodes: SceneNode[] = projects.map((project, clusterIndex) => {
   glint.renderOrder = 6
   hitMesh.renderOrder = 5
 
-  if (localLight) {
-    localLight.name = `EphemerisNodeLight:${project.id}`
-    localLight.position.copy(mesh.position)
-  }
 
   group.add(corona)
   group.add(halo)
@@ -317,9 +306,6 @@ const sceneNodes: SceneNode[] = projects.map((project, clusterIndex) => {
   group.add(glint)
   group.add(hitMesh)
 
-  if (localLight) {
-    group.add(localLight)
-  }
 
   return {
     project,
@@ -329,9 +315,10 @@ const sceneNodes: SceneNode[] = projects.map((project, clusterIndex) => {
     corona,
     glint,
     hitMesh,
-    localLight,
     baseRadius,
     baseEmissiveIntensity: nodeColor.emissiveIntensity,
+    brightness: nodeColor.emissiveIntensity,
+    bodyColor: new THREE.Color(1, 1, 1),
     atmosphereOpacity: nodeColor.atmosphereOpacity,
     coronaOpacity: nodeColor.coronaOpacity,
     glintRestOpacity: nodeColor.glintRestOpacity,
@@ -413,7 +400,6 @@ function placeNode(node: SceneNode, at: THREE.Vector3) {
   node.corona.position.copy(at)
   node.glint.position.copy(at)
   node.hitMesh.position.copy(at)
-  node.localLight?.position.copy(at)
 }
 
 const nodePhaseOffsets = sceneNodes.map((_, i) => i * 1.37 + 0.42)
@@ -436,11 +422,15 @@ const loopStop = useLoop().onBeforeRender(({ elapsed, delta }) => {
     const visualScale = node.runtimeState.scale * microBreathScale
     const atmosphereScale = node.runtimeState.scale * (1 + 0.012 * pulseWave)
 
-    node.mesh.material.emissiveIntensity = THREE.MathUtils.lerp(
-      node.mesh.material.emissiveIntensity,
+    // Was `emissiveIntensity` on a Standard material. Matcaps have no emissive
+    // term, so the same breathing-and-hover curve drives `color`, which
+    // multiplies the matcap and carries past 1 into the bloom pass.
+    node.brightness = THREE.MathUtils.lerp(
+      node.brightness,
       node.baseEmissiveIntensity * highlightBoost * (1 + 0.28 * pulseWave),
       0.06,
     )
+    node.mesh.material.color.copy(node.bodyColor).multiplyScalar(node.brightness)
     node.mesh.scale.setScalar(visualScale)
     node.corona.scale.setScalar(THREE.MathUtils.lerp(node.corona.scale.x, atmosphereScale, 0.08))
     node.halo.scale.setScalar(THREE.MathUtils.lerp(node.halo.scale.x, atmosphereScale, 0.1))
@@ -476,6 +466,7 @@ onUnmounted(() => {
   loopStop.off()
   stopInteraction?.()
   registerNodeMeshes([])
+  disposeMatcaps()
   scene.value.remove(group)
 
   sceneNodes.forEach((node) => {
@@ -490,15 +481,6 @@ onUnmounted(() => {
     node.hitMesh.geometry.dispose()
     node.hitMesh.material.dispose()
 
-    // The lights were the one thing this teardown missed. A PointLight holds no
-    // GPU buffer of its own, so there is nothing to `dispose()` — but it is a
-    // node in the scene graph with a parent reference, and up to twelve of them
-    // survived every unmount, keeping their whole subtree alive. The scene
-    // remounts on `?plain=1` toggles and quality-tier changes, so they
-    // accumulated (CLAUDE.md, known leak).
-    if (node.localLight) {
-      node.localLight.removeFromParent()
-    }
   })
 })
 </script>

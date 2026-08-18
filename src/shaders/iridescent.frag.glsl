@@ -142,7 +142,15 @@ void main() {
   vec3 starColor = mix(coldStar, warmStar, step(0.972, cellSeed));
   color += starColor * allStars * mix(0.20, 0.48, screenVignette);
 
-  color += (hash(vUv * 900.0 + uTime * 0.03) - 0.5) * 0.0015;
+  // Dither (PLAN.md 6.9 — DESIGN.md §5). Deep space is nothing but dark
+  // gradients, and 8-bit output bands across every one of them.
+  //
+  // Keyed to `gl_FragCoord`, not `vUv`: the noise has to be one *device pixel*
+  // per cell to break up a band. Against UV it scales with the quad, so at
+  // DPR 1.25 each cell covered more than a pixel and the pattern read as texture
+  // rather than as dither. The previous version was also animated by uTime,
+  // which turned a static grain into a shimmer on a still page.
+  color += (hash(gl_FragCoord.xy) - 0.5) * 0.0045;
 
   gl_FragColor = vec4(color, 1.0);
 }

@@ -37,3 +37,21 @@ if (!LOOPBACK.has(window.location.hostname)) {
 }
 
 createApp(App).use(createPinia()).mount('#app')
+
+/**
+ * Reveal, and cancel the 8-second failsafe in `index.html` (PLAN.md 6.1).
+ *
+ * After `mount()`, not before: the point of the guard is that nothing is shown
+ * until there is something to show.
+ */
+declare global {
+  interface Window {
+    __ephemerisReveal?: () => void
+    __ephemerisFailsafe?: number
+  }
+}
+
+if (window.__ephemerisFailsafe !== undefined) {
+  window.clearTimeout(window.__ephemerisFailsafe)
+}
+window.__ephemerisReveal?.()

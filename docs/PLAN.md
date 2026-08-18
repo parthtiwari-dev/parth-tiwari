@@ -353,19 +353,52 @@ Everything here is cuttable. Nothing here is load-bearing. That is deliberate �
 
 | # | Task |
 |---|---|
-| 6.1 | Loading choreography: real asset progress, continuous transition into the universe, `<head>` visibility guard with 8s failsafe |
-| 6.2 | Audio: reactive-first, muted by default, `context.resume()` on the loader gesture |
-| 6.3 | Nine tuned notes in one scale, one per project |
-| 6.4 | Velocity-modulated random sample pools with a limiter |
-| 6.5 | `BiquadFilterNode` lowpass on the ambient bed when a project opens |
-| 6.6 | Silence audio entirely under resume and experience overlays |
-| 6.7 | Iridescent thin-film material on the center star |
-| 6.8 | Matcaps for project bodies — removes 10 dynamic PointLights |
-| 6.9 | Dither and `fwidth()` AA in the shaders |
-| 6.10 | Near-field parallax dust so camera motion is legible |
-| 6.11 | Post-FX: DOF racking focus on approach, chromatic aberration on fast motion, grain |
-| 6.12 | Micro-interactions: magnetic controls, cursor reacting to context, text decode on reveal. Native CSS scroll-driven animation where it suffices |
-| 6.13 | Idle autopilot — camera drifts if the visitor stops |
+| ✅ 6.1 | **Done 2026-08-18.** `<head>` visibility guard with an 8-second failsafe. The guard is the easy half; the failsafe is the one that matters, because hiding content behind JS means a script that never runs leaves a permanently blank page — a blocked bundle, a CDN failure, one syntax error in an old browser. It reveals unconditionally after 8s and is cancelled the moment the app mounts. **Verified by aborting every JS request and watching the page appear anyway.** *Real asset progress is not instrumented, and deliberately so:* the 3D chunk is lazily imported and only starts loading after the boot sequence completes, so during boot there is nothing whose progress could honestly be reported. A fake progress bar is the exact decoration-as-data failure this repo exists to avoid. |
+| ❌ 6.2 | **Not built — owner decision.** See the note below. |
+| ❌ 6.3 | **Not built — owner decision.** |
+| ❌ 6.4 | **Not built — owner decision.** |
+| ❌ 6.5 | **Not built — owner decision.** |
+| ❌ 6.6 | **Not built — owner decision.** |
+| ✅ 6.7 | **Done 2026-08-18 — and its subject did not exist.** DESIGN §5 specifies thin-film shading "on the center star" and there was no centre star: twelve nodes orbiting an empty origin, in a layout that derives every position as a radius and an angle *about a centre*. `CentreStar.vue` + `thinFilm.frag.glsl`. The colour is interference, not paint — three cosines standing in for R/G/B wavelengths over an optical path that grows toward the limb, plus Fresnel. Took three passes: the first was 72% gold tint and resolved to flat olive, the second packed eight rings into the silhouette and read as a dartboard, the third has the low band frequency and high grazing-angle floor a real film actually shows. |
+| ✅ 6.8 | **Done 2026-08-18. Thirteen lights removed.** Star bodies are `MeshMatcapMaterial` and the twelve per-node `PointLight`s, the camera key light and the ambient are all gone — nothing in the scene responds to a light any more (halos, coronas, glints, particles and sky are shader materials; moons are `MeshBasicMaterial`). DESIGN names the PBR-over-ten-lights loop as the single largest mid-tier GPU cost. Matcaps are **generated from the same token as the legend swatch** rather than shipped as a PNG, so the star and the swatch describing it cannot drift (the 2.6 bug). The emissive term became a `color` multiplier past 1 into the half-float buffer, which is where the breathing pulse and hover boost now live. |
+| 🟡 6.9 | **Dither done; `fwidth()` has no subject.** The sky already dithered, but against `vUv` and animated by time — so at DPR 1.25 each noise cell covered more than a device pixel (which is not dithering) and a still page shimmered. Now `gl_FragCoord`-based, static, at DESIGN's 0.0045, and added to the corona, the other wide low-alpha gradient. **The `fwidth()` line has nothing to anti-alias:** DESIGN aims it at orbit rings and connector lines, and connector lines are DOM SVG that the browser already anti-aliases while no ring primitive exists. Adding geometry to justify a line of shader code would be backwards. |
+| ✅ 6.10 | **Done 2026-08-18.** `NearFieldDust.vue`, a sparse shell at radius 15–27. **Inside the rig, which is the whole trick:** free mode rotates the scene rather than the camera (4.3), so dust parented to the camera would be nailed to the screen and parallax nothing — inside the rig, dust out at the camera's own orbit distance sweeps several times faster than the constellation at radius 4–13. Parallax from the geometry, not from a second transform. Off entirely on the low tier. |
+| 🟡 6.11 | **Chromatic aberration and grain done, high tier only. Depth of field deliberately not shipped.** Aberration is driven by smoothed camera speed, so it reads as a lens under load rather than a broken display on a still frame; grain sits at 0.028 opacity. **DOF was the item and it is the wrong effect for this scene:** it needs a depth pass, and the subjects here are small bright points against black — blurring by depth blurs precisely what the viewer is looking at, and bokeh on a bloomed point is a smear, not a circle. The FOV change already carries "approach" (4.3). |
+| ✅ 6.12 | **Done 2026-08-18.** `useMagnetic.ts` on the booking CTA — the one action that matters commercially, so the one that earns the pixels. Fine pointers only (on touch the transform would only apply *as you press*, a button that moves under the tap), reduced motion opts out, and the listener is on `window` because the point is to react before the pointer arrives. Cursor-reacts-to-context and text-decode-on-reveal already shipped in `CustomCursor.vue` and `useCharacterSplit.ts`. |
+| ✅ 6.13 | **Done 2026-08-18.** Idle autopilot after 12s in free mode, eased in over 1.5s so it does not read as the page grabbing the camera back. It nudges the *target* azimuth, so it goes through the same damping as a drag and can never fight one. **Idle is detected from the targets changing, not from a callback per input** — gestures, zoom buttons, focus and deep links all move the camera by different routes, and a hand-wired list of "this counts as input" is a list the next control will be missing from. |
+
+**Status 2026-08-18 — 7 done, 2 partial with stated reasons, 5 audio items not built.**
+
+### Audio (6.2–6.6) is an owner decision, not an oversight
+
+DESIGN §7 specifies **Tone.js for transport and Howler.js for the sample pools**, over
+**pre-rendered loops rather than synthesis** — and is explicit that hand-rolled
+`AudioBufferSourceNode` timing is where amateur web audio falls apart, and that 100,000 Stars
+*cut* generative Web Audio because it crashed Chrome.
+
+Three things block it, and only the third is decisive:
+
+1. Two new runtime dependencies. `CLAUDE.md` requires asking first.
+2. No audio assets exist, and pre-rendered loops are the stated approach.
+3. **The author cannot hear the output.** Shipping sound onto a lead-generation site without
+   listening to it is unverifiable work of exactly the kind the rest of this repo refuses. The
+   architecture — muted by default, gesture-gated resume, a lowpass on overlay open, silence
+   under resume and experience overlays — is all buildable blind. The sound design is not.
+
+The conservative default is already in place by accident: the site is silent, which is
+DESIGN's own "a recruiter who never interacts hears nothing".
+
+### Verification
+
+`npm run craft` (`scripts/craft-check.mjs`) covers the parts of this phase that are not
+matters of taste: that the app reveals on mount, that the failsafe is cancelled when it should
+be, that **the page still becomes visible with every JS request aborted**, and that the scene
+keeps moving with nobody touching it.
+
+The rest was judged on screenshots at each step, which is why the centre star took three
+passes and the matcap took two — the first matcap multiplied the node colour by a matcap that
+already contained it, squaring the hue and returning golds darker and more orange than their
+swatch.
 
 ---
 

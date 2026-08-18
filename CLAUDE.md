@@ -48,6 +48,8 @@ There is no unit-test runner and no linter configured. Type checking, a clean bu
 
 **`npm run labels` is the label gate.** `scripts/label-check.mjs` asserts the projection cull, the magnitude-and-distance decluttering, the name cap, occlusion fading rather than hiding, and that a card can actually be clicked. It caught a card drifting 26.8px per 500ms under the cursor on its first run.
 
+**`npm run craft` covers the Phase 6 guarantees** that are not matters of taste — chiefly that `index.html`'s visibility guard still reveals the page when every JS request fails. Anything touching that guard, `main.ts`'s reveal call, or the idle autopilot should re-run it.
+
 **`npm run shots` is the third.** Playwright captures `/` and `/?plain=1` at 390, 430, 800, 834 and 1440 with the right device scale factor and a touch pointer, reporting page errors per viewport. Run it before and after anything touching the scene, layout or shaders:
 
 ```bash
@@ -188,6 +190,10 @@ The sky shader (`iridescent.frag.glsl`) is the largest GPU cost in the app: 7 `t
 
 `ConnectorLines` still reallocates an array of objects per tick, triggering Vue reactivity for all pairs even though lines only render on hover. It no longer *runs* while paused or off-screen (2.1), so the cost is bounded — but the allocation itself is unfixed.
 
+**There are no lights in the scene, and adding one would do nothing.** Star bodies are matcaps generated in `utils/matcap.ts` from the same token as the legend swatch; halos, coronas, glints, particles, the sky and the centre star are shader materials; moons are `MeshBasicMaterial`. The thirteen lights that used to be here were the largest mid-tier GPU cost in the app (6.8). If a new object needs shading, give it a material that shades itself.
+
+The matcap's `color` is **white**, scaled past 1 into the half-float buffer — that multiplier is where the old `emissiveIntensity` animation lives. Do not set it to the node colour: the hue is already in the texture and multiplying twice squares it.
+
 **Labels are one component, not one per node.** `NodeLabels.vue` projects every node in a single tick callback and `data/labelLod.ts` decides the whole set at once — the five-name cap is a decision about the set and cannot be made a label at a time. A card only ever appears on intent (hover or focus), never from the derivation, and it freezes while the pointer is on it because stars orbit and a moving click target is not one. Occlusion is a raycast against `data/nodeMeshes.ts` that fades opacity; **never** the `NoBlending` hole-punch, which breaks under the bloom pass this scene runs.
 
 Anything readable stays real DOM. MSDF-in-WebGL text is not installed and adding it is an open decision (PLAN 5.5) — do not reach for it to solve occlusion, which is already solved.
@@ -201,6 +207,8 @@ The orbit state in `useFreeOrbit.ts` is a deliberately non-reactive module singl
 **Two clocks, and that is the budget.** `gsap.ticker` steps Lenis, ScrollTrigger, `ConnectorLines` and `NodeLabel`; the TresJS `useLoop` renders the scene and applies the camera. `MobileStarWorld`'s rAF went with the file (2.5), and the DOM overlays moved onto the ticker (2.1).
 
 **Do not add a third.** Anything needing a frame callback joins `gsap.ticker` — a raw `requestAnimationFrame` will drift against the scroll interpolation Lenis is doing on the ticker, and it will not stop when the scene pauses.
+
+**The page is hidden until Vue mounts, with an 8-second failsafe** (`index.html` + `main.ts`, 6.1). If you change either half, keep the failsafe: hiding content behind JS means a script that never runs leaves a permanently blank page. `npm run craft` asserts this by aborting every JS request.
 
 `ScenePauseController` is fed by `useSceneVisibility`, so the scene stops when the section is off-screen, the tab is hidden, or an overlay is open.
 

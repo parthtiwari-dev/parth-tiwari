@@ -13,7 +13,8 @@
     "capture": "node scripts/capture-demos.mjs",
     "og": "node scripts/og.mjs",
     "nav": "node scripts/nav-check.mjs",
-    "labels": "node scripts/label-check.mjs"
+    "labels": "node scripts/label-check.mjs",
+    "craft": "node scripts/craft-check.mjs"
   },
   "dependencies": {
     "@tresjs/core": "4.3.1",
