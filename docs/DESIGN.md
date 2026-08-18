@@ -308,7 +308,7 @@ Also from 100,000 Stars, learned the hard way: they *cut* generative Web Audio b
 
 ### Quality tiers as a first-class concept
 
-One detection feeds particle count, shader complexity, post-FX chain, and DPR. The current build tiers particle count but leaves the sky shader — ~84 noise evaluations per fragment, fullscreen, every frame — completely un-tiered. It is the largest GPU cost in the app.
+One detection feeds particle count, shader complexity, post-FX chain, and DPR. **Implemented 2026-08-18** in `utils/qualityTier.ts`. The sky shader — the largest GPU cost in the app — is tiered by fbm octaves, giving 63 / 42 / 21 `noise()` evaluations per fragment. Degrading detail rather than dropping the aurora or milky-dust layers keeps the composition intact at every tier.
 
 | Tier | Sky shader | Particles | Post-FX | DPR |
 |---|---|---|---|---|

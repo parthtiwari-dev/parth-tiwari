@@ -9,6 +9,7 @@ import { projects } from '@/data/projects'
 import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
 import { useOverlayStore } from '@/stores/overlayStore'
 import { useProjectStore } from '@/stores/projectStore'
+import { getQuality } from '@/utils/qualityTier'
 import CameraPathController from '@/components/scene/CameraPathController.vue'
 import CameraLight from '@/components/scene/CameraLight.vue'
 import ConstellationNodes from '@/components/scene/ConstellationNodes.vue'
@@ -29,7 +30,11 @@ const hoveredProjectId = ref<string | null>(null)
 const hoveredClusterIndex = ref<number | null>(null)
 const selectedProjectId = ref<string | null>(null)
 const particleHueOffset = ref(0)
-const dpr: [number, number] = [1, 1.25]
+// DPR comes from the shared quality tier (PLAN.md 2.4) rather than a constant.
+// On a low-tier handset [1, 1] is roughly half the fragments of [1, 1.25].
+const quality = getQuality()
+const dpr: [number, number] = quality.dpr
+const postFxEnabled = quality.postFx
 let hueMilestoneTrigger: ScrollTrigger | null = null
 let hueMilestoneFrame = 0
 
@@ -142,7 +147,12 @@ onUnmounted(() => {
           @hover="handleHover"
           @select="handleSelect"
         />
-        <PostProcessing />
+        <!--
+          Bloom runs a full extra composer pass over the frame. On a low-tier
+          handset that is the difference between a scene that scrolls and one
+          that stutters, and it is the least missed of the effects (PLAN.md 2.4).
+        -->
+        <PostProcessing v-if="postFxEnabled" />
       </TresCanvas>
 
       <!-- Pass hoveredProjectId so lines only show for related nodes -->

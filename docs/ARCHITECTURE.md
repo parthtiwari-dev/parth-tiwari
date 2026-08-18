@@ -160,7 +160,7 @@ Hover state is tracked **three ways simultaneously**: written onto `node.runtime
 
 | File | Role | Assessment |
 |---|---|---|
-| `iridescent.*.glsl` | Sky dome (radius-90 `BackSide` sphere locked to camera) | Dense and good-looking. **~84 noise evaluations per fragment**, fullscreen, every frame. Not quality-tiered. The largest GPU cost in the app. |
+| `iridescent.*.glsl` | Sky dome (radius-90 `BackSide` sphere locked to camera) | Dense and good-looking, and the largest GPU cost in the app: 7 `triFbm` calls × 3 `fbm` × `SKY_OCTAVES`. **Quality-tiered since 2026-08-18** — 63 `noise()` evaluations per fragment at high, 42 at medium, 21 at low, injected as a define from `utils/qualityTier.ts`. Fewer octaves reads as a softer nebula rather than a missing one. |
 | `particle.*.glsl` | Star field | The best-engineered shader here. Size/alpha/warmth tiers, diffraction spikes gated to rare bright stars, 4-stop color ramp, luma-preserving hue rotation. |
 | `refusalRipple.*.glsl` | "Refusal" ring | **Effectively invisible** — output alpha multiplied by `0.004`, on an unconnected 30-second wall-clock timer. Not wired to any refusal, store, or interaction. |
 
@@ -297,5 +297,5 @@ Direction, in brief. Detail lives in `DESIGN.md` and `PLAN.md`.
 3. **One clock.** A single frame loop owns the scene; scroll and time are inputs to it, not competing drivers.
 4. **Tokens as the only source of color and scale**, reachable from Tailwind, with the 3D layer reading the same palette as the DOM.
 5. **One overlay state machine** replacing two booleans, with focus trap, focus restoration, and scroll lock handled once.
-6. **Quality tiers as a first-class concept** — the sky shader, particle count, and post-FX chain all scale from one detected tier.
+6. ~~**Quality tiers as a first-class concept**~~ — **done 2026-08-18.** Sky shader, particle count, post-FX and DPR all scale from one detection in `utils/qualityTier.ts`.
 7. **Lazy-load the 3D stack** so plain mode and first paint do not pay for it.

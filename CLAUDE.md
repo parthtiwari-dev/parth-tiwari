@@ -150,7 +150,9 @@ There is no router. Three modes, all on `/`:
 
 ## Performance
 
-The sky shader (`iridescent.frag.glsl`) runs roughly 84 noise evaluations per fragment, fullscreen, every frame, and is not quality-tiered. It is the largest GPU cost in the app. Treat any addition to it as a performance decision.
+The sky shader (`iridescent.frag.glsl`) is the largest GPU cost in the app: 7 `triFbm` calls, each running `fbm` three times, each looping `SKY_OCTAVES` times — 63 `noise()` evaluations per fragment at high tier, fullscreen, every frame.
+
+**All quality decisions come from `src/utils/qualityTier.ts`.** One detection feeds particle count, DPR, sky octaves and whether post-FX mounts. Do not add a second capability check — that fragmentation is exactly what 2.4 removed. Anything added to the sky shader is a performance decision and should scale with `SKY_OCTAVES`.
 
 Known leak to respect when editing `ConstellationNodes.vue`: `onUnmounted` disposes geometries and materials but **not the `PointLight`s**.
 

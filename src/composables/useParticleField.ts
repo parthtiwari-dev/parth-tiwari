@@ -2,27 +2,13 @@ import * as THREE from 'three'
 import fragmentShader from '@/shaders/particle.frag.glsl'
 import vertexShader from '@/shaders/particle.vert.glsl'
 import type { Project } from '@/types/project'
+import { getQuality } from '@/utils/qualityTier'
 
-const PARTICLE_COUNTS = {
-  high: 10000,
-  medium: 5000,
-  low: 2000,
-} as const
-
+// Particle count now comes from the shared tier (PLAN.md 2.4). This used to be
+// its own hardwareConcurrency branch, one of three independent quality
+// decisions that never agreed with each other.
 function getParticleCount() {
-  if (typeof navigator === 'undefined') {
-    return PARTICLE_COUNTS.low
-  }
-
-  if (navigator.hardwareConcurrency >= 12) {
-    return PARTICLE_COUNTS.high
-  }
-
-  if (navigator.hardwareConcurrency >= 6) {
-    return PARTICLE_COUNTS.medium
-  }
-
-  return PARTICLE_COUNTS.low
+  return getQuality().particleCount
 }
 
 function seededRandom(seed: string) {

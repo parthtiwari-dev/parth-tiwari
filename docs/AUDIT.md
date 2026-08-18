@@ -135,7 +135,7 @@ Between them: the desktop WebGL scene mounts, the nav is already in mobile hambu
 
 - **10 dynamic PointLights** (9 nodes at `ConstellationNodes.vue:311-313`, plus `CameraLight`). All node bodies use `MeshStandardMaterial`, so the PBR fragment shader loops over `NUM_POINT_LIGHTS=10` for **every fragment**. Single biggest mid-tier-GPU cost in the scene.
 - **27 large additive transparent quads always drawn** — 3 per node (corona at `radius × 12`, halo `× 5.2`, glint `× 5.6`), all `depthWrite:false, depthTest:false, DoubleSide`. Their `discard` statements **defeat early-Z on tile-based mobile GPUs**.
-- **The sky shader** (`iridescent.frag.glsl`) runs ~84 noise evaluations per fragment, fullscreen, every frame, and is **not quality-tiered** — unlike the particle count, which is.
+- ~~**The sky shader** is not quality-tiered.~~ **Fixed 2026-08-18.** It runs 63 `noise()` evaluations per fragment at high tier, 42 at medium, 21 at low, driven by the same detection as particle count, DPR and post-FX.
 
 Node spheres are `SphereGeometry(r, 48, 24)` — 2,304 triangles each for what render as near-points.
 

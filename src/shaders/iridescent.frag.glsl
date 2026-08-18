@@ -23,11 +23,20 @@ float noise(vec2 p) {
   );
 }
 
+// SKY_OCTAVES is injected from IridescentBackground.vue via the shared quality
+// tier (PLAN.md 2.4). This shader is the largest GPU cost in the app: 7 triFbm
+// calls, each running fbm three times, each looping this many times. At 3 that
+// is 63 noise() evaluations per fragment, fullscreen, every frame. Fewer
+// octaves reads as a softer nebula, not a missing one.
+#ifndef SKY_OCTAVES
+#define SKY_OCTAVES 3
+#endif
+
 float fbm(vec2 p) {
   float value = 0.0;
   float amplitude = 0.5;
 
-  for (int i = 0; i < 3; i += 1) {
+  for (int i = 0; i < SKY_OCTAVES; i += 1) {
     value += amplitude * noise(p);
     p *= 2.03;
     amplitude *= 0.5;
