@@ -46,6 +46,8 @@ There is no unit-test runner and no linter configured. Type checking, a clean bu
 
 **`npm run nav` is the behaviour gate.** `scripts/nav-check.mjs` drives the real scene through the Phase 4 navigation contract — default mode, drag-to-free, resume tour, the three zoom scales, deep links, the comparison label, and the phone controls including touch-target size. A screenshot cannot prove any of that. Two defects passed typecheck, build *and* the viewport matrix and were caught only here. Run it after anything touching the camera, the rig, the overlay or the project index.
 
+**`npm run labels` is the label gate.** `scripts/label-check.mjs` asserts the projection cull, the magnitude-and-distance decluttering, the name cap, occlusion fading rather than hiding, and that a card can actually be clicked. It caught a card drifting 26.8px per 500ms under the cursor on its first run.
+
 **`npm run shots` is the third.** Playwright captures `/` and `/?plain=1` at 390, 430, 800, 834 and 1440 with the right device scale factor and a touch pointer, reporting page errors per viewport. Run it before and after anything touching the scene, layout or shaders:
 
 ```bash
@@ -185,6 +187,10 @@ The sky shader (`iridescent.frag.glsl`) is the largest GPU cost in the app: 7 `t
 `ConstellationNodes.vue`'s `onUnmounted` disposes geometries and materials **and removes the `PointLight`s from the graph** — the lights were the one thing it missed, and they have no GPU buffer to dispose but do hold a parent reference, so twelve of them survived every scene remount. Keep that call when editing the teardown.
 
 `ConnectorLines` still reallocates an array of objects per tick, triggering Vue reactivity for all pairs even though lines only render on hover. It no longer *runs* while paused or off-screen (2.1), so the cost is bounded — but the allocation itself is unfixed.
+
+**Labels are one component, not one per node.** `NodeLabels.vue` projects every node in a single tick callback and `data/labelLod.ts` decides the whole set at once — the five-name cap is a decision about the set and cannot be made a label at a time. A card only ever appears on intent (hover or focus), never from the derivation, and it freezes while the pointer is on it because stars orbit and a moving click target is not one. Occlusion is a raycast against `data/nodeMeshes.ts` that fades opacity; **never** the `NoBlending` hole-punch, which breaks under the bloom pass this scene runs.
+
+Anything readable stays real DOM. MSDF-in-WebGL text is not installed and adding it is an open decision (PLAN 5.5) — do not reach for it to solve occlusion, which is already solved.
 
 **Navigation is two modes over one scene.** Guided (scroll drives the authored pose array) is the default arrival; free orbit is unlocked by the first drag, pinch or zoom-button press. `NavigationController.vue` is the **only** thing that writes the camera in either mode — they were never going to survive as two components, because both want the same transform and the handover has to be seamless within one frame.
 

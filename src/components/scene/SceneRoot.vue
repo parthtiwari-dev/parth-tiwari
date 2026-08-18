@@ -7,7 +7,6 @@ import type * as THREE from 'three'
 import { usePlainMode } from '@/composables/usePlainMode'
 import { useSceneVisibility } from '@/composables/useSceneVisibility'
 import { useScrollRunway } from '@/composables/useScrollRunway'
-import { projects } from '@/data/projects'
 import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
 import { useOverlayStore } from '@/stores/overlayStore'
 import { useProjectStore } from '@/stores/projectStore'
@@ -18,12 +17,11 @@ const CameraAuthoring = defineAsyncComponent(() => import('@/components/scene/Ca
 import NavigationController from '@/components/scene/NavigationController.vue'
 import NavigationControls from '@/components/scene/NavigationControls.vue'
 import { registerSceneRig } from '@/data/sceneRig'
-import { useNavigationStore } from '@/stores/navigationStore'
 import CameraLight from '@/components/scene/CameraLight.vue'
 import ConstellationNodes from '@/components/scene/ConstellationNodes.vue'
 import ConnectorLines from '@/components/scene/ConnectorLines.vue'
 import IridescentBackground from '@/components/scene/IridescentBackground.vue'
-import NodeLabel from '@/components/scene/NodeLabel.vue'
+import NodeLabels from '@/components/scene/NodeLabels.vue'
 import NodeMoons from '@/components/scene/NodeMoons.vue'
 import ParticleField from '@/components/scene/ParticleField.vue'
 import PostProcessing from '@/components/scene/PostProcessing.vue'
@@ -33,7 +31,6 @@ const { isPlain } = usePlainMode()
 const overlayStore = useOverlayStore()
 const evidenceOverlayStore = useEvidenceOverlayStore()
 const projectStore = useProjectStore()
-const navigationStore = useNavigationStore()
 const tresContext = shallowRef<TresContext | null>(null)
 
 /**
@@ -56,17 +53,6 @@ const sceneRig = computed<THREE.Object3D | null>(() => {
 
 watch(sceneRig, (rig) => registerSceneRig(rig), { immediate: true })
 
-/**
- * The receding subject (4.6). Only while free mode actually has a focus — in
- * guided mode there is no "previously", and showing one would be a claim about
- * a comparison the viewer never made.
- */
-const comparisonProject = computed(() => {
-  if (!navigationStore.isFree || !navigationStore.focusedProjectId) return null
-  const previous = navigationStore.previousProjectId
-  if (!previous || previous === hoveredProjectId.value) return null
-  return projectStore.getById(previous) ?? null
-})
 const hoveredProjectId = ref<string | null>(null)
 const hoveredClusterIndex = ref<number | null>(null)
 const selectedProjectId = ref<string | null>(null)
@@ -92,9 +78,6 @@ const moonsEnabled = quality.tier !== 'low'
 let hueMilestoneTrigger: ScrollTrigger | null = null
 let hueMilestoneFrame = 0
 
-const hoveredProject = computed(() => {
-  return projects.find((project) => project.id === hoveredProjectId.value) ?? null
-})
 const sceneInteractionPaused = computed(() => overlayStore.isOpen || evidenceOverlayStore.isOpen)
 const sceneAnimationPaused = computed(() => {
   // Not visible outranks everything: there is no reason to render a frame that
@@ -122,6 +105,18 @@ function handleHover(payload: { projectId: string | null; clusterIndex: number |
   window.dispatchEvent(new CustomEvent('evidence-cursor-intent', {
     detail: { state: payload.projectId ? 'enter' : 'default' },
   }))
+}
+
+/**
+ * Keeps a star hovered while the pointer sits on its own card.
+ *
+ * The card is the one interactive label, and it covers the star it belongs to.
+ * Without this the pointer moving off the mesh and onto the card clears the
+ * hover, which unmounts the card, which un-hovers the pointer — the card
+ * flickers and can never be clicked.
+ */
+function handleLabelHold(projectId: string | null) {
+  hoveredProjectId.value = projectId
 }
 
 function handleSelect(projectId: string) {
@@ -236,24 +231,18 @@ onUnmounted(() => {
         :paused="connectorsPaused"
         :hovered-project-id="hoveredProjectId"
       />
-      <NodeLabel
-        :context="tresContext"
-        :project="hoveredProject"
-        :visible="Boolean(hoveredProject)"
-      />
-
       <!--
-        Pairwise comparison (PLAN.md 4.6): the project focused before this one
-        stays labelled while it is still on screen, so the size difference the
-        legend describes has something to be a difference *from*. Hidden when it
-        is also the hovered node, which would stack two cards on one star.
+        One projector for every label (PLAN.md 5.1–5.4). It replaces two
+        single-project `NodeLabel` instances: the name budget in `labelLod.ts` is
+        a decision about the whole set, and a component that only knows its own
+        project can never make it.
       -->
-      <NodeLabel
-        v-if="comparisonProject"
+      <NodeLabels
         :context="tresContext"
-        :project="comparisonProject"
-        :visible="true"
-        variant="ghost"
+        :hovered-project-id="hoveredProjectId"
+        :paused="connectorsPaused"
+        @hold="handleLabelHold"
+        @open="handleSelect"
       />
 
       <!--

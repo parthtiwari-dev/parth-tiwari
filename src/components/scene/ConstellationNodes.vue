@@ -13,6 +13,7 @@ import type { NodeRuntimeState } from '@/types/node'
 import { readToken } from '@/utils/cssTokens'
 import type { Project, ProjectNodeKind } from '@/types/project'
 import { layoutFor } from '@/data/layout'
+import { registerNodeMeshes } from '@/data/nodeMeshes'
 import { advanceNodeMotion, livePosition } from '@/data/nodeMotion'
 import { useScaleModeStore } from '@/stores/scaleModeStore'
 
@@ -350,6 +351,17 @@ const interactionEntries: NodeMeshEntry[] = sceneNodes.map((node) => ({
   mesh: node.hitMesh,
 }))
 
+/**
+ * Published for the label layer's occlusion raycast (5.2). The *hit* meshes, not
+ * the visible spheres: they are the same size and position but simple geometry,
+ * and they are already what the pointer picks against — a label and a pointer
+ * disagreeing about which star is in front would be its own bug.
+ */
+registerNodeMeshes(interactionEntries.map((entry) => ({
+  projectId: entry.projectId,
+  mesh: entry.mesh,
+})))
+
 const interaction = useNodeInteraction({
   getCamera: () => camera.value,
   getRenderer: () => renderer.value,
@@ -463,6 +475,7 @@ const loopStop = useLoop().onBeforeRender(({ elapsed, delta }) => {
 onUnmounted(() => {
   loopStop.off()
   stopInteraction?.()
+  registerNodeMeshes([])
   scene.value.remove(group)
 
   sceneNodes.forEach((node) => {

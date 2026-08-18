@@ -307,11 +307,43 @@ the one thing stars, rail and deep links all agree on.
 
 | # | Task |
 |---|---|
-| 5.1 | Manual projection into Vue state; cull `ndc.z > 1` |
-| 5.2 | Occlusion by raycast against the nine meshes, with opacity fade — **not** the `NoBlending` hole-punch, which breaks under bloom |
-| 5.3 | Magnitude × distance drives label visibility |
-| 5.4 | Label LOD: dot → short name → full card |
-| 5.5 | MSDF text for in-space labels; real DOM for anything a recruiter or crawler reads |
+| ✅ 5.1 | **Done 2026-08-18.** Manual projection into Vue state, one pass per tick, with the depth cull. `CSS2DRenderer` skipped for the reason DESIGN §6 gives — at twelve nodes hand projection is cheaper and far more controllable. The cull is `ndc.z <= 1` *plus* the x/y bounds: without it a star behind the camera projects to a mirrored point **inside** the viewport and its label tracks backwards across the screen. |
+| ✅ 5.2 | **Done 2026-08-18.** Occlusion by raycast against the node hit meshes only, fading opacity to 0.22 rather than hiding. Explicitly **not** the `NoBlending` hole-punch, which writes a transparent quad into the colour buffer and breaks under bloom — and this scene runs bloom on every tier above low. The hit meshes are reused rather than the visible spheres, because a label and a pointer disagreeing about which star is in front would be its own bug. Verified: orbiting until stars overlap drives the minimum label opacity to 0.22. |
+| ✅ 5.3 | **Done 2026-08-18.** `data/labelLod.ts`. Apparent magnitude is the project's derived magnitude (3.7) scaled by camera distance, normalised so that at the galaxy resting distance apparent *is* magnitude. **Distance alone is not enough of a filter** — fly into a dense arc and a dozen projects clear the threshold together, because the arc got closer, not any one project — so there is also a hard cap of five names, spent strongest-first. Measured at the overview: 7 dots, 3 names, 0 cards, and the names go to BeatMind, Stick and Dot and Tathya. |
+| ✅ 5.4 | **Done 2026-08-18.** dot → name → card. A card only ever appears on intent (hover, or the focused subject in free mode), never from the derivation, so the pile of twelve cards can never happen. The card is the one interactive label — `pointer-events` is off on the container and re-enabled just for it — and clicking it opens the project. |
+| 🟡 5.5 | **DOM half done 2026-08-18; MSDF deliberately not built, pending a decision.** Everything a person or a crawler reads is real DOM text, which is the half of this item that carries the SEO and screen-reader guarantee. MSDF-in-WebGL was wanted for one reason — correct occlusion among the stars — and 5.2 now solves that by raycast, so the remaining benefit is perspective-scaled glyphs. Against that: a new runtime dependency (`troika-three-text`, ~180 kB into the lazy chunk), a font atlas to generate and keep in sync with the self-hosted Geist Mono, and compatibility risk against pinned `three@0.165`. **`CLAUDE.md` requires asking before adding a dependency, so it has not been added.** Owner decision. |
+
+**Exit:** every star is labelled at a level the camera earns, nothing readable is trapped in a
+canvas, and no label ever renders for a star that is not there.
+
+**Status 2026-08-18 — four of five done, 5.5 is an owner decision, not an omission.**
+
+### Why one component and not twelve
+
+`NodeLabel.vue` rendered exactly one card for the hovered project, and Phase 4 added a second
+instance for the comparison ghost. That shape cannot declutter: the name budget is a decision
+about the *whole set* — which five of twelve are strongest right now — and a component that
+only knows its own project can never make it. `NodeLabels.vue` is one ticker callback over one
+pass, which is also one clock rather than twelve.
+
+### Verification
+
+`npm run labels` (`scripts/label-check.mjs`) drives the real scene through fourteen assertions:
+projection and the behind-camera cull, that no label renders outside the viewport, that more
+than one detail level is in use, the name cap, that no card appears without intent, that the
+projector actually runs each tick, hover promotion, the click-through, and that occlusion fades
+via a transitioned opacity rather than `display: none`.
+
+It caught a genuine usability defect on its first run. Cards track their star, stars orbit, and
+the measured drift was **26.8px in 500ms** — fast enough that a card slides under the cursor
+while you are reaching for it. It was *just* clickable, which is the worst kind of defect: fine
+when you test it deliberately, broken-feeling when you do not. A card now freezes the moment the
+pointer is on it and resumes when the pointer leaves; measured slip afterwards is 0.00px.
+
+Two assertions in that harness had to be rewritten because they were testing the wrong thing —
+"an untouched card tracks its star" depends on which star happened to be hovered, and a
+`complete` project orbits at 0.004 rad/s and sits visibly still. Liveness is asserted across the
+whole label set instead, where something is always moving.
 
 ---
 

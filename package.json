@@ -12,7 +12,8 @@
     "budget": "node scripts/budget.mjs",
     "capture": "node scripts/capture-demos.mjs",
     "og": "node scripts/og.mjs",
-    "nav": "node scripts/nav-check.mjs"
+    "nav": "node scripts/nav-check.mjs",
+    "labels": "node scripts/label-check.mjs"
   },
   "dependencies": {
     "@tresjs/core": "4.3.1",
