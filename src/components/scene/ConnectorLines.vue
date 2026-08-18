@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { gsap } from 'gsap'
-import { layoutFor } from '@/data/layout'
+import { livePosition } from '@/data/nodeMotion'
 import { useScaleModeStore } from '@/stores/scaleModeStore'
 import { onMounted, onUnmounted, ref, computed } from 'vue'
 import type { TresContext } from '@tresjs/core'
@@ -122,7 +122,7 @@ function projectNode(
   }
 
   projectedPosition
-    .copy(layoutFor(project.id, scaleModeStore.mode).position)
+    .copy(livePosition(project.id, scaleModeStore.mode))
     .project(camera)
 
   if (projectedPosition.z < -1 || projectedPosition.z > 1) {

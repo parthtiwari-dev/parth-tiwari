@@ -133,7 +133,11 @@ Do not build on these; remove them when you are in the neighbourhood:
 
 **Used but undefined** (silently no-ops, should be fixed not removed): `--active-glow`, and `--font-mono` / `--font-display` / `--font-body` in `PlainExperience.vue`.
 
-**Dormant but not dead:** `sliderStore`, `sliderConfigs`, and `sliderResponse` are unused today but are being revived as the Cost of Intelligence control inside the Proof panel (`docs/PLAN.md` 3.8). Do not delete them.
+**Revived 2026-08-18:** `sliderStore` and `sliderConfigs` now drive the Cost of Intelligence
+control in the Proof panel (3.8). `sliderResponse` is still read by nothing, and that is
+deliberate — it was meant to let the dial change a node's colour and size, but size encodes
+evidence depth now (3.1) and a slider changing it would break an encoding the legend
+explains. Leave it, or delete it, but do not wire it to the scene.
 
 ---
 

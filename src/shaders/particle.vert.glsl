@@ -16,6 +16,21 @@ uniform float uTime;
 // index over a constant bound IS a constant-index-expression, so the lookup below
 // is legal and no longer has to know how many projects exist.
 uniform float uClusterBrightness[CLUSTER_COUNT];
+// Per-cluster orbital displacement (PLAN.md 3.2). Aura positions are uploaded
+// once and never rewritten; the CPU sends twelve vec3 deltas per frame instead
+// of ten thousand positions. Rigid translation, not a rotation about the origin
+// — a particle sitting outside its node would sweep a wider arc and the aura
+// would visibly shear off over a minute.
+uniform vec3 uClusterOffset[CLUSTER_COUNT];
+
+vec3 getClusterOffset(float cluster) {
+  if (cluster < -0.5) return vec3(0.0);
+  int index = int(cluster + 0.5);
+  for (int i = 0; i < CLUSTER_COUNT; i++) {
+    if (i == index) return uClusterOffset[i];
+  }
+  return vec3(0.0);
+}
 uniform float uPointSize;
 
 varying float vAlpha;
@@ -42,10 +57,11 @@ void main() {
     cos(driftTime * 0.71 + aPhase * 0.37),
     sin(driftTime * 0.53 + aPhase * 1.13)
   ) * driftAmount;
-  vec3 driftedPosition = position + drift;
+  vec3 orbit = getClusterOffset(aClusterIndex);
+  vec3 driftedPosition = position + orbit + drift;
   vec4 driftedViewPosition = modelViewMatrix * vec4(driftedPosition, 1.0);
   float parallaxScale = 1.0 + (18.0 / max(1.0, -driftedViewPosition.z)) * mix(0.008, 0.026, isAmbient);
-  vec4 mvPosition = modelViewMatrix * vec4(position + (drift * parallaxScale), 1.0);
+  vec4 mvPosition = modelViewMatrix * vec4(position + orbit + (drift * parallaxScale), 1.0);
   float distanceScale = clamp(30.0 / max(1.0, -mvPosition.z), 0.3, 1.68);
   float twinkle = 1.0 + aTwinkle * sin((uTime * 5.2) + (aPhase * 3.1)) * 0.28;
 

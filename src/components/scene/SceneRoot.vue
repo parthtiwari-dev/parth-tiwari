@@ -21,6 +21,7 @@ import ConstellationNodes from '@/components/scene/ConstellationNodes.vue'
 import ConnectorLines from '@/components/scene/ConnectorLines.vue'
 import IridescentBackground from '@/components/scene/IridescentBackground.vue'
 import NodeLabel from '@/components/scene/NodeLabel.vue'
+import NodeMoons from '@/components/scene/NodeMoons.vue'
 import ParticleField from '@/components/scene/ParticleField.vue'
 import PostProcessing from '@/components/scene/PostProcessing.vue'
 import RefusalRipple from '@/components/scene/RefusalRipple.vue'
@@ -50,6 +51,9 @@ const sceneVisible = useSceneVisibility(viewportEl)
 const quality = getQuality()
 const dpr: [number, number] = quality.dpr
 const postFxEnabled = quality.postFx
+// Moons are the first thing to go on a phone: ~90 extra instances buys less
+// than keeping the nodes themselves smooth (3.5).
+const moonsEnabled = quality.tier !== 'low'
 let hueMilestoneTrigger: ScrollTrigger | null = null
 let hueMilestoneFrame = 0
 
@@ -165,6 +169,7 @@ onUnmounted(() => {
           :hovered-cluster-index="hoveredClusterIndex"
           :hue-offset="particleHueOffset"
         />
+        <NodeMoons v-if="moonsEnabled" />
         <RefusalRipple />
         <ConstellationNodes
           :interaction-paused="sceneInteractionPaused"

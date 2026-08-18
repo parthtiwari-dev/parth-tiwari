@@ -3,6 +3,7 @@ import fragmentShader from '@/shaders/particle.frag.glsl'
 import vertexShader from '@/shaders/particle.vert.glsl'
 import type { Project } from '@/types/project'
 import { layoutFor, type ScaleMode } from '@/data/layout'
+import { clusterOffsets } from '@/data/nodeMotion'
 import { getQuality } from '@/utils/qualityTier'
 
 // Particle count now comes from the shared tier (PLAN.md 2.4). This used to be
@@ -253,6 +254,8 @@ export function useParticleField(projects: Project[]) {
     uniforms: {
       uTime:             { value: 0 },
       uClusterBrightness: { value: clusterBrightness },
+      // Twelve vec3s per frame instead of rewriting 10,000 positions (3.2).
+      uClusterOffset: { value: clusterOffsets },
       uPointSize:        { value: 3.0 },
       uHueOffset:        { value: 0 },
     },

@@ -13,6 +13,7 @@ import type { NodeRuntimeState } from '@/types/node'
 import { readToken } from '@/utils/cssTokens'
 import type { Project, ProjectNodeKind, ProjectStatus } from '@/types/project'
 import { layoutFor } from '@/data/layout'
+import { advanceNodeMotion, livePosition } from '@/data/nodeMotion'
 import { useScaleModeStore } from '@/stores/scaleModeStore'
 
 const emit = defineEmits<{
@@ -399,23 +400,35 @@ const scaleModeStore = useScaleModeStore()
 // body, halo, corona, glint, the invisible hit target, and the point light.
 // Miss one and it reads as a rendering bug rather than a change of scale.
 watch(() => scaleModeStore.mode, (mode) => {
-  sceneNodes.forEach((node) => {
-    const at = layoutFor(node.project.id, mode).position
-    node.mesh.position.copy(at)
-    node.halo.position.copy(at)
-    node.corona.position.copy(at)
-    node.glint.position.copy(at)
-    node.hitMesh.position.copy(at)
-    node.localLight?.position.copy(at)
-  })
+  advanceNodeMotion(0, mode)
+  sceneNodes.forEach((node) => placeNode(node, livePosition(node.project.id, mode)))
 })
+
+/**
+ * All six objects belonging to a node move together (3.6, 3.2): body, halo,
+ * corona, glint, the invisible hit target, and the point light. Miss one and it
+ * reads as a rendering bug rather than as motion.
+ */
+function placeNode(node: SceneNode, at: THREE.Vector3) {
+  node.mesh.position.copy(at)
+  node.halo.position.copy(at)
+  node.corona.position.copy(at)
+  node.glint.position.copy(at)
+  node.hitMesh.position.copy(at)
+  node.localLight?.position.copy(at)
+}
 
 const nodePhaseOffsets = sceneNodes.map((_, i) => i * 1.37 + 0.42)
 
-const loopStop = useLoop().onBeforeRender(({ elapsed }) => {
+const loopStop = useLoop().onBeforeRender(({ elapsed, delta }) => {
   const activeCamera = camera.value
 
+  // One place advances the orbit; every other layer reads the result (3.2).
+  advanceNodeMotion(delta, scaleModeStore.mode)
+
   sceneNodes.forEach((node, i) => {
+    placeNode(node, livePosition(node.project.id, scaleModeStore.mode))
+
     const pulseWave = Math.sin(elapsed * 0.9 + nodePhaseOffsets[i])
     const isHighlighted = highlightedProjectIdSet.value.has(node.project.id)
     const targetScale = node.runtimeState.hovered ? NODE_HOVER_SCALE : isHighlighted ? 1.16 : 1

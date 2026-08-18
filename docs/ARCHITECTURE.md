@@ -79,7 +79,10 @@ Wraps the static `projects` array plus `highlightedProjectIds`. `highlight()`/`c
 `activeKind` (`experience | training | capability | about | resume`); `isOpen` is computed from it.
 
 ### `sliderStore`
-**Entirely dead.** Never imported. `setValue` and `reset` have zero call sites. The supporting `sliderConfigs` data and the `sliderResponse` field on 5 of 9 projects feed a "Cost of Intelligence" UI that was deferred and never built.
+**Live since 2026-08-18.** `CostOfIntelligence.vue` in the Proof panel reads `sliderConfigs`
+and writes through `setValue`. The dial deliberately refuses to interpolate: away from the
+measured setting it withdraws the number rather than inventing one. `sliderResponse` remains
+unread on purpose — see `CLAUDE.md`.
 
 ### Known state problems
 
@@ -98,7 +101,7 @@ Wraps the static `projects` array plus `highlightedProjectIds`. `highlight()`/`c
 `SceneRoot.vue` owns everything. A `#constellation-section` of `h-[400vh]` provides scroll runway; a `sticky top-0 h-screen` child pins the viewport.
 
 Inside `<TresCanvas>` (`antialias: false`, `dpr: [1, 1.25]`, `render-mode="always"`, ACES tone mapping):
-`ScenePauseController` · `CameraPathController` · `CameraLight` · `IridescentBackground` · `ParticleField` · `RefusalRipple` · `ConstellationNodes` · `PostProcessing`
+`ScenePauseController` · `CameraPathController` · `CameraLight` · `IridescentBackground` · `ParticleField` · `RefusalRipple` · `ConstellationNodes` · `NodeMoons` · `PostProcessing` · `CameraAuthoring` (debug only)
 
 Outside the canvas, as DOM/SVG overlays reading `tresContext`:
 `ConnectorLines` · `NodeLabel` · a hardcoded legend
@@ -254,7 +257,7 @@ Supporting data: `about.ts`, `training.ts`, `capabilities.ts` (5 groups, 45 skil
 ### Fields declared but never read
 
 - `origin` — populated on all 9, read by nothing
-- `sliderResponse` — on 5 of 9, read by nothing
+- `sliderResponse` — on 5 of 12, still read by nothing, deliberately (3.8)
 - `radialMetricId` — read by nothing
 - `NodeRuntimeState.ringState` and `colorState` — computed and written every frame, read by nothing (there is no ring mesh)
 
