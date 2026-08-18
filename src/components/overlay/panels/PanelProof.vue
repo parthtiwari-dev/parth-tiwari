@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
+import CostOfIntelligence from '@/components/overlay/panels/CostOfIntelligence.vue'
 import type { Project, ProjectMetric } from '@/types/project'
 
 const props = defineProps<{
@@ -167,6 +168,8 @@ onUnmounted(() => {
           </ul>
         </section>
       </div>
+
+      <CostOfIntelligence :project="project" />
 
       <p v-if="proof.caveat" class="proof-caveat">
         {{ proof.caveat }}

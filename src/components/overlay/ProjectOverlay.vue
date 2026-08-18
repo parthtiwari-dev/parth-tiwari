@@ -71,6 +71,21 @@ function canScrollOverlay(deltaY: number) {
   return root.scrollTop > scrollTolerance
 }
 
+/**
+ * Elements that interpret arrow keys themselves. Panel navigation must not
+ * preempt them.
+ */
+function ownsArrowKeys(target: EventTarget | null): boolean {
+  if (!(target instanceof HTMLElement)) return false
+  const tag = target.tagName
+  if (tag === 'TEXTAREA' || tag === 'SELECT') return true
+  if (tag === 'INPUT') {
+    const type = (target as HTMLInputElement).type
+    return type === 'range' || type === 'number' || type === 'text' || type === 'search'
+  }
+  return target.isContentEditable
+}
+
 function handleKeydown(event: KeyboardEvent) {
   if (!overlayStore.isOpen) {
     return
@@ -79,6 +94,16 @@ function handleKeydown(event: KeyboardEvent) {
   // Escape is handled by useEscapeStack so the topmost surface wins (2.9).
   // Arrows stay here: they are panel navigation, meaningless to any other
   // surface, and only reachable while this overlay is the open one.
+  //
+  // Except when focus is in a control that owns arrow keys itself. The Cost of
+  // Intelligence dial (3.8) is a range input inside the Proof panel, and without
+  // this guard the overlay swallowed its arrows — the slider rendered, took
+  // focus, and could not be moved by keyboard at all. Found by driving it in a
+  // real browser; it typechecks and looks correct either way.
+  if (ownsArrowKeys(event.target)) {
+    return
+  }
+
   if (event.key === 'ArrowRight') {
     event.preventDefault()
     nextPanel()

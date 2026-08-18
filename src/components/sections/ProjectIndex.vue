@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { computed, nextTick, ref } from 'vue'
 import { useEscapeStack } from '@/composables/useEscapeStack'
+import { layoutFor } from '@/data/layout'
 import { useOverlayStore } from '@/stores/overlayStore'
 import { useProjectStore } from '@/stores/projectStore'
-import type { ProjectNodeKind, ProjectStatus, ProjectWeight } from '@/types/project'
+import type { ProjectNodeKind, ProjectStatus } from '@/types/project'
 
 /**
  * The DOM half of the constellation.
@@ -23,12 +24,6 @@ const isOpen = ref(false)
 const toggleRef = ref<HTMLButtonElement | null>(null)
 const panelRef = ref<HTMLElement | null>(null)
 
-const weightRank: Record<ProjectWeight, number> = {
-  flagship: 0,
-  major: 1,
-  minor: 2,
-}
-
 const kindLabel: Record<ProjectNodeKind, string> = {
   'personal-project': 'Personal project',
   'work-experience': 'Work experience',
@@ -43,14 +38,21 @@ const statusLabel: Record<ProjectStatus, string> = {
   experience: 'Experience',
 }
 
+/**
+ * Ordered by apparent magnitude (PLAN.md 3.7) — the same composite that decides
+ * how bright a node is in the scene, so the rail and the universe agree about
+ * what matters most.
+ *
+ * It replaces a sort on `weight` alone, which was the author's own judgement
+ * with no receipts behind it. Magnitude folds in maturity and how much can
+ * actually be proven, so a flagship with an empty proof panel ranks below a
+ * major one that shipped and has metrics — which is the ordering a visitor
+ * should read.
+ */
 const orderedProjects = computed(() => {
   return [...projectStore.projects].sort((a, b) => {
-    const weightDelta = weightRank[a.weight] - weightRank[b.weight]
-
-    if (weightDelta !== 0) {
-      return weightDelta
-    }
-
+    const delta = layoutFor(b.id).magnitude - layoutFor(a.id).magnitude
+    if (Math.abs(delta) > 0.001) return delta
     return a.name.localeCompare(b.name)
   })
 })
