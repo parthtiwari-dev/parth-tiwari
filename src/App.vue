@@ -6,6 +6,7 @@ import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
 import { useProjectStore } from '@/stores/projectStore'
 import BootSequence from '@/components/sections/BootSequence.vue'
 import BookingCta from '@/components/conversion/BookingCta.vue'
+import ConversionClose from '@/components/conversion/ConversionClose.vue'
 import CustomCursor from '@/components/interaction/CustomCursor.vue'
 import EvidenceOverlay from '@/components/evidence/EvidenceOverlay.vue'
 import EvidenceTopBar from '@/components/sections/EvidenceTopBar.vue'
@@ -125,6 +126,12 @@ onUnmounted(() => {
     :class="{ 'plain-mode': isPlain }"
   >
     <SceneRoot v-if="showScene" />
+
+    <!-- After the constellation runway, in flow: the offer and the contact
+         routes. Plain mode mounts the same two components itself. Until this
+         existed they rendered *only* under ?plain=1, so the default experience
+         had no services block and no contact panel (PLAN.md 1.5.4, 1.5.6). -->
+    <ConversionClose v-if="!isPlain && experienceReady" />
 
     <BootSequence
       v-if="!isPlain && !bootComplete"

@@ -34,10 +34,10 @@ Independent of the redesign. Ships alone, immediately.
 | ✅ 0.8 | `npm audit fix` — 4 high-severity transitive vulnerabilities | AUDIT |
 | ✅ 0.9 | Define the missing CSS variables (`--font-mono`, `--font-display`, `--font-body`, `--active-glow`) | AUDIT |
 | ✅ 0.10 | Add reduced-motion to the scene mount condition so it genuinely produces a static experience | AUDIT C1 |
-| ✅ 0.11 | Enable Vercel Web Analytics — currently returns no data, so no UX claim is measurable | AUDIT S9 |
+| ⬜ 0.11 | Enable Vercel Web Analytics — currently returns no data, so no UX claim is measurable. **De-ticked 2026-08-18:** this was marked done and is not. `@vercel/analytics` is absent from `package.json`, `src/` and `index.html`, and `CLAUDE.md` says so in the same breath. Every claim in these docs about how people use the site remains unmeasured. | AUDIT S9 |
 | ✅ 0.12 | Fix canonical URL mismatch (trailing slash), stale `sitemap.xml` lastmod, and add `?plain=1` to the sitemap | AUDIT S2, S3, S4 |
 | ✅ 0.13 | Add security headers to `vercel.json` | AUDIT S6 |
-| ✅ 0.14 | Delete dead code: `isOverlayReadyProject`, `CopiedToast`, 7 unused tokens. **Keep `sliderStore`** — it is revived in 3.8. | ARCHITECTURE §11 |
+| 🟡 0.14 | Delete dead code. **De-ticked 2026-08-18** — only partly done. `isOverlayReadyProject` is still in `data/overlayReady.ts` with three call sites branching on a function that always returns `true`; `CopiedToast` is still mounted at `App.vue` with a literal `:show="false"`; `--bg-bridge`, `--surface-glass`, `--surface-glass-hover`, `--teal-deep` and `--cold` are still defined and unused. `--bg-lift` and `--active-glow` acquired real users and should stay. **Keep `sliderStore`** — revived in 3.8. | ARCHITECTURE §11 |
 
 **Exit:** typecheck and build clean; keyboard can reach every project; plain mode ships no WebGL engine.
 
@@ -68,18 +68,33 @@ Small, high-leverage, mostly data rather than code.
 
 **The highest-commercial-value phase in the plan.** It is deliberately early, ahead of the engine rewrite, because it converts leads on the *current* site while the universe is still being built.
 
-| # | Task | Blocked on |
+| # | Task | State |
 |---|---|---|
-| 1.5.1 | Capture screenshots of `vivid-alpha`, `tathya-1`, `support-core-nine` at desktop and mobile via Playwright; commit as optimised assets | — |
-| 1.5.2 | Add an `images` field to the project model; render screenshot-first in the overlay | 1.5.1 |
-| 1.5.3 | Add an `outcome` field — what it does, for whom, plain language | owner |
-| 1.5.4 | Services block: three ranked offers in outcome language | — |
-| 1.5.5 | Persistent booking CTA, one tap from every screen at every breakpoint | booking tool choice |
-| 1.5.6 | Contact form with a serverless endpoint | — |
-| 1.5.7 | Email and WhatsApp as always-visible direct channels | — |
-| 1.5.8 | About: photo + first-person intro | owner photo |
-| 1.5.9 | Reserve a testimonial slot; leave it honestly empty until one exists | owner |
-| 1.5.10 | Site URL as a single exported constant consumed by canonical, OG, Twitter, JSON-LD, sitemap | — |
+| ✅ 1.5.1 | **Done 2026-08-18.** `scripts/capture-demos.mjs` captures desktop (1440, DSF 2) and phone (iPhone 13) stills plus a short silent screen recording of each live demo, into `public/media/`. Five targets: `beatmind`, `stick-and-dot` (Vivid), `support-core`, `tathya`, `querypilot`. Every URL is re-verified 200 and auth-free *at capture time* and refused otherwise — the same rule as linking, because a screenshot of a login wall is not evidence. JPEG q88 from Chromium rather than a new `sharp` dependency. |
+| ✅ 1.5.2 | **Done 2026-08-18.** `images` and a new `video` field are populated for those five. Rendered by a new **Demo panel that opens the overlay** ahead of Problem (`PanelShowcase.vue`), conditional on real media existing — `data/showcase.ts` owns both `hasShowcase()` and the panel count, since `filmStripPanelCount` and the store's `maxPanelIndex` were two constants that would have disagreed. Video and stills are one ordered slide list: they were two branches with a thumbnail strip that rendered, highlighted and changed nothing whenever a project had both. |
+| 🟡 1.5.3 | `outcome` field exists and renders in both modes, but only **3 of 12** projects have one (`beatmind`, `support-core`, `tathya`). **Owner-blocked, and deliberately so** — an outcome states what a system did and for whom, and inferring that from the architecture panels would be inventing a claim on a site whose entire argument is evidence. Nine lines outstanding. |
+| ✅ 1.5.4 | Built in `ServicesBlock.vue` + `data/services.ts`, three ranked offers in outcome language, each naming the projects that prove it. **Mounted in the full experience 2026-08-18 — see the note below.** |
+| ✅ 1.5.5 | `BookingCta.vue`, fixed, every breakpoint, every mode but plain. `IS_BOOKING_CONFIRMED` gates it so the button is never a broken promise. |
+| 🟡 1.5.6 | `ContactPanel.vue` ships a `mailto:` form and no serverless endpoint, **deliberately**: it needs no backend, no third-party form service, and cannot silently drop a lead the way an unwired form would. Revisit only if volume justifies it. **Mounted in the full experience 2026-08-18.** |
+| 🟡 1.5.7 | Email is always visible. WhatsApp is **owner-blocked**: `WHATSAPP_NUMBER` is empty and every WhatsApp affordance stays unrendered until it is filled, because a guessed number is worse than none. |
+| ❌ 1.5.8 | About photo. **Owner-blocked** — no photo field and no file. |
+| ✅ 1.5.9 | Testimonial slot reserved and honestly empty in `ContactPanel.vue`. Stays that way until a real quote exists. |
+| ✅ 1.5.10 | `config/site.ts` is the single constant, feeding canonical/OG/Twitter/JSON-LD/sitemap. `index.html` cannot import TS, so its 13 occurrences are enumerated in that file and must move with it. |
+
+**The gap this phase actually had, found 2026-08-18.** 1.5.4 and 1.5.6 were built and then mounted
+*only inside `PlainExperience.vue`*. So the site a lead lands on — the universe, at `/` — had no
+services block and no contact panel at all, just the floating booking button. Every visitor who
+did not think to append `?plain=1` got the least commercial version of a site whose stated purpose
+is generating paid client work. `ConversionClose.vue` now mounts both in flow after the
+constellation runway, where the scroll ends.
+
+**One live demo is broken, and this is owner homework.** `support-core-nine.vercel.app` loads, but
+its backend at `support-core.onrender.com` returned nothing in 200s on three separate paths — not
+a free-tier cold start, which resolves in 30–60s. A visitor who clicks that link can ask a question
+and will watch "Lumi is typing…" forever. It is captured as its greeting state only, it has no
+video (a recording would document a hang), and the capture script keeps the interaction hook
+commented with why it is disabled. **Either restore the backend or drop the `liveUI` link** — a link
+that hangs is a worse evidence failure than no link.
 
 **Why before Phase 2:** the engine rewrite is invisible to a buyer. Screenshots, outcomes and a booking button are the entire difference between a site that generates leads and one that does not. If the project stalls after this phase, it has still paid for itself.
 
@@ -178,8 +193,16 @@ Exit criterion — "adding a project requires adding a data record and nothing e
 then some: a new record now also gets an orbit, a size, a place in the index ordering, its
 own moons, and a position in both scale modes, without touching a line of scene code. A new project needs
 a record in `projects.ts`; position, size and speed follow from it, and the shader no longer
-has a project-count limit. 3.2, 3.5, 3.6, 3.7 and 3.8 remain — they add axes and controls,
-not the derivation itself.
+has a project-count limit.
+
+**Audited 2026-08-18, independently of the commits that claimed it.** All eight items verified
+against the code rather than the doc: `layout.ts` derives every axis, no coordinate triples
+survive in `projects.ts`, `nodeMotion.ts` is the sole owner of live positions, `NodeMoons.vue`
+hashes hue from technology name, `scaleModeStore` keeps four layers in agreement, `ProjectIndex`
+sorts by derived magnitude, and the Cost of Intelligence dial refuses off-measurement. The
+sentence that used to sit here — "3.2, 3.5, 3.6, 3.7 and 3.8 remain" — was left over from an
+earlier commit and directly contradicted the line above it. Exactly the stale claim this
+document warns about.
 
 **A production bug the harness caught, unrelated to this phase.** Teaching
 `scripts/shots.mjs` to report failing request *URLs* rather than "Failed to load resource"
@@ -189,6 +212,17 @@ answered 404 as `text/plain` with `nosniff`, and Chrome blocked it. Geist Mono h
 *never* loaded: every mono label, the legend, the overlay eyebrows and the boot sequence
 were silently rendering in a fallback. Now self-hosted from `public/fonts/`, because the
 typography is load-bearing identity and should not depend on a third party being reachable.
+
+**A regression this phase caused, found in the same audit and fixed.** `layout.ts` imported
+`three` for `Vector3` and three `MathUtils` helpers. `ProjectIndex` reads `layoutFor()` to order
+the rail and is a *static* import in `App.vue`, so that one import pulled the entire engine out
+of the lazy scene chunk and into the eager entry: **796.96 kB, 212.19 kB gzip, before first
+paint, for every visitor including `?plain=1`** — the precise guarantee 0.1 exists to make.
+`layout.ts` now exports a plain `Vec3` and imports nothing; `nodeMotion.ts` wraps resting
+positions into real vectors at the scene boundary. Entry chunk 796.96 kB → 130.82 kB. This was
+the *second* silent break of that boundary, so `npm run budget` (`scripts/budget.mjs`) now
+asserts the entry's gzip size and that `WebGLRenderer` is absent from it, and exits non-zero
+otherwise. Negative-tested by reintroducing the import.
 
 **One thing the derivation exposed:** the hand-typed coordinates had been doing *framing*,
 not just placement — everything was clustered stage-right so the hero wordmark stayed clear.

@@ -37,10 +37,12 @@ npm run preview      # serve the production build
 Before any commit that touches source:
 
 ```bash
-npm run typecheck && npm run build
+npm run typecheck && npm run build && npm run budget
 ```
 
-There is no unit-test runner and no linter configured. Type checking and a clean build are the mandatory gates.
+There is no unit-test runner and no linter configured. Type checking, a clean build and the bundle budget are the mandatory gates.
+
+**`npm run budget` is not optional.** It reads `dist/` and fails if the eager entry chunk exceeds its gzip ceiling or if `WebGLRenderer` appears in it. The lazy-3D boundary has broken *twice*, silently, and neither break failed typecheck, failed the build, or showed up in a screenshot — the first was a `manualChunks` rule that made Rolldown preload the chunk anyway, the second was `data/layout.ts` importing `three` for `Vector3` while `ProjectIndex` statically imports `layoutFor()`, which put 796.96 kB in front of every visitor including `?plain=1`. A number is the only thing that catches this.
 
 **`npm run shots` is the third.** Playwright captures `/` and `/?plain=1` at 390, 430, 800, 834 and 1440 with the right device scale factor and a touch pointer, reporting page errors per viewport. Run it before and after anything touching the scene, layout or shaders:
 
@@ -52,6 +54,10 @@ node scripts/shots.mjs --tag after
 ```
 
 800 is not padding — it is the documented 768–820 dead zone. The touch pointer is not either: `qualityTier.ts` branches on `(pointer: coarse)`, so a merely-narrow window takes the wrong branch and proves nothing.
+
+**`npm run capture` re-shoots the live demos** into `public/media/` — stills at two widths plus a short silent recording, from the deployments listed in `scripts/capture-demos.mjs`. It re-verifies every URL is 200 and auth-free before it captures and refuses otherwise, which is the linking rule applied to screenshots: an image of a login wall, an error page, or a stranger's site is worse than no image. Re-run it when a demo's UI changes, and read the captures before trusting them into `projects.ts`.
+
+Both harnesses launch Chromium through `scripts/browser.mjs`. Do not call `chromium.launch()` directly — it resolves a version-stable binary and, behind an egress proxy, passes the flags without which every navigation dies as `ERR_CONNECTION_RESET`. The reasoning is in that file.
 
 ---
 
@@ -86,7 +92,7 @@ Scene components that drive Three.js imperatively use an **empty template** and 
 ### Styling
 All color and spacing comes from `src/styles/tokens.css`. Do not hardcode a hex or rgba that a token already defines.
 
-This rule is currently violated heavily — `--ice` appears as a raw literal 35 times across 15 files. When you touch a file, replace the literals you find in it. Do not add new ones.
+This was violated heavily — `--ice` as a raw literal, 35 times across 15 files. **Fixed; verified 0 occurrences on 2026-08-18.** Do not add new ones.
 
 Tailwind's config carries no theme extension, so tokens are reached via the escape-hatch form: `text-[color:var(--ice)]`. If you extend the Tailwind theme to fix this, migrate call sites in the same change rather than leaving two idioms alive.
 
@@ -94,7 +100,7 @@ Tailwind's config carries no theme extension, so tokens are reached via the esca
 Star colors are currently hardcoded hexes in `ConstellationNodes.vue` that do not match the legend swatches describing them. Any new scene color reads from tokens.
 
 ### Breakpoints
-Nine distinct width thresholds exist today. Do not add a tenth. Use the shared breakpoint tokens; if the one you need does not exist, add it centrally rather than inline.
+**Ten distinct thresholds exist as of 2026-08-18** — 320, 620, 640, 720, 760, 767, 768, 820, 900, 1040 — so the "do not add a tenth" rule has already been broken once and the count here was stale. Do not add an eleventh; consolidate instead. Use the shared breakpoint tokens; if the one you need does not exist, add it centrally rather than inline.
 
 The 768–820px range is a known dead zone (desktop scene + mobile nav + no mobile content). Any responsive change must be checked at 800px.
 
@@ -114,7 +120,9 @@ Any interaction reachable by hover must also be reachable, **and dismissable**, 
 
 `src/data/projects.ts` is the single source of truth for the projects. Node metadata, panel copy, stack, links, and artifacts all live there. Prefer changing data over changing components.
 
-Supporting data files: `about.ts`, `training.ts`, `capabilities.ts`, `socialLinks.ts`, `resume.ts`, `projectLinks.ts`.
+Supporting data files: `about.ts`, `training.ts`, `capabilities.ts`, `socialLinks.ts`, `resume.ts`, `projectLinks.ts`, `services.ts`, `showcase.ts`.
+
+**`images` and `video` are evidence, not decoration.** Both are captured from deployments confirmed public and auth-free by `scripts/capture-demos.mjs`, never mocked up, never taken from a prototype, and every `alt` and `caption` must describe what is actually in the frame. A project with no honest capture renders no Demo panel — `hasShowcase()` in `data/showcase.ts` decides, and an empty showcase would be exactly the decoration-pretending-to-be-data this project exists to avoid. Note that `images` counts toward `evidenceOf()` in `layout.ts`, so adding a capture legitimately grows that project's star.
 
 **Never hardcode the project count in prose.** Every surface derives it from `projectStore.projectCount` — `EvidenceTopBar`, `MobileFooterDock`, `ProjectIndex`, `PlainExperience` and `BootSequence` all do this correctly now. There is no fixed number of projects anywhere in the codebase; keep it that way.
 
@@ -124,14 +132,14 @@ Supporting data files: `about.ts`, `training.ts`, `capabilities.ts`, `socialLink
 
 Do not build on these; remove them when you are in the neighbourhood:
 
-- `isOverlayReadyProject` — always returns `true`; three call sites branch on it as if it gates something.
-- `CopiedToast` — mounted with a literal `:show="false"`.
+- `isOverlayReadyProject` — always returns `true`; three call sites branch on it as if it gates something. (PLAN 0.14 claimed this was deleted. It was not — verified 2026-08-18.)
+- `CopiedToast` — mounted with a literal `:show="false"`. (Same stale tick.)
 - `RefusalRipple` — renders at alpha ×0.004 on an unconnected 30-second timer.
 - `GlassPanel`, `GeistChip`, `StatusBadge`, `MetricCountUp` — reachable only via `?debug=1`.
-- Tokens `--bg-lift`, `--bg-bridge`, `--bg-nebula`, `--surface-glass`, `--surface-glass-hover`, `--teal-deep`, `--cold`.
+- Tokens `--bg-bridge`, `--surface-glass`, `--surface-glass-hover`, `--teal-deep`, `--cold`. (`--bg-lift` and `--bg-nebula` acquired real users and are no longer dead.)
 - `NodeRuntimeState.ringState` / `colorState` — written every frame, read by nothing.
 
-**Used but undefined** (silently no-ops, should be fixed not removed): `--active-glow`, and `--font-mono` / `--font-display` / `--font-body` in `PlainExperience.vue`.
+~~**Used but undefined**: `--active-glow`, `--font-mono`, `--font-display`, `--font-body`.~~ **Fixed** — all four are defined in `tokens.css`; verified 2026-08-18.
 
 **Revived 2026-08-18:** `sliderStore` and `sliderConfigs` now drive the Cost of Intelligence
 control in the Proof panel (3.8). `sliderResponse` is still read by nothing, and that is
@@ -210,4 +218,4 @@ Do not open a pull request unless asked.
 
 Vercel, project `parth-tiwari`, static SPA off `main`. `vercel.json` handles the SPA rewrite and asset cache headers. No environment variables are required.
 
-Web Analytics is **not currently enabled**, so there is no real usage data behind any UX claim. Treat assertions about "how people use the site" as untested until it is.
+Web Analytics is **not currently enabled**, so there is no real usage data behind any UX claim. Treat assertions about "how people use the site" as untested until it is. (`PLAN.md` 0.11 claimed this was done; de-ticked 2026-08-18.)

@@ -163,6 +163,22 @@ const groupedProjects = computed(() => [
           <figcaption v-if="image.caption">{{ image.caption }}</figcaption>
         </figure>
 
+        <!-- No autoplay and no loop here. Plain mode is the static, printable,
+             reduced-motion backstop; a video that starts itself would break the
+             one promise the mode makes. Poster and description carry the
+             content for anyone who never presses play. -->
+        <figure v-if="project.video" class="plain-experience__figure">
+          <video
+            :src="project.video.src"
+            :poster="project.video.poster"
+            controls
+            muted
+            playsinline
+            preload="none"
+          />
+          <figcaption>{{ project.video.description }}</figcaption>
+        </figure>
+
         <p v-if="project.outcome" class="plain-experience__outcome">
           {{ project.outcome }}
         </p>
@@ -393,6 +409,13 @@ const groupedProjects = computed(() => [
 
 .plain-experience__facts dd {
   margin: 0;
+}
+
+.plain-experience__figure video {
+  display: block;
+  width: 100%;
+  max-width: 44rem;
+  height: auto;
 }
 
 .plain-experience__figure {

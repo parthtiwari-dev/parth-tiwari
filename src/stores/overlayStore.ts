@@ -1,13 +1,22 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { projects } from '@/data/projects'
+import { panelCountFor } from '@/data/showcase'
 import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
-
-const maxPanelIndex = 4
 
 export const useOverlayStore = defineStore('overlay', () => {
   const isOpen = ref(false)
   const activeProjectId = ref<string | null>(null)
   const activePanelIndex = ref(0)
+
+  /**
+   * Not a constant any more. Projects with a capture get a Demo panel first
+   * (`data/showcase.ts`), so a fixed `maxPanelIndex = 4` would clamp navigation
+   * one panel short of what the strip renders.
+   */
+  const panelCount = computed(() => panelCountFor(
+    projects.find((project) => project.id === activeProjectId.value),
+  ))
 
   function open(projectId: string) {
     // Only one surface at a time (PLAN.md 2.9). Nothing used to enforce this,
@@ -26,7 +35,7 @@ export const useOverlayStore = defineStore('overlay', () => {
   }
 
   function setPanel(index: number) {
-    activePanelIndex.value = Math.min(Math.max(index, 0), maxPanelIndex)
+    activePanelIndex.value = Math.min(Math.max(index, 0), panelCount.value - 1)
   }
 
   function nextPanel() {
@@ -41,6 +50,7 @@ export const useOverlayStore = defineStore('overlay', () => {
     isOpen,
     activeProjectId,
     activePanelIndex,
+    panelCount,
     open,
     close,
     setPanel,

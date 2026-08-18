@@ -78,6 +78,25 @@ export const projects: Project[] = [
     // the apex is what silently broke Modal's webhook callbacks (see the Problem
     // panel). Sign-up is invite-only for the closed pilot; the marketing surface
     // is public.
+    images: [
+      {
+        src: '/media/beatmind-desktop.jpg',
+        alt: 'BeatMind landing page: the headline "Get inside the music" beside a circular '
+          + 'visualisation of a track, with navigation for the editor, what it hears and what it costs.',
+        caption: 'The public marketing surface, captured 2026-08-18. The editor itself is '
+          + 'invite-only for the closed pilot, so it is deliberately not shown.',
+      },
+      {
+        src: '/media/beatmind-mobile.jpg',
+        alt: 'The same BeatMind landing page on a phone-width screen.',
+        caption: 'The same page at 390px.',
+      },
+    ],
+    video: {
+      src: '/media/beatmind.webm',
+      poster: '/media/beatmind-desktop.jpg',
+      description: 'A silent scroll through the BeatMind marketing page, captured from the live site.',
+    },
     links: {
       liveUI: 'https://www.beatmind.tech',
     },
@@ -277,6 +296,26 @@ export const projects: Project[] = [
     // `domains` array rather than guessed. `vivid.vercel.app` is a different
     // owner's site and must never be linked here (CLAUDE.md).
     // The Stick and Dot App deployment is excluded by the owner and stays out.
+    images: [
+      {
+        src: '/media/stick-and-dot-desktop.jpg',
+        alt: 'Vivid\'s Storyboard console: a scene description field, generate and plan controls, '
+          + 'a seed input, scene type and fast-mode toggles, and a grid of named style presets, '
+          + 'beside an empty four-frame board reading "ready to render".',
+        caption: 'Vivid\'s generation console before a render, captured 2026-08-18. No generation '
+          + 'was triggered — running one costs real compute on a live product.',
+      },
+      {
+        src: '/media/stick-and-dot-mobile.jpg',
+        alt: 'The Vivid console on a phone-width screen.',
+        caption: 'The same console at 390px.',
+      },
+    ],
+    video: {
+      src: '/media/stick-and-dot.webm',
+      poster: '/media/stick-and-dot-desktop.jpg',
+      description: 'A silent pass over the Vivid storyboard console, captured from the live app.',
+    },
     links: {
       liveUI: 'https://vivid-alpha.vercel.app',
     },
@@ -386,6 +425,21 @@ export const projects: Project[] = [
       'OpenAI API',
       'SentenceTransformers',
       'sqlparse',
+    ],
+    images: [
+      {
+        src: '/media/querypilot-desktop.jpg',
+        alt: 'QueryPilot\'s OpenAPI 3.1 documentation, describing a POST /query and GET /health '
+          + 'endpoint and typed QueryRequest, QueryResponse, ValidationError and HTTPValidationError schemas.',
+        caption: 'The served API contract, captured 2026-08-18. There is no UI to show — the '
+          + 'evidence for this one is the typed surface itself. The endpoint is a free-tier '
+          + 'instance and takes 30-60s to wake.',
+      },
+      {
+        src: '/media/querypilot-mobile.jpg',
+        alt: 'The same QueryPilot API documentation on a phone-width screen.',
+        caption: 'The same documentation at 390px.',
+      },
     ],
     links: {
       github: 'https://github.com/parthtiwari-dev/querypilot',
@@ -677,6 +731,34 @@ export const projects: Project[] = [
     // Verified 2026-08-17: serves the real app ("Lumio Support Chat") over HTTPS
     // with no auth wall. The Render backend is deliberately not linked — a bare
     // API root is not a demo, and Render free instances cold-start.
+    /**
+     * Greeting state only, and that is the honest capture.
+     *
+     * The interaction was driven — the question is really sent — but the answer
+     * never arrives: the frontend POSTs to `support-core.onrender.com`, which
+     * returned nothing in 200s on 2026-08-18, on three separate paths. That is
+     * not a free-tier cold start, which resolves in 30-60s. **The backend is
+     * down**, so the linked demo accepts a question and sits on "Lumi is
+     * typing…" indefinitely.
+     *
+     * No video for this one: a recording would document a hang. Re-capture with
+     * `scripts/capture-demos.mjs` once the API answers — the interaction hook is
+     * still in the script, commented with why it is disabled.
+     */
+    images: [
+      {
+        src: '/media/support-core-desktop.jpg',
+        alt: 'The Lumio Support chat widget: a greeting from "Lumi, Lumio\'s support assistant" '
+          + 'and four suggested questions about returns, international shipping, warranty claims '
+          + 'and discounts, above a message input.',
+        caption: 'The entry state, captured 2026-08-18.',
+      },
+      {
+        src: '/media/support-core-mobile.jpg',
+        alt: 'The same Lumio Support chat widget on a phone-width screen.',
+        caption: 'The same widget at 390px.',
+      },
+    ],
     links: {
       github: 'https://github.com/parthtiwari-dev/support-core',
       liveUI: 'https://support-core-nine.vercel.app',
@@ -772,6 +854,26 @@ export const projects: Project[] = [
     // month. The Render API is intentionally not linked — free tier, sleeps after
     // 15 minutes, 30-60s cold start. A link that might take a minute to answer is
     // not evidence.
+    images: [
+      {
+        src: '/media/tathya-desktop.jpg',
+        alt: 'Tathya\'s feed, "The Record": automatically clustered topics, each showing a live '
+          + 'badge, an actor, an age, a sourced summary, and a source breakdown counting official, '
+          + 'media and citizen sources.',
+        caption: 'The live feed, captured 2026-08-18, with topics dated eleven days earlier. '
+          + 'The header states the rule the system runs on: no topic on the feed was chosen by hand.',
+      },
+      {
+        src: '/media/tathya-mobile.jpg',
+        alt: 'The same Tathya feed on a phone-width screen.',
+        caption: 'The same feed at 390px.',
+      },
+    ],
+    video: {
+      src: '/media/tathya.webm',
+      poster: '/media/tathya-desktop.jpg',
+      description: 'A silent scroll through Tathya\'s live case-file feed, captured from the running system.',
+    },
     links: {
       github: 'https://github.com/parthtiwari-dev/tathya',
       liveUI: 'https://tathya-1.vercel.app',

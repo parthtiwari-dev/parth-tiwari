@@ -5,6 +5,8 @@ import PanelBoundary from '@/components/overlay/panels/PanelBoundary.vue'
 import PanelLinks from '@/components/overlay/panels/PanelLinks.vue'
 import PanelProblem from '@/components/overlay/panels/PanelProblem.vue'
 import PanelProof from '@/components/overlay/panels/PanelProof.vue'
+import PanelShowcase from '@/components/overlay/panels/PanelShowcase.vue'
+import { hasShowcase } from '@/data/showcase'
 import type { Project } from '@/types/project'
 
 const props = defineProps<{
@@ -18,15 +20,27 @@ const emit = defineEmits<{
 
 const frameRef = ref<HTMLElement | null>(null)
 
-const panels = [
+const EVIDENCE_PANELS = [
   { label: 'Problem', shortLabel: 'Prob', component: PanelProblem },
   { label: 'Architecture', shortLabel: 'Arch', component: PanelArchitecture },
   { label: 'Proof', shortLabel: 'Proof', component: PanelProof },
   { label: 'Boundary', shortLabel: 'Bound', component: PanelBoundary },
   { label: 'Links', shortLabel: 'Links', component: PanelLinks },
-] as const
+]
 
-const activePanel = computed(() => panels[props.activePanelIndex] ?? panels[0])
+/**
+ * Showcase first where there is one to show (CLAUDE.md, "show before telling").
+ * Projects without a capture keep the original five and open on Problem, so
+ * nothing renders an empty frame. Count comes from `panelCountFor` in
+ * `data/showcase.ts`, which the store and the header read too.
+ */
+const panels = computed(() => (
+  hasShowcase(props.project)
+    ? [{ label: 'Demo', shortLabel: 'Demo', component: PanelShowcase }, ...EVIDENCE_PANELS]
+    : EVIDENCE_PANELS
+))
+
+const activePanel = computed(() => panels.value[props.activePanelIndex] ?? panels.value[0])
 
 watch(
   () => props.activePanelIndex,
@@ -41,10 +55,6 @@ watch(
     frameRef.value.scrollLeft = 0
   },
 )
-</script>
-
-<script lang="ts">
-export const filmStripPanelCount = 5
 </script>
 
 <template>

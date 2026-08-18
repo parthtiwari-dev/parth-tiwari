@@ -98,6 +98,25 @@ export interface ProjectImage {
   caption?: string
 }
 
+/**
+ * A short, silent screen recording of the real product being used.
+ *
+ * Silent and muted by default and looped: this sits inside an overlay a visitor
+ * opened to read, and audio they did not ask for is a reason to close the tab.
+ * `poster` is required so the panel has something to show before the file
+ * arrives and for anyone who blocks media.
+ *
+ * Same evidence rule as `images`: recorded from a deployment confirmed public,
+ * auth-free and ours (`scripts/capture-demos.mjs`). Never a mock-up, never a
+ * prototype, never someone else's product.
+ */
+export interface ProjectVideo {
+  src: string
+  poster: string
+  /** Described for anyone who cannot play it. Required for the same reason `alt` is. */
+  description: string
+}
+
 export interface ProjectLinks {
   github?: string
   liveUI?: string
@@ -166,6 +185,14 @@ export interface Project {
    * files exist in `public/` — no placeholder paths.
    */
   images?: ProjectImage[]
+  /**
+   * A screen recording of the product working. Outranks a screenshot, which
+   * outranks a paragraph (CLAUDE.md).
+   *
+   * Optional, and absent wherever a recording would misrepresent the thing: a
+   * product whose backend is down records a hang, not a demo.
+   */
+  video?: ProjectVideo
   links: ProjectLinks
   panels: ProjectPanels
   artifacts?: ProjectArtifact[]

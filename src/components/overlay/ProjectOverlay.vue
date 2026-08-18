@@ -4,7 +4,7 @@ import { lockBodyScroll, unlockBodyScroll } from '@/composables/useBodyScrollLoc
 import { useEscapeStack } from '@/composables/useEscapeStack'
 import { useFocusTrap } from '@/composables/useFocusTrap'
 import { isOverlayReadyProject } from '@/data/overlayReady'
-import FilmStrip, { filmStripPanelCount } from '@/components/overlay/FilmStrip.vue'
+import FilmStrip from '@/components/overlay/FilmStrip.vue'
 import FilmStripHeader from '@/components/overlay/FilmStripHeader.vue'
 import { useOverlayStore } from '@/stores/overlayStore'
 import { useProjectStore } from '@/stores/projectStore'
@@ -218,7 +218,7 @@ onUnmounted(() => {
         <FilmStripHeader
           :project="activeProject"
           :panel-index="overlayStore.activePanelIndex"
-          :total-panels="filmStripPanelCount"
+          :total-panels="overlayStore.panelCount"
           @close="closeOverlay"
           @previous="previousPanel"
           @next="nextPanel"

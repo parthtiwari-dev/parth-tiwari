@@ -22,6 +22,7 @@
  */
 
 import { chromium } from 'playwright'
+import { chromiumLaunchOptions } from './browser.mjs'
 import { mkdir } from 'node:fs/promises'
 import path from 'node:path'
 
@@ -55,7 +56,7 @@ const ROUTES = [
 
 async function main() {
   await mkdir(OUT, { recursive: true })
-  const browser = await chromium.launch()
+  const browser = await chromium.launch(chromiumLaunchOptions())
   let problems = 0
 
   for (const vp of VIEWPORTS) {
