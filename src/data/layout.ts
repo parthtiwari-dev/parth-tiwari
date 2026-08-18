@@ -116,23 +116,48 @@ function startedKey(project: Project): number {
   return Number(year) * 12 + Number(month)
 }
 
-function derive(): Map<string, DerivedNode> {
+export type ScaleMode = 'schematic' | 'true'
+
+/**
+ * Two layouts, and the viewer is always told which one they are in
+ * (PLAN.md 3.6, DESIGN.md §2).
+ *
+ * **Schematic** spaces projects evenly around the ring and compresses radius
+ * into a legible band. **True** spaces them by actual elapsed months and lets
+ * radius spread by raw maturity.
+ *
+ * True scale looks worse, and that is the point. Real gaps between project
+ * starts are wildly uneven — eight of twelve began within five months of each
+ * other — so honest spacing bunches most of the career into one arc and leaves
+ * the rest empty. Every space visualisation hits this. The answer that keeps
+ * faith with the thesis is `solarsystemscope.com`'s: ship both, and label which
+ * one is on screen. A site arguing that systems should act only on evidence has
+ * to be visibly candid about when it is compressing the truth to stay readable.
+ */
+function derive(mode: ScaleMode): Map<string, DerivedNode> {
   const chronological = [...projects].sort((a, b) => startedKey(a) - startedKey(b))
   const lastIndex = Math.max(1, chronological.length - 1)
+  const first = startedKey(chronological[0]!)
+  const last = startedKey(chronological[chronological.length - 1]!)
+  const span = Math.max(1, last - first)
   const result = new Map<string, DerivedNode>()
 
   chronological.forEach((project, index) => {
     const maturity = maturityOf(project)
     const evidence = evidenceOf(project)
 
-    // Even angular spacing, not proportional to elapsed time. Real gaps between
-    // starts are wildly uneven and a time-proportional ring would bunch eight
-    // projects into one arc and leave the rest empty — unreadable, and the
-    // schematic/true toggle in 3.6 is where honest spacing gets to live.
-    const t = index / lastIndex
+    const t = mode === 'schematic'
+      ? index / lastIndex
+      : (startedKey(project) - first) / span
+
     const angle = THREE.MathUtils.degToRad(ARC_START_DEGREES + t * ARC_DEGREES)
 
-    const orbitRadius = THREE.MathUtils.lerp(OUTER_RADIUS, INNER_RADIUS, maturity)
+    const orbitRadius = mode === 'schematic'
+      ? THREE.MathUtils.lerp(OUTER_RADIUS, INNER_RADIUS, maturity)
+      // Raw maturity as an inverse distance: a barely-started thing really is
+      // far away, and true mode declines to flatter it.
+      : THREE.MathUtils.clamp(INNER_RADIUS / Math.max(0.28, maturity), INNER_RADIUS, 34)
+
     const height = (project.origin === 'work' ? 1 : -1) * evidence * MAX_HEIGHT
 
     result.set(project.id, {
@@ -145,8 +170,6 @@ function derive(): Map<string, DerivedNode> {
       angle,
       orbitRadius,
       speed: speedOf(project),
-      // Bright things are near and well-evidenced. Used for label priority, so
-      // the labels that appear first are the ones worth reading first.
       magnitude: THREE.MathUtils.clamp(evidence * 0.65 + maturity * 0.35, 0, 1),
       maturity,
       evidence,
@@ -156,15 +179,25 @@ function derive(): Map<string, DerivedNode> {
   return result
 }
 
-export const nodeLayout: Map<string, DerivedNode> = derive()
+const LAYOUTS: Record<ScaleMode, Map<string, DerivedNode>> = {
+  schematic: derive('schematic'),
+  true: derive('true'),
+}
+
+/** Default is schematic: legible first, with the compression disclosed. */
+export const nodeLayout: Map<string, DerivedNode> = LAYOUTS.schematic
+
+export function layoutIn(mode: ScaleMode): Map<string, DerivedNode> {
+  return LAYOUTS[mode]
+}
 
 /**
  * Throws rather than returning a fallback: a missing entry means a project
  * exists that the derivation did not see, and a silently placed node at the
  * origin is exactly the meaningless decoration this file exists to remove.
  */
-export function layoutFor(projectId: string): DerivedNode {
-  const node = nodeLayout.get(projectId)
-  if (!node) throw new Error(`No derived layout for project "${projectId}"`)
+export function layoutFor(projectId: string, mode: ScaleMode = 'schematic'): DerivedNode {
+  const node = LAYOUTS[mode].get(projectId)
+  if (!node) throw new Error(`No derived layout for project "${projectId}" (${mode})`)
   return node
 }

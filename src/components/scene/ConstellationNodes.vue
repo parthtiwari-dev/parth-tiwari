@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted } from 'vue'
+import { computed, onMounted, onUnmounted, watch } from 'vue'
 import { useLoop, useTres } from '@tresjs/core'
 import * as THREE from 'three'
 import { projects } from '@/data/projects'
@@ -13,6 +13,7 @@ import type { NodeRuntimeState } from '@/types/node'
 import { readToken } from '@/utils/cssTokens'
 import type { Project, ProjectNodeKind, ProjectStatus } from '@/types/project'
 import { layoutFor } from '@/data/layout'
+import { useScaleModeStore } from '@/stores/scaleModeStore'
 
 const emit = defineEmits<{
   hover: [payload: { projectId: string | null; clusterIndex: number | null }]
@@ -392,6 +393,23 @@ onMounted(() => {
 })
 
 // Stable per-node phase offset so each star pulses at a different rhythm
+const scaleModeStore = useScaleModeStore()
+
+// Every visual belonging to a node moves together on a scale change (3.6):
+// body, halo, corona, glint, the invisible hit target, and the point light.
+// Miss one and it reads as a rendering bug rather than a change of scale.
+watch(() => scaleModeStore.mode, (mode) => {
+  sceneNodes.forEach((node) => {
+    const at = layoutFor(node.project.id, mode).position
+    node.mesh.position.copy(at)
+    node.halo.position.copy(at)
+    node.corona.position.copy(at)
+    node.glint.position.copy(at)
+    node.hitMesh.position.copy(at)
+    node.localLight?.position.copy(at)
+  })
+})
+
 const nodePhaseOffsets = sceneNodes.map((_, i) => i * 1.37 + 0.42)
 
 const loopStop = useLoop().onBeforeRender(({ elapsed }) => {

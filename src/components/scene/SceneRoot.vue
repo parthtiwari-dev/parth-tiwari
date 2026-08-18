@@ -11,6 +11,7 @@ import { projects } from '@/data/projects'
 import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
 import { useOverlayStore } from '@/stores/overlayStore'
 import { useProjectStore } from '@/stores/projectStore'
+import { useScaleModeStore } from '@/stores/scaleModeStore'
 import { getQuality } from '@/utils/qualityTier'
 // Async + debug-gated so Tweakpane never enters the production entry (2.8).
 const CameraAuthoring = defineAsyncComponent(() => import('@/components/scene/CameraAuthoring.vue'))
@@ -38,6 +39,7 @@ const particleHueOffset = ref(0)
 // On a low-tier handset [1, 1] is roughly half the fragments of [1, 1.25].
 // Four viewport-heights of scroll track, in pixels rather than vh so mobile
 // browser chrome cannot resize it mid-scroll (PLAN.md 2.7).
+const scaleModeStore = useScaleModeStore()
 const isDebug = typeof window !== 'undefined'
   && new URLSearchParams(window.location.search).get('debug') === '1'
 const runwayHeight = useScrollRunway(4)
@@ -195,7 +197,7 @@ onUnmounted(() => {
            z-90) and would otherwise sit on top of this legend's last two lines. -->
       <div
         v-if="evidenceOverlayStore.activeKind !== 'about'"
-        class="constellation-index pointer-events-none absolute bottom-24 right-6 z-30 hidden md:block"
+        class="constellation-index absolute bottom-24 right-6 z-30 hidden md:block"
       >
         <p class="constellation-index__title">CONSTELLATION INDEX</p>
         <p><span class="constellation-index__dot constellation-index__dot--personal"></span> personal project</p>
@@ -203,6 +205,30 @@ onUnmounted(() => {
         <p><span class="constellation-index__dot constellation-index__dot--current"></span> currently building</p>
         <p><span class="constellation-index__dot constellation-index__dot--utility"></span> utility / tooling</p>
         <p class="constellation-index__note">bigger node = stronger evidence</p>
+
+        <!--
+          The scale disclosure (PLAN.md 3.6). Not a settings control tucked in a
+          menu — which mode you are looking at is part of the information, so it
+          sits in the legend that explains the rest of it.
+        -->
+        <div class="constellation-index__scale">
+          <p class="constellation-index__scale-state">
+            <span aria-hidden="true">◐</span>
+            {{ scaleModeStore.mode === 'schematic' ? 'schematic scale' : 'true scale' }}
+          </p>
+          <p class="constellation-index__scale-note">
+            {{ scaleModeStore.mode === 'schematic'
+              ? 'spacing evened out for legibility'
+              : 'spaced by real elapsed time' }}
+          </p>
+          <button
+            type="button"
+            class="constellation-index__scale-toggle"
+            @click="scaleModeStore.toggle()"
+          >
+            show {{ scaleModeStore.mode === 'schematic' ? 'true' : 'schematic' }} scale
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -261,6 +287,50 @@ onUnmounted(() => {
 .constellation-index__dot--utility {
   background: var(--node-utility);
   color: var(--node-utility);
+}
+
+.constellation-index p:not(.constellation-index__scale-toggle) {
+  pointer-events: none;
+}
+
+.constellation-index__scale {
+  margin-top: 0.55rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid color-mix(in srgb, var(--ice-faint) 40%, transparent);
+}
+
+.constellation-index__scale-state {
+  color: var(--gold-glow);
+  letter-spacing: 0.1em;
+}
+
+.constellation-index__scale-note {
+  color: color-mix(in srgb, var(--ice-muted) 70%, transparent);
+}
+
+.constellation-index__scale-toggle {
+  margin-top: 0.3rem;
+  padding: 0.2rem 0;
+  border: 0;
+  background: none;
+  color: var(--ice-muted);
+  cursor: pointer;
+  font: inherit;
+  letter-spacing: 0.1em;
+  pointer-events: auto;
+  text-decoration: underline;
+  text-transform: uppercase;
+  text-underline-offset: 0.25em;
+}
+
+.constellation-index__scale-toggle:hover,
+.constellation-index__scale-toggle:focus-visible {
+  color: var(--gold-glow);
+}
+
+.constellation-index__scale-toggle:focus-visible {
+  outline: 2px solid var(--gold-glow);
+  outline-offset: 3px;
 }
 
 .constellation-index__note {

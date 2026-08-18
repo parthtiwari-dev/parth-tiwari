@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import fragmentShader from '@/shaders/particle.frag.glsl'
 import vertexShader from '@/shaders/particle.vert.glsl'
 import type { Project } from '@/types/project'
-import { layoutFor } from '@/data/layout'
+import { layoutFor, type ScaleMode } from '@/data/layout'
 import { getQuality } from '@/utils/qualityTier'
 
 // Particle count now comes from the shared tier (PLAN.md 2.4). This used to be
@@ -284,9 +284,40 @@ export function useParticleField(projects: Project[]) {
     material.dispose()
   }
 
+  /**
+   * Slide every aura particle from its old cluster centre to the new one when
+   * the scale mode changes (PLAN.md 3.6). Ambient stars (cluster index < 0) do
+   * not move — they are the backdrop, not part of any project.
+   *
+   * Offsets are preserved by translating rather than re-randomising, so the
+   * halo a node carries stays recognisably the same halo across the toggle.
+   */
+  function restack(from: ScaleMode, to: ScaleMode) {
+    if (from === to) return
+    const attr = geometry.getAttribute('position') as THREE.BufferAttribute
+    const array = attr.array as Float32Array
+
+    for (let i = 0; i < count; i += 1) {
+      const cluster = clusterIndices[i]
+      if (cluster < 0) continue
+      const project = projects[cluster]
+      if (!project) continue
+      const before = layoutFor(project.id, from).position
+      const after = layoutFor(project.id, to).position
+      const at = i * 3
+      array[at] += after.x - before.x
+      array[at + 1] += after.y - before.y
+      array[at + 2] += after.z - before.z
+    }
+
+    attr.needsUpdate = true
+    geometry.computeBoundingSphere()
+  }
+
   return {
     points,
     update,
+    restack,
     dispose,
   }
 }
