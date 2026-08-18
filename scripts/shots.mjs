@@ -75,6 +75,12 @@ async function main() {
       page.on('console', (m) => {
         if (m.type() === 'error') errors.push(`console: ${m.text()}`)
       })
+      // "Failed to load resource" with no URL is unactionable. requestfailed
+      // carries the URL, which is how the external font CDNs were identified as
+      // the only network dependency the page has.
+      page.on('requestfailed', (r) => {
+        errors.push(`request: ${r.failure()?.errorText ?? 'failed'} ${r.url()}`)
+      })
 
       await page.goto(`${BASE}${route.path}`, { waitUntil: 'load', timeout: 45_000 })
       // The scene is async-imported and the boot sequence types itself out.
