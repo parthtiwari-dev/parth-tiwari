@@ -199,7 +199,6 @@ function openOverlay(kind: EvidenceOverlayKind, disabled?: boolean) {
 .mobile-footer-dock__socials a:hover {
   border-color: var(--gold);
   color: var(--gold-glow);
-  outline: none;
 }
 
 .mobile-footer-dock__socials {

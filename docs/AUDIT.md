@@ -223,7 +223,7 @@ This is the cheapest high-impact fix available: the site's entire thesis is evid
 
 ## Documentation drift
 
-`PROGRESS_AUDIT.md` (588 lines, dated 2026-06-03) is a phase-by-phase build log. It is genuinely useful history and is preserved. Claims that no longer match the code:
+`PROGRESS_AUDIT.md` (dated 2026-06-03) is a phase-by-phase build log. **Formally retired 2026-08-18** under PLAN 7.8 and now carries a header saying so; it is preserved as history, not as reference. Claims that no longer matched the code even then:
 
 | Claim | Reality |
 |---|---|

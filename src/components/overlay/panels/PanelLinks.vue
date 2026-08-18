@@ -133,7 +133,6 @@ h3 {
 .link-card:focus-visible {
   border-color: color-mix(in srgb, var(--gold) 78%, transparent);
   color: var(--ice);
-  outline: none;
   transform: translateY(-2px);
 }
 
@@ -210,7 +209,7 @@ h3 {
 }
 
 .empty-links small {
-  color: var(--ice-faint);
+  color: var(--ice-quiet);
 }
 
 @media (max-width: 620px) {

@@ -17,7 +17,7 @@ const badgeClass = computed(() => ({
   'text-gold': props.status === 'complete',
   'text-teal-active': props.status === 'active',
   'text-amber': props.status === 'in-progress',
-  'text-ice-faint': props.status === 'experience',
+  'text-ice-quiet': props.status === 'experience',
 }))
 </script>
 

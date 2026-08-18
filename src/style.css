@@ -45,6 +45,7 @@
   --color-ice: var(--ice);
   --color-ice-muted: var(--ice-muted);
   --color-ice-faint: var(--ice-faint);
+  --color-ice-quiet: var(--ice-quiet);
 
   --color-gold: var(--gold);
   --color-gold-glow: var(--gold-glow);
@@ -71,6 +72,7 @@
 @import "./styles/scrollbar.css";
 @import "./styles/cursor.css";
 @import "./styles/plain.css";
+@import './styles/focus.css';
 
 body {
   margin: 0;

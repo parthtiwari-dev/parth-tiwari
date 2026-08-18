@@ -336,7 +336,7 @@ watch(() => props.paused, (paused) => (paused ? stop() : start()))
 
 .node-labels__eyebrow {
   display: block;
-  color: var(--ice-faint);
+  color: var(--ice-quiet);
   font-size: 0.85em;
   letter-spacing: 0.18em;
 }
@@ -401,7 +401,7 @@ watch(() => props.paused, (paused) => (paused ? stop() : start()))
 
 .node-labels__card-cue {
   margin-top: 0.35rem;
-  color: var(--ice-faint);
+  color: var(--ice-quiet);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: 0.16em;

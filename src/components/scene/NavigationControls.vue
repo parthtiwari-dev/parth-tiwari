@@ -135,7 +135,7 @@ function reset() {
 }
 
 .nav-controls__scale-label {
-  color: var(--ice-faint);
+  color: var(--ice-quiet);
 }
 
 .nav-controls__scale-value {
@@ -193,7 +193,7 @@ function reset() {
 
 .nav-controls__hint {
   margin: 0;
-  color: var(--ice-faint);
+  color: var(--ice-quiet);
 }
 
 /*

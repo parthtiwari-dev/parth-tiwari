@@ -7,6 +7,18 @@
   --ice: #d8eaf0;
   --ice-muted: #7fa8b8;
   --ice-faint: #2e4f5e;
+  /*
+   * Faint TEXT, as opposed to faint hairlines (PLAN.md 7.3).
+   *
+   * `--ice-faint` measures 2.34:1 against `--bg` — fine for a 1px border, which
+   * WCAG does not govern, and a clear AA failure for the 12px mono captions it
+   * was also being used for. Rather than lighten `--ice-faint` and change the
+   * weight of every border in the app, text gets its own step at 4.89:1.
+   *
+   * Verified by `npm run a11y`, which computes the real composited ratio for
+   * every visible text node rather than trusting this comment.
+   */
+  --ice-quiet: #64818f;
 
   --teal-active: #1a6b7a;
 

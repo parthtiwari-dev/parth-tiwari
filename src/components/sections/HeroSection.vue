@@ -95,7 +95,7 @@ onUnmounted(() => {
 
 .hero-section__cue {
   margin: 0;
-  color: var(--ice-faint);
+  color: var(--ice-quiet);
   font-size: var(--text-xs);
   letter-spacing: 0.16em;
   text-transform: uppercase;

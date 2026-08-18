@@ -152,7 +152,7 @@ The current build gates `SceneRoot` with `v-if`, which stops it *mounting* — t
 | `logarithmicDepthBuffer` | Measurably degrades performance with many overlapping transparent objects; documented desktop/mobile inconsistency. Tight near/far planes instead. |
 | A physics playground | Bruno Simon's car is brilliant and is a different site. This one must be readable in 40 seconds. |
 | A router with per-project pages | Overlays in one world are the existing identity and they work. Deep links go through query params. |
-| Node click → camera lerp | Already tried and rejected during the original build (`PROGRESS_AUDIT.md` Phase 3 item 4) — it felt worse than opening the overlay directly. Do not re-propose without new evidence. |
+| Node click → camera lerp | Already tried and rejected during the original build (`PROGRESS_AUDIT.md` Phase 3 item 4 — a retired, frozen document; the decision stands, the rest of that file does not) — it felt worse than opening the overlay directly. Do not re-propose without new evidence. |
 | Two separate paths for clients and recruiters | A fork-in-the-road makes every visitor choose before they know anything. One client-led site serves both; the reverse does not. |
 | Published pricing | Owner targets both Indian SMBs and Western startups. Fixed prices destroy the ability to price by client and geography. Every path leads to a conversation instead. |
 | Four co-equal contact buttons | All four channels ship, but ranked — booking primary, form secondary, email and WhatsApp always-visible. Equal weighting dilutes intent. |

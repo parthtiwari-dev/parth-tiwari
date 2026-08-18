@@ -143,7 +143,7 @@ watch(
 }
 
 .film-strip__panel-number {
-  color: var(--ice-faint);
+  color: var(--ice-quiet);
   margin-right: 0.45rem;
 }
 
@@ -159,7 +159,6 @@ watch(
     linear-gradient(180deg, rgb(232 200 106 / 0.06), transparent),
     color-mix(in srgb, var(--bg) 52%, transparent);
   color: var(--ice);
-  outline: none;
 }
 
 .film-strip__nav button:hover {

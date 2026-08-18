@@ -293,7 +293,6 @@ onUnmounted(() => {
 .capability-group__chips button.is-active {
   border-color: color-mix(in srgb, var(--gold) 76%, transparent);
   color: var(--gold-glow);
-  outline: none;
   transform: translateY(-1px);
 }
 

@@ -1,3 +1,33 @@
+> # ⚠️ RETIRED — HISTORICAL RECORD, FROZEN 2026-08-18
+>
+> **Nothing below this line is maintained, and several claims in it are now false.**
+> It is kept because it is the only record of decisions made during the original
+> build — `MEMORY.md` cites it for one of them (node-click camera lerp, tried and
+> rejected) — and deleting it would lose that. It is not kept because it is accurate.
+>
+> Retired under PLAN.md 7.8, which offered "update its drift, or retire it in
+> favour of these docs". Updating was the wrong option: it is 587 lines describing
+> a build that has since been rewritten through seven phases, and a document that
+> has to be re-verified line by line every time the code changes is a document
+> nobody will re-verify.
+>
+> **Known false, as of 2026-08-18:**
+>
+> - The site is **EPHEMERIS**, not EVIDENCEBOUND.
+> - Its "Phase 5" is not `PLAN.md`'s Phase 5. The phase numbering is unrelated.
+> - The `dev` and `codex/evidencebound-bootstrap` branches no longer exist.
+> - The separate mobile star-world path was deleted in PLAN 2.5 — there is one scene.
+> - "0 vulnerabilities" was stale when `AUDIT.md` was written and stale again after;
+>   `npm audit` is currently clean, but check it rather than believing this file.
+> - The nine-project cap is gone. There are twelve, and no number is hardcoded.
+>
+> **Where the truth is now:** `PLAN.md` for what is built and what is not,
+> `ARCHITECTURE.md` for how it fits together, `DESIGN.md` for why it looks like
+> this, `AUDIT.md` for the fitness review that started the rewrite, and
+> `CLAUDE.md` for the rules that hold it all in place.
+
+---
+
 # EVIDENCEBOUND Progress Audit
 
 Date: 2026-06-03

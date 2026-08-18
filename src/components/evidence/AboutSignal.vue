@@ -174,7 +174,6 @@ const socialIconPaths: Record<SocialLinkKind, string> = {
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 0.12),
     0 0 1.1rem rgb(232 200 106 / 0.18);
-  outline: none;
   transform: translateY(-1px);
 }
 
@@ -307,7 +306,6 @@ const socialIconPaths: Record<SocialLinkKind, string> = {
     0 1.25rem 2.6rem rgb(0 0 0 / 0.22),
     0 0 1.8rem color-mix(in srgb, currentColor 22%, transparent);
   color: var(--gold-glow);
-  outline: none;
   transform: translateY(-0.18rem) scale(1.015);
 }
 

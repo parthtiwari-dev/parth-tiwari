@@ -298,11 +298,10 @@ ul {
 .experience-log__footer a:hover,
 .experience-log__footer a:focus-visible {
   color: var(--ice);
-  outline: none;
 }
 
 .experience-log__footer span {
-  color: var(--ice-faint);
+  color: var(--ice-quiet);
 }
 
 @media (max-width: 900px) {

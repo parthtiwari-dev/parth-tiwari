@@ -130,7 +130,7 @@ function reset() {
 }
 
 .coi__end {
-  color: var(--ice-faint);
+  color: var(--ice-quiet);
   font-family: var(--font-mono);
   font-size: 0.6rem;
   letter-spacing: 0.12em;
@@ -164,7 +164,7 @@ function reset() {
 }
 
 .coi__metric--withheld {
-  color: var(--ice-faint);
+  color: var(--ice-quiet);
   font-size: 1rem;
   font-style: italic;
 }

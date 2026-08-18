@@ -314,7 +314,7 @@ onUnmounted(() => {
 }
 
 .milestone-status--roadmap {
-  color: var(--ice-faint);
+  color: var(--ice-quiet);
 }
 
 .milestone-list h3,

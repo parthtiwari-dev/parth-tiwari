@@ -48,6 +48,10 @@ There is no unit-test runner and no linter configured. Type checking, a clean bu
 
 **`npm run labels` is the label gate.** `scripts/label-check.mjs` asserts the projection cull, the magnitude-and-distance decluttering, the name cap, occlusion fading rather than hiding, and that a card can actually be clicked. It caught a card drifting 26.8px per 500ms under the cursor on its first run.
 
+**`npm run a11y` is the accessibility gate.** `scripts/a11y-check.mjs` tabs the real page at 390/800/1440 and asserts reachability, accessible names, focus indicators, the dialog contract, focus trap and restoration, WCAG AA contrast on every visible text node, and plain-mode content parity. It found twelve `outline: none` violations on its first run.
+
+**`npm run perf` is the sustained-load gate.** Two minutes per tier, comparing the end of the run against the start. It skips the absolute frame-rate assertion when it detects software rendering — this runner has no GPU, and failing a build on a SwiftShader number would be reporting a fact about the CI box as a fact about the site.
+
 **`npm run craft` covers the Phase 6 guarantees** that are not matters of taste — chiefly that `index.html`'s visibility guard still reveals the page when every JS request fails. Anything touching that guard, `main.ts`'s reveal call, or the idle autopilot should re-run it.
 
 **`npm run shots` is the third.** Playwright captures `/` and `/?plain=1` at 390, 430, 800, 834 and 1440 with the right device scale factor and a touch pointer, reporting page errors per viewport. Run it before and after anything touching the scene, layout or shaders:
@@ -96,7 +100,9 @@ Vue 3 `<script setup lang="ts">` SFCs. Scoped styles. No Options API, no global 
 Scene components that drive Three.js imperatively use an **empty template** and do their work in `setup`. Keep that pattern — it is why the renderless controllers do not warn.
 
 ### Styling
-All color and spacing comes from `src/styles/tokens.css`. Do not hardcode a hex or rgba that a token already defines.
+All color and spacing comes from `src/styles/tokens.css`.
+
+`--ice-faint` is a **hairline** colour: 2.34:1 against `--bg`, which is fine for a 1px border and an AA failure for text. Faint *text* uses `--ice-quiet` (4.89:1). `npm run a11y` computes the real composited ratio for every visible text node and will catch a regression here. Do not hardcode a hex or rgba that a token already defines.
 
 This was violated heavily — `--ice` as a raw literal, 35 times across 15 files. **Fixed; verified 0 occurrences on 2026-08-18.** Do not add new ones.
 
@@ -116,7 +122,7 @@ Every animation needs a `prefers-reduced-motion: reduce` path, and it must be a 
 ### Accessibility
 New overlays need: `role="dialog"`, `aria-modal`, focus moved in on open, **focus trapped while open**, **focus restored to the trigger on close**, and Escape to dismiss. The first two exist today; the trap and restoration do not — do not ship a new overlay that repeats that gap.
 
-Never use `outline: none` without an equally visible replacement focus indicator.
+**Do not set `outline` in a component at all.** `styles/focus.css` owns the focus ring for the whole app. Twelve components each set `outline: none` inside a combined `:hover, :focus-visible` rule and relied on a glow that, measured, several of them did not actually render — so the guarantee moved to one file (7.1). Add a glow on top if you like; do not take the ring away.
 
 Any interaction reachable by hover must also be reachable, **and dismissable**, by touch. `CapabilityMap` used to fail this and is the worked example: hover previews, tap pins, tapping the pinned control releases it, and a visible Clear control exists for anyone who has neither hover nor a second tap in mind. Copy that shape rather than inventing a new one.
 

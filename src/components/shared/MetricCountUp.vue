@@ -8,7 +8,7 @@ defineProps<{
 
 <template>
   <div class="type-mono grid gap-1">
-    <span class="text-[length:var(--text-xs)] uppercase tracking-[0.12em] text-ice-faint">
+    <span class="text-[length:var(--text-xs)] uppercase tracking-[0.12em] text-ice-quiet">
       {{ label }}
     </span>
     <span class="bg-gradient-to-r from-gold to-gold-glow bg-clip-text text-2xl text-transparent">

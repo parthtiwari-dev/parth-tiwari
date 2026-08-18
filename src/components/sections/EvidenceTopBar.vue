@@ -345,7 +345,6 @@ onUnmounted(() => {
     0 0.85rem 1.8rem rgb(0 0 0 / 0.22),
     0 0 1.4rem color-mix(in srgb, var(--gold) 18%, transparent);
   color: var(--gold-glow);
-  outline: none;
   padding-inline: 1rem;
   transform: translateY(-1px) scale(1.06);
 }
@@ -456,7 +455,6 @@ onUnmounted(() => {
   .evidence-top-bar__mobile-menu-button[aria-expanded='true'] {
     border-color: color-mix(in srgb, var(--gold) 66%, transparent);
     color: var(--gold-glow);
-    outline: none;
     transform: none;
   }
 

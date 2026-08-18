@@ -222,7 +222,7 @@ onUnmounted(() => {
           />
 
           <div class="grid gap-3">
-            <p class="type-label text-ice-faint">
+            <p class="type-label text-ice-quiet">
               Cost of Intelligence sliders
             </p>
             <div class="flex flex-wrap gap-2">

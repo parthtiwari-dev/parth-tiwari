@@ -149,7 +149,6 @@ import {
 .resume-overlay__actions a:focus-visible {
   border-color: var(--ice);
   color: var(--ice);
-  outline: none;
 }
 
 @media (max-width: 620px) {
