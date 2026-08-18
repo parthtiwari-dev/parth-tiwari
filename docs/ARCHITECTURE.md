@@ -130,7 +130,7 @@ There are also **two separate ScrollTriggers on the same element**, created in d
 
 ### Node positions — hand-placed, not derived
 
-All 9 node positions are literal `{x, y, z}` coordinates typed into `src/data/projects.ts`. There is no layout algorithm, no force graph, and no derivation from project relationships.
+**Derived since 2026-08-18 (PLAN.md 3.1/3.3).** `src/data/layout.ts` computes every node's position, radius and orbital speed from the project record: orbital radius from maturity (`status` + whether a public link resolves), angle from `started` read clockwise, sphere radius from evidence depth (`weight` + metric/milestone/artifact counts), speed from recency, height from `origin`. `ConstellationNodeConfig` now holds only `relatedIds`, because a relationship between two projects is a judgement and nothing in the data implies it. `layoutFor()` throws on a miss rather than falling back to the origin — a silently-placed node is the meaningless decoration this replaced.
 
 **Nothing about a star's position currently encodes anything true about the work.** This is the central thing the redesign changes — see `DESIGN.md`.
 
@@ -284,7 +284,7 @@ There is no code-splitting by mode: the Three.js stack is in the graph regardles
 | `GlassPanel`, `GeistChip`, `StatusBadge`, `MetricCountUp` | Reachable only via `?debug=1` |
 | `.phase-bridge` / `.phase-zero-console` CSS | 88 lines serving the debug block only |
 | 7 tokens | Zero uses |
-| `ProjectOrigin`, `NodeSize` exports | Declared, effectively unused |
+| `ProjectOrigin` | Now load-bearing — drives node height in `layout.ts`. `NodeSize` deleted with 3.3. |
 
 ---
 

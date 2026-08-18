@@ -47,7 +47,7 @@ Projects invert to screenshot → outcome → live demo → the existing evidenc
 
 The governing rule. Position, size, angle, speed, moons, cluster, and label priority are all derived from project data. Nothing is hand-placed.
 
-This came from noticing that every node position in the current build is a literal typed coordinate. A portfolio whose thesis is *evidence* cannot be built on meaningless decoration — it refutes itself. The bar is Shirley Wu's *Legends*, where 3D geometry is generated from each subject's data.
+This came from noticing that every node position was a literal typed coordinate — since fixed in 3.1/3.3. A portfolio whose thesis is *evidence* cannot be built on meaningless decoration — it refutes itself. The bar is Shirley Wu's *Legends*, where 3D geometry is generated from each subject's data.
 
 **Consequence:** adding a tenth project must require adding a data record and nothing else. If a change makes that untrue, the change is wrong.
 

@@ -30,8 +30,13 @@ export interface CameraPose {
 }
 
 export const CAMERA_POSES: CameraPose[] = [
-  { at: 0.0,  position: new THREE.Vector3(0, 6, 22),    target: new THREE.Vector3(0, 0, 2) },
-  { at: 0.25, position: new THREE.Vector3(1, 5.5, 18),  target: new THREE.Vector3(0, 0, 2) },
+  // Pose 0 looks left of centre so the constellation composes into the right of
+  // frame, clear of the wordmark. The hand-typed node coordinates used to do
+  // this framing implicitly by clustering everything stage-right; once positions
+  // became derived (3.1) that job moved to the camera, which is where it
+  // belonged — the layout encodes the data, the camera decides the shot.
+  { at: 0.0,  position: new THREE.Vector3(0, 6, 22),    target: new THREE.Vector3(-4.2, 0, 2) },
+  { at: 0.25, position: new THREE.Vector3(1, 5.5, 18),  target: new THREE.Vector3(-2.0, 0, 2) },
   { at: 0.5,  position: new THREE.Vector3(-1, 5, 15),   target: new THREE.Vector3(0, 0.15, 2.6) },
   { at: 0.75, position: new THREE.Vector3(0, 2.4, 5.8), target: new THREE.Vector3(0, 0.5, 6.6) },
   { at: 1.0,  position: new THREE.Vector3(0, 2.1, -7.2), target: new THREE.Vector3(0, 0.7, 9) },

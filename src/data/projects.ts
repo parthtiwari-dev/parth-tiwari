@@ -159,8 +159,6 @@ export const projects: Project[] = [
       },
     },
     node: {
-      position: { x: 5.5, y: 1.2, z: -3 },
-      size: 'large',
       relatedIds: ['stick-and-dot'],
     },
   },
@@ -247,8 +245,6 @@ export const projects: Project[] = [
       },
     },
     node: {
-      position: { x: 0, y: 0, z: 2 },
-      size: 'large',
       relatedIds: ['medrag', 'querypilot'],
     },
     sliderResponse: { sliderId: 'automationVsControl', affects: 'both' },
@@ -367,8 +363,6 @@ export const projects: Project[] = [
       },
     ],
     node: {
-      position: { x: -5, y: 0.5, z: 4 },
-      size: 'large',
       relatedIds: ['oncoverse'],
     },
     sliderResponse: { sliderId: 'costPerQuery', affects: 'both' },
@@ -468,8 +462,6 @@ export const projects: Project[] = [
       },
     },
     node: {
-      position: { x: 5, y: 0.3, z: 4 },
-      size: 'medium-large',
       relatedIds: ['secondself', 'upi-fraud'],
     },
     sliderResponse: { sliderId: 'latencyBudget', affects: 'both' },
@@ -566,8 +558,6 @@ export const projects: Project[] = [
       },
     },
     node: {
-      position: { x: -4, y: -0.3, z: 8 },
-      size: 'medium',
       relatedIds: ['querypilot'],
     },
     sliderResponse: { sliderId: 'alertBudget', affects: 'both' },
@@ -658,8 +648,6 @@ export const projects: Project[] = [
       },
     },
     node: {
-      position: { x: 3.5, y: 1.0, z: 8 },
-      size: 'medium',
       relatedIds: ['secondself', 'fraud-risk-intel'],
     },
     sliderResponse: { sliderId: 'evidenceStrictness', affects: 'both' },
@@ -755,8 +743,6 @@ export const projects: Project[] = [
       },
     },
     node: {
-      position: { x: -7.5, y: -1.6, z: -2.5 },
-      size: 'medium-small',
       relatedIds: ['medrag'],
     },
   },
@@ -868,8 +854,6 @@ export const projects: Project[] = [
       },
     },
     node: {
-      position: { x: 2.5, y: -2.4, z: 5.5 },
-      size: 'medium',
       relatedIds: ['medrag', 'support-core'],
     },
   },
@@ -961,8 +945,6 @@ export const projects: Project[] = [
       },
     },
     node: {
-      position: { x: 1.5, y: 2.5, z: 12 },
-      size: 'medium-small',
       relatedIds: ['stick-and-dot'],
     },
   },
@@ -1048,8 +1030,6 @@ export const projects: Project[] = [
       },
     },
     node: {
-      position: { x: -6, y: 0.2, z: 16 },
-      size: 'small',
       relatedIds: [],
     },
   },
@@ -1136,8 +1116,6 @@ export const projects: Project[] = [
       },
     },
     node: {
-      position: { x: 5.0, y: -0.5, z: 16 },
-      size: 'small',
       relatedIds: ['medrag'],
     },
   },
@@ -1221,8 +1199,6 @@ export const projects: Project[] = [
       },
     },
     node: {
-      position: { x: -2, y: 1.5, z: 20 },
-      size: 'tiny',
       relatedIds: ['secondself'],
     },
   },

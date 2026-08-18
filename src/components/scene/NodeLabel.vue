@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { gsap } from 'gsap'
+import { layoutFor } from '@/data/layout'
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import type { TresContext } from '@tresjs/core'
 import * as THREE from 'three'
@@ -98,7 +99,7 @@ function updatePosition() {
   }
 
   projectedPosition
-    .set(project.node.position.x, project.node.position.y, project.node.position.z)
+    .copy(layoutFor(project.id).position)
     .project(camera)
 
   const projectedX = (projectedPosition.x * 0.5 + 0.5) * rect.width + rect.left

@@ -161,16 +161,27 @@ Where the universe starts meaning something.
 
 | # | Task |
 |---|---|
-| 3.1 | Compute orbital radius from maturity, size from evidence depth, angle from date, speed from recency |
-| 3.2 | Move orbital motion into the vertex shader — per-instance phase attribute, positions upload once |
-| 3.3 | Delete the hand-typed `node.position` coordinates from `projects.ts` |
-| 3.4 | Remove the hardcoded `uClusterBrightness[9]` limit so a tenth project cannot silently break the shader |
+| ✅ 3.1 | **Done 2026-08-18.** `data/layout.ts`. Radius from maturity (`status` + whether a public link resolves — a live link is the difference between a claim and something a stranger can open, so `oncoverse`, which has never deployed, correctly stays at the rim). Angle from `started`, evenly spaced rather than time-proportional, because real gaps are wildly uneven and would bunch eight projects into one arc. Sphere radius from evidence depth, with receipt counts capped so a project cannot inflate itself by listing more bullets. Speed from recency. Height from `origin`. |
+| ⬜ 3.2 | Move orbital motion into the vertex shader — per-instance phase attribute, positions upload once. `DerivedNode.angle` and `.speed` exist for this; nothing consumes `speed` yet, so nodes are placed but static. |
+| ✅ 3.3 | **Done 2026-08-18.** All twelve coordinate triples and `size` values deleted, `NodeSize` removed from the type, `ConstellationNodeConfig` reduced to `relatedIds`. Five consumers repointed at `layoutFor()`: `ConstellationNodes`, `NodeLabel`, `ConnectorLines`, `useParticleField` (×2 — clearance and aura placement). |
+| ✅ 3.4 | **Done 2026-08-17**, ahead of the phase — it was blocking BeatMind from shipping as a node. `CLUSTER_COUNT` define + bounded loop; verified in-browser at ten, then twelve. |
 | 3.5 | Moons: `stack[]` rendered as satellites; shared technologies visibly recur |
 | 3.6 | Schematic ↔ true-scale toggle, with the current mode always labelled |
-| 3.7 | Apparent magnitude derivation feeding label priority |
+| ⬜ 3.7 | Apparent magnitude derivation feeding label priority. `DerivedNode.magnitude` is computed (evidence 0.65 + maturity 0.35) but **nothing reads it yet** — forward-declared data, same as `CameraPose.activeNode`. |
 | 3.8 | **Cost of Intelligence** revived inside the Proof panel — drag a budget/latency slider, watch the metric respond. `sliderConfigs` and `sliderResponse` stop being dead data. |
 
 **Exit:** adding a project requires adding a data record and nothing else.
+
+**Status 2026-08-18 — 3.1, 3.3, 3.4 done. The exit criterion is met.** A new project needs
+a record in `projects.ts`; position, size and speed follow from it, and the shader no longer
+has a project-count limit. 3.2, 3.5, 3.6, 3.7 and 3.8 remain — they add axes and controls,
+not the derivation itself.
+
+**One thing the derivation exposed:** the hand-typed coordinates had been doing *framing*,
+not just placement — everything was clustered stage-right so the hero wordmark stayed clear.
+With positions derived from data that stopped being true and nodes landed on the type. Fixed
+in the camera rather than by biasing the layout: pose 0 now looks left of centre. The layout
+encodes the data; the camera decides the shot. Verified at all five viewports.
 
 ---
 

@@ -24,7 +24,7 @@ The site is a solar system in which Parth is the star and the work orbits him. T
 
 > **Every visual property is derived from project data. If a property cannot be justified by data, it is cut.**
 
-This is not an aesthetic preference. The site's entire argument is *evidence* — systems that act only after the evidence agrees. A portfolio making that argument in a universe of hand-placed, meaningless stars refutes itself. The current build places every node position as a literal typed coordinate. That is the single thing this redesign most needs to undo.
+This is not an aesthetic preference. The site's entire argument is *evidence* — systems that act only after the evidence agrees. A portfolio making that argument in a universe of hand-placed, meaningless stars refutes itself. That was the single thing this redesign most needed to undo, and it is done (2026-08-18): every position is computed in `data/layout.ts` from the project record, and the coordinates are gone from `projects.ts`.
 
 The standard to hold this to is **Shirley Wu's *Legends*** (`shirleywu.studio/legends`) — 51 female Nobel laureates rendered as 3D crystals whose *form is generated from each laureate's Wikipedia data*. The geometry is the encoding, not a decoration wrapped around a label. That is the bar.
 
@@ -52,7 +52,7 @@ Twelve projects. Seven axes. Nothing arbitrary.
 | **Cluster / arm** | Domain | capability matching | RAG, agents, diffusion, fraud ML, medical resolve as regions at galaxy scale. |
 | **Apparent magnitude** | Label priority | derived composite | Governs when a label appears. See §6. |
 
-**Positions are computed at runtime from data.** Adding a project means adding a record, not typing coordinates. The hard limit that used to be baked into `particle.vert.glsl` — `uniform float uClusterBrightness[9]`, which broke silently at ten projects — was removed on 2026-08-17; the array is now sized from `projects.length` via a `CLUSTER_COUNT` define. Node *positions* are still literal coordinates in `projects.ts`; that is what this section remains about.
+**Positions are computed at runtime from data.** Adding a project means adding a record, not typing coordinates. The hard limit that used to be baked into `particle.vert.glsl` — `uniform float uClusterBrightness[9]`, which broke silently at ten projects — was removed on 2026-08-17; the array is now sized from `projects.length` via a `CLUSTER_COUNT` define. **Node positions are derived as of 2026-08-18** — see `data/layout.ts`. What framing the shot now falls to the camera: pose 0 looks left of centre so the ring composes clear of the wordmark, a job the hand-placed coordinates used to do implicitly by clustering everything stage-right.
 
 ### The honesty problem, and the honest solution
 

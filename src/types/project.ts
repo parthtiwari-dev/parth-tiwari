@@ -12,13 +12,6 @@ export type ProjectOrigin = 'personal' | 'work'
 
 export type ProjectWeight = 'flagship' | 'major' | 'minor'
 
-export type NodeSize =
-  | 'large'
-  | 'medium-large'
-  | 'medium'
-  | 'medium-small'
-  | 'small'
-  | 'tiny'
 
 export interface ProjectMetric {
   label: string
@@ -116,9 +109,18 @@ export interface ProjectLinks {
   deployment?: string
 }
 
+/**
+ * What the constellation still needs stated by hand.
+ *
+ * `position` and `size` used to live here as typed coordinates and a t-shirt
+ * size. Both are derived now (`data/layout.ts`, PLAN.md 3.1/3.3) — radius from
+ * maturity, angle from `started`, size from evidence depth. A portfolio arguing
+ * that systems should act only on evidence cannot place its own stars by hand.
+ *
+ * `relatedIds` stays because a relationship between two projects is a judgement,
+ * not a measurement. Nothing in the data implies it.
+ */
 export interface ConstellationNodeConfig {
-  position: { x: number; y: number; z: number }
-  size: NodeSize
   relatedIds: string[]
 }
 

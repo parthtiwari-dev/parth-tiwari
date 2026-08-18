@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { gsap } from 'gsap'
+import { layoutFor } from '@/data/layout'
 import { onMounted, onUnmounted, ref, computed } from 'vue'
 import type { TresContext } from '@tresjs/core'
 import * as THREE from 'three'
@@ -118,7 +119,7 @@ function projectNode(
   }
 
   projectedPosition
-    .set(project.node.position.x, project.node.position.y, project.node.position.z)
+    .copy(layoutFor(project.id).position)
     .project(camera)
 
   if (projectedPosition.z < -1 || projectedPosition.z > 1) {

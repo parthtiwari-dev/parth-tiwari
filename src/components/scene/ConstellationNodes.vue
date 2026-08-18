@@ -12,6 +12,7 @@ import {
 import type { NodeRuntimeState } from '@/types/node'
 import { readToken } from '@/utils/cssTokens'
 import type { Project, ProjectNodeKind, ProjectStatus } from '@/types/project'
+import { layoutFor } from '@/data/layout'
 
 const emit = defineEmits<{
   hover: [payload: { projectId: string | null; clusterIndex: number | null }]
@@ -54,29 +55,14 @@ interface SceneNode {
 const NODE_VISUAL_SCALE = 0.48
 const highlightedProjectIdSet = computed(() => new Set(props.highlightedProjectIds ?? []))
 
-const radiusBySize: Record<Project['node']['size'], number> = {
-  large: 0.35,
-  'medium-large': 0.28,
-  medium: 0.22,
-  'medium-small': 0.18,
-  small: 0.14,
-  tiny: 0.09,
-}
-
-const minimumVisibleRadiusBySize: Record<Project['node']['size'], number> = {
-  large: 0,
-  'medium-large': 0,
-  medium: 0,
-  'medium-small': 0.094,
-  small: 0.086,
-  tiny: 0.074,
-}
+const MIN_VISIBLE_RADIUS = 0.13
 
 function visualRadiusForProject(project: Project) {
-  const scaledRadius = radiusBySize[project.node.size] * NODE_VISUAL_SCALE
-  const visibilityFloor = minimumVisibleRadiusBySize[project.node.size]
+  // Radius is derived now (3.1); the visibility floor keeps the smallest nodes
+  // clickable rather than letting evidence-thin projects vanish.
+  const scaledRadius = layoutFor(project.id).radius * NODE_VISUAL_SCALE
 
-  return Math.max(scaledRadius, visibilityFloor)
+  return Math.max(scaledRadius, MIN_VISIBLE_RADIUS)
 }
 
 const colorByNodeKind: Record<
@@ -266,7 +252,8 @@ function createGlintMaterial(color: string) {
 }
 
 const sceneNodes: SceneNode[] = projects.map((project, clusterIndex) => {
-  const baseRadius = radiusBySize[project.node.size]
+  const derived = layoutFor(project.id)
+  const baseRadius = derived.radius
   const visualRadius = visualRadiusForProject(project)
   const nodeColor = colorByNodeKind[project.nodeKind]
   const geometry = new THREE.SphereGeometry(visualRadius, 48, 24)
@@ -318,7 +305,7 @@ const sceneNodes: SceneNode[] = projects.map((project, clusterIndex) => {
   corona.name = `EvidenceBoundNodeCorona:${project.id}`
   glint.name = `EvidenceBoundNodeGlint:${project.id}`
   hitMesh.name = `EvidenceBoundNodeHit:${project.id}`
-  mesh.position.set(project.node.position.x, project.node.position.y, project.node.position.z)
+  mesh.position.copy(derived.position)
   halo.position.copy(mesh.position)
   corona.position.copy(mesh.position)
   glint.position.copy(mesh.position)

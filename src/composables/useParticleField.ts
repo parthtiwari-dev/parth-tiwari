@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import fragmentShader from '@/shaders/particle.frag.glsl'
 import vertexShader from '@/shaders/particle.vert.glsl'
 import type { Project } from '@/types/project'
+import { layoutFor } from '@/data/layout'
 import { getQuality } from '@/utils/qualityTier'
 
 // Particle count now comes from the shared tier (PLAN.md 2.4). This used to be
@@ -27,38 +28,28 @@ function seededRandom(seed: string) {
   }
 }
 
-function clusterRadius(size: Project['node']['size']) {
-  const radiusBySize: Record<Project['node']['size'], number> = {
-    large: 1.55,
-    'medium-large': 1.3,
-    medium: 1.05,
-    'medium-small': 0.86,
-    small: 0.68,
-    tiny: 0.52,
-  }
-
-  return radiusBySize[size]
+/**
+ * The aura around a node scales with the node itself, which is now derived from
+ * evidence depth (PLAN.md 3.1). Previously a lookup keyed on a hand-picked
+ * t-shirt size that no longer exists.
+ */
+function clusterRadius(projectId: string) {
+  return 0.42 + layoutFor(projectId).radius * 1.9
 }
 
 function nodeClearanceRadius(project: Project) {
-  const radiusBySize: Record<Project['node']['size'], number> = {
-    large: 1.18,
-    'medium-large': 1.04,
-    medium: 0.9,
-    'medium-small': 0.86,
-    small: 0.84,
-    tiny: 0.8,
-  }
-
-  return radiusBySize[project.node.size]
+  // Keep ambient stars out of the node's own glow. Scales with the derived
+  // radius so an evidence-heavy node clears more space, as it should.
+  return 0.7 + layoutFor(project.id).radius * 1.4
 }
 
 function isInsideNodeClearance(x: number, y: number, z: number, projects: Project[]) {
   return projects.some((project) => {
     const clearance = nodeClearanceRadius(project)
-    const dx = x - project.node.position.x
-    const dy = y - project.node.position.y
-    const dz = z - project.node.position.z
+    const at = layoutFor(project.id).position
+    const dx = x - at.x
+    const dy = y - at.y
+    const dz = z - at.z
 
     return dx * dx + dy * dy + dz * dz < clearance * clearance
   })
@@ -155,15 +146,16 @@ function assignAuraParticle(
 ) {
   const clusterIndex = auraIndex % projects.length
   const project = projects[clusterIndex]
-  const radius = clusterRadius(project.node.size)
+  const at = layoutFor(project.id).position
+  const radius = clusterRadius(project.id)
   const theta = random() * Math.PI * 2
   const phi = Math.acos(2 * random() - 1)
   const spread = radius * (0.36 + random() * 1.04)
   const positionIndex = index * 3
 
-  positions[positionIndex]     = project.node.position.x + Math.sin(phi) * Math.cos(theta) * spread
-  positions[positionIndex + 1] = project.node.position.y + Math.sin(phi) * Math.sin(theta) * spread
-  positions[positionIndex + 2] = project.node.position.z + Math.cos(phi) * spread
+  positions[positionIndex]     = at.x + Math.sin(phi) * Math.cos(theta) * spread
+  positions[positionIndex + 1] = at.y + Math.sin(phi) * Math.sin(theta) * spread
+  positions[positionIndex + 2] = at.z + Math.cos(phi) * spread
   clusterIndices[index] = clusterIndex
 
   const tier = random()
