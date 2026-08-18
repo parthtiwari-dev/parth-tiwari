@@ -40,7 +40,18 @@ Before any commit that touches source:
 npm run typecheck && npm run build
 ```
 
-There is no test runner and no linter configured. Type checking and a clean build are the only automated gates, so they are not optional.
+There is no unit-test runner and no linter configured. Type checking and a clean build are the mandatory gates.
+
+**`npm run shots` is the third.** Playwright captures `/` and `/?plain=1` at 390, 430, 800, 834 and 1440 with the right device scale factor and a touch pointer, reporting page errors per viewport. Run it before and after anything touching the scene, layout or shaders:
+
+```bash
+npm run dev &                       # or vite preview
+node scripts/shots.mjs --tag before
+# ...change...
+node scripts/shots.mjs --tag after
+```
+
+800 is not padding — it is the documented 768–820 dead zone. The touch pointer is not either: `qualityTier.ts` branches on `(pointer: coarse)`, so a merely-narrow window takes the wrong branch and proves nothing.
 
 ---
 
@@ -156,9 +167,13 @@ The sky shader (`iridescent.frag.glsl`) is the largest GPU cost in the app: 7 `t
 
 Known leak to respect when editing `ConstellationNodes.vue`: `onUnmounted` disposes geometries and materials but **not the `PointLight`s**.
 
-`ConnectorLines` reallocates an array of objects every frame, triggering full Vue reactivity per rAF — for all pairs, even though lines only render on hover.
+`ConnectorLines` still reallocates an array of objects per tick, triggering Vue reactivity for all pairs even though lines only render on hover. It no longer *runs* while paused or off-screen (2.1), so the cost is bounded — but the allocation itself is unfixed.
 
-Four independent animation clocks currently run (GSAP ScrollTrigger, TresJS `useLoop`, raw rAF in DOM overlays, and a separate rAF in `MobileStarWorld`). `ScenePauseController` pauses only the TresJS one. Do not add a fifth.
+**Two clocks, and that is the budget.** `gsap.ticker` steps Lenis, ScrollTrigger, `ConnectorLines` and `NodeLabel`; the TresJS `useLoop` renders the scene and applies the camera. `MobileStarWorld`'s rAF went with the file (2.5), and the DOM overlays moved onto the ticker (2.1).
+
+**Do not add a third.** Anything needing a frame callback joins `gsap.ticker` — a raw `requestAnimationFrame` will drift against the scroll interpolation Lenis is doing on the ticker, and it will not stop when the scene pauses.
+
+`ScenePauseController` is fed by `useSceneVisibility`, so the scene stops when the section is off-screen, the tab is hidden, or an overlay is open.
 
 ---
 

@@ -14,10 +14,10 @@ const label = computed(() => {
 })
 
 const badgeClass = computed(() => ({
-  'text-[color:var(--gold)]': props.status === 'complete',
-  'text-[color:var(--teal-active)]': props.status === 'active',
-  'text-[color:var(--amber)]': props.status === 'in-progress',
-  'text-[color:var(--ice-faint)]': props.status === 'experience',
+  'text-gold': props.status === 'complete',
+  'text-teal-active': props.status === 'active',
+  'text-amber': props.status === 'in-progress',
+  'text-ice-faint': props.status === 'experience',
 }))
 </script>
 

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { gsap } from 'gsap'
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import type { TresContext } from '@tresjs/core'
 import * as THREE from 'three'
@@ -27,7 +28,7 @@ const labelPosition = ref({
 const projectedPosition = new THREE.Vector3()
 const cachedRect = { left: 0, top: 0, width: 0, height: 0 }
 
-let frameId = 0
+let running = false
 let rectDirty = true
 let measuredElement: HTMLCanvasElement | null = null
 
@@ -76,8 +77,8 @@ function setLabelPosition(x: number, y: number, visible: boolean) {
   }
 }
 
+// gsap.ticker, not a private rAF — one clock (PLAN.md 2.1).
 function updatePosition() {
-  frameId = requestAnimationFrame(updatePosition)
 
   const context = props.context
   const project = props.project
@@ -111,18 +112,15 @@ function updatePosition() {
 }
 
 function stopLoop() {
-  if (frameId) {
-    cancelAnimationFrame(frameId)
-    frameId = 0
-  }
+  if (!running) return
+  gsap.ticker.remove(updatePosition)
+  running = false
 }
 
 function startLoop() {
-  if (frameId) {
-    return
-  }
-
-  frameId = requestAnimationFrame(updatePosition)
+  if (running) return
+  gsap.ticker.add(updatePosition)
+  running = true
 }
 
 watch(
@@ -165,13 +163,13 @@ onUnmounted(() => {
       }"
     >
       <div class="node-label__card">
-        <p class="type-label text-[color:var(--gold)]">
+        <p class="type-label text-gold">
           {{ project.name }}
         </p>
-        <p class="type-body mt-1 text-[length:var(--text-sm)] leading-snug text-[color:var(--ice-muted)]">
+        <p class="type-body mt-1 text-[length:var(--text-sm)] leading-snug text-ice-muted">
           {{ project.tagline }}
         </p>
-        <p class="type-mono mt-3 text-[length:var(--text-xs)] uppercase tracking-[0.16em] text-[color:var(--ice-faint)]">
+        <p class="type-mono mt-3 text-[length:var(--text-xs)] uppercase tracking-[0.16em] text-ice-faint">
           {{ canOpen ? '[CLICK -> OPEN]' : nodeKindLabel[project.nodeKind] }}
         </p>
       </div>

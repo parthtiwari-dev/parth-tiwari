@@ -2,6 +2,50 @@
 @import url('https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-mono/style.css');
 @import "tailwindcss";
 @import "./styles/tokens.css";
+
+/*
+ * Tailwind v4 theme (PLAN.md 2.6).
+ *
+ * Every value here is a reference to a token in `tokens.css`, never a literal —
+ * so `bg-bg` and `var(--bg)` cannot drift apart, and there is still exactly one
+ * place a colour is defined.
+ *
+ * This exists to retire the escape-hatch form. Without a theme, using a token in
+ * a utility meant writing `text-[color:var(--ice)]`, which appeared 28 times and
+ * is easy to typo into silence — a misspelled custom property resolves to
+ * nothing and the element renders with an inherited colour rather than an error.
+ * `text-ice` either exists or fails the build.
+ */
+@theme {
+  --color-bg: var(--bg);
+  --color-bg-lift: var(--bg-lift);
+  --color-bg-nebula: var(--bg-nebula);
+
+  --color-ice: var(--ice);
+  --color-ice-muted: var(--ice-muted);
+  --color-ice-faint: var(--ice-faint);
+
+  --color-gold: var(--gold);
+  --color-gold-glow: var(--gold-glow);
+
+  --color-teal-deep: var(--teal-deep);
+  --color-teal-active: var(--teal-active);
+
+  --color-amber: var(--amber);
+  --color-amber-glow: var(--amber-glow);
+
+  --color-utility: var(--utility);
+  --color-utility-glow: var(--utility-glow);
+
+  --color-cold: var(--cold);
+  --color-cold-text: var(--cold-text);
+
+  --color-node-personal: var(--node-personal);
+  --color-node-work: var(--node-work);
+  --color-node-build: var(--node-build);
+  --color-node-utility: var(--node-utility);
+}
+
 @import "./styles/typography.css";
 @import "./styles/glass.css";
 @import "./styles/scrollbar.css";

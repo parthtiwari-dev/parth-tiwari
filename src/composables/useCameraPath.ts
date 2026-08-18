@@ -1,42 +1,38 @@
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import * as THREE from 'three'
 
-const CAMERA_POINTS = [
-  new THREE.Vector3(0, 6, 22),
-  new THREE.Vector3(1, 5.5, 18),
-  new THREE.Vector3(-1, 5, 15),
-  new THREE.Vector3(0, 2.4, 5.8),
-  new THREE.Vector3(0, 2.1, -7.2),
-]
+/**
+ * Scroll → a number. Nothing else (PLAN.md 2.2).
+ *
+ * This used to own the camera: GSAP's `onUpdate` wrote position and look-at
+ * directly, which meant the camera moved on the scroll event's schedule rather
+ * than the renderer's. Two clocks writing the same transform — a scroll burst
+ * could move the camera several times between two painted frames, and a paused
+ * render loop still paid for the work.
+ *
+ * Now this only advances `scrollProgress`, a plain mutable object that is
+ * deliberately not reactive: it changes every scroll tick, and pushing that
+ * through Vue's reactivity would schedule a component update per tick for a
+ * value only the render loop reads. `CameraPathController` samples it once per
+ * frame (`docs/PLAN.md` 2.1).
+ */
 
-const LOOK_AT_POINT = new THREE.Vector3(0, 0, 2)
-const FINAL_LOOK_AT_POINT = new THREE.Vector3(0, 0.7, 9)
-const TURN_START = 0.48
-const TURN_END = 0.82
+export interface ScrollProgress {
+  value: number
+}
 
-export function useCameraPath(camera: THREE.Camera | undefined) {
-  if (!camera || typeof window === 'undefined') {
-    return () => {}
-  }
+export function createScrollProgress(): ScrollProgress {
+  return { value: 0 }
+}
 
-  const activeCamera = camera
-  const path = new THREE.CatmullRomCurve3(CAMERA_POINTS, false, 'catmullrom', 0.5)
-  const cameraProgress = { value: 0 }
-  const lookTarget = new THREE.Vector3()
+/**
+ * Binds `progress.value` to scroll through `#constellation-section`.
+ * Returns a cleanup function.
+ */
+export function useCameraPath(progress: ScrollProgress): () => void {
+  if (typeof window === 'undefined') return () => {}
 
-  function updateCamera() {
-    const point = path.getPoint(cameraProgress.value)
-    const turnMix = THREE.MathUtils.smoothstep(cameraProgress.value, TURN_START, TURN_END)
-
-    activeCamera.position.copy(point)
-    lookTarget.copy(LOOK_AT_POINT).lerp(FINAL_LOOK_AT_POINT, turnMix)
-    activeCamera.lookAt(lookTarget)
-  }
-
-  updateCamera()
-
-  const tween = gsap.to(cameraProgress, {
+  const tween = gsap.to(progress, {
     value: 1,
     ease: 'none',
     scrollTrigger: {
@@ -45,16 +41,15 @@ export function useCameraPath(camera: THREE.Camera | undefined) {
       end: 'bottom bottom',
       scrub: 1.5,
     },
-    onUpdate: updateCamera,
   })
 
+  // The runway is sized in pixels after mount (2.7), so ScrollTrigger's cached
+  // start/end are stale until it re-measures.
   const refreshFrame = requestAnimationFrame(() => ScrollTrigger.refresh())
 
-  const cleanup = () => {
+  return () => {
     cancelAnimationFrame(refreshFrame)
     tween.scrollTrigger?.kill()
     tween.kill()
   }
-
-  return cleanup
 }

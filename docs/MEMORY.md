@@ -167,7 +167,7 @@ The current build gates `SceneRoot` with `v-if`, which stops it *mounting* — t
 - **No project link ships unless confirmed public-safe.** Private repos, company endpoints, internal URLs, unreviewed deployments stay out. An empty links panel is correct behavior.
 - **`?plain=1` stays complete.** It is the accessibility and SEO backstop. New content goes there too.
 - **Sound never autoplays.**
-- **Typecheck and build are the only automated gates.** There is no test runner and no linter, so those two are not optional.
+- **Typecheck, build, and `npm run shots`.** No unit-test runner and no linter, so these three are not optional. `shots` is Playwright across 390/430/800/834/1440 — it is the only thing that catches a viewport-specific regression, and it exists because a whole phase shipped once without mobile ever being rendered.
 
 ---
 

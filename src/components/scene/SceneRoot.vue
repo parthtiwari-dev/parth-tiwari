@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, shallowRef, ref } from 'vue'
+import { computed, defineAsyncComponent, onMounted, onUnmounted, shallowRef, ref } from 'vue'
 import { TresCanvas, type TresContext } from '@tresjs/core'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ACESFilmicToneMapping, SRGBColorSpace } from 'three'
@@ -12,6 +12,8 @@ import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
 import { useOverlayStore } from '@/stores/overlayStore'
 import { useProjectStore } from '@/stores/projectStore'
 import { getQuality } from '@/utils/qualityTier'
+// Async + debug-gated so Tweakpane never enters the production entry (2.8).
+const CameraAuthoring = defineAsyncComponent(() => import('@/components/scene/CameraAuthoring.vue'))
 import CameraPathController from '@/components/scene/CameraPathController.vue'
 import CameraLight from '@/components/scene/CameraLight.vue'
 import ConstellationNodes from '@/components/scene/ConstellationNodes.vue'
@@ -36,6 +38,8 @@ const particleHueOffset = ref(0)
 // On a low-tier handset [1, 1] is roughly half the fragments of [1, 1.25].
 // Four viewport-heights of scroll track, in pixels rather than vh so mobile
 // browser chrome cannot resize it mid-scroll (PLAN.md 2.7).
+const isDebug = typeof window !== 'undefined'
+  && new URLSearchParams(window.location.search).get('debug') === '1'
 const runwayHeight = useScrollRunway(4)
 // One signal decides whether the scene runs at all (PLAN.md 2.1). Off-screen or
 // a hidden tab now stops it, not just an open overlay.
@@ -130,7 +134,7 @@ onUnmounted(() => {
   >
     <div
       ref="viewportEl"
-      class="constellation-viewport sticky top-0 h-screen overflow-hidden bg-[color:var(--bg)]"
+      class="constellation-viewport sticky top-0 h-screen overflow-hidden bg-bg"
     >
       <TresCanvas
         class="absolute inset-0 z-0 h-full w-full"
@@ -152,6 +156,7 @@ onUnmounted(() => {
         <TresAmbientLight :intensity="0.12" />
         <ScenePauseController :paused="sceneAnimationPaused" />
         <CameraPathController />
+        <CameraAuthoring v-if="isDebug" />
         <CameraLight />
         <IridescentBackground />
         <ParticleField

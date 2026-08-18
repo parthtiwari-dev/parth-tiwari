@@ -22,7 +22,7 @@ This document describes **current state as of the redesign baseline** (commit `0
 | Types | TypeScript | 6.x | `vue-tsc -b --noEmit` |
 | Host | Vercel | — | Static SPA, project `parth-tiwari` |
 
-There is **no router**, **no test runner**, and **no lint config**. Navigation is entirely store-driven overlay state on a single page.
+There is **no router** and **no lint config**. There is no unit-test runner either, but `npm run shots` (Playwright, `scripts/shots.mjs`) is a real verification gate across five viewports. Navigation is entirely store-driven overlay state on a single page.
 
 ---
 
@@ -113,7 +113,7 @@ Scroll → GSAP ScrollTrigger → manual `camera.lookAt`.
 
 `CameraPathController.vue` captures `camera.value` **once** in `onMounted` — if TresJS swaps the camera, the path silently detaches.
 
-### Four independent animation clocks
+### ~~Four independent animation clocks~~ — two, as of 2026-08-18
 
 This is the single most important structural fact about the scene:
 

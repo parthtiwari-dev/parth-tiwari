@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { gsap } from 'gsap'
 import { onMounted, onUnmounted, ref, computed } from 'vue'
 import type { TresContext } from '@tresjs/core'
 import * as THREE from 'three'
@@ -78,7 +79,6 @@ const fromPoint = { x: 0, y: 0 }
 const toPoint = { x: 0, y: 0 }
 const cachedRect = { width: 0, height: 0 }
 
-let frameId = 0
 let rectDirty = true
 let measuredElement: HTMLCanvasElement | null = null
 
@@ -138,9 +138,12 @@ function deactivateAll() {
   })
 }
 
+// Driven by gsap.ticker, which also steps Lenis and ScrollTrigger, so scroll
+// interpolation and everything reading it advance on one clock (PLAN.md 2.1).
+// It used to self-schedule a rAF and early-return while paused, which kept a
+// frame callback alive for the whole session doing nothing — and this is the
+// loop ARCHITECTURE §11 flags for reallocating an array every frame.
 function updateLines() {
-  frameId = requestAnimationFrame(updateLines)
-
   if (props.paused) {
     return
   }
@@ -213,12 +216,12 @@ function updateLines() {
 
 onMounted(() => {
   window.addEventListener('resize', invalidateRect, { passive: true })
-  frameId = requestAnimationFrame(updateLines)
+  gsap.ticker.add(updateLines)
 })
 
 onUnmounted(() => {
   window.removeEventListener('resize', invalidateRect)
-  cancelAnimationFrame(frameId)
+  gsap.ticker.remove(updateLines)
 })
 </script>
 

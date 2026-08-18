@@ -11,6 +11,7 @@ import EvidenceOverlay from '@/components/evidence/EvidenceOverlay.vue'
 import EvidenceTopBar from '@/components/sections/EvidenceTopBar.vue'
 import HeroSection from '@/components/sections/HeroSection.vue'
 import MobileFooterDock from '@/components/sections/MobileFooterDock.vue'
+import { useSmoothScroll } from '@/composables/useSmoothScroll'
 import ProjectIndex from '@/components/sections/ProjectIndex.vue'
 import ProjectOverlay from '@/components/overlay/ProjectOverlay.vue'
 import PlainExperience from '@/components/sections/PlainExperience.vue'
@@ -32,6 +33,10 @@ import CopiedToast from '@/components/shared/CopiedToast.vue'
  * `v-if` below actually resolves true.
  */
 const SceneRoot = defineAsyncComponent(() => import('@/components/scene/SceneRoot.vue'))
+
+// Interpolated scroll, stepped from GSAP's ticker (PLAN.md 2.3). App-level
+// because it owns the window scroller, and a no-op under reduced motion.
+useSmoothScroll()
 
 const MOBILE_QUERY = '(max-width: 767px)'
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)'
@@ -116,7 +121,7 @@ onUnmounted(() => {
 
 <template>
   <main
-    class="min-h-screen text-[color:var(--ice)]"
+    class="min-h-screen text-ice"
     :class="{ 'plain-mode': isPlain }"
   >
     <SceneRoot v-if="showScene" />
@@ -159,13 +164,13 @@ onUnmounted(() => {
       class="phase-zero-console mx-auto flex min-h-[92vh] max-w-6xl flex-col justify-center gap-10 px-6 py-10"
     >
       <div class="grid gap-5">
-        <p class="type-mono text-[length:var(--text-xs)] uppercase tracking-[0.18em] text-[color:var(--gold)]">
+        <p class="type-mono text-[length:var(--text-xs)] uppercase tracking-[0.18em] text-gold">
           Phase 0 / Evidence console surface
         </p>
         <h1 class="type-display max-w-5xl leading-none tracking-[0.08em]">
           PARTH TIWARI
         </h1>
-        <p class="type-thesis max-w-3xl leading-tight text-[color:var(--ice-muted)]">
+        <p class="type-thesis max-w-3xl leading-tight text-ice-muted">
           Systems that act only after the evidence, schema, budget, and workflow state agree.
         </p>
       </div>
@@ -183,7 +188,7 @@ onUnmounted(() => {
             <div
               v-for="project in featuredProjects"
               :key="project.id"
-              class="grid gap-2 border-t border-[color:var(--ice-faint)] py-3 first:border-t-0 first:pt-0"
+              class="grid gap-2 border-t border-ice-faint py-3 first:border-t-0 first:pt-0"
             >
               <div class="flex flex-wrap items-center justify-between gap-3">
                 <h2 class="type-section text-[length:var(--text-xl)] not-italic">
@@ -191,7 +196,7 @@ onUnmounted(() => {
                 </h2>
                 <StatusBadge :status="project.status" />
               </div>
-              <p class="type-body text-[color:var(--ice-muted)]">
+              <p class="type-body text-ice-muted">
                 {{ project.tagline }}
               </p>
             </div>
@@ -207,7 +212,7 @@ onUnmounted(() => {
           />
 
           <div class="grid gap-3">
-            <p class="type-label text-[color:var(--ice-faint)]">
+            <p class="type-label text-ice-faint">
               Cost of Intelligence sliders
             </p>
             <div class="flex flex-wrap gap-2">

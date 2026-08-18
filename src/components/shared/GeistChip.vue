@@ -12,10 +12,10 @@ const props = withDefaults(
 )
 
 const chipClass = computed(() => ({
-  'border-[color:var(--ice-faint)] text-[color:var(--ice-muted)]': props.variant === 'default',
-  'border-[color:var(--gold)] text-[color:var(--gold)]': props.variant === 'gold',
-  'border-[color:var(--cold-text)] text-[color:var(--cold-text)]': props.variant === 'muted',
-  'border-[color:var(--teal-active)] text-[color:var(--ice)]': props.variant === 'status',
+  'border-ice-faint text-ice-muted': props.variant === 'default',
+  'border-gold text-gold': props.variant === 'gold',
+  'border-cold-text text-cold-text': props.variant === 'muted',
+  'border-teal-active text-ice': props.variant === 'status',
 }))
 </script>
 

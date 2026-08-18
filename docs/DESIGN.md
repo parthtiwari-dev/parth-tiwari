@@ -320,7 +320,7 @@ One detection feeds particle count, shader complexity, post-FX chain, and DPR. *
 
 ### One clock
 
-The current build runs four independent animation clocks and `ScenePauseController` pauses only one of them. Off-screen, the desktop scene keeps rendering bloom, particles and ten lights indefinitely, because `@tresjs/core` has no `visibilitychange` or `IntersectionObserver` pausing.
+**Resolved 2026-08-18.** Two clocks remain: `gsap.ticker` (Lenis, ScrollTrigger, the DOM overlays) and the TresJS render loop. `useSceneVisibility` supplies the `IntersectionObserver` and `visibilitychange` pausing `@tresjs/core` does not have, so off-screen or a hidden tab stops bloom, particles and the ten lights rather than rendering them into nothing.
 
 Target: **exactly one loop**, which stops when the scene is off-screen or the tab is hidden.
 
