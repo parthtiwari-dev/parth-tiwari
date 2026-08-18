@@ -162,6 +162,23 @@ Four independent animation clocks currently run (GSAP ScrollTrigger, TresJS `use
 
 ---
 
+## Keeping the plan honest
+
+**Tick items off `docs/PLAN.md` in the same commit that does the work.** Prefix the row with
+`✅` (done), `🟡` (partial — say what is left in the row itself), or `⬜` (open), and rewrite
+the row to describe what was actually built rather than what was proposed.
+
+This is not bookkeeping. `docs/` is the only memory that survives a session, and a plan that
+still describes finished work as pending is worse than no plan — the next session re-derives
+a decision that was already made, or re-does work that already shipped. Three separate stale
+claims in these docs (the nine-node shader cap, `beatmind` marked `deploy BLOCKED`, the
+untiered sky shader) each cost real time before they were caught.
+
+The same applies to the other docs: when a change makes a sentence in `ARCHITECTURE.md`,
+`AUDIT.md`, `DESIGN.md` or `MEMORY.md` untrue, fix it in that commit. If a claim cannot be
+verified, say so in the doc — an explicit "not verified on mobile" is worth more than
+silence.
+
 ## Git
 
 Work on feature branches. Commit messages are lowercase, imperative, prefixed by type (`feat:`, `fix:`, `polish:`, `docs:`, `chore:`) — match the existing history.

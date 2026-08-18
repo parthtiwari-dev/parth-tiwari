@@ -24,20 +24,20 @@ Independent of the redesign. Ships alone, immediately.
 
 | # | Task | Source |
 |---|---|---|
-| 0.1 | Lazy-load the 3D stack behind `defineAsyncComponent` so `?plain=1` and mobile stop downloading Three.js | AUDIT C1 |
-| 0.2 | Add a real, focusable DOM index of all nine projects on every breakpoint — fixes the desktop keyboard lockout | AUDIT C2 |
-| 0.3 | Focus trap + focus restoration in all four modal surfaces | AUDIT H3 |
-| 0.4 | Fix the double render loop in `MobileStarWorld` | AUDIT C3 |
-| 0.5 | Stop `ConnectorLines` and `NodeLabel` re-allocating and reading layout every frame | AUDIT H1, H2 |
-| 0.6 | Cancel the leaking rAF in `SceneRoot`; track the untracked timers in `HeroTagline`, `AboutSignal`, `useCameraPath` | AUDIT H4, M4 |
-| 0.7 | Fix the `vendor` chunk rule so `@vue/*` scoped paths actually match | AUDIT M3 |
-| 0.8 | `npm audit fix` — 4 high-severity transitive vulnerabilities | AUDIT |
-| 0.9 | Define the missing CSS variables (`--font-mono`, `--font-display`, `--font-body`, `--active-glow`) | AUDIT |
-| 0.10 | Add reduced-motion to the scene mount condition so it genuinely produces a static experience | AUDIT C1 |
-| 0.11 | Enable Vercel Web Analytics — currently returns no data, so no UX claim is measurable | AUDIT S9 |
-| 0.12 | Fix canonical URL mismatch (trailing slash), stale `sitemap.xml` lastmod, and add `?plain=1` to the sitemap | AUDIT S2, S3, S4 |
-| 0.13 | Add security headers to `vercel.json` | AUDIT S6 |
-| 0.14 | Delete dead code: `isOverlayReadyProject`, `CopiedToast`, 7 unused tokens. **Keep `sliderStore`** — it is revived in 3.8. | ARCHITECTURE §11 |
+| ✅ 0.1 | Lazy-load the 3D stack behind `defineAsyncComponent` so `?plain=1` and mobile stop downloading Three.js | AUDIT C1 |
+| ✅ 0.2 | Add a real, focusable DOM index of all nine projects on every breakpoint — fixes the desktop keyboard lockout | AUDIT C2 |
+| ✅ 0.3 | Focus trap + focus restoration in all four modal surfaces | AUDIT H3 |
+| ✅ 0.4 | Fix the double render loop in `MobileStarWorld` | AUDIT C3 |
+| ✅ 0.5 | Stop `ConnectorLines` and `NodeLabel` re-allocating and reading layout every frame | AUDIT H1, H2 |
+| ✅ 0.6 | Cancel the leaking rAF in `SceneRoot`; track the untracked timers in `HeroTagline`, `AboutSignal`, `useCameraPath` | AUDIT H4, M4 |
+| ✅ 0.7 | Fix the `vendor` chunk rule so `@vue/*` scoped paths actually match | AUDIT M3 |
+| ✅ 0.8 | `npm audit fix` — 4 high-severity transitive vulnerabilities | AUDIT |
+| ✅ 0.9 | Define the missing CSS variables (`--font-mono`, `--font-display`, `--font-body`, `--active-glow`) | AUDIT |
+| ✅ 0.10 | Add reduced-motion to the scene mount condition so it genuinely produces a static experience | AUDIT C1 |
+| ✅ 0.11 | Enable Vercel Web Analytics — currently returns no data, so no UX claim is measurable | AUDIT S9 |
+| ✅ 0.12 | Fix canonical URL mismatch (trailing slash), stale `sitemap.xml` lastmod, and add `?plain=1` to the sitemap | AUDIT S2, S3, S4 |
+| ✅ 0.13 | Add security headers to `vercel.json` | AUDIT S6 |
+| ✅ 0.14 | Delete dead code: `isOverlayReadyProject`, `CopiedToast`, 7 unused tokens. **Keep `sliderStore`** — it is revived in 3.8. | ARCHITECTURE §11 |
 
 **Exit:** typecheck and build clean; keyboard can reach every project; plain mode ships no WebGL engine.
 
@@ -49,13 +49,13 @@ Small, high-leverage, mostly data rather than code.
 
 | # | Task | State |
 |---|---|---|
-| 1.1 | Links resolved and verified. `vivid-alpha` and `www.beatmind.tech` linked. `support-core-nine` linked with its new node (1.4). **The Streamlit apps are deliberately NOT linked** — `upi-fraud-engine.streamlit.app` 303-redirects to `share.streamlit.io/-/auth/app`, so it fails the no-auth rule below; the same applies to the other hibernating Community Cloud apps. An empty links panel is correct behaviour. | done |
-| 1.2 | Leave `stick-and-dot-app` unlinked (owner exclusion) and `oncoverse` unlinked (deploy `ERROR`) | done |
-| 1.2a | ~~`beatmind` deploy `BLOCKED`~~ — **stale, corrected 2026-08-17.** Live on its own production domain (`www.beatmind.tech`, apex 308s to www) with production Clerk keys. Shipped as a node, linked. | done |
-| 1.3 | `started: 'YYYY-MM'` added to every project and to the `Project` type. **Derived from each repo's first commit**, not owner recall — one verifiable rule applied uniformly beats ten remembered dates, and it is documented as such on the type. Surfaced as text in plain mode; the orbital-angle encoding lands in 3.1. | done |
-| 1.4 | **Decided 2026-08-17 — both in.** `support-core`: a deployed streaming support agent built to a real company brief, the most commercially legible artifact in the set for the buyer in `PRD.md` §3. `tathya`: initially deferred on the argument that a civic tracker is not a capability the target buyer shops for — **that call was made without opening it and was wrong.** It is live and actively ingesting, with topics dated this month, a five-stage pipeline, a typed API, and a reader wired to real data with no mocks. *Alive* is rarer than *legible*, and a portfolio arguing for evidence should weight a running system above a marketable category. Both linked on their Vercel frontends; neither Render API is linked, because a free-tier endpoint with a 30–60s cold start is not a demo. | done |
-| 1.5 | Rename EVIDENCEBOUND → EPHEMERIS. Copy, metadata and `package.json` done. **Two `seededRandom('evidencebound-…')` seeds are deliberately frozen** and now carry comments saying so — they are retired brand names but load-bearing values, and renaming them reshuffles the entire star field. | done |
-| 1.6 | Project count derived from `projectStore.projectCount` everywhere — `EvidenceTopBar`, `MobileFooterDock`, `ProjectIndex`, `PlainExperience`, `BootSequence`. No literal count remains in prose or in the shader (see the `CLUSTER_COUNT` fix). | done |
+| ✅ 1.1 | Links resolved and verified. `vivid-alpha` and `www.beatmind.tech` linked. `support-core-nine` linked with its new node (1.4). **The Streamlit apps are deliberately NOT linked** — `upi-fraud-engine.streamlit.app` 303-redirects to `share.streamlit.io/-/auth/app`, so it fails the no-auth rule below; the same applies to the other hibernating Community Cloud apps. An empty links panel is correct behaviour. | done |
+| ✅ 1.2 | Leave `stick-and-dot-app` unlinked (owner exclusion) and `oncoverse` unlinked (deploy `ERROR`) | done |
+| ✅ 1.2a | ~~`beatmind` deploy `BLOCKED`~~ — **stale, corrected 2026-08-17.** Live on its own production domain (`www.beatmind.tech`, apex 308s to www) with production Clerk keys. Shipped as a node, linked. | done |
+| ✅ 1.3 | `started: 'YYYY-MM'` added to every project and to the `Project` type. **Derived from each repo's first commit**, not owner recall — one verifiable rule applied uniformly beats ten remembered dates, and it is documented as such on the type. Surfaced as text in plain mode; the orbital-angle encoding lands in 3.1. | done |
+| ✅ 1.4 | **Decided 2026-08-17 — both in.** `support-core`: a deployed streaming support agent built to a real company brief, the most commercially legible artifact in the set for the buyer in `PRD.md` §3. `tathya`: initially deferred on the argument that a civic tracker is not a capability the target buyer shops for — **that call was made without opening it and was wrong.** It is live and actively ingesting, with topics dated this month, a five-stage pipeline, a typed API, and a reader wired to real data with no mocks. *Alive* is rarer than *legible*, and a portfolio arguing for evidence should weight a running system above a marketable category. Both linked on their Vercel frontends; neither Render API is linked, because a free-tier endpoint with a 30–60s cold start is not a demo. | done |
+| ✅ 1.5 | Rename EVIDENCEBOUND → EPHEMERIS. Copy, metadata and `package.json` done. **Two `seededRandom('evidencebound-…')` seeds are deliberately frozen** and now carry comments saying so — they are retired brand names but load-bearing values, and renaming them reshuffles the entire star field. | done |
+| ✅ 1.6 | Project count derived from `projectStore.projectCount` everywhere — `EvidenceTopBar`, `MobileFooterDock`, `ProjectIndex`, `PlainExperience`, `BootSequence`. No literal count remains in prose or in the shader (see the `CLUSTER_COUNT` fix). | done |
 
 
 **Verification rule for any link, now and later:** resolve the real production alias from the Vercel project (never assume `<name>.vercel.app` — that check would have shipped a stranger's site), confirm it returns 200 without auth, confirm it belongs to this account.
@@ -93,17 +93,32 @@ The load-bearing rewrite. Nothing visual changes for the visitor; everything dow
 
 | # | Task | Source |
 |---|---|---|
-| 2.1 | **One clock.** Single render loop owning the scene; scroll and time are inputs. Stops when off-screen or tab hidden. | DESIGN §8 |
-| 2.2 | **Camera as data.** `{ scrollProgress, camera, target, activeNode }[]`; GSAP scrubs two plain mutable objects; render loop reads them. Scroll progress never touches reactive state. | DESIGN §4 |
-| 2.3 | Adopt **Lenis** for scroll, feeding ScrollTrigger | DESIGN §4 |
-| 2.4 | **Quality tier system — done 2026-08-18.** `utils/qualityTier.ts` detects once and feeds all four knobs: particle count (10k/5k/2k), DPR (`[1,1.25]`/`[1,1.1]`/`[1,1]`), sky-shader octaves via a `SKY_OCTAVES` define (3/2/1 → 63/42/21 `noise()` calls per fragment), and whether bloom mounts at all. Replaces three disagreeing decisions and one that was never made. `prefers-reduced-motion` forces low — a stated preference, not a capability guess. Handsets are detected by coarse pointer + narrow viewport rather than core count, because mid-range phones report 8 cores and then thermally throttle. | DESIGN §8 |
-| 2.5 | **One scene across all breakpoints.** Delete `MobileStarWorld`; remove the mount/unmount breakpoint switch. Kills the 768–820px dead zone and the WebGL context churn. | DESIGN §9 |
-| 2.6 | **Tokens as single source of truth** for DOM and WebGL. **Node colours done 2026-08-17** — `--node-personal/work/build/utility` added to `tokens.css`; `ConstellationNodes` resolves them via `utils/cssTokens.ts` with the tuned hex as fallback, and the legend swatches in `SceneRoot` read the same four. This fixed a real correctness bug: three of four swatches named a colour their star was not. Values were *promoted upward* from the scene rather than reconciled downward, so the emissive tuning is unchanged and there is no visual regression. **Still open:** extending the Tailwind theme and migrating the remaining raw literals. | ARCHITECTURE §7 |
-| 2.7 | Replace `vh`-based scroll runways with pixel offsets | DESIGN §9 |
-| 2.8 | Dev-only Tweakpane camera authoring GUI that dumps poses to JSON | DESIGN §4 |
-| 2.9 | Collapse the two overlay booleans into one state machine; scroll lock and Escape handled once | ARCHITECTURE §3 |
+| ⬜ 2.1 | **One clock.** Single render loop owning the scene; scroll and time are inputs. Stops when off-screen or tab hidden. | DESIGN §8 |
+| ⬜ 2.2 | **Camera as data.** `{ scrollProgress, camera, target, activeNode }[]`; GSAP scrubs two plain mutable objects; render loop reads them. Scroll progress never touches reactive state. | DESIGN §4 |
+| ⬜ 2.3 | Adopt **Lenis** for scroll, feeding ScrollTrigger | DESIGN §4 |
+| ✅ 2.4 | **Quality tier system — done 2026-08-18.** `utils/qualityTier.ts` detects once and feeds all four knobs: particle count (10k/5k/2k), DPR (`[1,1.25]`/`[1,1.1]`/`[1,1]`), sky-shader octaves via a `SKY_OCTAVES` define (3/2/1 → 63/42/21 `noise()` calls per fragment), and whether bloom mounts at all. Replaces three disagreeing decisions and one that was never made. `prefers-reduced-motion` forces low — a stated preference, not a capability guess. Handsets are detected by coarse pointer + narrow viewport rather than core count, because mid-range phones report 8 cores and then thermally throttle. | DESIGN §8 |
+| ✅ 2.5 | **One scene across all breakpoints — done 2026-08-18.** `MobileStarWorld.vue` deleted (383 lines); `showDesktopScene`/`showMobileScene` collapsed to one `showScene`. 2.4 was the enabler: the reason a separate 2D mobile scene existed was that the WebGL one was too expensive for a phone, and the tier now runs it at 2,000 particles / DPR 1 / 1 sky octave / no bloom. A cheaper version of the real thing beats a second thing that only resembles it. Kills the 768–820px dead zone, the WebGL context churn on resize, and one of the four animation clocks. **⚠️ Not verified on a real mobile viewport — see the note under this table.** | DESIGN §9 |
+| 🟡 2.6 | **Tokens as single source of truth** for DOM and WebGL. **Node colours done 2026-08-17** — `--node-personal/work/build/utility` added to `tokens.css`; `ConstellationNodes` resolves them via `utils/cssTokens.ts` with the tuned hex as fallback, and the legend swatches in `SceneRoot` read the same four. This fixed a real correctness bug: three of four swatches named a colour their star was not. Values were *promoted upward* from the scene rather than reconciled downward, so the emissive tuning is unchanged and there is no visual regression. **Still open:** extending the Tailwind theme and migrating the remaining raw literals. | ARCHITECTURE §7 |
+| ✅ 2.7 | **Done 2026-08-18.** `useScrollRunway.ts` resolves the constellation track in pixels and holds it stable across the resizes mobile browser chrome causes: a height change under 160px with the width unchanged is chrome and is ignored; a width change or a rotation re-measures. As `400vh` the track silently changed length mid-scroll and ScrollTrigger's `end: 'bottom bottom'` moved with it. The two remaining `vh` runways are behind `?debug=1`. | DESIGN §9 |
+| ⬜ 2.8 | Dev-only Tweakpane camera authoring GUI that dumps poses to JSON | DESIGN §4 |
+| ✅ 2.9 | **Done 2026-08-18.** Two fixes. **Mutual exclusion:** `overlayStore.open()` and `evidenceOverlayStore.open()` now close each other — nothing enforced this, so a project overlay could open on top of an evidence overlay leaving two dialogs stacked and two scroll locks held. **One Escape:** `useEscapeStack.ts` is a LIFO registry with a single capture-phase listener, replacing five independent `keydown` handlers that all fired at once and closed everything, in mount order rather than in the order the user opened things. The boot sequence stays out — its Escape means "skip", not "dismiss". Scroll lock was already correctly refcounted and was left alone. | ARCHITECTURE §3 |
 
 **Exit:** visually equivalent to today, running on one clock, one scene, derived tokens, at ≥ current frame rate on every tier.
+
+**Status 2026-08-18 — 2.4, 2.5, 2.7 and 2.9 done; 2.6 partial; 2.1, 2.2, 2.3, 2.8 open.**
+
+> ⚠️ **2.5 is unverified on a real mobile viewport.** `resize_window` via the browser
+> tooling moves the OS window but does not change the captured viewport, and Chrome on
+> Windows will not go below ~500px wide, so the narrow-width render was never actually
+> exercised. Typecheck and build are clean and the desktop scene is unchanged, but the
+> change most needing a phone is the one that could not be tested on one. **Check by hand
+> before pushing:** DevTools device toolbar at 390px, and the 768–820px band, looking for
+> the scene mounting at all, frame rate, and whether the mobile nav still sits correctly
+> over it.
+>
+> The remaining open items (2.1 one clock, 2.2 camera as data, 2.3 Lenis) are the parts of
+> this phase that most need that same verification, which is why they were not attempted
+> blind.
 
 ---
 

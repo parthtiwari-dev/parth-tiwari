@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { lockBodyScroll, unlockBodyScroll } from '@/composables/useBodyScrollLock'
+import { useEscapeStack } from '@/composables/useEscapeStack'
 import { useFocusTrap } from '@/composables/useFocusTrap'
 import { isResumeConfigured } from '@/data/resume'
 import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
@@ -89,14 +90,10 @@ function toggleMobileMenu() {
   isMobileMenuOpen.value = !isMobileMenuOpen.value
 }
 
+useEscapeStack(isMobileMenuOpen, () => closeMobileMenu())
+
 function closeMobileMenu() {
   isMobileMenuOpen.value = false
-}
-
-function handleKeydown(event: KeyboardEvent) {
-  if (event.key === 'Escape') {
-    closeMobileMenu()
-  }
 }
 
 function setBodyScrollLock(shouldLock: boolean) {
@@ -138,14 +135,12 @@ onMounted(() => {
   mobileMediaQuery.addEventListener('change', syncMobileViewport)
   window.addEventListener('scroll', updateScrollState, { passive: true })
   window.addEventListener('resize', updateScrollState, { passive: true })
-  window.addEventListener('keydown', handleKeydown)
 })
 
 onUnmounted(() => {
   mobileMediaQuery?.removeEventListener('change', syncMobileViewport)
   window.removeEventListener('scroll', updateScrollState)
   window.removeEventListener('resize', updateScrollState)
-  window.removeEventListener('keydown', handleKeydown)
   drawerFocusTrap.deactivate()
   setBodyScrollLock(false)
 })

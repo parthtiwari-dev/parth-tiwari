@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, nextTick, ref } from 'vue'
+import { computed, nextTick, ref } from 'vue'
+import { useEscapeStack } from '@/composables/useEscapeStack'
 import { useOverlayStore } from '@/stores/overlayStore'
 import { useProjectStore } from '@/stores/projectStore'
 import type { ProjectNodeKind, ProjectStatus, ProjectWeight } from '@/types/project'
@@ -92,19 +93,9 @@ function openProject(projectId: string) {
   overlayStore.open(projectId)
 }
 
-function handleKeydown(event: KeyboardEvent) {
-  if (event.key === 'Escape' && isOpen.value) {
-    closePanel()
-  }
-}
-
-onMounted(() => {
-  window.addEventListener('keydown', handleKeydown)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('keydown', handleKeydown)
-})
+// Escape goes through the shared stack so an overlay opened on top of this
+// drawer takes the key first (PLAN.md 2.9).
+useEscapeStack(isOpen, closePanel)
 </script>
 
 <template>

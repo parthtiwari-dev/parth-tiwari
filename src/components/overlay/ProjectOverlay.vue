@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { lockBodyScroll, unlockBodyScroll } from '@/composables/useBodyScrollLock'
+import { useEscapeStack } from '@/composables/useEscapeStack'
 import { useFocusTrap } from '@/composables/useFocusTrap'
 import { isOverlayReadyProject } from '@/data/overlayReady'
 import FilmStrip, { filmStripPanelCount } from '@/components/overlay/FilmStrip.vue'
@@ -31,6 +32,8 @@ const activeProject = computed(() => {
 function closeOverlay() {
   overlayStore.close()
 }
+
+useEscapeStack(computed(() => overlayStore.isOpen), closeOverlay)
 
 function nextPanel() {
   overlayStore.nextPanel()
@@ -73,11 +76,9 @@ function handleKeydown(event: KeyboardEvent) {
     return
   }
 
-  if (event.key === 'Escape') {
-    event.preventDefault()
-    closeOverlay()
-  }
-
+  // Escape is handled by useEscapeStack so the topmost surface wins (2.9).
+  // Arrows stay here: they are panel navigation, meaningless to any other
+  // surface, and only reachable while this overlay is the open one.
   if (event.key === 'ArrowRight') {
     event.preventDefault()
     nextPanel()

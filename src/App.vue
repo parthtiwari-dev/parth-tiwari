@@ -32,7 +32,6 @@ import CopiedToast from '@/components/shared/CopiedToast.vue'
  * `v-if` below actually resolves true.
  */
 const SceneRoot = defineAsyncComponent(() => import('@/components/scene/SceneRoot.vue'))
-const MobileStarWorld = defineAsyncComponent(() => import('@/components/scene/MobileStarWorld.vue'))
 
 const MOBILE_QUERY = '(max-width: 767px)'
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)'
@@ -60,20 +59,25 @@ const isAboutOverlayOpen = computed(() => (
 const experienceReady = computed(() => isPlain.value || bootComplete.value)
 
 /**
- * Reduced motion means no render loop at all, not a slower one (PRD M6).
- * `SceneRoot` drives an always-on TresJS loop, bloom, ten dynamic lights and a
- * particle field, so the honest fallback is to not mount it — which, now that
- * it is async, also means never fetching the chunk.
+ * One scene at every breakpoint (PLAN.md 2.5).
  *
- * `MobileStarWorld` stays: under reduced motion it paints one static frame and
- * never schedules a rAF, so it is already a genuinely static backdrop.
+ * There used to be two: `SceneRoot` above 820px and a separate 2D-canvas
+ * `MobileStarWorld` below it. That existed because the WebGL scene was too
+ * expensive for a phone — but it also meant mounting and unmounting a WebGL
+ * context on every resize across the boundary, two starfields that had to be
+ * kept looking alike by hand, and a dead zone between 768 and 820 where the
+ * desktop scene ran behind mobile navigation.
+ *
+ * The quality tier (2.4) solved the original problem properly: on a handset the
+ * one scene runs at 2,000 particles, DPR 1, a single sky octave and no bloom.
+ * A cheaper version of the real thing beats a second thing that only resembles
+ * it.
+ *
+ * Reduced motion still means no render loop at all rather than a slower one
+ * (PRD M6) — the honest fallback is not to mount it, which, now that it is
+ * async, also means never fetching the chunk.
  */
-const showDesktopScene = computed(() => (
-  !isPlain.value
-  && !isMobileViewport.value
-  && !prefersReducedMotion.value
-))
-const showMobileScene = computed(() => !isPlain.value && isMobileViewport.value)
+const showScene = computed(() => !isPlain.value && !prefersReducedMotion.value)
 const showMobileSystemsIndex = computed(() => (
   !isPlain.value
   && isMobileViewport.value
@@ -115,8 +119,7 @@ onUnmounted(() => {
     class="min-h-screen text-[color:var(--ice)]"
     :class="{ 'plain-mode': isPlain }"
   >
-    <SceneRoot v-if="showDesktopScene" />
-    <MobileStarWorld v-if="showMobileScene" />
+    <SceneRoot v-if="showScene" />
 
     <BootSequence
       v-if="!isPlain && !bootComplete"

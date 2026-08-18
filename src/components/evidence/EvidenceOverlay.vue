@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { lockBodyScroll, unlockBodyScroll } from '@/composables/useBodyScrollLock'
+import { useEscapeStack } from '@/composables/useEscapeStack'
 import { useFocusTrap } from '@/composables/useFocusTrap'
 import AboutSignal from '@/components/evidence/AboutSignal.vue'
 import CapabilityMap from '@/components/evidence/CapabilityMap.vue'
@@ -57,16 +58,7 @@ function closeOverlay() {
   evidenceOverlayStore.close()
 }
 
-function handleKeydown(event: KeyboardEvent) {
-  if (!evidenceOverlayStore.isOpen) {
-    return
-  }
-
-  if (event.key === 'Escape') {
-    event.preventDefault()
-    closeOverlay()
-  }
-}
+useEscapeStack(computed(() => evidenceOverlayStore.isOpen), closeOverlay)
 
 function setBodyScrollLock(shouldLock: boolean) {
   if (shouldLock && !hasScrollLock) {
@@ -112,12 +104,10 @@ onMounted(() => {
   mobileMediaQuery = window.matchMedia(MOBILE_QUERY)
   syncMobileViewport()
   mobileMediaQuery.addEventListener('change', syncMobileViewport)
-  window.addEventListener('keydown', handleKeydown)
 })
 
 onUnmounted(() => {
   mobileMediaQuery?.removeEventListener('change', syncMobileViewport)
-  window.removeEventListener('keydown', handleKeydown)
   setBodyScrollLock(false)
   focusTrap.deactivate()
 })

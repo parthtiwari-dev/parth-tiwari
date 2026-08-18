@@ -4,6 +4,7 @@ import { TresCanvas, type TresContext } from '@tresjs/core'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ACESFilmicToneMapping, SRGBColorSpace } from 'three'
 import { usePlainMode } from '@/composables/usePlainMode'
+import { useScrollRunway } from '@/composables/useScrollRunway'
 import { isOverlayReadyProject } from '@/data/overlayReady'
 import { projects } from '@/data/projects'
 import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
@@ -32,6 +33,9 @@ const selectedProjectId = ref<string | null>(null)
 const particleHueOffset = ref(0)
 // DPR comes from the shared quality tier (PLAN.md 2.4) rather than a constant.
 // On a low-tier handset [1, 1] is roughly half the fragments of [1, 1.25].
+// Four viewport-heights of scroll track, in pixels rather than vh so mobile
+// browser chrome cannot resize it mid-scroll (PLAN.md 2.7).
+const runwayHeight = useScrollRunway(4)
 const quality = getQuality()
 const dpr: [number, number] = quality.dpr
 const postFxEnabled = quality.postFx
@@ -110,7 +114,8 @@ onUnmounted(() => {
   <section
     v-if="!isPlain"
     id="constellation-section"
-    class="relative h-[400vh]"
+    class="relative"
+    :style="{ height: runwayHeight || '400vh' }"
     :data-selected-project-id="selectedProjectId ?? undefined"
   >
     <div class="constellation-viewport sticky top-0 h-screen overflow-hidden bg-[color:var(--bg)]">
