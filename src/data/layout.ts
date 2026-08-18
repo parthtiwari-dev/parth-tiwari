@@ -1,4 +1,3 @@
-import * as THREE from 'three'
 import { projects } from '@/data/projects'
 import type { Project } from '@/types/project'
 
@@ -24,6 +23,35 @@ import type { Project } from '@/types/project'
  * Adding a project adds a record. It does not touch this file.
  */
 
+/**
+ * A position, and nothing more.
+ *
+ * **This file deliberately does not import `three`.** It used to, for
+ * `Vector3` and three `MathUtils` helpers, and that single import cost every
+ * visitor 666 kB. `ProjectIndex` reads `layoutFor()` to order the rail, it is a
+ * static import in `App.vue`, so Three.js was pulled out of the lazy scene chunk
+ * and into the eager entry — 797 kB, loaded before first paint, in plain mode
+ * and on every phone. `?plain=1` was shipping the WebGL engine it exists to
+ * avoid (PLAN.md 0.1).
+ *
+ * The derivation never needed a `Vector3`. It needs three numbers and four lines
+ * of arithmetic. The scene side wraps these into real vectors where real vector
+ * maths is actually done (`data/nodeMotion.ts`).
+ *
+ * Keep it that way: anything imported here lands in the entry chunk. There is a
+ * budget assertion in `scripts/shots.mjs` that fails the check if it regrows.
+ */
+export interface Vec3 {
+  x: number
+  y: number
+  z: number
+}
+
+const degToRad = (degrees: number) => (degrees * Math.PI) / 180
+const lerp = (a: number, b: number, t: number) => a + (b - a) * t
+const clamp = (value: number, min: number, max: number) =>
+  Math.min(max, Math.max(min, value))
+
 /** Schematic radii. True-scale is 3.6; this is the compressed, legible mode. */
 const INNER_RADIUS = 4.2
 const OUTER_RADIUS = 13.5
@@ -43,7 +71,7 @@ const MAX_NODE_RADIUS = 0.36
 const MAX_HEIGHT = 1.6
 
 export interface DerivedNode {
-  position: THREE.Vector3
+  position: Vec3
   /** Sphere radius in world units. */
   radius: number
   /** Orbital angle in radians, for 3.2's per-instance shader phase. */
@@ -150,27 +178,27 @@ function derive(mode: ScaleMode): Map<string, DerivedNode> {
       ? index / lastIndex
       : (startedKey(project) - first) / span
 
-    const angle = THREE.MathUtils.degToRad(ARC_START_DEGREES + t * ARC_DEGREES)
+    const angle = degToRad(ARC_START_DEGREES + t * ARC_DEGREES)
 
     const orbitRadius = mode === 'schematic'
-      ? THREE.MathUtils.lerp(OUTER_RADIUS, INNER_RADIUS, maturity)
+      ? lerp(OUTER_RADIUS, INNER_RADIUS, maturity)
       // Raw maturity as an inverse distance: a barely-started thing really is
       // far away, and true mode declines to flatter it.
-      : THREE.MathUtils.clamp(INNER_RADIUS / Math.max(0.28, maturity), INNER_RADIUS, 34)
+      : clamp(INNER_RADIUS / Math.max(0.28, maturity), INNER_RADIUS, 34)
 
     const height = (project.origin === 'work' ? 1 : -1) * evidence * MAX_HEIGHT
 
     result.set(project.id, {
-      position: new THREE.Vector3(
-        Math.cos(angle) * orbitRadius,
-        height,
-        Math.sin(angle) * orbitRadius,
-      ),
-      radius: THREE.MathUtils.lerp(MIN_NODE_RADIUS, MAX_NODE_RADIUS, evidence),
+      position: {
+        x: Math.cos(angle) * orbitRadius,
+        y: height,
+        z: Math.sin(angle) * orbitRadius,
+      },
+      radius: lerp(MIN_NODE_RADIUS, MAX_NODE_RADIUS, evidence),
       angle,
       orbitRadius,
       speed: speedOf(project),
-      magnitude: THREE.MathUtils.clamp(evidence * 0.65 + maturity * 0.35, 0, 1),
+      magnitude: clamp(evidence * 0.65 + maturity * 0.35, 0, 1),
       maturity,
       evidence,
     })

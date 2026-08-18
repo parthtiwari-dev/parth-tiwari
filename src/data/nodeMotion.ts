@@ -16,6 +16,27 @@ import { layoutFor, type ScaleMode } from '@/data/layout'
  * the render loop reads them.
  */
 
+/**
+ * Resting positions as real vectors, keyed `mode:id`.
+ *
+ * `layout.ts` returns plain `{ x, y, z }` on purpose — importing `three` there
+ * dragged the whole engine into the eager entry chunk (see the note on `Vec3`).
+ * This is the boundary where the derivation becomes scene geometry, so the
+ * wrapping happens here, once, at module load rather than per frame.
+ */
+const resting = new Map<string, THREE.Vector3>()
+
+function restingVector(projectId: string, mode: ScaleMode): THREE.Vector3 {
+  const key = `${mode}:${projectId}`
+  let at = resting.get(key)
+  if (!at) {
+    const { position } = layoutFor(projectId, mode)
+    at = new THREE.Vector3(position.x, position.y, position.z)
+    resting.set(key, at)
+  }
+  return at
+}
+
 /** Current world position per project id. */
 const live = new Map<string, THREE.Vector3>()
 
@@ -58,7 +79,7 @@ export function advanceNodeMotion(delta: number, mode: ScaleMode): void {
     // Rigid translation, not a rotation of each particle about the origin. A
     // particle sitting slightly outside its node would sweep a larger arc and
     // the aura would visibly shear away over a minute or two.
-    offsets.get(project.id)!.subVectors(at, base.position)
+    offsets.get(project.id)!.subVectors(at, restingVector(project.id, mode))
   }
 }
 
@@ -69,7 +90,7 @@ export function advanceNodeMotion(delta: number, mode: ScaleMode): void {
 export function livePosition(projectId: string, mode: ScaleMode): THREE.Vector3 {
   const at = live.get(projectId)
   if (!at || (at.x === 0 && at.y === 0 && at.z === 0)) {
-    return layoutFor(projectId, mode).position
+    return restingVector(projectId, mode)
   }
   return at
 }
