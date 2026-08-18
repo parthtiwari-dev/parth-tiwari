@@ -165,17 +165,26 @@ Where the universe starts meaning something.
 | ⬜ 3.2 | Move orbital motion into the vertex shader — per-instance phase attribute, positions upload once. `DerivedNode.angle` and `.speed` exist for this; nothing consumes `speed` yet, so nodes are placed but static. |
 | ✅ 3.3 | **Done 2026-08-18.** All twelve coordinate triples and `size` values deleted, `NodeSize` removed from the type, `ConstellationNodeConfig` reduced to `relatedIds`. Five consumers repointed at `layoutFor()`: `ConstellationNodes`, `NodeLabel`, `ConnectorLines`, `useParticleField` (×2 — clearance and aura placement). |
 | ✅ 3.4 | **Done 2026-08-17**, ahead of the phase — it was blocking BeatMind from shipping as a node. `CLUSTER_COUNT` define + bounded loop; verified in-browser at ten, then twelve. |
-| 3.5 | Moons: `stack[]` rendered as satellites; shared technologies visibly recur |
-| 3.6 | Schematic ↔ true-scale toggle, with the current mode always labelled |
-| ⬜ 3.7 | Apparent magnitude derivation feeding label priority. `DerivedNode.magnitude` is computed (evidence 0.65 + maturity 0.35) but **nothing reads it yet** — forward-declared data, same as `CameraPose.activeNode`. |
-| 3.8 | **Cost of Intelligence** revived inside the Proof panel — drag a budget/latency slider, watch the metric respond. `sliderConfigs` and `sliderResponse` stop being dead data. |
+| ⬜ 3.5 | Moons: `stack[]` rendered as satellites; shared technologies visibly recur |
+| ✅ 3.6 | **Done 2026-08-18.** `layout.ts` derives both; a `scaleModeStore` keeps the scene, labels, connectors and particle field in agreement, because a disagreement here shows as labels floating off their nodes. Schematic evens the spacing and compresses radius; true spaces by elapsed months and lets radius spread by raw maturity. True looks worse — eight of twelve projects started within five months of each other — and shipping both with the mode disclosed in the legend is the only version that keeps faith with the thesis. `restack()` translates each aura particle by its cluster's delta rather than re-randomising, so a node keeps the same halo across the toggle. |
+| ✅ 3.7 | **Done 2026-08-18.** `ProjectIndex` is ordered by derived magnitude (evidence 0.65 + maturity 0.35) instead of by `weight` alone, so the rail and the scene agree about what matters. `weight` was judgement with no receipts; magnitude folds in maturity and what can be proven, so a flagship with an empty proof panel ranks below a major one that shipped with metrics. |
+| ✅ 3.8 | **Done 2026-08-18, with one deliberate inversion.** The configs hold one measured value, not a curve, so a slider that recomputed a number as you drag would be fabricating metrics — the thing `CLAUDE.md` forbids and the thing this site argues against. **So it refuses.** At the measured setting it shows the real figure; move away and it withdraws to "not measured here" and says why. `sliderResponse`'s effect on node colour and size is deliberately *not* wired: size encodes evidence depth now (3.1), and a slider changing it would break an encoding the legend explains. |
 
 **Exit:** adding a project requires adding a data record and nothing else.
 
-**Status 2026-08-18 — 3.1, 3.3, 3.4 done. The exit criterion is met.** A new project needs
+**Status 2026-08-18 — 3.1, 3.3, 3.4, 3.6, 3.7, 3.8 done. 3.2 and 3.5 open. The exit criterion is met.** A new project needs
 a record in `projects.ts`; position, size and speed follow from it, and the shader no longer
 has a project-count limit. 3.2, 3.5, 3.6, 3.7 and 3.8 remain — they add axes and controls,
 not the derivation itself.
+
+**A production bug the harness caught, unrelated to this phase.** Teaching
+`scripts/shots.mjs` to report failing request *URLs* rather than "Failed to load resource"
+surfaced `ERR_BLOCKED_BY_ORB` on the Geist Mono stylesheet — an `@import` to a jsDelivr path
+that **does not exist**. The package ships woff2 files but no `style.css` there, jsDelivr
+answered 404 as `text/plain` with `nosniff`, and Chrome blocked it. Geist Mono had therefore
+*never* loaded: every mono label, the legend, the overlay eyebrows and the boot sequence
+were silently rendering in a fallback. Now self-hosted from `public/fonts/`, because the
+typography is load-bearing identity and should not depend on a third party being reachable.
 
 **One thing the derivation exposed:** the hand-typed coordinates had been doing *framing*,
 not just placement — everything was clustered stage-right so the hero wordmark stayed clear.
