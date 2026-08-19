@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, defineAsyncComponent, onMounted, onUnmounted, shallowRef, ref, watch } from 'vue'
+import { computed, defineAsyncComponent, nextTick, onMounted, onUnmounted, shallowRef, ref, watch } from 'vue'
 import { TresCanvas, type TresContext } from '@tresjs/core'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ACESFilmicToneMapping, SRGBColorSpace } from 'three'
@@ -19,11 +19,12 @@ import NavigationController from '@/components/scene/NavigationController.vue'
 import NearFieldDust from '@/components/scene/NearFieldDust.vue'
 import NavigationControls from '@/components/scene/NavigationControls.vue'
 import { registerSceneRig } from '@/data/sceneRig'
+import { registerScreenRegion } from '@/data/screenRegions'
 import ConstellationNodes from '@/components/scene/ConstellationNodes.vue'
-import ConnectorLines from '@/components/scene/ConnectorLines.vue'
 import IridescentBackground from '@/components/scene/IridescentBackground.vue'
 import NodeLabels from '@/components/scene/NodeLabels.vue'
 import NodeMoons from '@/components/scene/NodeMoons.vue'
+import OrbitPaths from '@/components/scene/OrbitPaths.vue'
 import ParticleField from '@/components/scene/ParticleField.vue'
 import PostProcessing from '@/components/scene/PostProcessing.vue'
 import ScenePauseController from '@/components/scene/ScenePauseController.vue'
@@ -55,6 +56,8 @@ const sceneRig = computed<THREE.Object3D | null>(() => {
 watch(sceneRig, (rig) => registerSceneRig(rig), { immediate: true })
 
 const hoveredProjectId = ref<string | null>(null)
+/** Set while the pointer is resting on a label card; see `handleHover`. */
+const labelHeldProjectId = ref<string | null>(null)
 const hoveredClusterIndex = ref<number | null>(null)
 const selectedProjectId = ref<string | null>(null)
 const particleHueOffset = ref(0)
@@ -86,9 +89,9 @@ const sceneAnimationPaused = computed(() => {
   if (!sceneVisible.value) return true
   return overlayStore.isOpen || (evidenceOverlayStore.isOpen && evidenceOverlayStore.activeKind !== 'capability')
 })
-// ConnectorLines reallocates an array of objects every frame (ARCHITECTURE §11),
-// so it is the loop that most benefits from stopping when unseen.
-const connectorsPaused = computed(() => sceneInteractionPaused.value || !sceneVisible.value)
+// The DOM label projector runs a per-node raycast and screen projection every
+// tick, so it is the loop that most benefits from stopping when unseen.
+const overlaysPaused = computed(() => sceneInteractionPaused.value || !sceneVisible.value)
 
 function prefersReducedMotion() {
   return typeof window !== 'undefined'
@@ -100,6 +103,21 @@ function handleReady(context: TresContext) {
 }
 
 function handleHover(payload: { projectId: string | null; clusterIndex: number | null }) {
+  // A held card outranks the raycast (PLAN.md 8.10).
+  //
+  // The card covers the star it belongs to, so the pointer resting on the card
+  // is usually *not* over the mesh — `pick()` returns null and clears the
+  // hover, which unmounts the card, which un-hovers the pointer. `handleLabelHold`
+  // exists to stop that, but it was only setting the same ref the raycast
+  // writes, so whichever fired last won and the raycast fired last.
+  //
+  // This was latent behind a throttle that dropped every other `pointermove`
+  // (8.10): half the clearing picks never ran, so the card usually survived.
+  // Fixing the throttle made it deterministic, and `npm run labels` failed on
+  // "card survives the pointer moving onto it" — a defect the old throttle was
+  // hiding rather than one it was preventing.
+  if (labelHeldProjectId.value && payload.projectId === null) return
+
   hoveredProjectId.value = payload.projectId
   hoveredClusterIndex.value = payload.clusterIndex
 
@@ -117,7 +135,8 @@ function handleHover(payload: { projectId: string | null; clusterIndex: number |
  * flickers and can never be clicked.
  */
 function handleLabelHold(projectId: string | null) {
-  hoveredProjectId.value = projectId
+  labelHeldProjectId.value = projectId
+  if (projectId) hoveredProjectId.value = projectId
 }
 
 function handleSelect(projectId: string) {
@@ -128,7 +147,60 @@ function handleSelect(projectId: string) {
   overlayStore.open(projectId)
 }
 
+/**
+ * Publish the chrome boxes so labels can step around them (PLAN.md 8.12).
+ *
+ * Same mechanism the hero uses. The reveal frame is the composition's climax —
+ * every project on screen at once — and "Tathya" was rendering underneath the
+ * constellation index, which is the one moment where a buried name costs the
+ * most. The scale readout is registered for the same reason at the other
+ * corner.
+ *
+ * Measured from the live elements rather than derived from the Tailwind offsets
+ * they are positioned with: the legend's height depends on the project count
+ * and on whether the scale disclosure is expanded, neither of which this code
+ * should be re-deriving.
+ */
+const legendEl = ref<HTMLElement | null>(null)
+const navDockEl = ref<HTMLElement | null>(null)
+let regionObserver: ResizeObserver | null = null
+
+function publishChromeRegions() {
+  for (const [key, el] of [['legend', legendEl.value], ['nav-dock', navDockEl.value]] as const) {
+    if (!el || isPlain.value) {
+      registerScreenRegion(key, null)
+      continue
+    }
+    const box = el.getBoundingClientRect()
+    // A `display: none` element still has a rect of zeros; the legend is
+    // desktop-only, so on a phone this correctly registers nothing.
+    if (box.width <= 0 || box.height <= 0) {
+      registerScreenRegion(key, null)
+      continue
+    }
+    registerScreenRegion(key, {
+      left: box.left,
+      top: box.top,
+      right: box.right,
+      bottom: box.bottom,
+      opacity: 1,
+    })
+  }
+}
+
+watch([legendEl, navDockEl, () => evidenceOverlayStore.activeKind], () => {
+  void nextTick().then(publishChromeRegions)
+})
+
 onMounted(() => {
+  publishChromeRegions()
+  if (typeof ResizeObserver !== 'undefined') {
+    regionObserver = new ResizeObserver(publishChromeRegions)
+    if (legendEl.value) regionObserver.observe(legendEl.value)
+    if (navDockEl.value) regionObserver.observe(navDockEl.value)
+  }
+  window.addEventListener('resize', publishChromeRegions, { passive: true })
+
   if (isPlain.value || prefersReducedMotion()) {
     return
   }
@@ -148,6 +220,12 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
+  regionObserver?.disconnect()
+  regionObserver = null
+  window.removeEventListener('resize', publishChromeRegions)
+  registerScreenRegion('legend', null)
+  registerScreenRegion('nav-dock', null)
+
   if (hueMilestoneFrame) {
     cancelAnimationFrame(hueMilestoneFrame)
     hueMilestoneFrame = 0
@@ -174,7 +252,7 @@ onUnmounted(() => {
         class="absolute inset-0 z-0 h-full w-full"
         :alpha="true"
         :antialias="false"
-        clear-color="#010409"
+        clear-color="#000000"
         :dpr="dpr"
         :enable-provide-bridge="false"
         :output-color-space="SRGBColorSpace"
@@ -216,6 +294,14 @@ onUnmounted(() => {
           <CentreStar />
           <!-- Close to the viewer, so camera motion is legible at all (6.10). -->
           <NearFieldDust />
+          <!--
+            The path each node travels (8.2). Replaces `ConnectorLines`, which
+            drew a hand-typed relationship as a flat SVG hairline *above* the
+            canvas. This is real geometry inside the rig, so it takes
+            perspective and depth, and what it draws is a measurement: the
+            orbit `layout.ts` derived.
+          -->
+          <OrbitPaths />
           <ParticleField
             :hovered-cluster-index="hoveredClusterIndex"
             :hue-offset="particleHueOffset"
@@ -236,12 +322,6 @@ onUnmounted(() => {
         <PostProcessing v-if="postFxEnabled" />
       </TresCanvas>
 
-      <!-- Pass hoveredProjectId so lines only show for related nodes -->
-      <ConnectorLines
-        :context="tresContext"
-        :paused="connectorsPaused"
-        :hovered-project-id="hoveredProjectId"
-      />
       <!--
         One projector for every label (PLAN.md 5.1–5.4). It replaces two
         single-project `NodeLabel` instances: the name budget in `labelLod.ts` is
@@ -251,7 +331,7 @@ onUnmounted(() => {
       <NodeLabels
         :context="tresContext"
         :hovered-project-id="hoveredProjectId"
-        :paused="connectorsPaused"
+        :paused="overlaysPaused"
         @hold="handleLabelHold"
         @open="handleSelect"
       />
@@ -266,7 +346,7 @@ onUnmounted(() => {
         ended up underneath "Book a call". Booking is never the thing that moves
         (CLAUDE.md), so this does.
       -->
-      <div class="nav-controls-dock absolute bottom-20 left-16 z-30 md:bottom-6 md:left-6">
+      <div ref="navDockEl" class="nav-controls-dock absolute bottom-20 left-16 z-30 md:bottom-6 md:left-6">
         <NavigationControls />
       </div>
 
@@ -274,6 +354,7 @@ onUnmounted(() => {
            z-90) and would otherwise sit on top of this legend's last two lines. -->
       <div
         v-if="evidenceOverlayStore.activeKind !== 'about'"
+        ref="legendEl"
         class="constellation-index absolute bottom-24 right-6 z-30 hidden md:block"
       >
         <p class="constellation-index__title">CONSTELLATION INDEX</p>

@@ -274,14 +274,35 @@ onUnmounted(() => {
   outline-offset: -3px;
 }
 
+/**
+ * The scrim, and why it stopped destroying the glass (PLAN.md 8.7).
+ *
+ * `.glass-panel` asks for `backdrop-filter: blur(22px) saturate(1.55)`, and it
+ * was producing nothing, because this element sat underneath it at 0.64 alpha
+ * with a `blur(10px)` of its own. By the time the panel's filter sampled the
+ * page, the scene behind had already been flattened to a near-uniform dark
+ * field — and blurring something uniform returns the same uniform thing. The
+ * panel read as a dark rectangle because that is all it had to work with.
+ *
+ * So the scrim gives up its own blur entirely and drops to 0.38, which leaves
+ * the starfield sharp and structured directly behind the panel. The panel's
+ * blur then has real high-frequency detail to bend, which is the only thing
+ * that has ever made a glass surface read as glass. Air's reference in the set
+ * makes the same point from the other side: its glass feel comes from the
+ * photograph behind the surface, not from the filter on it.
+ *
+ * Text contrast is not carried by this layer — `.glass-panel` has its own
+ * background stack — and `npm run a11y` computes the real composited ratio for
+ * every visible text node, so a regression here fails a gate rather than
+ * shipping.
+ */
 .project-overlay__scrim {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 28% 12%, rgba(11, 182, 214, 0.12), transparent 36%),
-    radial-gradient(circle at 78% 12%, rgba(232, 200, 106, 0.08), transparent 34%),
-    rgba(0, 2, 5, 0.64);
-  backdrop-filter: blur(10px) saturate(1.08);
+    radial-gradient(circle at 28% 12%, rgba(11, 182, 214, 0.10), transparent 40%),
+    radial-gradient(circle at 78% 8%, rgba(232, 200, 106, 0.07), transparent 38%),
+    radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.58) 78%);
 }
 
 .project-overlay__shell {

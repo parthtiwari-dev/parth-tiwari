@@ -88,9 +88,22 @@ void main() {
   float verticalDepth = dir.y * 0.5 + 0.5;
   float screenVignette = 0.82 + 0.18 * smoothstep(-0.85, 0.65, dir.z);
 
-  vec3 zenithColor = vec3(0.000, 0.002, 0.010);
-  vec3 midColor = vec3(0.004, 0.013, 0.040);
-  vec3 nadirColor = vec3(0.001, 0.011, 0.028);
+  // Pure black is the canvas, not a dark navy (PLAN.md 8.4 — DESIGN.md §5).
+  //
+  // Sampled from the shipped build, the empty sky read rgb(1, 4, 13): blue was
+  // twelve times red, so what looked like "space" was a flat navy wash with a
+  // handful of dots on it. Real deep-field imagery is the other way round — the
+  // void is genuinely black and every bit of colour is concentrated *in* an
+  // object. The reference set says the same thing about the design side: Dala's
+  // rule is "pure #000000 as every background, never dark gray — the void is
+  // the design", and it works there because the thing inside the void is dense.
+  //
+  // So the gradient keeps only enough lift to stop the sky reading as a dead
+  // pixel area, and the colour budget moves to the nebula, the band and the
+  // stars, which are the things that have earned it.
+  vec3 zenithColor = vec3(0.000, 0.000, 0.001);
+  vec3 midColor = vec3(0.001, 0.003, 0.009);
+  vec3 nadirColor = vec3(0.000, 0.002, 0.006);
 
   vec3 color = mix(nadirColor, midColor, smoothstep(0.0, 0.58, verticalDepth));
   color = mix(color, zenithColor, smoothstep(0.58, 1.0, verticalDepth) * 0.72);
@@ -101,9 +114,13 @@ void main() {
   float cloudB = triFbm(nebulaP * 2.45 + vec3(-drift * 0.33, drift * 0.55, 9.2));
   float cloudC = triFbm(nebulaP * 4.2 + vec3(13.0, drift * 0.18, -drift * 0.16));
 
-  float softNebula = smoothstep(0.48, 0.78, cloudA) * 0.28;
-  softNebula += smoothstep(0.55, 0.84, cloudB) * 0.18;
-  softNebula += smoothstep(0.62, 0.88, cloudC) * 0.09;
+  // Thresholds pushed up and weights down: the nebula should be a few discrete
+  // clouds against black, not a haze covering the whole sphere. The old floor
+  // meant a majority of fragments picked up some blue, which is what turned the
+  // void navy.
+  float softNebula = smoothstep(0.62, 0.86, cloudA) * 0.20;
+  softNebula += smoothstep(0.68, 0.92, cloudB) * 0.13;
+  softNebula += smoothstep(0.74, 0.95, cloudC) * 0.06;
   softNebula *= 0.58 + 0.42 * screenVignette;
 
   vec3 blueNebula = vec3(0.004, 0.030, 0.125);
@@ -116,16 +133,21 @@ void main() {
   float milkyDust = triFbm(dir * 5.8 + vec3(drift * 0.14, -drift * 0.1, 4.2));
   float milkyFine = triFbm(dir * 13.0 + vec3(8.1, drift * 0.08, -drift * 0.05));
   float milkyIntensity = milkyBand * (0.26 + milkyDust * 0.42 + milkyFine * 0.16);
-  color += vec3(0.014, 0.035, 0.120) * milkyIntensity * 0.42;
+  // The band survives at close to full strength — it is a real structure and
+  // the one place a broad wash of colour is honest.
+  color += vec3(0.012, 0.030, 0.098) * milkyIntensity * 0.40;
 
   float auroraA = smoothstep(0.60, 0.86, triFbm(dir * 3.4 + vec3(drift * 0.25, 2.0, -drift * 0.12)));
   float auroraB = smoothstep(0.62, 0.88, triFbm(dir * 4.1 + vec3(7.0, -drift * 0.2, drift * 0.18)));
-  color += vec3(0.028, 0.135, 0.210) * auroraA * 0.026 * screenVignette;
-  color += vec3(0.020, 0.090, 0.185) * auroraB * 0.022 * screenVignette;
+  // Aurora halved. It was the least defensible term here — nothing in deep
+  // space glows like this, and it was spreading cyan across fragments that
+  // should have been black.
+  color += vec3(0.028, 0.135, 0.210) * auroraA * 0.013 * screenVignette;
+  color += vec3(0.020, 0.090, 0.185) * auroraB * 0.011 * screenVignette;
 
   float hue = mod((uHueShift / 360.0) + (uTime * 0.003) + (dir.x * 0.015) + (dir.z * 0.01), 1.0);
   vec3 iridescent = hsl2rgb(vec3(hue, 0.05, 0.04));
-  color += iridescent * (0.003 + verticalDepth * 0.006) * screenVignette;
+  color += iridescent * (0.001 + verticalDepth * 0.002) * screenVignette;
 
   float s1 = directionStars(dir, 42.0, 0.902, vec2(0.13, 0.27)) * 0.18;
   float s2 = directionStars(dir, 58.0, 0.914, vec2(0.67, 0.41)) * 0.24;
@@ -140,7 +162,10 @@ void main() {
   vec3 coldStar = vec3(0.62, 0.80, 1.00);
   vec3 warmStar = vec3(1.00, 0.88, 0.62);
   vec3 starColor = mix(coldStar, warmStar, step(0.972, cellSeed));
-  color += starColor * allStars * mix(0.20, 0.48, screenVignette);
+  // Brighter, because they are now doing the work the wash used to. A real
+  // long exposure is mostly black with a lot of very small very bright points,
+  // and that contrast is the thing that reads as depth.
+  color += starColor * allStars * mix(0.34, 0.78, screenVignette);
 
   // Dither (PLAN.md 6.9 — DESIGN.md §5). Deep space is nothing but dark
   // gradients, and 8-bit output bands across every one of them.

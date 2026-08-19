@@ -47,12 +47,15 @@ Twelve projects. Seven axes. Nothing arbitrary.
 | **Orbital radius** | Maturity | `status` + whether links resolve to something live | Closeness to the star reads instinctively as "finished, mine, real." Shipped work sits close; exploration sits far. |
 | **Body size** | Evidence depth | `weight` + count of metrics, milestones, artifacts | Size is the most immediately comparable visual property. It should carry the thing the site is about: how much can actually be proven. |
 | **Orbital angle** | Chronology | project date | Position around the ring is a natural clock. Reading the system clockwise reads the career. |
-| **Orbital speed** | Recency of contact | `status` | Active work visibly moves. A dormant project is nearly still. Motion means attention, which is true. |
+| **Orbital speed** | Recency of contact | `status` | Active work visibly moves. A dormant project is nearly still. Motion means attention, which is true. **Played back at 4× (`MOTION_SCALE`, PLAN.md 8.3)** — the raw values are one revolution per 114 seconds at the fastest and per 26 minutes at the slowest, so the encoding was true and invisible. One scalar for every node, so the 13.75:1 ratio the data states is untouched. |
+| **Orbital path** | The orbit itself | `orbitRadius`, brightest at the resting angle | A ring makes the *path* legible when the motion is too slow to be. It is brightest where `started` put the node, so the gap between the glow and the star is elapsed motion made visible. It replaced the connector lines (8.2), which drew a hand-typed judgement instead of a measurement. |
 | **Moons** | Stack | `stack[]` | Technologies orbit the project that uses them. A shared technology visibly recurs across systems. |
 | **Cluster / arm** | Domain | capability matching | RAG, agents, diffusion, fraud ML, medical resolve as regions at galaxy scale. |
 | **Apparent magnitude** | Label priority | derived composite | Governs when a label appears. See §6. |
 
 **Positions are computed at runtime from data.** Adding a project means adding a record, not typing coordinates. The hard limit that used to be baked into `particle.vert.glsl` — `uniform float uClusterBrightness[9]`, which broke silently at ten projects — was removed on 2026-08-17; the array is now sized from `projects.length` via a `CLUSTER_COUNT` define. **Node positions are derived as of 2026-08-18** — see `data/layout.ts`. What framing the shot now falls to the camera: pose 0 looks left of centre so the ring composes clear of the wordmark, a job the hand-placed coordinates used to do implicitly by clustering everything stage-right.
+
+**And the framing of the reveal is derived too** (8.13 / 4.9). `constellationExtent()` reports the radius that has to fit; the controller pushes the camera out along the posed direction until it does. The binding constraint is the *narrower* screen axis, which on a portrait phone is the horizontal one — a pose typed for a 16:10 desktop frames a third of the work at 390×844, which is what the old one did. Add a thirteenth project and the shot follows it.
 
 ### The honesty problem, and the honest solution
 
@@ -190,6 +193,26 @@ A dev-only GUI (Tweakpane) lets a pose be flown to and dumped as JSON per node. 
 
 ## 5. Look
 
+### The void is the design
+
+`--bg` is **`#000000`**. Not near-black, not a very dark navy — black (PLAN.md 8.4).
+
+This was measured before it was decided. A capture of the shipped build sampled `rgb(1, 4, 13)`
+in the empty sky: blue twelve times red, because `#010409` composited with a nebula wash whose
+threshold was low enough that most fragments picked up some of it. What read as "space" was a
+flat navy field with a handful of dots on it.
+
+Two arguments converge on black. The physical one: real deep-field imagery is genuinely black,
+with every bit of colour concentrated *in* an object — the void is not a place light comes from.
+The design one, from the reference set: *"maintain pure #000000 as every background, never dark
+gray — the void is the design"*, and it works there because the thing inside the void is dense
+and large. That second clause is the load-bearing half. A black frame with 1% ink is not
+minimalism, it is an empty frame; the constellation has to be the anchor, which is what the
+orbit rings, the corona and the brighter stars are for.
+
+So the colour budget moved: out of the ambient wash, into the nebula clouds, the galactic band
+and the stars — the things that have earned it.
+
 ### Palette
 
 The existing CRYO-GOLD identity is genuinely good and survives. What changes is that it becomes **the single source of truth for both DOM and WebGL** — currently the 3D layer hardcodes eight hexes that do not match the legend swatches describing them.
@@ -198,7 +221,37 @@ Star color is not authored per node. Following 100,000 Stars: each node carries 
 
 ### Materials
 
-**Iridescent thin-film shading on the center star.** Dogstudio's KIKK 2016 bubble is the reference — it is the most "premium and otherworldly" material available for a sphere and it is cheap.
+**~~Iridescent thin-film shading on the center star.~~ Superseded 2026-08-19 (PLAN.md 8.5).**
+Dogstudio's KIKK 2016 bubble was the reference and it was the wrong reference. The shader was
+genuinely the physics — three cosines and a Fresnel term, correct thin-film interference — and
+it produced an object that read as a **flat green disc** at distance, easily mistaken for one of
+the project nodes it is supposed to be the origin of, and as a **ball of concentric rainbow
+rings** when the camera flew past it. Both are in the frame captures; neither is a star.
+
+The replacement is what actually makes a photographed star look like one:
+
+- **Limb darkening** — the disc is brightest dead centre and falls off toward the edge, because
+  near the limb you are looking through more of a cooler outer atmosphere. `pow(facing, 0.36)`.
+  Near 1.0 the sphere reads as a flat card; much above 0.5 it collapses to a point with a dark ring.
+- **A colour temperature ramp** from hot white in the core to `--gold` at the edge, so the star
+  and its legend swatch cannot disagree.
+- **Granulation** — convection cells, sampled in normal space so they tumble with the body
+  rather than swimming across it. Very low contrast; it exists to stop the gradient reading as a
+  CSS `radial-gradient`.
+- **A corona.** A star's light is mostly *outside* its silhouette, and no amount of work on the
+  disc substitutes for that. A camera-facing billboard with two summed falloffs — a tight core
+  that sells the overexposure, a wide faint halo that lets you find the star from across the
+  constellation.
+- **Opaque, and depth-writing.** The old material was transparent with `depthWrite: false`, so
+  the particle field showed straight through it. A body you can see stars behind is not a body.
+
+The output deliberately exceeds 1.0 in the core: the scene renders to a half-float buffer with a
+bloom pass, so values above the threshold bleed. That is how a real overexposed highlight
+behaves, and the only way a 0.42-unit sphere reads as something with a furnace inside it.
+
+All that survives of the thin-film idea is a chromatic fringe confined to the outer few percent
+of the disc — a hint of spectral separation where the sightline grazes the atmosphere. The
+moment it spreads inward, the beach ball is back.
 
 **Matcaps for project bodies.** Bruno Simon's portfolio has *no lights at all* — matcaps everywhere, with faked bounce light from vertex distance to ground × `dot(abs(normal), up)`. This is directly relevant: the current build runs **10 dynamic PointLights** through `MeshStandardMaterial`, meaning the PBR fragment shader loops over all ten for every fragment. That is the single largest mid-tier GPU cost in the scene, and matcaps eliminate it entirely while *increasing* art direction control.
 
@@ -209,8 +262,8 @@ Star color is not authored per node. Following 100,000 Stars: each node carries 
 //    Deep space is nothing but dark gradients. Without this it bands on every display.
 color += (hash(gl_FragCoord.xy) - 0.5) * 0.0045;
 
-// 2. fwidth() anti-aliasing on orbit rings and connector lines,
-//    so they hold 1px at every zoom level across the whole scale range.
+// 2. fwidth() anti-aliasing on orbit rings, so they hold 1px at every zoom
+//    level across the whole scale range. (Connector lines are gone — 8.2.)
 float aa = fwidth(dist);
 float line = smoothstep(w + aa, w - aa, dist);
 ```

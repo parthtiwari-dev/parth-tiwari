@@ -350,8 +350,24 @@ onUnmounted(() => {
     grid-template-columns: 1fr;
   }
 
+  /* 18rem is 288px, which on a 390px phone is three-quarters of the screen
+     width given to a dial whose entire payload is a one-digit number. Measured
+     on a real capture, the header, the panel nav and this ring together used
+     roughly 870 of 1150px before a single sentence appeared. 9.5rem still reads
+     as a gauge and leaves the panel's actual content above the fold. */
   .proof-orbit {
-    max-width: 18rem;
+    max-width: 9.5rem;
+    justify-self: center;
+    box-shadow:
+      inset 0 0 2rem rgb(0 0 0 / 0.38),
+      0 0 3rem color-mix(in srgb, var(--gold) 12%, transparent);
+  }
+
+  /* The numeral is `clamp(4rem, 8vw, 7rem)`, so on a phone it took the 4rem
+     floor — 64px inside a 152px ring, which put it under the label text.
+     Scaled to the ring rather than to the viewport. */
+  .proof-orbit strong {
+    font-size: 3rem;
   }
 
   .milestone-list section {

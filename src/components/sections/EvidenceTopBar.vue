@@ -270,6 +270,34 @@ onUnmounted(() => {
   font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
 }
 
+/*
+ * A scrim, so the page can pass underneath (PLAN.md 8.9).
+ *
+ * The bar floats with no background of its own, which is right over the scene
+ * and wrong over the DOM sections below it — captured at the foot of the page,
+ * the services heading and the contact copy ran straight through the nav pills,
+ * two sets of words occupying the same pixels. Padding the sections cannot fix
+ * it: the bar is fixed, so content passes under it at *some* scroll position no
+ * matter where it starts.
+ *
+ * A masked gradient rather than a filled bar. It keeps the floating look the
+ * pills are designed for while giving anything scrolling beneath somewhere to
+ * fade out, and the mask means there is no hard edge where the scrim stops.
+ */
+.evidence-top-bar::before {
+  position: absolute;
+  inset: -1rem -1.5rem -2.5rem;
+  z-index: -1;
+  pointer-events: none;
+  content: '';
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--bg) 92%, transparent),
+    color-mix(in srgb, var(--bg) 62%, transparent) 52%,
+    transparent
+  );
+}
+
 .evidence-top-bar__brand {
   margin: 0;
   color: var(--ice-muted);

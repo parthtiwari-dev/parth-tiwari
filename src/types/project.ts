@@ -129,19 +129,29 @@ export interface ProjectLinks {
 }
 
 /**
- * What the constellation still needs stated by hand.
+ * Nothing about a node is stated by hand any more.
  *
- * `position` and `size` used to live here as typed coordinates and a t-shirt
- * size. Both are derived now (`data/layout.ts`, PLAN.md 3.1/3.3) — radius from
- * maturity, angle from `started`, size from evidence depth. A portfolio arguing
- * that systems should act only on evidence cannot place its own stars by hand.
+ * `position` and `size` went first (PLAN.md 3.1/3.3) — radius from maturity,
+ * angle from `started`, size from evidence depth. `relatedIds` was the last
+ * survivor, and the comment that used to sit here said the quiet part out loud:
+ * "a relationship between two projects is a judgement, not a measurement.
+ * Nothing in the data implies it."
  *
- * `relatedIds` stays because a relationship between two projects is a judgement,
- * not a measurement. Nothing in the data implies it.
+ * It was drawn as a flat SVG hairline pinned above the canvas at `z-20` —
+ * constant 1.1px width and 0.32 opacity from a node four units away to one
+ * twenty units away, unoccluded by the star it crossed, sliding across the
+ * frame while everything else parallaxed. A 2D overlay pasted onto a 3D scene
+ * reads as exactly that, and the thing it was drawing had no stated meaning to
+ * justify the cost.
+ *
+ * `ConstellationNodes.vue` draws the orbit each node actually travels instead.
+ * A ring is a measurement — it is the path, at the radius the derivation gave
+ * it — and it lives inside the rig, so it takes perspective and depth like
+ * everything else in the world.
+ *
+ * A portfolio arguing that systems should act only on evidence cannot place its
+ * own stars by hand, and cannot draw its own relationships by hand either.
  */
-export interface ConstellationNodeConfig {
-  relatedIds: string[]
-}
 
 export interface SliderResponse {
   sliderId: SliderKey
@@ -196,6 +206,5 @@ export interface Project {
   links: ProjectLinks
   panels: ProjectPanels
   artifacts?: ProjectArtifact[]
-  node: ConstellationNodeConfig
   sliderResponse?: SliderResponse
 }

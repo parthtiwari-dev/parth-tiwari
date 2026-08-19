@@ -161,5 +161,10 @@ vite.config.ts.timestamp-*
 .design-pass/
 inbox/refero/
 .shots/
-*-check.mjs
 .frames/
+
+# `*-check.mjs` used to be ignored here, which meant the five behaviour gates
+# `package.json` calls — nav, labels, craft, a11y, perf — existed only on
+# whatever machine last wrote them. `npm run nav` failed for anyone who cloned,
+# CLAUDE.md described mandatory gates that were not in the repository, and a
+# cloud session's container is reclaimed on idle. They are committed now.

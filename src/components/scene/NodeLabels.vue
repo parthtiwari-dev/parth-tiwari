@@ -26,6 +26,7 @@ import * as THREE from 'three'
 import type { TresContext } from '@tresjs/core'
 import { projects } from '@/data/projects'
 import { decideLabels, type LabelCandidate, type LabelLod } from '@/data/labelLod'
+import { overlapsChrome } from '@/data/screenRegions'
 import { layoutFor } from '@/data/layout'
 import { livePosition } from '@/data/nodeMotion'
 import { getNodeMeshes } from '@/data/nodeMeshes'
@@ -63,6 +64,9 @@ const navigation = useNavigationStore()
  */
 const pinnedId = ref<string | null>(null)
 
+/** Widest a name gets, near enough. Past this from the right edge, flip it. */
+const FLIP_MARGIN = 190
+
 interface LabelView {
   id: string
   name: string
@@ -81,6 +85,8 @@ interface LabelView {
    * turned 4.6 back into an unexplained second name floating in the scene.
    */
   comparison: boolean
+  /** Draw to the left of the star, because there is no room on the right. */
+  flipped: boolean
 }
 
 const labels = ref<LabelView[]>(
@@ -93,6 +99,7 @@ const labels = ref<LabelView[]>(
     lod: 'hidden' as LabelLod,
     clarity: 1,
     comparison: false,
+    flipped: false,
   })),
 )
 
@@ -209,19 +216,54 @@ function update() {
     })
   }
 
+  const candidateFor = (id: string) => candidates.find((c) => c.projectId === id)
+
   for (const decision of decideLabels(candidates)) {
     const label = byId.get(decision.projectId)
     const at = screen.get(decision.projectId)
     if (!label || !at) continue
 
-    if (label.lod !== decision.lod) label.lod = decision.lod
+    /*
+     * Step around the hero copy (PLAN.md 8.12).
+     *
+     * The hero is `position: fixed` over the canvas and lays out in the same
+     * screen coordinates these labels do, so on a 390px phone three names were
+     * printing straight through "PARTH TIWARI" and the thesis line. Demote to a
+     * dot rather than hide: the star is still the invitation to scroll and
+     * removing it entirely would leave the arrival frame emptier than it needs
+     * to be — it is the *name* that collides, not the point.
+     *
+     * A pointed-at or focused label is exempt. Those are the visitor asking a
+     * direct question, and the answer outranks the composition.
+     */
+    let lod = decision.lod
+    if (
+      (lod === 'name' || lod === 'card')
+      && !candidateFor(decision.projectId)?.hovered
+      && navigation.focusedProjectId !== decision.projectId
+      && overlapsChrome(at.x, at.y)
+    ) {
+      lod = 'dot'
+    }
+
+    if (label.lod !== lod) label.lod = lod
     const isComparison = comparisonId === decision.projectId
     if (label.comparison !== isComparison) label.comparison = isComparison
-    if (decision.lod === 'hidden') continue
+    if (lod === 'hidden') continue
 
     if (pinnedId.value !== decision.projectId) {
       if (label.x !== at.x) label.x = at.x
       if (label.y !== at.y) label.y = at.y
+      /*
+       * Names are drawn to the right of their star, so one near the right edge
+       * ran off screen — "Stick and Dot" lost its last three characters on a
+       * 390px capture. Flip the whole label to the other side when there is not
+       * room, which is what a star chart does and what the existing off-screen
+       * cull (which only catches labels whose *anchor* has left the frame)
+       * cannot do on its own.
+       */
+      const flipped = at.x > rect.width + rect.left - FLIP_MARGIN
+      if (label.flipped !== flipped) label.flipped = flipped
     }
 
     // Only pay for the raycast on labels that are actually drawn.
@@ -273,10 +315,12 @@ watch(() => props.paused, (paused) => (paused ? stop() : start()))
     <div
       v-for="label in visibleLabels"
       :key="label.id"
+      :data-project-id="label.id"
       class="node-labels__item"
       :class="[
         `node-labels__item--${label.lod}`,
         { 'node-labels__item--comparison': label.comparison },
+        { 'node-labels__item--flipped': label.flipped },
       ]"
       :style="{
         transform: `translate3d(${label.x}px, ${label.y}px, 0)`,
@@ -322,6 +366,21 @@ watch(() => props.paused, (paused) => (paused ? stop() : start()))
   /* Fade, never `display: none` (DESIGN.md §6) — including the occlusion fade,
      which changes every time a star passes behind another. */
   transition: opacity 220ms ease;
+}
+
+/*
+ * Mirrored about the anchor, so the text runs back toward the middle of the
+ * frame instead of off the edge.
+ *
+ * `translateX(-100%)` on the *child* rather than a second transform on the
+ * item: the item's transform carries the projected position and is rewritten
+ * every frame, so anything composed into it would have to be recomputed in JS
+ * for what is a purely presentational offset.
+ */
+.node-labels__item--flipped .node-labels__name,
+.node-labels__item--flipped .node-labels__card {
+  transform: translateX(-100%);
+  text-align: right;
 }
 
 .node-labels__dot {

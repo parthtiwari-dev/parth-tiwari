@@ -177,9 +177,6 @@ export const projects: Project[] = [
         ],
       },
     },
-    node: {
-      relatedIds: ['stick-and-dot'],
-    },
   },
   {
     id: 'secondself',
@@ -262,9 +259,6 @@ export const projects: Project[] = [
           { side: 'refuses', text: 'Expose private VPS, keys, cookies, or job-account data.' },
         ],
       },
-    },
-    node: {
-      relatedIds: ['medrag', 'querypilot'],
     },
     sliderResponse: { sliderId: 'automationVsControl', affects: 'both' },
   },
@@ -401,9 +395,6 @@ export const projects: Project[] = [
         boundary: ['Publicly show product architecture only', 'Do not expose private company workflow data'],
       },
     ],
-    node: {
-      relatedIds: ['oncoverse'],
-    },
     sliderResponse: { sliderId: 'costPerQuery', affects: 'both' },
   },
   {
@@ -515,9 +506,6 @@ export const projects: Project[] = [
         ],
       },
     },
-    node: {
-      relatedIds: ['secondself', 'upi-fraud'],
-    },
     sliderResponse: { sliderId: 'latencyBudget', affects: 'both' },
   },
   {
@@ -611,9 +599,6 @@ export const projects: Project[] = [
         ],
       },
     },
-    node: {
-      relatedIds: ['querypilot'],
-    },
     sliderResponse: { sliderId: 'alertBudget', affects: 'both' },
   },
   {
@@ -700,9 +685,6 @@ export const projects: Project[] = [
           { side: 'refuses', text: 'Hide weaker interaction and mechanism-query behavior.' },
         ],
       },
-    },
-    node: {
-      relatedIds: ['secondself', 'fraud-risk-intel'],
     },
     sliderResponse: { sliderId: 'evidenceStrictness', affects: 'both' },
   },
@@ -823,9 +805,6 @@ export const projects: Project[] = [
           { side: 'refuses', text: 'Link the bare API root and call it a demo.' },
         ],
       },
-    },
-    node: {
-      relatedIds: ['medrag'],
     },
   },
   {
@@ -955,9 +934,6 @@ export const projects: Project[] = [
         ],
       },
     },
-    node: {
-      relatedIds: ['medrag', 'support-core'],
-    },
   },
   {
     id: 'oncoverse',
@@ -1046,9 +1022,6 @@ export const projects: Project[] = [
         ],
       },
     },
-    node: {
-      relatedIds: ['stick-and-dot'],
-    },
   },
   {
     id: 'order-supervisor',
@@ -1130,9 +1103,6 @@ export const projects: Project[] = [
           { side: 'refuses', text: 'Frame the system as a generic chatbot.' },
         ],
       },
-    },
-    node: {
-      relatedIds: [],
     },
   },
   {
@@ -1217,9 +1187,6 @@ export const projects: Project[] = [
         ],
       },
     },
-    node: {
-      relatedIds: ['medrag'],
-    },
   },
   {
     id: 'oracle-auto-provision',
@@ -1299,9 +1266,6 @@ export const projects: Project[] = [
           { side: 'refuses', text: 'Make the utility look larger than it is.' },
         ],
       },
-    },
-    node: {
-      relatedIds: ['secondself'],
     },
   },
 ]

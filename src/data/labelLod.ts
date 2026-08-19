@@ -1,4 +1,4 @@
-import { SCALE_DISTANCE } from '@/stores/navigationStore'
+import { constellationExtent } from '@/data/layout'
 
 /**
  * How much of a label to draw, and whether to draw one at all
@@ -21,14 +21,27 @@ import { SCALE_DISTANCE } from '@/stores/navigationStore'
 export type LabelLod = 'hidden' | 'dot' | 'name' | 'card'
 
 /**
+ * The distance at which the whole constellation fits a 45-degree frame.
+ *
+ * This is what "the overview" means, and it has to be *derived* for the same
+ * reason the reveal pose is (4.9). It was `SCALE_DISTANCE.galaxy`, 22 — a
+ * number chosen when the guided path never pulled back far enough to contain
+ * the ring. Once it did, at about 36 units, every apparent magnitude fell by a
+ * third against thresholds that had not moved, and the frame the whole scroll
+ * builds toward rendered twelve stars and **no names at all**. The constant was
+ * not wrong when it was written; it went stale under it.
+ */
+const OVERVIEW_DISTANCE = constellationExtent() / Math.tan((45 / 2) * (Math.PI / 180))
+
+/**
  * Apparent prominence: magnitude scaled by how close the camera is.
  *
- * Normalised so that at the galaxy resting distance a project's apparent value
- * *is* its magnitude. That makes the thresholds below readable as magnitudes at
- * the overview, which is the scale they were chosen against.
+ * Normalised so that at the overview distance a project's apparent value *is*
+ * its magnitude, which is what makes the thresholds below readable as
+ * magnitudes at the scale they were chosen against.
  */
 export function apparentMagnitude(magnitude: number, distance: number): number {
-  return magnitude * (SCALE_DISTANCE.galaxy / Math.max(distance, 1))
+  return magnitude * (OVERVIEW_DISTANCE / Math.max(distance, 1))
 }
 
 /**
@@ -40,7 +53,18 @@ export function apparentMagnitude(magnitude: number, distance: number): number {
  * "nine labels never all render at once unless zoomed to overview, and at that
  * scale they are short" behaviour DESIGN.md asks for.
  */
-const NAME_THRESHOLD = 0.82
+/*
+ * 0.68, down from 0.82.
+ *
+ * Re-normalising alone still left the reveal with two names out of twelve, and
+ * the end of the scroll is the one moment the composition is *for* — every
+ * project on screen at once, with room around each one. Measured magnitudes run
+ * 0.35 to 1.0, so 0.68 promotes the top five there, which is exactly
+ * `MAX_NAMES` and therefore the cap does the deciding rather than the
+ * threshold. Closer in, everything clears it and the rank cap governs, which is
+ * the behaviour that was already correct.
+ */
+const NAME_THRESHOLD = 0.68
 const DOT_THRESHOLD = 0.42
 
 /**

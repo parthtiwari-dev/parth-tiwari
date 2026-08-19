@@ -8,7 +8,16 @@ const props = defineProps<{
 }>()
 
 const isComplete = ref(props.isPlain)
-const { displayed, start, complete } = useCharacterSplit(props.text, 8, () => {
+/**
+ * 18ms per character — about 1.5s for the 83-character thesis.
+ *
+ * It was 8, which multiplies out to 664ms and reads as a flash rather than as
+ * typing. That number was never observed, because the old timer-chain
+ * implementation was delivering roughly one character every 700ms and taking
+ * the better part of a minute (PLAN.md 8.11); with the duration now honoured,
+ * 8 is simply too fast to be the effect it is trying to be.
+ */
+const { displayed, start, complete } = useCharacterSplit(props.text, 18, () => {
   isComplete.value = true
 })
 

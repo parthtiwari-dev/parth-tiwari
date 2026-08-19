@@ -70,7 +70,7 @@ experienceReady = isPlain || (bootComplete && !showMobileNotice)
 ### `projectStore`
 Wraps the static `projects` array plus `highlightedProjectIds`. `highlight()`/`clearHighlight()` have exactly one consumer (`CapabilityMap.vue`).
 
-**Bypassed in practice.** Six modules import the raw `projects` array directly rather than going through the store: `SceneRoot`, `ConstellationNodes`, `ConnectorLines`, `ParticleField`, `MobileSystemsIndex`, `overlayReady`. The store adds no value over the import except the highlight list.
+**Bypassed in practice.** Several modules import the raw `projects` array directly rather than going through the store: `SceneRoot`, `ConstellationNodes`, `OrbitPaths`, `NodeMoons`, `ParticleField`, `NodeLabels`. The store adds no value over the import except the highlight list.
 
 ### `overlayStore`
 `isOpen`, `activeProjectId`, `activePanelIndex`. Panel index clamped to `maxPanelIndex = 4`.
@@ -104,7 +104,7 @@ Inside `<TresCanvas>` (`antialias: false`, `dpr: [1, 1.25]`, `render-mode="alway
 `ScenePauseController` · `CameraPathController` · `CameraLight` · `IridescentBackground` · `ParticleField` · `RefusalRipple` · `ConstellationNodes` · `NodeMoons` · `PostProcessing` · `CameraAuthoring` (debug only)
 
 Outside the canvas, as DOM/SVG overlays reading `tresContext`:
-`ConnectorLines` · `NodeLabel` · a hardcoded legend
+`NodeLabels` · a hardcoded legend. (`ConnectorLines` was deleted in 8.2.)
 
 All in-canvas components use an **empty-template, imperative-Three-in-setup** pattern. TresJS's declarative layer is used only for the camera and ambient light.
 
@@ -124,7 +124,7 @@ This is the single most important structural fact about the scene:
 |---|---|
 | GSAP ScrollTrigger | camera path, particle hue milestones |
 | TresJS `useLoop` | `ConstellationNodes`, `ParticleField`, `IridescentBackground`, `RefusalRipple`, `CameraLight`, `PostProcessing` |
-| Raw `requestAnimationFrame` | `ConnectorLines`, `NodeLabel`, `CustomCursor`, `PanelProof` |
+| Raw `requestAnimationFrame` | `CustomCursor`, `PanelProof` — the scene overlays and the typewriter are on `gsap.ticker` (2.1, 8.11) |
 | Separate rAF | `MobileStarWorld` |
 
 `ScenePauseController` pauses **only** the TresJS loop. The raw rAF loops keep re-scheduling regardless — they self-gate on a `paused` prop for *work*, but never stop the frame request.
@@ -133,7 +133,7 @@ There are also **two separate ScrollTriggers on the same element**, created in d
 
 ### Node positions — hand-placed, not derived
 
-**Derived since 2026-08-18 (PLAN.md 3.1/3.3).** `src/data/layout.ts` computes every node's position, radius and orbital speed from the project record: orbital radius from maturity (`status` + whether a public link resolves), angle from `started` read clockwise, sphere radius from evidence depth (`weight` + metric/milestone/artifact counts), speed from recency, height from `origin`. `ConstellationNodeConfig` now holds only `relatedIds`, because a relationship between two projects is a judgement and nothing in the data implies it. `layoutFor()` throws on a miss rather than falling back to the origin — a silently-placed node is the meaningless decoration this replaced.
+**Derived since 2026-08-18 (PLAN.md 3.1/3.3).** `src/data/layout.ts` computes every node's position, radius and orbital speed from the project record: orbital radius from maturity (`status` + whether a public link resolves), angle from `started` read clockwise, sphere radius from evidence depth (`weight` + metric/milestone/artifact counts), speed from recency, height from `origin`. `ConstellationNodeConfig` is **gone** (8.2). Its last field was `relatedIds`, and the comment above it admitted the problem: *"a relationship between two projects is a judgement, not a measurement. Nothing in the data implies it."* Nothing about a node is stated by hand any more. `layoutFor()` throws on a miss rather than falling back to the origin — a silently-placed node is the meaningless decoration this replaced.
 
 **Nothing about a star's position currently encodes anything true about the work.** This is the central thing the redesign changes — see `DESIGN.md`.
 
@@ -155,7 +155,7 @@ Hover state is tracked **three ways simultaneously**: written onto `node.runtime
 
 ### Overlays that aren't 3D
 
-`ConnectorLines` and `NodeLabel` are **DOM/SVG overlays**, not scene objects. Both re-project world→screen every frame using a **verbatim-duplicated projection block**. `ConnectorLines` reallocates a fresh array of objects every frame, triggering full Vue reactivity per rAF — and does this for all pairs even though lines are only visible on hover.
+`NodeLabels` is the one **DOM overlay** left, and it projects world→screen for every node in a single `gsap.ticker` callback — one component, because the five-name cap in `labelLod.ts` is a decision about the whole set. `ConnectorLines` was the other, and 8.2 deleted it: it drew a hand-typed relationship as a flat SVG hairline above the canvas, with constant width and opacity regardless of depth, and reallocated an array of objects every tick to do it. `OrbitPaths.vue` states the same kind of thing as real geometry inside the rig, in one draw call, rebuilt only when the scale mode changes.
 
 ---
 
@@ -212,7 +212,7 @@ Mobile has no nodes, no hover, no connectors, no labels, no camera path, no bloo
 
 **The legend lies.** `SceneRoot.vue:203-221` renders legend swatches using `var(--gold)`, `var(--teal-active)`, `var(--amber)`, `var(--utility)`. The actual stars use *different* hardcoded hexes in `ConstellationNodes.vue:94-122`. The dots do not match the stars they describe.
 
-**`--bg` (`#010409`) is written out four times**: `tokens.css`, `SceneRoot.vue:108`, `index.html:17`, `MobileStarWorld.vue:255`.
+**`--bg` is `#000000`** since 8.4, and is written out three times: `tokens.css`, `SceneRoot.vue`'s canvas `clear-color`, and `index.html`'s `theme-color`. The first two have to agree or the canvas seams against the page; the third is browser chrome. It was `#010409`, which composited with the sky shader's nebula wash to a measured `rgb(1, 4, 13)` — a navy.
 
 ### Typography
 

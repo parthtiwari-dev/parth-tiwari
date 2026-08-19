@@ -1,5 +1,9 @@
 :root {
-  --bg: #010409;
+  /* True black (PLAN.md 8.4). It was #010409, and with the sky shader's wash on
+     top the empty frame measured rgb(1, 4, 13) — a navy, not a void. Every
+     dark reference in the set is emphatic about this: the black has to be
+     black for anything floating in it to read as light. */
+  --bg: #000000;
   --bg-lift: #04101d;
   --bg-nebula: #071d34;
   --bg-cyan: #0bb6d6;

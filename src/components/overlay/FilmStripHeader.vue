@@ -170,19 +170,34 @@ h2 {
   transform: translateY(-1px);
 }
 
+/*
+ * Vertical is the scarce axis on a phone (PLAN.md 8.8).
+ *
+ * Stacking the title above a wrapping row of controls, above a two-row panel
+ * nav, above a full-width dial put roughly 870 of 1150px between opening a
+ * project and reading a word about it — measured from a real capture, not
+ * estimated. The controls move back onto the title's row: they are three
+ * 44px targets and there is room beside a two-line heading for them.
+ *
+ * The buttons stay at 2.75rem. That is the documented touch minimum and it is
+ * not what was costing the space.
+ */
 @media (max-width: 760px) {
   .film-strip-header {
-    flex-direction: column;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0.75rem;
   }
 
   .film-strip-header__controls {
-    flex-wrap: wrap;
-    gap: 0.5rem;
+    flex-shrink: 0;
+    flex-wrap: nowrap;
+    gap: 0.4rem;
   }
 
   .film-strip-header__button {
-    width: 2.95rem;
-    height: 2.95rem;
+    width: 2.75rem;
+    height: 2.75rem;
   }
 }
 </style>

@@ -266,6 +266,7 @@ encodes the data; the camera decides the shot. Verified at all five viewports.
 | ✅ 4.6 | **Done 2026-08-18.** The previously-focused project keeps a quiet "Previously" label and the framing opens until both fit. Framing is computed from the geometry — centre biased 35% toward the predecessor, distance solved from the half-extent and the current FOV — because the first version guessed a multiple of the separation, under-shot, and left the ghost card clamped to the bottom of the screen with its star below the viewport. The ghost label also refuses to clamp: off screen means not shown, since a card pinned to an edge pointing at nothing is worse than no card. |
 | ✅ 4.7 | **Done 2026-08-18.** `?project=<id>`, via `history.replaceState` rather than a router — one query parameter does not justify the dependency. **`replaceState`, not `pushState`:** opening a project is not navigation, and pushing history would make Back close an overlay instead of leaving the site, which would trap someone who arrived from a cold-outreach link. Unknown ids are ignored rather than opening an empty overlay, and `?plain=1` / `?debug=1` survive the rewrite. |
 | ✅ 4.8 | **Done 2026-08-18.** Zoom in / zoom out / resume tour as real buttons at 44px, on every breakpoint, keyboard-reachable and labelled — gestures alone assume a visitor who already expects them. They step between the three named scales rather than nudging, so every press lands somewhere the readout can describe. On phones the cluster is a row above the booking dock: booking is never the thing that moves. |
+| ✅ 4.9 | **Done 2026-08-19 (Phase 8).** Two defects in one array. The path **flew through its own look-at point** — between 70% and 78% of the scroll the z component of the look direction went from -0.51 to +0.76 with the camera 2.06 units from its target, a 180° reversal in 8% of the runway that swept every star across the frame and re-landed it. The path is an orbit now: target at the origin, camera arcing around it, so the direction rotates continuously by construction. Closest approach along the interpolated curve is **11.48 units**, sharpest turn **1.83°** per quarter-percent. And the **reveal framed four nodes of twelve**, because the final pose sat at z = -7.2, inside a ring of outer radius 13.5, looking outward. Framing is geometry, so it is derived: `constellationExtent()` reports what must fit and the controller pushes the camera out along the posed direction until it does, opening the lens only if `MAX_DISTANCE` runs out first. The binding axis is the *narrower* screen one — horizontal on a portrait phone, which is why no single typed number could serve both. **12/12 at 1440×900 and 12/12 at 390×844**, from 8 and 2. |
 
 **Exit:** guided by default, free on demand, both over one scene, with every route to a
 project — star, keyboard rail, deep link — moving the same camera.
@@ -446,6 +447,68 @@ Three things in this phase need a person and hardware, and no amount of scriptin
 - **A real screen reader.** 7.2 checks the accessibility *tree* — names, roles, structure,
   focus behaviour — which is most of what goes wrong. It does not tell you whether the
   result is pleasant to listen to.
+
+---
+
+## Phase 8 — The scene, looked at
+
+Every earlier phase was built from the code outward. This one started from **300 captured
+frames** — every scroll step on desktop and mobile, every panel of every project, both ends
+of each — because six of the eight defects below are invisible in a diff and four of them
+had already survived every gate in phases 0 through 7.
+
+`npm run frames` is the harness. It walks the document scroll in even steps, then opens every
+project and drives a real `mouse.wheel` against the overlay, recording `scrollHeight`,
+`clientHeight`, `overflowY` and the `scrollTop` the gesture actually produced. The point is
+that "scrolling inside a project doesn't work" becomes a number.
+
+| # | Task |
+|---|---|
+| ✅ 8.1 | **Overlay scroll was dead on desktop.** Lenis binds `wheel` on `window` with `allowNestedScroll: false`, so after `ProjectOverlay`'s handler correctly stepped aside to let the browser scroll the panel, Lenis cancelled the event and applied the delta to a page that is scroll-locked while the overlay is open. Caught by patching `Event.prototype.preventDefault` and reading the stack. Measured: one wheel notch moved **0px** against 275px of hidden content, and **100px** with `data-lenis-prevent` on the root. Touch was never affected — Lenis runs `syncTouch: false` — which is exactly why this read as "the phone is fine". Every one of the 65 mobile panels overflowed, up to **1146px**. |
+| ✅ 8.2 | **`ConnectorLines` deleted; `OrbitPaths` replaces it.** The lines drew `relatedIds`, and `types/project.ts` said the quiet part itself: *"a relationship between two projects is a judgement, not a measurement. Nothing in the data implies it."* They were rendered as flat SVG hairlines at `z-20` — constant 1.1px width and 0.32 opacity from a node four units away to one twenty units away, unoccluded by the star they crossed, sliding across the frame while everything else parallaxed. A 2D overlay pasted onto a 3D scene reads as exactly that. Orbit rings state a measurement instead (`orbitRadius`, where radius encodes maturity) and live inside the rig, so they take perspective and depth. `relatedIds` and `ConstellationNodeConfig` are gone with them. |
+| ✅ 8.3 | **Orbital speed made visible.** `speedOf` returns the honest ordering and at raw values it was unreadable: 0.055 rad/s is one revolution every 114 seconds, 0.004 is one every 26 minutes. `MOTION_SCALE = 4` in `nodeMotion.ts` is a **playback rate, not a re-derivation** — one scalar for every node, so the 13.75:1 ratio the data states is untouched. It lives in `nodeMotion` rather than `layout` because the derivation states what is true and the presentation decides how it is shown. Guarded by a new assertion (8.10) rather than by good intentions. |
+| ✅ 8.4 | **The sky is black.** Sampled from the shipped build, empty sky measured `rgb(1, 4, 13)` — blue twelve times red, a navy wash rather than a void. `--bg` is `#000000`, the shader's gradient floor is near zero, the nebula thresholds are up and its weights down so it reads as discrete clouds rather than fog, the aurora term is halved, and the stars are brighter because they now carry the frame. Real deep-field imagery is black with the colour concentrated in objects; the reference set says the same thing from the design side. |
+| ✅ 8.5 | **The centre star was a soap bubble; it is a star.** The thin-film shader was genuinely the physics and genuinely wrong for this object — at distance a flat green disc easily mistaken for a project node, at close range a ball of concentric rainbow rings filling the frame. Replaced with limb darkening, a hot-white core through the `--gold` tint, surface granulation, and a chromatic fringe confined to the outer few percent of the disc. It is opaque and depth-writing now: the old one let the particle field show straight through it. A billboard corona was added, because a star's light is mostly *outside* its silhouette and no amount of work on the disc substitutes for that. |
+| ✅ 8.6 | **Moons were 4.6 pixels of flat colour.** `MeshBasicMaterial` is unlit by definition, so ninety satellites rendered as stuck pixels and the "a technology keeps the same colour everywhere" idea was being made in a language nobody could see. Radius 0.032 → 0.058 (~8.4px), segments 8×6 → 12×8, and a matcap so they shade — the same bargain the nodes already take. Still well under `MIN_VISIBLE_RADIUS`, so a moon can never be mistaken for its parent. |
+| ✅ 8.7 | **Glass had nothing to refract.** `.glass-panel` asked for `blur(22px) saturate(1.55)` over a scrim at 0.64 alpha with a `blur(10px)` of its own — by the time the panel's filter sampled the page, the scene behind was already a uniform dark field, and blurring something uniform returns the same uniform thing. The scrim drops its blur entirely and falls to a gradient, so the starfield stays sharp behind the panel. The panel's blur comes **down** to 16px, which is the counter-intuitive half: past ~18px the sample radius exceeds the spacing of anything in a starfield and every sample averages to the same grey. |
+| ✅ 8.8 | **Mobile panels: 870 of 1150px before a sentence.** The overlay header stacked its controls under a two-line title, the panel nav was `repeat(5, ...)` from before the Demo panel existed so a six-panel project orphaned "06 Links" on its own row, and the Proof dial was 288px square — three-quarters of the screen width for a one-digit number. Controls back onto the title row, three columns fitting real words instead of `Bound`, dial to 9.5rem. |
+| ✅ 8.9 | **Collisions the viewport matrix could not see.** `npm run shots` samples one scroll position, so a fixed header that only overlaps content 3000px down never appeared. The top bar gained a masked gradient scrim — padding cannot fix a fixed element, since content passes under it at *some* scroll position regardless. The hero's bottom padding now clears the scale readout, which the scroll cue had been printing across since the first captured frame. |
+| ✅ 8.10 | **Two input defects the gates had been passing over.** Node selection fired on `pointerdown` with no movement threshold, so pressing a star to orbit opened its overlay before the drag moved a pixel — free orbit was unreachable from the most natural place to start it. And hover throttled by dropping every *other* `pointermove`, which is not a throttle (rate varies by device) and can drop the *last* event, leaving a pointer at rest on a star that never responded. Selection now needs a `pointerup` on the same node within 6px and re-picks on release; hover is one pick per frame with a trailing resolve. `npm run labels` gained **5.6**, asserting no star moves faster than 120px/s, so 8.3's knob cannot be raised until the stars are unhittable. |
+| ✅ 8.11 | **The thesis took 58 seconds to appear.** `useCharacterSplit` re-armed a `setTimeout` per character, which makes total duration a function of how often the browser runs a timer rather than of `msPerChar`. Measured on the hero tagline — 83 characters at 8ms, so 664ms of intent — the real rate was **one character every 700ms**. Timers are the lowest-priority thing on the event loop and this page runs a WebGL scene ahead of them. Now time-derived on `gsap.ticker`: a slow device skips characters and still finishes on schedule. `msPerChar` raised to 18, because 664ms was never observed and reads as a flash rather than as typing. |
+| ✅ 8.12 | **Labels and DOM chrome shared a coordinate system and ignored each other.** The hero is `position: fixed` over the canvas, so at 390px three project names printed straight through "PARTH TIWARI" and the thesis line, on the first frame anybody sees; at the other end of the scroll "Tathya" rendered underneath the constellation index. `data/screenRegions.ts` lets each surface publish its box and the projector demotes only the labels that actually overlap one — a name to a dot, never to nothing, because the star is the invitation. Hero measurement is `ResizeObserver`-driven: the tagline types itself in, so the box grows after mount while the page is still. Names near the right edge now flip to the other side of their star. |
+| ✅ 8.13 | **The reveal shows every project, on every screen.** Covered in 4.9 — recorded here because it is the frame this phase was called in to fix. Desktop 8/12 → **12/12**, phone 2/12 → **12/12**. |
+
+**Exit:** the frames say so. `npm run frames` before and after, and the before/after pair is
+the evidence — not a claim in a commit message.
+
+**Status 2026-08-19 — 13 of 13 done.** Gates: typecheck, build, budget (118.19 kB eager,
+three.js absent), nav 15/15, labels 15/15, a11y 23/23, craft 5/5, shots 10/10 clean.
+
+### What the user actually said, and what it turned out to be
+
+Six complaints, six different underlying causes, and only one of them was where it felt like
+it was:
+
+| Reported | Actual cause |
+|---|---|
+| "scrolling inside the project doesn't work" | Lenis cancelling the wheel event at `window` |
+| "the flip that rearranges everything" | camera crossing its own look-at point, 2.06 units away |
+| "the end frame needs to show every node" | final pose sat *inside* the ring looking outward |
+| "the lines go here and there, I don't get the point" | they drew a hand-typed judgement, as a 2D overlay |
+| "glass panels don't feel like glass" | the scrim flattened the scene before the blur ran |
+| "space should be more black" | correct, and the nebula/aurora wash was the reason |
+
+The one that was *not* reported and mattered most: pressing a star to orbit opened its
+overlay. Nobody described that as a bug because nobody got far enough to form the
+expectation.
+
+### On stopping at three tiers
+
+Moons orbit nodes, nodes orbit the centre. A fourth tier — the whole constellation orbiting
+something larger — was discussed and dropped, because nothing in the data says what that
+larger thing *is*, and inventing one would be exactly the decoration-pretending-to-be-data
+this project exists to avoid. The rings do the work a fourth tier was wanted for: they make
+the system read as a system.
 
 ---
 

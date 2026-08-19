@@ -22,7 +22,31 @@ export function useNodeInteraction(options: NodeInteractionOptions) {
   const raycaster = new THREE.Raycaster()
   const pointer = new THREE.Vector2()
   let hoveredProjectId: string | null = null
-  let pointerMoveTick = 0
+
+  /**
+   * Time-throttled, with a trailing pick (PLAN.md 8.10).
+   *
+   * This throttled by dropping every *other* `pointermove` — `tick = (tick + 1)
+   * % 2`, return on odd. Two things are wrong with that. It is not actually a
+   * throttle: event rate varies by device and pointer, so on a 120Hz trackpad
+   * it still picked 60 times a second while on a slow one it halved an already
+   * sparse stream. And because it drops by parity rather than by time, the
+   * event that gets dropped can be the *last* one — the pointer comes to rest
+   * on a star and the hover never fires, which reads as a star that sometimes
+   * refuses to respond.
+   *
+   * That got worse when orbital speeds were scaled up (8.3): a star now moves
+   * 40-80px per second, so a dropped final event leaves the pick resolved
+   * against a position the star has already left. `npm run labels` caught it as
+   * a hover that produced no card.
+   *
+   * So: at most one pick per frame, and if an event arrives inside that window
+   * it is remembered and picked on the next frame rather than thrown away.
+   */
+  const PICK_INTERVAL_MS = 16
+  let lastPickAt = 0
+  let pendingEvent: PointerEvent | null = null
+  let trailingFrame = 0
 
   function pick(event: PointerEvent) {
     const renderer = options.getRenderer()
@@ -64,19 +88,34 @@ export function useNodeInteraction(options: NodeInteractionOptions) {
     options.onHover(nextProjectId, entry?.clusterIndex ?? null)
   }
 
+  function runPick(event: PointerEvent) {
+    lastPickAt = performance.now()
+    pendingEvent = null
+    setHover(pick(event))
+  }
+
   function handlePointerMove(event: PointerEvent) {
     if (options.isEnabled && !options.isEnabled()) {
       setHover(null)
       return
     }
 
-    pointerMoveTick = (pointerMoveTick + 1) % 2
-
-    if (pointerMoveTick === 1) {
+    if (performance.now() - lastPickAt >= PICK_INTERVAL_MS) {
+      runPick(event)
       return
     }
 
-    setHover(pick(event))
+    // Inside the window: remember it and resolve on the next frame, so the
+    // pointer coming to rest always ends with a pick against where it stopped.
+    pendingEvent = event
+    if (trailingFrame) return
+    trailingFrame = requestAnimationFrame(() => {
+      trailingFrame = 0
+      const held = pendingEvent
+      if (!held) return
+      if (options.isEnabled && !options.isEnabled()) return
+      runPick(held)
+    })
   }
 
   /**
@@ -138,6 +177,13 @@ export function useNodeInteraction(options: NodeInteractionOptions) {
     pressedAt = null
   }
 
+  function cancelTrailing() {
+    if (!trailingFrame) return
+    cancelAnimationFrame(trailingFrame)
+    trailingFrame = 0
+    pendingEvent = null
+  }
+
   function handlePointerLeave() {
     setHover(null)
     handlePointerCancel()
@@ -165,6 +211,7 @@ export function useNodeInteraction(options: NodeInteractionOptions) {
 
     return () => {
       cancelAnimationFrame(frameId)
+      cancelTrailing()
       window.removeEventListener('pointermove', handlePointerMove)
       window.removeEventListener('pointerdown', handlePointerDown)
       window.removeEventListener('pointerup', handlePointerUp)

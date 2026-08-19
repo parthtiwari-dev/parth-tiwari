@@ -32,6 +32,7 @@ npm run dev          # Vite dev server
 npm run typecheck    # vue-tsc -b --noEmit
 npm run build        # typecheck + production build
 npm run preview      # serve the production build
+npm run frames       # walk every scroll step and every panel, desktop + mobile
 ```
 
 Before any commit that touches source:
@@ -45,6 +46,8 @@ There is no unit-test runner and no linter configured. Type checking, a clean bu
 **`npm run budget` is not optional.** It reads `dist/` and fails if the eager entry chunk exceeds its gzip ceiling or if `WebGLRenderer` appears in it. The lazy-3D boundary has broken *twice*, silently, and neither break failed typecheck, failed the build, or showed up in a screenshot — the first was a `manualChunks` rule that made Rolldown preload the chunk anyway, the second was `data/layout.ts` importing `three` for `Vector3` while `ProjectIndex` statically imports `layoutFor()`, which put 796.96 kB in front of every visitor including `?plain=1`. A number is the only thing that catches this.
 
 **`npm run nav` is the behaviour gate.** `scripts/nav-check.mjs` drives the real scene through the Phase 4 navigation contract — default mode, drag-to-free, resume tour, the three zoom scales, deep links, the comparison label, and the phone controls including touch-target size. A screenshot cannot prove any of that. Two defects passed typecheck, build *and* the viewport matrix and were caught only here. Run it after anything touching the camera, the rig, the overlay or the project index.
+
+**`npm run frames` is the eyes gate.** `scripts/frames.mjs` walks the whole document scroll in even steps on desktop and mobile, then opens every project and every panel and drives a *real* `mouse.wheel` against the overlay, recording `scrollHeight`, `clientHeight`, `overflowY` and the `scrollTop` the gesture produced. It exists because six defects in Phase 8 were invisible to every other gate — a camera that flipped, a reveal framing four nodes of twelve, an overlay that could not scroll on desktop, labels printing through the wordmark. Run it before and after anything touching the camera, the scene or the overlay, and **look at the frames**. The probe has to be a synthesised gesture: assigning `scrollTop` succeeds even when the defect is present, because the defect was Lenis cancelling the wheel event before the browser could act on it.
 
 **`npm run labels` is the label gate.** `scripts/label-check.mjs` asserts the projection cull, the magnitude-and-distance decluttering, the name cap, occlusion fading rather than hiding, and that a card can actually be clicked. It caught a card drifting 26.8px per 500ms under the cursor on its first run.
 
@@ -101,6 +104,8 @@ Scene components that drive Three.js imperatively use an **empty template** and 
 
 ### Styling
 All color and spacing comes from `src/styles/tokens.css`.
+
+`--bg` is **`#000000`** as of 8.4 — pure black, not the old `#010409`. The empty sky measured `rgb(1, 4, 13)` in a capture of the shipped build, and a void that is twelve parts blue to one part red is a navy, not space. Anything floating in it only reads as light if the black is actually black.
 
 `--ice-faint` is a **hairline** colour: 2.34:1 against `--bg`, which is fine for a 1px border and an AA failure for text. Faint *text* uses `--ice-quiet` (4.89:1). `npm run a11y` computes the real composited ratio for every visible text node and will catch a regression here. Do not hardcode a hex or rgba that a token already defines.
 
@@ -194,23 +199,27 @@ The sky shader (`iridescent.frag.glsl`) is the largest GPU cost in the app: 7 `t
 
 `ConstellationNodes.vue`'s `onUnmounted` disposes geometries and materials **and removes the `PointLight`s from the graph** — the lights were the one thing it missed, and they have no GPU buffer to dispose but do hold a parent reference, so twelve of them survived every scene remount. Keep that call when editing the teardown.
 
-`ConnectorLines` still reallocates an array of objects per tick, triggering Vue reactivity for all pairs even though lines only render on hover. It no longer *runs* while paused or off-screen (2.1), so the cost is bounded — but the allocation itself is unfixed.
+`ConnectorLines` is **gone** (8.2). It drew `relatedIds` — a hand-typed judgement nothing on the page explained — as flat SVG hairlines pinned above the canvas, and its per-tick array reallocation went with it. `OrbitPaths.vue` replaces it: one `LineSegments` inside the rig, built once per scale mode, drawing the orbit each node actually travels. A ring is a measurement; a relationship was not.
 
-**There are no lights in the scene, and adding one would do nothing.** Star bodies are matcaps generated in `utils/matcap.ts` from the same token as the legend swatch; halos, coronas, glints, particles, the sky and the centre star are shader materials; moons are `MeshBasicMaterial`. The thirteen lights that used to be here were the largest mid-tier GPU cost in the app (6.8). If a new object needs shading, give it a material that shades itself.
+**There are no lights in the scene, and adding one would do nothing.** Star bodies are matcaps generated in `utils/matcap.ts` from the same token as the legend swatch; halos, coronas, glints, particles, the sky, the centre star and its corona are shader materials; **moons are matcaps too** (8.6 — they were `MeshBasicMaterial`, which is unlit by definition, so ninety satellites rendered as 4.6px of flat colour). The thirteen lights that used to be here were the largest mid-tier GPU cost in the app (6.8). If a new object needs shading, give it a material that shades itself.
 
 The matcap's `color` is **white**, scaled past 1 into the half-float buffer — that multiplier is where the old `emissiveIntensity` animation lives. Do not set it to the node colour: the hue is already in the texture and multiplying twice squares it.
 
 **Labels are one component, not one per node.** `NodeLabels.vue` projects every node in a single tick callback and `data/labelLod.ts` decides the whole set at once — the five-name cap is a decision about the set and cannot be made a label at a time. A card only ever appears on intent (hover or focus), never from the derivation, and it freezes while the pointer is on it because stars orbit and a moving click target is not one. Occlusion is a raycast against `data/nodeMeshes.ts` that fades opacity; **never** the `NoBlending` hole-punch, which breaks under the bloom pass this scene runs.
 
+**Labels step around DOM chrome** (8.12). The hero, the legend and the scale readout all lay out in the same screen coordinates the label projector does, and none of them knew about the others — three project names printed through "PARTH TIWARI" at 390px, and "Tathya" rendered under the constellation index in the reveal frame. `data/screenRegions.ts` lets a surface publish its box; the projector demotes an overlapping name to a dot, **never to nothing**, because the star is the invitation. Register a box for any new fixed panel over the canvas.
+
 Anything readable stays real DOM. MSDF-in-WebGL text is not installed and adding it is an open decision (PLAN 5.5) — do not reach for it to solve occlusion, which is already solved.
 
 **Navigation is two modes over one scene.** Guided (scroll drives the authored pose array) is the default arrival; free orbit is unlocked by the first drag, pinch or zoom-button press. `NavigationController.vue` is the **only** thing that writes the camera in either mode — they were never going to survive as two components, because both want the same transform and the handover has to be seamless within one frame.
 
-Free mode **rotates the rig, not the camera** (DESIGN §4). Everything in constellation space hangs off one `<TresGroup>`; `data/sceneRig.ts` registers it and `toWorld()` is the only sanctioned way to convert a local node position to a world one. The two DOM projectors (`NodeLabel`, `ConnectorLines`) compute screen positions by hand and **must** go through it — skip it and every label detaches from its star the moment anyone drags.
+Free mode **rotates the rig, not the camera** (DESIGN §4). Everything in constellation space hangs off one `<TresGroup>`; `data/sceneRig.ts` registers it and `toWorld()` is the only sanctioned way to convert a local node position to a world one. `NodeLabels` computes screen positions by hand and **must** go through it — skip it and every label detaches from its star the moment anyone drags.
+
+**Guided mode is an orbit too, and must stay one** (8.1 / 4.9). `CAMERA_POSES` used to fly the camera *through* its own look-at point at 72% of the scroll — a 180° reversal in 8% of the runway that swept every star across the frame. The invariant when editing those poses: camera-to-target distance stays well clear of zero, measured along the interpolated curve and not just at the poses. It is 11.48 units today. `scripts/frames.mjs` is how you see a violation; nothing else will show it.
 
 The orbit state in `useFreeOrbit.ts` is a deliberately non-reactive module singleton. Do not put it in a store and do not `computed()` over it: it changes every frame, and a computed over a plain object is evaluated once and never invalidates. The reactive copy the DOM reads is `navigationStore.distance`, pushed from the render loop only when it has actually moved.
 
-**Two clocks, and that is the budget.** `gsap.ticker` steps Lenis, ScrollTrigger, `ConnectorLines` and `NodeLabel`; the TresJS `useLoop` renders the scene and applies the camera. `MobileStarWorld`'s rAF went with the file (2.5), and the DOM overlays moved onto the ticker (2.1).
+**Two clocks, and that is the budget.** `gsap.ticker` steps Lenis, ScrollTrigger, `NodeLabels` and `useCharacterSplit`; the TresJS `useLoop` renders the scene and applies the camera. `MobileStarWorld`'s rAF went with the file (2.5), the DOM overlays moved onto the ticker (2.1), and the typewriter joined it in 8.11 — it was a self-re-arming `setTimeout` chain, which made its duration a function of how often the browser felt like running a timer and had the hero tagline taking **58 seconds** to finish.
 
 **Do not add a third.** Anything needing a frame callback joins `gsap.ticker` — a raw `requestAnimationFrame` will drift against the scroll interpolation Lenis is doing on the ticker, and it will not stop when the scene pauses.
 

@@ -56,18 +56,40 @@ export const clusterOffsets: THREE.Vector3[] = projects.map(
 let elapsed = 0
 
 /**
+ * How fast the derived speeds are played back (PLAN.md 8.3).
+ *
+ * `speedOf` in `layout.ts` returns the honest ordering — active projects move,
+ * dormant ones barely do — and at its raw values that ordering was invisible.
+ * 0.055 rad/s is one revolution every 114 seconds and 0.004 rad/s is one every
+ * 26 minutes, so a visitor who stays a minute sees a still photograph of a
+ * system that is supposed to be turning. The encoding was true and unreadable,
+ * which for a site whose argument is legible evidence is the worse of the two
+ * failures.
+ *
+ * This is a **playback rate, not a re-derivation**: one scalar applied to every
+ * node, so the ratio between the fastest and slowest project — 13.75:1 — is
+ * exactly what the data says. At 4x the liveliest orbit comes round in about 28
+ * seconds and the quietest still takes six and a half minutes, which is the
+ * difference between "moving" and "not" that `status` is claiming.
+ *
+ * It lives here rather than in `layout.ts` on purpose. The derivation states
+ * what is true; this file decides how it is presented, and mixing the two is
+ * how a presentation choice ends up looking like a fact about the work.
+ */
+const MOTION_SCALE = 4
+
+/**
  * Advances the orbit and rewrites every live position.
  *
  * Motion means attention — an active project visibly moves and a dormant one is
- * nearly still (DESIGN.md §2). Speeds are slow on purpose: 0.055 rad/s is about
- * three degrees a second, noticeable over a visit without being a carousel.
+ * nearly still (DESIGN.md §2).
  */
 export function advanceNodeMotion(delta: number, mode: ScaleMode): void {
   elapsed += delta
 
   for (const project of projects) {
     const base = layoutFor(project.id, mode)
-    const angle = base.angle + base.speed * elapsed
+    const angle = base.angle + base.speed * MOTION_SCALE * elapsed
 
     const at = live.get(project.id)!
     at.set(
