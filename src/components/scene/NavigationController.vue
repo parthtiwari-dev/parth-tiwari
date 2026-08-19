@@ -15,7 +15,7 @@
  * angles instead of an orbit camera that has to be reconciled with a scripted
  * one, and zoom is a field-of-view change rather than a dolly.
  */
-import { onMounted, onUnmounted, watch } from 'vue'
+import { nextTick, onMounted, onUnmounted, watch } from 'vue'
 import { useLoop, useTres } from '@tresjs/core'
 import * as THREE from 'three'
 import { createScrollProgress, useCameraPath } from '@/composables/useCameraPath'
@@ -32,7 +32,7 @@ import { constellationExtent } from '@/data/layout'
 import { livePosition } from '@/data/nodeMotion'
 import { registerSceneRig } from '@/data/sceneRig'
 import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
-import { useNavigationStore, SCALE_DISTANCE } from '@/stores/navigationStore'
+import { useNavigationStore, SCALE_DISTANCE, type NavigationSnapshot } from '@/stores/navigationStore'
 import { useOverlayStore } from '@/stores/overlayStore'
 import { useScaleModeStore } from '@/stores/scaleModeStore'
 
@@ -254,11 +254,89 @@ function syncFocusCentre() {
  * them. The overlay is the one thing all three paths agree on, so it is the one
  * thing that drives focus.
  */
+/**
+ * Closing a project is an undo, not a new destination.
+ *
+ * Opening one calls `focusProject`, which enters free mode and pulls the camera
+ * in to `SCALE_DISTANCE.project`. Closing did none of that in reverse, so a
+ * viewer several screens into the guided tour got the panel dismissed and the
+ * camera left parked at maximum zoom on a single star — orbits flattened to
+ * lines, most labels culled, and a "resume tour" button that had not been there
+ * a moment earlier as the only way back. The page scroll *was* restored exactly,
+ * which is what made it disorienting rather than merely wrong: the document said
+ * one thing and the camera said another.
+ *
+ * The snapshot is taken on the first open and cleared on close, so stepping
+ * between projects while the overlay is up still unwinds to wherever the viewer
+ * was before any of it — not to the previous project.
+ *
+ * This watcher must stay *above* the focus watcher below. Both are pre-flush and
+ * both fire on `isOpen`, so registration order is what guarantees the state is
+ * captured before `focusProject` overwrites it.
+ */
+interface CameraSnapshot extends NavigationSnapshot {
+  azimuth: number
+  polar: number
+  distance: number
+  fovBase: number
+  distanceBase: number
+  centre: THREE.Vector3
+}
+
+let snapshot: CameraSnapshot | null = null
+/** Suppresses the focus watcher while an unwind is in flight. */
+let restoring = false
+
+watch(() => overlayStore.isOpen, (open) => {
+  if (open) {
+    snapshot ??= {
+      mode: navigation.mode,
+      focusedProjectId: navigation.focusedProjectId,
+      previousProjectId: navigation.previousProjectId,
+      azimuth: orbit.targetAzimuth,
+      polar: orbit.targetPolar,
+      distance: orbit.targetDistance,
+      fovBase: orbit.fovBase,
+      distanceBase: orbit.distanceBase,
+      centre: orbit.targetCentre.clone(),
+    }
+    return
+  }
+
+  const previous = snapshot
+  snapshot = null
+  if (!previous) return
+
+  restoring = true
+  navigation.restore(previous)
+
+  // Guided mode re-derives the camera from scroll every frame, so putting the
+  // mode back is the whole restoration. Free mode has no such authority to fall
+  // back on: its targets are the only record of where the viewer had put the
+  // camera, and the damping in `advanceOrbit` is what turns them into a move
+  // back rather than a cut.
+  if (previous.mode === 'free') {
+    orbit.targetAzimuth = previous.azimuth
+    orbit.targetPolar = previous.polar
+    orbit.targetDistance = previous.distance
+    orbit.targetCentre.copy(previous.centre)
+    orbit.fovBase = previous.fovBase
+    orbit.distanceBase = previous.distanceBase
+  }
+
+  void nextTick(() => {
+    restoring = false
+  })
+})
+
 watch(() => (overlayStore.isOpen ? overlayStore.activeProjectId : null), (projectId) => {
   if (projectId) navigation.focusProject(projectId)
 })
 
 watch(() => navigation.focusedProjectId, (focused) => {
+  // An unwind has already written the targets it wants; this watcher exists to
+  // move the camera *to* a newly chosen node and would overwrite them.
+  if (restoring) return
   handOver()
   // Set project scale *first*: `syncFocusCentre` may widen it again to fit the
   // pair, and doing it the other way round would throw that away every time.

@@ -22,6 +22,18 @@ import { projects } from '@/data/projects'
 export type NavigationMode = 'guided' | 'free'
 
 /**
+ * The discrete half of "where the viewer was" — enough to unwind an overlay
+ * open. The continuous half (azimuth, polar, distance, field of view) stays out
+ * of Vue for the reasons in the file header, so `NavigationController` captures
+ * it alongside this from `orbitState`.
+ */
+export interface NavigationSnapshot {
+  mode: NavigationMode
+  focusedProjectId: string | null
+  previousProjectId: string | null
+}
+
+/**
  * The three zoom scales (4.5). Derived from distance, never set directly, so the
  * label and the camera cannot disagree — the readout is a description of where
  * the camera is, not a second source of truth about it.
@@ -91,6 +103,22 @@ export const useNavigationStore = defineStore('navigation', () => {
     previousProjectId.value = null
   }
 
+  /**
+   * Put mode and focus back exactly as they were, with none of the bookkeeping.
+   *
+   * Deliberately not `focusProject` plus `resumeGuided`: those two encode
+   * *decisions* — that the viewer chose free mode, and that the node they just
+   * left is worth remembering as the other half of a comparison. Restoring a
+   * snapshot is neither. Routing the undo through them leaves
+   * `previousProjectId` pointing at the project that was just closed, which puts
+   * a ghost "Previously" label on screen for a comparison nobody asked for.
+   */
+  function restore(snapshot: NavigationSnapshot) {
+    mode.value = snapshot.mode
+    focusedProjectId.value = snapshot.focusedProjectId
+    previousProjectId.value = snapshot.previousProjectId
+  }
+
   function focusProject(projectId: string | null) {
     if (projectId !== null && !projectIds.has(projectId)) return
     if (projectId === focusedProjectId.value) return
@@ -118,6 +146,7 @@ export const useNavigationStore = defineStore('navigation', () => {
     zoomScale,
     enterFree,
     resumeGuided,
+    restore,
     focusProject,
     setDistance,
   }
