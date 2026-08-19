@@ -118,7 +118,12 @@ function openOverlay(kind: EvidenceOverlayKind, disabled?: boolean) {
   display: none;
   gap: 0.75rem;
   margin: 0;
-  padding: 1rem 1rem max(3rem, env(safe-area-inset-bottom));
+  /* The last line of the document has to clear the booking pill, which is
+     `position: fixed` bottom-right and never moves (CLAUDE.md). Mid-page copy
+     cannot be padded out of its way — it passes underneath at some scroll
+     position regardless — but the final line can, and it was losing the year
+     off "12 systems / public-safe evidence / 2026". */
+  padding: 1rem 1rem max(7rem, calc(env(safe-area-inset-bottom) + 6rem));
   border-top: 1px solid color-mix(in srgb, var(--ice-faint) 34%, transparent);
   background:
     linear-gradient(180deg, rgb(216 234 240 / 0.055), transparent 42%),

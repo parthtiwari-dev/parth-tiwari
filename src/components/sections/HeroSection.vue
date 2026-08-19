@@ -208,15 +208,25 @@ onUnmounted(() => {
 @media (max-width: 720px) {
   .hero-section__content {
     padding-right: 1rem;
-    padding-bottom: 11rem;
+    /* 13.5rem, not 11. The dock sits at `bottom-20` (5rem) and is about 3.6rem
+       tall, so its top edge is ~8.6rem up — and the tagline is four lines at
+       390px, so 11rem left the panel's top border cutting through "agree." */
+    padding-bottom: 13.5rem;
     padding-left: 3.25rem;
   }
 }
 
-/* Short phones in landscape have no room for an 11rem gutter; there the cue is
-   the thing that goes, since the scroll it describes is the one gesture nobody
-   needs telling about on a touch screen. */
-@media (max-width: 720px) and (max-height: 680px) {
+/* Genuinely short viewports — a phone in landscape, or a very small window —
+   have no room for a 13.5rem gutter, and there the cue is the thing that goes:
+   the scroll it describes is the one gesture nobody needs telling about on a
+   touch screen.
+   **`max-height: 680px` was wrong**, and wrong in a way that only a frame
+   capture shows. A portrait iPhone 13 reports 664px of viewport once browser
+   chrome is subtracted, so this branch was firing on the *primary* phone case
+   and quietly overriding the padding meant to clear the scale readout — the
+   panel's top border kept cutting through "agree." while the rule above looked
+   correct in the file. 560px is below any phone held upright. */
+@media (max-width: 720px) and (max-height: 560px) {
   .hero-section__content {
     padding-bottom: 8rem;
   }

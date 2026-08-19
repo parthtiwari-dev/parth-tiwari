@@ -4,7 +4,6 @@ import { sliderConfigs } from '@/data/projects'
 import { usePlainMode } from '@/composables/usePlainMode'
 import { useProjectDeepLink } from '@/composables/useProjectDeepLink'
 import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
-import { useOverlayStore } from '@/stores/overlayStore'
 import { useProjectStore } from '@/stores/projectStore'
 import BootSequence from '@/components/sections/BootSequence.vue'
 import BookingCta from '@/components/conversion/BookingCta.vue'
@@ -52,7 +51,6 @@ function getMediaQueryMatches(query: string) {
 
 const { isPlain } = usePlainMode()
 const evidenceOverlayStore = useEvidenceOverlayStore()
-const overlayStore = useOverlayStore()
 const projectStore = useProjectStore()
 const bootComplete = ref(isPlain.value)
 const isDebug = ref(false)
@@ -79,17 +77,6 @@ const experienceReady = computed(() => isPlain.value || bootComplete.value)
  */
 const sceneInView = ref(true)
 
-/**
- * Any modal surface owning the screen.
- *
- * The rail sits at `z-index: 45` under an overlay at 80, so it was never *on
- * top* — but the panel is glass, and a tab of chrome reading through it is the
- * same defect as the hero reading through it, just quieter. It is also
- * unusable while an overlay traps focus, so there is nothing to keep.
- */
-const anyOverlayOpen = computed(
-  () => overlayStore.isOpen || evidenceOverlayStore.isOpen,
-)
 
 function updateSceneInView() {
   const section = document.getElementById('constellation-section')
@@ -210,7 +197,7 @@ onUnmounted(() => {
       `v-if`, not `visibility: hidden` — a focusable control nobody can see is
       worse than no control.
     -->
-    <ProjectIndex v-if="!isPlain && experienceReady && sceneInView && !anyOverlayOpen" />
+    <ProjectIndex v-if="!isPlain && experienceReady && sceneInView" />
 
     <!-- Booking stays one tap from every screen, in every mode but plain. -->
     <BookingCta v-if="!isPlain && experienceReady" />

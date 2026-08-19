@@ -2,6 +2,7 @@
 import { computed, nextTick, ref } from 'vue'
 import { useEscapeStack } from '@/composables/useEscapeStack'
 import { layoutFor } from '@/data/layout'
+import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
 import { useOverlayStore } from '@/stores/overlayStore'
 import { useProjectStore } from '@/stores/projectStore'
 import type { ProjectNodeKind, ProjectStatus } from '@/types/project'
@@ -18,7 +19,26 @@ import type { ProjectNodeKind, ProjectStatus } from '@/types/project'
  */
 
 const overlayStore = useOverlayStore()
+const evidenceOverlayStore = useEvidenceOverlayStore()
 const projectStore = useProjectStore()
+
+/**
+ * True while a modal surface owns the screen.
+ *
+ * The rail sits under an overlay at `z-index: 45` against 80, so it was never
+ * *on top* — but the project panel is glass, and a tab of chrome reading
+ * through it is the same defect as the hero reading through it, just quieter.
+ *
+ * It recedes rather than unmounting, and that distinction was expensive to
+ * learn: `v-if` here destroys the element the overlay restores focus to when it
+ * closes, so `npm run a11y` went from "focus is restored to the page on close"
+ * passing to failing in one run. Opacity plus `pointer-events: none` hides it
+ * without removing the restore target, and the overlay's focus trap already
+ * stops anyone tabbing to something they cannot see.
+ */
+const overlayOwnsScreen = computed(
+  () => overlayStore.isOpen || evidenceOverlayStore.isOpen,
+)
 
 const isOpen = ref(false)
 const toggleRef = ref<HTMLButtonElement | null>(null)
@@ -101,7 +121,11 @@ useEscapeStack(isOpen, closePanel)
 </script>
 
 <template>
-  <nav class="project-index" :class="{ 'is-open': isOpen }" aria-label="Project index">
+  <nav
+    class="project-index"
+    :class="{ 'is-open': isOpen, 'is-recessed': overlayOwnsScreen }"
+    aria-label="Project index"
+  >
     <button
       ref="toggleRef"
       type="button"
@@ -183,6 +207,23 @@ useEscapeStack(isOpen, closePanel)
   transform: translateY(-50%);
   font-family: var(--font-mono);
   pointer-events: none;
+}
+
+/* Recedes under a modal surface; see the note on `overlayOwnsScreen`. Not
+   `display: none` — the overlay restores focus to a button in here on close. */
+.project-index.is-recessed {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.project-index {
+  transition: opacity 200ms var(--ease-in-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-index {
+    transition: none;
+  }
 }
 
 .project-index__toggle {
