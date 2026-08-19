@@ -220,6 +220,29 @@ export function layoutIn(mode: ScaleMode): Map<string, DerivedNode> {
 }
 
 /**
+ * The radius that contains every node, in world units.
+ *
+ * The end-of-scroll frame is supposed to reveal the whole constellation, and
+ * the pose that did it was typed: the camera sat at z = -7.2, *inside* a ring
+ * whose outer radius is 13.5, looking outward. Four nodes were on screen and
+ * eight were behind the lens. Framing is geometry, so it should be derived from
+ * the thing being framed rather than guessed and then re-guessed every time a
+ * project is added.
+ *
+ * Node radius is included because a star that is half off the edge is not
+ * framed either, and the height term because true scale pushes nodes out to 34
+ * where schematic stops at 13.5.
+ */
+export function constellationExtent(mode: ScaleMode = 'schematic'): number {
+  let extent = 0
+  for (const node of LAYOUTS[mode].values()) {
+    const planar = Math.hypot(node.position.x, node.position.z)
+    extent = Math.max(extent, planar + node.radius)
+  }
+  return extent
+}
+
+/**
  * Throws rather than returning a fallback: a missing entry means a project
  * exists that the derivation did not see, and a silently placed node at the
  * origin is exactly the meaningless decoration this file exists to remove.

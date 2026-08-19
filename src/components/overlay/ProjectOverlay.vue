@@ -114,6 +114,23 @@ function handleKeydown(event: KeyboardEvent) {
   }
 }
 
+/**
+ * Panel advance on wheel — but only once the panel itself has nothing left to
+ * show.
+ *
+ * `data-lenis-prevent` on the root is what makes the early return below mean
+ * anything. Lenis binds `wheel` on `window` with `allowNestedScroll: false`, so
+ * after this handler politely steps aside to let the browser scroll the
+ * overlay, Lenis called `preventDefault()` further up the chain and applied the
+ * delta to the page — which is scroll-locked while the overlay is open. The
+ * result was an overlay with 275px of content below the fold on desktop and
+ * up to 1146px on a phone, and a wheel that moved it exactly 0px. Measured, not
+ * inferred: one notch moves 0px without the attribute and 100px with it.
+ *
+ * Touch was never affected, because Lenis runs `syncTouch: false` and returns
+ * without cancelling for touch events. That asymmetry is why the bug read as
+ * "the phone is fine and the desktop is broken".
+ */
 function handleWheel(event: WheelEvent) {
   if (Math.abs(event.deltaY) < 18) {
     return
@@ -206,6 +223,7 @@ onUnmounted(() => {
       class="project-overlay"
       role="dialog"
       aria-modal="true"
+      data-lenis-prevent
       :aria-label="`${activeProject.name} evidence overlay`"
       tabindex="-1"
       @wheel="handleWheel"

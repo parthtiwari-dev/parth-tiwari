@@ -28,6 +28,7 @@ import {
   seedOrbitFromCamera,
 } from '@/composables/useFreeOrbit'
 import { sampleCameraPath, type CameraSample } from '@/data/cameraPath'
+import { constellationExtent } from '@/data/layout'
 import { livePosition } from '@/data/nodeMotion'
 import { registerSceneRig } from '@/data/sceneRig'
 import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
@@ -56,9 +57,85 @@ const rigOffset = new THREE.Vector3()
 const rigQuaternion = new THREE.Quaternion()
 const rigEuler = new THREE.Euler()
 
+/**
+ * The reveal (PLAN.md 4.9).
+ *
+ * "Everything in one frame" is a geometric claim, and the typed pose could not
+ * keep it: the old path ended inside the ring looking outward and put four of
+ * twelve nodes on screen. Containing a disc of radius R needs
+ * `R / tan(halfAngle)` on whichever screen axis is narrower — and on a portrait
+ * phone that is the *horizontal* one, where the half-angle is only
+ * `atan(tan(vFov/2) * aspect)`. At 390x844 that is 10.8°, so a ring the desktop
+ * frames comfortably at 32 units would need 70. No single typed number can be
+ * right for both.
+ *
+ * So the last stretch of the path is framed rather than positioned: keep the
+ * pose's direction, and push the camera out along it until the extent fits.
+ * Where that would exceed `MAX_DISTANCE` the field of view opens instead, up to
+ * a cap — a phone showing a wide establishing shot is normal, a phone showing a
+ * third of the work is not.
+ *
+ * `REVEAL_FROM` is where the widening starts. Earlier than that the authored
+ * poses are the shot and nothing should touch them.
+ */
+const BASE_FOV = 45
+const REVEAL_FROM = 0.82
+const REVEAL_MARGIN = 1.08
+const MAX_REVEAL_FOV = 78
+
+const revealDirection = new THREE.Vector3()
+
+function frameReveal(camera: THREE.PerspectiveCamera, progress: number) {
+  if (progress < REVEAL_FROM) {
+    if (Math.abs(camera.fov - BASE_FOV) > 0.01) {
+      camera.fov = BASE_FOV
+      camera.updateProjectionMatrix()
+    }
+    return
+  }
+
+  const extent = constellationExtent(scaleModeStore.mode) * REVEAL_MARGIN
+  const blend = THREE.MathUtils.smoothstep(progress, REVEAL_FROM, 1)
+
+  // Narrower screen axis wins. On a desktop that is vertical; on a phone held
+  // upright it is horizontal, and getting this backwards is exactly how the
+  // pose came to be authored for one device.
+  const halfVertical = THREE.MathUtils.degToRad(BASE_FOV) / 2
+  const halfHorizontal = Math.atan(Math.tan(halfVertical) * camera.aspect)
+  const halfAngle = Math.min(halfVertical, halfHorizontal)
+
+  const needed = extent / Math.tan(halfAngle)
+  const posed = sample.position.distanceTo(sample.target)
+  const reach = Math.min(Math.max(posed, needed), MAX_DISTANCE)
+
+  revealDirection.copy(sample.position).sub(sample.target)
+  const posedLength = revealDirection.length()
+  if (posedLength > 1e-4) {
+    revealDirection.multiplyScalar(THREE.MathUtils.lerp(posed, reach, blend) / posedLength)
+    camera.position.copy(sample.target).add(revealDirection)
+  }
+
+  // Still short? Open the lens for the remainder rather than cropping the work.
+  let fov = BASE_FOV
+  if (needed > reach) {
+    const shortfall = Math.atan(extent / reach)
+    const wideVertical = camera.aspect >= 1
+      ? shortfall
+      : Math.atan(Math.tan(shortfall) / camera.aspect)
+    fov = Math.min(MAX_REVEAL_FOV, THREE.MathUtils.radToDeg(wideVertical) * 2)
+  }
+
+  const blended = THREE.MathUtils.lerp(BASE_FOV, fov, blend)
+  if (Math.abs(camera.fov - blended) > 0.01) {
+    camera.fov = blended
+    camera.updateProjectionMatrix()
+  }
+}
+
 let stopPath: (() => void) | null = null
 let stopInput: (() => void) | null = null
 let lastGuidedProgress = Number.NaN
+let lastAspect = Number.NaN
 let seeded = false
 
 /**
@@ -206,17 +283,24 @@ const loop = useLoop().onBeforeRender(({ delta }) => {
       props.rig.position.set(0, 0, 0)
       props.rig.updateMatrixWorld(true)
     }
-    // A still page is the common case and `lookAt` recomputes a matrix.
-    if (progress.value === lastGuidedProgress) return
+    // A still page is the common case and `lookAt` recomputes a matrix. Aspect
+    // is part of the key because the reveal is framed against it — resize the
+    // window at the end of the scroll and progress never changes, so keying on
+    // progress alone would leave the frame sized for the old viewport.
+    if (progress.value === lastGuidedProgress && activeCamera.aspect === lastAspect) return
     lastGuidedProgress = progress.value
+    lastAspect = activeCamera.aspect
 
     sampleCameraPath(progress.value, sample)
     activeCamera.position.copy(sample.position)
+    // Widens the last stretch until the whole constellation fits this screen.
+    // Writes `position` and `fov`; must run before `lookAt`.
+    frameReveal(activeCamera, progress.value)
     activeCamera.lookAt(sample.target)
     // The scale readout claims to describe where the camera is, so it has to be
     // fed in guided mode as well — otherwise it reports the free-orbit default
     // for the entire scripted path and contradicts the view on screen.
-    navigation.setDistance(sample.position.distanceTo(sample.target))
+    navigation.setDistance(activeCamera.position.distanceTo(sample.target))
     return
   }
 

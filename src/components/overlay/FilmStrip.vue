@@ -18,7 +18,8 @@ const emit = defineEmits<{
   setPanel: [index: number]
 }>()
 
-const frameRef = ref<HTMLElement | null>(null)
+const stripRef = ref<HTMLElement | null>(null)
+
 
 const EVIDENCE_PANELS = [
   { label: 'Problem', shortLabel: 'Prob', component: PanelProblem },
@@ -42,23 +43,34 @@ const panels = computed(() => (
 
 const activePanel = computed(() => panels.value[props.activePanelIndex] ?? panels.value[0])
 
+/**
+ * Switching panel returns you to the top of the new one.
+ *
+ * The scroller is `.project-overlay`, not `.film-strip__frame`. The frame is
+ * `overflow: visible` and has never scrolled, so resetting *its* `scrollTop`
+ * was a no-op that read as correct — switch panels while scrolled down and you
+ * landed in the middle of the next panel, halfway through a sentence. It
+ * survived because the assignment succeeds silently on a non-scrolling box.
+ *
+ * Walking up to the nearest scrolling ancestor rather than naming the class
+ * keeps this honest if the scroller moves again.
+ */
 watch(
   () => props.activePanelIndex,
   async () => {
     await nextTick()
 
-    if (!frameRef.value) {
-      return
-    }
+    const scroller = stripRef.value?.closest<HTMLElement>('.project-overlay')
+    if (!scroller) return
 
-    frameRef.value.scrollTop = 0
-    frameRef.value.scrollLeft = 0
+    scroller.scrollTop = 0
+    scroller.scrollLeft = 0
   },
 )
 </script>
 
 <template>
-  <div class="film-strip">
+  <div ref="stripRef" class="film-strip">
     <nav class="film-strip__nav" aria-label="Project evidence panels">
       <button
         v-for="(panel, index) in panels"
@@ -73,7 +85,7 @@ watch(
       </button>
     </nav>
 
-    <div ref="frameRef" class="film-strip__frame">
+    <div class="film-strip__frame">
       <Transition name="film-panel" mode="out-in">
         <component
           :is="activePanel.component"
@@ -222,9 +234,19 @@ watch(
 }
 
 @media (max-width: 720px) {
+  /* Three columns, not five.
+   *
+   * Five was the panel count before `PanelShowcase` existed. A project with a
+   * capture has six, so the sixth tile wrapped onto a row of its own and sat
+   * alone at 1/5 width — a ragged shelf under the header. Three columns divide
+   * both counts (5 leaves one gap on the last row, 6 fills exactly two rows),
+   * and the tiles get wide enough for the full word instead of `Bound`.
+   *
+   * It also buys back vertical space, which is the scarce axis here: the header
+   * plus this nav was eating 870 of 1150px before a phone saw any content. */
   .film-strip__nav {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0.32rem;
     margin-inline: 0;
     overflow: visible;
@@ -236,33 +258,38 @@ watch(
   }
 
   .film-strip__nav button {
-    display: grid;
+    display: flex;
     min-width: 0;
-    min-height: 3.65rem;
-    align-content: center;
-    justify-items: center;
-    gap: 0.22rem;
-    padding: 0.5rem 0.2rem;
+    /* 2.75rem is the documented touch minimum; the tiles no longer need to be
+       stacked two lines tall now that three columns give them the width. */
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.34rem;
+    padding: 0.5rem 0.35rem;
     letter-spacing: 0.09em;
     scroll-snap-align: none;
   }
 
   .film-strip__panel-number {
     margin-right: 0;
-    font-size: 0.72rem;
+    font-size: 0.68rem;
   }
 
+  /* Three columns fit the real word. `Bound` and `Prob` were abbreviations
+     forced by a 1/5-width tile, and an abbreviation in a nav is a small tax on
+     every visitor to save space that is no longer scarce. */
   .film-strip__label-full {
-    display: none;
-  }
-
-  .film-strip__label-short {
     display: inline;
     max-width: 100%;
     overflow: hidden;
-    font-size: 0.58rem;
+    font-size: 0.62rem;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .film-strip__label-short {
+    display: none;
   }
 
   .film-strip__nav button::before,

@@ -79,20 +79,68 @@ export function useNodeInteraction(options: NodeInteractionOptions) {
     setHover(pick(event))
   }
 
+  /**
+   * A press is not a click (PLAN.md 4.10).
+   *
+   * This opened the overlay on `pointerdown`, with no movement threshold and no
+   * `pointerup`. Pressing a star to orbit the scene therefore selected it the
+   * instant the button went down — before the drag had moved a single pixel —
+   * so the one gesture the scene is built around could not be started from the
+   * one place a visitor naturally reaches for. Drag from empty space and free
+   * orbit worked; drag from a star and you got a dialog.
+   *
+   * Discriminate the way every other pointer surface does: remember what was
+   * under the press, and only select if the pointer comes back up on the same
+   * node without having travelled. `SLOP` is in CSS pixels and deliberately
+   * generous — a touch press wanders a few pixels on its own, and the cost of
+   * being strict is a tap that does nothing.
+   */
+  const SLOP = 6
+  let pressedProjectId: string | null = null
+  let pressedAt: { x: number; y: number } | null = null
+
   function handlePointerDown(event: PointerEvent) {
+    pressedProjectId = null
+    pressedAt = null
+
     if (options.isEnabled && !options.isEnabled()) {
       return
     }
 
     const entry = pick(event)
+    if (!entry) return
 
-    if (entry) {
-      options.onSelect(entry.projectId)
-    }
+    pressedProjectId = entry.projectId
+    pressedAt = { x: event.clientX, y: event.clientY }
+  }
+
+  function handlePointerUp(event: PointerEvent) {
+    const projectId = pressedProjectId
+    const from = pressedAt
+    pressedProjectId = null
+    pressedAt = null
+
+    if (!projectId || !from) return
+    if (options.isEnabled && !options.isEnabled()) return
+    if (Math.hypot(event.clientX - from.x, event.clientY - from.y) > SLOP) return
+
+    // Re-pick on release: the scene keeps moving under a stationary pointer
+    // (nodes orbit, and the idle drift rotates the rig), so "same place" is not
+    // the same thing as "same star".
+    const entry = pick(event)
+    if (entry?.projectId !== projectId) return
+
+    options.onSelect(projectId)
+  }
+
+  function handlePointerCancel() {
+    pressedProjectId = null
+    pressedAt = null
   }
 
   function handlePointerLeave() {
     setHover(null)
+    handlePointerCancel()
   }
 
   function start() {
@@ -108,6 +156,8 @@ export function useNodeInteraction(options: NodeInteractionOptions) {
 
       window.addEventListener('pointermove', handlePointerMove, { passive: true })
       window.addEventListener('pointerdown', handlePointerDown)
+      window.addEventListener('pointerup', handlePointerUp)
+      window.addEventListener('pointercancel', handlePointerCancel)
       window.addEventListener('blur', handlePointerLeave)
     }
 
@@ -117,6 +167,8 @@ export function useNodeInteraction(options: NodeInteractionOptions) {
       cancelAnimationFrame(frameId)
       window.removeEventListener('pointermove', handlePointerMove)
       window.removeEventListener('pointerdown', handlePointerDown)
+      window.removeEventListener('pointerup', handlePointerUp)
+      window.removeEventListener('pointercancel', handlePointerCancel)
       window.removeEventListener('blur', handlePointerLeave)
     }
   }

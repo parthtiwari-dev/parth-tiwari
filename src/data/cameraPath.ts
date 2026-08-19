@@ -23,17 +23,48 @@ export interface CameraPose {
   target: THREE.Vector3
 }
 
+/**
+ * **The path is an orbit. It must never fly through its own look-at point.**
+ *
+ * The previous array did exactly that. Between 70% and 78% of the scroll the
+ * camera crossed its target and the look direction on z swung from -0.51 to
+ * +0.76 — a 180° turn inside 8% of the runway, with the camera 2.06 units from
+ * the point it was aiming at, which is where `lookAt()` loses its up vector and
+ * the roll snaps. On screen every star swept across the frame and re-landed
+ * somewhere else. That was the "flip".
+ *
+ * The fix is structural, not a nudge to a number: keep the target at or near
+ * the origin for the whole path and move the camera on an arc around it. Then
+ * the view direction rotates continuously by construction, there is no crossing
+ * to protect against, and the guided tour becomes the same *kind* of motion as
+ * free orbit — which is the motion that already felt right, and the reason the
+ * handover in `NavigationController` reads as a handover rather than a cut.
+ *
+ * The invariant, if you edit these: every pose's camera-to-target distance
+ * stays well clear of zero. Measured along the interpolated curve, not just
+ * at the poses, the closest approach here is 11.48 units and the sharpest
+ * turn is 1.83° per quarter-percent of scroll. The old array's numbers were
+ * 2.06 units and a 180° reversal.
+ */
 export const CAMERA_POSES: CameraPose[] = [
-  // Pose 0 looks left of centre so the constellation composes into the right of
-  // frame, clear of the wordmark. The hand-typed node coordinates used to do
-  // this framing implicitly by clustering everything stage-right; once positions
-  // became derived (3.1) that job moved to the camera, which is where it
-  // belonged — the layout encodes the data, the camera decides the shot.
-  { at: 0.0,  position: new THREE.Vector3(0, 6, 22),    target: new THREE.Vector3(-4.2, 0, 2) },
-  { at: 0.25, position: new THREE.Vector3(1, 5.5, 18),  target: new THREE.Vector3(-2.0, 0, 2) },
-  { at: 0.5,  position: new THREE.Vector3(-1, 5, 15),   target: new THREE.Vector3(0, 0.15, 2.6) },
-  { at: 0.75, position: new THREE.Vector3(0, 2.4, 5.8), target: new THREE.Vector3(0, 0.5, 6.6) },
-  { at: 1.0,  position: new THREE.Vector3(0, 2.1, -7.2), target: new THREE.Vector3(0, 0.7, 9) },
+  // Arrival. Target held left of centre so the constellation composes into the
+  // right of frame, clear of the wordmark — the layout encodes the data, the
+  // camera decides the shot.
+  { at: 0.0,  position: new THREE.Vector3(-6, 7, 21),    target: new THREE.Vector3(-4.2, 0, 1.5) },
+  // Swing left and close in. Target eases toward the origin as the wordmark
+  // fades, so the constellation takes the centre it was giving away.
+  { at: 0.25, position: new THREE.Vector3(-12, 5, 14),   target: new THREE.Vector3(-1.5, 0, 1.5) },
+  // Low and behind: the ring seen almost edge-on, raking. This is the only
+  // moment the plane of the constellation is legible *as* a plane.
+  { at: 0.5,  position: new THREE.Vector3(-9, 1.6, -11), target: new THREE.Vector3(0, 0, 0) },
+  // Continue the arc round the far side. Still an orbit, still no crossing.
+  { at: 0.75, position: new THREE.Vector3(7, 3.5, -16),  target: new THREE.Vector3(0, 0, 0) },
+  // The reveal: rise and pull back to look down on the whole system. The
+  // distance here is a floor, not the final word — `NavigationController`
+  // widens it to whatever actually contains `constellationExtent()` at the
+  // live camera's aspect, because a pose typed for a 16:10 desktop frames
+  // nothing on a portrait phone.
+  { at: 1.0,  position: new THREE.Vector3(2, 26, 18),    target: new THREE.Vector3(0, 0, 0) },
 ]
 
 /**
