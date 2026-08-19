@@ -45,18 +45,34 @@ export function registerScreenRegion(key: string, next: ScreenRegion | null): vo
 }
 
 /**
- * True when this screen point is under any visible piece of chrome.
+ * True when a label anchored here would land any of its text on visible chrome.
  *
- * `padding` widens each box, because a label is a run of text anchored at a
- * point and drawn beside it — an anchor a few pixels outside the box still
- * lands its name inside.
+ * **The extent matters, not the anchor.** The first version tested the anchor
+ * point with 12px of padding, and "Tathya" still rendered underneath the
+ * constellation index: its star sat 25px to the *left* of the panel — outside
+ * the box, so no overlap — while the name it draws to the right ran 90px
+ * straight into it. A label is a run of text beside a point, so the test has to
+ * be the run.
+ *
+ * `reach` is how far the text extends in its drawing direction, and `flipped`
+ * says which direction that is. Both come from the projector, which is the only
+ * thing that knows whether this label flipped to clear the right edge.
  */
-export function overlapsChrome(x: number, y: number, padding = 12): boolean {
+export function overlapsChrome(
+  x: number,
+  y: number,
+  reach = 0,
+  flipped = false,
+): boolean {
+  const left = flipped ? x - reach : x
+  const right = flipped ? x : x + reach
+  const padding = 12
+
   for (const region of regions.values()) {
     if (region.opacity < 0.1) continue
     if (
-      x >= region.left - padding
-      && x <= region.right + padding
+      right >= region.left - padding
+      && left <= region.right + padding
       && y >= region.top - padding
       && y <= region.bottom + padding
     ) return true

@@ -80,10 +80,27 @@ useMagnetic(ctaRef, { radius: 110, strength: 6 })
   padding: 0.6rem 1rem;
   border: 1px solid color-mix(in srgb, var(--gold) 66%, transparent);
   border-radius: 999px;
+  /*
+   * Opaque, and haloed (PLAN.md 8.14).
+   *
+   * This is `position: fixed` and it must never move (CLAUDE.md: booking stays
+   * one tap from every screen), so page content passes underneath it at some
+   * scroll position no matter what the sections do about padding. At 78% the
+   * body copy behind was legible *through* the pill — "your users can open in a
+   * browser" reading straight across the label. A floating action that hides
+   * what is behind it is normal; one you can read two things through is a bug.
+   *
+   * The shadow is kept tight on purpose. A wide one reads as a scrim and was
+   * fading three words of perfectly good body copy on either side, which trades
+   * one legibility problem for a subtler one — a clean edge says "something is
+   * on top of this", a soft gradient says "this text is broken".
+   */
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--gold) 24%, transparent), transparent 62%),
-    color-mix(in srgb, var(--bg) 78%, transparent);
-  box-shadow: 0 0.5rem 1.75rem color-mix(in srgb, var(--bg) 55%, transparent);
+    var(--bg);
+  box-shadow:
+    0 0.5rem 1.75rem var(--bg),
+    0 0 1.25rem 0.4rem color-mix(in srgb, var(--bg) 72%, transparent);
   color: var(--gold-glow);
   font-family: var(--font-mono);
   font-size: var(--text-xs);

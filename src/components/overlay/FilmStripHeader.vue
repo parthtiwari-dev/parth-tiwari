@@ -171,33 +171,57 @@ h2 {
 }
 
 /*
- * Vertical is the scarce axis on a phone (PLAN.md 8.8).
+ * Vertical is the scarce axis on a phone, but not at any price (PLAN.md 8.8,
+ * corrected in 8.14).
  *
- * Stacking the title above a wrapping row of controls, above a two-row panel
- * nav, above a full-width dial put roughly 870 of 1150px between opening a
- * project and reading a word about it — measured from a real capture, not
- * estimated. The controls move back onto the title's row: they are three
- * 44px targets and there is room beside a two-line heading for them.
+ * 8.8 moved the controls onto the title's row to buy back vertical space, and
+ * that was measured wrong. Three 2.75rem targets plus their gaps take ~150px of
+ * a 390px viewport, which left the title column at ~290px — and "Stick and Dot"
+ * wrapped to **three** lines while "EPHEMERIS / WORK EXPERIENCE" took another
+ * three. The row saved 40px of header and spent 90px on wrapping.
  *
- * The buttons stay at 2.75rem. That is the documented touch minimum and it is
- * not what was costing the space.
+ * So the controls go back below the title, where they get the full width and sit
+ * in one tidy row. The height comes out of the *type* instead: the eyebrow drops
+ * to one line by not breaking on the slash, and the title steps down a size,
+ * which is a change nobody notices and this does not have to pay for twice.
  */
 @media (max-width: 760px) {
   .film-strip-header {
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 0.75rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.55rem;
   }
 
   .film-strip-header__controls {
-    flex-shrink: 0;
     flex-wrap: nowrap;
+    justify-content: flex-end;
     gap: 0.4rem;
   }
 
   .film-strip-header__button {
     width: 2.75rem;
     height: 2.75rem;
+  }
+
+  /* One line, not three. `clamp(2rem, 4.4vw, 4.8rem)` takes its 2rem floor on a
+     phone, which is 32px of Spectral at 0.06em tracking — "Stick and Dot" does
+     not fit 390px minus the shell padding at that size, and a three-line title
+     is the header cost this breakpoint was trying to avoid. */
+  .film-strip-header h2 {
+    font-size: 1.65rem;
+    letter-spacing: 0.03em;
+    line-height: 1.02;
+  }
+
+  /* The eyebrow was breaking after "EPHEMERIS /" and again after "WORK",
+     spending three lines on a breadcrumb. It is small enough to keep whole and
+     ellipsise if a longer kind ever appears. */
+  .film-strip-header__eyebrow {
+    overflow: hidden;
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 </style>

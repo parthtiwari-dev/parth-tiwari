@@ -329,6 +329,7 @@ onUnmounted(() => {
         project can never make it.
       -->
       <NodeLabels
+        v-if="!sceneInteractionPaused"
         :context="tresContext"
         :hovered-project-id="hoveredProjectId"
         :paused="overlaysPaused"
@@ -346,14 +347,25 @@ onUnmounted(() => {
         ended up underneath "Book a call". Booking is never the thing that moves
         (CLAUDE.md), so this does.
       -->
-      <div ref="navDockEl" class="nav-controls-dock absolute bottom-20 left-16 z-30 md:bottom-6 md:left-6">
+      <div
+        v-if="!sceneInteractionPaused"
+        ref="navDockEl"
+        class="nav-controls-dock absolute bottom-20 left-16 z-30 md:bottom-6 md:left-6"
+      >
         <NavigationControls />
       </div>
 
       <!-- bottom-24, not bottom-6: BookingCta.vue also docks bottom-right (fixed,
            z-90) and would otherwise sit on top of this legend's last two lines. -->
+      <!--
+        Scene chrome hides while an overlay owns the screen (8.14). These are
+        controls for a scene that is paused, and they were reading through the
+        project panel's glass — "CONSTELLATION + −" and "SHOW TRUE SCALE"
+        legible underneath the copy. A control for something you cannot
+        currently touch is not chrome, it is noise.
+      -->
       <div
-        v-if="evidenceOverlayStore.activeKind !== 'about'"
+        v-if="evidenceOverlayStore.activeKind !== 'about' && !sceneInteractionPaused"
         ref="legendEl"
         class="constellation-index absolute bottom-24 right-6 z-30 hidden md:block"
       >

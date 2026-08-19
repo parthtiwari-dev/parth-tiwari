@@ -4,6 +4,7 @@ import { sliderConfigs } from '@/data/projects'
 import { usePlainMode } from '@/composables/usePlainMode'
 import { useProjectDeepLink } from '@/composables/useProjectDeepLink'
 import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
+import { useOverlayStore } from '@/stores/overlayStore'
 import { useProjectStore } from '@/stores/projectStore'
 import BootSequence from '@/components/sections/BootSequence.vue'
 import BookingCta from '@/components/conversion/BookingCta.vue'
@@ -51,6 +52,7 @@ function getMediaQueryMatches(query: string) {
 
 const { isPlain } = usePlainMode()
 const evidenceOverlayStore = useEvidenceOverlayStore()
+const overlayStore = useOverlayStore()
 const projectStore = useProjectStore()
 const bootComplete = ref(isPlain.value)
 const isDebug = ref(false)
@@ -66,6 +68,37 @@ const isAboutOverlayOpen = computed(() => (
   && evidenceOverlayStore.activeKind === 'about'
 ))
 const experienceReady = computed(() => isPlain.value || bootComplete.value)
+
+/**
+ * True while any part of `#constellation-section` is still on screen.
+ *
+ * Read from scroll rather than an IntersectionObserver because the answer is
+ * needed on a threshold, not on a crossing, and the page already listens to
+ * scroll for the hero fade — a second observer for one boolean is not worth the
+ * lifecycle.
+ */
+const sceneInView = ref(true)
+
+/**
+ * Any modal surface owning the screen.
+ *
+ * The rail sits at `z-index: 45` under an overlay at 80, so it was never *on
+ * top* — but the panel is glass, and a tab of chrome reading through it is the
+ * same defect as the hero reading through it, just quieter. It is also
+ * unusable while an overlay traps focus, so there is nothing to keep.
+ */
+const anyOverlayOpen = computed(
+  () => overlayStore.isOpen || evidenceOverlayStore.isOpen,
+)
+
+function updateSceneInView() {
+  const section = document.getElementById('constellation-section')
+  if (!section) {
+    sceneInView.value = true
+    return
+  }
+  sceneInView.value = section.getBoundingClientRect().bottom > 0
+}
 
 /**
  * One scene at every breakpoint (PLAN.md 2.5).
@@ -115,11 +148,17 @@ onMounted(() => {
   syncMediaState()
   mobileMediaQuery.addEventListener('change', syncMediaState)
   reducedMotionMediaQuery.addEventListener('change', syncMediaState)
+
+  updateSceneInView()
+  window.addEventListener('scroll', updateSceneInView, { passive: true })
+  window.addEventListener('resize', updateSceneInView, { passive: true })
 })
 
 onUnmounted(() => {
   mobileMediaQuery?.removeEventListener('change', syncMediaState)
   reducedMotionMediaQuery?.removeEventListener('change', syncMediaState)
+  window.removeEventListener('scroll', updateSceneInView)
+  window.removeEventListener('resize', updateSceneInView)
 })
 </script>
 
@@ -154,8 +193,24 @@ onUnmounted(() => {
     <MobileSystemsIndex v-if="showMobileSystemsIndex" />
     <MobileFooterDock v-if="showMobileSystemsIndex" />
 
-    <!-- Keyboard and screen-reader route to all nine projects, every breakpoint. -->
-    <ProjectIndex v-if="!isPlain && experienceReady" />
+    <!--
+      Keyboard and screen-reader route to every project, for as long as the
+      constellation is the thing on screen (PLAN.md 8.14).
+
+      It is `position: fixed` at the left edge, so once the page scrolls past
+      the constellation into the DOM sections it started printing through their
+      copy — "I build AI products people actually use" lost its first letters to
+      the tab, and "OPEN EVIDENCE →" lost its O. Padding the sections would cost
+      44px of width on a 390px phone to accommodate a control for a scene that
+      is no longer visible.
+
+      Removing it below the scene is safe *because* of what is down there: the
+      services and contact sections list every project as a real card with its
+      own focusable "open evidence" link, so nothing becomes unreachable. It is
+      `v-if`, not `visibility: hidden` — a focusable control nobody can see is
+      worse than no control.
+    -->
+    <ProjectIndex v-if="!isPlain && experienceReady && sceneInView && !anyOverlayOpen" />
 
     <!-- Booking stays one tap from every screen, in every mode but plain. -->
     <BookingCta v-if="!isPlain && experienceReady" />

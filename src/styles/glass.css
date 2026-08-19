@@ -6,13 +6,17 @@
  * fix is mostly in `ProjectOverlay.vue` — the scrim stopped pre-blurring the
  * scene — but three things change here too.
  *
- * The tint drops from 0.42 to 0.30 so the blurred starfield is actually
- * visible through it rather than being a rumour under a wash. The blur comes
- * *down* from 22px to 16px, which is the counter-intuitive half: past about
- * 18px the sample radius exceeds the spacing of anything in a starfield and
- * every sample averages to the same grey, so more blur was buying less glass.
- * And `brightness(1.06)` joins saturate, because real glass gathers light —
- * without it a transparent panel over black reads as a hole.
+ * The tint drops from 0.42 to 0.38 and the blur from 22px to 20px, so the
+ * starfield behind is visible as structure rather than as a uniform wash.
+ * `brightness(1.06)` joins saturate, because real glass gathers light — without
+ * it a transparent panel over black reads as a hole.
+ *
+ * **The first attempt at this went much further** — tint 0.30, blur 16px — on
+ * the theory that past ~18px the sample radius exceeds the spacing of anything
+ * in a starfield. That is true of the starfield and irrelevant to what was
+ * actually behind the panel: the hero wordmark at 100px, which survives any
+ * blur radius, and the scene chrome. Both are hidden while an overlay is open
+ * now (8.14), which is the real fix; these numbers only have to handle stars.
  */
 .glass-panel {
   position: relative;
@@ -21,14 +25,14 @@
   background:
     radial-gradient(circle at 12% 0%, rgba(255, 255, 255, 0.1), transparent 30%),
     linear-gradient(135deg, rgba(216, 234, 240, 0.09), rgba(216, 234, 240, 0.018) 45%, rgba(11, 182, 214, 0.035)),
-    rgba(3, 10, 18, 0.30);
+    rgba(3, 10, 18, 0.38);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.2),
     inset 0 -1px 0 rgba(46, 79, 94, 0.24),
     0 0 0 1px rgba(11, 182, 214, 0.04),
     0 28px 120px rgba(0, 0, 0, 0.42);
-  backdrop-filter: blur(16px) saturate(1.55) brightness(1.06) contrast(1.06);
-  -webkit-backdrop-filter: blur(16px) saturate(1.55) brightness(1.06) contrast(1.06);
+  backdrop-filter: blur(20px) saturate(1.55) brightness(1.06) contrast(1.06);
+  -webkit-backdrop-filter: blur(20px) saturate(1.55) brightness(1.06) contrast(1.06);
 }
 
 .glass-panel::before,

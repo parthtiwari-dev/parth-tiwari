@@ -276,14 +276,25 @@ watch(
     font-size: 0.68rem;
   }
 
-  /* Three columns fit the real word. `Bound` and `Prob` were abbreviations
-     forced by a 1/5-width tile, and an abbreviation in a nav is a small tax on
-     every visitor to save space that is no longer scarce. */
+  /* Three columns fit the real word — except one. At 390px a tile is ~110px
+     and "Architecture" needs ~120px at 0.62rem mono, so it shipped as
+     "03 ARCHITECTU…", which is worse than the abbreviation it replaced. The
+     number and the word stack instead: two short lines inside the same tile,
+     no truncation, and the tile stays one touch target.
+     `Bound` and `Prob` are gone either way — an abbreviation in a nav is a tax
+     on every visitor. */
+  .film-strip__nav button {
+    flex-direction: column;
+    gap: 0.12rem;
+    padding: 0.42rem 0.25rem;
+  }
+
   .film-strip__label-full {
     display: inline;
     max-width: 100%;
     overflow: hidden;
-    font-size: 0.62rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.04em;
     text-overflow: ellipsis;
     white-space: nowrap;
   }

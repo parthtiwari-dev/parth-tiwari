@@ -133,21 +133,43 @@ async function captureProjects(browser, device) {
       // before the browser can act on it, which only a synthesised gesture
       // reproduces.
       const box = await page.locator('.project-overlay').boundingBox()
-      const before = await page.evaluate(() =>
-        document.querySelector('.project-overlay')?.scrollTop ?? null)
+
+      // Read the state *before* the gesture. The first version recorded
+      // `scrollHeight` afterwards, which made five perfectly correct panels
+      // look broken: a panel that fits does not scroll, so the wheel advances
+      // to the next one — and if that one is taller, the report showed "hidden
+      // 148, scrollTop did not move" for a panel that never had 148px to hide.
+      // A measurement taken after the thing you are measuring has changed is
+      // not a measurement.
+      const before = await page.evaluate(() => {
+        const el = document.querySelector('.project-overlay')
+        if (!el) return null
+        return {
+          scrollTop: el.scrollTop,
+          hidden: el.scrollHeight - el.clientHeight,
+          panel: document.querySelector('.film-strip__nav button.is-active')?.textContent?.trim(),
+        }
+      })
+
       if (box) {
         await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2 + 200)
         await page.mouse.wheel(0, 100)
         await settle(page, 600)
       }
+
       const moved = await page.evaluate((from) => {
         const el = document.querySelector('.project-overlay')
-        if (!el) return null
+        if (!el || !from) return null
+        const panel = document.querySelector('.film-strip__nav button.is-active')?.textContent?.trim()
         return {
-          before: from,
-          after: el.scrollTop,
-          scrollH: el.scrollHeight,
-          clientH: el.clientHeight,
+          hiddenBefore: from.hidden,
+          from: from.scrollTop,
+          to: el.scrollTop,
+          // A panel change is the *correct* outcome when there was nothing
+          // left to scroll, so the report has to be able to tell the two
+          // apart rather than counting both as "did not move".
+          advanced: panel !== from.panel,
+          panel,
         }
       }, before)
       await settle(page, 500)

@@ -477,12 +477,28 @@ that "scrolling inside a project doesn't work" becomes a number.
 | ✅ 8.11 | **The thesis took 58 seconds to appear.** `useCharacterSplit` re-armed a `setTimeout` per character, which makes total duration a function of how often the browser runs a timer rather than of `msPerChar`. Measured on the hero tagline — 83 characters at 8ms, so 664ms of intent — the real rate was **one character every 700ms**. Timers are the lowest-priority thing on the event loop and this page runs a WebGL scene ahead of them. Now time-derived on `gsap.ticker`: a slow device skips characters and still finishes on schedule. `msPerChar` raised to 18, because 664ms was never observed and reads as a flash rather than as typing. |
 | ✅ 8.12 | **Labels and DOM chrome shared a coordinate system and ignored each other.** The hero is `position: fixed` over the canvas, so at 390px three project names printed straight through "PARTH TIWARI" and the thesis line, on the first frame anybody sees; at the other end of the scroll "Tathya" rendered underneath the constellation index. `data/screenRegions.ts` lets each surface publish its box and the projector demotes only the labels that actually overlap one — a name to a dot, never to nothing, because the star is the invitation. Hero measurement is `ResizeObserver`-driven: the tagline types itself in, so the box grows after mount while the page is still. Names near the right edge now flip to the other side of their star. |
 | ✅ 8.13 | **The reveal shows every project, on every screen.** Covered in 4.9 — recorded here because it is the frame this phase was called in to fix. Desktop 8/12 → **12/12**, phone 2/12 → **12/12**. |
+| ✅ 8.14 | **Phase 8 reviewed against the deployed site, and three of its own changes reverted.** Captured every frame again — this time from `parth-tiwari-1.vercel.app`, not a local preview — and looked at all of them rather than the ten that confirmed the fixes. **8.7 went too far**: with the panel tint at 0.30 and the blur at 16px, "PARTH TIWARI" at 100px and the whole thesis line read straight *through* an open project, along with the legend, the scale readout and two node labels. The reasoning was wrong in a specific way — 16px is enough blur for a starfield and no blur radius small enough to leave stars looking like stars will touch a 100px serif. The real fix is to remove what is behind rather than fight it through the glass: the hero now hides for *any* overlay (it only checked the evidence one, so opening a project left it at full opacity), and the scene chrome and node labels hide with it, since they are controls for a paused scene. Tint back to 0.38, blur to 20px. **8.8 also cost more than it saved**: moving the overlay's controls onto the title row bought 40px of header and spent 90px on wrapping — three 44px targets take 150px of a 390px viewport, so "Stick and Dot" wrapped to three lines. Controls back below the title; the height comes out of the type instead. And the three-column panel nav shipped "03 ARCHITECTU…", so number and word stack inside the tile. **8.12 tested the wrong thing**: `overlapsChrome` checked the anchor point, so "Tathya" — whose star sat 25px left of the legend while its name ran 90px into it — was never demoted. It tests the label's extent now, in its drawing direction. Also: a `name`-level label rendered text with no marker, on the assumption that the star is the marker, which fails when the star is behind the corona; the top bar's scrim started fading inside the bar's own band and let a serif heading through at 25%; the booking pill was 78% opaque so body copy read through it; and the index rail printed through the DOM sections below the scene, where every project is already a focusable card. |
 
 **Exit:** the frames say so. `npm run frames` before and after, and the before/after pair is
 the evidence — not a claim in a commit message.
 
-**Status 2026-08-19 — 13 of 13 done.** Gates: typecheck, build, budget (118.19 kB eager,
+**Status 2026-08-19 — 14 of 14 done.** Gates: typecheck, build, budget (118.33 kB eager,
 three.js absent), nav 15/15, labels 15/15, a11y 23/23, craft 5/5, shots 10/10 clean.
+
+### The lesson of 8.14
+
+Every gate passed after 8.1–8.13 and three of the changes were visibly wrong, because the
+gates check *properties* — is it reachable, is it named, does it contrast, did it move — and
+none of them can see two legible things in the same pixels. `npm run frames` produces 300
+images for exactly that, and the first pass through it read ten of them: the ones that would
+show the fixes working. Looking at the frames that confirm a change is not looking at the
+frames.
+
+The harness also lied once, and in a way worth recording: it measured the overlay's
+`scrollHeight` *after* the wheel gesture, so five panels that correctly advanced to the next
+panel — because they fit, and there was nothing left to scroll — were reported as "148px
+hidden, scrollTop did not move". It records the state before the gesture now, and whether
+the panel advanced, so the two outcomes cannot be confused again.
 
 ### What the user actually said, and what it turned out to be
 

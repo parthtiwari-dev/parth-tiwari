@@ -280,9 +280,12 @@ onUnmounted(() => {
  * it: the bar is fixed, so content passes under it at *some* scroll position no
  * matter where it starts.
  *
- * A masked gradient rather than a filled bar. It keeps the floating look the
- * pills are designed for while giving anything scrolling beneath somewhere to
- * fade out, and the mask means there is no hard edge where the scrim stops.
+ * A gradient rather than a filled bar, so there is no hard edge where the scrim
+ * stops — but **fully opaque across the bar's own band** (8.14). The first
+ * version started at 92% and was already fading by the middle of the bar, which
+ * left a serif section heading at 25% strength printing through the nav pills:
+ * two legible sets of words in the same pixels, which is the defect, not a
+ * softer version of it. It only needs to be transparent *below* the bar.
  */
 .evidence-top-bar::before {
   position: absolute;
@@ -292,8 +295,8 @@ onUnmounted(() => {
   content: '';
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--bg) 92%, transparent),
-    color-mix(in srgb, var(--bg) 62%, transparent) 52%,
+    var(--bg) 0 46%,
+    color-mix(in srgb, var(--bg) 74%, transparent) 66%,
     transparent
   );
 }

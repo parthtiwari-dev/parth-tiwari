@@ -2,6 +2,7 @@
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { registerScreenRegion } from '@/data/screenRegions'
 import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
+import { useOverlayStore } from '@/stores/overlayStore'
 import HeroName from '@/components/sections/HeroName.vue'
 import HeroTagline from '@/components/sections/HeroTagline.vue'
 
@@ -11,11 +12,27 @@ const props = defineProps<{
 
 const tagline = 'Systems that act only after the evidence, schema, budget, and workflow state agree.'
 const evidenceOverlayStore = useEvidenceOverlayStore()
+const overlayStore = useOverlayStore()
 const scrollY = ref(0)
 const hasInteracted = ref(false)
 
 const heroOpacity = computed(() => {
-  if (evidenceOverlayStore.isOpen) {
+  /*
+   * Any overlay, not just the evidence one (PLAN.md 8.14).
+   *
+   * This checked `evidenceOverlayStore` only, so opening a *project* left the
+   * hero rendered at full opacity underneath it. Combined with the glass
+   * retune in 8.7, "PARTH TIWARI" at 100px and the whole thesis line read
+   * straight through the panel — two sets of text in the same pixels, and by
+   * far the worst thing 8.7 produced. `backdrop-filter` cannot save this:
+   * blur removes detail, and a 100px serif letterform survives any blur radius
+   * small enough to leave the starfield looking like a starfield.
+   *
+   * The fix is to remove the thing behind rather than to fight it through the
+   * glass. Hiding it is also just correct — the hero is the arrival state and
+   * an open project is not it.
+   */
+  if (evidenceOverlayStore.isOpen || overlayStore.isOpen) {
     return 0
   }
 

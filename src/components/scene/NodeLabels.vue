@@ -241,7 +241,10 @@ function update() {
       (lod === 'name' || lod === 'card')
       && !candidateFor(decision.projectId)?.hovered
       && navigation.focusedProjectId !== decision.projectId
-      && overlapsChrome(at.x, at.y)
+      // Measured extent, not the anchor: `FLIP_MARGIN` is already this
+      // component's estimate of how wide a name gets, so reuse it rather than
+      // inventing a second number that can drift from it.
+      && overlapsChrome(at.x, at.y, FLIP_MARGIN, label.flipped)
     ) {
       lod = 'dot'
     }
@@ -329,7 +332,18 @@ watch(() => props.paused, (paused) => (paused ? stop() : start()))
     >
       <span v-if="label.lod === 'dot'" class="node-labels__dot" />
 
+      <!--
+        A name carries its own dot (PLAN.md 8.14).
+
+        It used to render text alone, on the assumption that the star itself is
+        the marker — which holds right up until the star is behind the centre
+        star's corona or too small to see at that distance, and then the name
+        floats in empty space attached to nothing. Two of them do exactly that
+        in a capture of the mid-scroll frames. The dot costs nothing and makes
+        the label unambiguous about which point it is naming.
+      -->
       <p v-else-if="label.lod === 'name'" class="node-labels__name">
+        <span class="node-labels__dot node-labels__dot--inline" aria-hidden="true" />
         <span v-if="label.comparison" class="node-labels__eyebrow">Previously</span>
         {{ label.name }}
       </p>
@@ -393,6 +407,23 @@ watch(() => props.paused, (paused) => (paused ? stop() : start()))
   opacity: 0.7;
 }
 
+/*
+ * The name's own marker. Absolutely positioned back at the anchor rather than
+ * laid out inline, so it lands exactly on the star's projected point whichever
+ * side the text is drawn on — the name carries a translate of its own, and an
+ * inline dot would ride along with it.
+ */
+.node-labels__dot--inline {
+  position: absolute;
+  left: -0.75rem;
+  top: 0.6rem;
+}
+
+.node-labels__item--flipped .node-labels__dot--inline {
+  right: -0.75rem;
+  left: auto;
+}
+
 .node-labels__eyebrow {
   display: block;
   color: var(--ice-quiet);
@@ -408,6 +439,7 @@ watch(() => props.paused, (paused) => (paused ? stop() : start()))
 }
 
 .node-labels__name {
+  position: relative;
   margin: 0;
   transform: translate(0.75rem, -0.6rem);
   color: var(--ice-muted);
