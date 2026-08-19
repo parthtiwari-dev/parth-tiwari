@@ -16,7 +16,8 @@
     "labels": "node scripts/label-check.mjs",
     "craft": "node scripts/craft-check.mjs",
     "a11y": "node scripts/a11y-check.mjs",
-    "perf": "node scripts/perf-check.mjs"
+    "perf": "node scripts/perf-check.mjs",
+    "frames": "node scripts/frames.mjs"
   },
   "dependencies": {
     "@tresjs/core": "4.3.1",
