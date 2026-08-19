@@ -433,9 +433,18 @@ export const projects: Project[] = [
       },
     ],
     links: {
+      /*
+       * The hosted API is deliberately not linked.
+       *
+       * `querypilot-backend.onrender.com` is a Render free-tier instance that
+       * sleeps, and a warm-up request held the connection open for 90 seconds
+       * without ever answering — not a slow page, a link that hangs. The panel
+       * captures below are the served contract and stand on their own; the repo
+       * is where a sceptical reader goes next. An endpoint that may or may not
+       * respond is worse evidence than no endpoint, which is the same rule that
+       * keeps unverified deployments out of here in the first place.
+       */
       github: 'https://github.com/parthtiwari-dev/querypilot',
-      liveAPI: 'https://querypilot-backend.onrender.com',
-      apiDocs: 'https://querypilot-backend.onrender.com/docs',
     },
     panels: {
       problem: {

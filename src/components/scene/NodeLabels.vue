@@ -64,6 +64,63 @@ const navigation = useNavigationStore()
  */
 const pinnedId = ref<string | null>(null)
 
+/**
+ * Hover, tested against the label rather than the star.
+ *
+ * The raycast picks the star sphere and nothing else, and at overview distances
+ * that sphere is a handful of pixels which *orbits out from under a motionless
+ * cursor in about four seconds* — measured on the deployed site, pointer held
+ * perfectly still. The name printed beside it is what a person is actually
+ * aiming at, and it did nothing at all.
+ *
+ * The obvious fix — `pointer-events: auto` on the name — is the wrong one here.
+ * The canvas owns drag-to-orbit and a press that starts on a DOM child above it
+ * never reaches the canvas (8.16), so up to five interactive names would be
+ * five dead zones for the gesture that unlocks free mode. So the hit test is
+ * geometric instead: the pointer position against the boxes the labels were
+ * last drawn at. Nothing above the canvas changes, and the target becomes the
+ * thing you can see.
+ *
+ * Boxes are read at the top of the tick, before this frame writes any
+ * transforms, so it is a clean read against the layout the browser has already
+ * done rather than a forced reflow.
+ */
+const rootEl = ref<HTMLElement | null>(null)
+const intentId = ref<string | null>(null)
+const pointer = { x: 0, y: 0, present: false }
+
+function trackPointer(event: PointerEvent) {
+  // Touch has no hover, and a stale touch point would pin a label under a
+  // finger that has long since lifted.
+  if (event.pointerType !== 'mouse') return
+  pointer.x = event.clientX
+  pointer.y = event.clientY
+  pointer.present = true
+}
+
+function dropPointer() {
+  pointer.present = false
+}
+
+function resolveIntent(): string | null {
+  if (!pointer.present) return null
+  const root = rootEl.value
+  if (!root) return null
+
+  for (const element of root.querySelectorAll<HTMLElement>('.node-labels__item')) {
+    const id = element.dataset.projectId
+    if (!id) continue
+    const box = element.getBoundingClientRect()
+    if (box.width === 0 || box.height === 0) continue
+    if (
+      pointer.x >= box.left && pointer.x <= box.right
+      && pointer.y >= box.top && pointer.y <= box.bottom
+    ) return id
+  }
+
+  return null
+}
+
 /** Widest a name gets, near enough. Past this from the right edge, flip it. */
 const FLIP_MARGIN = 190
 
@@ -182,6 +239,13 @@ function update() {
   const rect = readRect(renderer as THREE.WebGLRenderer)
   if (!rect) return
 
+  // Read before this tick writes anything, and let it drive the freeze: a label
+  // the pointer is resting inside stops tracking its star, which is what stops
+  // the target sliding away mid-reach.
+  const intent = resolveIntent()
+  if (intentId.value !== intent) intentId.value = intent
+  if (pinnedId.value !== intent) pinnedId.value = intent
+
   const mode = scaleModeStore.mode
   const candidates: LabelCandidate[] = []
   const comparisonId = navigation.isFree && navigation.focusedProjectId
@@ -209,7 +273,7 @@ function update() {
       projectId: project.id,
       magnitude: magnitudes.get(project.id) ?? 0,
       distance,
-      hovered: props.hoveredProjectId === project.id,
+      hovered: props.hoveredProjectId === project.id || intent === project.id,
       focused: navigation.focusedProjectId === project.id,
       comparison: comparisonId === project.id,
       onScreen,
@@ -293,12 +357,18 @@ const visibleLabels = computed(() => labels.value.filter((label) => label.lod !=
 onMounted(() => {
   window.addEventListener('resize', invalidateRect, { passive: true })
   window.addEventListener('scroll', invalidateRect, { passive: true })
+  window.addEventListener('pointermove', trackPointer, { passive: true })
+  window.addEventListener('pointerleave', dropPointer)
+  window.addEventListener('blur', dropPointer)
   start()
 })
 
 onUnmounted(() => {
   window.removeEventListener('resize', invalidateRect)
   window.removeEventListener('scroll', invalidateRect)
+  window.removeEventListener('pointermove', trackPointer)
+  window.removeEventListener('pointerleave', dropPointer)
+  window.removeEventListener('blur', dropPointer)
   stop()
 })
 
@@ -314,7 +384,7 @@ watch(() => props.paused, (paused) => (paused ? stop() : start()))
     readout, and making them clickable would put invisible hit targets over the
     scene the raycaster is already picking from.
   -->
-  <div class="node-labels" aria-hidden="true">
+  <div ref="rootEl" class="node-labels" aria-hidden="true">
     <div
       v-for="label in visibleLabels"
       :key="label.id"
@@ -352,8 +422,8 @@ watch(() => props.paused, (paused) => (paused ? stop() : start()))
         v-else
         type="button"
         class="node-labels__card"
-        @pointerenter="pinnedId = label.id; emit('hold', label.id)"
-        @pointerleave="pinnedId = null; emit('hold', null)"
+        @pointerenter="emit('hold', label.id)"
+        @pointerleave="emit('hold', null)"
         @click="emit('open', label.id)"
       >
         <span class="node-labels__card-name">{{ label.name }}</span>

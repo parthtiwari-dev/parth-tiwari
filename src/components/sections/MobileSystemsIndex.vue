@@ -173,8 +173,16 @@ function openProject(projectId: string) {
   position: relative;
   z-index: 35;
   display: none;
-  min-height: 220vh;
-  padding: 148vh 1rem 3rem;
+  /*
+   * `padding-top` was 148vh and `min-height` 220vh — scroll runway for
+   * `MobileStarWorld`, which was a sticky canvas above this section and was
+   * deleted in 2.5. Nothing has been sticky here since, so the runway rendered
+   * as **a full blank screen** mid-scroll: measured 1249px of padding at 844px
+   * of viewport, between the end of the contact panel and the first word of the
+   * systems index. On a 13-screen document that is a screen of pure black that
+   * reads as the end of the page.
+   */
+  padding: 3.5rem 1rem 3rem;
   pointer-events: auto;
 }
 

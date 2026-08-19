@@ -1,7 +1,12 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+import { useEvidenceOverlayStore } from '@/stores/evidenceOverlayStore'
+import { useOverlayStore } from '@/stores/overlayStore'
 
 type CursorState = 'default' | 'enter' | 'refuse'
+
+const overlayStore = useOverlayStore()
+const evidenceOverlayStore = useEvidenceOverlayStore()
 
 const cursorEl = ref<HTMLElement | null>(null)
 const state = ref<CursorState>('default')
@@ -103,6 +108,32 @@ function handleCursorIntent(event: Event) {
 
   sceneIntent = nextState === 'enter' || nextState === 'refuse' ? nextState : null
 }
+
+/**
+ * What is under the pointer can change without the pointer moving.
+ *
+ * The state is only ever recomputed from a `pointermove` target, so opening a
+ * project — which happens on click, with the pointer perfectly still — left the
+ * cursor reading ENTER over the panel's body copy, and it was *still* reading
+ * ENTER after the panel closed and the star it referred to was gone.
+ *
+ * It resets rather than re-derives, and that is deliberate. Re-resolving with
+ * `elementFromPoint` was tried first and reports the *old* DOM twice over: the
+ * watcher is pre-flush, and the overlay leaves through a `<Transition>`, so its
+ * close button is still under the pointer and still returns `enter` well after
+ * the overlay is logically gone. A cursor that makes no claim until the pointer
+ * moves is correct; one that confidently names something that is no longer
+ * there is not.
+ */
+watch(
+  () => overlayStore.isOpen || evidenceOverlayStore.isOpen,
+  () => {
+    // Whatever the scene last reported is about a star behind a panel, or one
+    // the pointer is no longer anywhere near.
+    sceneIntent = null
+    state.value = 'default'
+  },
+)
 
 function updateEnabledState() {
   const hasFinePointer = pointerQuery?.matches ?? false
