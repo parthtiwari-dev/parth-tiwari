@@ -120,6 +120,58 @@ async function boot(ctxOpts = {}) {
   await p.close()
 }
 
+// ---- 8.16 a phone can actually scroll the page ----
+//
+// The one thing 300 captured frames could never show. `frames.mjs` moves the
+// page with `window.scrollTo`, which bypasses touch handling entirely — so a
+// canvas that refuses every touch gesture looks identical in every frame to one
+// that does not. `@tresjs/core` sets `touch-action: none` inline on its canvas,
+// and that canvas is sticky at full height for the first four screens of this
+// document, so the page could not be scrolled by touch at all.
+//
+// It has to be a synthesised *touch* gesture through CDP: Playwright's
+// `mouse.wheel` and `tap` both go around the code path that broke.
+{
+  const p = await boot({viewport:{width:390,height:844}, hasTouch:true, isMobile:true, deviceScaleFactor:3})
+  const cdp = await p.context().newCDPSession(p)
+  await p.goto(B, {waitUntil:'load'}); await p.waitForTimeout(2500)
+  await p.keyboard.press('Escape'); await p.waitForTimeout(3500)
+
+  const touchAction = await p.evaluate(() => getComputedStyle(document.querySelector('canvas')).touchAction)
+  ok('8.16 canvas leaves the vertical axis to the page', touchAction.includes('pan-y'), touchAction)
+
+  async function swipe(dx, dy) {
+    const x = 195, y0 = 480
+    await cdp.send('Input.dispatchTouchEvent', {type:'touchStart', touchPoints:[{x, y:y0}]})
+    for (let i = 1; i <= 15; i++) {
+      await cdp.send('Input.dispatchTouchEvent', {
+        type:'touchMove',
+        touchPoints:[{x: x + dx * i / 15, y: y0 + dy * i / 15}],
+      })
+      await p.waitForTimeout(16)
+    }
+    await cdp.send('Input.dispatchTouchEvent', {type:'touchEnd', touchPoints:[]})
+    await p.waitForTimeout(1100)
+    return p.evaluate(() => ({
+      y: Math.round(window.scrollY),
+      free: (document.querySelectorAll('.nav-controls__resume').length > 0),
+    }))
+  }
+
+  const down = await swipe(0, -300)
+  ok('8.16 a vertical swipe scrolls the page', down.y > 100, `scrollY ${down.y}`)
+  // And it must not steal the tour: `pan-y` still delivers a few pointermoves
+  // before the browser claims the gesture, which was enough to flip the scene
+  // into free orbit on every swipe and stop the camera following scroll.
+  ok('8.16 scrolling does not leave guided mode', !down.free)
+
+  await p.evaluate(() => window.scrollTo({top: 0, behavior: 'instant'}))
+  await p.waitForTimeout(900)
+  const across = await swipe(260, 0)
+  ok('8.16 a horizontal swipe still orbits', across.free && across.y === 0, `scrollY ${across.y}`)
+  await p.close()
+}
+
 console.log(fails === 0 ? '\nALL PHASE 4 CHECKS PASSED' : `\n${fails} FAILURE(S)`)
 await b.close()
 process.exit(fails ? 1 : 0)

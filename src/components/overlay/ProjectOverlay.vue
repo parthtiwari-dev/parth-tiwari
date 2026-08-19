@@ -14,7 +14,15 @@ const overlayRoot = ref<HTMLElement | null>(null)
 const touchStartX = ref<number | null>(null)
 // Declares role="dialog" aria-modal="true", so Tab has to stay inside it and
 // focus has to go back to the node or index button that opened it.
-const focusTrap = useFocusTrap(overlayRoot)
+const focusTrap = useFocusTrap(overlayRoot, {
+  /*
+   * Choosing a project from the index rail collapses the rail, so by the time
+   * this overlay closes the button that opened it no longer exists and focus
+   * would land on `<body>`. The rail's toggle is the honest destination: it is
+   * the control that opens that same list again, and it is always present.
+   */
+  restoreFallback: () => document.querySelector<HTMLElement>('.project-index__toggle'),
+})
 let lastWheelAt = 0
 let hasScrollLock = false
 

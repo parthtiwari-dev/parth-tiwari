@@ -405,6 +405,37 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+/*
+ * The page has to be scrollable on a phone (PLAN.md 8.16).
+ *
+ * `@tresjs/core` sets `touch-action: none` inline on the canvas — a sensible
+ * default for a library whose canvas is usually a widget inside a page, and
+ * catastrophic here, where the canvas is `position: sticky` at `h-screen` and
+ * covers the entire viewport for the first four screens of the document. A
+ * touch that begins on it is never given to the browser, so **the page could
+ * not be scrolled by touch at all**: the wordmark and the tagline sat locked in
+ * place and nothing moved. Reported as "I can't scroll anywhere, I can't do
+ * anything", and reproduced exactly — 9962px of document, no scroll lock, and a
+ * 300px drag moving `scrollY` by 0.
+ *
+ * `pan-y` gives the vertical axis back to the browser and keeps the horizontal
+ * one for us. That is the right split rather than a compromise: scroll *is* the
+ * guided tour, so it outranks everything, and the horizontal drag is the
+ * azimuth orbit — the rotation the scene is actually about. Vertical
+ * drag-to-tilt is the only thing lost on touch, and the zoom controls that
+ * exist for undiscoverable gestures already cover that ground.
+ *
+ * `!important` because the declaration it overrides is inline, and TresJS is
+ * pinned (CLAUDE.md) so it cannot be fixed upstream here.
+ *
+ * Nothing in 300 captured frames could have caught this: `frames.mjs` moves the
+ * page with `window.scrollTo`, which bypasses touch entirely. `npm run nav`
+ * asserts a real touch drag now.
+ */
+:deep(canvas) {
+  touch-action: pan-y !important;
+}
+
 .constellation-index {
   min-width: 12.5rem;
   padding: 0.75rem 0.85rem;

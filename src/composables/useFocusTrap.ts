@@ -36,6 +36,12 @@ export interface FocusTrapOptions {
   initialFocus?: () => HTMLElement | null | undefined
   /** Restore focus to the previously focused element on deactivate. Default true. */
   restoreFocus?: boolean
+  /**
+   * Where focus should land when the element that opened this surface is no
+   * longer in the document. Evaluated at deactivate time, not at activate time,
+   * so it can name something that did not exist when the dialog opened.
+   */
+  restoreFallback?: () => HTMLElement | null
 }
 
 export function useFocusTrap(
@@ -211,12 +217,35 @@ export function useFocusTrap(
     const target = previouslyFocused
     previouslyFocused = null
 
-    if (!restoreFocus || !target) {
+    if (!restoreFocus) {
       return
     }
 
-    if (target.isConnected && typeof target.focus === 'function') {
+    if (target?.isConnected && typeof target.focus === 'function') {
       target.focus()
+      return
+    }
+
+    /*
+     * The trigger can be gone by the time we come back (PLAN.md 8.16).
+     *
+     * `restoreFocus` assumed the element that opened the dialog would still be
+     * in the document when it closed, and for the project overlay that is
+     * routinely false: choosing a project from the index rail *collapses the
+     * rail*, so the button that was focused has been unmounted before the
+     * overlay even finishes opening. Restoring to a detached node is a no-op,
+     * which drops focus to `<body>` and strands a keyboard user at the top of
+     * the document with no idea where they were.
+     *
+     * The fallback is the closest still-present ancestor-ish anchor: whatever
+     * the caller nominates as the surface that owned the trigger. It is not a
+     * perfect restoration — nothing can be, once the element is gone — but
+     * landing on the control that opens that list again is the nearest true
+     * thing, and it is enormously better than `<body>`.
+     */
+    const fallback = options.restoreFallback?.()
+    if (fallback?.isConnected && typeof fallback.focus === 'function') {
+      fallback.focus()
     }
   }
 

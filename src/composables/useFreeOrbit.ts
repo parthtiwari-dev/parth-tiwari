@@ -220,6 +220,10 @@ export interface OrbitInputOptions {
  * A drag is only a drag once it clears a few pixels — otherwise every tap on a
  * node would be read as a one-pixel orbit and steal the click, which is the
  * usual way this interaction breaks on touch.
+ *
+ * And on touch a drag is only an *orbit* if it is predominantly horizontal:
+ * the vertical axis belongs to the page, because scroll is the guided tour.
+ * See the note in `pointerMove`.
  */
 export function bindOrbitInput(options: OrbitInputOptions): () => void {
   const { element, state } = options
@@ -233,14 +237,55 @@ export function bindOrbitInput(options: OrbitInputOptions): () => void {
   let lastX = 0
   let lastY = 0
   let pinchDistance = 0
+  /** Signed travel since the press, for the touch axis test below. */
+  let travelX = 0
+  let travelY = 0
+  let isTouch = false
+  /** Set once a touch gesture has been judged vertical; it never orbits. */
+  let scrollGesture = false
 
   function pointerDown(event: PointerEvent) {
     if (options.isBlocked()) return
     pointers.set(event.pointerId, { x: event.clientX, y: event.clientY })
 
+    /*
+     * Capture the pointer, or the drag gets stolen (PLAN.md 8.16).
+     *
+     * These listeners are on the canvas, and the canvas is not the only thing
+     * under the cursor: hovering a star promotes it to a label *card*, which is
+     * a real `<button>` above the canvas. So a drag that begins on empty space
+     * and passes over a star hands its remaining `pointermove` events to that
+     * card, and the orbit simply stops — traced by logging pointer targets
+     * through a drag and watching them go
+     * `CANVAS → node-labels__card → node-labels__card-name`.
+     *
+     * It was intermittent before hover was made reliable (8.10): the old
+     * every-other-event throttle meant the card often did not appear in time.
+     * Fixing hover made this deterministic, which is the only reason
+     * `npm run nav` caught it.
+     *
+     * `setPointerCapture` is the API for exactly this — every subsequent event
+     * for this pointer id is delivered here regardless of what it is over. It
+     * still bubbles to `window`, so the selection logic in `useNodeInteraction`
+     * is unaffected, and a press that starts *on* a card never reaches this
+     * handler at all.
+     */
+    if (pointers.size === 1) {
+      try {
+        element.setPointerCapture(event.pointerId)
+      } catch {
+        // Safari throws for a pointer id it considers inactive; the drag just
+        // degrades to the previous behaviour rather than breaking.
+      }
+    }
+
     if (pointers.size === 1) {
       dragging = true
       moved = 0
+      travelX = 0
+      travelY = 0
+      scrollGesture = false
+      isTouch = event.pointerType === 'touch'
       lastX = event.clientX
       lastY = event.clientY
     } else if (pointers.size === 2) {
@@ -264,15 +309,40 @@ export function bindOrbitInput(options: OrbitInputOptions): () => void {
       return
     }
 
-    if (!dragging) return
+    if (!dragging || scrollGesture) return
 
     const dx = event.clientX - lastX
     const dy = event.clientY - lastY
     lastX = event.clientX
     lastY = event.clientY
     moved += Math.abs(dx) + Math.abs(dy)
+    travelX += dx
+    travelY += dy
 
     if (moved < DRAG_THRESHOLD) return
+
+    /*
+     * On touch, a vertical drag is a scroll and must not become an orbit
+     * (PLAN.md 8.16).
+     *
+     * The canvas is `touch-action: pan-y`, so the browser takes the vertical
+     * axis — but it does not take it instantly. A handful of `pointermove`
+     * events land before the scroll is recognised, and they were enough to
+     * clear `DRAG_THRESHOLD` and call `onManipulate()`. The result: every
+     * scroll gesture on a phone flipped the scene into free orbit, which stops
+     * the camera following the scroll and puts a "Resume tour" button on
+     * screen. The tour died on the visitor's first swipe.
+     *
+     * The axis test settles it once per gesture and latches, so a drag that
+     * starts vertical cannot become an orbit halfway through by wobbling.
+     * Mouse and pen are exempt — they have no competing scroll gesture and
+     * vertical drag-to-tilt is a real interaction there.
+     */
+    if (isTouch && Math.abs(travelY) > Math.abs(travelX)) {
+      scrollGesture = true
+      dragging = false
+      return
+    }
 
     options.onManipulate()
     // Dragging right should send the scene left, which is what "grabbing" the
@@ -282,9 +352,15 @@ export function bindOrbitInput(options: OrbitInputOptions): () => void {
   }
 
   function pointerUp(event: PointerEvent) {
+    if (element.hasPointerCapture?.(event.pointerId)) {
+      element.releasePointerCapture(event.pointerId)
+    }
     pointers.delete(event.pointerId)
     if (pointers.size < 2) pinchDistance = 0
-    if (pointers.size === 0) dragging = false
+    if (pointers.size === 0) {
+      dragging = false
+      scrollGesture = false
+    }
   }
 
   function wheel(event: WheelEvent) {
