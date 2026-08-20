@@ -228,7 +228,6 @@ onUnmounted(() => {
     <MobileSystemsIndex v-if="showMobileSystemsIndex" />
     <MobileFooterDock v-if="showMobileSystemsIndex" />
 
-
     <!-- Booking stays one tap from every screen, in every mode but plain. -->
     <BookingCta v-if="!isPlain && experienceReady" />
 
