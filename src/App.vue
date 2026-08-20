@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, defineAsyncComponent, onMounted, onUnmounted, ref } from 'vue'
+import { beginLoadTask, completeLoadTask } from '@/data/loadSignals'
 import { sliderConfigs } from '@/data/projects'
 import { usePlainMode } from '@/composables/usePlainMode'
 import { useProjectDeepLink } from '@/composables/useProjectDeepLink'
@@ -33,7 +34,12 @@ import StatusBadge from '@/components/shared/StatusBadge.vue'
  * roots behind a dynamic import so the chunk is fetched only when the matching
  * `v-if` below actually resolves true.
  */
-const SceneRoot = defineAsyncComponent(() => import('@/components/scene/SceneRoot.vue'))
+const SceneRoot = defineAsyncComponent(async () => {
+  const module = await import('@/components/scene/SceneRoot.vue')
+  // The boot screen reports this rather than a number someone typed (8.23).
+  completeLoadTask('scene')
+  return module
+})
 
 // Interpolated scroll, stepped from GSAP's ticker (PLAN.md 2.3). App-level
 // because it owns the window scroller, and a no-op under reduced motion.
@@ -107,6 +113,20 @@ function updateSceneInView() {
  * async, also means never fetching the chunk.
  */
 const showScene = computed(() => !isPlain.value && !prefersReducedMotion.value)
+/*
+ * Register only what this visit will really load. `showScene` is false under
+ * reduced motion and in plain mode, and in those cases the chunk is never
+ * fetched — so declaring the task would leave the boot waiting on a promise
+ * that is never created.
+ */
+if (showScene.value) beginLoadTask('scene')
+beginLoadTask('fonts')
+if (typeof document !== 'undefined' && 'fonts' in document) {
+  void document.fonts.ready.then(() => completeLoadTask('fonts'))
+} else {
+  completeLoadTask('fonts')
+}
+
 const showMobileSystemsIndex = computed(() => (
   !isPlain.value
   && isMobileViewport.value
@@ -154,6 +174,34 @@ onUnmounted(() => {
     class="min-h-screen text-ice"
     :class="{ 'plain-mode': isPlain }"
   >
+    <!--
+      Keyboard and screen-reader route to every project, for as long as the
+      constellation is the thing on screen (PLAN.md 8.14).
+
+      It is `position: fixed` at the left edge, so once the page scrolls past
+      the constellation into the DOM sections it started printing through their
+      copy — "I build AI products people actually use" lost its first letters to
+      the tab, and "OPEN EVIDENCE →" lost its O. Padding the sections would cost
+      44px of width on a 390px phone to accommodate a control for a scene that
+      is no longer visible.
+
+      **It is first in the template because it is first in the reading order.**
+      Tab order follows the DOM, and this rail used to be declared next to last:
+      a keyboard user tabbed through the zoom controls, the booking link, both
+      contact fields, the email and WhatsApp links and all five evidence buttons
+      — fifteen stops — before reaching the twelve projects the site is *about*.
+      Moving the declaration costs nothing visually because the rail is
+      `position: fixed` with an explicit `z-index`, so paint order does not
+      depend on where it sits here.
+
+      Removing it below the scene is safe *because* of what is down there: the
+      services and contact sections list every project as a real card with its
+      own focusable "open evidence" link, so nothing becomes unreachable. It is
+      `v-if`, not `visibility: hidden` — a focusable control nobody can see is
+      worse than no control.
+    -->
+    <ProjectIndex v-if="!isPlain && experienceReady && sceneInView" />
+
     <SceneRoot v-if="showScene" />
 
     <!-- After the constellation runway, in flow: the offer and the contact
@@ -180,24 +228,6 @@ onUnmounted(() => {
     <MobileSystemsIndex v-if="showMobileSystemsIndex" />
     <MobileFooterDock v-if="showMobileSystemsIndex" />
 
-    <!--
-      Keyboard and screen-reader route to every project, for as long as the
-      constellation is the thing on screen (PLAN.md 8.14).
-
-      It is `position: fixed` at the left edge, so once the page scrolls past
-      the constellation into the DOM sections it started printing through their
-      copy — "I build AI products people actually use" lost its first letters to
-      the tab, and "OPEN EVIDENCE →" lost its O. Padding the sections would cost
-      44px of width on a 390px phone to accommodate a control for a scene that
-      is no longer visible.
-
-      Removing it below the scene is safe *because* of what is down there: the
-      services and contact sections list every project as a real card with its
-      own focusable "open evidence" link, so nothing becomes unreachable. It is
-      `v-if`, not `visibility: hidden` — a focusable control nobody can see is
-      worse than no control.
-    -->
-    <ProjectIndex v-if="!isPlain && experienceReady && sceneInView" />
 
     <!-- Booking stays one tap from every screen, in every mode but plain. -->
     <BookingCta v-if="!isPlain && experienceReady" />

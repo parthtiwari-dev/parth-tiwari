@@ -87,21 +87,41 @@ async function boot(ctxOpts = {}) {
   await p.close()
 }
 
-// ---- 4.6 pairwise comparison ----
+// ---- 8.18 closing a project is an undo ----
+//
+// This block used to assert 4.6's pairwise comparison — that closing a panel
+// left its project focused so the previously-focused one stayed labelled and
+// receding. That behaviour and the bug in 8.18 are the same thing seen from two
+// sides: a project can only be focused by opening its panel, so "focus persists
+// after close" *is* "the camera stays parked at SINGLE SYSTEM zoom on a star you
+// did not ask to be parked at". The exit contract won; the ghost is gone with
+// it, and the comparison machinery it drove is dead code pending removal.
 {
   const p = await boot()
   await p.goto(B, {waitUntil:'load'}); await p.waitForTimeout(2500)
   await p.keyboard.press('Escape'); await p.waitForTimeout(3500)
+
+  const scale = () => p.locator('.nav-controls__scale-value').innerText()
+  const before = await scale()
+
   await p.locator('.project-index__toggle').click(); await p.waitForTimeout(600)
   await p.locator('.project-index__item').filter({hasText:/Tathya/i}).first().click()
-  await p.waitForTimeout(1500); await p.keyboard.press('Escape'); await p.waitForTimeout(900)
-  ok('4.6 no ghost after the first focus', (await p.locator('.node-labels__item--comparison').count()) === 0)
+  await p.waitForTimeout(1500); await p.keyboard.press('Escape'); await p.waitForTimeout(1800)
+
+  ok('8.18 closing restores the scale it was opened from', (await scale()) === before, `${before} -> ${await scale()}`)
+  ok('8.18 closing from guided does not strand free mode',
+    (await p.locator('.nav-controls__resume').count()) === 0)
+  ok('8.18 no ghost label survives the close',
+    (await p.locator('.node-labels__item--comparison').count()) === 0)
+
+  // A second project must unwind to the same place, not to the first one.
   await p.locator('.project-index__toggle').click(); await p.waitForTimeout(600)
   await p.locator('.project-index__item').filter({hasText:/BeatMind/i}).first().click()
-  await p.waitForTimeout(1500); await p.keyboard.press('Escape'); await p.waitForTimeout(1600)
-  const ghost = await p.locator('.node-labels__item--comparison').count()
-  ok('4.6 previous subject stays labelled', ghost === 1, ghost ? await p.locator('.node-labels__item--comparison').innerText() : '')
-  await p.screenshot({path:'.shots/p4-pairwise.png'})
+  await p.waitForTimeout(1500); await p.keyboard.press('Escape'); await p.waitForTimeout(1800)
+  ok('8.18 a second open unwinds to the same place', (await scale()) === before, `${before} -> ${await scale()}`)
+  ok('8.18 still no ghost', (await p.locator('.node-labels__item--comparison').count()) === 0)
+
+  await p.screenshot({path:'.shots/p4-panel-exit.png'})
   await p.close()
 }
 

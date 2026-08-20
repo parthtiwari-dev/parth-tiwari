@@ -159,6 +159,15 @@ Still standing, and still fine:
 
 ~~**Used but undefined**: `--active-glow`, `--font-mono`, `--font-display`, `--font-body`.~~ **Fixed** — all four are defined in `tokens.css`; verified 2026-08-18.
 
+**Dead as of 8.18:** the pairwise-comparison machinery — `navigationStore.previousProjectId`,
+`NodeLabels`' `--comparison` label and eyebrow, and `syncFocusCentre`'s `PAIR_BIAS` /
+`PAIR_MARGIN` framing. It is not deleted, and it is not reachable either. The ghost only ever
+appeared *after* a panel closed, because a project can only be focused by opening one — so
+"the previous subject stays labelled" and "the camera stays parked at SINGLE SYSTEM zoom on a
+star you did not ask for" were the same behaviour seen from two sides. The exit contract won
+(8.18). `nav-check` asserts the new contract instead of 4.6. Delete it or revive it
+deliberately; do not wire a new path to it by accident.
+
 **Revived 2026-08-18:** `sliderStore` and `sliderConfigs` now drive the Cost of Intelligence
 control in the Proof panel (3.8). `sliderResponse` is still read by nothing, and that is
 deliberate — it was meant to let the dial change a node's colour and size, but size encodes
