@@ -88,7 +88,7 @@ function reset() {
         <p class="coi__metric coi__metric--withheld">not measured here</p>
         <p class="coi__metric-label">
           Moving towards <strong>{{ towards }}</strong> changes this number, but it was
-          never measured at that setting — so there is nothing honest to show.
+          never measured at that setting, so there is nothing honest to show.
           <button type="button" class="coi__reset" @click="reset">
             Back to the measured point
           </button>

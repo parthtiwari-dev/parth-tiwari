@@ -158,7 +158,7 @@ useEscapeStack(isOpen, closePanel)
           </p>
           <p class="project-index__hint">
             {{ projectStore.projectCount }} systems. Same evidence panels as the
-            constellation — problem, architecture, proof, boundary, links.
+            constellation: problem, architecture, proof, boundary, links.
           </p>
         </div>
 
