@@ -172,7 +172,7 @@ export const projects: Project[] = [
           { side: 'will', text: 'State that the closed pilot has not run yet, and that usage so far is zero.' },
           { side: 'will', text: 'Describe the two invisible production failures and how they were found.' },
           { side: 'refuses', text: 'Let a track be exported when its lineage cannot be fully resolved.' },
-          { side: 'refuses', text: 'Claim the models are mine — ACE-Step, BS-RoFormer and UVR-MDXNET are open source.' },
+          { side: 'refuses', text: 'Claim the models are mine. ACE-Step, BS-RoFormer and UVR-MDXNET are open source.' },
           { side: 'refuses', text: 'Expose company-private endpoints, keys, or pilot user data.' },
         ],
       },
@@ -297,7 +297,7 @@ export const projects: Project[] = [
           + 'a seed input, scene type and fast-mode toggles, and a grid of named style presets, '
           + 'beside an empty four-frame board reading "ready to render".',
         caption: 'Vivid\'s generation console before a render, captured 2026-08-18. No generation '
-          + 'was triggered — running one costs real compute on a live product.',
+          + 'was triggered. Running one costs real compute on a live product.',
       },
       {
         src: '/media/stick-and-dot-mobile.jpg',
@@ -422,7 +422,7 @@ export const projects: Project[] = [
         src: '/media/querypilot-desktop.jpg',
         alt: 'QueryPilot\'s OpenAPI 3.1 documentation, describing a POST /query and GET /health '
           + 'endpoint and typed QueryRequest, QueryResponse, ValidationError and HTTPValidationError schemas.',
-        caption: 'The served API contract, captured 2026-08-18. There is no UI to show — the '
+        caption: 'The served API contract, captured 2026-08-18. There is no UI to show. The '
           + 'evidence for this one is the typed surface itself. The endpoint is a free-tier '
           + 'instance and takes 30-60s to wake.',
       },
@@ -773,7 +773,7 @@ export const projects: Project[] = [
           {
             id: 'model',
             label: 'GPT-4o-mini',
-            description: 'Scoped to the brand’s own catalogue and policies. Chosen for cost and latency — a support turn is short and high-volume, which is the wrong place for a frontier model.',
+            description: 'Scoped to the brand’s own catalogue and policies. Chosen for cost and latency. A support turn is short and high-volume, which is the wrong place for a frontier model.',
             stackChips: ['OpenAI'],
             connections: [],
             position: { x: 80, y: 38 },
@@ -795,13 +795,13 @@ export const projects: Project[] = [
           { label: 'Deployed frontend, backend and database', status: 'complete', detail: 'Vercel + Render + Supabase' },
         ],
         caveat:
-          'Built as a take-home against a company brief, for a fictional brand. Small by design — it is evidence of scoping and shipping to someone else’s spec, not of scale.',
+          'Built as a take-home against a company brief, for a fictional brand. Small by design. It is evidence of scoping and shipping to someone else’s spec, not of scale.',
       },
       boundary: {
         items: [
           { side: 'will', text: 'Show that a brief from a real company was scoped and shipped end to end.' },
           { side: 'will', text: 'State plainly that the brand is fictional and the build is small.' },
-          { side: 'refuses', text: 'Claim production traffic or real customers — it has neither.' },
+          { side: 'refuses', text: 'Claim production traffic or real customers. It has neither.' },
           { side: 'refuses', text: 'Link the bare API root and call it a demo.' },
         ],
       },
@@ -828,7 +828,7 @@ export const projects: Project[] = [
       'Vercel',
     ],
     outcome:
-      'Watches configured public sources continuously and clusters what it finds into sourced case files showing what government, media and citizens each said. It issues no verdict — the reader decides.',
+      'Watches configured public sources continuously and clusters what it finds into sourced case files showing what government, media and citizens each said. It issues no verdict. The reader decides.',
     // Verified 2026-08-17: live and actively ingesting, with topics dated this
     // month. The Render API is intentionally not linked — free tier, sleeps after
     // 15 minutes, 30-60s cold start. A link that might take a minute to answer is
@@ -869,7 +869,7 @@ export const projects: Project[] = [
           {
             id: 'ingest',
             label: 'Continuous Ingestion',
-            description: 'Configured public sources — government releases, media, citizen signal — watched on a schedule rather than sampled when someone remembers.',
+            description: 'Government releases, media and citizen signal, watched on a schedule rather than sampled when someone remembers.',
             stackChips: ['Python'],
             connections: ['snapshot'],
             position: { x: 8, y: 50 },
@@ -901,7 +901,7 @@ export const projects: Project[] = [
           {
             id: 'api',
             label: 'API v1 + Reader',
-            description: 'FastAPI typed against the frontend’s own type definitions, with a Next.js reader wired to the real API — no mock data anywhere in the deployed path.',
+            description: 'FastAPI typed against the frontend’s own type definitions, with a Next.js reader wired to the real API. No mock data anywhere in the deployed path.',
             stackChips: ['FastAPI', 'Next.js', 'Vercel'],
             connections: [],
             position: { x: 92, y: 34 },
@@ -921,7 +921,7 @@ export const projects: Project[] = [
           { label: 'Manual audit gate', status: 'roadmap', detail: 'not yet run' },
         ],
         caveat:
-          'Live topics currently show cluster titles and templated summaries, not final generated case files — the deployed persist step still calls the deterministic extractive builder. The repo’s own docs track this rather than the README, which lags.',
+          'Live topics currently show cluster titles and templated summaries, not final generated case files. The deployed persist step still calls the deterministic extractive builder. The repo’s own docs track this rather than the README, which lags.',
       },
       boundary: {
         items: [
@@ -929,7 +929,7 @@ export const projects: Project[] = [
           { side: 'will', text: 'State that clustering is the fallible step, because it is the one replacing an editor.' },
           { side: 'will', text: 'Say plainly that the Gemini-grounded path is built but not yet the deployed default.' },
           { side: 'refuses', text: 'Issue a verdict, a rating, or a partisan framing of any topic.' },
-          { side: 'refuses', text: 'Choose topics by hand — the moment it does, it is a publication, not a record.' },
+          { side: 'refuses', text: 'Choose topics by hand. The moment it does, it is a publication, not a record.' },
           { side: 'refuses', text: 'Link the Render API as a demo while it cold-starts for a minute on the free tier.' },
         ],
       },

@@ -38,7 +38,7 @@ export const services: Service[] = [
     rank: 'lead',
     label: 'Custom AI products, end to end',
     outcome:
-      'A working AI product your users can open in a browser — not a notebook, not a demo script.',
+      'A working AI product your users can open in a browser, not a notebook or a demo script.',
     detail:
       'Retrieval over your own documents and data, agents that take real actions, and the evaluation and refusal rules that decide when the system should answer and when it should stop.',
     evidenceProjectIds: ['querypilot', 'medrag', 'secondself', 'upi-fraud', 'stick-and-dot'],
@@ -50,7 +50,7 @@ export const services: Service[] = [
     outcome:
       'Work that currently happens by hand happens on its own, with a person still approving anything that matters.',
     detail:
-      'Order and workflow supervision, scheduled provisioning, risk and fraud scoring — each one built with a human gate before an action is applied, and a log of why it was taken.',
+      'Order and workflow supervision, scheduled provisioning, risk and fraud scoring. Each one has a human gate before an action is applied, and a log of why it was taken.',
     evidenceProjectIds: ['order-supervisor', 'oracle-auto-provision', 'fraud-risk-intel'],
   },
   {
@@ -60,7 +60,7 @@ export const services: Service[] = [
     outcome:
       'A site or interface that holds attention, built to the same standard as the system underneath it.',
     detail:
-      '3D, motion and generative work where the interaction is engineered rather than decorated — data-driven scenes, real accessibility, and a static fallback that still works.',
+      '3D, motion and generative work where the interaction is engineered rather than decorated: data-driven scenes, real accessibility, and a static fallback that still works.',
     evidenceProjectIds: ['oncoverse', 'stick-and-dot'],
     evidenceNote: 'This site is the working example.',
   },

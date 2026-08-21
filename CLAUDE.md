@@ -145,6 +145,33 @@ Supporting data files: `about.ts`, `training.ts`, `capabilities.ts`, `socialLink
 
 **`images` and `video` are evidence, not decoration.** Both are captured from deployments confirmed public and auth-free by `scripts/capture-demos.mjs`, never mocked up, never taken from a prototype, and every `alt` and `caption` must describe what is actually in the frame. A project with no honest capture renders no Demo panel — `hasShowcase()` in `data/showcase.ts` decides, and an empty showcase would be exactly the decoration-pretending-to-be-data this project exists to avoid. Note that `images` counts toward `evidenceOf()` in `layout.ts`, so adding a capture legitimately grows that project's star.
 
+**No em dashes in user-facing copy.** Audited 2026-08-21 against
+[`no-ai-slop`](https://github.com/petergyang/no-ai-slop): 17 removed from `services.ts`,
+`projects.ts`, `CostOfIntelligence.vue` and `ProjectIndex.vue`. Punctuation was chosen per
+sentence, not substituted, so do not "restore" a dash. **Code comments are exempt** and keep
+theirs; this rule is about what a visitor reads. The same standard already holds in BeatMind
+(`CLAUDE.md`, 2026-08-17), so the two repos now agree.
+
+Two dashes are deliberate keeps, not misses:
+
+| Site | Why it stays |
+|---|---|
+| `ContactPanel.vue:40` | Email signature (`\n\n— name`). A signature dash is a real convention, not rhythm |
+| `CostOfIntelligence.vue:84` | `{{ metricLabel }} — {{ metricContext }}` is a field delimiter between two data values, not prose |
+
+**Four flagged words that stay, because they carry contrast.** `no-ai-slop` lists these as
+often-empty adverbs and its own rule says keep them when they do real work. They do:
+
+- `ServicesBlock` — *"AI products people **actually** use"*: contrast against demos that go nowhere. This is the site's headline; do not soften it
+- `projects.ts` — *"State medical review status **honestly**"*: honesty is the subject, not filler
+- `projects.ts` — *"Show what each source **actually** said"*: contrast against paraphrase
+- `about.ts` — *"not **just** making a model answer"*
+
+The last one is also a **binary contrast** ("not X, it is Y"), which `no-ai-slop` says to
+state directly. It is left alone on purpose: it is the most first-person sentence on the
+site and the skill's overriding rule is to preserve the writer's voice. Owner's call, not a
+future session's.
+
 **Never hardcode the project count in prose.** Every surface derives it from `projectStore.projectCount` — `EvidenceTopBar`, `MobileFooterDock`, `ProjectIndex`, `PlainExperience` and `BootSequence` all do this correctly now. There is no fixed number of projects anywhere in the codebase; keep it that way.
 
 ---
