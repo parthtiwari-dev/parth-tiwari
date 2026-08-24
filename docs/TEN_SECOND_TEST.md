@@ -2,6 +2,9 @@
 
 The acceptance gate for the v2 rebuild (`REBUILD_BRIEF.md` §5).
 
+Round 0 is also **`DECISIONS.md` §1.1's input** — the verbatim answers are the
+evidence for what the site's one sentence has to overcome.
+
 **How to run it.** Five people who have not seen the site. Open it, close it after 10
 seconds, then ask: *"What does he do? Would you hire him? For what?"*
 
