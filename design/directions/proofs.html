@@ -1,0 +1,694 @@
+<title>Direction Proofs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,opsz,wght@1,6..72,400&display=swap">
+
+<style>
+/* ============================================================
+   CHROME — a studio proof sheet. Near-monochrome on purpose:
+   the specimens carry every colour, so the page around them
+   must not compete. One accent, a plotter-pen blue, used only
+   for the recommendation and for focus.
+   ============================================================ */
+:root{
+  --paper:#E9EAE6;
+  --panel:#F5F6F3;
+  --panel-2:#DEE0DA;
+  --ink:#15171A;
+  --ink-2:#4B5058;
+  --ink-3:#767C85;
+  --rule:#C6C9C1;
+  --rule-soft:#D6D8D1;
+  --accent:#1B4FA8;
+  --accent-soft:#DCE4F3;
+  --warn:#8A4B12;
+
+  --f-disp:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-edit:"Instrument Serif",Georgia,"Times New Roman",serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px;
+  --sp-5:24px; --sp-6:32px; --sp-7:48px; --sp-8:64px; --sp-9:96px;
+  --maxw:1240px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#111316;
+    --panel:#181B1F;
+    --panel-2:#22262B;
+    --ink:#EDEFF1;
+    --ink-2:#A8AEB6;
+    --ink-3:#7A818A;
+    --rule:#2C3137;
+    --rule-soft:#23272C;
+    --accent:#8FB2F2;
+    --accent-soft:#1C2942;
+    --warn:#D9A162;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#111316;
+  --panel:#181B1F;
+  --panel-2:#22262B;
+  --ink:#EDEFF1;
+  --ink-2:#A8AEB6;
+  --ink-3:#7A818A;
+  --rule:#2C3137;
+  --rule-soft:#23272C;
+  --accent:#8FB2F2;
+  --accent-soft:#1C2942;
+  --warn:#D9A162;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:16px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--sp-5)}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.lab{
+  font-family:var(--f-mono);font-size:11px;font-weight:500;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);
+}
+
+/* ---------- masthead ---------- */
+.mast{border-bottom:1px solid var(--rule);padding:var(--sp-8) 0 var(--sp-6)}
+.mast-top{display:flex;flex-wrap:wrap;gap:var(--sp-3) var(--sp-5);align-items:baseline;justify-content:space-between;margin-bottom:var(--sp-6)}
+h1{
+  font-family:var(--f-disp);font-weight:700;
+  font-size:clamp(38px,7.5vw,74px);line-height:.98;letter-spacing:-.035em;
+  margin:0 0 var(--sp-4);text-wrap:balance;
+}
+.deck{
+  font-family:var(--f-edit);font-style:italic;
+  font-size:clamp(19px,2.4vw,27px);line-height:1.35;color:var(--ink-2);
+  max-width:34ch;margin:0;
+}
+.mast-meta{display:flex;flex-wrap:wrap;gap:var(--sp-2) var(--sp-5)}
+
+/* the sentence being designed for */
+.sentence{
+  margin-top:var(--sp-7);border-left:3px solid var(--accent);
+  padding:var(--sp-4) 0 var(--sp-4) var(--sp-5);max-width:60ch;
+}
+.sentence p{margin:var(--sp-2) 0 0;font-size:clamp(17px,2vw,21px);line-height:1.4;font-weight:500}
+
+/* ---------- generic section ---------- */
+section{padding:var(--sp-8) 0;border-bottom:1px solid var(--rule)}
+h2{
+  font-family:var(--f-disp);font-weight:700;
+  font-size:clamp(23px,3vw,32px);line-height:1.1;letter-spacing:-.02em;
+  margin:var(--sp-2) 0 var(--sp-5);text-wrap:balance;
+}
+h3{font-family:var(--f-disp);font-weight:600;font-size:17px;letter-spacing:-.005em;margin:0 0 var(--sp-2)}
+p{max-width:68ch}
+
+.cols{display:grid;gap:var(--sp-5)}
+@media(min-width:820px){.cols{grid-template-columns:repeat(3,1fr)}}
+.card{background:var(--panel);border:1px solid var(--rule-soft);padding:var(--sp-5)}
+.card p{font-size:14.5px;color:var(--ink-2);margin:0}
+
+/* ruled-out table */
+.tbl{width:100%;border-collapse:collapse;font-size:14.5px}
+.tbl th{
+  text-align:left;font-family:var(--f-mono);font-size:11px;font-weight:500;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);
+  padding:0 var(--sp-4) var(--sp-2) 0;border-bottom:1px solid var(--rule);
+}
+.tbl td{padding:var(--sp-3) var(--sp-4) var(--sp-3) 0;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+.tbl td:first-child{font-family:var(--f-mono);font-size:13px;white-space:nowrap;color:var(--ink)}
+.scroll{overflow-x:auto}
+
+/* ============================================================
+   DIRECTION ENTRIES
+   ============================================================ */
+.dir{padding:var(--sp-8) 0;border-bottom:1px solid var(--rule)}
+.dir-head{display:flex;flex-wrap:wrap;gap:var(--sp-3) var(--sp-5);align-items:baseline;margin-bottom:var(--sp-2)}
+.dir-no{
+  font-family:var(--f-mono);font-size:13px;font-weight:700;letter-spacing:.06em;
+  color:var(--accent);
+}
+.dir-name{
+  font-family:var(--f-disp);font-weight:700;
+  font-size:clamp(26px,4vw,44px);line-height:1;letter-spacing:-.03em;margin:0;
+}
+.dir-thesis{
+  font-family:var(--f-edit);font-style:italic;
+  font-size:clamp(18px,2.2vw,24px);line-height:1.35;color:var(--ink-2);
+  max-width:52ch;margin:0 0 var(--sp-6);
+}
+.dir-body{display:grid;gap:var(--sp-6)}
+@media(min-width:960px){.dir-body{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:var(--sp-7)}}
+
+.spec dl{display:grid;grid-template-columns:auto 1fr;gap:var(--sp-2) var(--sp-4);margin:0 0 var(--sp-5)}
+.spec dt{font-family:var(--f-mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);padding-top:3px}
+.spec dd{margin:0;font-size:14.5px;color:var(--ink-2)}
+.spec dd b{color:var(--ink);font-weight:600}
+
+.dials{display:flex;gap:var(--sp-4);flex-wrap:wrap;margin:0 0 var(--sp-5)}
+.dial{flex:1 1 90px;min-width:90px}
+.dial-k{font-family:var(--f-mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3)}
+.dial-v{font-family:var(--f-disp);font-weight:700;font-size:20px;line-height:1.1;font-variant-numeric:tabular-nums}
+.dial-bar{height:3px;background:var(--panel-2);margin-top:5px;position:relative}
+.dial-bar i{position:absolute;inset:0 auto 0 0;background:var(--ink-3);display:block}
+.dial.hot .dial-v{color:var(--accent)}
+.dial.hot .dial-bar i{background:var(--accent)}
+
+.verdict{border-top:1px solid var(--rule-soft);padding-top:var(--sp-4);font-size:14.5px}
+.verdict p{margin:0 0 var(--sp-3);color:var(--ink-2)}
+.verdict p:last-child{margin:0}
+.verdict b{color:var(--ink)}
+.risk b{color:var(--warn)}
+
+/* ============================================================
+   SPECIMENS — each is a real, self-contained palette. They set
+   their own background and every colour, so they hold on either
+   host theme rather than borrowing the viewer's.
+   ============================================================ */
+.spm{
+  border:1px solid var(--rule);
+  aspect-ratio:16/10;min-height:300px;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+  container-type:inline-size;
+}
+.spm-cap{
+  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--ink-3);margin-top:var(--sp-2);
+}
+.swatches{display:flex;gap:0;margin-top:var(--sp-2);border:1px solid var(--rule-soft)}
+.swatches i{flex:1;height:16px;display:block}
+
+/* --- D1 SPEC SHEET --- */
+.s1{background:#FBFAF6;color:#1B1B1A;padding:5cqw 5cqw;font-family:var(--f-disp)}
+.s1 .n{font-family:var(--f-mono);font-size:2.6cqw;letter-spacing:.14em;text-transform:uppercase;color:#8A8272}
+.s1 h4{font-size:6.6cqw;font-weight:700;letter-spacing:-.03em;line-height:1.02;margin:2.4cqw 0 2cqw;max-width:18ch}
+.s1 .sub{font-size:2.9cqw;line-height:1.4;color:#4A463D;max-width:40ch;margin:0}
+.s1 .figs{display:flex;gap:6cqw;margin-top:auto;padding-top:4cqw;border-top:1px solid #D8D2C2}
+.s1 .fig .v{font-family:var(--f-mono);font-size:5.4cqw;font-weight:700;color:#A6300E;font-variant-numeric:tabular-nums;line-height:1}
+.s1 .fig .k{font-family:var(--f-mono);font-size:2.2cqw;letter-spacing:.09em;text-transform:uppercase;color:#8A8272;margin-top:1cqw}
+
+/* --- D2 PRODUCT PAGE --- */
+.s2{background:#0A0A0B;color:#F2F2F0;padding:5cqw;font-family:var(--f-disp);justify-content:center}
+.s2 .eyebrow{font-family:var(--f-mono);font-size:2.3cqw;letter-spacing:.11em;text-transform:uppercase;color:#E9A23B}
+.s2 h4{font-size:7cqw;font-weight:600;letter-spacing:-.035em;line-height:1.03;margin:2.6cqw 0 2.4cqw;max-width:17ch}
+.s2 .sub{font-size:2.9cqw;color:#9EA0A3;max-width:38ch;margin:0 0 4cqw;line-height:1.45}
+.s2 .btn{display:inline-block;background:#E9A23B;color:#0A0A0B;font-size:2.6cqw;font-weight:600;padding:2cqw 3.6cqw;border-radius:6px}
+.s2 .shot{position:absolute;right:-8cqw;bottom:-6cqw;width:44cqw;height:26cqw;background:#141416;border:1px solid #26262A;border-radius:8px}
+
+/* --- D3 LOGBOOK --- */
+.s3{background:#F2EFE7;color:#1A1A1A;padding:4.4cqw 5cqw;font-family:var(--f-disp);overflow-y:hidden}
+.s3 .head{border-bottom:2px solid #1A1A1A;padding-bottom:2cqw;margin-bottom:3cqw}
+.s3 .head .nm{font-size:3.4cqw;font-weight:700;letter-spacing:-.02em}
+.s3 .head .sn{font-size:2.4cqw;color:#5A564C;margin-top:.6cqw}
+.s3 .ent{border-bottom:1px solid #C8C2B0;padding:2.4cqw 0}
+.s3 .ent .d{font-family:var(--f-mono);font-size:2.1cqw;letter-spacing:.06em;color:#A33327}
+.s3 .ent .t{font-family:"Newsreader",Georgia,serif;font-style:italic;font-size:3.4cqw;line-height:1.3;margin-top:.8cqw;color:#1A1A1A}
+.s3 .ent .m{font-family:var(--f-mono);font-size:2.2cqw;color:#5A564C;margin-top:.8cqw;font-variant-numeric:tabular-nums}
+
+/* --- D4 MONOGRAPH --- */
+.s4{background:#0C0C0D;color:#F6F5F2;padding:6cqw;justify-content:center;align-items:flex-start}
+.s4 h4{
+  font-family:var(--f-edit);font-size:11cqw;line-height:.94;letter-spacing:-.02em;
+  margin:0;max-width:13ch;font-weight:400;
+}
+.s4 .mark{font-family:var(--f-mono);font-size:2.2cqw;letter-spacing:.12em;text-transform:uppercase;color:#6F6C64;margin-bottom:3cqw}
+
+/* --- D5 INSTRUMENT (the run trace) --- */
+.s5{background:#0B0F14;color:#DCE3EA;padding:4.4cqw 5cqw;font-family:var(--f-mono)}
+.s5 .hd{display:flex;justify-content:space-between;align-items:baseline;gap:2cqw;flex-wrap:wrap}
+.s5 .hd .t{font-family:var(--f-disp);font-size:3.4cqw;font-weight:700;letter-spacing:-.02em;color:#F0F4F8}
+.s5 .hd .s{font-size:2.1cqw;letter-spacing:.08em;text-transform:uppercase;color:#5F707F}
+.s5 .trace{margin-top:3.2cqw;display:flex;flex-direction:column;gap:1.5cqw}
+.s5 .row{display:grid;grid-template-columns:16cqw 1fr 9cqw;align-items:center;gap:2cqw}
+.s5 .row .nm{font-size:2.1cqw;color:#8FA0AE;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.s5 .track{height:2.6cqw;background:#131B23;position:relative;overflow:hidden}
+.s5 .track i{
+  position:absolute;top:0;bottom:0;left:0;display:block;background:#5BE49B;
+  transform:scaleX(0);transform-origin:left center;
+  animation:grow .55s cubic-bezier(.23,1,.32,1) forwards;
+}
+.s5 .track.retry i{background:#F2994A}
+.s5 .row .ms{font-size:2cqw;color:#5F707F;text-align:right;font-variant-numeric:tabular-nums}
+.s5 .foot{margin-top:auto;padding-top:2.6cqw;font-size:1.9cqw;color:#4E5D6B;border-top:1px solid #1B252E}
+@keyframes grow{to{transform:scaleX(1)}}
+@media(prefers-reduced-motion:reduce){
+  .s5 .track i{animation:none;transform:scaleX(1)}
+}
+
+/* --- D6 THE VOID --- */
+.s6{background:#000;color:#fff;padding:5cqw;justify-content:center;position:relative}
+.s6 canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.s6 .in{position:relative;z-index:1;max-width:60%}
+.s6 .lbl{font-family:var(--f-disp);font-size:2.2cqw;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#ffb829}
+.s6 h4{font-family:var(--f-disp);font-size:8.4cqw;font-weight:400;letter-spacing:-.04em;line-height:1.02;margin:2.6cqw 0 2.6cqw;color:#fff}
+.s6 .sub{font-size:2.7cqw;font-weight:200;line-height:1.5;color:#bdbdbd;margin:0 0 4cqw;max-width:30ch}
+.s6 .pill{display:inline-block;background:#8052ff;color:#fff;font-size:2.3cqw;font-weight:600;letter-spacing:.025em;text-transform:uppercase;padding:2.2cqw 3.6cqw;border-radius:9999px}
+
+/* ---------- recommendation ---------- */
+.rec{background:var(--panel);border:1px solid var(--rule);border-left:3px solid var(--accent);padding:var(--sp-6)}
+.rec h2{margin-top:0}
+.rec .pair{
+  font-family:var(--f-mono);font-size:clamp(20px,3vw,30px);font-weight:700;
+  letter-spacing:-.01em;color:var(--accent);margin:0 0 var(--sp-4);
+}
+.ask{counter-reset:a}
+.ask li{margin:0 0 var(--sp-4);max-width:70ch}
+.ask li b{display:block;font-weight:600;color:var(--ink)}
+.ask li span{color:var(--ink-2);font-size:15px}
+
+footer{padding:var(--sp-7) 0 var(--sp-9);color:var(--ink-3);font-size:13.5px}
+footer p{max-width:70ch}
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <div class="mast-top">
+      <div class="lab">Portfolio v2 &middot; Phase 0 &middot; DECISIONS §4</div>
+      <div class="mast-meta">
+        <span class="lab">26 Aug 2026</span>
+        <span class="lab">Six candidates</span>
+        <span class="lab">Nothing chosen</span>
+      </div>
+    </div>
+    <h1>Direction Proofs</h1>
+    <p class="deck">Six ways the rebuild could look, each split into a base that stands on its own and a creative layer that <span class="mono" style="font-style:normal;font-size:.82em">git revert</span> can remove.</p>
+
+    <div class="sentence">
+      <div class="lab">The sentence every one of these has to land in ten seconds</div>
+      <p>He builds AI products on his own and ships them. Three for a paying studio client in five months.</p>
+    </div>
+  </header>
+
+  <section>
+    <div class="lab">The frame</div>
+    <h2>What every direction has to survive</h2>
+    <div class="cols">
+      <div class="card">
+        <h3>The revert test</h3>
+        <p>Build the clear site, ship it, then add one creative layer in its own commit. Revert it. If what remains is a working, complete site, you are safe. If not, the creative thing has become the information architecture again, which is exactly how v1 died.</p>
+      </div>
+      <div class="card">
+        <h3>Screenshots, not photography</h3>
+        <p>Five products captured at two widths, three silent recordings, one portrait. No commissioned photography, no testimonials, no usage numbers. BeatMind has zero users and that stays on the page.</p>
+      </div>
+      <div class="card">
+        <h3>It must not read as generated</h3>
+        <p>The detectors already flagged <span class="mono">Inter</span> and <span class="mono">Geist&nbsp;Mono</span> as overused faces on this very repo. Neither appears below. Nor does a 2&times;2 grid, a violet-to-blue gradient, or a centred-everything hero.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="lab">Ruled out before we started</div>
+    <h2>Four admired recipes that cannot be built here</h2>
+    <p style="color:var(--ink-2);font-size:15px">Each of these is genuinely good and each fails on something that is not a matter of taste. Naming them stops us relitigating them in three weeks.</p>
+    <div class="scroll">
+      <table class="tbl">
+        <thead><tr><th>Recipe</th><th>Why it is out</th></tr></thead>
+        <tbody>
+          <tr><td>monocle&#8209;magazine</td><td>Its own recipe says that without commissioned photography it is hollow. We have product screenshots and one portrait.</td></tr>
+          <tr><td>stripe&#8209;press</td><td>The hero is a physical book photographed on cream paper. Also: "do not use when the deliverable has no editorial or publication content."</td></tr>
+          <tr><td>are&#8209;na</td><td>Explicitly rejects premium signalling. Someone quoting &#8377;50k&ndash;1L cannot open with a page that reads as deliberately unfinished.</td></tr>
+          <tr><td>tufte&#8209;dataink</td><td>"Don't use when the medium is mobile." 12&ndash;14px body plus margin notes does not fit a phone, and mobile is where the outreach links open. Kept as a source to borrow from, not a direction.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===================== D1 ===================== -->
+  <article class="dir">
+    <div class="dir-head"><span class="dir-no">D1</span><h2 class="dir-name">The Spec Sheet</h2></div>
+    <p class="dir-thesis">A person documented the way serious hardware is documented.</p>
+    <div class="dir-body">
+      <div>
+        <div class="spm">
+          <div class="s1">
+            <div class="n">Parth Tiwari &middot; AI Engineer</div>
+            <h4>Builds AI products on his own, and ships them.</h4>
+            <p class="sub">Three for a paying studio client in five months. Every figure below carries its denominator.</p>
+            <div class="figs">
+              <div class="fig"><div class="v">24</div><div class="k">days, solo</div></div>
+              <div class="fig"><div class="v">307</div><div class="k">commits</div></div>
+              <div class="fig"><div class="v">23.4s</div><div class="k">was 70s</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="swatches" aria-hidden="true">
+          <i style="background:#FBFAF6"></i><i style="background:#1B1B1A"></i><i style="background:#A6300E"></i><i style="background:#D8D2C2"></i><i style="background:#8A8272"></i>
+        </div>
+        <div class="spm-cap">Archivo 700 / JetBrains Mono &middot; warm paper &middot; radius 0 &middot; no shadows</div>
+      </div>
+      <div class="spec">
+        <dl>
+          <dt>School</dt><dd>Information architecture. Tufte's data&#8209;ink rule, Vignelli, Braun under Rams.</dd>
+          <dt>Base</dt><dd>Numbered sections, real tables, figures with captions, hairlines doing the work shadows do elsewhere. <b>Readable with the stylesheet off</b>, which closes v1's crawler gap by construction rather than by promise.</dd>
+          <dt>Layer</dt><dd>Annotation callouts that draw themselves onto a capture over ~400ms. Revert gives static labels.</dd>
+        </dl>
+        <div class="dials">
+          <div class="dial"><div class="dial-k">Variance</div><div class="dial-v">2</div><div class="dial-bar"><i style="width:20%"></i></div></div>
+          <div class="dial"><div class="dial-k">Motion</div><div class="dial-v">3</div><div class="dial-bar"><i style="width:30%"></i></div></div>
+          <div class="dial hot"><div class="dial-k">Density</div><div class="dial-v">7</div><div class="dial-bar"><i style="width:70%"></i></div></div>
+        </div>
+        <div class="verdict">
+          <p><b>Ten seconds:</b> strongest of the six. The sentence and three numbers are the entire fold, so there is nothing to decode.</p>
+          <p class="risk"><b>Risk:</b> reads cold. A founder who wanted warmth gets a datasheet. Mitigated by leading each section with the outcome and putting the spec underneath.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ===================== D2 ===================== -->
+  <article class="dir">
+    <div class="dir-head"><span class="dir-no">D2</span><h2 class="dir-name">Product Page for a Person</h2></div>
+    <p class="dir-thesis">Treat the person as the product, in the grammar founders already read fluently.</p>
+    <div class="dir-body">
+      <div>
+        <div class="spm">
+          <div class="s2">
+            <div class="eyebrow">Available for build work</div>
+            <h4>Ships the whole AI product, not the demo.</h4>
+            <p class="sub">Three shipped for a paying studio client in five months. All of them are live and you can open them.</p>
+            <span class="btn">See the work</span>
+            <div class="shot" aria-hidden="true"></div>
+          </div>
+        </div>
+        <div class="swatches" aria-hidden="true">
+          <i style="background:#0A0A0B"></i><i style="background:#F2F2F0"></i><i style="background:#E9A23B"></i><i style="background:#26262A"></i><i style="background:#9EA0A3"></i>
+        </div>
+        <div class="spm-cap">Archivo 600 / JetBrains Mono &middot; near&#8209;black &middot; radius 6px &middot; hairline panels</div>
+      </div>
+      <div class="spec">
+        <dl>
+          <dt>School</dt><dd>Modern tool. Linear, Vercel, Raycast, Resend.</dd>
+          <dt>Base</dt><dd>Hero, proof strip, three offers, five case studies, contact. Every section is static HTML with a real image in it.</dd>
+          <dt>Layer</dt><dd>The autoplaying hero recording and scroll&#8209;triggered device framing. Revert leaves the poster frame, which is a real screenshot and says the same thing.</dd>
+        </dl>
+        <div class="dials">
+          <div class="dial"><div class="dial-k">Variance</div><div class="dial-v">3</div><div class="dial-bar"><i style="width:30%"></i></div></div>
+          <div class="dial hot"><div class="dial-k">Motion</div><div class="dial-v">4</div><div class="dial-bar"><i style="width:40%"></i></div></div>
+          <div class="dial"><div class="dial-k">Density</div><div class="dial-v">5</div><div class="dial-bar"><i style="width:50%"></i></div></div>
+        </div>
+        <div class="verdict">
+          <p><b>Ten seconds:</b> strong. This is the genre the target buyer reads every day.</p>
+          <p class="risk"><b>Risk:</b> the largest here, and specific. Dark canvas, one accent, hairline cards and a grotesk headline is <b>the most-imitated look of 2026</b>. Choosing it means committing to hard divergence, not merely executing it well.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ===================== D3 ===================== -->
+  <article class="dir">
+    <div class="dir-head"><span class="dir-no">D3</span><h2 class="dir-name">The Logbook</h2></div>
+    <p class="dir-thesis">The site is a working record. Dated entries, revisions visible, what changed and why.</p>
+    <div class="dir-body">
+      <div>
+        <div class="spm">
+          <div class="s3">
+            <div class="head">
+              <div class="nm">Parth Tiwari &mdash; AI Engineer</div>
+              <div class="sn">Builds AI products on his own and ships them. Three for a paying studio client in five months.</div>
+            </div>
+            <div class="ent">
+              <div class="d">2026&#8209;08&#8209;02 &middot; BeatMind</div>
+              <div class="t">A checkbox is not a rights check.</div>
+              <div class="m">Built self&#8209;attestation. Deleted it. Export now resolves lineage across two sources.</div>
+            </div>
+            <div class="ent">
+              <div class="d">2026&#8209;07&#8209;19 &middot; Vivid</div>
+              <div class="t">Predicted 40%. Measured 8%. Reverted.</div>
+              <div class="m">Demucs swap. The reference chain made later shots ~4&times; slower.</div>
+            </div>
+          </div>
+        </div>
+        <div class="swatches" aria-hidden="true">
+          <i style="background:#F2EFE7"></i><i style="background:#1A1A1A"></i><i style="background:#A33327"></i><i style="background:#C8C2B0"></i><i style="background:#5A564C"></i>
+        </div>
+        <div class="spm-cap">Newsreader italic / JetBrains Mono &middot; warm paper &middot; rules, not cards</div>
+      </div>
+      <div class="spec">
+        <dl>
+          <dt>School</dt><dd>Warm humanist crossed with information architecture.</dd>
+          <dt>Base</dt><dd>A reverse&#8209;chronological document. The four corrections stop being a page and <b>become the form</b>: each entry states what was predicted, what was measured, what changed.</dd>
+          <dt>Layer</dt><dd>A marginal rail tracking reading position. Revert leaves a plain date on each entry.</dd>
+        </dl>
+        <div class="dials">
+          <div class="dial"><div class="dial-k">Variance</div><div class="dial-v">4</div><div class="dial-bar"><i style="width:40%"></i></div></div>
+          <div class="dial"><div class="dial-k">Motion</div><div class="dial-v">2</div><div class="dial-bar"><i style="width:20%"></i></div></div>
+          <div class="dial hot"><div class="dial-k">Density</div><div class="dial-v">6</div><div class="dial-bar"><i style="width:60%"></i></div></div>
+        </div>
+        <div class="verdict">
+          <p><b>Ten seconds:</b> weakest of the six as drawn, and that is the thing to fix before choosing it. A visitor may read "blog" in two seconds and leave. It passes only if the fixed head does the whole job.</p>
+          <p><b>Tempting anyway:</b> almost nobody publishes the measurement that killed their own hypothesis. This is the only direction where that becomes the structure rather than a section.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ===================== D4 ===================== -->
+  <article class="dir">
+    <div class="dir-head"><span class="dir-no">D4</span><h2 class="dir-name">The Monograph</h2></div>
+    <p class="dir-thesis">One idea per screen, enormous type, slow confident pacing.</p>
+    <div class="dir-body">
+      <div>
+        <div class="spm">
+          <div class="s4">
+            <div class="mark">01 &mdash; What he does</div>
+            <h4>He builds AI products on his own, and ships them.</h4>
+          </div>
+        </div>
+        <div class="swatches" aria-hidden="true">
+          <i style="background:#0C0C0D"></i><i style="background:#F6F5F2"></i><i style="background:#6F6C64"></i><i style="background:#2A2A2C"></i>
+        </div>
+        <div class="spm-cap">Instrument Serif 400 at 96&ndash;120px &middot; near&#8209;black &middot; one claim per screen</div>
+      </div>
+      <div class="spec">
+        <dl>
+          <dt>School</dt><dd>Editorial minimalist. Apple's product pages, MUJI, By&#8209;Kin.</dd>
+          <dt>Base</dt><dd>Sequential full&#8209;height sections, one claim and one image each.</dd>
+          <dt>Layer</dt><dd>Cross&#8209;fades between sections, slow scale on captures. Revert gives hard cuts.</dd>
+        </dl>
+        <div class="dials">
+          <div class="dial hot"><div class="dial-k">Variance</div><div class="dial-v">5</div><div class="dial-bar"><i style="width:50%"></i></div></div>
+          <div class="dial"><div class="dial-k">Motion</div><div class="dial-v">4</div><div class="dial-bar"><i style="width:40%"></i></div></div>
+          <div class="dial"><div class="dial-k">Density</div><div class="dial-v">1</div><div class="dial-bar"><i style="width:10%"></i></div></div>
+        </div>
+        <div class="verdict">
+          <p><b>Ten seconds:</b> passes trivially. There is one sentence on screen.</p>
+          <p class="risk"><b>Risk:</b> two, both structural. Twelve projects do not fit one&#8209;idea&#8209;per&#8209;screen, so the layout would settle §2.1 by aesthetics. And it needs imagery that does not exist: five screenshots stretched over gallery pacing reads as empty, not confident. <b>Not recommended.</b></p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ===================== D5 ===================== -->
+  <article class="dir">
+    <div class="dir-head"><span class="dir-no">D5</span><h2 class="dir-name">The Instrument</h2></div>
+    <p class="dir-thesis">An ordinary, legible page, with one live graphic that is genuinely his.</p>
+    <div class="dir-body">
+      <div>
+        <div class="spm">
+          <div class="s5">
+            <div class="hd">
+              <div class="t">separation &middot; job 4c19f</div>
+              <div class="s">8 stages &middot; 1 retry</div>
+            </div>
+            <div class="trace">
+              <div class="row"><span class="nm">presign</span><span class="track"><i style="width:5%;animation-delay:.05s"></i></span><span class="ms">1.2s</span></div>
+              <div class="row"><span class="nm">fingerprint</span><span class="track"><i style="width:3%;animation-delay:.12s"></i></span><span class="ms">0.8s</span></div>
+              <div class="row"><span class="nm">dispatch</span><span class="track retry"><i style="width:9%;animation-delay:.19s"></i></span><span class="ms">retry</span></div>
+              <div class="row"><span class="nm">separation</span><span class="track"><i style="width:100%;animation-delay:.26s"></i></span><span class="ms">23.4s</span></div>
+              <div class="row"><span class="nm">structure</span><span class="track"><i style="width:18%;animation-delay:.33s"></i></span><span class="ms">4.1s</span></div>
+              <div class="row"><span class="nm">key + bpm</span><span class="track"><i style="width:7%;animation-delay:.40s"></i></span><span class="ms">1.6s</span></div>
+              <div class="row"><span class="nm">render</span><span class="track"><i style="width:14%;animation-delay:.47s"></i></span><span class="ms">3.2s</span></div>
+            </div>
+            <div class="foot">23.4s measured on a 4&#8209;minute track after root&#8209;causing a missing libcublasLt.so.13. Was 70s. Other stages illustrative pending export.</div>
+          </div>
+        </div>
+        <div class="swatches" aria-hidden="true">
+          <i style="background:#0B0F14"></i><i style="background:#DCE3EA"></i><i style="background:#5BE49B"></i><i style="background:#F2994A"></i><i style="background:#1B252E"></i>
+        </div>
+        <div class="spm-cap">Archivo 700 / JetBrains Mono &middot; one success colour, one retry colour, no third</div>
+      </div>
+      <div class="spec">
+        <dl>
+          <dt>Anchor</dt><dd>Deliberately not another website. The motif comes from the most characteristic object in his own world: <b>every system he builds is a pipeline that emits stages, timings and failures.</b></dd>
+          <dt>Base</dt><dd>A normal page. The trace's data rendered as a table.</dd>
+          <dt>Layer</dt><dd>The trace itself. The cleanest split of the six, because it is a self&#8209;contained section rendered from a JSON file of measured timings.</dd>
+        </dl>
+        <div class="dials">
+          <div class="dial"><div class="dial-k">Variance</div><div class="dial-v">4</div><div class="dial-bar"><i style="width:40%"></i></div></div>
+          <div class="dial hot"><div class="dial-k">Motion</div><div class="dial-v">7</div><div class="dial-bar"><i style="width:70%"></i></div></div>
+          <div class="dial"><div class="dial-k">Density</div><div class="dial-v">5</div><div class="dial-bar"><i style="width:50%"></i></div></div>
+        </div>
+        <div class="verdict">
+          <p><b>Ten seconds:</b> passes on the hero, then the trace does something no competitor's site does. It shows a real system running, <b>including the part where it failed and retried.</b></p>
+          <p class="risk"><b>Risk:</b> closest of the six to how v1 died, so the guard is explicit. <b>The trace is never a control.</b> It cannot be clicked to navigate, it gates no content, no legend is needed to read the page. Break any of those and it is the constellation in new clothes.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ===================== D6 ===================== -->
+  <article class="dir">
+    <div class="dir-head"><span class="dir-no">D6</span><h2 class="dir-name">The Void</h2></div>
+    <p class="dir-thesis">Pure black, weightless type, and one signature particle field. Modelled on Dala.</p>
+    <div class="dir-body">
+      <div>
+        <div class="spm">
+          <div class="s6">
+            <canvas id="voidfield" aria-hidden="true"></canvas>
+            <div class="in">
+              <div class="lbl">AI Engineer</div>
+              <h4>Ships AI products, alone.</h4>
+              <p class="sub">Three for a paying studio client in five months. He writes down what broke.</p>
+              <span class="pill">Start a project</span>
+            </div>
+          </div>
+        </div>
+        <div class="swatches" aria-hidden="true">
+          <i style="background:#000000"></i><i style="background:#ffffff"></i><i style="background:#8052ff"></i><i style="background:#ffb829"></i><i style="background:#9a9a9a"></i>
+        </div>
+        <div class="spm-cap">Weight 400 display / weight 200 body &middot; pure #000 &middot; radius 24px &middot; one violet pill</div>
+      </div>
+      <div class="spec">
+        <dl>
+          <dt>What it gets right</dt><dd><b>Hierarchy from scale, not weight.</b> Every headline sits at 400, the same weight as body, and works purely through size and &minus;0.04em tracking. Body at weight 200. No cards, no borders, no shadows anywhere. One filled violet pill per view, and never as a surface.</dd>
+          <dt>Base</dt><dd>Two&#8209;column text and visual, alternating left and right down the page. Nothing but type on black.</dd>
+          <dt>Layer</dt><dd>The particle field. <b>Dala is the best argument in this document for your own brief:</b> delete its constellation and the page still reads completely. It is decoration in the right half of a hero, not navigation.</dd>
+        </dl>
+        <div class="dials">
+          <div class="dial"><div class="dial-k">Variance</div><div class="dial-v">3</div><div class="dial-bar"><i style="width:30%"></i></div></div>
+          <div class="dial hot"><div class="dial-k">Motion</div><div class="dial-v">7</div><div class="dial-bar"><i style="width:70%"></i></div></div>
+          <div class="dial"><div class="dial-k">Density</div><div class="dial-v">1</div><div class="dial-bar"><i style="width:10%"></i></div></div>
+        </div>
+        <div class="verdict">
+          <p class="risk"><b>Risk 1, the ghost.</b> Dala's own summary line is "constellation floating on black velvet." A particle constellation is the one visual v1 has already burned, and anyone who saw v1 will read it as the same site.</p>
+          <p class="risk"><b>Risk 2, the company it keeps.</b> Its own reference sheet lists Linear, Vercel, Anthropic and Runway as similar. Violet on pure black is the exact pattern flagged as the most recognisable generated look.</p>
+          <p class="risk"><b>Risk 3, density 1.</b> One or two elements per viewport, never information&#8209;dense. That is D4's problem again: it needs imagery we do not have, and it fights twelve projects.</p>
+          <p><b>Worth stealing regardless:</b> the weight&#8209;200 body, hierarchy through scale alone, and the absolute refusal of cards and borders. Those three survive being moved to any palette.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <section>
+    <div class="rec">
+      <div class="lab">Recommendation</div>
+      <h2>D1 as the base, D5 as the creative layer</h2>
+      <p class="pair">D1 + D5</p>
+      <p>They are the architecture the brief demands, already split. The Spec Sheet passes the ten-second test on text alone, which is the Phase 1 gate, and it survives having every moving thing removed because it was a document to begin with. The Run Trace is the one signature moment. It is animated, graphic, and unlike anyone else's site, and it lives in a section one commit can delete.</p>
+      <p>It also resolves the tension in the brief honestly. The ask is a site that is creative and animated; the constraint is that the creative layer must be deletable. This is the only pair here where the creative thing is genuinely additive rather than load-bearing.</p>
+      <p style="margin-bottom:0"><b>If you want the Dala feeling</b>, the honest route is not D6. It is D5 with D6's typographic discipline borrowed: hierarchy from scale rather than weight, no cards, no borders, and one accent used only on the one thing you want clicked. You get the weightlessness without inheriting the constellation or the company it keeps.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="lab">Before anything is locked</div>
+    <h2>Four things I need from you</h2>
+    <ol class="ask">
+      <li><b>Pick a direction, or tell me what is missing from all six.</b><span>If none of these is it, that is a useful answer and we search again rather than settling.</span></li>
+      <li><b>Refero captures.</b><span>The Refero MCP needs a paid subscription, and the design-pass skill will not scrape the site because its robots.txt disallows every AI crawler. So the workflow is manual: browse it yourself, save what you like into <span class="mono">design-kit/inbox/refero/</span> named <span class="mono">brand--what-caught-your-eye.png</span>. The suffix matters more than the prefix. Six captures is the useful number.</span></li>
+      <li><b>Settle the BeatMind figures.</b><span>The resume says 19 days, 194 commits, 27,000 lines. The case study says 24 days, 307 commits, ~30,500 lines. The case study is later and more precise, and the D1 specimen above uses it. One number, everywhere.</span></li>
+      <li><b>Run the ten-second test on the sentence alone.</b><span>No website. Say it to five people and write down what comes back, verbatim. If the sentence does not land as a sentence, none of these six saves it.</span></li>
+    </ol>
+  </section>
+
+  <footer>
+    <p><b>Sources.</b> 29 videos transcribed and mined, nine design-skill repos cloned, the 74-brand design language corpus, and the live hero lines of rauno.me, paco.me, jxnl.co and parlance-labs.com read directly. Everything is committed under <span class="mono">design/research/</span>.</p>
+    <p style="margin-top:12px">Two research agents were killed mid-write by a rate limit: the Reddit practitioner sweep and the twenty-site reference sweep. Both wrote nothing to disk and both are still outstanding.</p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var c = document.getElementById('voidfield');
+  if(!c) return;
+  var ctx = c.getContext('2d');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var pts = [], W = 0, H = 0, raf = null;
+  var hues = ['#8052ff','#ffb829','#15846e','#b06cff','#4a7dff'];
+
+  function build(){
+    var r = c.getBoundingClientRect();
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = r.width; H = r.height;
+    c.width = W * dpr; c.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    pts = [];
+    // Dense cluster on the right, sparse ambient drift across the rest.
+    var n = Math.round((W * H) / 1400);
+    for (var i = 0; i < n; i++){
+      var cluster = Math.random() < 0.62;
+      var x, y;
+      if (cluster){
+        var a = Math.random() * Math.PI * 2;
+        var rad = Math.pow(Math.random(), 0.55) * (Math.min(W, H) * 0.42);
+        x = W * 0.74 + Math.cos(a) * rad * 1.05;
+        y = H * 0.5 + Math.sin(a) * rad * 0.82;
+      } else {
+        x = Math.random() * W; y = Math.random() * H;
+      }
+      pts.push({
+        x:x, y:y,
+        s: 1.4 + Math.random() * 2.6,
+        col: hues[(Math.random() * hues.length) | 0],
+        o: cluster ? 0.35 + Math.random() * 0.5 : 0.12 + Math.random() * 0.22,
+        ph: Math.random() * Math.PI * 2,
+        sp: 0.4 + Math.random() * 0.9
+      });
+    }
+  }
+
+  function draw(t){
+    ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i < pts.length; i++){
+      var p = pts[i];
+      var dy = reduce ? 0 : Math.sin(t / 1600 * p.sp + p.ph) * 3;
+      ctx.globalAlpha = p.o;
+      ctx.strokeStyle = p.col;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y - p.s + dy);
+      ctx.lineTo(p.x + p.s, p.y + p.s + dy);
+      ctx.lineTo(p.x - p.s, p.y + p.s + dy);
+      ctx.closePath();
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function loop(t){ draw(t); raf = requestAnimationFrame(loop); }
+
+  function start(){
+    build();
+    if (raf) cancelAnimationFrame(raf);
+    if (reduce){ draw(0); } else { raf = requestAnimationFrame(loop); }
+  }
+
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if (e.isIntersecting){ if(!raf && !reduce) raf = requestAnimationFrame(loop); }
+      else if (raf){ cancelAnimationFrame(raf); raf = null; }
+    });
+  }, {rootMargin:'120px'});
+
+  var ro = new ResizeObserver(function(){ build(); if(reduce) draw(0); });
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', function(){ start(); io.observe(c); ro.observe(c); });
+  } else { start(); io.observe(c); ro.observe(c); }
+})();
+</script>
