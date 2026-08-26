@@ -159,6 +159,74 @@ Decided before form (`REBUILD_BRIEF.md` §3).
 | 4.5 | Is there a genre? Editorial, technical-manual, print, brutalist, terminal, something with no name | 🔴 **Run any candidate through the ten-second gate before committing. A genre that needs explaining is the constellation in a new costume** |
 | 4.6 | What is explicitly banned? | v1's ban list was useful. What is v2's |
 
+### 🟡 §4 — IN PROGRESS, research done 2026-08-26
+
+**Research is complete and committed. No direction is chosen yet.**
+
+Everything gathered lives in [`../design/`](../design/):
+
+| Where | What |
+|---|---|
+| `design/research/youtube/` | 29 videos, ~10 hours, transcribed with `yt-dlp` and mined. 27 per-video notes plus the Group A synthesis |
+| `design/research/skills-repos/raw/` | Nine design-skill repos cloned: emilkowalski, ConardLi/garden-skills, MengTo, jakubkrehel, Owl-Listener, codeswithroh/tastemaker, elayadesign, petergyang/no-ai-slop, haowjy |
+| `design/CRAFT-VALUES.md` | Every concrete number found, with its source |
+| `design/ASSET-INVENTORY.md` | What exists to design with, and the four recipes that kills |
+| `design/directions/DIRECTIONS.md` | The five directions in prose |
+| `design/directions/proofs.html` | The six directions with live specimens, published as an artifact |
+
+**4.1-4.3, the reference sweep: still outstanding.** The agent doing the twenty-site sweep was
+killed by a rate limit and wrote nothing. Four hero lines were read directly and are recorded
+under §1.1. The rest of §4.1 has not been done.
+
+**The Reddit practitioner sweep is also outstanding**, same cause.
+
+**4.5, candidate genres.** Six, drawn from `garden-skills`'s six-school taxonomy and filtered
+against what we can actually build:
+
+| | Direction | School | Verdict |
+|---|---|---|---|
+| D1 | The Spec Sheet | Information architecture | **Recommended as the base** |
+| D2 | Product Page for a Person | Modern tool | Safest commercially, highest slop risk |
+| D3 | The Logbook | Warm humanist | Most distinctive, weakest at ten seconds |
+| D4 | The Monograph | Editorial minimalist | Not recommended. Needs imagery we lack |
+| D5 | The Instrument | Motion, disciplined | **Recommended as the creative layer** |
+| D6 | The Void | Dark void, modelled on Dala | Owner's own reference. Argued honestly below |
+
+**4.6, the ban list, derived from the research.** Beyond the owner's existing bans:
+
+- `Inter` and `Geist Mono`. The design-kit detectors flagged both as overused **on this repo**
+- 2x2 grids. Named in the video corpus as reading "a little bit AI generated"
+- Indigo-to-purple and blue-to-cyan gradients, and `background-clip: text` gradient headlines
+- A single letter in a rounded coloured box as a logo
+- Centred-everything heroes: eyebrow, headline, lede and CTA all on one axis
+- Hand-drawn fake browser, phone or IDE chrome. Use a real screenshot or omit it
+- The reflexive hero, three feature cards, testimonial, CTA, footer template
+- Flat zero-chroma neutrals, outside a deliberately monochrome technical build
+- A section headline outside the hero reaching hero scale. Cap at 50-65%
+
+**On D6 and Dala.** The owner named `dala.craftedbygc.com` as a site he loves, after the
+research. Recorded rather than adopted, with three findings:
+
+1. Its own Refero summary line is *"constellation floating on black velvet"*, and the
+   signature is a particle constellation. That is the one visual v1 has already burned.
+2. Its own reference sheet lists **Linear, Vercel, Anthropic and Runway** as similar brands,
+   and `#8052ff` on pure black is the exact pattern the anti-slop research flags as the most
+   recognisable generated look.
+3. **It is also the best argument in the corpus for `REBUILD_BRIEF.md` §3.** Delete Dala's
+   constellation and the page still reads completely: headline, body, one violet pill. The
+   constellation is decoration in the right half of a hero, not navigation. v1 failed not
+   because it had a constellation but because you had to click it.
+
+Three things from it are worth taking to any palette: **hierarchy from scale rather than
+weight** (every headline at 400, the same weight as body), **weight-200 body copy**, and the
+refusal of cards, borders and shadows entirely.
+
+**Blocked on the owner:** pick a direction; supply six Refero captures into
+`design-kit/inbox/refero/` (the MCP needs a paid subscription and the skill will not scrape
+the site, whose robots.txt disallows every AI crawler); settle the BeatMind figures; run the
+ten-second test on the §1.1 sentence with no website.
+
+
 ---
 
 ## §5 — Typography
