@@ -1,0 +1,549 @@
+<title>Round Two</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=Archivo:wdth,wght@62..125,100..900&family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap">
+
+<style>
+/* ============================================================
+   Round two. The first proof sheet was a neutral studio grey
+   because the specimens carried the colour. This one commits:
+   the complaint was that nothing felt ambitious, so the page
+   itself has to answer that before a word is read.
+   ============================================================ */
+:root{
+  --void:#08080A;
+  --sur:#0E0F12;
+  --sur-2:#15171B;
+  --edge:#1F2228;
+  --edge-hi:#2E323A;
+  --ink:#F4F5F7;
+  --ink-2:#A2A8B4;
+  --ink-3:#6C7280;
+  --hot:#FF4D2E;
+  --cool:#5EE0C8;
+  --gold:#F2B441;
+
+  --f-disp:"Bricolage Grotesque","Archivo",Helvetica,Arial,sans-serif;
+  --f-body:"Archivo",Helvetica,Arial,sans-serif;
+  --f-ed:"Newsreader",Georgia,serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;
+  --s6:32px;--s7:48px;--s8:72px;--s9:112px;
+  --maxw:1200px;
+}
+/* Deliberately single-theme: this is a dark art direction, and a
+   light inversion would misrepresent four of the five directions.
+   Every colour is painted explicitly so it holds on either host. */
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  margin:0;background:var(--void);color:var(--ink);
+  font-family:var(--f-body);font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--s5)}
+a{color:var(--cool)}
+:focus-visible{outline:2px solid var(--cool);outline-offset:3px;border-radius:2px}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.lab{font-family:var(--f-mono);font-size:11px;font-weight:500;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3)}
+.hot{color:var(--hot)}
+
+/* ---------------- masthead ---------------- */
+.mast{padding:var(--s9) 0 var(--s8);border-bottom:1px solid var(--edge)}
+.mast h1{
+  font-family:var(--f-disp);font-weight:800;
+  font-size:clamp(52px,13vw,146px);line-height:.86;letter-spacing:-.05em;
+  margin:var(--s5) 0 var(--s6);text-wrap:balance;
+  font-variation-settings:"wdth" 100;
+}
+.mast h1 em{font-style:normal;color:var(--hot)}
+.deck{font-family:var(--f-ed);font-size:clamp(19px,2.6vw,29px);line-height:1.4;color:var(--ink-2);max-width:36ch;margin:0}
+
+/* the reframe callout */
+.reframe{
+  margin-top:var(--s8);border:1px solid var(--edge-hi);background:var(--sur);
+  padding:var(--s6);
+}
+.reframe h2{font-family:var(--f-disp);font-weight:700;font-size:clamp(21px,2.8vw,30px);line-height:1.15;letter-spacing:-.025em;margin:var(--s3) 0 var(--s4);text-wrap:balance}
+.reframe p{color:var(--ink-2);max-width:70ch;margin:0 0 var(--s4)}
+.reframe p:last-child{margin:0}
+.reframe b{color:var(--ink)}
+.quotes{display:grid;gap:var(--s3);margin:var(--s5) 0}
+@media(min-width:760px){.quotes{grid-template-columns:1fr 1fr}}
+.q{border-left:2px solid var(--hot);padding:var(--s2) 0 var(--s2) var(--s4)}
+.q p{font-family:var(--f-ed);font-size:16.5px;line-height:1.45;color:var(--ink);margin:0 0 var(--s1)}
+.q cite{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);font-style:normal}
+
+/* ---------------- direction blocks ---------------- */
+.dir{padding:var(--s9) 0;border-bottom:1px solid var(--edge)}
+.dir-no{font-family:var(--f-mono);font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--hot)}
+.dir h2{
+  font-family:var(--f-disp);font-weight:800;
+  font-size:clamp(34px,7vw,82px);line-height:.9;letter-spacing:-.045em;
+  margin:var(--s3) 0 var(--s4);text-wrap:balance;
+}
+.thesis{font-family:var(--f-ed);font-style:italic;font-size:clamp(18px,2.4vw,26px);line-height:1.35;color:var(--ink-2);max-width:48ch;margin:0 0 var(--s7)}
+.grid2{display:grid;gap:var(--s6)}
+@media(min-width:980px){.grid2{grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:var(--s7)}}
+
+.stage{
+  border:1px solid var(--edge-hi);background:#000;
+  aspect-ratio:16/10;min-height:290px;position:relative;overflow:hidden;
+  container-type:inline-size;
+}
+.stage-note{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);margin-top:var(--s2);display:flex;gap:var(--s4);flex-wrap:wrap;align-items:center}
+.replay{
+  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+  background:transparent;color:var(--cool);border:1px solid var(--edge-hi);
+  padding:5px 11px;cursor:pointer;
+}
+.replay:hover{border-color:var(--cool)}
+
+.meta dl{display:grid;grid-template-columns:auto 1fr;gap:var(--s2) var(--s4);margin:0 0 var(--s5)}
+.meta dt{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);padding-top:4px}
+.meta dd{margin:0;font-size:14.5px;color:var(--ink-2)}
+.meta dd b{color:var(--ink);font-weight:600}
+
+.pages{display:flex;flex-wrap:wrap;gap:var(--s1);margin:0 0 var(--s5)}
+.pages span{font-family:var(--f-mono);font-size:11px;padding:4px 9px;border:1px solid var(--edge-hi);color:var(--ink-2)}
+.pages span:first-child{border-color:var(--cool);color:var(--cool)}
+
+.moment{border-top:1px solid var(--edge);padding-top:var(--s4);font-size:14.5px}
+.moment p{margin:0 0 var(--s3);color:var(--ink-2)}
+.moment p:last-child{margin:0}
+.moment b{color:var(--ink)}
+.moment .warn b{color:var(--gold)}
+
+/* ============================================================
+   D7 — COMPOSITE
+   ============================================================ */
+.d7{background:#000;padding:5cqw;display:flex;flex-direction:column;justify-content:center}
+.d7 .k{font-family:var(--f-mono);font-size:2.1cqw;letter-spacing:.13em;text-transform:uppercase;color:#F2B441}
+.d7 h3{font-family:var(--f-disp);font-weight:400;font-size:8.6cqw;line-height:.98;letter-spacing:-.045em;margin:2.6cqw 0;color:#fff;max-width:15ch}
+.d7 .sub{font-size:2.5cqw;font-weight:300;color:#9aa0aa;max-width:34ch;margin:0 0 4cqw;line-height:1.5}
+.d7 .figs{display:flex;gap:5cqw;border-top:1px solid #1d1f24;padding-top:3cqw}
+.d7 .figs div .v{font-family:var(--f-mono);font-size:4cqw;font-weight:700;color:#fff;font-variant-numeric:tabular-nums;line-height:1}
+.d7 .figs div .k2{font-family:var(--f-mono);font-size:1.8cqw;letter-spacing:.09em;text-transform:uppercase;color:#5f6570;margin-top:.9cqw}
+
+/* ============================================================
+   D8 — DENOISE (canvas)
+   ============================================================ */
+.d8{background:#050506;position:relative}
+.d8 canvas{position:absolute;inset:0;width:100%;height:100%;display:block;image-rendering:auto}
+.d8 .ov{position:absolute;left:5cqw;bottom:5cqw;right:5cqw;z-index:2;pointer-events:none}
+.d8 .step{font-family:var(--f-mono);font-size:1.9cqw;letter-spacing:.1em;text-transform:uppercase;color:#7de3c8}
+.d8 .cap{font-family:var(--f-mono);font-size:1.7cqw;color:#6a7078;margin-top:1cqw}
+
+/* ============================================================
+   D9 — CITATION (interactive)
+   ============================================================ */
+.d9{background:#F6F4EF;color:#17181A;padding:4.6cqw 5cqw;font-family:var(--f-body);display:flex;gap:3cqw}
+.d9 .col{flex:1 1 62%}
+.d9 .marg{flex:1 1 38%;border-left:1px solid #D6D2C8;padding-left:2.6cqw}
+.d9 h3{font-family:var(--f-ed);font-weight:400;font-size:4.4cqw;line-height:1.15;letter-spacing:-.02em;margin:0 0 2.4cqw}
+.d9 p{font-size:2.4cqw;line-height:1.55;color:#3A3C40;margin:0 0 1.8cqw}
+.d9 .claim{
+  border-bottom:1px solid #B9B3A6;cursor:pointer;position:relative;
+  transition:background .18s ease-out,border-color .18s ease-out;
+}
+.d9 .claim sup{font-family:var(--f-mono);font-size:1.5cqw;color:#B4472C;margin-left:.3em}
+.d9 .claim:hover,.d9 .claim:focus-visible,.d9 .claim.on{background:#F3DFC6;border-color:#B4472C;outline:none}
+.d9 .src{opacity:.22;transition:opacity .2s ease-out,transform .2s ease-out;transform:translateX(4px)}
+.d9 .src.on{opacity:1;transform:translateX(0)}
+.d9 .src .n{font-family:var(--f-mono);font-size:1.6cqw;color:#B4472C;letter-spacing:.06em}
+.d9 .src .t{font-size:1.9cqw;line-height:1.4;color:#3A3C40;margin-top:.5cqw}
+.d9 .src + .src{margin-top:2cqw}
+
+/* ============================================================
+   D10 — CONTACT SHEET
+   ============================================================ */
+.d10{background:#141210;padding:3.4cqw;display:flex;flex-direction:column;gap:2cqw}
+.d10 .strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1.6cqw;flex:1}
+.d10 .fr{
+  position:relative;background:#221E1A;border:1px solid #332C25;
+  display:flex;align-items:flex-end;padding:1.4cqw;overflow:hidden;
+  transition:background .22s ease-out,border-color .22s ease-out;
+}
+.d10 .fr::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(150deg,#3A322A 0%,#1A1714 62%);
+  opacity:.55;transition:opacity .22s ease-out;
+}
+.d10 .fr:hover,.d10 .fr:focus-visible{background:#F2EDE3;border-color:#E9A23B;outline:none}
+.d10 .fr:hover::before,.d10 .fr:focus-visible::before{opacity:0}
+.d10 .fr .n{position:relative;font-family:var(--f-mono);font-size:1.7cqw;color:#8A7F70;transition:color .22s ease-out}
+.d10 .fr:hover .n,.d10 .fr:focus-visible .n{color:#141210}
+.d10 .sprock{display:flex;gap:1.1cqw;justify-content:space-between}
+.d10 .sprock i{flex:1;height:1.5cqw;background:#0B0A09;border:1px solid #2A2420;display:block}
+.d10 .cap{font-family:var(--f-mono);font-size:1.7cqw;letter-spacing:.1em;text-transform:uppercase;color:#6E6358}
+
+/* ============================================================
+   D11 — KINETIC TYPE
+   ============================================================ */
+.d11{background:#0A0A0B;padding:5cqw;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.d11 .line{
+  font-family:"Archivo",sans-serif;color:#fff;
+  font-size:11cqw;line-height:.92;letter-spacing:-.05em;white-space:nowrap;
+  font-variation-settings:"wght" 700,"wdth" 100;
+  transition:font-variation-settings .5s cubic-bezier(.83,0,.17,1);
+}
+.d11 .line.b{font-variation-settings:"wght" 200,"wdth" 118;color:#7A8290}
+.d11 .line.c{font-variation-settings:"wght" 900,"wdth" 68;color:#FF4D2E}
+.d11:hover .line{font-variation-settings:"wght" 200,"wdth" 120}
+.d11:hover .line.b{font-variation-settings:"wght" 900,"wdth" 70;color:#fff}
+.d11:hover .line.c{font-variation-settings:"wght" 400,"wdth" 112;color:#FF4D2E}
+.d11 .foot{font-family:var(--f-mono);font-size:1.8cqw;letter-spacing:.1em;text-transform:uppercase;color:#5A606B;margin-top:3.4cqw}
+
+/* ---------------- verdict ---------------- */
+.verdict{background:var(--sur);border:1px solid var(--edge-hi);border-left:3px solid var(--hot);padding:var(--s7)}
+.verdict h2{font-family:var(--f-disp);font-weight:800;font-size:clamp(26px,4vw,44px);line-height:.95;letter-spacing:-.04em;margin:var(--s3) 0 var(--s5)}
+.verdict p{color:var(--ink-2);max-width:72ch;margin:0 0 var(--s4)}
+.verdict p:last-child{margin:0}
+.verdict b{color:var(--ink)}
+
+.tbl{width:100%;border-collapse:collapse;font-size:14px;margin:var(--s5) 0}
+.tbl th{text-align:left;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);padding:0 var(--s4) var(--s2) 0;border-bottom:1px solid var(--edge-hi)}
+.tbl td{padding:var(--s3) var(--s4) var(--s3) 0;border-bottom:1px solid var(--edge);vertical-align:top;color:var(--ink-2)}
+.tbl td:first-child{font-family:var(--f-mono);color:var(--ink);white-space:nowrap}
+.scroll{overflow-x:auto}
+
+footer{padding:var(--s8) 0 var(--s9);color:var(--ink-3);font-size:13.5px}
+footer p{max-width:72ch;margin:0 0 var(--s3)}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="lab">Portfolio v2 &middot; Round two &middot; D7&ndash;D11</div>
+  <h1>Round<br>Two<em>.</em></h1>
+  <p class="deck">Five directions that are actually trying. Every demo below is live, not a screenshot.</p>
+
+  <div class="reframe">
+    <div class="lab">Why round one was too safe</div>
+    <h2>I read "the creative layer must be deletable" as "the creative layer must be small." Those are different constraints.</h2>
+    <p>Deletable governs <b>architecture</b>. It says nothing about how far the thing can go. So I built five sound bases with polite garnishes, and you were right to reject them.</p>
+    <p>Then I read the sources I had skipped, and found the three studios who actually do spectacular work saying the same thing, independently, for pure craft reasons:</p>
+
+    <div class="quotes">
+      <div class="q"><p>"One or two key WebGL moments is the recipe, not the whole page."</p><cite>field.io recipe</cite></div>
+      <div class="q"><p>"One big set-piece is the recipe, not five small ones."</p><cite>active theory recipe</cite></div>
+      <div class="q"><p>"Fewer, better beats. The recipe needs a payoff scene."</p><cite>resn recipe</cite></div>
+      <div class="q"><p>"Design a static first frame that remains complete when JavaScript, media, WebGL or motion is unavailable."</p><cite>Meng To &middot; awwwards-quality bar</cite></div>
+    </div>
+
+    <p><b>The award-grade standard itself demands the deletable layer.</b> Ambition and deletability were never in tension. The mistake was building <i>small</i> instead of building <i>singular</i>. Every direction below spends its entire budget on one payoff and keeps the rest quiet.</p>
+    <p>D5 is dropped. You were right that a run trace is a thing we would only build because BeatMind exists.</p>
+  </div>
+</header>
+
+<!-- ============================ D7 ============================ -->
+<article class="dir">
+  <div class="dir-no">D7 &middot; the composite you asked for</div>
+  <h2>Weightless</h2>
+  <p class="thesis">D6's discipline, D1's numbers, D4's pacing. The void, but load-bearing.</p>
+  <div class="grid2">
+    <div>
+      <div class="stage">
+        <div class="d7">
+          <div class="k">AI Engineer &middot; available</div>
+          <h3>Ships AI products, alone.</h3>
+          <p class="sub">Three for a paying studio client in five months. He writes down what broke.</p>
+          <div class="figs">
+            <div><div class="v">24</div><div class="k2">days solo</div></div>
+            <div><div class="v">307</div><div class="k2">commits</div></div>
+            <div><div class="v">70&rarr;23.4s</div><div class="k2">measured</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="stage-note"><span>Bricolage 400 at 8.6cqw &middot; hierarchy from scale, not weight</span></div>
+    </div>
+    <div class="meta">
+      <div class="pages"><span>Home</span><span>Work</span><span>Notes</span><span>Stack</span></div>
+      <dl>
+        <dt>Takes</dt><dd>From <b>D6</b>: headlines at weight 400, body at 200, zero cards and zero borders. From <b>D1</b>: the three measured figures as the spine. From <b>D4</b>: one idea per screen. From <b>D2</b>: real captures shown large.</dd>
+        <dt>Fixes</dt><dd>D6's density&nbsp;1 problem. The figure row gives the fold something to <b>read</b>, so it is not one sentence floating in space.</dd>
+      </dl>
+      <div class="moment">
+        <p><b>The one moment:</b> nothing yet, deliberately. This is the safe composite. It is here because you asked for it, and because it is the sane fallback if none of D8&ndash;D11 survives contact.</p>
+        <p class="warn"><b>Honest read:</b> this is still round one's thinking, executed better. If it is your favourite, that is a real signal, but do not pick it because the others feel risky.</p>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- ============================ D8 ============================ -->
+<article class="dir">
+  <div class="dir-no">D8 &middot; the one I would build</div>
+  <h2>Denoise</h2>
+  <p class="thesis">The site arrives as noise and resolves. Because that is literally what he trained a model to do.</p>
+  <div class="grid2">
+    <div>
+      <div class="stage">
+        <div class="d8">
+          <canvas id="dn" aria-hidden="true"></canvas>
+          <div class="ov">
+            <div class="step" id="dnstep">step 0 / 2250</div>
+            <div class="cap">He trained the LoRA himself. Six-stage dataset pipeline, 2,250 steps.</div>
+          </div>
+        </div>
+      </div>
+      <div class="stage-note">
+        <span>Live canvas &middot; real denoise curve</span>
+        <button class="replay" id="dnbtn" type="button">Replay</button>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="pages"><span>Home</span><span>Work</span><span>Notes</span><span>Stack</span></div>
+      <dl>
+        <dt>The idea</dt><dd>A diffusion model starts at pure noise and denoises into an image over N steps. <b>He trained one.</b> So the site's entire visual grammar is that process: type, captures and page transitions all resolve out of noise.</dd>
+        <dt>Why it is his</dt><dd>Nobody else can honestly use this. It is not a metaphor borrowed from space or nature, it is <b>the actual mechanism of the work</b>. That is divergence operator 6 done properly.</dd>
+        <dt>Graphics</dt><dd>One WebGL or canvas noise field. Captures denoise into place on scroll. The step counter on each project is its <b>real</b> number: 2,250 for the LoRA, 307 commits, 8 pipeline stages.</dd>
+      </dl>
+      <div class="moment">
+        <p><b>The payoff:</b> first load. The hero resolves from noise in about 1.2s while the headline is already readable underneath. One set-piece, then the page goes quiet and behaves like a document.</p>
+        <p><b>Deletes cleanly:</b> the static first frame is the resolved state. Kill the canvas and you have a normal, complete site. This is exactly Meng To's rule.</p>
+        <p class="warn"><b>Watch:</b> noise is expensive on a mid-range Android. Cap DPR, render at half resolution, pause offscreen, and swap for the resolved frame under <span class="mono">prefers-reduced-motion</span>.</p>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- ============================ D9 ============================ -->
+<article class="dir">
+  <div class="dir-no">D9 &middot; the light one</div>
+  <h2>Citation</h2>
+  <p class="thesis">Every claim on the site is footnoted to its evidence. Touch a claim and the source lights up.</p>
+  <div class="grid2">
+    <div>
+      <div class="stage">
+        <div class="d9">
+          <div class="col">
+            <h3>What he actually did</h3>
+            <p>Built and shipped <span class="claim" tabindex="0" data-c="1">three AI products in five months<sup>1</sup></span> for a paying studio client, working alone.</p>
+            <p>Cut stem separation <span class="claim" tabindex="0" data-c="2">from 70s to 23.4s<sup>2</sup></span> by root-causing a silent CPU fallback.</p>
+            <p>Predicted a 40% gain from a model swap, <span class="claim" tabindex="0" data-c="3">measured 8%, and reverted it<sup>3</sup></span>.</p>
+          </div>
+          <div class="marg">
+            <div class="src" data-s="1"><div class="n">1 &middot; ledger</div><div class="t">&#8377;72,000 across five months. BeatMind, Vivid, the editorial platform.</div></div>
+            <div class="src" data-s="2"><div class="n">2 &middot; measured</div><div class="t">Missing libcublasLt.so.13. Re-verified on T4 and L4.</div></div>
+            <div class="src" data-s="3"><div class="n">3 &middot; correction</div><div class="t">Demucs swap. The reference chain also made later shots ~4&times; slower.</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="stage-note"><span>Hover or tab a claim &middot; the margin responds</span></div>
+    </div>
+    <div class="meta">
+      <div class="pages"><span>Home</span><span>Work</span><span>Notes</span><span>Stack</span></div>
+      <dl>
+        <dt>The idea</dt><dd>His whole thesis is evidence-bound systems that refuse to answer without a source. <b>So the site behaves the way his software behaves.</b> No claim stands unsourced, and the interaction proves it.</dd>
+        <dt>Why it converts</dt><dd>A sceptical founder's real question is "is any of this true." This is the only direction that answers it <b>structurally</b> rather than by asserting harder.</dd>
+        <dt>Graphics</dt><dd>Warm paper, editorial serif, a hairline that threads from claim to margin. On mobile the margin becomes an inline expansion under the claim.</dd>
+      </dl>
+      <div class="moment">
+        <p><b>The payoff:</b> the moment a visitor realises every single number is clickable and nothing is decoration.</p>
+        <p><b>Deletes cleanly:</b> without JS the footnotes are ordinary anchor links to a sources list. That is how footnotes worked before the web.</p>
+        <p class="warn"><b>Watch:</b> it demands that every claim really does have a source. Any unsourced line becomes conspicuous. That is a feature and it is also work.</p>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- ============================ D10 ============================ -->
+<article class="dir">
+  <div class="dir-no">D10 &middot; the warm one</div>
+  <h2>Contact Sheet</h2>
+  <p class="thesis">A film contact sheet on a light table. He built a storyboard pipeline, so the frame is his object.</p>
+  <div class="grid2">
+    <div>
+      <div class="stage">
+        <div class="d10">
+          <div class="sprock" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="strip">
+            <div class="fr" tabindex="0"><span class="n">01 BEATMIND</span></div>
+            <div class="fr" tabindex="0"><span class="n">02 VIVID</span></div>
+            <div class="fr" tabindex="0"><span class="n">03 TATHYA</span></div>
+            <div class="fr" tabindex="0"><span class="n">04 QUERYPILOT</span></div>
+          </div>
+          <div class="sprock" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="cap">Hover a frame &middot; the light table comes on</div>
+        </div>
+      </div>
+      <div class="stage-note"><span>Frames hold real captures in the build &middot; hover to expose</span></div>
+    </div>
+    <div class="meta">
+      <div class="pages"><span>Home</span><span>Work</span><span>Notes</span><span>Stack</span></div>
+      <dl>
+        <dt>The idea</dt><dd>Vivid decomposes a script into an N-shot sequence with world and character bibles. The contact sheet is <b>the object that work produces</b>, and it solves a real problem: it makes five screenshots feel like a body of work rather than a thin gallery.</dd>
+        <dt>Graphics</dt><dd>Sprocket rails, grease-pencil circles on the selected frame, shot numbers, a light-table glow on hover. Warm amber against a darkroom brown.</dd>
+      </dl>
+      <div class="moment">
+        <p><b>The payoff:</b> the light table. Frames sit underexposed until you touch one, then it blooms to full colour. It rewards a cursor without requiring one.</p>
+        <p><b>Deletes cleanly:</b> without JS or hover it is a grid of captioned images, which is a perfectly good work index.</p>
+        <p class="warn"><b>Watch:</b> the register is cinema, and his buyer is a SaaS founder. Charming, or off-brief. This is the direction most likely to split opinion.</p>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- ============================ D11 ============================ -->
+<article class="dir">
+  <div class="dir-no">D11 &middot; the loudest</div>
+  <h2>Kinetic</h2>
+  <p class="thesis">No imagery at all. One variable typeface, morphing. The type is the whole show.</p>
+  <div class="grid2">
+    <div>
+      <div class="stage">
+        <div class="d11">
+          <div class="line">SHIPS AI</div>
+          <div class="line b">PRODUCTS</div>
+          <div class="line c">ALONE.</div>
+          <div class="foot">Hover the panel &middot; weight and width invert</div>
+        </div>
+      </div>
+      <div class="stage-note"><span>Archivo variable &middot; wght 100&ndash;900, wdth 62&ndash;125 &middot; one font file</span></div>
+    </div>
+    <div class="meta">
+      <div class="pages"><span>Home</span><span>Work</span><span>Notes</span><span>Stack</span></div>
+      <dl>
+        <dt>The idea</dt><dd>Turn the biggest weakness into the concept. He has <b>no photography</b>, and every recipe that needs it was ruled out. So refuse imagery entirely and spend the whole budget on kinetic type: weight and width animate on scroll along <span class="mono">cubic-bezier(.83,0,.17,1)</span>.</dd>
+        <dt>Cost</dt><dd>Cheapest of the five to build and the fastest to load. One variable font file replaces an image system.</dd>
+        <dt>Each page</dt><dd>A different typographic composition rather than the same template recoloured. Notes runs narrow and quiet; Stack runs as a wide condensed list.</dd>
+      </dl>
+      <div class="moment">
+        <p><b>The payoff:</b> the hero resolving as the axes settle. field.io's grammar, achieved with one font file instead of a WebGL pipeline.</p>
+        <p><b>Deletes cleanly:</b> variable-font axes degrade to a static weight. Older browsers get a normal bold headline.</p>
+        <p class="warn"><b>Watch:</b> type-only sites can read as a student project if the writing is not excellent. This direction puts <b>all</b> the weight on the copy.</p>
+      </div>
+    </div>
+  </div>
+</article>
+
+<section class="dir" style="border-bottom:none">
+  <div class="verdict">
+    <div class="lab">Where I land</div>
+    <h2>D8, with D9's footnotes underneath it.</h2>
+    <p><b>D8 is the only one here that no other person on earth can honestly ship.</b> Everything else in this document is a good idea someone else could also have. A portfolio that denoises is available only to someone who trained the model, and he did, over 2,250 steps with a dataset pipeline he built.</p>
+    <p>It also satisfies the whole brief at once. It is spectacular, it is one set-piece rather than five, the static first frame is the finished site, and it costs one canvas.</p>
+    <p><b>D9 is the substrate, not a rival.</b> Footnoting every claim is a content discipline, not a look, so it survives being bolted under any of these. Under D8 it does the convincing while the noise does the impressing.</p>
+    <div class="scroll">
+      <table class="tbl">
+        <thead><tr><th>&nbsp;</th><th>Ambition</th><th>Only he can ship it</th><th>Risk</th></tr></thead>
+        <tbody>
+          <tr><td>D7 Weightless</td><td>Low</td><td>No</td><td>Reads as round one, done better</td></tr>
+          <tr><td>D8 Denoise</td><td><b>Highest</b></td><td><b>Yes</b></td><td>Mobile performance. Solvable</td></tr>
+          <tr><td>D9 Citation</td><td>Medium</td><td>Partly</td><td>Every claim must really have a source</td></tr>
+          <tr><td>D10 Contact Sheet</td><td>High</td><td>Partly</td><td>Cinema register against a SaaS buyer</td></tr>
+          <tr><td>D11 Kinetic</td><td>High</td><td>No</td><td>Puts all the weight on the writing</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-bottom:0"><b>Next, if you want it:</b> say the word and I build D8 as a real page at 390 and 1440, with the denoise running on your actual BeatMind capture, so you are judging a site rather than a panel.</p>
+  </div>
+</section>
+
+<footer>
+  <p><b>Still running.</b> Three research agents are finishing the work the rate limit interrupted: the Reddit practitioner sweep, the twenty-site reference sweep now aimed at ambitious sites that stayed legible, and the Group C synthesis on 3D and generated imagery. None of their findings are in this document yet.</p>
+  <p><b>Stack cost, flagged.</b> The awwwards bar assumes GSAP plus exactly one smooth-scroll engine, never two. With a framework that is three of the four runtime dependencies the rebuild brief budgets. D8 and D11 both fit; D10 fits; a full WebGL direction would not.</p>
+</footer>
+
+</div>
+
+<script>
+/* ---- D8 denoise: draw a target, then subtract noise over a real curve ---- */
+(function(){
+  var c=document.getElementById('dn'); if(!c) return;
+  var ctx=c.getContext('2d',{willReadFrequently:true});
+  var stepEl=document.getElementById('dnstep');
+  var btn=document.getElementById('dnbtn');
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W=0,H=0,target=null,raf=null,t0=0,running=false;
+  var TOTAL=2250, DUR=2100;
+
+  function paintTarget(){
+    var r=c.getBoundingClientRect();
+    W=Math.max(2,Math.round(r.width/2));       /* half-res backing, then upscale */
+    H=Math.max(2,Math.round(r.height/2));
+    c.width=W; c.height=H;
+    ctx.fillStyle='#050506'; ctx.fillRect(0,0,W,H);
+    var g=ctx.createLinearGradient(0,H,W,0);
+    g.addColorStop(0,'#0B1F1A'); g.addColorStop(.5,'#123'); g.addColorStop(1,'#2A1410');
+    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#7de3c8';
+    ctx.beginPath(); ctx.arc(W*0.72,H*0.42,Math.min(W,H)*0.26,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#FF4D2E';
+    ctx.beginPath(); ctx.arc(W*0.33,H*0.62,Math.min(W,H)*0.17,0,Math.PI*2); ctx.fill();
+    ctx.font='700 '+Math.round(W*0.11)+'px Archivo, Helvetica, sans-serif';
+    ctx.fillStyle='#FFFFFF';
+    ctx.fillText('PARTH', W*0.07, H*0.38);
+    ctx.fillText('TIWARI', W*0.07, H*0.38+W*0.115);
+    target=ctx.getImageData(0,0,W,H);
+  }
+
+  function frame(ts){
+    if(!t0) t0=ts;
+    var p=Math.min(1,(ts-t0)/DUR);
+    var amp=Math.pow(1-p,2.1)*170;            /* noise amplitude decays */
+    var src=target.data;
+    var out=ctx.createImageData(W,H);
+    var d=out.data;
+    for(var i=0;i<src.length;i+=4){
+      var n=(Math.random()-0.5)*amp;
+      d[i]  =src[i]  +n;
+      d[i+1]=src[i+1]+n;
+      d[i+2]=src[i+2]+n;
+      d[i+3]=255;
+    }
+    ctx.putImageData(out,0,0);
+    if(stepEl) stepEl.textContent='step '+Math.round(p*TOTAL)+' / '+TOTAL;
+    if(p<1){ raf=requestAnimationFrame(frame); }
+    else { ctx.putImageData(target,0,0); running=false; raf=null; }
+  }
+
+  function run(){
+    if(running) return;
+    paintTarget();
+    if(reduce){ if(stepEl) stepEl.textContent='step '+TOTAL+' / '+TOTAL; return; }
+    running=true; t0=0;
+    if(raf) cancelAnimationFrame(raf);
+    raf=requestAnimationFrame(frame);
+  }
+
+  if(btn) btn.addEventListener('click',run);
+  new ResizeObserver(function(){ if(!running){ paintTarget(); ctx.putImageData(target,0,0);} }).observe(c);
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting) run(); });
+  },{threshold:.35});
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',function(){ paintTarget(); ctx.putImageData(target,0,0); io.observe(c); });
+  } else { paintTarget(); ctx.putImageData(target,0,0); io.observe(c); }
+})();
+
+/* ---- D9 citation threading ---- */
+(function(){
+  var claims=document.querySelectorAll('.d9 .claim');
+  var srcs=document.querySelectorAll('.d9 .src');
+  function set(id,on){
+    srcs.forEach(function(s){
+      if(s.getAttribute('data-s')===id) s.classList.toggle('on',on);
+    });
+  }
+  claims.forEach(function(cl){
+    var id=cl.getAttribute('data-c');
+    ['mouseenter','focus'].forEach(function(ev){
+      cl.addEventListener(ev,function(){ set(id,true); cl.classList.add('on'); });
+    });
+    ['mouseleave','blur'].forEach(function(ev){
+      cl.addEventListener(ev,function(){ set(id,false); cl.classList.remove('on'); });
+    });
+    cl.addEventListener('click',function(){
+      var on=!cl.classList.contains('on');
+      claims.forEach(function(o){o.classList.remove('on')});
+      srcs.forEach(function(s){s.classList.remove('on')});
+      if(on){ cl.classList.add('on'); set(id,true); }
+    });
+  });
+})();
+</script>
