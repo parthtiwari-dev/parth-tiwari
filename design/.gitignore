@@ -1,0 +1,6 @@
+# Raw WebVTT as yt-dlp emitted it: 6.5 MB, and every line repeats up to three
+# times in the rolling auto-caption window. `research/youtube/text/` holds the
+# deduplicated version at a tenth the size, and INDEX.md carries the command
+# that regenerates these from scratch.
+research/youtube/transcripts/
+research/youtube/*.log

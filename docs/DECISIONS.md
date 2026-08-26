@@ -40,6 +40,81 @@ Everything downstream is arbitrary until these are answered.
 | 1.4 | What is the argument? | "I ship end to end and measure it" is one candidate, not the answer. What else could it be? |
 | 1.5 | What is deliberately **not** claimed? | v1's honesty about zero users was a strength. What is the v2 equivalent? |
 
+### ✅ 1.1 — DECIDED 2026-08-26
+
+**The answer.** The sentence a stranger should be able to repeat after ten seconds:
+
+> **He builds AI products on his own and ships them. Three for a paying studio client in five months.**
+
+This is the sentence in the visitor's head, not the hero copy. Hero copy is Phase 1 and may
+not resemble it.
+
+Two sub-choices settled with it:
+
+| | Chosen | Why |
+|---|---|---|
+| Title | **"AI Engineer"**, no qualifier | "Intern" kills client conversion and undersells solo-shipped paid work. "Contract" is accurate but is the one claim a reference check catches while `parth-os/RESUME.md` §Open-decisions 1 is unresolved. "AI Engineer" describes the work rather than asserting an employment status, so it survives either answer to the offer-letter question |
+| The client | **Unnamed** ("a paying studio client") | Owner's call. Costs some checkability, avoids needing Stick and Dot's consent to be referenced |
+
+**The alternatives, and why each was rejected.**
+
+| | Sentence | Rejected because |
+|---|---|---|
+| A — Shipping | *"He builds AI products by himself and actually ships them."* | Not rejected. **Fused into the answer** as its verb. Alone it is slightly generic: "solo, end to end" is scarce but widely claimed, so it relies on the reader believing him |
+| B — Corrections | *"He builds AI products and publishes what broke."* | Highest recall and the strongest differentiator (`parth-os/docs/RULES.md` §6), but it answers *"what is my risk"* before *"is this person real"* and *"can they build"*. Devastating as the **second** thing a reader learns, strange as the first. **Held for page two, not discarded** |
+| D — Niche | *"He builds AI for creative tools — music, video, storyboards."* | Highest recall, smallest market. Honest read of the last five months, since every paid product was a creative tool. Rejected by the owner 2026-08-26: the identity stays open because the goal is any work that pays and teaches, not a vertical |
+| E — Category | *"Retrieval, agents, diffusion, and the plumbing that keeps them up."* | This is v1's failure mode in a milder costume. A list of abstract nouns is not a sentence anyone repeats |
+
+**Why.** Neither his name nor his employer will do the proving, so the sentence has to carry
+its own proof, and every word of this one is checkable in shape even with the client unnamed.
+
+**The evidence.**
+
+1. **The sentence that failed is on record.** v1 `src/components/sections/HeroSection.vue:13`:
+   *"Systems that act only after the evidence, schema, budget, and workflow state agree."*
+   Four abstract nouns in a list, no subject a reader recognises, no verb they can act on, no
+   sign that hiring is possible. Every viewer reported not understanding the site.
+
+2. **Three of the four references named in §4.1 use a pattern unavailable here.** Read
+   directly, 2026-08-26:
+
+   | Site | Verbatim first line | Pattern |
+   |---|---|---|
+   | `rauno.me` | "Rauno Freiberg is an Estonian interaction designer working with Vercel and Devouring Details" | identity + **borrowed** affiliation |
+   | `paco.me` | "Crafting interfaces..." + "Webmaster at Linear" | identity + borrowed affiliation |
+   | `jxnl.co` | "Developer Experience Engineer on the Codex team at OpenAI" | identity + borrowed affiliation |
+   | `parlance-labs.com` | "Build AI that works in production." | outcome + category, standing on Hamel Husain's name |
+
+   "Interaction designer at Vercel" works because Vercel does the proving. The affiliation
+   here is "Stick and Dot", which nobody recognises, against 5 GitHub followers
+   (`parth-os/docs/PRD.md` §1). A generic outcome line like Parlance Labs' also needs a known
+   name behind it. Hence: the sentence must carry its own proof.
+
+3. **The claim is backed.** `parth-os/docs/PRD.md` §3 and `docs/AUDIT.md`: ₹72,000 across five
+   months, three products for one studio (BeatMind, Vivid, the editorial platform).
+   `parth-os/case-studies/beatmind.md`: BeatMind solo in 24 days, 307 commits, ~30,500 lines,
+   ₹50,000, **zero users**. The sentence claims shipping, not traction, so zero users does not
+   break it. A sentence implying usage would be false.
+
+4. **Web-search results on "portfolio headline formulas" were discarded** as SEO filler with
+   no evidence behind them. The four hero lines above were read from the live sites.
+
+**Flagged, not resolved.**
+
+- **Factual conflict.** BeatMind is 19 days / 194 commits / 27,000 lines in
+  `parth-os/RESUME.md`, and 24 days / 307 commits / ~30,500 lines in
+  `parth-os/case-studies/beatmind.md`. The case study is later and more precise. Settle before
+  any number ships (blocks §2.4).
+- **The numbers named in §2.4** below (500s→56s, 5.9x, $2.81→$0.48) **appear nowhere in either
+  repo.** The measured figures that do exist are 70s → 23.4s on stem separation and the
+  Vivid cost work. Verify or drop before §2.4.
+- **`parth-os/docs/DESIGN.md` §3 is stale.** It says "The design system already exists and is
+  good. Do not redesign it. Four changes only." The rebuild supersedes it. Fix in this pass.
+- Round 0 of [`TEN_SECOND_TEST.md`](TEN_SECOND_TEST.md) is still empty. Not a blocker for 1.1;
+  a blocker for Phase 1. The real test of this sentence is saying it aloud to five people with
+  no website at all.
+
+
 ---
 
 ## §2 — Content. What actually goes on it?
