@@ -159,7 +159,18 @@ Decided before form (`REBUILD_BRIEF.md` §3).
 | 4.5 | Is there a genre? Editorial, technical-manual, print, brutalist, terminal, something with no name | 🔴 **Run any candidate through the ten-second gate before committing. A genre that needs explaining is the constellation in a new costume** |
 | 4.6 | What is explicitly banned? | v1's ban list was useful. What is v2's |
 
-### 🟡 §4 — IN PROGRESS, research done 2026-08-26
+### ✅ §4 — DIRECTION CHOSEN 2026-08-27
+
+**Denoise is the signature, and it absorbs Kinetic rather than sharing the stage.**
+The full reasoning, the committed stack, the three rules that keep it safe, and the build
+sequence are in [`BUILD_PLAN.md`](BUILD_PLAN.md). Research is closed except for the Reddit
+sweep, which runs in the background and does not gate the build.
+
+Round one (D1-D6) and round two (D7-D11) are preserved as published artifacts and as
+`design/directions/proofs.html` and `round-two.html`. The research that produced them stands
+below.
+
+### 🟡 §4 — the research behind it, done 2026-08-26
 
 **Research is complete and committed. No direction is chosen yet.**
 
