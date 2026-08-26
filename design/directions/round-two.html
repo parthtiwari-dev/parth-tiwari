@@ -89,11 +89,18 @@ a{color:var(--cool)}
 .grid2{display:grid;gap:var(--s6)}
 @media(min-width:980px){.grid2{grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:var(--s7)}}
 
+/* No `min-height` here. With `aspect-ratio`, a min-height drives the WIDTH
+   (290 x 1.6 = 464px), which overflowed a 390px viewport by 99px. Let width
+   lead and the ratio follow. */
 .stage{
   border:1px solid var(--edge-hi);background:#000;
-  aspect-ratio:16/10;min-height:290px;position:relative;overflow:hidden;
+  aspect-ratio:16/10;position:relative;overflow:hidden;
   container-type:inline-size;
 }
+/* Every panel fills the stage. Without this the panels are ordinary blocks
+   that size to their content, and D8 (whose children are all absolutely
+   positioned) collapses to zero height and renders as pure black. */
+.stage > *{position:absolute;inset:0;overflow:hidden}
 .stage-note{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);margin-top:var(--s2);display:flex;gap:var(--s4);flex-wrap:wrap;align-items:center}
 .replay{
   font-family:var(--f-mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
@@ -131,7 +138,10 @@ a{color:var(--cool)}
 /* ============================================================
    D8 — DENOISE (canvas)
    ============================================================ */
-.d8{background:#050506;position:relative}
+/* `position` is deliberately NOT set here. `.stage > *` and `.d8` have equal
+   specificity (0,1,0), so a `position:relative` on this rule silently beat the
+   panel-fills-stage rule above and collapsed the canvas to zero height. */
+.d8{background:#050506}
 .d8 canvas{position:absolute;inset:0;width:100%;height:100%;display:block;image-rendering:auto}
 .d8 .ov{position:absolute;left:5cqw;bottom:5cqw;right:5cqw;z-index:2;pointer-events:none}
 .d8 .step{font-family:var(--f-mono);font-size:1.9cqw;letter-spacing:.1em;text-transform:uppercase;color:#7de3c8}
@@ -462,33 +472,49 @@ footer p{max-width:72ch;margin:0 0 var(--s3)}
   var W=0,H=0,target=null,raf=null,t0=0,running=false;
   var TOTAL=2250, DUR=2100;
 
+  var work=null;                              /* reused, so no per-frame allocation */
+
   function paintTarget(){
     var r=c.getBoundingClientRect();
+    if(r.width<2||r.height<2) return false;
     W=Math.max(2,Math.round(r.width/2));       /* half-res backing, then upscale */
     H=Math.max(2,Math.round(r.height/2));
     c.width=W; c.height=H;
-    ctx.fillStyle='#050506'; ctx.fillRect(0,0,W,H);
+
     var g=ctx.createLinearGradient(0,H,W,0);
-    g.addColorStop(0,'#0B1F1A'); g.addColorStop(.5,'#123'); g.addColorStop(1,'#2A1410');
+    g.addColorStop(0,'#08201C'); g.addColorStop(.55,'#0C1620'); g.addColorStop(1,'#2A1310');
     ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
-    ctx.fillStyle='#7de3c8';
-    ctx.beginPath(); ctx.arc(W*0.72,H*0.42,Math.min(W,H)*0.26,0,Math.PI*2); ctx.fill();
-    ctx.fillStyle='#FF4D2E';
-    ctx.beginPath(); ctx.arc(W*0.33,H*0.62,Math.min(W,H)*0.17,0,Math.PI*2); ctx.fill();
-    ctx.font='700 '+Math.round(W*0.11)+'px Archivo, Helvetica, sans-serif';
+
+    var m=Math.min(W,H);
+    var cy=ctx.createRadialGradient(W*.74,H*.40,0,W*.74,H*.40,m*.42);
+    cy.addColorStop(0,'rgba(125,227,200,.95)'); cy.addColorStop(1,'rgba(125,227,200,0)');
+    ctx.fillStyle=cy; ctx.fillRect(0,0,W,H);
+
+    var ht=ctx.createRadialGradient(W*.30,H*.72,0,W*.30,H*.72,m*.34);
+    ht.addColorStop(0,'rgba(255,77,46,.85)'); ht.addColorStop(1,'rgba(255,77,46,0)');
+    ctx.fillStyle=ht; ctx.fillRect(0,0,W,H);
+
+    var fs=Math.round(W*0.125);
+    ctx.font='700 '+fs+'px Archivo, Helvetica, Arial, sans-serif';
+    ctx.textBaseline='alphabetic';
     ctx.fillStyle='#FFFFFF';
-    ctx.fillText('PARTH', W*0.07, H*0.38);
-    ctx.fillText('TIWARI', W*0.07, H*0.38+W*0.115);
+    ctx.fillText('PARTH',  W*0.07, H*0.46);
+    ctx.fillText('TIWARI', W*0.07, H*0.46+fs*1.02);
+
+    ctx.font='500 '+Math.round(W*0.026)+'px "JetBrains Mono", monospace';
+    ctx.fillStyle='rgba(255,255,255,.62)';
+    ctx.fillText('SHIPS AI PRODUCTS, ALONE', W*0.075, H*0.46+fs*1.02+Math.round(W*0.055));
+
     target=ctx.getImageData(0,0,W,H);
+    work=ctx.createImageData(W,H);
+    return true;
   }
 
   function frame(ts){
     if(!t0) t0=ts;
     var p=Math.min(1,(ts-t0)/DUR);
-    var amp=Math.pow(1-p,2.1)*170;            /* noise amplitude decays */
-    var src=target.data;
-    var out=ctx.createImageData(W,H);
-    var d=out.data;
+    var amp=Math.pow(1-p,2.1)*190;            /* noise amplitude decays */
+    var src=target.data, d=work.data;
     for(var i=0;i<src.length;i+=4){
       var n=(Math.random()-0.5)*amp;
       d[i]  =src[i]  +n;
@@ -496,29 +522,43 @@ footer p{max-width:72ch;margin:0 0 var(--s3)}
       d[i+2]=src[i+2]+n;
       d[i+3]=255;
     }
-    ctx.putImageData(out,0,0);
+    ctx.putImageData(work,0,0);
     if(stepEl) stepEl.textContent='step '+Math.round(p*TOTAL)+' / '+TOTAL;
     if(p<1){ raf=requestAnimationFrame(frame); }
     else { ctx.putImageData(target,0,0); running=false; raf=null; }
   }
 
+  function showResolved(){ if(target) ctx.putImageData(target,0,0); }
+
   function run(){
     if(running) return;
-    paintTarget();
-    if(reduce){ if(stepEl) stepEl.textContent='step '+TOTAL+' / '+TOTAL; return; }
+    if(!paintTarget()) return;
+    if(reduce){ showResolved(); if(stepEl) stepEl.textContent='step '+TOTAL+' / '+TOTAL; return; }
     running=true; t0=0;
     if(raf) cancelAnimationFrame(raf);
     raf=requestAnimationFrame(frame);
   }
 
-  if(btn) btn.addEventListener('click',run);
-  new ResizeObserver(function(){ if(!running){ paintTarget(); ctx.putImageData(target,0,0);} }).observe(c);
+  function init(){
+    if(paintTarget()) showResolved();          /* resolved frame is the default state */
+    io.observe(c);
+    ro.observe(c);
+    /* Fonts change the target, so repaint once they land. */
+    if(document.fonts&&document.fonts.ready){
+      document.fonts.ready.then(function(){ if(!running&&paintTarget()) showResolved(); });
+    }
+  }
+
+  var ro=new ResizeObserver(function(){ if(!running&&paintTarget()) showResolved(); });
   var io=new IntersectionObserver(function(es){
     es.forEach(function(e){ if(e.isIntersecting) run(); });
-  },{threshold:.35});
+  },{threshold:.3});
+
+  if(btn) btn.addEventListener('click',function(){ running=false; run(); });
+
   if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded',function(){ paintTarget(); ctx.putImageData(target,0,0); io.observe(c); });
-  } else { paintTarget(); ctx.putImageData(target,0,0); io.observe(c); }
+    document.addEventListener('DOMContentLoaded',init);
+  } else { init(); }
 })();
 
 /* ---- D9 citation threading ---- */
