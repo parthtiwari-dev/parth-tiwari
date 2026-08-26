@@ -42,9 +42,27 @@ Everything downstream is arbitrary until these are answered.
 
 ### ✅ 1.1 — DECIDED 2026-08-26
 
-**The answer.** The sentence a stranger should be able to repeat after ten seconds:
+**The answer.** Revised 2026-08-27 after the owner rejected the first version: "I don't love
+this." Three faults, all real. It was two sentences so nobody repeated it, it led with process
+(solo, shipping) rather than outcome, and "a paying studio client" read as hedged.
 
-> **He builds AI products on his own and ships them. Three for a paying studio client in five months.**
+The replacement is a pair. The hero answers *can you build*, the line under it answers *can I
+trust you*, which are buyer A's two questions in that order (`parth-os/docs/PRD.md` §3).
+
+> # You can describe the product. I get it live.
+> Three AI products in five months, working alone.
+> **Every one is live. So is the record of what broke.**
+
+"Live" does double duty across the products and the corrections, which lets the corrections
+differentiator land without opening on failure. A stranger repeats it as *"he builds the thing
+for people who cannot, and he is open about what went wrong."*
+
+**Voice: first person.** Chosen by the owner. The corrections record only works in first person,
+and "I" reads as someone hirable rather than a studio abstraction.
+
+Superseded first version, kept because the reason it failed is the useful part:
+
+> ~~He builds AI products on his own and ships them. Three for a paying studio client in five months.~~
 
 This is the sentence in the visitor's head, not the hero copy. Hero copy is Phase 1 and may
 not resemble it.

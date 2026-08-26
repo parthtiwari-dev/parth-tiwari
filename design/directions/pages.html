@@ -1,0 +1,482 @@
+<title>Four Pages</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&display=swap">
+
+<style>
+/* ============================================================
+   The page-by-page spec. Chrome is the real v2 palette so the
+   mockups sit inside the world they describe, not on a grey
+   proof sheet. Single-theme by intent: v2 is a dark site.
+   ============================================================ */
+:root{
+  --void:#07070A;
+  --sur:#0D0E12;
+  --sur2:#14161B;
+  --edge:#1E212A;
+  --edge2:#2C3039;
+  --ink:#F5F6F8;
+  --ink2:#A5ABB8;
+  --ink3:#6B7280;
+  --hot:#FF4D2E;
+  --cool:#5EE0C8;
+
+  --f:"Archivo",Helvetica,Arial,sans-serif;
+  --fm:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --fe:"Newsreader",Georgia,serif;
+
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;
+  --s6:32px;--s7:48px;--s8:72px;--s9:104px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--void);color:var(--ink);font-family:var(--f);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 var(--s5)}
+a{color:var(--cool)}
+:focus-visible{outline:2px solid var(--cool);outline-offset:3px}
+.mono{font-family:var(--fm);font-variant-numeric:tabular-nums}
+.lab{font-family:var(--fm);font-size:11px;font-weight:500;letter-spacing:.11em;text-transform:uppercase;color:var(--ink3)}
+
+/* masthead */
+.mast{padding:var(--s9) 0 var(--s7);border-bottom:1px solid var(--edge)}
+h1{font-family:var(--f);font-weight:200;font-variation-settings:"wght" 200,"wdth" 108;
+   font-size:clamp(46px,11vw,120px);line-height:.92;letter-spacing:-.045em;margin:var(--s5) 0 var(--s5);text-wrap:balance}
+h1 b{font-weight:800;font-variation-settings:"wght" 800,"wdth" 88}
+.deck{font-family:var(--fe);font-size:clamp(18px,2.4vw,26px);line-height:1.4;color:var(--ink2);max-width:38ch;margin:0}
+
+.sentence{margin-top:var(--s7);border:1px solid var(--edge2);background:var(--sur);padding:var(--s6)}
+.sentence .h{font-size:clamp(22px,3.4vw,38px);font-weight:700;font-variation-settings:"wght" 700,"wdth" 92;line-height:1.05;letter-spacing:-.035em;margin:var(--s3) 0 var(--s4);text-wrap:balance}
+.sentence .s{color:var(--ink2);margin:0;max-width:56ch;font-size:16.5px}
+.sentence .s b{color:var(--ink);font-weight:600}
+
+section{padding:var(--s8) 0;border-bottom:1px solid var(--edge)}
+h2{font-weight:800;font-variation-settings:"wght" 800,"wdth" 90;font-size:clamp(24px,3.4vw,38px);line-height:1;letter-spacing:-.035em;margin:var(--s3) 0 var(--s5);text-wrap:balance}
+h3{font-weight:600;font-size:16px;margin:0 0 var(--s2)}
+p{max-width:70ch;color:var(--ink2)}
+p b,li b{color:var(--ink);font-weight:600}
+
+/* page block */
+.page{padding:var(--s8) 0;border-bottom:1px solid var(--edge)}
+.page-head{display:flex;flex-wrap:wrap;gap:var(--s3) var(--s5);align-items:baseline;margin-bottom:var(--s2)}
+.route{font-family:var(--fm);font-size:13px;font-weight:700;color:var(--hot);letter-spacing:.04em}
+.page h2{margin:0}
+.job{font-family:var(--fe);font-style:italic;font-size:clamp(17px,2.1vw,22px);color:var(--ink2);max-width:52ch;margin:var(--s3) 0 var(--s6)}
+.split{display:grid;gap:var(--s6)}
+@media(min-width:1000px){.split{grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:var(--s7)}}
+
+/* the device frames */
+.frames{display:grid;gap:var(--s4);grid-template-columns:1fr}
+@media(min-width:620px){.frames{grid-template-columns:minmax(0,1fr) 168px}}
+.dev{border:1px solid var(--edge2);background:#000;overflow:hidden;position:relative;container-type:inline-size}
+.dev.desk{aspect-ratio:16/10}
+.dev.ph{aspect-ratio:9/17}
+.devcap{font-family:var(--fm);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-top:6px}
+
+/* ---- shared mock primitives, sized in container units ---- */
+.mk{position:absolute;inset:0;padding:5cqw;display:flex;flex-direction:column;background:#07070A;overflow:hidden}
+.mk .nav{display:flex;justify-content:space-between;align-items:center;font-family:var(--fm);font-size:2.1cqw;color:#6B7280;letter-spacing:.09em;text-transform:uppercase}
+.mk .nav b{color:#F5F6F8;font-weight:500}
+.mk .nav .lk{display:flex;gap:2.6cqw}
+.mk .nav .lk i{font-style:normal}
+.mk .nav .lk i.on{color:#5EE0C8}
+.mk h4{font-weight:800;font-variation-settings:"wght" 800,"wdth" 88;font-size:6.6cqw;line-height:.98;letter-spacing:-.045em;margin:0;color:#fff}
+.mk .sub{font-size:2.4cqw;font-weight:300;color:#A5ABB8;line-height:1.45;margin:2.2cqw 0 0;max-width:36ch}
+.mk .sub b{color:#fff;font-weight:600}
+.mk .figs{display:flex;gap:5cqw;margin-top:auto;padding-top:3cqw;border-top:1px solid #1E212A}
+.mk .figs .v{font-family:var(--fm);font-size:3.4cqw;font-weight:700;color:#fff;line-height:1;font-variant-numeric:tabular-nums}
+.mk .figs .k{font-family:var(--fm);font-size:1.6cqw;letter-spacing:.09em;text-transform:uppercase;color:#6B7280;margin-top:.8cqw}
+.mk .cta{display:inline-block;align-self:flex-start;background:#FF4D2E;color:#0A0A0B;font-size:2.2cqw;font-weight:700;padding:1.8cqw 3.2cqw;margin-top:3cqw}
+
+/* landing hero canvas */
+.mk canvas.hero{position:absolute;right:0;top:0;width:46%;height:100%;display:block;opacity:.95}
+.mk .body{position:relative;z-index:1;display:flex;flex-direction:column;flex:1;justify-content:center}
+
+/* work index contact sheet */
+.sheet{display:grid;grid-template-columns:repeat(3,1fr);gap:2cqw;margin-top:3cqw;flex:1}
+.cell{border:1px solid #23262E;background:#101319;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:1.6cqw}
+.cell::before{content:"";position:absolute;inset:0;background:linear-gradient(145deg,#1B2530,#0C0E13);opacity:.9}
+.cell span{position:relative;font-family:var(--fm);font-size:1.7cqw;color:#8A93A2}
+.cell.lit::before{opacity:0}
+.cell.lit{background:#5EE0C8;border-color:#5EE0C8}
+.cell.lit span{color:#06231D;font-weight:700}
+
+/* notes list */
+.notes{margin-top:3cqw;flex:1;display:flex;flex-direction:column;gap:0}
+.note{border-top:1px solid #1E212A;padding:2.2cqw 0;display:flex;gap:3cqw;align-items:baseline}
+.note .d{font-family:var(--fm);font-size:1.7cqw;color:#FF4D2E;white-space:nowrap}
+.note .t{font-family:var(--fe);font-size:2.9cqw;line-height:1.25;color:#F5F6F8}
+.note .m{font-family:var(--fm);font-size:1.6cqw;color:#6B7280;margin-top:.6cqw}
+
+/* stack list */
+.stack{margin-top:3cqw;flex:1;display:flex;flex-direction:column}
+.srow{display:grid;grid-template-columns:1fr auto;gap:2cqw;padding:1.7cqw 0;border-top:1px solid #1E212A;align-items:baseline}
+.srow .n{font-size:2.4cqw;color:#F5F6F8;font-weight:600}
+.srow .w{font-size:2cqw;color:#6B7280}
+.srow .u{font-family:var(--fm);font-size:1.6cqw;color:#5EE0C8;letter-spacing:.07em;text-transform:uppercase;white-space:nowrap}
+
+/* spec column */
+.spec dl{display:grid;grid-template-columns:auto 1fr;gap:var(--s2) var(--s4);margin:0 0 var(--s5)}
+.spec dt{font-family:var(--fm);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);padding-top:4px}
+.spec dd{margin:0;font-size:14.5px;color:var(--ink2)}
+.spec dd b{color:var(--ink);font-weight:600}
+.spec ul{margin:0 0 var(--s5);padding-left:18px;font-size:14.5px;color:var(--ink2)}
+.spec li{margin-bottom:6px}
+
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl th{text-align:left;font-family:var(--fm);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);padding:0 var(--s4) var(--s2) 0;border-bottom:1px solid var(--edge2)}
+.tbl td{padding:var(--s3) var(--s4) var(--s3) 0;border-bottom:1px solid var(--edge);vertical-align:top;color:var(--ink2)}
+.tbl td:first-child{font-family:var(--fm);color:var(--ink);white-space:nowrap}
+.scroll{overflow-x:auto}
+
+.cols{display:grid;gap:var(--s5)}
+@media(min-width:820px){.cols{grid-template-columns:repeat(3,1fr)}}
+.card{border:1px solid var(--edge);background:var(--sur);padding:var(--s5)}
+.card p{font-size:14.5px;margin:0}
+
+.rules{counter-reset:r;list-style:none;padding:0;margin:0}
+.rules li{counter-increment:r;position:relative;padding-left:38px;margin-bottom:var(--s4);max-width:72ch;color:var(--ink2);font-size:15px}
+.rules li::before{content:counter(r);position:absolute;left:0;top:1px;font-family:var(--fm);font-size:12px;font-weight:700;color:var(--hot);border:1px solid var(--edge2);width:24px;height:24px;display:grid;place-items:center}
+
+footer{padding:var(--s8) 0 var(--s9);color:var(--ink3);font-size:13.5px}
+footer p{max-width:72ch}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="lab">Portfolio v2 &middot; the page-by-page spec</div>
+  <h1>Four<br><b>Pages</b>.</h1>
+  <p class="deck">What actually goes on each one, at desktop and at 390. Every mockup below is live HTML in the real palette, not a picture of one.</p>
+
+  <div class="sentence">
+    <div class="lab">The sentence, settled 27 Aug</div>
+    <div class="h">You can describe the product. I get it live.</div>
+    <p class="s">Three AI products in five months, working alone. <b>Every one is live. So is the record of what broke.</b></p>
+  </div>
+</header>
+
+<section>
+  <div class="lab">How to read this</div>
+  <h2>One signature, three supporting layers</h2>
+  <div class="cols">
+    <div class="card">
+      <h3>The signature</h3>
+      <p>The fused denoise-and-settle. Grain clears while the variable font resolves from wide and light to tight and heavy, on one curve. <b>It happens once, on arrival, on the home page only.</b> No other page has it.</p>
+    </div>
+    <div class="card">
+      <h3>The base</h3>
+      <p>Hierarchy from scale, not weight. Body at 200. Zero cards, zero borders on content, zero shadows. One accent, and it only ever marks the thing meant to be clicked.</p>
+    </div>
+    <div class="card">
+      <h3>The substrate</h3>
+      <p>Every claim carries a source. Invisible until touched, so it costs nothing visually and it makes an unsourced line conspicuous, which is the point.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== / ===================== -->
+<article class="page">
+  <div class="page-head"><span class="route">/</span><h2>Home</h2></div>
+  <p class="job">Answer the ten-second question, prove it is real, and put one action within reach.</p>
+  <div class="split">
+    <div>
+      <div class="frames">
+        <div>
+          <div class="dev desk">
+            <div class="mk">
+              <canvas class="hero" id="c-home" aria-hidden="true"></canvas>
+              <div class="nav"><b>PARTH TIWARI</b><span class="lk"><i class="on">Work</i><i>Notes</i><i>Stack</i></span></div>
+              <div class="body">
+                <h4>You can describe<br>the product.<br>I get it live.</h4>
+                <p class="sub">Three AI products in five months, working alone. <b>Every one is live. So is the record of what broke.</b></p>
+                <span class="cta">See the work</span>
+              </div>
+              <div class="figs">
+                <div><div class="v">24</div><div class="k">days solo</div></div>
+                <div><div class="v">307</div><div class="k">commits</div></div>
+                <div><div class="v">70&rarr;23.4s</div><div class="k">measured</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="devcap">1440 &middot; the denoise resolves into the BeatMind capture</div>
+        </div>
+        <div>
+          <div class="dev ph">
+            <div class="mk" style="padding:7cqw">
+              <div class="nav" style="font-size:3.4cqw"><b>PT</b><span class="lk"><i class="on">Menu</i></span></div>
+              <div class="body">
+                <h4 style="font-size:11cqw">You can describe the product. I get it live.</h4>
+                <p class="sub" style="font-size:4cqw;margin-top:4cqw">Three AI products in five months, working alone.</p>
+                <span class="cta" style="font-size:3.6cqw;padding:3.4cqw 5cqw;margin-top:5cqw">See the work</span>
+              </div>
+              <div class="figs" style="gap:0;justify-content:space-between;padding-top:5cqw">
+                <div><div class="v" style="font-size:5.4cqw">24</div><div class="k" style="font-size:2.6cqw">days</div></div>
+                <div><div class="v" style="font-size:5.4cqw">307</div><div class="k" style="font-size:2.6cqw">commits</div></div>
+                <div><div class="v" style="font-size:5.4cqw">23.4s</div><div class="k" style="font-size:2.6cqw">was 70s</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="devcap">390 &middot; different choreography</div>
+        </div>
+      </div>
+    </div>
+    <div class="spec">
+      <dl>
+        <dt>Fold</dt><dd>Headline, sub, one action, three figures. <b>The capture is the denoise target</b>, so the signature and the proof are the same pixels rather than competing for the fold.</dd>
+        <dt>At 390</dt><dd>Headline, sub, action. Figures sit at the bottom edge as a row. <b>The capture moves below the fold</b> because three demos in a phone fold is not a smaller layout, it is a broken one.</dd>
+        <dt>Below</dt><dd>The other two demos, full width, one per scroll. Then the offer, then contact.</dd>
+      </dl>
+      <div class="lab" style="margin-bottom:8px">Why not three demos in the fold</div>
+      <ul>
+        <li>The anti-slop gate is explicit: <b>multiple competing mockups belong below the fold</b> unless the product cannot be understood without one.</li>
+        <li>Three videos above the fold wrecks LCP for the cold-outreach visitor on a phone, who is the design target.</li>
+        <li>Two spectacles at once means neither lands. The denoise <i>is</i> the demo here.</li>
+      </ul>
+    </div>
+  </div>
+</article>
+
+<!-- ===================== /work ===================== -->
+<article class="page">
+  <div class="page-head"><span class="route">/work</span><h2>Work</h2></div>
+  <p class="job">Five real products, and the honest reason each one is here.</p>
+  <div class="split">
+    <div>
+      <div class="frames">
+        <div>
+          <div class="dev desk">
+            <div class="mk">
+              <div class="nav"><b>PARTH TIWARI</b><span class="lk"><i class="on">Work</i><i>Notes</i><i>Stack</i></span></div>
+              <h4 style="font-size:5.4cqw;margin-top:3.4cqw">Five things,<br>all of them open.</h4>
+              <div class="sheet">
+                <div class="cell lit"><span>01 BEATMIND</span></div>
+                <div class="cell"><span>02 VIVID</span></div>
+                <div class="cell"><span>03 TATHYA</span></div>
+                <div class="cell"><span>04 QUERYPILOT</span></div>
+                <div class="cell"><span>05 SPUR CHAT</span></div>
+                <div class="cell" style="border-style:dashed;opacity:.5"><span>&mdash;</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="devcap">1440 &middot; contact sheet, one frame lit</div>
+        </div>
+        <div>
+          <div class="dev ph">
+            <div class="mk" style="padding:7cqw">
+              <div class="nav" style="font-size:3.4cqw"><b>PT</b><span class="lk"><i class="on">Menu</i></span></div>
+              <h4 style="font-size:8cqw;margin-top:5cqw">Five things,<br>all open.</h4>
+              <div class="sheet" style="grid-template-columns:1fr;gap:3cqw;margin-top:5cqw">
+                <div class="cell lit" style="padding:3.4cqw"><span style="font-size:3.4cqw">01 BEATMIND</span></div>
+                <div class="cell" style="padding:3.4cqw"><span style="font-size:3.4cqw">02 VIVID</span></div>
+                <div class="cell" style="padding:3.4cqw"><span style="font-size:3.4cqw">03 TATHYA</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="devcap">390 &middot; one column, taller cells</div>
+        </div>
+      </div>
+    </div>
+    <div class="spec">
+      <dl>
+        <dt>The one component</dt><dd>D10's contact sheet, kept to this page only. Frames sit underexposed until hovered or focused, then bloom to the real capture.</dd>
+        <dt>Why it works here</dt><dd>It makes <b>five screenshots read as a body of work</b> rather than a thin gallery, which is the actual problem with the asset inventory.</dd>
+        <dt>Empty slot</dt><dd>The sixth cell stays dashed and empty. An honest gap beats padding the grid, and it is the same rule as the empty testimonial slot.</dd>
+        <dt>Each opens</dt><dd>A case page: what it does, the capture, the stack, one measured number, and the boundary of what it does not do.</dd>
+      </dl>
+      <div class="lab" style="margin-bottom:8px">Touch parity</div>
+      <ul>
+        <li>Hover exposes. <b>Tap pins</b>, tapping again releases, and a visible Clear control exists. This copies the worked example already in the repo rather than inventing a new pattern.</li>
+      </ul>
+    </div>
+  </div>
+</article>
+
+<!-- ===================== /notes ===================== -->
+<article class="page">
+  <div class="page-head"><span class="route">/notes</span><h2>Notes</h2></div>
+  <p class="job">Seeded with the four corrections, so it is never an empty blog.</p>
+  <div class="split">
+    <div>
+      <div class="frames">
+        <div>
+          <div class="dev desk">
+            <div class="mk">
+              <div class="nav"><b>PARTH TIWARI</b><span class="lk"><i>Work</i><i class="on">Notes</i><i>Stack</i></span></div>
+              <h4 style="font-size:5.4cqw;margin-top:3.4cqw">What I got wrong.</h4>
+              <div class="notes">
+                <div class="note"><span class="d">2026&#8209;08&#8209;02</span><span><span class="t">A checkbox is not a rights check.</span><div class="m">Built self&#8209;attestation. Deleted it. Export resolves lineage across two sources.</div></span></div>
+                <div class="note"><span class="d">2026&#8209;07&#8209;19</span><span><span class="t">Predicted 40%. Measured 8%. Reverted.</span><div class="m">Demucs swap. The reference chain made later shots ~4&times; slower.</div></span></div>
+                <div class="note"><span class="d">2026&#8209;06&#8209;28</span><span><span class="t">I declined to bypass the CAPTCHA.</span><div class="m">Shipped assisted review instead of an autonomous applier.</div></span></div>
+              </div>
+            </div>
+          </div>
+          <div class="devcap">1440 &middot; dated, newest first, no cards</div>
+        </div>
+        <div>
+          <div class="dev ph">
+            <div class="mk" style="padding:7cqw">
+              <div class="nav" style="font-size:3.4cqw"><b>PT</b><span class="lk"><i class="on">Menu</i></span></div>
+              <h4 style="font-size:8cqw;margin-top:5cqw">What I<br>got wrong.</h4>
+              <div class="notes" style="margin-top:5cqw">
+                <div class="note" style="flex-direction:column;gap:1.4cqw;padding:4cqw 0"><span class="d" style="font-size:3cqw">2026&#8209;08&#8209;02</span><span><span class="t" style="font-size:5cqw">A checkbox is not a rights check.</span></span></div>
+                <div class="note" style="flex-direction:column;gap:1.4cqw;padding:4cqw 0"><span class="d" style="font-size:3cqw">2026&#8209;07&#8209;19</span><span><span class="t" style="font-size:5cqw">Predicted 40%. Measured 8%. Reverted.</span></span></div>
+              </div>
+            </div>
+          </div>
+          <div class="devcap">390 &middot; date stacks above</div>
+        </div>
+      </div>
+    </div>
+    <div class="spec">
+      <dl>
+        <dt>Launches with four</dt><dd>The corrections already exist and are real. <b>An empty blog is worse than no blog</b>, so this page never ships hollow.</dd>
+        <dt>Shape of an entry</dt><dd>What was predicted, what was measured, what changed. Three lines minimum, no minimum on length.</dd>
+        <dt>Why it converts</dt><dd>Almost nobody publishes the measurement that killed their own hypothesis. It is the differentiator, placed where it lands hardest: <b>page two, after the work is believed</b>.</dd>
+        <dt>Not a content mill</dt><dd>No cadence promise. A dated record that grows when something actually breaks. A stale blog with a monthly promise is worse than an honest irregular one.</dd>
+      </dl>
+    </div>
+  </div>
+</article>
+
+<!-- ===================== /stack ===================== -->
+<article class="page">
+  <div class="page-head"><span class="route">/stack</span><h2>Stack</h2></div>
+  <p class="job">The tools actually in use, with the honest reason for each.</p>
+  <div class="split">
+    <div>
+      <div class="frames">
+        <div>
+          <div class="dev desk">
+            <div class="mk">
+              <div class="nav"><b>PARTH TIWARI</b><span class="lk"><i>Work</i><i>Notes</i><i class="on">Stack</i></span></div>
+              <h4 style="font-size:5.4cqw;margin-top:3.4cqw">What I actually use.</h4>
+              <div class="stack">
+                <div class="srow"><span class="n">Claude Code</span><span class="u">daily</span></div>
+                <div class="srow"><span class="n">Modal</span><span class="u">daily</span></div>
+                <div class="srow"><span class="n">FLUX.2&#8209;dev + PuLID</span><span class="u">weekly</span></div>
+                <div class="srow"><span class="n">Groq, Llama&#8209;3.3&#8209;70B</span><span class="u">weekly</span></div>
+                <div class="srow"><span class="n">Neon + Drizzle</span><span class="u">daily</span></div>
+                <div class="srow"><span class="n">Playwright</span><span class="u">weekly</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="devcap">1440 &middot; a list with a frequency column, not a logo wall</div>
+        </div>
+        <div>
+          <div class="dev ph">
+            <div class="mk" style="padding:7cqw">
+              <div class="nav" style="font-size:3.4cqw"><b>PT</b><span class="lk"><i class="on">Menu</i></span></div>
+              <h4 style="font-size:8cqw;margin-top:5cqw">What I<br>actually use.</h4>
+              <div class="stack" style="margin-top:5cqw">
+                <div class="srow" style="padding:3.4cqw 0"><span class="n" style="font-size:4.4cqw">Claude Code</span><span class="u" style="font-size:3cqw">daily</span></div>
+                <div class="srow" style="padding:3.4cqw 0"><span class="n" style="font-size:4.4cqw">Modal</span><span class="u" style="font-size:3cqw">daily</span></div>
+                <div class="srow" style="padding:3.4cqw 0"><span class="n" style="font-size:4.4cqw">FLUX.2&#8209;dev</span><span class="u" style="font-size:3cqw">weekly</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="devcap">390 &middot; same list, larger rows</div>
+        </div>
+      </div>
+    </div>
+    <div class="spec">
+      <dl>
+        <dt>Why it earns a page</dt><dd>It is the cheapest page to write and the most linkable. <b>Both buyers read it</b>: a founder to check you are current, an engineer to check you are real.</dd>
+        <dt>The rule that saves it</dt><dd>A frequency column. "Daily" and "weekly" are claims that can be wrong, which makes the page evidence rather than a wishlist. A bare logo wall is the failure mode.</dd>
+        <dt>One line each</dt><dd>Not a review. What it is for, and the honest reason it beat the alternative.</dd>
+        <dt>Ordering</dt><dd>By frequency, not by category. The top of the list is the truest thing on it.</dd>
+      </dl>
+    </div>
+  </div>
+</article>
+
+<section>
+  <div class="lab">Non-negotiable</div>
+  <h2>Four rules the signature has to obey</h2>
+  <ol class="rules">
+    <li><b>The headline is real text, readable before the effect starts.</b> Never gated behind it. The static first frame is a complete page on its own, which is the award-grade standard, not a compromise against it.</li>
+    <li><b>Under 1.2 seconds, once per session.</b> Held in <span class="mono">sessionStorage</span>, not replayed on every scroll into view. An arrival effect that fires repeatedly becomes a toll booth.</li>
+    <li><b>Reduced motion and no-JS both get the resolved frame immediately.</b> The final state, not a shortened animation.</li>
+    <li><b>The canvas is never a control.</b> Nothing is clicked through it, no content lives inside it, no legend explains it. That is the exact line v1 crossed.</li>
+  </ol>
+</section>
+
+<section>
+  <div class="lab">Open</div>
+  <h2>What I still need from you</h2>
+  <div class="scroll">
+    <table class="tbl">
+      <thead><tr><th>Question</th><th>Why it matters now</th></tr></thead>
+      <tbody>
+        <tr><td>Ship order</td><td>You picked <span class="mono">/notes</span> and <span class="mono">/stack</span> at launch <b>and</b> "just / and /work first". I am reading that as sequencing: build four, ship two, add two. Say if you meant all four on day one.</td></tr>
+        <tr><td>The sixth slot</td><td>Five products have real captures. Is there a sixth worth capturing, or does the dashed empty cell stay?</td></tr>
+        <tr><td>BeatMind figures</td><td>Still 19/194/27k in the resume against 24/307/30.5k in the case study. Every mockup above uses the case study. One number, everywhere.</td></tr>
+        <tr><td>Ten-second test</td><td>The new sentence has still never been said to five people. It is the Phase 1 gate and nothing here substitutes for it.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  <p><b>These are live mockups, not images.</b> Every panel above is HTML and CSS in the real v2 palette, sized in container units so the desktop and phone frames are genuinely different layouts rather than one scaled down.</p>
+  <p style="margin-top:12px">Round one is at its own URL and round two at another. Neither was overwritten.</p>
+</footer>
+
+</div>
+
+<script>
+/* The home hero: denoise resolving into a capture-shaped composition.
+   Same mechanic as the round-two demo, scoped to one small canvas. */
+(function(){
+  var c=document.getElementById('c-home'); if(!c) return;
+  var ctx=c.getContext('2d',{willReadFrequently:true});
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W=0,H=0,target=null,work=null,raf=null,t0=0,running=false;
+
+  function paint(){
+    var r=c.getBoundingClientRect();
+    if(r.width<2||r.height<2) return false;
+    W=Math.max(2,Math.round(r.width/2)); H=Math.max(2,Math.round(r.height/2));
+    c.width=W; c.height=H;
+    var g=ctx.createLinearGradient(0,0,W,H);
+    g.addColorStop(0,'#0A1F1B'); g.addColorStop(.6,'#0B1017'); g.addColorStop(1,'#2A1310');
+    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    var m=Math.min(W,H);
+    var a=ctx.createRadialGradient(W*.55,H*.38,0,W*.55,H*.38,m*.75);
+    a.addColorStop(0,'rgba(94,224,200,.55)'); a.addColorStop(1,'rgba(94,224,200,0)');
+    ctx.fillStyle=a; ctx.fillRect(0,0,W,H);
+    var b=ctx.createRadialGradient(W*.30,H*.82,0,W*.30,H*.82,m*.6);
+    b.addColorStop(0,'rgba(255,77,46,.45)'); b.addColorStop(1,'rgba(255,77,46,0)');
+    ctx.fillStyle=b; ctx.fillRect(0,0,W,H);
+    /* a suggestion of UI, so it reads as a product capture rather than a blob */
+    ctx.strokeStyle='rgba(255,255,255,.16)'; ctx.lineWidth=1;
+    for(var i=1;i<5;i++){ var y=H*(0.30+i*0.11); ctx.beginPath(); ctx.moveTo(W*0.12,y); ctx.lineTo(W*0.62,y); ctx.stroke(); }
+    ctx.fillStyle='rgba(255,255,255,.10)'; ctx.fillRect(W*0.12,H*0.14,W*0.5,H*0.10);
+    target=ctx.getImageData(0,0,W,H);
+    work=ctx.createImageData(W,H);
+    return true;
+  }
+  function frame(ts){
+    if(!t0) t0=ts;
+    var p=Math.min(1,(ts-t0)/1500);
+    var amp=Math.pow(1-p,2.1)*185;
+    var s=target.data,d=work.data;
+    for(var i=0;i<s.length;i+=4){
+      var n=(Math.random()-0.5)*amp;
+      d[i]=s[i]+n; d[i+1]=s[i+1]+n; d[i+2]=s[i+2]+n; d[i+3]=255;
+    }
+    ctx.putImageData(work,0,0);
+    if(p<1) raf=requestAnimationFrame(frame);
+    else { ctx.putImageData(target,0,0); running=false; raf=null; }
+  }
+  function run(){
+    if(running||!paint()) return;
+    if(reduce){ ctx.putImageData(target,0,0); return; }
+    running=true; t0=0; raf=requestAnimationFrame(frame);
+  }
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting) run(); });
+  },{threshold:.3});
+  var ro=new ResizeObserver(function(){ if(!running&&paint()) ctx.putImageData(target,0,0); });
+  function init(){ if(paint()) ctx.putImageData(target,0,0); io.observe(c); ro.observe(c); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
+})();
+</script>
