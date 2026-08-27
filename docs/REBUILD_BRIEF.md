@@ -1,139 +1,97 @@
-> ✅ **STATUS 2026-08-27.** The brief still governs. What it left open is now
-> closed: the direction is **Paper and Worlds** (`DESIGN_LOCK.md`), the twelve
-> worlds are specified (`WORLDS.md`), the stack is Astro and the phases are set
-> (`BUILD_PLAN.md`). Section 3, the deletable creative layer, is satisfied by
-> construction: Phase 3 ships every route with no canvas and no tear, and
-> Phases 4 and 5 add them in commits that revert alone. Section 5, the
-> ten-second test, **has still never been run** and now gates Phase 1.
+# Rebuild brief
 
-# REBUILD BRIEF — v2
+Revised 2026-08-27. The direction, product requirements and execution sequence are now
+settled in `DESIGN_LOCK.md`, `PRD.md` and `BUILD_PLAN.md`.
 
-Rewritten 2026-08-23. **This version decides less than the first one did, on purpose.**
+This file preserves the diagnosis and the guards that prevent v2 from repeating v1.
 
-The first draft of this file settled multi-page vs single-page, the number of case studies,
-the organising idea and the five-second answer. The owner's instruction is that **nothing is
-decided yet** — every surface, down to a border radius, gets researched and argued before it
-is chosen. Those calls have moved to [`DECISIONS.md`](DECISIONS.md) as open questions.
+## 1. Why v1 is replaced
 
-What remains here is only what is **evidence**, plus the **method** and the **guards**. If a
-line in this file is a taste preference, it is in the wrong file.
+The Vue/Three.js constellation is well built and hard to understand. People shown the site
+could not reliably identify the projects, what Parth does or where to begin. The metaphor
+became the information architecture: a visitor had to learn a legend and interact before
+receiving content.
 
----
+The root cause was not insufficient polish. The creative metaphor was chosen first and the
+projects were fitted into it.
 
-## 1. The evidence
+v1 is therefore replaced rather than patched.
 
-**Every person shown the current site has said they do not understand it.** Sharpest version,
-from a UI/UX designer (design lead at Apps for Bharat, now Times of India):
+## 2. What remains forbidden
 
-> *"Nothing is clear. I don't know which were projects, what it does, or what the concept
-> is. It's really hard to grab."*
+- Constellations, stars, orbital navigation and glass-panel space interfaces
+- A creative graphic used as the only route or content surface
+- Client-rendered content as the primary page
+- A separate mobile experience that loses desktop content
+- Invented clients, users, testimonials or benchmark numbers
+- Shipping a phase because it “should” pass without running its gate
 
-The same person said BeatMind's site looks great and made him want to try the product. Same
-builder, same taste. **Craft is not the variable.**
-
-### The diagnosis, which is not "it looks AI-generated"
-
-Slop is generic. The constellation is **over-specific**. It makes a visitor learn a legend —
-node size means evidence weight, colour means project type — before they can read anything.
-The interaction *is* the information architecture, so there is no content until you interact.
-
-Portfolios get dismissed when *"the experience of viewing it requires too much effort"* —
-**not because the work lacks merit.**
-
-### The root cause, written down so it is not repeated
-
-**The metaphor was chosen first, and twelve projects were fitted into it.** That is why a
-legend exists. Everything in §3 is a guard against that happening twice.
-
----
-
-## 2. The only two things settled
-
-1. **v1 is replaced, not patched.** The constellation *is* the IA; patching means fighting it.
-2. **No constellation, stars, glass panels, orbit metaphors, or borrowed BeatMind grammar.**
-   Ruled out by the owner, final.
-
-Everything else — genre, structure, type, colour, motion, radii, stack, page count, what the
-site even argues — is **open**. See [`DECISIONS.md`](DECISIONS.md).
-
----
-
-## 3. 🔴 The rule that prevents the repeat
+## 3. The structural guard
 
 **The creative layer must be deletable.**
 
-The constellation happened because the creative idea was load-bearing: remove it and there
-was no site. Willpower does not fix that. Structure does.
+Phase 3 ships a complete static site without a tear, backlight or animated world. Phase 4
+adds the paper signature in one revertable commit. Phases 5 and 6 add a shared world system
+and project stories that each revert independently.
 
-> Build the plain version first and ship it. Then add **one** creative layer, in its own
-> commit, that can be reverted without breaking anything.
->
-> The test is literal: `git revert` the creative commit. If what remains is a working, clear,
-> complete site, you are safe. If it is not, the creative thing has become the information
-> architecture again. Stop and restructure.
+The test is literal and runs in a temporary worktree. Reverting an enhancement must leave
+complete routes, content, navigation and contact.
 
-The owner's own instinct already found the right shape: **a clear default, and a toggle into
-something playful.** The default is the site. The toggle is the play. If the toggle broke
-tomorrow, nothing is lost.
+## 4. Supporting rules
 
-### Supporting rules
+1. **Content before form.** Phase 1 is plain content and provenance. No design artifact is
+   opened.
+2. **Static before enhanced.** Every page reads from HTML on disk with JavaScript disabled.
+3. **One phase at a time.** The owner sees the opening questions, checkpoints and gate
+   evidence before the next phase.
+4. **Storyboard before world.** A project story is approved before its generator is coded.
+5. **Real data or an honest empty slot.** A fabricated graphic invalidates the site's trust
+   argument.
+6. **Native scroll remains native.** Scroll may advance a visual story but is never hijacked.
+7. **A growing site uses content contracts.** Project and note counts are not hard-coded.
+8. **Every decision has a reason.** Current decisions and open phase questions live in
+   `DECISIONS.md`.
 
-1. **Content before form.** Every word in plain Markdown first, tested for clarity with no
-   design at all. This is the direct fix for metaphor-first.
-2. **One signature moment, not a signature system.** `DESIGN_LOCK.md` in v1 had this idea;
-   the mistake was applying it to the whole site instead of one moment.
-3. **Every page must read as static HTML with JavaScript off.** Closes v1's crawler gap and
-   forces the content to carry itself.
-4. **Decide nothing without writing down why.** Every choice lands in `DECISIONS.md` with the
-   options considered and the reason. A decision with no recorded reason gets re-litigated by
-   the next session.
+## 5. The comprehension gate
 
----
+Five people who have not seen the artifact get ten seconds with it. Then ask:
 
-## 4. The budget — a starting constraint, not a design decision
+> What does he do? Would you hire him? For what?
 
-v1 measured on `main` @ `bc9e977`:
+Record answers verbatim. Four of five must satisfy the rubric in `TEN_SECOND_TEST.md`.
+An agent cannot simulate this gate.
 
-| | v1 | proposed v2 ceiling |
-|---|---:|---:|
-| `src/` lines | **18,572** | ≤ 4,000 |
-| Components | **49** | ≤ 15 |
-| Runtime dependencies | **8** — `three`, `@tresjs/core`, `gsap`, `lenis`, `postprocessing`, `pinia`, `vue`, analytics | ≤ 4 |
+The gate runs:
 
-**The right column is a proposal, open to argument in Phase 0.** What is *not* open is that a
-ceiling exists and is written down before the first line of code. v1 is not too ugly; it is
-too much, and the failure mode was that no number said stop.
+- on text alone after Phase 1;
+- on the complete static site after Phase 3;
+- on the live domain after Phase 7.
 
----
+Visual and world phases use their own owner-review, accessibility, resilience and
+performance gates in addition to this comprehension test.
 
-## 5. The gate
+## 6. The execution sequence
 
-Run after **every** phase, on five people who have not seen it.
+| Phase | Result |
+|---|---|
+| 0 | Astro static foundation after reviewed v1 deletion |
+| 1 | Complete sourced content, no design |
+| 2 | Approved design system and page architecture |
+| 3 | Complete static preview site |
+| 4 | Approved backlight and tear enhancement |
+| 5 | Shared world lifecycle and BeatMind pilot |
+| 6 | Remaining worlds, one reviewed story at a time |
+| 7 | Production cutover |
+| 8 | Post-launch publishing/admin workflow |
 
-1. Open the site. **Close it after 10 seconds.**
-2. Ask: *"What does he do? Would you hire him? For what?"*
-3. Record the answers **verbatim**. Do not paraphrase, do not explain afterwards.
+The full checklists and gates live only in `BUILD_PLAN.md`.
 
-**Ship when four of five answer correctly with no prompting.** Until then it is not done,
-however it looks.
+## 7. Current blockers
 
-Log every round in [`TEN_SECOND_TEST.md`](TEN_SECOND_TEST.md) with the date and raw answers.
-A round recalled from memory is worthless.
+- The text-only ten-second test has not been run.
+- Several numeric claims need their source, scope and snapshot date.
+- BeatMind's 17-user count and Vivid's changing count need attached evidence before
+  publication.
+- The public price band and meaning of cost sorting require Phase 1 owner decisions.
 
----
-
-## 6. Sequence
-
-| Phase | Do | Gate |
-|---|---|---|
-| **0** | **Research and decide.** Work `DECISIONS.md` top to bottom. No code | Every row has an answer and a recorded reason |
-| **1** | Copy only. Every word, plain Markdown, no design | §5 passes **on the text alone** |
-| **2** | Design lock written from the Phase 0 answers | Tokens exist before any component |
-| **3** | Build the plain site. Static-HTML-readable, no creative layer | §5 passes. **Ship it live** |
-| **4** | Add the one creative layer, in its own revertable commit | `git revert` still leaves a working site |
-| **5** | Cut the domain over, redirect v1 | §5 passes at 4/5 |
-
-**Phase 3 ships before Phase 4 exists.** That is the mechanism that makes Phase 4 safe.
-
-**Phase 0 is the whole point of the next session.** Do not let it collapse into "let's just
-start building and figure it out" — that is precisely how v1 happened.
+These block claims or later gates. They do not reopen the Paper and Worlds direction.

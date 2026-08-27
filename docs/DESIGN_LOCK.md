@@ -1,239 +1,268 @@
-# DESIGN LOCK — v2
+# DESIGN LOCK: Paper and Worlds
 
-Logged 2026-08-27, on `redesign/v2`. **This is what gets built.**
+Revised 2026-08-27. This is the visual and interaction direction that gets built.
 
-Supersedes the root `DESIGN_LOCK.md` (v1, the constellation) and `BUILD_PLAN.md` §2
-(the denoise signature). Both are dead. Where this file and `DECISIONS.md` disagree,
-this file wins and `DECISIONS.md` should be corrected in the same commit.
+The public name is **Parth Tiwari**. **Paper and Worlds** is the design system name, not
+the masthead. It replaces the v1 constellation and the later denoise-wide direction.
 
-**Status: the direction is locked. The prototype is not finished.**
-`design/directions/paper.html` proves the design and carries real bugs (§11, and
-`WORLDS.md` §5). It is a reference, not something to port line by line. The rebuild
-reimplements it on the stack in [`BUILD_PLAN.md`](BUILD_PLAN.md).
+`design/directions/paper.html` is a reference artifact. It proves the material, register,
+backlight and tear idea and contains known defects. It is not production code and is not
+ported line by line.
 
-[`WORLDS.md`](WORLDS.md) specifies what is behind each tear, for all twelve.
-
-Three artifacts carry the detail. Read them before touching anything visual:
-
-| Artifact | What it holds |
-|---|---|
-| The design lock | Seven routes, the world system, four live specimens, tokens, build order |
-| The register | The index as a working page, re-sortable, with real captures |
-| The paper sheet | The landing: rag stock, backlit index, tear into a world |
-
----
+The direction is locked. Its execution is not presumed perfect. Every visual phase begins
+with owner review, uses rendered evidence, and stops at its gate. “Locked” prevents the
+project from changing metaphors again; it does not prevent improving spacing, hierarchy,
+motion, accessibility, storytelling or world choreography.
 
 ## 1. The idea
 
-**One sheet of paper. Every project is an entry on it. Tearing an entry opens that
-project's world.**
+**One long sheet of real rag paper. Every project is an entry on it. Tearing an entry opens
+that project's own world.**
 
-The landing is a single sheet of aged rag stock. It does not scroll the page; the
-index scrolls inside it. Each entry opens into a full, dark, immersive case study
-built in that project's own visual language.
+The landing is one continuous scrolling document printed on real paper stock. It carries the
+arrival, the person, every project in an editorial index, evidence, services, errata and the
+way to start. The paper
+is the common frame. Each project world is allowed to abandon that frame and speak in the
+product's own visual language.
 
-**The count is never stated.** Projects keep arriving. Adding one is adding a row,
-and nothing in the copy, the masthead or the design says how many there are. This
-is already a repo rule (`CLAUDE.md`: *never hardcode the project count in prose*)
-and it now governs the landing too. The working name is **Paper and Worlds**, not
-"Twelve Worlds", for exactly this reason.
+The count is never hard-coded in prose or the brand. Projects and notes keep arriving.
 
-## 2. Why multi-page
+## 2. Why the paper direction is right
 
-The site has to win a **job** and a **client**. Those are two readers who want
-different depths: a client wants outcome, speed and price; an employer wants
-engineering decisions, tradeoffs and a CV. One page cannot serve both without
-becoming a compromise that serves neither. That is the argument for many pages,
-and it is an argument rather than a preference.
+The old constellation made the metaphor the information architecture. Paper reverses that:
+the document remains readable before the creative layer loads. It also gives the growing
+portfolio a natural form. New work is another entry; new writing is another note; an erratum
+can sit beside the claim it corrects.
 
-## 3. Routes
+The paper has a specific job:
 
-| Route | Job | Reader |
-|---|---|---|
-| `/` | The sheet. Masthead, one sentence, the index, one action | Both |
-| `/work` | The register: every project, re-sortable by cost, recency, still-running | Both |
-| `/work/[slug]` | One world per project. The case study lives here | Employer |
-| `/notes` | Errata and writing. Predicted next to measured | Both |
-| `/about` | The person, the path, how he works | Employer |
-| `/resume` | Real HTML CV. **Not the Drive embed** | Employer |
-| `/hire` | Scope, process, price band | Client |
+- make the site feel authored and physical without becoming nostalgic decoration;
+- create one calm shared surface for two different readers;
+- make the transition into a project world memorable;
+- remain complete when backlight, tear and canvas are removed.
 
-**Persistent chrome:** wordmark, four links, one red action. Contact is one tap from
-every route at every width.
+The paper is not perfect because the prototype is not perfect. Production work must improve
+its mobile hierarchy, long-page rhythm, touch invitation, focus behavior, backlight legibility
+and tear material. Those improvements happen in Phases 2 through 4 with owner review.
 
-**Never built:** a hamburger that hides the action, a cookie banner, a newsletter
-modal, a testimonial slot before a real quote exists, a page whose only content is a
-link to another page.
+## 3. Two readers, eight route families
 
-**On `/resume`:** the source of truth is `parth-os/resume/Parth_Tiwari_Resume_B.pdf`,
-the Bangalore variant. The current Google Drive embed is invisible to crawlers, to
-recruiter search and to ATS parsers, which is the only audience that page has. Real
-HTML page, PDF as the download beside it.
+A client wants outcome, speed, scope and cost. An employer wants engineering depth,
+decisions, evidence and a CV. The first viewport offers two doors without splitting the
+brand into two sites:
 
-## 4. The landing sheet
+- **See the work** leads to `/work`.
+- **Start a project** leads to `/hire`.
 
-**Stock.** A real scanned sheet, not a procedural texture. `public/media/paper-stock.jpg`,
-prepared by `design/make-stock.mjs` from a CC0 1.0 photograph (creator "Teddy", via
-rawpixel; source and licence in `public/media/paper-stock.LICENSE.txt`). CC0 is a public
-domain dedication, so commercial use is unrestricted and no attribution is required.
+`Hire me` is not a third competing hero action. Employment information remains one tap away
+through the persistent navigation and the resume route.
 
-Three things the script does that a raw photo cannot:
-
-1. **Crops off the fold crease.** The sheet's type runs down the middle and a crease
-   through the copy is not a nice detail.
-2. **Flattens the slow luminance gradient**, by dividing out a heavily blurred copy of
-   the image. Left in, it survives tiling as a visible rhythm down the roll.
-3. **Mirrors the crop below itself**, so `repeat-y` joins exactly at any sheet length.
-
-Measured on the rendered stock: the darkest 1% of the texture is **9.52:1** against
-`--ink` and **4.91:1** against `--ink-2`, so body copy clears AA even on the darkest
-fibre. The CSS layer over it now carries only light falling on the sheet and the edge
-burn; the old procedural foxing double-stained a photograph that already has its own.
-
-**Edges.** Seeded deckle polygon, generated once so the sheet has the same torn edge
-every load. Rolled top and bottom edges, lit on top and creased into shadow beneath.
-
-**Shadow.** Its own layer, not `filter: drop-shadow()` on the sheet. `drop-shadow`
-derives its shape from the element's alpha, so the moment the stock thins, the hole
-grows its own shadow and fills itself with black.
-
-**Ink.** One oxblood `#8E2116`, doing exactly two jobs: the hover bleed and the one
-action. Bleed uses `feTurbulence` + `feDisplacementMap` so the edge feathers like ink
-in fibre rather than drawing a clean shape.
-
-**The invitation, and it is the important part.** Hovering an entry **backlights the
-whole sheet**: the stock drops to 62% and the world running behind it comes up. You
-see the world before you decide to enter it.
-
-A small porthole was tried first and failed for a reason worth recording: most of
-these worlds are sparse and dark, so a 240px window had almost nothing in it and read
-as a stain. Backlighting the whole sheet shows the entire world at once and never
-looks like damage. **The type is a separate layer from the stock**, so it stays fully
-opaque while the paper goes translucent.
-
-**Arrival.** The sheet settles once, then the entry names lay down like ink, left to
-right, 62ms apart. The sheet leans a degree or so toward the pointer so it has weight.
-None of it is scroll-driven.
-
-## 5. The tear
-
-Clicking an entry splits the sheet along a seeded jagged seam. The two halves leave in
-opposite directions with a slight rotation and the world is behind them.
-
-**Nothing is gated behind it.** The case study is real DOM underneath; the tear can
-fail and the world still opens. Reduced motion skips straight to the world.
-
-## 6. The worlds
-
-Each case study renders a hero generated from **that project's own material**. This is
-the creative system and the part that cannot be copied off a reference board.
-
-| Project | Its world |
+| Route | Page contract |
 |---|---|
-| BeatMind | Stem envelopes, four lanes, a playhead |
-| Vivid | Diffusion resolving a frame over 28 steps |
-| BeatMind / Order Supervisor | A run trace with the failed stage and its retry drawn |
-| MedRAG | An embedding space that cites, then refuses |
-| Tathya | Sources settling into case files |
-| QueryPilot | Query → AST → critic → SQL, as a correction loop |
-| UPI Fraud | Score distribution with the alert budget as a moving line |
-| SecondSelf | A pipeline that stops at a review queue and waits |
-| OncoVerse | The 3D atlas, one rotating region |
-| Spur Chat | A token stream scoped to a catalogue |
-| Fraud Risk Intel | Reconstruction error against the anomaly boundary |
-| Oracle Auto Provision | A cron heartbeat and the retry that landed |
+| `/` | Arrival and two doors, portrait and introduction, every project in the paper index, verified proof, three kinds of work, latest errata and contact |
+| `/work` | Complete register, with a meaningful default order and only evidence-backed controls |
+| `/work/[slug]` | Complete project case study and project-specific world |
+| `/notes` | Errata and Posts hub; Posts may honestly say “Coming soon” |
+| `/notes/[slug]` | Full erratum or article with sources, related project and next reading |
+| `/about` | Portrait, path, work-experience timeline, training and operating rules |
+| `/resume` | Semantic HTML CV, print view and verified PDF download |
+| `/hire` | Scope, process, price band, booking and direct contact |
 
-**A project with no world yet says so** and shows a held slot. An empty slot beats a
-mocked-up one.
+No separate `/blog` page is needed. Posts and Errata are two types inside Notes. No separate
+`/experience` route is needed. The human story belongs on About; the structured employment
+record belongs on Resume.
 
-🔴 **The rule that stops this becoming v1: no world is ever a control.** Nothing is
-clicked through it, no content lives inside it, no legend explains it. Delete every
-canvas and a complete set of readable case studies remains.
+Persistent chrome contains the Parth Tiwari wordmark, route links and one oxblood contact
+action. Contact remains one tap away at every width.
 
-## 7. Tokens
+## 4. The landing
 
-**Frame:** paper `#EAE3D5`, ink `#1A1613`, secondary `#4E463C`, quiet `#6B6153`,
-oxblood `#8E2116`.
-**Worlds:** void `#0B0C0E`, rule `#262A2F`, ink `#F2F3F0`. Accents come from the
-product, never chosen — BeatMind's four stem colours are BeatMind's own.
+### Arrival
 
-**Type, three faces, three jobs:**
-- **Bricolage Grotesque** — display. Has a designer's hand in it at 90px; Inter does not.
-- **Archivo** — body and UI. Its width axis carries hierarchy alongside size.
-- **DM Mono** — numbers, dates, stack, labels. Never body copy.
+The first viewport has one sentence, two doors and a quiet proof cue. It must answer what
+Parth builds and why someone should continue within ten seconds. Nothing above the fold
+depends on motion.
 
-Rag paper + heavy grotesk + oxblood is a **printer's** register. Cream paper with a
-high-contrast serif and a terracotta accent is the exact combination the anti-slop
-research flags as the current generated default, so it is avoided on purpose.
+The final creative version may place a featured project's world behind the paper. Phase 3
+uses its approved still frame. Phase 5 may animate it after the shared world system exists.
+It never competes with the sentence or becomes a route control.
 
-**Banned:** Inter, Geist Mono, gradient headlines, italic headings, a letter in a
-coloured box as a logo, `transition: all`, animating anything but transform and
-opacity, a section headline reaching hero scale.
+### Long-sheet flow
 
-## 8. Motion budget
+1. Arrival and two doors
+2. Portrait and a short first-person introduction
+3. Every project in a simple editorial paper index, plus a path to the full register
+4. Verified proof, with dated and sourced numbers
+5. Three kinds of work
+6. Latest Errata and Posts
+7. Contact and route close
 
-| Moment | Value |
+Every project appears on the home sheet, which preserves the core metaphor and a stable
+editorial order. `/work` adds comparison metadata, sorting and filtering; it is the working
+register rather than a duplicate landing narrative.
+
+### Stock
+
+Use the real prepared stock at `public/media/paper-stock.jpg`, with its licence retained.
+The production surface preserves the useful preparation already proven by
+`design/make-stock.mjs`: crease removal, luminance flattening and a repeat-safe crop.
+
+The CSS layer may add lighting and edge response. It must not repaint the photograph with
+procedural stains until it reads synthetic again. Rendered contrast is measured on the
+actual stock.
+
+### Edges, depth and ink
+
+- Seeded deckle edges remain stable between loads.
+- Paper shadow is its own layer so transparency does not create a black hole.
+- Oxblood `#8E2116` is reserved for the primary action, focus-worthy emphasis and paper
+  bleed. It is not a general decoration color.
+- Type and stock are separate layers. The paper may become translucent; the copy does not.
+
+## 5. The register and preview
+
+The default order is editorial and expresses which work matters most. Sorting is a useful
+control only when its fields mean the same thing across every project.
+
+Candidate controls are:
+
+- Featured
+- Most recent
+- Still running
+- Cost, only after Phase 1 defines and sources a comparable cost model
+
+Hovering or focusing an entry backlights the sheet and reveals that project's approved world
+frame behind it. Motion may begin after a deliberate dwell only if it improves recognition
+and passes the performance budget.
+
+Touch has no hover. On coarse pointers the entry nearest the viewport center becomes the
+preview candidate as the user scrolls. This must not capture or alter native scrolling.
+The preview is an invitation, not the only way to open a project.
+
+## 6. The tear
+
+Selecting an entry opens its real `/work/[slug]` URL. The tear visualizes that navigation;
+it does not own navigation state.
+
+The production tear must improve on the prototype:
+
+- it tears the rendered paper or a faithful captured layer, not generic substitute stock;
+- the seam, fibre edge, paper weight, shadows and exit motion are tuned together;
+- the source entry remains the correct back-navigation and focus-restoration target;
+- focus moves to the destination heading after navigation;
+- touch, keyboard and pointer all have complete paths;
+- reduced motion and failed enhancement navigate immediately;
+- hidden controls are not focusable.
+
+Phase 4 begins with two or three motion studies using the real paper and a real project still.
+The owner approves one before production implementation.
+
+## 7. Worlds
+
+A world is a **scroll-directed product story** generated from the project's real material.
+It is not a looping wallpaper, a feature carousel, a fake app or a control surface.
+
+The visual stage may demonstrate a workflow as the document scrolls. BeatMind, for example,
+can move through ingest, separation, analysis, arrangement, mixing, rendering, failure and
+retry. The visitor experiences what the product does without being asked to operate a fake
+editor. Optional sound is user-initiated and never required.
+
+The DOM carries the full case study. If every canvas and animation is deleted, the page
+still contains the problem, architecture, measurement, boundary, what broke, links and next
+case. Reduced motion gets a deliberately composed final frame.
+
+`WORLDS.md` defines the shared grammar and every project's narrative material. Each world
+receives an owner-approved storyboard before implementation.
+
+## 8. Visual system
+
+### Paper
+
+- paper: `#EAE3D5`
+- ink: `#1A1613`
+- secondary ink: `#4E463C`
+- quiet ink: `#6B6153`
+- oxblood: `#8E2116`
+
+### Worlds
+
+- void: `#0B0C0E`
+- rule: `#262A2F`
+- ink: `#F2F3F0`
+- secondary: `#9AA0A2`
+- project accents come from the product's real interface or data
+
+### Type
+
+- Bricolage Grotesque: display
+- Archivo: body and interface
+- DM Mono: dates, numbers, labels, stack and provenance
+
+Fonts are self-hosted and subset. Their rendered roles and budget are approved in Phase 2.
+
+### Banned defaults
+
+- Inter or a generic system font presented as brand character
+- gradient headlines
+- decorative italic word swaps
+- a letter in a colored rounded square as a logo
+- reflexive hero, feature-card grid, testimonial, CTA templates
+- `transition: all`
+- scroll hijacking or a smooth-scroll engine
+- animation that changes layout continuously
+- a project accent reused as global brand chrome
+- fake product screenshots or invented data graphics
+
+## 9. Motion and accessibility
+
+| Moment | Starting budget |
 |---|---|
-| The tear | 900ms, `cubic-bezier(.3,.05,.2,1)`. The only heavy motion |
-| Backlight | 460ms |
-| Ink bleed | 620ms |
-| Arrival settle | 1000ms once, then 62ms per entry |
-| UI feedback | 150–250ms. Longer needs a reason |
-| Worlds | Canvas, 30fps ceiling, paused off-screen and on hidden tabs |
+| Tear | One deliberate heavy transition, tuned in Phase 4 |
+| Backlight | Fast enough to preserve cause and effect; measured in the motion study |
+| Ink bleed | Secondary to legibility |
+| Arrival | Runs once and never delays reading |
+| Interface feedback | 150–250ms unless a measured reason requires more |
+| Worlds | 30fps ceiling, one shared clock, paused off-screen and on hidden tabs |
 
-One clock. Reduced motion gets the **final frame** of every world and no tear.
+Exact paper-transition values are no longer locked from the prototype. They are chosen from
+rendered motion studies in Phase 4. Reduced motion gets immediate navigation and the final
+composed world frame. Native scrolling remains available at all times.
 
-## 9. Build order
+## 10. Build order
 
-Ships before it is decorated. That ordering is what makes the worlds safe.
+1. Clear v1 and prove Astro static output.
+2. Write and verify every word without opening design files.
+3. Lock the system and page architecture with the owner.
+4. Build and preview the complete static site with no canvas, tear or animated world.
+5. Perfect the paper preview and tear as a revertable enhancement.
+6. Build the shared world system and BeatMind pilot.
+7. Build the other worlds one reviewed story at a time.
+8. Cut over production.
+9. Add a publishing/admin workflow after the public site is stable.
 
-1. Seven routes as static HTML, real copy, no canvas. Gate: `curl` every route.
-2. The register and twelve case shells written out. Gate: ten-second test, 4 of 5.
-3. **Ship it live.** Domain cutover, v1 redirected.
-4. The tear, in one commit. Gate: `git revert` leaves a working site.
-5. The worlds, one commit each, flagships first. Gate: each reverts alone.
+The detailed gates are in `BUILD_PLAN.md`.
 
-## 10. Still open
+## 11. Known prototype defects
 
-- The ten-second test has never been run. It gates step 2.
-- BeatMind's figures conflict: 19/194/27,000 in `parth-os/RESUME.md` against
-  24/307/~30,500 in its case study. Settle to one number before any of them ship.
-- Seven projects have no capture. Not a blocker: worlds are generated, not photographed.
-- Vivid's existing capture is an empty state and QueryPilot's is a Swagger page.
-  Both want re-shooting whenever the capture pass happens.
+- The prototype says “Hover” on touch devices.
+- Nav links are in-page anchors instead of routes.
+- World state has no deep-link URL.
+- Opening a world does not move focus into the destination.
+- The hidden close control remains keyboard focusable.
+- The tear uses plain stock rather than the rendered sheet.
+- The mobile register allows narrow project names to collide with metadata.
+- The resume download is not wired.
 
----
+These are production requirements, not reasons to polish `paper.html`.
 
-## 11. Corrections, 2026-08-27
+## 12. Open evidence, not open direction
 
-Four faults found by the owner on the first sheet. Recorded here rather than quietly
-fixed, because each one came from me over-committing to a shape nobody asked for.
-
-**The seven routes are not on the landing.** §3 specifies them and the sheet ships an
-index and one action. There is no nav, no `/about`, no `/hire`, no `/resume`, no
-`/notes`. A visitor cannot reach five of the seven routes. This is the largest gap.
-
-**The sheet does not scroll, and there was no reason for it.** I held the landing to a
-single fixed viewport with the index scrolling inside it, and defended that shape
-across three iterations. The owner never asked for it. **The landing scrolls.** That
-unlocks everything below.
-
-**There is no flow, and no person in it.** A landing page is not an index. A visitor
-arrives, works out who this is, what he is about, what he has built, why to believe
-it, and how to start. The sheet does the fourth of those and skips the rest. There is
-currently no element about Parth on it at all.
-
-**The stock still reads as generated.** A canvas fibre tile plus CSS staining is a
-convincing texture and not a convincing photograph. The fix is a real scanned sheet,
-embedded, with the procedural layer kept only for the parts that must respond to
-hover. Owner's call and it is the right one.
-
-### What this changes
-
-- §4 is a description of the **sheet as a material**, and it stands. It is no longer a
-  description of the whole landing page.
-- The landing becomes a scrolling document **printed on that stock**: arrival, the
-  person, the work index, the proof, the way in. The routes live in persistent chrome
-  at the top and in the close.
-- Content gets decided before the next build. `DECISIONS.md` §2 has been open since the
-  register was written and it is now the blocking item, not the design.
+- The ten-second test has not been run.
+- BeatMind's build-effort figures represent conflicting snapshots. The owner reports
+  17 users as of 2026-08-27; the evidence and counting definition must be attached before
+  publication.
+- Vivid's user count is backed and changes over time; publish a dated snapshot.
+- QueryPilot and UPI metrics need their exact denominators and evaluation context.
+- Oracle uptime language remains unpublished until evidence exists.
+- Vivid and QueryPilot need useful product captures before their worlds ship.
+- The exact price band and the meaning of “cost” sorting are Phase 1 owner decisions.

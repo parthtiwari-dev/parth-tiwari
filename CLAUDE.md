@@ -11,8 +11,10 @@
 > next session would trust it either way. `BUILD_PLAN.md` Phase 0 rewrites this file
 > against the codebase that actually exists at that point.
 >
-> Read instead: [`docs/DESIGN_LOCK.md`](docs/DESIGN_LOCK.md),
-> [`docs/WORLDS.md`](docs/WORLDS.md), [`docs/BUILD_PLAN.md`](docs/BUILD_PLAN.md).
+> Read instead, in order: [`docs/DESIGN_LOCK.md`](docs/DESIGN_LOCK.md),
+> [`docs/WORLDS.md`](docs/WORLDS.md), [`docs/BUILD_PLAN.md`](docs/BUILD_PLAN.md),
+> [`docs/CONTENT_PROVENANCE.md`](docs/CONTENT_PROVENANCE.md), then
+> [`docs/DECISIONS.md`](docs/DECISIONS.md).
 
 ## The rules that survive the rewrite
 
@@ -48,7 +50,9 @@ and carry into v2 unchanged. **Port these into the rewritten CLAUDE.md.**
 - Never `transition: all`. Animate transform and opacity only.
 
 **Process**
-- Screenshot the real first frame at 390 and 1440 before publishing. Numeric checks
+- Follow `docs/BUILD_PLAN.md` §0: open each phase with its scope and owner questions,
+  build only the named checkpoints, run the gate, show the evidence, and stop for approval.
+- Screenshot the real first frame at 390, 800 and 1440 before publishing. Numeric checks
   cannot see clipped copy or a broken headline, and have twice reported a broken page
   as fine.
 - Tick items off the plan in the same commit that does the work, and fix any sentence

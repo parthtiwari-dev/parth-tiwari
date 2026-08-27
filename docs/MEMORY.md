@@ -1,3 +1,7 @@
+> **SUPERSEDED 2026-08-27.** This records v1 decisions and is not current build
+> instruction. Read `DESIGN_LOCK.md`, `WORLDS.md`, `BUILD_PLAN.md`,
+> `CONTENT_PROVENANCE.md` and `DECISIONS.md`.
+
 # Memory
 
 Durable context for anyone — human or agent — picking this project up cold. Decisions, their reasoning, and the things that are easy to get wrong twice.

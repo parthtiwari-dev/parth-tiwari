@@ -1,50 +1,106 @@
-# TEN SECOND TEST — the log
+# Ten-second test log
 
-The acceptance gate for the v2 rebuild (`REBUILD_BRIEF.md` §5).
+The comprehension gate for the rebuild.
 
-Round 0 is also **`DECISIONS.md` §1.1's input** — the verbatim answers are the
-evidence for what the site's one sentence has to overcome.
+## Method
 
-**How to run it.** Five people who have not seen the site. Open it, close it after 10
-seconds, then ask: *"What does he do? Would you hire him? For what?"*
+Use five people who have not seen the artifact or received an explanation.
 
-**Record the answers verbatim.** Do not paraphrase, do not explain the site afterwards, do
-not correct them. A round written from memory is worthless — the whole value is in the exact
-words someone reaches for when they only half-understood.
+1. Show the text artifact or page for exactly ten seconds.
+2. Close or hide it.
+3. Ask: **“What does he do? Would you hire him? For what?”**
+4. Record the answer verbatim.
+5. Do not correct, prompt or explain until the round is recorded.
 
-**Ship when 4 of 5 answer correctly with no prompting.**
+Do not reuse a participant in later rounds. A remembered answer is not evidence.
 
----
+## Passing rubric
 
-## Round 0 — baseline, the constellation site
+An answer passes only when it communicates both:
 
-*To be filled by the owner before Phase 1. This is the number the rebuild has to beat.*
+1. **Work:** Parth builds real software or AI products, not merely designs, studies or
+   visual experiments.
+2. **Hiring reason:** the participant can name a credible engagement, such as building an
+   AI product, automating a business workflow, creating an interactive product experience
+   or hiring him for product/AI engineering.
 
-| # | Who | Verbatim answer | Correct? |
-|---|---|---|---|
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
+Exact wording is not required. Mentioning a specific project is welcome but not necessary.
+
+An answer fails when it:
+
+- describes only the paper, animation, portfolio or visual style;
+- identifies only “developer” with no credible work or hiring reason;
+- mistakes the site for an agency with invented staff;
+- cannot say what he builds;
+- needs prompting.
+
+**Gate: at least four of five pass.**
+
+## Round 0: v1 baseline
+
+Status: not run as a controlled five-person test.
+
+One unprompted response already on record:
+
+> “Nothing is clear. I don't know which were projects, what it does, or what the concept
+> is. It's really hard to grab.”
+
+This is qualitative evidence, not a scored round.
+
+## Round 1: Phase 1 text only
+
+Artifact:
+
+Date:
+
+| # | Participant context | Verbatim answer | Work clear? | Hiring reason clear? | Pass? |
+|---|---|---|---|---|---|
+| 1 | | | | | |
+| 2 | | | | | |
+| 3 | | | | | |
+| 4 | | | | | |
+| 5 | | | | | |
 
 **Score: _ / 5**
 
-### Already on record
+**Owner decision:**
 
-Unprompted, from a UI/UX designer (design lead at Apps for Bharat, now Times of India):
+## Round 2: Phase 3 static preview
 
-> *"Nothing is clear. I don't know which were projects, what it does, or what the concept
-> is. It's really hard to grab."*
+Preview URL:
 
-Owner's note, 2026-08-21: **every** person shown the site has said they do not understand
-it. Treat the baseline as near zero until measured otherwise.
+Commit:
 
----
+Date:
 
-## Round 1 — copy only, no design (Phase 1 gate)
-
-| # | Who | Verbatim answer | Correct? |
-|---|---|---|---|
+| # | Participant context | Verbatim answer | Work clear? | Hiring reason clear? | Pass? |
+|---|---|---|---|---|---|
+| 1 | | | | | |
+| 2 | | | | | |
+| 3 | | | | | |
+| 4 | | | | | |
+| 5 | | | | | |
 
 **Score: _ / 5**
+
+**Owner decision:**
+
+## Round 3: Phase 7 live domain
+
+Live URL:
+
+Commit:
+
+Date:
+
+| # | Participant context | Verbatim answer | Work clear? | Hiring reason clear? | Pass? |
+|---|---|---|---|---|---|
+| 1 | | | | | |
+| 2 | | | | | |
+| 3 | | | | | |
+| 4 | | | | | |
+| 5 | | | | | |
+
+**Score: _ / 5**
+
+**Owner decision:**

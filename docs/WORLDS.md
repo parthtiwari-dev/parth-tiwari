@@ -3,9 +3,11 @@
 Written 2026-08-27. Reads after [`DESIGN_LOCK.md`](DESIGN_LOCK.md), which settles the
 landing sheet. This file settles **what a world is**, and specifies all twelve.
 
-A world is a case study. It is not a gallery, not a hero with a screenshot, and not a
-list of features. It is the answer to the only question an employer or a client is
-actually asking: *did this person build a real thing, and can they explain it.*
+A world is a scroll-directed case study. It is not a gallery, not a looping hero, not
+a screenshot carousel, and not a miniature fake version of the product. It lets the
+visitor watch a real workflow unfold while the document explains why each step exists.
+It answers the question an employer or client is asking: *did this person build a real
+thing, and can they explain what mattered.*
 
 ---
 
@@ -13,9 +15,11 @@ actually asking: *did this person build a real thing, and can they explain it.*
 
 **One rule above all the rest, carried over from `DESIGN_LOCK.md` §6:**
 
-🔴 **The graphic is never a control.** Nothing is clicked through it, no content lives
-inside it, no legend explains it. Delete every canvas on the site and twelve complete,
-readable case studies remain. Break this and it is v1's constellation in new clothes.
+🔴 **The graphic is never the only control or the only source of information.** Native
+scroll may advance its story and an optional labelled control may start sound or replay
+a sequence, but route navigation and case-study content remain ordinary DOM. Delete every
+canvas on the site and twelve complete, readable case studies remain. Break this and it
+is v1's constellation in new clothes.
 
 ### The skeleton, identical for all twelve
 
@@ -24,7 +28,7 @@ a missing section is visibly missing rather than quietly absent.
 
 | # | Beat | What it does | Length |
 |---|---|---|---|
-| 1 | **Arrival** | Full-bleed graphic, the name, one sentence. The graphic runs on its own | 1 screen |
+| 1 | **Arrival** | Full-bleed final frame, the name, one sentence. Motion is not required to understand it | 1 screen |
 | 2 | **What it is** | Plain language. What a person gets, not which library was used | 2-4 sentences |
 | 3 | **The problem** | Why it was hard, concretely. Not "AI is complex" | 3-5 sentences |
 | 4 | **How it is built** | The architecture, and the one decision that mattered | 4-8 sentences, one diagram if it earns it |
@@ -49,6 +53,15 @@ a missing section is visibly missing rather than quietly absent.
 6. **A world with no honest graphic yet says so.** A held slot beats a mock-up.
 7. **Every claim in the copy is checkable** against the repo, the deployment, or the
    errata. No estimated metrics, no implied clients, no invented users.
+8. **Native scroll controls time, not access.** A bounded sticky stage may progress as
+   the case study scrolls, but scroll is never hijacked and the user can always continue.
+9. **It demonstrates, it does not impersonate.** Product actions may be rehearsed as a
+   story, but a portfolio page does not pretend to be the production editor, dashboard
+   or medical tool.
+10. **Each world starts as a storyboard.** Before code, the owner reviews its scenes,
+    real-data inventory, final still, mobile composition and unresolved claims.
+11. **Audio is opt-in.** It starts only from a labelled user action, has a visible stop,
+    and is never necessary to understand the case study.
 
 ### Type and ground inside a world
 
@@ -60,8 +73,9 @@ body Archivo, data DM Mono, exactly as the landing.
 
 ## 2. Build order
 
-Flagships first, because they carry the most weight and are the most likely to be the
-only one a visitor opens. Each world is **its own commit** and must revert alone.
+The shared lifecycle and BeatMind pilot are built first in Phase 5. The remaining worlds
+follow in Phase 6, flagships first. Each project-specific world is **its own commit** and
+must revert alone.
 
 | Wave | Worlds | Why |
 |---|---|---|
@@ -88,9 +102,11 @@ not the model, it is that the pipeline survives its own workers dying.
 right, played bars saturated and unplayed bars grey. Drawn from real envelope data
 exported from a separated track, not from `Math.random()`.
 
-**Animation.** The playhead loops over 6s. Bars near the playhead swell. On arrival the
-lanes draw in top to bottom, 90ms apart. Reduced motion: playhead parked at 40%, all
-four lanes fully drawn.
+**Scroll story.** The page rehearses the product in scenes: a whole track arrives; four
+stems separate; musical analysis labels key, tempo and sections; the arrangement opens;
+the mix changes; the render completes; then a real failed worker and retry reveal how the
+system survives. The playhead follows the active scene rather than looping forever.
+Reduced motion shows the composed four-lane result and the completed run trace.
 
 **Accent.** BeatMind's own stem colours: vocals `#E86A8A`, drums `#E8913C`,
 bass `#4F9BE8`, other `#4FD39B`.
@@ -100,14 +116,19 @@ durations, including the `separate` stage failing, the worker being lost in red,
 the retry completing in green. This is the most distinctive single graphic on the whole
 site and no competitor's portfolio has one.
 
-**Content it already has.** 24 days solo, 307 commits, ~30,500 lines, 299 tests across
-four tiers, 70s → 23.4s on stem separation after root-causing a missing
-`libcublasLt.so.13`, and **zero users, which stays on the page.**
+**Content awaiting provenance lock.** The later case-study snapshot says 24 days solo,
+307 commits, about 30,500 lines and 299 tests across four tiers; an earlier resume
+snapshot says 19 days, 194 commits and 27,000 lines. Stem separation improved from 70s
+to 23.4s after root-causing a missing `libcublasLt.so.13`. The owner reports 17 users
+as of 2026-08-27. None of these values ships until its scope, source and `asOf` date are
+recorded in `CONTENT_PROVENANCE.md`.
 
 **Errata.** The copyright tickbox that got deleted.
 
-**Build notes.** Export a real envelope array and a real job trace to JSON at build
-time. The canvas reads the JSON. No fetch at runtime.
+**Build notes.** Export a real envelope array, analysis markers and job trace to JSON at
+build time. Use a licensed or owner-created audio excerpt only after explicit approval.
+Listening is optional and user-initiated. The world is a storytelling demonstration,
+not a working mixer. No runtime fetch.
 
 ---
 
@@ -120,13 +141,16 @@ the same person across every frame. He trained the model it runs on.
 step counter and a progress rule. **This is the one place the v2 denoise idea is true**:
 it is literally what the product does, on the one page that is about it.
 
-**Animation.** 8s cycle, resolve over the first 70%, hold the finished frame for the
-rest, the way a real sampler ends. Reduced motion: the resolved frame, step 28 of 28.
+**Scroll story.** Script beats become shots, references bind to characters, sampling
+resolves each frame, consistency is checked, and the failed previous-frame conditioning
+experiment becomes the turn in the story. Reduced motion shows the resolved storyboard
+and the failed comparison side by side.
 
 **Accent.** The dusk palette of the frame it resolves to.
 
 **Content.** 2,250 LoRA training steps, the dataset pipeline, CLIP scoring for prompt
-alignment and face consistency.
+alignment and face consistency. The backed user count is a dated claim, not permanent
+copy; attach its evidence and `asOf` date before publication.
 
 **Errata.** Conditioning each shot on the previous shot's pixels made it worse: the
 previous frame's hand pose overrode the text prompt and later shots ran roughly four
@@ -147,8 +171,9 @@ carries its source and the reader decides.
 **The graphic.** Sources arriving as scattered points and settling into clusters. The
 readout counts case files as they form.
 
-**Animation.** 9s settle with a per-point stagger so it looks like arrival rather than
-a transition. Reduced motion: fully settled.
+**Scroll story.** A source arrives, becomes a claim, joins a case file, receives its
+citation and stops before a verdict. Later scenes show conflicting sources coexisting
+without a ranking. Reduced motion shows the sourced, unresolved case file.
 
 **Accent.** `#4FD39B` for a resolved cluster, `#39424A` for one still arriving.
 
@@ -171,12 +196,14 @@ time, so the graphic's numbers are the real ones.
 documents with drawn links; then a second query lands where nothing is close enough and
 is marked **refused** in red, with its evidence radius empty.
 
-**Animation.** Alternates cited and refused on a 9s cycle. Reduced motion: the refused
-state, because that is the argument.
+**Scroll story.** The first question retrieves enough evidence and answers with citations.
+The second lands outside the evidence radius and refuses. The refusal is the final scene,
+because it is the argument.
 
 **Accent.** `#4FD39B` cited, `--oxblood` refused.
 
-**Content.** Roughly 20% of adversarial inputs refused rather than answered.
+**Content.** The final evaluation recorded 4 refusals in 20 cases. Publish that denominator
+and evaluation name rather than an unqualified “roughly 20%.”
 
 **Boundary.** The whole page is the boundary. Lead with it.
 
@@ -192,8 +219,9 @@ coordinates. Do not fake the geometry.
 **The graphic.** The Temporal state machine as nodes and edges, with the human gate lit
 and every model-proposed transition shown arriving at a gate rather than at the state.
 
-**Animation.** A single order walks the machine, pauses visibly at the gate, then
-proceeds. Reduced motion: parked at the gate.
+**Scroll story.** A customer message becomes a proposed action, the model reaches the
+gate, authoritative order state is checked, a human approval lands, and only then does
+the order advance. Reduced motion parks the proposal at the gate.
 
 **Accent.** One colour for the machine, `--oxblood` for the gate.
 
@@ -210,13 +238,15 @@ touches the database and a correction loop when it fails.
 **The graphic.** The loop, drawn as a loop: question → schema retrieval → generated SQL
 → critic → either execute, or back round with the failure reason attached.
 
-**Animation.** One query goes round twice: rejected on the first pass with the critic's
-reason readable, accepted on the second. Reduced motion: the accepted pass.
+**Scroll story.** A question retrieves schema, generates SQL, fails the critic with a
+readable reason, returns through correction and executes only after acceptance. Reduced
+motion shows the rejected and corrected queries together.
 
 **Accent.** Blue for the forward path, `--oxblood` for the rejection edge.
 
-**Content.** +5.7pp correction depth on an 82-query benchmark. 🔴 Verify this figure
-against the repo before it ships; `DECISIONS.md` flags several numbers as unsourced.
+**Content.** The current evidence supports a +5.7 percentage-point lift on the 70-query
+core set. The 12 adversarial queries are reported separately. Do not describe the lift as
+being measured across all 82 unless later evidence proves that denominator.
 
 **Build notes.** 🔴 **The current capture is a Swagger docs page**, which proves an API
 exists rather than a product. Either re-shoot against a real client, or let the graphic
@@ -232,8 +262,9 @@ for a human before anything is sent.
 **The graphic.** A pipeline that runs, reaches a review queue, and **waits** — visibly,
 with a queue depth that does not clear until a decision arrives.
 
-**Animation.** Items flow, accumulate at the gate, and hold. The stall is the point;
-resist the urge to drain it. Reduced motion: items held at the gate.
+**Scroll story.** Evidence enters, a job packet is assembled, unsupported claims are
+removed, the application reaches the review queue and waits. A human decision is shown
+as a distinct later event. Reduced motion holds at the review gate.
 
 **Accent.** One flow colour, `--oxblood` on the queue.
 
@@ -251,7 +282,9 @@ fine and is the argument for generated worlds in the first place.
 **The graphic.** The atlas itself: one slowly rotating body region, source-backed
 regions highlighted and unsourced ones deliberately dimmed.
 
-**Animation.** A slow rotation, one axis. Reduced motion: static three-quarter view.
+**Scroll story.** The atlas reveals one region, attaches its source boundary, compares
+what is known with what is not sourced and returns to the whole. Reduced motion uses a
+static three-quarter view with the boundary visible.
 
 **Accent.** One highlight colour for sourced, grey for not.
 
@@ -270,15 +303,20 @@ most demos pretend does not exist.
 **The graphic.** A score distribution with the alert-budget threshold as a line that
 moves, and precision updating as it moves. Move the line, watch the tradeoff.
 
-**Animation.** The threshold sweeps its useful range and settles at 0.5%. Reduced
-motion: parked at 0.5% with the number stated.
+**Scroll story.** Transactions enter, scores form a distribution, an alert budget cuts
+the distribution, and the measurement changes with the threshold before settling on the
+documented operating point. Reduced motion shows the final distribution and labelled
+threshold.
 
 **Accent.** One colour for legitimate, `--oxblood` for flagged.
 
-**Content.** 92.06% precision at a 0.5% alert budget.
+**Content.** 92.06% is currently supported for a named model evaluation at a 0.5% alert
+budget. A separate operational backtest reports a different overall precision. Both may
+be useful, but their datasets and contexts must never be collapsed into one claim.
 
-**Note.** This is the one world where a control would be genuinely tempting. **Do not
-add one.** It animates; it is not a slider. Same rule as every other world.
+**Note.** This is the one world where a threshold control might genuinely teach the
+tradeoff. It may be proposed during storyboard review only if keyboard, touch and a
+non-interactive explanation remain complete. It is never required to read the result.
 
 ---
 
@@ -290,8 +328,8 @@ built to a company brief.
 **The graphic.** A token stream arriving, with the retrieved catalogue scope shown
 alongside so the answer is visibly bounded rather than open-ended.
 
-**Animation.** One answer streams in at realistic cadence, then holds. Reduced motion:
-the completed answer.
+**Scroll story.** A question arrives, catalogue scope is retrieved, unsupported material
+is excluded and the bounded answer streams. Reduced motion shows the scope and final answer.
 
 **Content.** Be plain that this was a take-home. Honesty about scale is the site's
 whole posture and a small project stated small costs nothing.
@@ -305,8 +343,9 @@ whole posture and a small project stated small costs nothing.
 **The graphic.** Reconstruction error plotted against the anomaly boundary, normal
 points inside and anomalies outside.
 
-**Animation.** Points arrive and sort themselves relative to the boundary. Reduced
-motion: settled.
+**Scroll story.** Preprocessing freezes, transactions become reconstruction errors, the
+boundary separates normal from anomalous and the explanation attaches to one flagged point.
+Reduced motion shows the settled distribution.
 
 **Content.** Frozen preprocessing is the point: the same input scores the same way
 tomorrow. Say why that matters.
@@ -315,24 +354,26 @@ tomorrow. Say why that matters.
 
 ### 12 · Oracle Auto Provision — *minor · running · 📐 specced*
 
-**The story.** A small piece of automation that has quietly worked for months.
+**The story.** A small provisioning automation whose value is retrying safely after a
+failed run. Duration and uptime remain unpublished until evidence is attached.
 
 **The graphic.** A cron heartbeat: a long row of run ticks, most green, with the failed
 attempts and the retry that finally landed marked in red.
 
-**Animation.** The row fills left to right, then holds. Reduced motion: filled.
+**Scroll story.** Scheduled runs accumulate, one fails, the retry waits, and the later
+attempt lands. Reduced motion shows the failed and successful attempts together.
 
-**Content.** The smallest project here, and the one with the longest uptime. That
-contrast is worth stating rather than hiding.
+**Content.** Keep the scope small and state what the retry protected. Do not claim
+“months” or “longest uptime” until logs establish the duration and comparison.
 
 ---
 
-## 4. What is not built yet, and blocks nothing
+## 4. What is not built yet
 
-Seven of twelve have no capture, and that is now **fine by design** — the worlds are
-generated from data, not photographed. Captures are a bonus, not a dependency. This is
-the direct payoff of the generated-world system and it is why the capture pass moved
-after the design rather than before it.
+Several projects have no useful product capture. That does not block the static case-study
+shell, because a sourced world still can carry the arrival. It does block claiming the
+product has been visually demonstrated when it has not. Each storyboard inventory states
+whether it relies on a capture, generated data graphic or both.
 
 Two captures that do exist should be replaced before their world ships: Vivid's empty
 state, and QueryPilot's Swagger page.
@@ -349,3 +390,5 @@ Recorded so the rebuild does not inherit them silently.
 - The tear uses plain stock rather than a clone of the page. Acceptable, recorded.
 - `Download the resume` points nowhere yet.
 - The BeatMind figures conflict is still unresolved and gates that world's numbers.
+- The prototype loops graphics independently of the reading sequence. Production worlds
+  are scroll-directed narratives with composed static endpoints.

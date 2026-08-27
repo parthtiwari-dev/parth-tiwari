@@ -1,247 +1,530 @@
-# BUILD PLAN — Paper and Worlds
+# BUILD PLAN: Paper and Worlds
 
-Rewritten 2026-08-27. **This supersedes the whole previous file**, which planned a
-denoise signature on a Vue SPA. Both are dead.
+Revised 2026-08-27. This is the execution plan for the portfolio rebuild.
 
-Read in this order:
+The public brand is **Parth Tiwari**. **Paper and Worlds** is the internal name of the
+design system: one continuous sheet of real rag paper, a register of work printed on it,
+and a project-specific world behind each entry.
 
-1. [`DESIGN_LOCK.md`](DESIGN_LOCK.md) — the design, locked
-2. [`WORLDS.md`](WORLDS.md) — what is behind each tear, all twelve specified
-3. This file — the stack, what gets deleted, and the phases
+This plan replaces the earlier six-phase draft. The order is binding. A later phase does
+not begin until the current phase gate has been run, its evidence shown to the owner, and
+the owner has approved moving on.
 
-**The design is locked. The prototype is not finished.** `design/directions/paper.html`
-is a working artifact with real bugs (`WORLDS.md` §5). It exists to prove the direction,
-not to be ported line by line. The rebuild reimplements it properly.
+## 0. Working protocol
 
----
+Every phase follows the same loop.
 
-## 1. The stack
+1. **Open the phase.** State its scope, exclusions, exact files likely to change, known
+   risks, and the questions whose answers would materially change the result.
+2. **Get the owner's decision.** For visual phases, show the reference lock, page
+   structure or storyboard before production implementation. Do not interpret silence as
+   approval.
+3. **Build in reviewable slices.** Keep the owner updated after each named checkpoint.
+   For visual work, show rendered evidence at 390px, 800px and 1440px, including the
+   relevant hover, touch, keyboard, reduced-motion and no-JavaScript states.
+4. **Run the gate.** A gate is command output, rendered evidence or a recorded human
+   test. “Should pass” is not evidence.
+5. **Stop.** Report what passed, what failed, what cannot be verified, and the current
+   diff. Do not begin the next phase until the owner approves it.
 
-### Decided: Astro
+Plan checkboxes are evidence markers. Tick an item only in the same commit that completes
+and verifies it. A partially completed item stays unticked and receives a short note.
 
-| | |
+### Planning lock completed before Phase 0
+
+The 2026-08-27 documentation commit completed this planning pass:
+
+- [x] Set the public brand to Parth Tiwari and kept Paper and Worlds as the design name.
+- [x] Reconciled the route model, including full note pages and no duplicate Blog or
+  Experience route.
+- [x] Updated the stack to pinned Astro 6.x, defined the dependency rule and removed
+  analytics from the initial baseline.
+- [x] Added the phase opening, owner-review, checkpoint, evidence and stop protocol.
+- [x] Separated Phase 3 preview deployment from Phase 7 production cutover.
+- [x] Added the shared-world foundation and BeatMind pilot before the remaining worlds.
+- [x] Upgraded worlds from looping graphics to owner-reviewed scroll stories.
+- [x] Added claim provenance and dated handling for changing user counts.
+- [x] Added the post-launch publishing/admin phase without adding it to the public runtime.
+
+## 1. Stack
+
+| Layer | Decision |
 |---|---|
-| **Framework** | **Astro 5.** Static output. Islands only where a world canvas or the tear needs one |
-| **Content** | Astro content collections. Case studies and notes in Markdown, frontmatter typed with Zod |
-| **Styling** | Vanilla CSS with tokens in one file. No Tailwind |
-| **Motion** | Native CSS and the Web Animations API. **No GSAP, no Lenis, no smooth-scroll engine** |
-| **Canvas** | Hand-written 2D canvas. One shared clock |
-| **Deploy** | Vercel, static. Same project |
-| **Runtime deps** | Target **1**: `astro`. Every addition argued in `DECISIONS.md` |
+| Framework | **Astro 6.x**, exact stable version pinned during Phase 0 |
+| Output | Static HTML. No server rendering in the public site |
+| Language | TypeScript strict |
+| Content | Astro build-time content collections; Markdown entries with schemas from `astro/zod` |
+| Styling | Vanilla CSS with tokens in one file. No Tailwind |
+| Motion | CSS and Web Animations API. No GSAP, Lenis or smooth-scroll engine |
+| Worlds | Hand-written 2D canvas or DOM/SVG where simpler; one shared clock |
+| Hosting | Static Vercel deployment, no adapter in the initial build |
+| Public runtime dependencies | Target **one direct dependency: `astro`** |
+| Analytics | Removed during Phase 0. Reconsidered in Phase 7 with a written privacy and dependency decision |
 
-### Why, argued
+“One runtime dependency” means one direct production dependency in `package.json`, not
+Astro's transitive dependency tree. Test, lint and build tools may be development
+dependencies when they have a named gate to serve.
 
-**`REBUILD_BRIEF.md` §3 rule 3 requires every page to read as static HTML with
-JavaScript off.** v1 claimed this and did not have it. Astro gives it by construction:
-HTML on disk, zero JS by default, and you cannot accidentally lose it. That single
-property is worth more here than framework familiarity, because the audience for
-`/resume` is a crawler and an ATS parser.
+Astro is the right shape because the default artifact is HTML on disk. The sheet, routes,
+case studies, notes and resume need no client runtime. The tear, backlight and world stages
+are isolated enhancements. Next.js and Nuxt can emit static sites, but their application
+runtime and conventions add no value to this content-first build. Plain HTML has appeal,
+but hand-maintaining a growing project and notes archive would rot.
 
-**Twelve case studies plus a growing notes page is a content problem.** Content
-collections put every word in Markdown with a typed schema — which is also what
-"content before form" has been asking for since the brief was written.
+Any proposed public runtime dependency must first be recorded in `DECISIONS.md` with:
 
-**The islands model matches the design exactly.** The sheet is static HTML. The tear,
-the backlight and each world canvas are the only interactive parts, and each is a
-separate island that fails independently.
+- the user-visible capability it enables;
+- the measured cost in the relevant route bundle;
+- the simpler alternatives tried;
+- its no-JavaScript and reduced-motion behavior;
+- its removal path.
 
-### Rejected
+## 2. Information architecture
 
-| | Why not |
-|---|---|
-| **Next.js** | Known to the owner, and the wrong shape: a React runtime on every route to serve twelve static documents. Also makes accidental client-side rendering easy, which is the exact v1 failure |
-| **Vue + Vite SPA** | What v1 is. The crawler gap is structural, not incidental |
-| **Plain HTML + Vite** | Fewest deps and real appeal, but twelve case studies and a notes feed hand-maintained in HTML will rot. Content collections are the reason to pay one dependency |
-| **Any smooth-scroll engine** | v1 ran Lenis. The landing scrolls natively and the tear does not need it. `CLAUDE.md`'s two-clock rule exists because of this |
+There are **eight route families**, serving two readers without turning one page into a
+compromise.
 
-**The honest cost:** the owner knows Next.js and does not know Astro. The curve is
-small, the payoff is that the crawler and ATS gap closes permanently.
+| Route | Purpose | Primary reader |
+|---|---|---|
+| `/` | Arrival, two doors, person, the complete paper index, proof, services, errata and contact | Both |
+| `/work` | Complete register with honest sorting and filtering | Both |
+| `/work/[slug]` | One complete case study and its project world | Employer depth |
+| `/notes` | Errata and writing hub; a clear coming-soon state if no general posts exist | Both |
+| `/notes/[slug]` | One full erratum or article with sources and related work | Both |
+| `/about` | Portrait, path, work-experience timeline and operating rules | Human check |
+| `/resume` | Crawlable HTML CV with PDF download and print styles | Employer and ATS |
+| `/hire` | Scope, process, price band and direct contact | Client conversion |
 
----
+The initial number of generated HTML pages is not called “eight routes” in a gate. The
+gate enumerates the files Astro actually produced: the fixed pages, every project slug,
+every published note slug, the 404 page, sitemap and feeds.
 
-## 2. What gets deleted, and what survives
+No separate `/blog` route is added. `/notes` is the publishing system. It has two content
+types, **Errata** and **Posts**, with individual pages under `/notes/[slug]`. If Posts has
+no entries at launch, the hub says “Coming soon” while Errata remains useful. No empty
+navigation destination ships.
 
-The v1 `src/` is 18,572 lines and 49 components. Nearly all of it goes.
+No separate `/experience` route is added. Work experience appears once as a human timeline
+on `/about` and once as structured employment on `/resume`. These are different readings of
+the same source data, not duplicate content stores.
 
-### Delete outright
+## 3. What is deleted and what survives
 
-- `src/components/**` — every scene component, overlay, panel and control
-- `src/shaders/**`, `src/composables/**`, `src/stores/**`, `src/utils/**`
+### Delete or replace in Phase 0
+
+- `src/components/**`
+- `src/shaders/**`
+- `src/composables/**`
+- `src/stores/**`
+- `src/utils/**`
 - `src/data/{layout,cameraPath,nodeMotion,nodeMeshes,sceneRig,labelLod,screenRegions}.ts`
-- `three`, `@tresjs/core`, `postprocessing`, `gsap`, `lenis`, `pinia`, `vue`
-- `tailwind.config.ts`, the Tailwind escape-hatch idiom, the whole `--bg` token set
-- Root `DESIGN_LOCK.md`, `DESIGN_REVIEW.md` — v1 artefacts, superseded
+- Vue/Vite entry files and configuration: `src/App.vue`, `src/main.ts`, `index.html`,
+  `vite.config.*`, Vue environment declarations and Vue-specific TypeScript configs
+- `tailwind.config.ts` and the old scene token layer
+- the direct dependencies `@tresjs/core`, `@vercel/analytics`, `gsap`, `lenis`, `pinia`,
+  `postprocessing`, `three` and `vue`
+- root `DESIGN_LOCK.md` and `DESIGN_REVIEW.md`, after confirming they are the superseded
+  v1 artifacts named in `docs/README.md`
+- the Google Drive resume embed and any query-parameter-only navigation contract
 
-### Keep, and port
+Before deletion, Phase 0 prints an exact resolved path list and the dependency diff. Nothing
+is deleted from a glob whose resolved targets have not been reviewed.
 
-| What | Why |
+### Keep and port
+
+| Source | Purpose |
 |---|---|
-| `src/data/projects.ts` | The only real content inventory. Becomes twelve Markdown case studies |
-| `src/data/{about,services,training,capabilities,socialLinks}.ts` | Real, audited copy. Becomes content and page frontmatter |
-| `public/media/**` | Captures, the portrait, the paper stock |
-| `scripts/browser.mjs` | Solves a proxy and binary problem that will recur. Do not rewrite it |
-| `scripts/{shots,a11y-check,perf-check,craft-check}.mjs` | Work today. Re-point at the new routes |
-| `design/**` | The research, the direction artifacts, the stock builder, the contrast checker |
-| `docs/**` | The only memory that survives a session |
+| `src/data/projects.ts` | Source inventory only; becomes validated project content, not a runtime module |
+| `src/data/{about,services,training,capabilities,socialLinks}.ts` | Audited inputs for Phase 1; every sentence is rechecked before reuse |
+| `public/media/**` | Captures, portrait, paper stock and licensed media |
+| `scripts/browser.mjs` | Existing browser launch/proxy solution; preserve unless a current check proves it obsolete |
+| `scripts/{shots,a11y-check,perf-check,craft-check}.mjs` | Audit and adapt to real routes; do not blindly copy v1 assumptions |
+| `design/**` | Research, direction artifacts, prototype and material tools |
+| `docs/**` | Project memory and gates |
 
-### Rewrite from scratch
+`CLAUDE.md` is rewritten in Phase 0. It keeps only stack-independent rules and the working
+protocol in §0. Every constellation, shader, Vue and v1 command rule is removed.
 
-`CLAUDE.md`. It currently describes the constellation, the shader cap, the label
-projector, `npm run nav`, `npm run labels`, `npm run frames`. **Almost every rule in it
-becomes false the moment the scene layer is deleted.** A CLAUDE.md that lies is worse
-than none, because the next session trusts it.
+## 4. Content contracts established before components
 
----
+The public site will continue to grow. Phase 1 therefore creates stable content contracts
+rather than hard-coding today's count into pages.
 
-## 3. The phases
+### Project entry
 
-Each phase has an exit gate. **Do not start the next phase until the gate passes.**
-The point of the ordering is that Phase 3 ships a complete site before a single canvas
-exists, which is what makes Phases 4 and 5 safe to attempt.
+Each project contains identity, tier, status, dates, audience, summary, nine case-study
+beats, verified links, media, world storyboard, world data source and claim references.
+Sorting fields are typed. “Cost” cannot become a sorting control until Phase 1 defines
+whether it means money, time, compute or effort and proves that the value is comparable
+across projects.
 
----
+### Note entry
 
-### Phase 0 — Clear the ground
+Each note contains type (`erratum` or `post`), date, summary, body, related projects,
+sources, publication state and optional updated date. Drafts do not enter static routes,
+sitemap or RSS.
 
-**Do**
+### Claims
 
-1. Branch `rebuild/astro` off `redesign/v2`.
-2. `git rm -r` the delete list in §2. One commit, so it is one revert.
-3. Scaffold Astro 5, TypeScript strict, static output, Vercel adapter not needed.
-4. Port `scripts/browser.mjs` and the four check scripts. Re-point their URLs.
-5. Rewrite `CLAUDE.md` for the new stack. Delete every rule about the scene.
+Every number shown publicly has a claim record with context, source, verification date and
+an `asOf` date when it can change. Counts are published as snapshots, never implied to be
+live. The working register is [`CONTENT_PROVENANCE.md`](CONTENT_PROVENANCE.md).
 
-**Gate.** `npm run build` produces HTML on disk. `curl` a built page and read the copy
-in the response body. Repo has one runtime dependency.
+## 5. Phases
 
----
+### Phase 0: Clear the ground
 
-### Phase 1 — Content, and not one line of design
+**Owner review before work**
 
-The phase that has been skipped twice. `REBUILD_BRIEF.md` §6 and `SESSION_HANDOFF.md`
-§2 both name this as the thing that cost the last two sessions.
-
-**Do**
-
-1. `src/content/work/*.md` — twelve case studies, every beat in `WORLDS.md` §1 written
-   out in full. Ported from `projects.ts`, not invented.
-2. `src/content/notes/*.md` — the four errata, dated, first person.
-3. Page copy for `/`, `/about`, `/resume`, `/hire` in frontmatter or Markdown.
-4. Zod schemas so a missing beat is a build error rather than an empty section.
-5. Settle the open facts: the BeatMind figures conflict, the QueryPilot benchmark
-   number, and every claim in `WORLDS.md` marked 🔴.
-
-**Gate.** 🔴 **The ten-second test, on the text alone, five people, verbatim answers
-into `TEN_SECOND_TEST.md`.** It has never been run. It gates everything after this.
-Four of five, unprompted.
-
----
-
-### Phase 2 — The design system
+- Show the resolved delete manifest and dependency changes.
+- Confirm the Astro 6.x version that will be pinned.
+- Confirm the retained source/content files and whether any uncommitted work exists.
 
 **Do**
 
-1. `src/styles/tokens.css` — the full palette from `DESIGN_LOCK.md` §7, both grounds.
-2. Type scale, five sizes in regular use. Bricolage Grotesque, Archivo, DM Mono,
-   self-hosted and subset rather than three Google Fonts requests.
-3. The sheet as components: `Sheet`, `Deckle`, `Curl`, `Letterhead`, `Entry`.
-4. Port `design/contrast-check.mjs` and run it as a gate.
+- [ ] Create `codex/rebuild-astro` from `redesign/v2`.
+- [ ] Delete the reviewed v1 files and packages in one revertable commit.
+- [ ] Scaffold Astro 6.x with strict TypeScript and static output.
+- [ ] Create only minimal placeholder routes needed to prove the build pipeline.
+- [ ] Audit and adapt the browser/check scripts; remove v1-only contracts.
+- [ ] Rewrite `CLAUDE.md` for Astro and the phase protocol.
+- [ ] Update this checklist and any documentation made untrue by the work.
 
-**Gate.** Tokens exist before any page component. Contrast passes on a stub page.
-Total font weight under budget and recorded.
+**Gate**
 
----
+- `npm run build` exits zero and emits HTML to `dist/`.
+- A local static server serves the built output.
+- `curl` reads meaningful placeholder copy from a built HTML file without executing JS.
+- `package.json` contains one direct production dependency, `astro`.
+- `git diff` contains no content or design implementation from later phases.
+- The Phase 0 commit can be reverted cleanly in a temporary worktree.
 
-### Phase 3 — The seven routes, static
+Show the complete command output and stop.
 
-No canvas. No tear. No backlight. **A complete, readable, crawlable site.**
+### Phase 1: Content and evidence, no design files
 
-**Do**
+**Hard boundary:** do not open `design/directions/*`, do not create CSS, and do not build a
+visual component. This phase has been skipped twice and is not skipped again.
 
-1. `/`, `/work`, `/work/[slug]` × 12, `/notes`, `/about`, `/resume`, `/hire`.
-2. The landing flow from `DESIGN_LOCK.md`: letterhead → sentence and two doors → who
-   he is with the portrait → the work index → the numbers → three kinds of work →
-   errata → contact.
-3. `/resume` as real HTML with `Parth_Tiwari_Resume_B.pdf` as the download beside it.
-   **Kill the Drive embed.**
-4. Each world's page shows its **still first frame** as a static image or nothing.
-5. Metadata: canonical, OG, JSON-LD, sitemap. The site URL in exactly one constant.
-6. Regenerate `og.png`.
+**Owner review before work**
 
-**Gate.** `npm run a11y` passes at 390/800/1440. `npm run shots` clean at every
-viewport. Every route readable with JS disabled, verified by `curl`, not by belief.
-Ten-second test passes on the built site. **Ship it live.**
-
----
-
-### Phase 4 — The signature, one revertable commit
+- Settle the public hero sentence and exact meaning of the two doors.
+- Confirm the price band and what “cost” means in the work register.
+- Review the claims queue, including BeatMind, Vivid, QueryPilot, UPI and Oracle.
+- Confirm which existing notes are Errata and whether any general Post is ready. If none
+  is ready, approve the “Coming soon” Posts state.
 
 **Do**
 
-1. The tear: entry → seam → world.
-2. The backlight on hover.
-3. 🔴 **The touch path.** Coarse pointers have no hover, so the landing's central
-   invitation currently does not exist on a phone. On coarse pointers the entry nearest
-   the viewport centre backlights as you scroll. This is a `CLAUDE.md` requirement, not
-   a nicety.
-4. Reduced-motion path: no tear, straight to the world.
+- [ ] Write all project case studies in `src/content/work/`, using the nine required beats.
+- [ ] Write the existing errata and any approved posts in `src/content/notes/`.
+- [ ] Write route copy for home, work, notes, about, resume and hire.
+- [ ] Create typed schemas for projects, notes, experience, services and claims.
+- [ ] Create a source-linked claim record for every public number.
+- [ ] Resolve the BeatMind scope conflict; record the owner-supplied 17-user count only
+  after its evidence and `asOf` date are attached.
+- [ ] Record Vivid's backed user count with evidence and `asOf` date; do not freeze a
+  changing count inside undated prose.
+- [ ] Correct QueryPilot and UPI metric context and remove unverifiable Oracle language.
+- [ ] Verify every public URL without assuming a deployment alias.
+- [ ] Complete the text-only ten-second-test artifact.
 
-**Gate.** `git revert` this commit and the site still works completely, with ordinary
-page navigation. Verified by actually running the revert, not by reasoning about it.
-Touch tested with a real synthesised touch drag, because `mouse.wheel` goes around the
-code path that broke in v1.
+**Gate**
 
----
+- Schemas reject a missing case-study beat, missing claim source and invalid link shape.
+- Every public number maps to a provenance entry.
+- Five people see the text-only artifact for ten seconds. Their verbatim answers are
+  recorded in `TEN_SECOND_TEST.md`.
+- At least four of five identify both the work and a credible hiring reason according to
+  the rubric in that file.
 
-### Phase 5 — The worlds, one commit each
+The human test is an owner gate. The agent cannot simulate it. Show the results and stop.
 
-Order from `WORLDS.md` §2: flagships first.
+### Phase 2: Design system and page architecture
 
-**Per world, every time**
+This phase decides how the locked direction behaves across the full site. It does not build
+the production pages.
 
-1. Export the real data to JSON at build time. Never `Math.random()` where a real
-   number exists.
-2. Write the generator against that JSON.
-3. Compose the still frame that reduced motion and no-JS will show.
-4. Verify the graphic against the spec in `WORLDS.md` §3.
-5. Commit alone.
+**Owner review before work**
 
-**Gate, per world.** Reverts alone. Still frame stands on its own. 30fps ceiling holds.
-Paused off-screen. `npm run perf` clean.
+- Show a reference lock for the paper system, dark world system, editorial notes and
+  conversion page.
+- Show low-fidelity page structures for all route families at phone and desktop widths.
+- Ask route-specific questions in one batch, not one question at a time.
 
----
+**Do**
 
-### Phase 6 — Cutover
+- [ ] Define tokens for paper, ink, type, spacing, grid, focus, motion and world surfaces.
+- [ ] Self-host and subset Bricolage Grotesque, Archivo and DM Mono using Astro's font
+  support where appropriate.
+- [ ] Define the reusable paper primitives without copying `paper.html` line by line.
+- [ ] Define route wireframes and content hierarchy for home, work, case study, notes hub,
+  note article, about, resume and hire.
+- [ ] Define responsive, keyboard, touch, reduced-motion and no-JavaScript states.
+- [ ] Define the visual treatment for “Coming soon” so it is honest and useful, not an
+  empty card.
+- [ ] Run rendered contrast checks on the actual paper stock and world ground.
 
-**Do.** Buy `parthtiwari.com` if still wanted, point it, redirect v1, confirm the
-production alias from Vercel's `domains` array rather than assuming
-`<project>.vercel.app`. Turn on Web Analytics for real.
+**Gate**
 
-**Gate.** Ten-second test at 4 of 5 on the live domain. Every link 200 and auth-free.
+- Tokens exist before page components.
+- Reference lock and route structures are approved by the owner.
+- Stub renders at 390px, 800px and 1440px have no overflow, clipped text or unreadable
+  contrast.
+- Fonts remain within the recorded budget.
+- No tear, backlight or animated world has been implemented.
 
----
+Show the visual evidence and stop.
 
-## 4. Budget
+### Phase 3: Complete static site
 
-| | v1 measured | v2 ceiling |
-|---|---:|---:|
-| `src/` lines | 18,572 | **≤ 4,000** |
-| Components | 49 | **≤ 20** |
-| Runtime dependencies | 8 | **1** |
-| Eager JS, gzipped, per route | 796 kB worst case | **≤ 30 kB** |
-| Fonts, total | not measured | **≤ 180 kB** |
+No canvas. No tear. No animated world. The result is a complete, useful portfolio by itself.
+It deploys to a verified preview alias; production remains on v1 until Phase 7.
 
-Twenty components rather than fifteen, because seven routes and twelve worlds is more
-surface than the brief assumed. **Argued here rather than quietly exceeded**, which is
-the rule.
+Build in reviewable route slices. Each slice receives screenshots, owner review and its own
+commit with the matching plan items ticked.
 
----
+#### 3A. Shell and home
 
-## 5. Owner homework, still gating
+- [ ] Persistent navigation, contact action, footer, skip link and responsive shell.
+- [ ] Home flow: arrival and two doors, portrait and short introduction, every project
+  in an editorial paper index, verified proof, services, latest errata and contact.
+- [ ] Above the fold contains one sentence, two doors and no content that requires motion.
 
-1. 🔴 **The ten-second test.** Never run. Gates Phase 1 and Phase 3.
-2. 🔴 **The BeatMind figures.** 19 days / 194 commits / 27,000 lines in
-   `parth-os/RESUME.md` against 24 / 307 / ~30,500 in the case study. One number.
-3. The QueryPilot benchmark figure, and every number flagged 🔴 in `WORLDS.md`.
-4. Re-shoot Vivid (currently an empty state) and QueryPilot (currently Swagger docs).
-5. The domain: buy it or drop it.
+#### 3B. Work register and case-study pages
+
+- [ ] `/work` lists every project without a hard-coded count in prose.
+- [ ] Sorting controls operate on real typed fields and preserve a meaningful default order.
+- [ ] Every `/work/[slug]` page contains all nine beats and an approved still world frame.
+- [ ] Previous/next and back-to-register links prevent dead ends.
+
+#### 3C. Notes and errata
+
+- [ ] `/notes` separates Errata and Posts without making either feel secondary.
+- [ ] `/notes/[slug]` renders complete articles, sources and related work.
+- [ ] RSS includes published notes only.
+- [ ] If Posts is empty, the approved “Coming soon” state ships while Errata remains live.
+
+#### 3D. About and experience
+
+- [ ] Portrait and first-person introduction.
+- [ ] Work-experience and training timeline from one typed source.
+- [ ] Operating rules and working style, with no invented endorsements.
+
+#### 3E. Resume
+
+- [ ] Real semantic HTML suitable for crawlers and ATS parsing.
+- [ ] Verified PDF download, print styles, email and route metadata.
+- [ ] No Drive embed.
+
+#### 3F. Hire
+
+- [ ] Three kinds of work, scope boundaries, four-step process and owner-approved price band.
+- [ ] Booking, email and WhatsApp paths verified on phone and desktop.
+- [ ] No unsupported testimonial, client logo or urgency claim.
+
+**Gate**
+
+- Build, type, accessibility, screenshot, link and craft checks pass.
+- Every emitted HTML page is enumerated and readable with JS disabled.
+- Canonical, Open Graph, JSON-LD, sitemap, RSS and 404 output are verified.
+- The ten-second test passes on the built site.
+- The complete static site is deployed to a verified preview alias, not the production
+  domain.
+
+Show the route matrix, screenshots, command output and preview evidence, then stop.
+
+### Phase 4: Paper signature, backlight and tear
+
+This phase perfects the transition between paper and world without making it navigation.
+
+**Owner review before work**
+
+- Show two or three motion studies built from the real paper stock and a real world still.
+- Compare tear seam, paper weight, exit direction, backlight strength, hover dwell and the
+  coarse-pointer equivalent.
+- Get explicit approval for one study before production implementation.
+
+**Do**
+
+- [ ] Backlight an entry using that project's approved still frame by default.
+- [ ] Add low-cost motion only after it proves useful and remains within budget.
+- [ ] On coarse pointers, preview the entry nearest the viewport center without blocking
+  normal scrolling.
+- [ ] Tear from the real rendered sheet or a faithful captured layer, not plain substitute
+  stock.
+- [ ] Navigate to the real project URL. The visual transition never owns routing state.
+- [ ] Move focus to the destination heading and preserve a correct back-navigation target.
+- [ ] Skip the tear under reduced motion and when enhancement fails.
+- [ ] Keep all hidden controls out of the tab order and accessibility tree.
+
+**Gate**
+
+- Keyboard, pointer and synthesized touch paths pass at all three viewports.
+- Reduced motion moves directly to the destination with a composed final frame.
+- A temporary-worktree `git revert` leaves the Phase 3 site fully functional.
+- Performance and screenshot checks pass with the enhancement enabled and disabled.
+- Owner approves the final paper, hover/backlight and tear behavior from rendered evidence.
+
+Show the evidence and stop.
+
+### Phase 5: World foundation and BeatMind pilot
+
+Worlds are scroll-directed case stories, not looping hero decoration and not miniature
+copies of the real products. Native document scroll advances a bounded visual stage while
+the complete DOM case study remains readable beside or below it.
+
+**Owner review before work**
+
+- Approve the shared world grammar and BeatMind storyboard before code.
+- Review each BeatMind scene: ingest, separation, analysis, arrangement/mix, render,
+  failure and retry, measurement and boundary.
+- Decide which real audio excerpt may ship and its licence. Sound is always user-initiated.
+
+**Do**
+
+- [ ] Build one shared world lifecycle: clock, visibility pause, resize, reduced motion,
+  static-frame fallback and cleanup.
+- [ ] Define a data contract that separates project facts from drawing code.
+- [ ] Implement BeatMind from real envelope and job-trace data.
+- [ ] Make scrolling demonstrate the product story without requiring interaction.
+- [ ] Offer listening only through an explicit labelled control; never autoplay audio.
+- [ ] Keep mixing and rendering as a narrative demonstration, not a fake production editor.
+- [ ] Record measured frame rate, bundle cost and teardown behavior.
+
+**Gate**
+
+- BeatMind tells a coherent story with canvas removed, JS disabled and reduced motion enabled.
+- The visual sequence uses only verified project data.
+- The shared engine holds the 30fps ceiling, pauses off-screen and stops on page hide.
+- The foundation and BeatMind commits revert independently to the Phase 4 site.
+- Owner approves the full scroll story on phone, tablet and desktop.
+
+Show the storyboard comparison, measurements and gate output, then stop.
+
+### Phase 6: Remaining worlds, one reviewed story at a time
+
+Follow the waves in `WORLDS.md`. Each world repeats this loop:
+
+1. Show the real-data inventory and unresolved claims.
+2. Present the scroll storyboard and static final frame.
+3. Ask the owner the project-specific questions.
+4. Build only after approval.
+5. Review phone, tablet, desktop, keyboard, reduced-motion and no-JavaScript output.
+6. Commit the world alone and tick its plan item in that commit.
+7. Run its revert and performance gates before starting another world.
+
+- [ ] Vivid
+- [ ] Tathya
+- [ ] MedRAG
+- [ ] Order Supervisor
+- [ ] QueryPilot
+- [ ] SecondSelf
+- [ ] OncoVerse
+- [ ] UPI Fraud Engine
+- [ ] Spur Chat
+- [ ] Fraud Risk Intelligence
+- [ ] Oracle Auto Provision
+
+OncoVerse defaults to a 2D or pre-rendered treatment. Three.js is considered only after a
+measured prototype proves the case study loses essential meaning without it and the runtime
+dependency decision is approved.
+
+**Gate per world**
+
+- Static frame stands alone.
+- All claims and visual data have provenance.
+- 30fps ceiling, offscreen pause and cleanup pass.
+- The world reverts alone without breaking its case-study route.
+- Owner approves the rendered story.
+
+After the final world, run the complete route, accessibility, performance and link suites.
+Show the results and stop.
+
+### Phase 7: Production cutover
+
+**Owner review before work**
+
+- Confirm the production domain and redirect map.
+- Confirm whether analytics earns its privacy, dependency and maintenance cost.
+- Approve final metadata, social preview and public claim snapshots.
+
+**Do**
+
+- [ ] Re-verify every external URL and deployment ownership.
+- [ ] Create the production deployment from the reviewed commit.
+- [ ] Point the chosen domain and redirect v1 only after the new deployment is healthy.
+- [ ] Verify canonical URLs, social previews, sitemap, RSS and robots on the live domain.
+- [ ] Run the live ten-second test and record results.
+- [ ] Add analytics only if the Phase 7 decision is approved and the plan budgets are updated.
+
+**Gate**
+
+- Every public route returns the expected status and is readable without authentication.
+- Four of five new participants pass the ten-second test on the live domain.
+- Phone contact and booking paths work without an interstitial.
+- Rollback to the last production deployment is documented and tested where the platform
+  permits it.
+
+Show the live evidence and stop.
+
+### Phase 8: Publishing and admin workflow
+
+This phase happens after the public site is stable. It does not block launch. Until then,
+new projects and notes are added through reviewed Markdown commits and preview deployments.
+
+**Research before choosing a system**
+
+Compare a Git-backed editor, an external headless CMS with build hooks, and a small separate
+admin application. Decide based on the actual publishing frequency, draft/review needs,
+media handling, authentication, preview quality, backup and rollback. Do not add an admin
+runtime to the public site by default.
+
+**Required capabilities**
+
+- Create and edit projects, errata and posts using the Phase 1 schemas.
+- Draft, preview, publish, unpublish and roll back.
+- Upload media with alt text, licence and source metadata.
+- Require provenance for numeric claims before publication.
+- Trigger a static preview build, then a production build after approval.
+- Keep admin authentication and secrets out of the public bundle.
+- Preserve Git or exportable content as the recovery path.
+
+**Gate**
+
+- A non-technical editing pass creates a draft note, previews it, publishes it and rolls it
+  back without touching source code.
+- Invalid claims and missing accessibility metadata are rejected before publish.
+- The public route remains static and within the same performance budgets.
+
+## 6. Budgets and stop conditions
+
+| Measure | Ceiling or rule |
+|---|---|
+| Direct public runtime dependencies | 1 until a recorded decision changes it |
+| Eager JavaScript, gzip, per static route | 30 kB maximum |
+| World animation | 30fps ceiling, one shared clock, paused when not visible |
+| Fonts | 180 kB total target, measured after subsetting |
+| Static content | Complete without JavaScript |
+| Motion | Transform and opacity by default; exceptions measured and documented |
+| Claims | Source, context, verification date and `asOf` date where changeable |
+
+The previous `src/` line and component counts remain useful warning signals, not quality
+targets. If the shared shell begins approaching v1's size or a world requires a sitewide
+framework, stop and review the architecture before adding more.
+
+## 7. Current blockers and owner-supplied facts
+
+- The text-only ten-second test has not been run.
+- BeatMind's build-effort figures still describe conflicting snapshots and need a scope
+  decision. The owner reports **17 users** as of 2026-08-27; publication still requires the
+  evidence reference and exact counting definition.
+- Vivid's user count is backed and may increase; Phase 1 records it as a dated snapshot with
+  evidence rather than permanent prose.
+- QueryPilot's `+5.7pp` belongs to the 70-query core set; the 12 adversarial queries are
+  reported separately unless new evidence establishes another denominator.
+- UPI's model-evaluation precision and operational backtest precision must not be collapsed
+  into one number.
+- Oracle duration and uptime language remains unpublished until evidence exists.
+- Vivid and QueryPilot need useful product captures before their worlds ship.
+- The price band on `/hire` is confirmed in Phase 1 before it appears publicly.
