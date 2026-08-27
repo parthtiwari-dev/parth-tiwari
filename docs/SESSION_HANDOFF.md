@@ -1,3 +1,10 @@
+> ⛔ **Superseded 2026-08-27.** This handed off the Phase 0 research session.
+> Everything it left open has since been answered: the direction is
+> `docs/DESIGN_LOCK.md`, the worlds are `docs/WORLDS.md`, the plan is
+> `docs/BUILD_PLAN.md`, and the prompt for the next session is
+> `docs/SESSION_PROMPT.md`. Kept because its section 5, the mistakes made
+> twice, is still the most useful page in this folder.
+
 # Handoff — end of the Phase 0 session
 
 Written 2026-08-27. Read this before `BUILD_PLAN.md`, which is partly stale and is

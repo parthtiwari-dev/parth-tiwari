@@ -1,3 +1,7 @@
+> ⛔ **SUPERSEDED 2026-08-27.** Describes v1, the constellation site, which is being
+> deleted rather than patched. Live docs: `docs/DESIGN_LOCK.md`, `docs/WORLDS.md`,
+> `docs/BUILD_PLAN.md`. Kept as the record of what was built and why it failed.
+
 # Design
 
 The universe, and why every part of it is the way it is.

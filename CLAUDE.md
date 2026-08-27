@@ -1,5 +1,67 @@
 # CLAUDE.md
 
+> ⛔ **This file describes v1, which is being deleted.** As of 2026-08-27 the site is
+> being rebuilt from scratch as **Paper and Worlds** on Astro. Every rule below about
+> the scene layer, Three.js, TresJS, shaders, matcaps, labels, the camera rig, the
+> quality tier, Lenis, Tailwind or `npm run nav` / `labels` / `frames` becomes false the
+> moment `src/` is cleared.
+>
+> **It is deliberately not rewritten yet.** A CLAUDE.md describing a stack that does not
+> exist is the same failure as one describing a stack that has been deleted, and the
+> next session would trust it either way. `BUILD_PLAN.md` Phase 0 rewrites this file
+> against the codebase that actually exists at that point.
+>
+> Read instead: [`docs/DESIGN_LOCK.md`](docs/DESIGN_LOCK.md),
+> [`docs/WORLDS.md`](docs/WORLDS.md), [`docs/BUILD_PLAN.md`](docs/BUILD_PLAN.md).
+
+## The rules that survive the rewrite
+
+These are hard-won, most of them from a defect that shipped. They are stack-independent
+and carry into v2 unchanged. **Port these into the rewritten CLAUDE.md.**
+
+**Commercial**
+- Never gate contact behind the experience. A booking action stays one tap from every
+  screen, at every breakpoint, in every mode.
+- Show before telling. A screenshot outranks a paragraph; a working demo outranks a
+  screenshot.
+- Never invent social proof. No fabricated testimonials, no estimated metrics, no
+  implied clients, no invented user counts.
+
+**Honesty**
+- Never add a project link that is not confirmed public, auth-free and safe. An empty
+  links panel is correct behaviour, not a bug to paper over.
+- Never assume `<project>.vercel.app` is ours. It has bitten twice, including this
+  site's own canonical URL. Resolve the alias from Vercel's `domains` array.
+- No em dashes in user-facing copy. Code comments are exempt.
+- Never hardcode the project count in prose. Derive it, always.
+- The site URL lives in exactly one constant.
+
+**Craft**
+- Contrast is measured on rendered output, never computed from tokens. This has been
+  wrong three times in this repo, twice in the tokens and once in the checker itself.
+- One file owns the focus ring. Never set `outline` in a component.
+- Any interaction reachable by hover must also be reachable, and dismissable, by touch.
+- `prefers-reduced-motion` gets the **final state**, immediately. Not a shorter
+  animation.
+- The static, no-JavaScript version stays complete. It is the accessibility and SEO
+  backstop.
+- Never `transition: all`. Animate transform and opacity only.
+
+**Process**
+- Screenshot the real first frame at 390 and 1440 before publishing. Numeric checks
+  cannot see clipped copy or a broken headline, and have twice reported a broken page
+  as fine.
+- Tick items off the plan in the same commit that does the work, and fix any sentence
+  in `docs/` that the change makes untrue. `docs/` is the only memory that survives a
+  session.
+- Do not call `chromium.launch()` directly. `scripts/browser.mjs` solves a version and
+  proxy problem that will recur; the reasoning is in that file.
+- Work on feature branches. Commit messages lowercase, imperative, type-prefixed.
+
+---
+
+# v1 rules, below, for reference only
+
 Working instructions for this repository. Read `docs/ARCHITECTURE.md` before touching the scene layer, and `docs/DESIGN.md` before touching anything visual.
 
 ---

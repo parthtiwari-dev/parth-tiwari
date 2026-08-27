@@ -1,3 +1,11 @@
+> ✅ **STATUS 2026-08-27.** The brief still governs. What it left open is now
+> closed: the direction is **Paper and Worlds** (`DESIGN_LOCK.md`), the twelve
+> worlds are specified (`WORLDS.md`), the stack is Astro and the phases are set
+> (`BUILD_PLAN.md`). Section 3, the deletable creative layer, is satisfied by
+> construction: Phase 3 ships every route with no canvas and no tear, and
+> Phases 4 and 5 add them in commits that revert alone. Section 5, the
+> ten-second test, **has still never been run** and now gates Phase 1.
+
 # REBUILD BRIEF — v2
 
 Rewritten 2026-08-23. **This version decides less than the first one did, on purpose.**

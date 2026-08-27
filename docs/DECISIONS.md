@@ -137,11 +137,34 @@ its own proof, and every word of this one is checkable in shape even with the cl
 
 ## §2 — Content. What actually goes on it?
 
-> 🔴 **Still open, and this is the gap that cost the Phase 0 session.** Nothing in
-> §2 or §3 was ever answered, so every page built so far runs on copy invented in the
-> moment. The brief warned about exactly this: content before form, every word in plain
-> Markdown first. **Answer these before opening another design file.** See
-> [`SESSION_HANDOFF.md`](SESSION_HANDOFF.md) §2.
+### ✅ §2 and §3 — DECIDED 2026-08-27
+
+Answered by the owner during the Paper and Worlds design pass. The full specification
+lives in [`DESIGN_LOCK.md`](DESIGN_LOCK.md) and [`WORLDS.md`](WORLDS.md); the answers
+are recorded here so they stop being re-litigated.
+
+| # | Answer | Why |
+|---|---|---|
+| 2.1 | **All of them, and the count is never stated** | Projects keep arriving. Adding one is adding a row. Twelve today; nothing in the copy or the design says twelve |
+| 2.2 | Ranked flagship / major / minor, from the `weight` field already in `projects.ts` | The tiering is real and was written by the owner. It was sitting in the data unused |
+| 2.3 | One shape for all twelve: arrival, what it is, the problem, how it is built, the measurement, the boundary, what broke, stack, next | `WORLDS.md` §1. A reader who has read one knows how to read the next, and a missing beat is visibly missing |
+| 2.4 | **Yes, on the landing and in each world**, each with its denominator. Including `0 users` | The last one is the one most people would leave off, which is why it stays |
+| 2.5 | **Yes. It is a route, `/notes`, not a section** | Almost nobody publishes the measurement that killed their own hypothesis. `parth-os/docs/RULES.md` §6 calls it the differentiator |
+| 2.6 | `/notes` carries the errata and any writing. No schedule. It grows when something breaks | A posting cadence is a promise that gets broken |
+| 2.7 | `/resume` as **real HTML**, with `parth-os/resume/Parth_Tiwari_Resume_B.pdf` as the download beside it | The Google Drive embed is invisible to crawlers, recruiter search and ATS parsers, which is the only audience that page has |
+| 3.1-3.5 | Seven routes, scrolling landing, letterhead nav, portrait and bio early | `DESIGN_LOCK.md` §3. Two readers, job and client, want different depths. One page cannot serve both |
+| 3.6 | **No boot or loading state.** The sheet settles once and the copy is readable in the first frame | v1's boot sequence gated content behind an effect. So did two v2 artifacts |
+
+**Two commercial calls, owner's, 2026-08-27:**
+
+- **No price anywhere.** Every path leads to a conversation. This is what `services.ts`
+  already said, so the site and the data now agree.
+- **Both doors equal weight** in the first viewport. `See the work` and
+  `Start a project`, same size. The goal is a job *and* a client.
+
+---
+
+### The original questions, kept for the record
 
 
 Decided before form (`REBUILD_BRIEF.md` §3).
@@ -348,9 +371,26 @@ The "how round should the radius be" layer. It matters, and it is the last thing
 
 ## §10 — Technical
 
+### ✅ 10.1-10.4 — DECIDED 2026-08-27
+
+**Astro 5, static output, content collections, vanilla CSS, target one runtime
+dependency.** The argument, the rejected alternatives and the honest cost are in
+[`BUILD_PLAN.md`](BUILD_PLAN.md) §1.
+
+The deciding reason is 10.4, not 10.1: `REBUILD_BRIEF.md` §3 requires every page to
+read as static HTML with JavaScript off, v1 claimed that and did not have it, and Astro
+gives it by construction rather than by discipline. Verified by `curl`, not by belief.
+
+**Rejected:** Next.js (a React runtime on every route to serve twelve static
+documents, and it makes accidental client rendering easy — the exact v1 failure);
+Vue SPA (what v1 is); plain HTML + Vite (twelve case studies and a notes feed
+hand-maintained in HTML will rot); any smooth-scroll engine.
+
+---
+
 | # | Question | Notes |
 |---|---|---|
-| 10.1 | Framework | v1 was Vue 3 + Vite. Keep, change, or none at all |
+| 10.1 | Framework | ✅ Astro. See above |
 | 10.2 | Is a framework justified for five-ish pages of mostly static content? | Argue it honestly. Astro, plain HTML, and a static generator are all real answers |
 | 10.3 | Styling | Tailwind v4, vanilla CSS with tokens, or something else |
 | 10.4 | How is static HTML guaranteed? | v1 claimed a crawlable fallback and did not have one. **Verify by `curl`, not by belief** |

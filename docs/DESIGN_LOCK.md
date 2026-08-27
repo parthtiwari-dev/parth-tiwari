@@ -6,6 +6,13 @@ Supersedes the root `DESIGN_LOCK.md` (v1, the constellation) and `BUILD_PLAN.md`
 (the denoise signature). Both are dead. Where this file and `DECISIONS.md` disagree,
 this file wins and `DECISIONS.md` should be corrected in the same commit.
 
+**Status: the direction is locked. The prototype is not finished.**
+`design/directions/paper.html` proves the design and carries real bugs (§11, and
+`WORLDS.md` §5). It is a reference, not something to port line by line. The rebuild
+reimplements it on the stack in [`BUILD_PLAN.md`](BUILD_PLAN.md).
+
+[`WORLDS.md`](WORLDS.md) specifies what is behind each tear, for all twelve.
+
 Three artifacts carry the detail. Read them before touching anything visual:
 
 | Artifact | What it holds |

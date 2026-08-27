@@ -1,58 +1,74 @@
-# The prompt for the new session
+# The prompt for the build session
 
-Paste this verbatim to open the Phase 0 research session. It is deliberately short — the
-repo carries the context, so the prompt does not have to.
+Paste the block below into a new chat. It is short on purpose: the repo carries the
+context, so the prompt only has to point at it and set the rules.
+
+**Before you paste it**, know that Phase 1 has an owner gate you cannot delegate: the
+ten-second test, five people, on the text alone. It has never been run and it blocks
+Phase 3. Everything else the session can do.
 
 ---
 
 ```
-Read docs/REBUILD_BRIEF.md and docs/DECISIONS.md on the redesign/v2 branch.
+Read these four, in order, before doing anything:
 
-I am rebuilding my portfolio. Everyone I show the current site to says they do
-not understand it, so v1 is being replaced. Two things are settled: it is a
-rebuild, and there are no constellations, stars, glass panels or orbit
-metaphors. Everything else is open.
+  docs/DESIGN_LOCK.md   the design, locked
+  docs/WORLDS.md        what is behind each tear, all twelve specified
+  docs/BUILD_PLAN.md    the stack, what gets deleted, and the phases
+  CLAUDE.md             the working rules
 
-This session is Phase 0 only. RESEARCH AND DECIDE. Do not write a line of code,
-do not open a component, do not pick a stack because it is familiar.
+I am rebuilding my portfolio. The design is settled and is called Paper and
+Worlds: the landing is one long scrolling sheet of real rag paper, every
+project is an entry on it, and tearing an entry opens that project's own
+world. A world is a full case study drawn in that project's own visual
+language, generated from its real data.
 
-Work DECISIONS.md top to bottom, in order. Section 1 constrains section 2 and so
-on, so do not jump ahead to typography or colour before we have settled what the
-site argues and what goes on it.
+design/directions/paper.html is a working prototype of the landing. It proves
+the direction and it has real bugs, listed in WORLDS.md section 5. Treat it as
+a reference. Do not port it line by line.
 
-For each decision: research it properly, show me real options with real
-tradeoffs, argue a recommendation, and let me choose. Then write the answer, the
-alternatives, the reason and the evidence into DECISIONS.md before moving on.
+We are rewriting the codebase from scratch. v1 is a Vue SPA with a Three.js
+constellation and it is being deleted, not patched. The new stack is Astro,
+static output, content collections, vanilla CSS, target one runtime
+dependency. The argument is in BUILD_PLAN.md section 1 and it is settled.
+
+Work the phases in BUILD_PLAN.md in order. Start at Phase 0 and stop at its
+gate. Do not start a phase until the previous gate actually passes, and prove
+the gate by running it rather than by reasoning about it.
 
 Rules for this session:
-- One decision at a time. Do not batch.
-- Do not decide anything for me silently. If you assume, say so out loud.
-- If I ask for a genre or a look before sections 1 to 3 are answered, push back.
-  That is exactly how v1 failed.
-- Hold me to REBUILD_BRIEF.md section 3: the creative layer must be deletable.
-- Hold me to the budget in section 4, or make me argue it up on the record.
 
-Start with 1.1. Ask me the question, tell me how you would research it, and
-what you need from me.
+- One phase at a time. Show me the gate result before moving on.
+- Phase 1 is content only. No design file is opened. This has been skipped
+  twice and it is what cost the last two sessions.
+- Phase 3 ships a complete, readable, crawlable site with no canvas and no
+  tear. That ordering is what makes Phases 4 and 5 safe.
+- Anything you cannot verify, say so. Do not report a gate as passing because
+  it should pass.
+- Tick items off the plan in the same commit that does the work, and fix any
+  sentence in docs/ that your change makes untrue.
+- If you want to add a runtime dependency, argue it in DECISIONS.md first.
+- Never invent a number, a testimonial, a client or a user count. Every claim
+  on this site has to be checkable.
+
+Start with Phase 0. Tell me what you are deleting before you delete it.
 ```
 
 ---
 
-## Before you paste it
+## After Phase 0
 
-Two things worth having ready, both from `DECISIONS.md`:
+The session will have rewritten `CLAUDE.md` for the new stack. From then on it carries
+the rules and this prompt is only needed to restart a cold session.
 
-- **§1.1** — try saying your one sentence out loud to five people with no website at all. If
-  it does not land as a sentence, no design will save it.
-- **§4.1** — start collecting reference sites. Typography and editorial collections, **not**
-  3D and WebGL.
+## If the session drifts
 
-Neither is required to begin. The session can start cold at 1.1.
+Two failure modes have already happened twice each in this project, so watch for both:
 
-## What this session is not
+**It starts building before the content exists.** The tell is components appearing
+while `src/content/` is empty. `REBUILD_BRIEF.md` §6 and `SESSION_HANDOFF.md` §2 both
+name this. Stop it and send it back to Phase 1.
 
-It is not the build. `REBUILD_BRIEF.md` §6 puts code at Phase 1 and the first shipped site at
-Phase 3. If the session starts producing components, it has drifted.
-
-It is also not the job hunt or the client work. Those live in `parth-os` and stay in their
-own session.
+**It reports a gate passing without running it.** The tell is "this should now work" or
+"the build succeeds" without output. Every gate in `BUILD_PLAN.md` is a command with a
+result. Ask for the result.

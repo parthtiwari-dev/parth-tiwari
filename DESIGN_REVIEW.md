@@ -1,3 +1,8 @@
+> ⛔ **SUPERSEDED 2026-08-27.** This describes v1, the constellation site, which is
+> being replaced. The live design is `docs/DESIGN_LOCK.md` (Paper and Worlds), the
+> per-world spec is `docs/WORLDS.md`, and the rebuild plan is `docs/BUILD_PLAN.md`.
+> Kept only so the reasoning that produced v1 is not lost.
+
 # DESIGN REVIEW — EPHEMERIS
 
 `/design-pass audit` on 2026-08-14. Read-only pass against the live local dev server (`http://127.0.0.1:5183/`), not the deployed site — screenshots and findings below reflect the code on `main` as of this pass. Nothing in this file has been applied except where explicitly marked **APPLIED** below.
