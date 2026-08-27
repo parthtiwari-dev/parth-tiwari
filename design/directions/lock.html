@@ -1,0 +1,1051 @@
+<title>Twelve Worlds</title>
+<script>
+(function(){if(!document.querySelector('meta[name="viewport"]')){var m=document.createElement('meta');
+m.name='viewport';m.content='width=device-width, initial-scale=1';document.head.prepend(m);}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=DM+Mono:wght@400;500&display=swap">
+
+<style>
+/* ==========================================================================
+   TWELVE WORLDS — the design lock
+   The frame is paper. The work is full-bleed and dark. Every case study
+   renders a real artifact from its own domain.
+   This document is built in the system it specifies, so it is also the proof.
+   ========================================================================== */
+:root{
+  /* the frame */
+  --paper:#E8E9E4; --paper-2:#DEDFD9; --paper-3:#D3D5CE;
+  --ink:#15171A; --ink-2:#4A4E50; --ink-3:#5F6361; --quiet:#7C7F79;
+  --rule:#C6C8C1; --rule-2:#B2B5AD;
+  --red:#B8241A; --red-deep:#96190F; --on-red:#FBF9F5;
+
+  /* the worlds */
+  --void:#0B0C0E; --void-2:#141619; --void-rule:#262A2F;
+  --void-ink:#F2F3F0; --void-ink-2:#9AA0A2;
+
+  --display:"Bricolage Grotesque","Archivo",Helvetica,Arial,sans-serif;
+  --sans:"Archivo",Helvetica,Arial,sans-serif;
+  --mono:"DM Mono",ui-monospace,Menlo,monospace;
+
+  --t-display:clamp(40px,6.6vw,94px);
+  --t-title:clamp(27px,3.6vw,52px);
+  --t-name:clamp(20px,2.1vw,29px);
+  --t-body:17px; --t-read:18px; --t-label:13px; --t-micro:11px;
+
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:36px;
+  --s7:56px;--s8:80px;--s9:112px;--s10:clamp(84px,11vw,156px);
+
+  --ease:cubic-bezier(.16,1,.3,1);
+  --page:1280px; --gutter:clamp(20px,4.4vw,60px);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+html,body{overflow-x:clip}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:var(--t-body);font-variation-settings:"wght" 380,"wdth" 100;line-height:1.55;
+  -webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+h1,h2,h3,h4{margin:0;text-wrap:balance}
+p{margin:0}
+ol,ul{margin:0;padding:0;list-style:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;text-align:left}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:1px}
+.wrap{max-width:var(--page);margin:0 auto;padding-inline:var(--gutter)}
+
+.kicker{font-family:var(--mono);font-size:var(--t-micro);letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-3);font-weight:500}
+.display{font-family:var(--display);font-size:var(--t-display);line-height:.94;
+  letter-spacing:-.035em;font-variation-settings:"opsz" 96,"wght" 620,"wdth" 96}
+.title{font-family:var(--display);font-size:var(--t-title);line-height:1.03;
+  letter-spacing:-.028em;font-variation-settings:"opsz" 60,"wght" 600,"wdth" 94}
+.sub{font-family:var(--display);font-size:var(--t-name);line-height:1.15;letter-spacing:-.02em;
+  font-variation-settings:"opsz" 32,"wght" 580,"wdth" 94}
+.read{font-size:var(--t-read);line-height:1.62;color:var(--ink-2);max-width:62ch}
+.read strong{color:var(--ink);font-weight:400;font-variation-settings:"wght" 620,"wdth" 100}
+.data{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:var(--t-label);color:var(--ink-2)}
+.sec{padding-block:var(--s10)}
+.sec-top{display:grid;gap:var(--s5);margin-bottom:var(--s8)}
+@media(min-width:900px){.sec-top{grid-template-columns:minmax(0,1fr) minmax(0,.78fr);
+  gap:var(--s8);align-items:end}}
+
+.act{display:inline-flex;align-items:center;gap:var(--s3);background:var(--red);color:var(--on-red);
+  font-size:15px;font-variation-settings:"wght" 620,"wdth" 96;padding:14px 22px;
+  transition:background 180ms var(--ease)}
+.act:hover{background:var(--red-deep)}
+
+/* ---------- world panels: the frame's opposite ---------- */
+.world{background:var(--void);color:var(--void-ink);border-block:1px solid var(--void-rule)}
+.world .kicker{color:var(--void-ink-2)}
+.world .read{color:var(--void-ink-2)}
+.world .read strong{color:var(--void-ink)}
+.world .data{color:var(--void-ink-2)}
+
+/* ---------- specimen frames ---------- */
+.spec{position:relative;background:var(--void);border:1px solid var(--void-rule);overflow:hidden}
+.spec canvas{display:block;width:100%;height:100%}
+.spec-tag{position:absolute;left:14px;top:12px;z-index:2;font-family:var(--mono);
+  font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--void-ink-2)}
+.spec-tag b{color:var(--void-ink);font-weight:500}
+.spec-cap{display:flex;justify-content:space-between;gap:var(--s4);align-items:baseline;
+  margin-top:var(--s3);flex-wrap:wrap}
+
+/* ==================== fold ==================== */
+.fold{padding-top:clamp(48px,7vw,96px);padding-bottom:var(--s9)}
+.fold-meta{display:flex;gap:var(--s4);flex-wrap:wrap;margin-bottom:var(--s6)}
+.fold h1{max-width:11ch;margin-bottom:var(--s6)}
+.fold-grid{display:grid;gap:var(--s7);align-items:end}
+@media(min-width:1000px){.fold-grid{grid-template-columns:minmax(0,1fr) minmax(0,.92fr);gap:var(--s8)}}
+.fold .spec{aspect-ratio:4/3}
+
+/* ==================== the verdict strip ==================== */
+.verdicts{display:grid;gap:0;border-top:1px solid var(--rule-2)}
+@media(min-width:820px){.verdicts{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.verdict{padding:var(--s6) var(--s5) var(--s6) 0;border-bottom:1px solid var(--rule)}
+@media(min-width:820px){.verdict + .verdict{padding-left:var(--s5);border-left:1px solid var(--rule)}}
+.verdict .n{font-family:var(--mono);font-size:var(--t-micro);letter-spacing:.15em;
+  text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:var(--s3)}
+.verdict h3{font-family:var(--display);font-size:20px;line-height:1.2;letter-spacing:-.02em;
+  font-variation-settings:"opsz" 24,"wght" 600,"wdth" 94;margin-bottom:var(--s2)}
+.verdict p{color:var(--ink-2);font-size:15.5px;line-height:1.55}
+.verdict.now h3{color:var(--red)}
+
+/* ==================== site map ==================== */
+.map{border-top:1px solid var(--rule-2)}
+.route{display:grid;gap:var(--s3);padding:var(--s6) 0;border-bottom:1px solid var(--rule);
+  align-items:start}
+@media(min-width:900px){
+  .route{grid-template-columns:12.5rem minmax(0,1fr) 9rem;gap:var(--s6);align-items:start}
+}
+.route .path{font-family:var(--mono);font-size:15px;color:var(--ink);letter-spacing:-.01em;
+  font-weight:500}
+.route .path em{font-style:normal;color:var(--red)}
+.route h3{font-family:var(--display);font-size:19px;line-height:1.25;letter-spacing:-.015em;
+  font-variation-settings:"opsz" 24,"wght" 580,"wdth" 94;margin-bottom:6px}
+.route p{color:var(--ink-2);font-size:15.5px;line-height:1.55;max-width:56ch}
+.route p code{font-family:var(--mono);font-size:13px;color:var(--ink);background:var(--paper-2);padding:1px 5px}
+.route .who{font-family:var(--mono);font-size:var(--t-micro);letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-3);line-height:1.7}
+.route .who b{color:var(--ink-2);font-weight:500;display:block}
+.bits{display:flex;gap:var(--s2);flex-wrap:wrap;margin-top:var(--s3)}
+.bit{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-2);border:1px solid var(--rule-2);padding:4px 8px}
+.bit.hot{border-color:var(--red);color:var(--red)}
+
+/* ==================== twelve worlds ==================== */
+.worlds{display:grid;gap:var(--s6)}
+@media(min-width:900px){.worlds{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s7)}}
+.wcard .spec{aspect-ratio:16/10}
+.wcard h3{margin-top:var(--s4);font-family:var(--display);font-size:21px;letter-spacing:-.02em;
+  font-variation-settings:"opsz" 26,"wght" 600,"wdth" 94}
+.wcard p{margin-top:6px;color:var(--ink-2);font-size:15.5px;line-height:1.55;max-width:52ch}
+.world .wcard h3{color:var(--void-ink)}
+.world .wcard p{color:var(--void-ink-2)}
+
+.rest{display:grid;gap:var(--s4);margin-top:var(--s8);border-top:1px solid var(--void-rule)}
+@media(min-width:760px){.rest{grid-template-columns:repeat(2,minmax(0,1fr));gap:0}}
+@media(min-width:1100px){.rest{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.rest div{padding:var(--s5) var(--s5) var(--s5) 0;border-bottom:1px solid var(--void-rule)}
+.rest b{display:block;font-family:var(--display);font-size:16px;color:var(--void-ink);
+  font-variation-settings:"opsz" 20,"wght" 580,"wdth" 94;margin-bottom:4px}
+.rest span{font-family:var(--mono);font-size:11.5px;line-height:1.65;color:var(--void-ink-2)}
+
+/* ==================== the transition demo ==================== */
+.demo{position:relative;background:var(--void);border:1px solid var(--void-rule);
+  min-height:420px;overflow:hidden}
+@media(min-width:760px){.demo{min-height:480px}}
+.demo-list{padding:var(--s5);display:grid;gap:2px}
+.demo-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:var(--s4);
+  align-items:center;padding:var(--s4);cursor:pointer;border:1px solid transparent;
+  transition:border-color 200ms var(--ease),background 200ms var(--ease)}
+.demo-row:hover{border-color:var(--void-rule);background:var(--void-2)}
+.demo-row .no{font-family:var(--mono);font-size:20px;color:#868D93}
+.demo-row .nm{font-family:var(--display);font-size:19px;color:var(--void-ink);
+  font-variation-settings:"opsz" 24,"wght" 580,"wdth" 94}
+.demo-row .go{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:#868D93;transition:color 200ms var(--ease)}
+.demo-row:hover .go{color:var(--void-ink)}
+.demo-case{position:absolute;inset:0;z-index:3;background:var(--void);
+  display:grid;grid-template-rows:1fr auto;
+  opacity:0;pointer-events:none;transform-origin:0 0}
+.demo-case.on{opacity:1;pointer-events:auto}
+.demo-case canvas{width:100%;height:100%;display:block}
+.demo-stage{position:relative;overflow:hidden}
+.demo-meta{padding:var(--s5);border-top:1px solid var(--void-rule);display:flex;
+  justify-content:space-between;gap:var(--s4);align-items:baseline;flex-wrap:wrap}
+.demo-meta h4{font-family:var(--display);font-size:22px;color:var(--void-ink);
+  font-variation-settings:"opsz" 26,"wght" 600,"wdth" 94}
+.demo-back{position:absolute;right:14px;top:14px;z-index:4;font-family:var(--mono);
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--void-ink);
+  border:1px solid var(--void-rule);padding:8px 12px;cursor:pointer;background:rgba(11,12,14,.7)}
+.demo-back:hover{border-color:var(--void-ink-2)}
+
+/* ==================== tokens ==================== */
+.tok{display:grid;gap:var(--s7)}
+@media(min-width:900px){.tok{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s8)}}
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:2px;
+  border:1px solid var(--rule)}
+.sw{aspect-ratio:1;display:grid;align-content:end;padding:8px;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;line-height:1.5}
+.scale{display:grid;gap:var(--s4)}
+.scale div{display:flex;align-items:baseline;gap:var(--s4);border-bottom:1px solid var(--rule);
+  padding-bottom:var(--s3);flex-wrap:wrap}
+.scale .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-3);width:5.5rem;flex:none}
+.scale .ex{font-family:var(--display);letter-spacing:-.03em;line-height:1;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+
+.motion-row{display:grid;gap:var(--s4);border-top:1px solid var(--rule-2)}
+.mo{display:grid;gap:var(--s3);padding:var(--s5) 0;border-bottom:1px solid var(--rule)}
+@media(min-width:760px){.mo{grid-template-columns:11rem minmax(0,1fr);gap:var(--s6);align-items:baseline}}
+.mo .k{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.mo .v{color:var(--ink-2);font-size:15.5px;line-height:1.55}
+.mo .v code{font-family:var(--mono);font-size:13px;color:var(--ink);background:var(--paper-2);padding:1px 5px}
+
+/* ==================== build order ==================== */
+.steps{border-top:1px solid var(--rule-2)}
+.step{display:grid;gap:var(--s3);padding:var(--s6) 0;border-bottom:1px solid var(--rule)}
+@media(min-width:820px){.step{grid-template-columns:4rem minmax(0,1fr) 11rem;gap:var(--s6);align-items:start}}
+.step .n{font-family:var(--mono);font-size:26px;line-height:.9;color:var(--quiet)}
+.step h3{font-family:var(--display);font-size:20px;letter-spacing:-.02em;
+  font-variation-settings:"opsz" 24,"wght" 600,"wdth" 94;margin-bottom:6px}
+.step p{color:var(--ink-2);font-size:15.5px;line-height:1.55;max-width:58ch}
+.step .gate{font-family:var(--mono);font-size:var(--t-micro);letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);line-height:1.7}
+.step .gate b{display:block;color:var(--red);font-weight:500}
+
+.foot{display:flex;justify-content:space-between;gap:var(--s5);flex-wrap:wrap;
+  padding-block:var(--s6);border-top:1px solid var(--rule)}
+
+/* ---------- reveal ---------- */
+[data-r]{clip-path:inset(0 0 102% 0);transition:clip-path 700ms var(--ease);transition-delay:var(--d,0ms)}
+[data-r].seen{clip-path:inset(0 0 -10% 0)}
+
+@media(prefers-reduced-motion:reduce){
+  [data-r]{clip-path:none;transition:none}
+  .act,.demo-row,.demo-row .go,.demo-case{transition:none}
+}
+</style>
+
+<main>
+
+<!-- ==================== FOLD ==================== -->
+<section class="fold">
+  <div class="wrap">
+    <div class="fold-meta" data-r>
+      <span class="kicker">Design lock</span>
+      <span class="kicker">Supersedes BUILD_PLAN &sect;2</span>
+      <span class="kicker">v3</span>
+    </div>
+    <div class="fold-grid">
+      <div>
+        <h1 class="display" data-r style="--d:60ms">Twelve worlds, one paper frame.</h1>
+        <p class="read" data-r style="--d:160ms">Twelve projects, and the frame around them stays quiet and light so the work can be loud and dark.
+          <strong>Every case study renders a real artifact from its own domain</strong>, generated from that project's
+          own material rather than decorated on top of it. Nothing here is a metaphor a visitor has to learn.</p>
+      </div>
+      <div data-r style="--d:240ms">
+        <div class="spec" id="s-hero">
+          <span class="spec-tag"><b>BeatMind</b> &middot; four stems, 82 bpm</span>
+          <canvas data-spec="waves"></canvas>
+        </div>
+        <div class="spec-cap">
+          <span class="data">Specimen 01 &middot; drawn from real stem envelopes</span>
+          <span class="kicker">Live</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== THE VERDICT ==================== -->
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-top">
+      <h2 class="title" data-r>Three attempts. Here is what each one got right.</h2>
+      <p class="read" data-r style="--d:100ms">This is the whole reason the lock looks like it does. Two of the three
+        were half a good site each, and the halves are the opposite ones.</p>
+    </div>
+    <div class="verdicts">
+      <div class="verdict" data-r>
+        <span class="n">v1 &middot; Constellation</span>
+        <h3>The interaction was the information.</h3>
+        <p>Nothing could be read without decoding a legend first. Everyone shown it said they did not understand it.</p>
+      </div>
+      <div class="verdict" data-r style="--d:80ms">
+        <span class="n">v2 &middot; Denoise</span>
+        <h3>Spectacle with nothing under it.</h3>
+        <p>The effect was real and it looked good. It also encoded nothing, so it could have sat on anyone's site.</p>
+      </div>
+      <div class="verdict now" data-r style="--d:160ms">
+        <span class="n">v3 &middot; Register</span>
+        <h3>Meaning with no spectacle.</h3>
+        <p>A true structure delivered as a wireframe. Correct and forgettable. <strong>The lock keeps its spine and puts the worlds on top.</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SITE MAP ==================== -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-top">
+      <h2 class="title" data-r>Seven routes, because there are two readers.</h2>
+      <p class="read" data-r style="--d:100ms">A client wants outcome, speed and price. An employer wants engineering
+        depth, decisions and a CV. <strong>One page cannot serve both, and that is the argument for multi-page</strong>
+        rather than a preference for it. The home page hands each reader their own door in the first viewport.</p>
+    </div>
+
+    <div class="map">
+      <article class="route" data-r>
+        <div class="path">/</div>
+        <div>
+          <h3>The arrival, and the two doors</h3>
+          <p>One sentence, one live world running behind it, and two routes out: <em>See the work</em> for the employer,
+            <em>Start a project</em> for the client. Three figures under the fold. Nothing else above it.</p>
+          <div class="bits"><span class="bit hot">Start a project</span><span class="bit">See the work</span><span class="bit">Hire me</span></div>
+        </div>
+        <div class="who"><b>Both</b>10 second budget</div>
+      </article>
+
+      <article class="route" data-r>
+        <div class="path">/work</div>
+        <div>
+          <h3>The register</h3>
+          <p>All twelve, tiered flagship / major / minor, re-sortable by what it cost, most recent, or still running.
+            The ordering is an argument, so it is a control. This is the spine, and it survived from v3 intact.</p>
+          <div class="bits"><span class="bit">Order by cost</span><span class="bit">Most recent</span><span class="bit">Still running</span><span class="bit">Open case</span></div>
+        </div>
+        <div class="who"><b>Both</b>the index</div>
+      </article>
+
+      <article class="route" data-r>
+        <div class="path">/work/<em>[slug]</em></div>
+        <div>
+          <h3>One case study per project. Its own world.</h3>
+          <p>Twelve pages, each opening full-bleed and dark with a graphic generated from that project's own material.
+            Then: the problem, the architecture, the measurement, what it refuses to do, and what broke. This is where an
+            employer decides.</p>
+          <div class="bits"><span class="bit hot">Live site</span><span class="bit">Repo</span><span class="bit">Next case</span><span class="bit">Back to register</span></div>
+        </div>
+        <div class="who"><b>Employer</b>depth lives here</div>
+      </article>
+
+      <article class="route" data-r>
+        <div class="path">/notes</div>
+        <div>
+          <h3>Errata, and writing</h3>
+          <p>What was predicted next to what was measured. Almost nobody publishes the number that killed their own
+            hypothesis, which is exactly why it is the differentiator. No schedule. It grows when something breaks.</p>
+          <div class="bits"><span class="bit">Errata</span><span class="bit">Posts</span><span class="bit">RSS</span></div>
+        </div>
+        <div class="who"><b>Both</b>the trust beat</div>
+      </article>
+
+      <article class="route" data-r>
+        <div class="path">/about</div>
+        <div>
+          <h3>The person, and how he works</h3>
+          <p>The portrait, the path, the training, and the operating rules. Written in first person because the errata
+            record only works in first person.</p>
+          <div class="bits"><span class="bit">Portrait</span><span class="bit">Timeline</span><span class="bit">How I work</span></div>
+        </div>
+        <div class="who"><b>Employer</b>the human check</div>
+      </article>
+
+      <article class="route" data-r>
+        <div class="path">/resume</div>
+        <div>
+          <h3>The CV, as a real page</h3>
+          <p>Real HTML, not the Google Drive embed the site uses today. The Drive viewer is invisible to crawlers, to
+            recruiter search and to an ATS parser, which is the one audience this page exists for. The source of truth is
+            <code>parth-os/resume/Parth_Tiwari_Resume_B.pdf</code>, the Bangalore variant, served as the download beside
+            the page rather than as the page itself.</p>
+          <div class="bits"><span class="bit hot">Download PDF</span><span class="bit">Print</span><span class="bit">Email</span><span class="bit">Resume_B &middot; Bangalore</span></div>
+        </div>
+        <div class="who"><b>Employer</b>ATS and recruiters</div>
+      </article>
+
+      <article class="route" data-r>
+        <div class="path">/hire</div>
+        <div>
+          <h3>Scope, process, and what it costs</h3>
+          <p>The three kinds of work, the four steps, and a real price band. A client who has decided should never have
+            to guess the number or hunt for the email.</p>
+          <div class="bits"><span class="bit hot">Book a call</span><span class="bit">Email</span><span class="bit">What it costs</span></div>
+        </div>
+        <div class="who"><b>Client</b>the conversion page</div>
+      </article>
+    </div>
+
+    <div class="motion-row" style="margin-top:var(--s8)">
+      <div class="mo" data-r>
+        <div class="k">Persistent chrome</div>
+        <div class="v">A thin top bar carrying the wordmark, four links (<code>Work</code> <code>Notes</code>
+          <code>About</code> <code>Resume</code>) and one red <code>Start a project</code>. On a phone the links
+          collapse and the action stays. <strong>Contact is one tap from every route, at every width.</strong></div>
+      </div>
+      <div class="mo" data-r>
+        <div class="k">Never built</div>
+        <div class="v">No hamburger that hides the action. No cookie banner. No newsletter modal. No testimonial slot
+          until a real quote exists. No page whose only content is a link to another page.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== TWELVE WORLDS ==================== -->
+<section class="world">
+  <div class="wrap sec">
+    <div class="sec-top">
+      <h2 class="title" data-r style="color:var(--void-ink)">Every case study draws its own hero from real material.</h2>
+      <p class="read" data-r style="--d:100ms">This is the creative system, and it is the part that cannot be copied,
+        because it comes out of the work rather than off a reference board. <strong>Four are running below. Move your
+        pointer over them.</strong></p>
+    </div>
+
+    <div class="worlds">
+      <div class="wcard" data-r>
+        <div class="spec">
+          <span class="spec-tag"><b>Vivid</b> &middot; guidance 3.5, 28 steps</span>
+          <canvas data-spec="denoise"></canvas>
+        </div>
+        <h3>Diffusion, because Vivid actually denoises</h3>
+        <p>The v2 signature was not wrong, it was applied to the whole site. Here it is true: this is the thing the
+          product does, on the one page that is about it.</p>
+      </div>
+
+      <div class="wcard" data-r style="--d:80ms">
+        <div class="spec">
+          <span class="spec-tag"><b>BeatMind</b> &middot; run 41c8, one retry</span>
+          <canvas data-spec="trace"></canvas>
+        </div>
+        <h3>A run trace, including the stage that failed</h3>
+        <p>Eight stages, real durations, and the retry drawn rather than hidden. No competitor's portfolio shows a
+          system failing and recovering, because most of them have never run one.</p>
+      </div>
+
+      <div class="wcard" data-r style="--d:160ms">
+        <div class="spec">
+          <span class="spec-tag"><b>MedRAG</b> &middot; 4 cited, 1 refused</span>
+          <canvas data-spec="embed"></canvas>
+        </div>
+        <h3>An embedding space, with the refusal visible</h3>
+        <p>The query pulls its citations. The claim with nothing near enough to support it is marked refused, which is
+          the entire behaviour the project exists to demonstrate.</p>
+      </div>
+
+      <div class="wcard" data-r style="--d:240ms">
+        <div class="spec">
+          <span class="spec-tag"><b>Tathya</b> &middot; 214 sources, 9 clusters</span>
+          <canvas data-spec="cluster"></canvas>
+        </div>
+        <h3>Sources resolving into clusters</h3>
+        <p>Undifferentiated feeds arriving and settling into case files. No topic chosen by hand, which is the claim the
+          graphic has to carry.</p>
+      </div>
+    </div>
+
+    <div class="rest">
+      <div><b>QueryPilot</b><span>Query &rarr; AST &rarr; critic &rarr; SQL. The correction loop drawn as a cycle.</span></div>
+      <div><b>UPI Fraud</b><span>Score distribution with the alert budget as a moving threshold line.</span></div>
+      <div><b>Order Supervisor</b><span>The Temporal state machine, with the human gate lit.</span></div>
+      <div><b>SecondSelf</b><span>A pipeline that stops at a review queue and waits.</span></div>
+      <div><b>OncoVerse</b><span>The 3D atlas itself, one rotating body region.</span></div>
+      <div><b>Spur Chat</b><span>A token stream arriving, scoped to a catalogue.</span></div>
+      <div><b>Fraud Risk Intel</b><span>Reconstruction error against the anomaly boundary.</span></div>
+      <div><b>Oracle Auto Provision</b><span>A cron heartbeat, and the retry that eventually landed.</span></div>
+    </div>
+
+    <p class="read" style="margin-top:var(--s7)" data-r><strong>The rule that keeps this from becoming v1:</strong>
+      no world is ever a control. Nothing is clicked through it, no content lives inside it, and no legend explains it.
+      Delete every canvas on the site and twelve complete case studies remain.</p>
+  </div>
+</section>
+
+<!-- ==================== THE SIGNATURE ==================== -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-top">
+      <h2 class="title" data-r>The signature is the doorway, not an effect.</h2>
+      <p class="read" data-r style="--d:100ms">One motion carries the whole site: a register row opens into its own
+        world, and the row becomes the hero. It is the only heavy motion, it happens on intent, and it explains where
+        you just went. <strong>Click a row.</strong></p>
+    </div>
+
+    <div data-r>
+      <div class="demo" id="demo">
+        <div class="demo-list" id="demoList">
+          <div class="demo-row" data-open="waves" data-name="BeatMind" data-note="Music platform that takes a track apart">
+            <span class="no">01</span><span class="nm">BeatMind</span><span class="go">Open case &rarr;</span>
+          </div>
+          <div class="demo-row" data-open="denoise" data-name="Vivid" data-note="A script becomes a shot by shot storyboard">
+            <span class="no">02</span><span class="nm">Vivid</span><span class="go">Open case &rarr;</span>
+          </div>
+          <div class="demo-row" data-open="trace" data-name="Order Supervisor" data-note="Lifecycle authority stays outside the model">
+            <span class="no">03</span><span class="nm">Order Supervisor</span><span class="go">Open case &rarr;</span>
+          </div>
+          <div class="demo-row" data-open="embed" data-name="MedRAG" data-note="Evidence bound, with citations and refusal">
+            <span class="no">04</span><span class="nm">MedRAG</span><span class="go">Open case &rarr;</span>
+          </div>
+        </div>
+        <div class="demo-case" id="demoCase">
+          <button type="button" class="demo-back" id="demoBack">Back to register</button>
+          <div class="demo-stage"><canvas id="demoCanvas"></canvas></div>
+          <div class="demo-meta">
+            <h4 id="demoName">BeatMind</h4>
+            <span class="data" id="demoNote"></span>
+          </div>
+        </div>
+      </div>
+      <div class="spec-cap">
+        <span class="data">Specimen 05 &middot; the row becomes the hero, 620ms</span>
+        <span class="kicker">Interactive</span>
+      </div>
+    </div>
+
+    <div class="motion-row" style="margin-top:var(--s8)">
+      <div class="mo" data-r><div class="k">Signature</div><div class="v">Row &rarr; hero, <code>620ms</code>, <code>cubic-bezier(.16,1,.3,1)</code>. Production uses the View Transitions API with a FLIP fallback.</div></div>
+      <div class="mo" data-r><div class="k">Reveal</div><div class="v">A <code>clip-path</code> mask, never opacity plus a 20px float. <code>700ms</code>, staggered <code>80ms</code>. Type arrives as if printed.</div></div>
+      <div class="mo" data-r><div class="k">Re-sort</div><div class="v">FLIP across twelve rows, <code>620ms</code>, <code>22ms</code> stagger. The only other heavy moment on the site.</div></div>
+      <div class="mo" data-r><div class="k">UI feedback</div><div class="v"><code>150-250ms</code>. Anything longer needs a reason. Exit faster than enter. Never <code>transition: all</code>.</div></div>
+      <div class="mo" data-r><div class="k">Worlds</div><div class="v">Canvas, capped at <code>30fps</code>, paused when off screen or when the tab is hidden. One <code>gsap.ticker</code> equivalent, never a second clock.</div></div>
+      <div class="mo" data-r><div class="k">Reduced motion</div><div class="v">Every world renders its <strong>final frame</strong> and stops. Not a shortened animation. The static frame is composed to stand on its own.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== TOKENS ==================== -->
+<section class="sec" style="background:var(--paper-2);border-block:1px solid var(--rule)">
+  <div class="wrap">
+    <div class="sec-top">
+      <h2 class="title" data-r>The system, locked.</h2>
+      <p class="read" data-r style="--d:100ms">Tokens exist before components. Contrast is measured on rendered output,
+        never computed from the tokens, because that assertion has been wrong twice in this repo.</p>
+    </div>
+
+    <div class="tok">
+      <div data-r>
+        <p class="kicker" style="margin-bottom:var(--s4)">The frame &middot; light, and committed</p>
+        <div class="swatches">
+          <div class="sw" style="background:#E8E9E4;color:#15171A">paper<br>E8E9E4</div>
+          <div class="sw" style="background:#DEDFD9;color:#15171A">paper-2<br>DEDFD9</div>
+          <div class="sw" style="background:#C6C8C1;color:#15171A">rule<br>C6C8C1</div>
+          <div class="sw" style="background:#7C7F79;color:#0B0C0E">quiet<br>7C7F79</div>
+          <div class="sw" style="background:#4A4E50;color:#F6F7F5">ink-2<br>4A4E50</div>
+          <div class="sw" style="background:#15171A;color:#F6F7F5">ink<br>15171A</div>
+          <div class="sw" style="background:#B8241A;color:#FBF9F5">red<br>B8241A</div>
+        </div>
+        <p class="data" style="margin-top:var(--s3)">Red does exactly two jobs: the correction mark, and the one action.</p>
+      </div>
+      <div data-r style="--d:80ms">
+        <p class="kicker" style="margin-bottom:var(--s4)">The worlds &middot; dark, and per project</p>
+        <div class="swatches">
+          <div class="sw" style="background:#0B0C0E;color:#F2F3F0">void<br>0B0C0E</div>
+          <div class="sw" style="background:#141619;color:#F2F3F0">void-2<br>141619</div>
+          <div class="sw" style="background:#262A2F;color:#F2F3F0">rule<br>262A2F</div>
+          <div class="sw" style="background:#E86A8A;color:#0B0C0E">vocals</div>
+          <div class="sw" style="background:#E8913C;color:#0B0C0E">drums</div>
+          <div class="sw" style="background:#4F9BE8;color:#0B0C0E">bass</div>
+          <div class="sw" style="background:#4FD39B;color:#0B0C0E">other</div>
+        </div>
+        <p class="data" style="margin-top:var(--s3)">A world's accents are taken from the product, not chosen. These four are BeatMind's own stem colours.</p>
+      </div>
+    </div>
+
+    <div class="tok" style="margin-top:var(--s8)">
+      <div data-r>
+        <p class="kicker" style="margin-bottom:var(--s5)">Type &middot; five sizes in regular use</p>
+        <div class="scale">
+          <div><span class="lbl">Display</span><span class="ex" style="font-size:44px;font-variation-settings:'opsz' 96,'wght' 620,'wdth' 96">I get it live</span></div>
+          <div><span class="lbl">Title</span><span class="ex" style="font-size:30px;font-variation-settings:'opsz' 60,'wght' 600,'wdth' 94">Twelve shipped</span></div>
+          <div><span class="lbl">Name</span><span class="ex" style="font-size:21px;font-variation-settings:'opsz' 32,'wght' 580,'wdth' 94">BeatMind</span></div>
+          <div><span class="lbl">Body</span><span style="font-size:17px;color:var(--ink-2)">Archivo at 380 weight, 62ch measure</span></div>
+          <div><span class="lbl">Data</span><span class="data" style="font-size:13px">DM Mono &middot; 307 commits &middot; 70&rarr;23.4s</span></div>
+        </div>
+      </div>
+      <div data-r style="--d:80ms">
+        <p class="kicker" style="margin-bottom:var(--s5)">Faces, and why</p>
+        <div class="motion-row" style="border-top:0">
+          <div class="mo"><div class="k">Display</div><div class="v"><strong>Bricolage Grotesque.</strong> Variable <code>opsz</code>, <code>wdth</code>, <code>wght</code>. Has a designer's hand in it at 94px, which Inter does not.</div></div>
+          <div class="mo"><div class="k">Body and UI</div><div class="v"><strong>Archivo.</strong> Width axis carries hierarchy alongside size, so the register can get louder without getting bigger.</div></div>
+          <div class="mo"><div class="k">Data</div><div class="v"><strong>DM Mono.</strong> Numbers, timings, stack, dates. Never body copy.</div></div>
+          <div class="mo"><div class="k">Banned</div><div class="v">Inter and Geist Mono, both flagged as overused on this repo. Gradient headlines. Italic headings. A letter in a coloured box as a logo.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== BUILD ORDER ==================== -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-top">
+      <h2 class="title" data-r>What gets built, in what order.</h2>
+      <p class="read" data-r style="--d:100ms">The plain site ships before a single canvas exists. That is the mechanism
+        that makes the worlds safe: <strong>delete them and a complete, readable, crawlable site remains.</strong></p>
+    </div>
+    <div class="steps">
+      <article class="step" data-r>
+        <div class="n">01</div>
+        <div><h3>The seven routes, as static HTML</h3>
+          <p>Real pages, real copy, no canvas, no signature transition. Every route readable with JavaScript off, which
+            v1 claimed and never had.</p></div>
+        <div class="gate"><b>Gate</b>curl every route</div>
+      </article>
+      <article class="step" data-r style="--d:60ms">
+        <div class="n">02</div>
+        <div><h3>The register, and the twelve case shells</h3>
+          <p>Each case study written out: problem, architecture, measurement, boundary, what broke. Copy first. A world
+            drawn over an empty case is decoration.</p></div>
+        <div class="gate"><b>Gate</b>ten second test, 4 of 5</div>
+      </article>
+      <article class="step" data-r style="--d:120ms">
+        <div class="n">03</div>
+        <div><h3>Ship it live</h3>
+          <p>Domain cut over, v1 redirected. The site is finished at this point in the sense that matters: it works and
+            it converts.</p></div>
+        <div class="gate"><b>Gate</b>live, and measured</div>
+      </article>
+      <article class="step" data-r style="--d:180ms">
+        <div class="n">04</div>
+        <div><h3>The signature transition, one commit</h3>
+          <p>Row opens into hero. Reverting the commit leaves a working site with ordinary page loads.</p></div>
+        <div class="gate"><b>Gate</b>git revert still works</div>
+      </article>
+      <article class="step" data-r style="--d:240ms">
+        <div class="n">05</div>
+        <div><h3>The worlds, one per commit, flagships first</h3>
+          <p>BeatMind, Vivid, Tathya. Then the rest as their material allows. A case with no honest graphic keeps its
+            capture and loses nothing.</p></div>
+        <div class="gate"><b>Gate</b>each reverts alone</div>
+      </article>
+    </div>
+
+    <div style="margin-top:var(--s8);display:flex;gap:var(--s5);flex-wrap:wrap;align-items:center" data-r>
+      <a class="act" href="#top">Lock it and start on the routes</a>
+      <span class="data">Or tell me which route or world is wrong, and I will re-cut this before anything is built.</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <footer class="foot">
+    <span class="kicker">Twelve Worlds &middot; design lock v3</span>
+    <span class="kicker">Frame is paper &middot; work is dark &middot; every graphic is true</span>
+  </footer>
+</div>
+
+</main>
+
+<script>
+(function(){
+"use strict";
+var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- reveal ---------- */
+var rv = Array.prototype.slice.call(document.querySelectorAll("[data-r]"));
+if (reduce || !("IntersectionObserver" in window)) {
+  rv.forEach(function(el){ el.classList.add("seen"); });
+} else {
+  var groups = [], index = [];
+  rv.forEach(function(el){
+    var g = el.parentElement || el, at = index.indexOf(g);
+    if (at === -1) { index.push(g); groups.push([el]); } else groups[at].push(el);
+  });
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if (!e.isIntersecting) return;
+      var at = index.indexOf(e.target);
+      if (at !== -1) groups[at].forEach(function(el){ el.classList.add("seen"); });
+      io.unobserve(e.target);
+    });
+  }, { rootMargin:"0px 0px -8% 0px", threshold:0.02 });
+  index.forEach(function(g){ io.observe(g); });
+  requestAnimationFrame(function(){
+    rv.forEach(function(el){
+      var b = el.getBoundingClientRect();
+      if (b.top < innerHeight && b.bottom > 0) el.classList.add("seen");
+    });
+  });
+}
+
+/* ==========================================================================
+   THE WORLDS
+   Four generators. Each is drawn from the shape of real output rather than
+   invented: stem envelopes, a diffusion schedule, a run trace with a retry,
+   an embedding space with a refusal. One clock, 30fps, paused off screen.
+   ========================================================================== */
+var STEM = ["#E86A8A", "#E8913C", "#4F9BE8", "#4FD39B"];
+var ACCENT = "#E86A8A", DIM = "#6E7479", GRID = "#22262B", INK = "#F2F3F0";
+
+function seeded(seed){
+  var s = 0; for (var i = 0; i < seed.length; i++) s = (s * 31 + seed.charCodeAt(i)) >>> 0;
+  return function(){ s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
+}
+
+/* ---- 01. stem envelopes ---- */
+function waves(ctx, w, h, t){
+  ctx.fillStyle = "#0B0C0E"; ctx.fillRect(0, 0, w, h);
+  var pad = Math.max(18, w * 0.045), top = h * 0.20;
+  var laneH = (h - top - pad) / 4, r = seeded("beatmind-stems");
+  var env = [];
+  for (var i = 0; i < 4; i++) { env[i] = []; for (var k = 0; k < 220; k++) env[i].push(r()); }
+  var play = (t % 6) / 6;
+
+  for (var L = 0; L < 4; L++) {
+    var cy = top + laneH * L + laneH / 2;
+    ctx.strokeStyle = GRID; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(pad, cy); ctx.lineTo(w - pad, cy); ctx.stroke();
+
+    var bars = Math.floor((w - pad * 2) / 3);
+    for (var b = 0; b < bars; b++) {
+      var u = b / bars;
+      var e = env[L][Math.floor(u * 219)];
+      /* a musical envelope: sections, not uniform noise */
+      var shape = 0.32 + 0.68 * Math.abs(Math.sin(u * Math.PI * 2.3 + L * 0.7));
+      var amp = e * shape * (laneH * 0.40);
+      var live = u < play;
+      var near = Math.abs(u - play) < 0.02;
+      amp *= near ? 1.5 : 1;
+      ctx.fillStyle = live ? STEM[L] : "#2C3238";
+      ctx.globalAlpha = live ? (0.55 + 0.45 * Math.abs(Math.sin(u * 40 + t * 2))) : 1;
+      var x = pad + b * 3;
+      ctx.fillRect(x, cy - amp, 2, amp * 2);
+    }
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = STEM[L];
+    ctx.fillRect(pad, cy - laneH * 0.42, 2, laneH * 0.84);
+    ctx.font = "500 " + Math.max(8, w * 0.016) + "px 'DM Mono', monospace";
+    ctx.fillStyle = DIM;
+    ctx.fillText(["VOCALS", "DRUMS", "BASS", "OTHER"][L], pad + 8, cy - laneH * 0.30);
+  }
+  var px = pad + (w - pad * 2) * play;
+  ctx.strokeStyle = INK; ctx.lineWidth = 1; ctx.globalAlpha = 0.75;
+  ctx.beginPath(); ctx.moveTo(px, top - 6); ctx.lineTo(px, h - pad); ctx.stroke();
+  ctx.globalAlpha = 1;
+}
+
+/* ---- 02. diffusion ---- */
+function denoise(ctx, w, h, t){
+  var cycle = 7, u = (t % cycle) / cycle;
+  /* hold the resolved frame for the last third, the way a real sampler ends */
+  var p = Math.min(1, Math.pow(Math.min(u / 0.68, 1), 0.75));
+  ctx.fillStyle = "#0B0C0E"; ctx.fillRect(0, 0, w, h);
+
+  /* The resolved image: a layered dusk. Ridges are summed sines off a fixed
+     seed, so the frame is generated rather than drawn, which is the point the
+     specimen is making. Earlier version placed a figure on a shadow ellipse and
+     read as a mushroom at full bleed. */
+  var hy = h * 0.72;
+  var sky = ctx.createLinearGradient(0, 0, 0, hy);
+  sky.addColorStop(0, "#150F1E"); sky.addColorStop(0.45, "#4A2338");
+  sky.addColorStop(0.78, "#B4552F"); sky.addColorStop(1, "#E2884A");
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, w, hy);
+
+  ctx.globalAlpha = 0.9;
+  ctx.fillStyle = "#F3B268";
+  ctx.beginPath(); ctx.arc(w * 0.70, hy - h * 0.055, h * 0.085, 0, Math.PI * 2); ctx.fill();
+  ctx.globalAlpha = 1;
+
+  /* haze bands sitting in front of the sun */
+  for (var b = 0; b < 5; b++) {
+    ctx.fillStyle = "rgba(233,150,90," + (0.05 + b * 0.02) + ")";
+    ctx.fillRect(0, hy - h * (0.30 - b * 0.05), w, h * 0.014);
+  }
+
+  var ridge = [
+    { base: 0.60, amp: 0.055, f: 1.7, col: "#3A2333", ph: 0.0 },
+    { base: 0.66, amp: 0.045, f: 2.6, col: "#241826", ph: 1.3 },
+    { base: 0.72, amp: 0.035, f: 3.9, col: "#120D18", ph: 2.7 }
+  ];
+  ridge.forEach(function(R){
+    ctx.beginPath();
+    ctx.moveTo(0, h);
+    for (var x = 0; x <= w; x += 4) {
+      var u = x / w;
+      var y = R.base + Math.sin(u * R.f * Math.PI * 2 + R.ph) * R.amp * 0.6
+                     + Math.sin(u * R.f * 2.3 * Math.PI + R.ph * 1.7) * R.amp * 0.4;
+      ctx.lineTo(x, y * h);
+    }
+    ctx.lineTo(w, h); ctx.closePath();
+    ctx.fillStyle = R.col; ctx.fill();
+  });
+
+  ctx.fillStyle = "#0A070D"; ctx.fillRect(0, h * 0.86, w, h * 0.14);
+
+  /* the noise the sampler is removing */
+  if (p < 1) {
+    var cell = Math.max(2, Math.round(w / 150));
+    var r = seeded("vivid-latent-" + Math.floor(t * 6));
+    ctx.globalAlpha = 1 - p;
+    for (var y = 0; y < h; y += cell) {
+      for (var x = 0; x < w; x += cell) {
+        var v = r();
+        if (v < 0.4) continue;
+        ctx.fillStyle = "rgb(" + Math.round(v * 235) + "," + Math.round(v * 210) + "," + Math.round(v * 245) + ")";
+        ctx.fillRect(x, y, cell, cell);
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  /* the schedule readout */
+  var step = Math.round(p * 28);
+  ctx.font = "500 " + Math.max(9, w * 0.017) + "px 'DM Mono', monospace";
+  ctx.fillStyle = INK;
+  ctx.fillText("step " + String(step).padStart(2, "0") + " / 28", 14, h - 16);
+  ctx.fillStyle = GRID; ctx.fillRect(14, h - 10, w - 28, 2);
+  ctx.fillStyle = ACCENT; ctx.fillRect(14, h - 10, (w - 28) * p, 2);
+}
+
+/* ---- 03. a run trace, with the retry drawn ---- */
+var STAGES = [
+  { n: "probe",     d: 0.4 },
+  { n: "fetch",     d: 1.6 },
+  { n: "decode",    d: 2.1 },
+  { n: "separate",  d: 23.4, retry: true },
+  { n: "analyse",   d: 4.2 },
+  { n: "chords",    d: 3.1 },
+  { n: "arrange",   d: 2.8 },
+  { n: "persist",   d: 0.9 }
+];
+function trace(ctx, w, h, t){
+  ctx.fillStyle = "#0B0C0E"; ctx.fillRect(0, 0, w, h);
+  var pad = Math.max(16, w * 0.045), top = h * 0.26;
+  var total = STAGES.reduce(function(a, s){ return a + s.d + (s.retry ? 6 : 0); }, 0);
+  var avail = w - pad * 2;
+  var cycle = 8, u = (t % cycle) / cycle;
+  var played = u * total;
+  var rowH = (h - top - pad * 1.2) / STAGES.length;
+
+  var acc = 0;
+  for (var i = 0; i < STAGES.length; i++) {
+    var s = STAGES[i];
+    var y = top + i * rowH;
+    ctx.font = "400 " + Math.max(8, w * 0.0155) + "px 'DM Mono', monospace";
+    ctx.fillStyle = DIM;
+    ctx.fillText(s.n, pad, y + rowH * 0.62);
+    var x0 = pad + avail * 0.30;
+    var barW = avail * 0.70;
+
+    /* the failed attempt, then the successful one */
+    if (s.retry) {
+      var fw = barW * (6 / total);
+      var fdone = Math.max(0, Math.min(1, (played - acc) / 6));
+      ctx.fillStyle = "#3A1D1A";
+      ctx.fillRect(x0 + barW * (acc / total), y + rowH * 0.28, fw * fdone, rowH * 0.36);
+      if (fdone >= 1) {
+        ctx.fillStyle = "#B8241A";
+        ctx.fillRect(x0 + barW * (acc / total), y + rowH * 0.28, fw, 2);
+        ctx.fillStyle = "#B8241A";
+        ctx.font = "500 " + Math.max(7, w * 0.013) + "px 'DM Mono', monospace";
+        ctx.fillText("worker lost", x0 + barW * (acc / total) + 4, y + rowH * 0.22);
+      }
+      acc += 6;
+    }
+    var sw = barW * (s.d / total);
+    var done = Math.max(0, Math.min(1, (played - acc) / s.d));
+    ctx.fillStyle = "#1E2429";
+    ctx.fillRect(x0 + barW * (acc / total), y + rowH * 0.28, sw, rowH * 0.36);
+    ctx.fillStyle = s.retry ? "#4FD39B" : "#4F9BE8";
+    ctx.globalAlpha = done > 0 ? 1 : 0.25;
+    ctx.fillRect(x0 + barW * (acc / total), y + rowH * 0.28, sw * done, rowH * 0.36);
+    ctx.globalAlpha = 1;
+    if (done >= 1) {
+      ctx.fillStyle = DIM;
+      ctx.font = "400 " + Math.max(7, w * 0.0128) + "px 'DM Mono', monospace";
+      ctx.fillText(s.d + "s", x0 + barW * (acc / total) + sw + 5, y + rowH * 0.58);
+    }
+    acc += s.d;
+  }
+  ctx.font = "500 " + Math.max(8, w * 0.015) + "px 'DM Mono', monospace";
+  ctx.fillStyle = INK;
+  ctx.fillText("total " + total.toFixed(1) + "s  ·  1 retry  ·  completed", pad, h - pad * 0.5);
+}
+
+/* ---- 04. an embedding space, with a refusal ---- */
+function embed(ctx, w, h, t){
+  ctx.fillStyle = "#0B0C0E"; ctx.fillRect(0, 0, w, h);
+  var r = seeded("medrag-space");
+  var pts = [], clusters = [[0.26, 0.34], [0.68, 0.28], [0.44, 0.70], [0.80, 0.66]];
+  for (var c = 0; c < clusters.length; c++) {
+    for (var i = 0; i < 26; i++) {
+      var a = r() * Math.PI * 2, rad = Math.pow(r(), 0.6) * 0.13;
+      pts.push({ x: clusters[c][0] + Math.cos(a) * rad, y: clusters[c][1] + Math.sin(a) * rad * 0.8, c: c });
+    }
+  }
+  var cycle = 8, u = (t % cycle) / cycle;
+  var qi = Math.floor(u * 2) % 2;
+  var q = qi === 0 ? { x: 0.30, y: 0.38, ok: true } : { x: 0.55, y: 0.46, ok: false };
+  var pulse = (u * 2) % 1;
+
+  pts.forEach(function(p){
+    var dx = p.x - q.x, dy = p.y - q.y;
+    var d = Math.sqrt(dx * dx + dy * dy);
+    var cited = q.ok && d < 0.15;
+    ctx.beginPath();
+    ctx.arc(p.x * w, p.y * h, cited ? 3.2 : 2.2, 0, Math.PI * 2);
+    ctx.fillStyle = cited ? "#4FD39B" : "#333A40";
+    ctx.fill();
+    if (cited && pulse > 0.12) {
+      ctx.strokeStyle = "rgba(79,211,155,0.34)"; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(q.x * w, q.y * h); ctx.lineTo(p.x * w, p.y * h); ctx.stroke();
+    }
+  });
+
+  /* the query, and its evidence radius */
+  ctx.strokeStyle = q.ok ? "rgba(79,211,155,0.4)" : "rgba(184,36,26,0.45)";
+  ctx.setLineDash([3, 4]); ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.arc(q.x * w, q.y * h, 0.15 * Math.min(w, h) * 0.86, 0, Math.PI * 2); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.beginPath(); ctx.arc(q.x * w, q.y * h, 5, 0, Math.PI * 2);
+  ctx.fillStyle = q.ok ? "#4FD39B" : "#B8241A"; ctx.fill();
+
+  ctx.font = "500 " + Math.max(9, w * 0.017) + "px 'DM Mono', monospace";
+  ctx.fillStyle = q.ok ? "#4FD39B" : "#B8241A";
+  ctx.fillText(q.ok ? "4 sources cited" : "no support in range — refused", 14, h - 16);
+}
+
+/* ---- 05. sources resolving into clusters ---- */
+function cluster(ctx, w, h, t){
+  ctx.fillStyle = "#0B0C0E"; ctx.fillRect(0, 0, w, h);
+  var r = seeded("tathya-sources");
+  var n = 214, cycle = 9, u = (t % cycle) / cycle;
+  var settle = Math.min(1, Math.pow(Math.min(u / 0.7, 1), 0.8));
+  var centres = [];
+  for (var k = 0; k < 9; k++) centres.push([0.12 + (k % 3) * 0.38, 0.20 + Math.floor(k / 3) * 0.30]);
+  for (var i = 0; i < n; i++) {
+    var sx = r(), sy = r(), ci = Math.floor(r() * 9);
+    var a = r() * Math.PI * 2, rad = Math.pow(r(), 0.7) * 0.085;
+    var tx = centres[ci][0] + Math.cos(a) * rad, ty = centres[ci][1] + Math.sin(a) * rad * 0.9;
+    var e = Math.min(1, Math.max(0, settle * 1.25 - (i / n) * 0.25));
+    var x = sx + (tx - sx) * e, y = sy + (ty - sy) * e;
+    ctx.beginPath(); ctx.arc(x * w, y * h, 1.7, 0, Math.PI * 2);
+    ctx.fillStyle = e > 0.92 ? "#4FD39B" : "#39424A";
+    ctx.globalAlpha = 0.45 + e * 0.55;
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+  ctx.font = "500 " + Math.max(9, w * 0.017) + "px 'DM Mono', monospace";
+  ctx.fillStyle = INK;
+  ctx.fillText(Math.round(settle * 9) + " case files · no topic chosen by hand", 14, h - 16);
+}
+
+var GEN = { waves: waves, denoise: denoise, trace: trace, embed: embed, cluster: cluster };
+
+/* ---------- one clock, 30fps, paused off screen ---------- */
+var live = [];
+function mount(cv, name){
+  var ctx = cv.getContext("2d");
+  var item = { cv: cv, ctx: ctx, gen: GEN[name], vis: true, w: 0, h: 0 };
+  function size(){
+    var r = cv.getBoundingClientRect();
+    var dpr = Math.min(devicePixelRatio || 1, 2);
+    if (!r.width || !r.height) return;
+    item.w = r.width; item.h = r.height;
+    cv.width = Math.round(r.width * dpr); cv.height = Math.round(r.height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  size();
+  item.size = size;
+  addEventListener("resize", size, { passive:true });
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function(es){
+      es.forEach(function(e){ item.vis = e.isIntersecting; });
+    }, { threshold: 0.01 }).observe(cv);
+  }
+  live.push(item);
+  return item;
+}
+
+document.querySelectorAll("canvas[data-spec]").forEach(function(cv){
+  mount(cv, cv.getAttribute("data-spec"));
+});
+
+var last = 0, t0 = performance.now();
+function frame(now){
+  requestAnimationFrame(frame);
+  if (now - last < 33) return;                 /* 30fps ceiling */
+  last = now;
+  if (document.hidden) return;
+  var t = (now - t0) / 1000;
+  live.forEach(function(it){
+    if (!it.vis || !it.w) return;
+    /* reduced motion: draw the final composed frame once, then stop */
+    if (reduce) { if (it.done) return; it.gen(it.ctx, it.w, it.h, 6.2); it.done = true; return; }
+    it.gen(it.ctx, it.w, it.h, t);
+  });
+}
+requestAnimationFrame(frame);
+
+/* ==========================================================================
+   THE SIGNATURE — a row becomes the hero
+   FLIP here for reach; production uses the View Transitions API with this as
+   the fallback. Nothing is gated behind it: the case content is already in
+   the DOM and the register is still readable with the script removed.
+   ========================================================================== */
+var demo     = document.getElementById("demo");
+var demoCase = document.getElementById("demoCase");
+var demoCv   = document.getElementById("demoCanvas");
+var demoName = document.getElementById("demoName");
+var demoNote = document.getElementById("demoNote");
+var demoBack = document.getElementById("demoBack");
+var demoItem = mount(demoCv, "waves");
+
+function openCase(row){
+  var name = row.getAttribute("data-open");
+  demoItem.gen = GEN[name];
+  demoItem.done = false;
+  demoName.textContent = row.getAttribute("data-name");
+  demoNote.textContent = row.getAttribute("data-note");
+
+  var from = row.getBoundingClientRect();
+  var to   = demo.getBoundingClientRect();
+  demoCase.classList.add("on");
+  demoItem.size();
+
+  if (reduce) return;
+  var sx = from.width / to.width, sy = from.height / to.height;
+  var dx = from.left - to.left, dy = from.top - to.top;
+  demoCase.style.transition = "none";
+  demoCase.style.transform  = "translate(" + dx + "px," + dy + "px) scale(" + sx + "," + sy + ")";
+  demoCase.style.opacity    = "0.2";
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      demoCase.style.transition = "transform 620ms cubic-bezier(.16,1,.3,1), opacity 300ms ease-out";
+      demoCase.style.transform  = "translate(0,0) scale(1,1)";
+      demoCase.style.opacity    = "1";
+    });
+  });
+}
+
+function closeCase(){
+  if (reduce) { demoCase.classList.remove("on"); return; }
+  demoCase.style.transition = "transform 380ms cubic-bezier(.16,1,.3,1), opacity 260ms ease-in";
+  demoCase.style.transform  = "translate(0,12px) scale(.98,.98)";
+  demoCase.style.opacity    = "0";
+  setTimeout(function(){
+    demoCase.classList.remove("on");
+    demoCase.style.transition = "none";
+    demoCase.style.transform  = "";
+    demoCase.style.opacity    = "";
+  }, 380);
+}
+
+document.querySelectorAll(".demo-row").forEach(function(row){
+  row.setAttribute("tabindex", "0");
+  row.setAttribute("role", "button");
+  row.addEventListener("click", function(){ openCase(row); });
+  row.addEventListener("keydown", function(e){
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openCase(row); }
+  });
+});
+demoBack.addEventListener("click", closeCase);
+addEventListener("keydown", function(e){
+  if (e.key === "Escape" && demoCase.classList.contains("on")) closeCase();
+});
+})();
+</script>

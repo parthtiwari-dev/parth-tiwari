@@ -168,3 +168,6 @@ inbox/refero/
 # whatever machine last wrote them. `npm run nav` failed for anyone who cloned,
 # CLAUDE.md described mandatory gates that were not in the repository, and a
 # cloud session's container is reclaimed on idle. They are committed now.
+
+# derived from src/data/projects.ts by the design build scripts
+.projects.json

@@ -1,0 +1,668 @@
+<title>Parth Tiwari</title>
+<script>
+/* Opened as a raw file as often as it is published, and a file with no viewport
+   meta lays out at 980px on a phone — which silently kills every media query
+   below. landing.html shipped with exactly that defect. */
+(function(){if(!document.querySelector('meta[name="viewport"]')){var m=document.createElement('meta');
+m.name='viewport';m.content='width=device-width, initial-scale=1';document.head.prepend(m);}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=DM+Mono:wght@400;500&display=swap">
+
+<style>
+/* ==========================================================================
+   THE REGISTER — v3
+   Twelve shipped things, ranked honestly. The page stays quiet; the work
+   is loud. Committed single-theme: escaping the near-black portfolio is the
+   whole divergence, so every colour is painted and nothing is inherited.
+   ========================================================================== */
+:root{
+  --paper:#E8E9E4; --paper-2:#DEDFD9; --paper-3:#D3D5CE;
+  --ink:#15171A; --ink-2:#4A4E50; --ink-3:#5F6361;
+  /* --quiet is the lightest tone still allowed to carry TEXT: 3.2:1 on paper.
+     --rule-2 is a hairline colour at 1.7:1 and was being used for the 42px
+     folios, which are index numbers a reader is meant to read. Measured on the
+     rendered page, not computed from the tokens. */
+  --quiet:#7C7F79;
+  --rule:#C6C8C1; --rule-2:#B2B5AD;
+  --red:#B8241A; --red-deep:#96190F; --on-red:#FBF9F5;
+
+  --display:"Bricolage Grotesque","Archivo",Helvetica,Arial,sans-serif;
+  --sans:"Archivo",Helvetica,Arial,sans-serif;
+  --mono:"DM Mono",ui-monospace,Menlo,monospace;
+
+  --t-display:clamp(42px,7.2vw,102px);
+  --t-title:clamp(29px,3.9vw,57px);
+  --t-name:clamp(21px,2.3vw,31px);
+  --t-body:17px; --t-read:18px; --t-label:13px; --t-micro:11px;
+
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:36px;
+  --s7:56px;--s8:80px;--s9:112px;--s10:clamp(92px,12.5vw,176px);
+
+  --ease:cubic-bezier(.16,1,.3,1);
+  --measure:62ch; --page:1340px; --gutter:clamp(20px,4.4vw,64px);
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+html,body{overflow-x:clip}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:var(--t-body);
+  font-variation-settings:"wght" 380,"wdth" 100;line-height:1.55;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+h1,h2,h3{margin:0;text-wrap:balance}
+p{margin:0}
+ol,ul{margin:0;padding:0;list-style:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;text-align:left}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:1px}
+
+.wrap{max-width:var(--page);margin:0 auto;padding-inline:var(--gutter)}
+
+.kicker{font-family:var(--mono);font-size:var(--t-micro);letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-3);font-weight:500}
+.display{font-family:var(--display);font-size:var(--t-display);line-height:.94;
+  letter-spacing:-.035em;font-variation-settings:"opsz" 96,"wght" 620,"wdth" 96}
+.title{font-family:var(--display);font-size:var(--t-title);line-height:1.02;
+  letter-spacing:-.028em;font-variation-settings:"opsz" 60,"wght" 600,"wdth" 94}
+.read{font-size:var(--t-read);line-height:1.62;color:var(--ink-2);max-width:var(--measure);
+  font-variation-settings:"wght" 380,"wdth" 100}
+.read strong{color:var(--ink);font-weight:400;font-variation-settings:"wght" 620,"wdth" 100}
+.data{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:var(--t-label);color:var(--ink-2)}
+
+/* ---------- the single action, always one tap away ---------- */
+.act{display:inline-flex;align-items:center;gap:var(--s3);
+  background:var(--red);color:var(--on-red);font-family:var(--sans);font-size:15px;
+  font-variation-settings:"wght" 620,"wdth" 96;padding:15px 24px;
+  transition:background 180ms var(--ease),transform 180ms var(--ease)}
+.act:hover{background:var(--red-deep)}
+.act:active{transform:translateY(1px)}
+.act .arw{transition:transform 260ms var(--ease)}
+.act:hover .arw{transform:translateX(4px)}
+.act-2{display:inline-flex;align-items:center;gap:var(--s2);font-family:var(--mono);
+  font-size:var(--t-label);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);
+  padding-block:6px;border-bottom:1px solid var(--rule-2);
+  transition:color 180ms var(--ease),border-color 180ms var(--ease)}
+.act-2:hover{color:var(--ink);border-color:var(--ink)}
+.pinned{position:fixed;right:var(--gutter);bottom:24px;z-index:50;
+  box-shadow:0 8px 28px -12px rgba(21,23,26,.5);
+  opacity:0;transform:translateY(12px);pointer-events:none;
+  transition:opacity 320ms var(--ease),transform 320ms var(--ease),background 180ms var(--ease)}
+.pinned.on{opacity:1;transform:none;pointer-events:auto}
+@media(max-width:640px){
+  .pinned{right:16px;left:16px;bottom:16px;justify-content:center}
+  body{padding-bottom:88px}
+}
+
+/* ---------- the spine. it reports position; that is the whole job ---------- */
+.spine{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:40;
+  display:flex;flex-direction:column;align-items:flex-end;gap:11px}
+.spine a{display:flex;align-items:center;flex-direction:row-reverse;gap:10px;
+  color:var(--ink-3);font-family:var(--mono);
+  font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;transition:color 240ms var(--ease)}
+.spine i{display:block;width:14px;height:1px;background:var(--rule-2);flex:none;
+  transition:width 320ms var(--ease),background 240ms var(--ease)}
+.spine a:hover{color:var(--ink-2)}
+.spine a.on{color:var(--ink)}
+.spine a.on i{width:28px;background:var(--red)}
+.spine span{opacity:0;transform:translateX(-4px);
+  transition:opacity 240ms var(--ease),transform 240ms var(--ease)}
+.spine:hover span,.spine a.on span,.spine a:focus-visible span{opacity:1;transform:none}
+@media(max-width:1180px){.spine{display:none}}
+
+/* ---------- reveal: a mask, not a fade-and-float ---------- */
+[data-reveal]{clip-path:inset(0 0 102% 0);transition:clip-path 720ms var(--ease);transition-delay:var(--d,0ms)}
+[data-reveal] > *{transform:translateY(14px);transition:transform 720ms var(--ease);transition-delay:var(--d,0ms)}
+[data-reveal].seen{clip-path:inset(0 0 -8% 0)}
+[data-reveal].seen > *{transform:none}
+
+/* ==================== 1. THE FOLD ==================== */
+.fold{padding-top:clamp(56px,8vw,112px);padding-bottom:var(--s9)}
+.fold-grid{display:grid;gap:var(--s8);align-items:end}
+@media(min-width:1000px){.fold-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.02fr)}}
+.fold-meta{display:flex;gap:var(--s4);flex-wrap:wrap;margin-bottom:var(--s6)}
+.fold h1{margin-bottom:var(--s6);max-width:13ch}
+@media(min-width:1000px){.fold h1{margin-left:-.045em}}
+.fold .read{margin-bottom:var(--s7);max-width:40ch}
+.fold-cta{display:flex;align-items:center;gap:var(--s6);flex-wrap:wrap}
+/* the break: the opening plate leaves the page on the right */
+@media(min-width:1000px){
+  .fold-plate{margin-right:calc((var(--gutter) + (100vw - min(100vw, var(--page))) / 2) * -1)}
+}
+.plate{position:relative;background:var(--paper-3);border:1px solid var(--rule);overflow:hidden;line-height:0}
+.plate img{width:100%;height:auto}
+.plate-cap{display:flex;justify-content:space-between;gap:var(--s4);align-items:baseline;
+  margin-top:var(--s3);padding-right:var(--gutter);flex-wrap:wrap}
+
+/* ==================== 2. THE REGISTER ==================== */
+.reg{padding-block:var(--s10)}
+.reg-head{display:grid;gap:var(--s5);margin-bottom:var(--s7)}
+@media(min-width:900px){.reg-head{grid-template-columns:minmax(0,1fr) minmax(0,.72fr);
+  align-items:end;gap:var(--s8)}}
+
+/* the sort bar. the ordering is a claim, so it is a control. */
+.sorts{display:flex;align-items:baseline;gap:var(--s4);flex-wrap:wrap;
+  padding-bottom:var(--s3);border-bottom:1px solid var(--rule-2);margin-bottom:var(--s2)}
+.sorts .lab{font-family:var(--mono);font-size:var(--t-micro);letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-3);margin-right:var(--s1)}
+.sortb{font-family:var(--mono);font-size:var(--t-micro);letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-3);cursor:pointer;padding:4px 0;position:relative;
+  transition:color 200ms var(--ease)}
+.sortb::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--red);
+  transform:scaleX(0);transform-origin:0 50%;transition:transform 320ms var(--ease)}
+.sortb:hover{color:var(--ink-2)}
+.sortb[aria-pressed="true"]{color:var(--ink)}
+.sortb[aria-pressed="true"]::after{transform:none}
+
+.reg-body{display:grid;gap:var(--s7)}
+@media(min-width:1000px){.reg-body{grid-template-columns:minmax(0,1.16fr) minmax(0,.84fr);
+  gap:clamp(40px,5vw,80px);align-items:start}}
+
+.reg-list li{border-bottom:1px solid var(--rule);padding-bottom:var(--s5);
+  transition:border-color 240ms var(--ease)}
+.reg-list li:last-child{border-bottom:0}
+.reg-list li:has(.row:hover){border-color:var(--rule-2)}
+.row{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--s4);align-items:start;
+  width:100%;cursor:pointer;padding-top:var(--s5)}
+/* the second break: folios hang outside the column at a scale nothing else uses */
+.no{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:clamp(23px,2.9vw,42px);
+  line-height:.92;color:var(--quiet);width:1.9em;flex:none;padding-top:.08em;
+  transition:color 300ms var(--ease),transform 420ms var(--ease)}
+@media(min-width:1000px){.row{margin-left:-2.5em}}
+.row-main{min-width:0;display:grid;gap:6px}
+.row-top{display:flex;align-items:baseline;gap:var(--s3) var(--s4);flex-wrap:wrap}
+.nm{font-family:var(--display);font-size:var(--t-name);line-height:1.1;letter-spacing:-.02em;
+  font-variation-settings:"opsz" 36,"wght" 560,"wdth" 92;
+  transition:font-variation-settings 380ms var(--ease)}
+.tag{color:var(--ink-2);font-size:15.5px;line-height:1.5;max-width:52ch}
+.meta{display:flex;gap:var(--s4);flex-wrap:wrap;font-family:var(--mono);font-size:var(--t-micro);
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-top:2px}
+.meta .live{color:var(--red)}
+.stk{font-family:var(--mono);font-size:var(--t-micro);letter-spacing:.04em;color:var(--ink-3);
+  margin-top:2px}
+.row:hover .no,.row[aria-current="true"] .no{color:var(--red);transform:translateY(-2px)}
+.row:hover .nm,.row[aria-current="true"] .nm{font-variation-settings:"opsz" 36,"wght" 620,"wdth" 100}
+/* FLIP writes this; nothing else touches transform on the li */
+.reg-list li{will-change:auto}
+.reg-list li.flip{will-change:transform}
+
+/* the viewer */
+.viewer{position:sticky;top:clamp(24px,6vh,64px)}
+.viewer-stage{position:relative;aspect-ratio:16/10;background:var(--paper-2);
+  border:1px solid var(--rule);overflow:hidden}
+.viewer-stage figure{position:absolute;inset:0;margin:0;opacity:0;display:grid;
+  transition:opacity 400ms var(--ease)}
+.viewer-stage figure.on{opacity:1}
+.viewer-stage img{width:100%;height:100%;object-fit:cover;object-position:0 0}
+/* where no capture exists yet: real data, never a mock-up */
+/* 1fr auto, so the note keeps its natural height and only the stack can clip.
+   The note is the honest half of this panel and must never be the part lost. */
+.no-shot{padding:clamp(20px,3.2vw,36px);grid-template-rows:1fr auto;background:var(--paper-2);
+  gap:var(--s4);overflow:hidden}
+.ns-stack{font-family:var(--mono);font-size:clamp(12.5px,1.25vw,15px);line-height:1.75;
+  color:var(--ink-2);min-height:0;overflow:hidden}
+.ns-stack em{font-style:normal;color:var(--ink)}
+.ns-note{font-family:var(--mono);font-size:var(--t-micro);letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-3);line-height:1.7}
+.viewer-cap{display:flex;justify-content:space-between;gap:var(--s4);align-items:baseline;
+  margin-top:var(--s3);flex-wrap:wrap}
+@media(max-width:999px){.viewer{display:none}}
+
+/* on a phone the row carries its own plate — nothing depends on hover */
+.row-plate{display:none;margin-top:var(--s4);border:1px solid var(--rule);
+  background:var(--paper-2);line-height:0}
+@media(max-width:999px){
+  .row-plate.has{display:block}
+  .no{font-size:22px;width:2.1em}
+}
+
+/* ==================== 3. THE CASE ==================== */
+.case{background:var(--paper-2);border-block:1px solid var(--rule);padding-block:var(--s10)}
+.case-head{display:grid;gap:var(--s6);margin-bottom:var(--s8)}
+@media(min-width:900px){.case-head{grid-template-columns:minmax(0,1fr) minmax(0,.9fr);
+  gap:var(--s8);align-items:end}}
+.figures{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--rule-2)}
+@media(min-width:720px){.figures{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(min-width:1100px){.figures{grid-template-columns:repeat(6,minmax(0,1fr))}}
+.fig{padding:var(--s5) var(--s4) var(--s5) 0;border-bottom:1px solid var(--rule)}
+.fig .v{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:clamp(21px,2.4vw,31px);
+  line-height:1;color:var(--ink);font-weight:500;letter-spacing:-.02em}
+.fig .k{margin-top:8px;font-family:var(--mono);font-size:var(--t-micro);letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-3);line-height:1.55}
+.fig.zero .v{color:var(--red)}
+.plates{display:grid;gap:var(--s5);margin-top:var(--s8)}
+@media(min-width:820px){.plates{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.plates figure{margin:0}
+.plates figcaption{margin-top:var(--s3)}
+
+/* ==================== 4. THE CORRECTIONS ==================== */
+.cor-sec{padding-block:var(--s10)}
+.cor-head{margin-bottom:var(--s8);display:grid;gap:var(--s5)}
+@media(min-width:900px){.cor-head{grid-template-columns:minmax(0,1fr) minmax(0,.8fr);
+  gap:var(--s8);align-items:end}}
+.ledger{border-top:1px solid var(--rule-2)}
+.entry{display:grid;gap:var(--s3);padding:var(--s6) 0;border-bottom:1px solid var(--rule)}
+@media(min-width:820px){.entry{grid-template-columns:10.5rem minmax(0,1fr);gap:var(--s6);align-items:start}}
+.entry .when{font-family:var(--mono);font-size:var(--t-label);color:var(--ink-3);
+  font-variant-numeric:tabular-nums;padding-top:.35em}
+.entry h3{font-family:var(--display);font-size:clamp(19px,2vw,26px);line-height:1.22;
+  letter-spacing:-.018em;font-variation-settings:"opsz" 28,"wght" 560,"wdth" 94;
+  padding-left:var(--s5);position:relative}
+/* the correction mark. red does one job on this page and this is it. */
+.entry h3::before{content:"";position:absolute;left:0;top:.44em;width:9px;height:2px;background:var(--red)}
+.entry p{margin-top:var(--s3);color:var(--ink-2);font-size:16px;line-height:1.62;
+  max-width:64ch;padding-left:var(--s5)}
+
+/* ==================== 5. THE CLOSE ==================== */
+.close{padding-block:var(--s10);border-top:1px solid var(--rule)}
+.close h2{max-width:14ch;margin-bottom:var(--s6)}
+.close .read{margin-bottom:var(--s7)}
+.close-cta{display:flex;align-items:center;gap:var(--s6);flex-wrap:wrap}
+.foot{display:flex;justify-content:space-between;gap:var(--s5);flex-wrap:wrap;
+  padding-block:var(--s6);border-top:1px solid var(--rule)}
+.foot a{border-bottom:1px solid transparent;transition:border-color 180ms var(--ease)}
+.foot a:hover{border-color:var(--ink-2)}
+
+/* ============ reduced motion: the final state, immediately ============ */
+@media(prefers-reduced-motion:reduce){
+  [data-reveal]{clip-path:none;transition:none}
+  [data-reveal] > *{transform:none;transition:none}
+  .pinned,.no,.nm,.act,.act .arw,.spine i,.spine span,.sortb::after{transition:none}
+  .viewer-stage figure{transition:opacity 120ms linear}
+}
+</style>
+
+<a class="act pinned" id="pinned" href="mailto:parthti2003@gmail.com">Start a project <span class="arw" aria-hidden="true">&rarr;</span></a>
+
+<nav class="spine" id="spine" aria-label="Sections">
+  <a href="#fold"><i></i><span>Open</span></a>
+  <a href="#register"><i></i><span>Register</span></a>
+  <a href="#case"><i></i><span>Case</span></a>
+  <a href="#corrections"><i></i><span>Errata</span></a>
+  <a href="#close"><i></i><span>Contact</span></a>
+</nav>
+
+<main>
+
+<!-- ==================== 1. THE FOLD ==================== -->
+<section class="fold" id="fold">
+  <div class="wrap">
+    <div class="fold-grid">
+      <div>
+        <div class="fold-meta" data-reveal>
+          <span class="kicker">Parth Tiwari</span>
+          <span class="kicker">AI Engineer</span>
+          <span class="kicker">Independent &middot; India</span>
+        </div>
+        <h1 class="display" data-reveal style="--d:60ms">You can describe the product. I get it live.</h1>
+        <p class="read" data-reveal style="--d:180ms">Three AI products in five months, working alone.
+          <strong>Every one is live. So is the record of what broke.</strong></p>
+        <div class="fold-cta" data-reveal style="--d:260ms">
+          <a class="act" href="mailto:parthti2003@gmail.com">Start a project <span class="arw" aria-hidden="true">&rarr;</span></a>
+          <a class="act-2" href="#register">See the register</a>
+        </div>
+      </div>
+      <div class="fold-plate" data-reveal style="--d:340ms">
+        <div class="plate">
+          <img src="__IMG_beatmind-arrangement-clean.png__" width="1552" height="784"
+               alt="BeatMind's arrangement view: 68 bars laid out as section cards with chord names, above per-stem lanes for vocals, drums, bass and backing.">
+        </div>
+        <div class="plate-cap">
+          <span class="data">BeatMind &middot; 68 bars, section by stem</span>
+          <span class="kicker">Live at beatmind.tech</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 2. THE REGISTER ==================== -->
+<section class="reg" id="register">
+  <div class="wrap">
+    <div class="reg-head">
+      <h2 class="title" data-reveal>Twelve shipped, ranked by what they cost me.</h2>
+      <p class="read" data-reveal style="--d:100ms">Three carried real weight. Five were substantial. Four were small,
+        and I am not going to pretend otherwise. <strong>Change the ordering and the claim changes with it.</strong></p>
+    </div>
+
+    <div class="sorts" role="group" aria-label="Order the register">
+      <span class="lab">Order by</span>
+      <button type="button" class="sortb" data-sort="weight" aria-pressed="true">What it cost</button>
+      <button type="button" class="sortb" data-sort="date" aria-pressed="false">Most recent</button>
+      <button type="button" class="sortb" data-sort="status" aria-pressed="false">Still running</button>
+    </div>
+
+    <div class="reg-body">
+      <ol class="reg-list" id="reglist">
+        <!--REGISTER-->
+      </ol>
+      <aside class="viewer" aria-hidden="true">
+        <div class="viewer-stage" id="stage">
+          <!--VIEWER-->
+        </div>
+        <div class="viewer-cap">
+          <span class="data" id="vcap">BeatMind</span>
+          <span class="kicker" id="vidx">01 / 12</span>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 3. THE CASE ==================== -->
+<section class="case" id="case">
+  <div class="wrap">
+    <div class="case-head">
+      <div>
+        <p class="kicker" data-reveal style="margin-bottom:var(--s4)">One of the twelve, opened</p>
+        <h2 class="title" data-reveal style="--d:60ms">BeatMind took a song apart in twenty-four days.</h2>
+      </div>
+      <p class="read" data-reveal style="--d:140ms">Stems, key, tempo and structure back from any track, then rebuild it in key.
+        <strong>The hard part was failure, not features:</strong> a resumable state machine with fencing tokens,
+        because GPU workers die and report nothing.</p>
+    </div>
+
+    <div class="figures">
+      <div class="fig" data-reveal><div class="v">24</div><div class="k">days, solo,<br>brief to live</div></div>
+      <div class="fig" data-reveal style="--d:60ms"><div class="v">307</div><div class="k">commits</div></div>
+      <div class="fig" data-reveal style="--d:120ms"><div class="v">30,500</div><div class="k">lines</div></div>
+      <div class="fig" data-reveal style="--d:180ms"><div class="v">299</div><div class="k">tests,<br>four tiers</div></div>
+      <div class="fig" data-reveal style="--d:240ms"><div class="v">70&rarr;23.4s</div><div class="k">stem separation,<br>after the fix</div></div>
+      <div class="fig zero" data-reveal style="--d:300ms"><div class="v">0</div><div class="k">users.<br>it stays on the page</div></div>
+    </div>
+
+    <div class="plates">
+      <figure data-reveal>
+        <div class="plate"><img src="__IMG_beatmind-stems-clean.png__" alt="Four coloured stem waveforms stacked in lanes, with 82 bpm and C sharp minor detected, and retune controls alongside."></div>
+        <figcaption class="data">Four stems, 82 bpm, C&#9839; minor</figcaption>
+      </figure>
+      <figure data-reveal style="--d:80ms">
+        <div class="plate"><img src="__IMG_beatmind-desktop.jpg__" alt="BeatMind's marketing page on cream: the headline Get inside the music, beside a disc of scattered particles."></div>
+        <figcaption class="data">The product page it ships behind</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 4. THE CORRECTIONS ==================== -->
+<section class="cor-sec" id="corrections">
+  <div class="wrap">
+    <div class="cor-head">
+      <h2 class="title" data-reveal>Four times I was wrong, written down.</h2>
+      <p class="read" data-reveal style="--d:100ms">Every developer publishes what worked. This is the other half, and it is the
+        only part that is hard to fake. <strong>No schedule. It grows when something breaks.</strong></p>
+    </div>
+    <div class="ledger">
+      <article class="entry" data-reveal>
+        <div class="when">02 Aug 2026</div>
+        <div>
+          <h3>A checkbox is not a rights check.</h3>
+          <p>I shipped a self-attestation tickbox for copyright, then deleted it. Export now has to resolve a
+            track's full lineage across two independent sources, and anything unresolvable blocks. The tickbox
+            would have moved liability onto the user while doing nothing about the problem.</p>
+        </div>
+      </article>
+      <article class="entry" data-reveal style="--d:90ms">
+        <div class="when">19 Jul 2026</div>
+        <div>
+          <h3>I predicted forty percent. I measured eight.</h3>
+          <p>A model swap that was supposed to be a large win was not, so it went back. The measurement is the
+            useful artifact, not the hypothesis. I keep the prediction next to the result so the gap stays visible.</p>
+        </div>
+      </article>
+      <article class="entry" data-reveal style="--d:180ms">
+        <div class="when">28 Jun 2026</div>
+        <div>
+          <h3>I declined to bypass the CAPTCHA.</h3>
+          <p>An automation I was building hit an invisible reCAPTCHA. Getting around it was possible. I shipped
+            assisted review instead, because the version that worked would have been the version I could not
+            describe to a client.</p>
+        </div>
+      </article>
+      <article class="entry" data-reveal style="--d:270ms">
+        <div class="when">11 Jun 2026</div>
+        <div>
+          <h3>Conditioning each shot on the last one made it worse.</h3>
+          <p>It was supposed to preserve continuity. At the guidance I was using, the previous frame's hand pose
+            overrode the text prompt, and the growing reference chain made later shots roughly four times slower.
+            A single character anchor fixed both.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 5. THE CLOSE ==================== -->
+<section class="close" id="close">
+  <div class="wrap">
+    <h2 class="display" data-reveal>Tell me what you are trying to build.</h2>
+    <p class="read" data-reveal style="--d:100ms">Most of what I do is a custom AI product end to end: retrieval over your own
+      documents, agents that take real actions, and the rules deciding when the system should stop. I also do automation
+      with a person in the loop, and the interface for the thing underneath. <strong>If it is a fit I will say so, and if
+      it is not I will tell you that instead.</strong></p>
+    <div class="close-cta" data-reveal style="--d:180ms">
+      <a class="act" href="mailto:parthti2003@gmail.com">Email me <span class="arw" aria-hidden="true">&rarr;</span></a>
+      <a class="act-2" href="#corrections">Read what went wrong</a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <footer class="foot">
+    <span class="kicker">Parth Tiwari &middot; AI Engineer</span>
+    <span class="kicker" style="display:flex;gap:var(--s5);flex-wrap:wrap">
+      <a href="https://github.com/parthtiwari-dev" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/parthtiwar1" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:parthti2003@gmail.com">Email</a>
+    </span>
+  </footer>
+</div>
+
+</main>
+
+<script>
+(function(){
+"use strict";
+var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- reveal ----------
+   The observed node is the PARENT, never the revealed element itself. A
+   clip-path that collapses a box to zero height also collapses its
+   intersection rect, so an observer watching its own hidden target reports
+   isIntersecting: false forever and the page stays blank. Parents are never
+   clipped, so they always resolve. */
+var revealables = Array.prototype.slice.call(document.querySelectorAll("[data-reveal]"));
+
+if (reduce || !("IntersectionObserver" in window)) {
+  revealables.forEach(function(el){ el.classList.add("seen"); });
+} else {
+  var groups = [];
+  var index  = [];
+  revealables.forEach(function(el){
+    var g = el.parentElement || el;
+    var at = index.indexOf(g);
+    if (at === -1) { index.push(g); groups.push([el]); }
+    else groups[at].push(el);
+  });
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      var at = index.indexOf(e.target);
+      if (at !== -1) groups[at].forEach(function(el){ el.classList.add("seen"); });
+      io.unobserve(e.target);
+    });
+  }, { rootMargin: "0px 0px -10% 0px", threshold: 0.02 });
+
+  index.forEach(function(g){ io.observe(g); });
+
+  /* Anything already on screen at load resolves on the next frame regardless,
+     so a short viewport or a restored scroll position never strands the fold. */
+  requestAnimationFrame(function(){
+    revealables.forEach(function(el){
+      var b = el.getBoundingClientRect();
+      if (b.top < innerHeight && b.bottom > 0) el.classList.add("seen");
+    });
+  });
+}
+
+/* ---------- the viewer ---------- */
+var list   = document.getElementById("reglist");
+var frames = Array.prototype.slice.call(document.querySelectorAll("#stage figure"));
+var vcap   = document.getElementById("vcap");
+var vidx   = document.getElementById("vidx");
+var byId   = {};
+frames.forEach(function(f){ byId[f.getAttribute("data-id")] = f; });
+var activeId = null;
+
+function rows(){ return Array.prototype.slice.call(list.querySelectorAll(".row")); }
+
+function show(id){
+  if (id === activeId || !byId[id]) return;
+  activeId = id;
+  frames.forEach(function(f){ f.classList.toggle("on", f.getAttribute("data-id") === id); });
+  var all = rows(), pos = 0;
+  all.forEach(function(r, i){
+    var on = r.getAttribute("data-id") === id;
+    r.setAttribute("aria-current", on ? "true" : "false");
+    if (on) { pos = i + 1; if (vcap) vcap.textContent = r.getAttribute("data-name"); }
+  });
+  if (vidx) vidx.textContent = String(pos).padStart(2,"0") + " / " + String(all.length).padStart(2,"0");
+}
+
+/* Intent wins while the pointer is in the list; otherwise the viewer follows
+   the scroll. Hover-only meant that scrolling the register past row six left
+   the plate showing row one — a preview of something no longer on screen. */
+var hovering = false;
+
+list.addEventListener("mouseover", function(e){
+  var r = e.target.closest(".row"); if (r) { hovering = true; show(r.getAttribute("data-id")); }
+});
+list.addEventListener("mouseleave", function(){ hovering = false; track(); });
+list.addEventListener("focusin", function(e){
+  var r = e.target.closest(".row"); if (r) show(r.getAttribute("data-id"));
+});
+list.addEventListener("click", function(e){
+  var r = e.target.closest(".row"); if (r) show(r.getAttribute("data-id"));
+});
+
+function track(){
+  if (hovering) return;
+  var stage = document.getElementById("stage");
+  if (!stage || !stage.offsetParent) return;          // viewer is hidden on phones
+  var eye = stage.getBoundingClientRect();
+  var aim = eye.top + eye.height / 2;
+  var best = null, dist = Infinity;
+  rows().forEach(function(r){
+    var b = r.getBoundingClientRect();
+    var d = Math.abs((b.top + b.height / 2) - aim);
+    if (d < dist) { dist = d; best = r; }
+  });
+  if (best) show(best.getAttribute("data-id"));
+}
+
+/* ---------- the set piece: the register re-sorts itself ----------
+   The ordering is an argument, so changing it is a real control rather than
+   a filter chip. FLIP because twelve rows moving at once is the only moment
+   on this page that earns heavy motion, and it earns it by carrying
+   information: you can watch the ranking disagree with itself. */
+var WEIGHT = { flagship:0, major:1, minor:2 };
+var STATUS = { active:0, "in-progress":1, complete:2, experience:3 };
+
+var comparators = {
+  weight: function(a,b){
+    return WEIGHT[a.weight] - WEIGHT[b.weight] || b.started.localeCompare(a.started);
+  },
+  date: function(a,b){
+    return b.started.localeCompare(a.started);
+  },
+  status: function(a,b){
+    return STATUS[a.status] - STATUS[b.status] || WEIGHT[a.weight] - WEIGHT[b.weight];
+  }
+};
+
+function reorder(key){
+  var items = Array.prototype.slice.call(list.children);
+
+  var first = items.map(function(li){ return li.getBoundingClientRect().top; });
+
+  var data = items.map(function(li, i){
+    var r = li.querySelector(".row");
+    return { li:li, i:i, first:first[i],
+      weight:r.getAttribute("data-weight"),
+      status:r.getAttribute("data-status"),
+      started:r.getAttribute("data-started") };
+  });
+
+  data.sort(comparators[key]);
+  data.forEach(function(d){ list.appendChild(d.li); });
+
+  /* renumber: the folio is a position in this ordering, not an id */
+  data.forEach(function(d, i){
+    var n = d.li.querySelector(".no");
+    if (n) n.textContent = String(i+1).padStart(2,"0");
+  });
+  if (activeId) { var keep = activeId; activeId = null; show(keep); }
+
+  if (reduce) return;
+
+  data.forEach(function(d, i){
+    var last = d.li.getBoundingClientRect().top;
+    var delta = d.first - last;
+    if (!delta) return;
+    d.li.classList.add("flip");
+    d.li.style.transition = "none";
+    d.li.style.transform = "translateY(" + delta + "px)";
+  });
+
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      data.forEach(function(d, i){
+        d.li.style.transition = "transform 620ms " + getComputedStyle(document.documentElement)
+          .getPropertyValue("--ease").trim() + " " + (i * 22) + "ms";
+        d.li.style.transform = "";
+      });
+    });
+  });
+
+  setTimeout(function(){
+    data.forEach(function(d){
+      d.li.style.transition = ""; d.li.classList.remove("flip");
+    });
+  }, 1000);
+}
+
+var sortbs = Array.prototype.slice.call(document.querySelectorAll(".sortb"));
+sortbs.forEach(function(b){
+  b.addEventListener("click", function(){
+    if (b.getAttribute("aria-pressed") === "true") return;
+    sortbs.forEach(function(o){ o.setAttribute("aria-pressed", String(o === b)); });
+    reorder(b.getAttribute("data-sort"));
+  });
+});
+
+/* ---------- the spine ---------- */
+var marks    = Array.prototype.slice.call(document.querySelectorAll("#spine a"));
+var sections = marks.map(function(a){ return document.querySelector(a.getAttribute("href")); });
+var pinned   = document.getElementById("pinned");
+var fold     = document.getElementById("fold");
+
+function onScroll(){
+  var mid = innerHeight * 0.42, best = 0;
+  sections.forEach(function(s, i){ if (s && s.getBoundingClientRect().top <= mid) best = i; });
+  marks.forEach(function(a, i){ a.classList.toggle("on", i === best); });
+  if (pinned && fold) pinned.classList.toggle("on", fold.getBoundingClientRect().bottom < 0);
+}
+addEventListener("scroll", function(){ onScroll(); track(); }, { passive:true });
+addEventListener("resize", function(){ onScroll(); track(); }, { passive:true });
+onScroll();
+
+var f0 = list.querySelector(".row");
+if (f0) show(f0.getAttribute("data-id"));
+track();
+})();
+</script>

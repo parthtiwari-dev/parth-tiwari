@@ -1,0 +1,936 @@
+<title>Paper and Worlds</title>
+<script>
+(function(){if(!document.querySelector('meta[name="viewport"]')){var m=document.createElement('meta');
+m.name='viewport';m.content='width=device-width, initial-scale=1';document.head.prepend(m);}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=DM+Mono:wght@400;500&display=swap">
+
+<style>
+/* ==========================================================================
+   PAPER AND WORLDS
+   One sheet of rag paper. Every project is an entry on it. Tearing an entry
+   opens that project's world, and the world is where the case study lives.
+
+   Rag paper + heavy grotesk + oxblood ink is a printer's register, not a
+   boutique one. That is deliberate: cream paper with a high-contrast serif
+   and a terracotta accent is the exact combination the anti-slop research
+   flags as the current generated default.
+   ========================================================================== */
+:root{
+  --paper:#EAE3D5; --paper-hi:#F3EDE1; --paper-lo:#D9CFBC; --paper-deep:#C7BCA5;
+  --ink:#1A1613; --ink-2:#4E463C; --ink-3:#6B6153; --ink-faint:#8B8172;
+  --rule:#BCB0999E;
+  --oxblood:#8E2116; --oxblood-deep:#6E170F;
+
+  --void:#0B0C0E; --void-2:#141619; --void-rule:#262A2F;
+  --void-ink:#F2F3F0; --void-ink-2:#9AA0A2;
+
+  --display:"Bricolage Grotesque","Archivo",Helvetica,Arial,sans-serif;
+  --sans:"Archivo",Helvetica,Arial,sans-serif;
+  --mono:"DM Mono",ui-monospace,Menlo,monospace;
+
+  --ease:cubic-bezier(.16,1,.3,1);
+  --tear-ease:cubic-bezier(.3,.05,.2,1);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--void)}
+body{font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{margin:0}
+p{margin:0}
+ol,ul{margin:0;padding:0;list-style:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;text-align:left}
+:focus-visible{outline:2px solid var(--oxblood);outline-offset:3px}
+.world :focus-visible{outline-color:#E8B7A8}
+
+/* ==========================================================================
+   THE STAGE — the world sits under the sheet, always
+   ========================================================================== */
+#stage{position:fixed;inset:0;background:var(--void);overflow:hidden}
+#worldCanvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#peekLight{position:absolute;inset:0;pointer-events:none;opacity:0;z-index:2;
+  --px:50%; --py:50%;
+  background:
+    radial-gradient(44vw 25vh at var(--px) var(--py), rgba(255,235,198,.52), transparent 74%),
+    radial-gradient(130% 110% at 50% 46%, rgba(255,238,208,.30), transparent 82%);
+  transition:opacity 420ms var(--ease)}
+#peekLight.on{opacity:1}
+#worldVeil{position:absolute;inset:0;pointer-events:none;
+   background:linear-gradient(180deg,rgba(11,12,14,.22),rgba(11,12,14,0) 34%,rgba(11,12,14,.55));
+   opacity:1;transition:opacity 420ms var(--ease)}
+#worldVeil.peeking{opacity:.25}
+
+/* ==========================================================================
+   THE SHEET
+   ========================================================================== */
+#sheetWrap{position:fixed;inset:0;z-index:10;pointer-events:none;
+  perspective:2200px;perspective-origin:50% 45%;
+  --px:-9999px; --py:-9999px; --pw:0px; --ph:0px}
+
+/* The sheet is a box that carries the deckle, the shadow and the tilt. The
+   paper surface and the content are separate layers inside it, because the
+   surface gets masked on hover and the type must not be masked with it. */
+.sheetshadow{
+  position:absolute;inset:clamp(10px,1.6vw,26px);
+  background:#000;opacity:.78;
+  filter:blur(34px);
+  transform:translateY(24px) scale(.985);
+  pointer-events:none;
+  transition:opacity 460ms var(--ease);
+}
+/* lit: the stock thins across the whole sheet, the shadow gets out of the way,
+   and the world behind comes up. The type never thins with it. */
+.lit .paper{opacity:.62}
+.lit .curl{opacity:.72}
+#sheetWrap.lit .sheetshadow{opacity:.20}
+.curl{transition:opacity 460ms var(--ease)}
+.sheetbox{
+  position:absolute;inset:clamp(10px,1.6vw,26px);
+  pointer-events:auto;
+  transform-style:preserve-3d;
+  will-change:transform;
+  transition:transform 420ms cubic-bezier(.2,.8,.3,1);
+}
+/* a crisp contact shadow right under the deckle, which the blurred layer
+   cannot give on its own */
+.sheetbox::after{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:4;
+  box-shadow:inset 0 0 40px rgba(74,58,34,.16);
+}
+.paper{
+  position:absolute;inset:0;
+  background-color:var(--paper);background-repeat:repeat;
+  /* the peek: hover an entry and the stock thins there, so the world under
+     the sheet shows through before anything is torn. */
+  transition:opacity 460ms var(--ease);
+}
+/* foxing, bloom and edge burn, so the stock is aged rather than tinted */
+.paper::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(118% 76% at 26% 8%,  rgba(255,253,247,.62), transparent 56%),
+    radial-gradient(26% 19% at 88% 22%,  rgba(158,126,78,.20), transparent 72%),
+    radial-gradient(19% 15% at 12% 62%,  rgba(158,126,78,.17), transparent 74%),
+    radial-gradient(15% 11% at 63% 88%,  rgba(166,134,86,.15), transparent 76%),
+    radial-gradient(11% 9%  at 41% 34%,  rgba(166,134,86,.12), transparent 78%),
+    radial-gradient(22% 16% at 76% 66%,  rgba(150,118,72,.13), transparent 74%),
+    radial-gradient(152% 132% at 50% 48%, transparent 42%, rgba(96,76,48,.40) 94%);
+}
+/* the rolled edges. Top catches light, the underside creases into shadow. */
+.curl{position:absolute;left:0;right:0;pointer-events:none;z-index:2}
+.curl-t{top:0;height:clamp(13px,2.1vh,30px);
+  background:linear-gradient(180deg,#B8A88A 0%,#D6C9AE 18%,#EFE7D7 46%,
+    #E2D8C2 70%,rgba(58,44,24,.34) 93%,rgba(38,28,14,.42) 100%)}
+.curl-b{bottom:0;height:clamp(13px,2.1vh,30px);
+  background:linear-gradient(0deg,#B8A88A 0%,#D6C9AE 18%,#EFE7D7 46%,
+    #E2D8C2 70%,rgba(58,44,24,.34) 93%,rgba(38,28,14,.42) 100%)}
+
+.sheet-inner{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;
+  padding:clamp(30px,4vw,64px) clamp(22px,4vw,64px);overflow:hidden;pointer-events:none}
+.sheet-inner > *{pointer-events:auto}
+
+/* ---- colophon ---- */
+.colo{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;flex:none}
+.colo span{font-family:var(--mono);font-size:clamp(9px,1vw,11px);letter-spacing:.17em;
+  text-transform:uppercase;color:var(--ink-3)}
+.colo b{color:var(--ink);font-weight:500}
+
+/* ---- the masthead ---- */
+.mast{flex:none;margin-top:clamp(18px,3.4vh,42px)}
+.mast h1{
+  font-family:var(--display);
+  font-size:clamp(30px,5.6vw,76px);
+  line-height:.96;letter-spacing:-.036em;max-width:15ch;
+  font-variation-settings:"opsz" 96,"wght" 640,"wdth" 92;
+  /* letterpress: ink sits a hair into the fibre */
+  text-shadow:0 1px 0 rgba(255,252,244,.5), 0 -1px 0 rgba(60,48,34,.09);
+}
+.mast .lede{margin-top:clamp(12px,1.8vh,22px);font-size:clamp(14px,1.35vw,18px);
+  line-height:1.55;color:var(--ink-2);max-width:46ch}
+.mast .lede b{color:var(--ink);font-weight:400;font-variation-settings:"wght" 640}
+
+/* ---- the index ---- */
+.idx-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+  margin-top:clamp(20px,3.2vh,40px);padding-bottom:8px;flex:none;
+  border-bottom:1px solid var(--rule)}
+.idx-head span{font-family:var(--mono);font-size:clamp(9px,.95vw,10.5px);letter-spacing:.17em;
+  text-transform:uppercase;color:var(--ink-3)}
+.idx{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;
+  scrollbar-width:thin;scrollbar-color:var(--paper-deep) transparent}
+.idx::-webkit-scrollbar{width:6px}
+.idx::-webkit-scrollbar-thumb{background:var(--paper-deep)}
+
+.entry{position:relative;display:grid;grid-template-columns:2.4rem minmax(0,1fr) auto;
+  gap:clamp(8px,1.4vw,20px);align-items:baseline;width:100%;cursor:pointer;
+  padding:clamp(9px,1.5vh,15px) 6px;border-bottom:1px solid var(--rule)}
+/* --ink-faint is 3:1 on this stock: a hairline tone, not a text tone. The
+   folios are numbers a reader reads, so they take --ink-3 (4.76:1). Measured
+   on the rendered sheet. */
+.entry .no{font-family:var(--mono);font-size:clamp(10px,1vw,12px);color:var(--ink-3);
+  font-variant-numeric:tabular-nums}
+.entry .nm{position:relative;z-index:2;font-family:var(--display);
+  font-size:clamp(16px,1.9vw,25px);line-height:1.1;letter-spacing:-.022em;
+  font-variation-settings:"opsz" 28,"wght" 560,"wdth" 92;
+  transition:color 260ms var(--ease),font-variation-settings 320ms var(--ease)}
+.entry .mt{position:relative;z-index:2;display:flex;gap:clamp(8px,1.2vw,18px);align-items:baseline;
+  font-family:var(--mono);font-size:clamp(8.5px,.9vw,10.5px);letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-3);white-space:nowrap}
+.entry .mt .built{color:var(--oxblood)}
+.entry:hover .nm,.entry:focus-visible .nm{color:var(--oxblood);
+  font-variation-settings:"opsz" 28,"wght" 620,"wdth" 100}
+
+/* the ink bleed: the accent wicks into the fibre under the entry.
+   feTurbulence + feDisplacementMap is what makes the edge feather instead of
+   drawing a clean ellipse, which is the difference between ink and a shape. */
+.entry .bleed{position:absolute;left:-10px;top:50%;z-index:1;
+  width:0;height:calc(100% + 8px);transform:translateY(-50%);
+  background:linear-gradient(90deg,rgba(142,33,22,.20),rgba(142,33,22,.10) 62%,transparent);
+  filter:url(#feather);pointer-events:none;
+  transition:width 620ms var(--ease)}
+.entry:hover .bleed,.entry:focus-visible .bleed{width:calc(100% + 20px)}
+
+/* ---- the foot of the sheet ---- */
+.foot{flex:none;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;
+  flex-wrap:wrap;padding-top:clamp(14px,2.2vh,24px);margin-top:clamp(10px,1.6vh,18px);
+  border-top:1px solid var(--rule)}
+.stamp{display:inline-flex;align-items:center;gap:10px;background:var(--oxblood);color:#F6EDE6;
+  font-size:clamp(12px,1.15vw,15px);font-variation-settings:"wght" 620,"wdth" 96;
+  padding:clamp(9px,1.3vh,14px) clamp(14px,1.6vw,22px);
+  transition:background 200ms var(--ease)}
+.stamp:hover{background:var(--oxblood-deep)}
+.foot .sig{font-family:var(--mono);font-size:clamp(8.5px,.9vw,10.5px);letter-spacing:.15em;
+  text-transform:uppercase;color:var(--ink-3);text-align:right;line-height:1.8}
+
+/* ==========================================================================
+   THE WORLD — what is behind the sheet
+   ========================================================================== */
+#world{position:fixed;inset:0;z-index:5;overflow-y:auto;overscroll-behavior:contain;
+  opacity:0;pointer-events:none;transition:opacity 420ms var(--ease)}
+#world.on{opacity:1;pointer-events:auto}
+.w-hero{height:78svh;min-height:380px;display:flex;align-items:flex-end;
+  padding:clamp(20px,4vw,64px);position:relative}
+.w-hero::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(to top,rgba(11,12,14,.97) 0%,rgba(11,12,14,.84) 24%,
+                    rgba(11,12,14,.22) 58%,transparent 88%),
+    linear-gradient(to right,rgba(11,12,14,.88),rgba(11,12,14,.35) 42%,transparent 68%)}
+.w-hero > div{position:relative;z-index:2}
+.w-hero .tag{font-family:var(--mono);font-size:clamp(9px,.95vw,11px);letter-spacing:.17em;
+  text-transform:uppercase;color:var(--void-ink-2);margin-bottom:14px;display:block}
+.w-hero h2{font-family:var(--display);font-size:clamp(34px,6vw,88px);line-height:.95;
+  letter-spacing:-.036em;color:var(--void-ink);max-width:14ch;
+  font-variation-settings:"opsz" 96,"wght" 640,"wdth" 94}
+.w-hero p{margin-top:16px;font-size:clamp(15px,1.4vw,19px);line-height:1.55;
+  color:var(--void-ink-2);max-width:52ch}
+.w-body{background:var(--void);padding:clamp(28px,5vw,80px) clamp(20px,4vw,64px) 30vh;
+  border-top:1px solid var(--void-rule)}
+.w-grid{display:grid;gap:clamp(24px,3vw,48px);max-width:1180px;margin:0 auto}
+@media(min-width:900px){.w-grid{grid-template-columns:11rem minmax(0,1fr)}}
+.w-blk{display:contents}
+.w-k{font-family:var(--mono);font-size:clamp(9px,.95vw,11px);letter-spacing:.15em;
+  text-transform:uppercase;color:var(--void-ink-2);padding-top:4px}
+.w-v{color:var(--void-ink-2);font-size:clamp(15px,1.3vw,17.5px);line-height:1.62;max-width:64ch;
+  padding-bottom:clamp(20px,2.6vw,36px);border-bottom:1px solid var(--void-rule)}
+.w-v strong{color:var(--void-ink);font-weight:400;font-variation-settings:"wght" 620}
+.w-v .stack{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.w-v .stack span{font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+  color:var(--void-ink-2);border:1px solid var(--void-rule);padding:5px 9px}
+.w-back{position:fixed;right:clamp(14px,2vw,28px);top:clamp(14px,2vw,28px);z-index:8;
+  font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--void-ink);border:1px solid var(--void-rule);background:rgba(11,12,14,.72);
+  padding:10px 14px;cursor:pointer;opacity:0;pointer-events:none;
+  transition:opacity 300ms var(--ease),border-color 200ms var(--ease)}
+.w-back.on{opacity:1;pointer-events:auto}
+.w-back:hover{border-color:var(--void-ink-2)}
+
+/* the torn halves, only alive during a tear */
+.shred{position:absolute;inset:clamp(10px,1.6vw,26px);z-index:11;pointer-events:none;
+  filter:drop-shadow(0 24px 40px rgba(0,0,0,.6));
+  will-change:transform,opacity}
+
+/* ---------- arrival: the sheet settles, then the ink goes down ---------- */
+@property --pw{syntax:"<length>";initial-value:0px;inherits:true}
+@property --ph{syntax:"<length>";initial-value:0px;inherits:true}
+
+.sheetbox.landing{animation:settle 1000ms cubic-bezier(.18,.9,.24,1) both}
+@keyframes settle{
+  0%{transform:translateY(-2.2%) scale(1.014);opacity:0}
+  55%{opacity:1}
+  100%{transform:translateY(0) scale(1);opacity:1}
+}
+/* names are laid down like ink, left to right, one after another */
+.wick .entry .nm{clip-path:inset(0 100% 0 0)}
+.wick .entry.inked .nm{clip-path:inset(0 -3% 0 0);
+  transition:clip-path 520ms cubic-bezier(.32,.72,.26,1)}
+.wick .entry .no,.wick .entry .mt{opacity:0;transition:opacity 420ms ease-out}
+.wick .entry.inked .no,.wick .entry.inked .mt{opacity:1}
+
+@media(prefers-reduced-motion:reduce){
+  .entry .bleed,.entry .nm,.stamp,#world,.w-back,.sheetbox,.paper{transition:none}
+  .sheetbox.landing{animation:none}
+  .wick .entry .nm{clip-path:none}
+  .wick .entry .no,.wick .entry .mt{opacity:1}
+  .shred{transition:opacity 200ms linear !important}
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="feather" x="-25%" y="-60%" width="150%" height="220%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.055 0.09" numOctaves="4" seed="11" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="13" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
+<div id="stage">
+  <canvas id="worldCanvas"></canvas>
+  <div id="peekLight"></div>
+  <div id="worldVeil"></div>
+</div>
+
+<div id="world" aria-hidden="true">
+  <div class="w-hero">
+    <div>
+      <span class="tag" id="wTag">Case study</span>
+      <h2 id="wName">BeatMind</h2>
+      <p id="wLede"></p>
+    </div>
+  </div>
+  <div class="w-body">
+    <div class="w-grid" id="wBody"></div>
+  </div>
+</div>
+<button type="button" class="w-back" id="wBack">Close the world</button>
+
+<div id="sheetWrap">
+  <div class="sheetshadow" id="sheetshadow"></div>
+  <div class="sheetbox" id="sheetbox">
+    <div class="paper" id="paper"></div>
+    <div class="curl curl-t" id="curlT"></div>
+    <div class="curl curl-b" id="curlB"></div>
+    <div class="sheet-inner">
+      <div class="colo">
+        <span><b>Parth Tiwari</b></span>
+        <span>AI Engineer</span>
+        <span>Independent &middot; India</span>
+      </div>
+
+      <div class="mast">
+        <h1>You can describe the product. I get it live.</h1>
+        <p class="lede">Every entry below is a system that runs. <b>Tear one open and you are inside it:</b>
+          what it does, how it was built, what broke, and what I changed after.</p>
+      </div>
+
+      <div class="idx-head">
+        <span>The index</span>
+        <span>Tear an entry to enter its world</span>
+      </div>
+      <div class="idx" id="idx"></div>
+
+      <div class="foot">
+        <a class="stamp" href="mailto:parthti2003@gmail.com">Start a project</a>
+        <span class="sig">Set on rag stock<br>Ink bleeds. So does the record.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ==========================================================================
+   THE STOCK
+   A fibre tile drawn once and repeated. Fine grain tiles without a visible
+   seam; the large-scale mottling is CSS gradients on ::before, so the sheet
+   never looks like a flat fill and nothing animates.
+   ========================================================================== */
+function stock(size){
+  var c = document.createElement("canvas");
+  c.width = c.height = size;
+  var x = c.getContext("2d");
+  x.fillStyle = "#EAE3D5"; x.fillRect(0, 0, size, size);
+  var i, n;
+  /* fibre: short strokes, wrapped so the tile joins itself */
+  for (i = 0; i < size * 5; i++) {
+    var px = Math.random() * size, py = Math.random() * size;
+    var a  = Math.random() * Math.PI, len = 1.5 + Math.random() * 5;
+    var lt = Math.random() > 0.5;
+    x.strokeStyle = lt ? "rgba(255,252,244," + (0.05 + Math.random() * 0.16) + ")"
+                       : "rgba(112,96,70,"   + (0.03 + Math.random() * 0.10) + ")";
+    x.lineWidth = Math.random() > 0.85 ? 1.2 : 0.6;
+    x.beginPath();
+    x.moveTo(px, py);
+    x.lineTo(px + Math.cos(a) * len, py + Math.sin(a) * len);
+    x.stroke();
+  }
+  /* flecks: the specks in real rag stock */
+  for (n = 0; n < size / 3; n++) {
+    x.fillStyle = "rgba(96,80,56," + (0.05 + Math.random() * 0.20) + ")";
+    var r = Math.random() * 0.9 + 0.25;
+    x.beginPath();
+    x.arc(Math.random() * size, Math.random() * size, r, 0, Math.PI * 2);
+    x.fill();
+  }
+  return c.toDataURL();
+}
+var STOCK    = stock(240);
+var sheetbox = document.getElementById("sheetbox");
+var paper    = document.getElementById("paper");
+paper.style.backgroundImage = "url(" + STOCK + ")";
+
+/* ==========================================================================
+   THE DECKLE EDGE
+   Real paper is torn, not guillotined. One seeded polygon, generated once,
+   so the sheet has the same edge every load rather than shimmering.
+   ========================================================================== */
+function seeded(str){
+  var s = 0, i;
+  for (i = 0; i < str.length; i++) s = (s * 31 + str.charCodeAt(i)) >>> 0;
+  return function(){ s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
+}
+function deckle(seed, steps, depth){
+  var r = seeded(seed), pts = [], i, t, d;
+  function edge(fx, fy){
+    for (i = 0; i < steps; i++) {
+      t = i / steps;
+      d = (r() * depth) + (r() > 0.86 ? depth * 1.5 : 0);
+      pts.push(fx(t, d) + "% " + fy(t, d) + "%");
+    }
+  }
+  edge(function(t){ return (t * 100).toFixed(2); }, function(t, d){ return d.toFixed(2); });
+  edge(function(t, d){ return (100 - d).toFixed(2); }, function(t){ return (t * 100).toFixed(2); });
+  edge(function(t){ return (100 - t * 100).toFixed(2); }, function(t, d){ return (100 - d).toFixed(2); });
+  edge(function(t, d){ return d.toFixed(2); }, function(t){ return (100 - t * 100).toFixed(2); });
+  return "polygon(" + pts.join(",") + ")";
+}
+/* Fewer, deeper, more uneven bites read as torn stock; a fast even zigzag
+   reads as pinking shears. */
+var DECKLE = deckle("parth-rag-stock", 26, 1.15);
+sheetbox.style.clipPath = DECKLE;
+var sheetshadow = document.getElementById("sheetshadow");
+sheetshadow.style.clipPath = DECKLE;
+
+/* ==========================================================================
+   THE ENTRIES
+   Rendered from one array and never counted in prose. Adding a project is
+   adding a row; nothing in the design states how many there are.
+   ========================================================================== */
+var ENTRIES = [
+  { id:"beatmind", name:"BeatMind", year:"2026", state:"Live", world:"waves",
+    lede:"A track goes in whole. Stems, key, tempo and a 68 bar arrangement come back out.",
+    body:[
+      ["What it is","Upload a song and get it back in parts: four separated stems, detected key and tempo, every section and chord change mapped, and an editor that lets you rebuild it in a different key."],
+      ["The hard part","<strong>Failure, not features.</strong> GPU workers die mid job and report nothing. The pipeline is a resumable state machine with lease tokens, per stage timeouts and fencing, so a dead worker loses one stage rather than the run."],
+      ["Measured","Stem separation went 70s to 23.4s after root causing a missing <code>libcublasLt.so.13</code> that had onnxruntime silently falling back to CPU while the GPU sat idle. Re verified on T4 and L4."],
+      ["What broke","I shipped a self attestation tickbox for copyright, then deleted it. A checkbox is not a rights check. Export now resolves a track's full lineage across two independent sources and blocks anything unresolvable."],
+      ["Built with","Next.js 16 · React 19 · Modal · ACE-Step · BS-RoFormer · Neon · Drizzle"]
+    ]},
+  { id:"stick-and-dot", name:"Vivid", year:"2026", state:"Live", world:"denoise",
+    lede:"A script becomes a shot by shot storyboard, scored for prompt alignment and face consistency.",
+    body:[
+      ["What it is","Paste a script. It plans the shots, generates each frame with a consistent character across all of them, and scores the result rather than asking you to eyeball it."],
+      ["The hard part","Identity that survives a whole sequence. <strong>I trained the model it runs on</strong>, dataset pipeline included, 2,250 steps."],
+      ["What broke","Conditioning each shot on the previous shot's pixels was meant to preserve continuity. At the guidance I was using, the previous frame's hand pose overrode the text prompt, and the growing reference chain made later shots roughly four times slower. A single character anchor fixed both."],
+      ["Built with","FLUX.1-dev · PuLID · LoRA · CLIP scoring · Groq · RunPod"]
+    ]},
+  { id:"tathya", name:"Tathya", year:"2026", state:"In progress", world:"cluster",
+    lede:"An autonomous record of India's Union Government. No topic is chosen by hand.",
+    body:[
+      ["What it is","It watches public sources, clusters what it finds into sourced case files, and issues no verdict. Every claim carries its source and the reader decides."],
+      ["The hard part","Deciding nothing. The temptation in a system like this is to summarise into a conclusion. <strong>It states what each source actually said</strong> and stops."],
+      ["Built with","Python · FastAPI · Next.js · Supabase · PostgreSQL"]
+    ]},
+  { id:"medrag", name:"MedRAG", year:"2026", state:"Shipped", world:"embed",
+    lede:"Evidence bound medical retrieval, with citations and a refusal when nothing supports the claim.",
+    body:[
+      ["What it is","Ask a clinical question and get an answer that carries its sources, or no answer at all. The refusal is the feature."],
+      ["The hard part","<strong>Knowing when to stop.</strong> A retrieval system that always answers is a system that will confidently invent one. Roughly 20% of adversarial inputs are refused rather than answered."],
+      ["Built with","RAG · ChromaDB · BM25 · SentenceTransformers · FastAPI · RAGAS"]
+    ]},
+  { id:"order-supervisor", name:"Order Supervisor", year:"2026", state:"Shipped", world:"trace",
+    lede:"Temporal order workflows where lifecycle authority stays outside the model.",
+    body:[
+      ["What it is","An agent handles the conversation. It never owns the order state. Temporal does, and the model can only propose transitions the workflow is willing to accept."],
+      ["The hard part","<strong>Refusing to let the model be the source of truth</strong>, which is the shortest path and the wrong one."],
+      ["Built with","Temporal · FastAPI · Next.js · PostgreSQL · OpenAI API"]
+    ]},
+  { id:"secondself", name:"SecondSelf", year:"2026", state:"Live" },
+  { id:"querypilot", name:"QueryPilot", year:"2026", state:"Shipped" },
+  { id:"oncoverse", name:"OncoVerse", year:"2026", state:"In progress" },
+  { id:"upi-fraud", name:"UPI Fraud Engine", year:"2026", state:"Shipped" },
+  { id:"support-core", name:"Spur Chat", year:"2026", state:"Shipped" },
+  { id:"fraud-risk-intel", name:"Fraud Risk Intel", year:"2025", state:"Shipped" },
+  { id:"oracle-auto-provision", name:"Oracle Auto Provision", year:"2026", state:"Running" }
+];
+
+var idx = document.getElementById("idx");
+ENTRIES.forEach(function(e, i){
+  var b = document.createElement("button");
+  b.type = "button";
+  b.className = "entry";
+  b.setAttribute("data-i", i);
+  b.setAttribute("aria-label", "Open the " + e.name + " world");
+  b.innerHTML =
+    '<span class="bleed"></span>' +
+    '<span class="no">' + String(i + 1).padStart(2, "0") + '</span>' +
+    '<span class="nm">' + e.name + '</span>' +
+    '<span class="mt"><span>' + e.state + '</span><span>' + e.year + '</span>' +
+      (e.world ? '<span class="built">World built</span>' : '<span>&nbsp;</span>') + '</span>';
+  idx.appendChild(b);
+});
+
+/* ==========================================================================
+   THE WORLDS
+   Same generators as the design lock: each draws from the shape of that
+   project's real output rather than decorating over it.
+   ========================================================================== */
+var STEM = ["#E86A8A", "#E8913C", "#4F9BE8", "#4FD39B"];
+var DIM = "#7E858B", GRID = "#22262B", INK = "#F2F3F0";
+
+function waves(ctx, w, h, t){
+  ctx.fillStyle = "#0B0C0E"; ctx.fillRect(0, 0, w, h);
+  var pad = Math.max(18, w * 0.06), top = h * 0.22;
+  var laneH = (h - top - pad) / 4, r = seeded("beatmind-stems"), env = [], i, k;
+  for (i = 0; i < 4; i++) { env[i] = []; for (k = 0; k < 260; k++) env[i].push(r()); }
+  var play = (t % 6) / 6;
+  for (var L = 0; L < 4; L++) {
+    var cy = top + laneH * L + laneH / 2;
+    ctx.strokeStyle = GRID; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(pad, cy); ctx.lineTo(w - pad, cy); ctx.stroke();
+    var bars = Math.floor((w - pad * 2) / 3);
+    for (var b = 0; b < bars; b++) {
+      var u = b / bars, e = env[L][Math.floor(u * 259)];
+      var shape = 0.32 + 0.68 * Math.abs(Math.sin(u * Math.PI * 2.3 + L * 0.7));
+      var amp = e * shape * (laneH * 0.40);
+      if (Math.abs(u - play) < 0.02) amp *= 1.5;
+      var liveBar = u < play;
+      ctx.fillStyle = liveBar ? STEM[L] : "#2C3238";
+      ctx.globalAlpha = liveBar ? (0.55 + 0.45 * Math.abs(Math.sin(u * 40 + t * 2))) : 1;
+      ctx.fillRect(pad + b * 3, cy - amp, 2, amp * 2);
+    }
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = STEM[L]; ctx.fillRect(pad, cy - laneH * 0.42, 2, laneH * 0.84);
+    ctx.font = "500 " + Math.max(9, w * 0.011) + "px 'DM Mono', monospace";
+    ctx.fillStyle = DIM;
+    ctx.fillText(["VOCALS","DRUMS","BASS","OTHER"][L], pad + 9, cy - laneH * 0.30);
+  }
+  var px = pad + (w - pad * 2) * play;
+  ctx.strokeStyle = INK; ctx.globalAlpha = .7; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(px, top - 8); ctx.lineTo(px, h - pad); ctx.stroke();
+  ctx.globalAlpha = 1;
+}
+
+function denoise(ctx, w, h, t){
+  var cycle = 8, u = (t % cycle) / cycle;
+  var p = Math.min(1, Math.pow(Math.min(u / 0.7, 1), 0.75));
+  ctx.fillStyle = "#0B0C0E"; ctx.fillRect(0, 0, w, h);
+  var hy = h * 0.74;
+  var sky = ctx.createLinearGradient(0, 0, 0, hy);
+  sky.addColorStop(0, "#150F1E"); sky.addColorStop(.45, "#4A2338");
+  sky.addColorStop(.78, "#B4552F"); sky.addColorStop(1, "#E2884A");
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, w, hy);
+  ctx.globalAlpha = .9; ctx.fillStyle = "#F3B268";
+  ctx.beginPath(); ctx.arc(w * .70, hy - h * .05, h * .075, 0, Math.PI * 2); ctx.fill();
+  ctx.globalAlpha = 1;
+  for (var b = 0; b < 5; b++) {
+    ctx.fillStyle = "rgba(233,150,90," + (.05 + b * .02) + ")";
+    ctx.fillRect(0, hy - h * (.28 - b * .045), w, h * .012);
+  }
+  [{ base:.63, amp:.05, f:1.7, col:"#3A2333", ph:0 },
+   { base:.69, amp:.04, f:2.6, col:"#241826", ph:1.3 },
+   { base:.75, amp:.03, f:3.9, col:"#120D18", ph:2.7 }].forEach(function(R){
+    ctx.beginPath(); ctx.moveTo(0, h);
+    for (var x = 0; x <= w; x += 4) {
+      var uu = x / w;
+      var y = R.base + Math.sin(uu * R.f * Math.PI * 2 + R.ph) * R.amp * .6
+                     + Math.sin(uu * R.f * 2.3 * Math.PI + R.ph * 1.7) * R.amp * .4;
+      ctx.lineTo(x, y * h);
+    }
+    ctx.lineTo(w, h); ctx.closePath(); ctx.fillStyle = R.col; ctx.fill();
+  });
+  ctx.fillStyle = "#0A070D"; ctx.fillRect(0, h * .88, w, h * .12);
+  if (p < 1) {
+    var cell = Math.max(2, Math.round(w / 190));
+    var rr = seeded("vivid-latent-" + Math.floor(t * 6));
+    ctx.globalAlpha = 1 - p;
+    for (var y2 = 0; y2 < h; y2 += cell) for (var x2 = 0; x2 < w; x2 += cell) {
+      var v = rr(); if (v < .42) continue;
+      ctx.fillStyle = "rgb(" + ((v*235)|0) + "," + ((v*210)|0) + "," + ((v*245)|0) + ")";
+      ctx.fillRect(x2, y2, cell, cell);
+    }
+    ctx.globalAlpha = 1;
+  }
+  ctx.font = "500 " + Math.max(10, w * .011) + "px 'DM Mono', monospace";
+  ctx.fillStyle = INK;
+  ctx.fillText("step " + String(Math.round(p * 28)).padStart(2,"0") + " / 28", 20, h * .93);
+  ctx.fillStyle = GRID; ctx.fillRect(20, h * .945, w - 40, 2);
+  ctx.fillStyle = "#E86A8A"; ctx.fillRect(20, h * .945, (w - 40) * p, 2);
+}
+
+var STAGES = [["probe",.4],["fetch",1.6],["decode",2.1],["separate",23.4,1],
+              ["analyse",4.2],["chords",3.1],["arrange",2.8],["persist",.9]];
+function trace(ctx, w, h, t){
+  ctx.fillStyle = "#0B0C0E"; ctx.fillRect(0, 0, w, h);
+  var pad = Math.max(20, w * .06), top = h * .18;
+  var total = STAGES.reduce(function(a, s){ return a + s[1] + (s[2] ? 6 : 0); }, 0);
+  var avail = w - pad * 2, rowH = (h - top - pad) / STAGES.length;
+  var played = ((t % 9) / 9) * total, acc = 0;
+  for (var i = 0; i < STAGES.length; i++) {
+    var s = STAGES[i], y = top + i * rowH, x0 = pad + avail * .26, barW = avail * .74;
+    ctx.font = "400 " + Math.max(9, w * .0105) + "px 'DM Mono', monospace";
+    ctx.fillStyle = DIM; ctx.fillText(s[0], pad, y + rowH * .62);
+    if (s[2]) {
+      var fw = barW * (6 / total), fdone = Math.max(0, Math.min(1, (played - acc) / 6));
+      ctx.fillStyle = "#3A1D1A";
+      ctx.fillRect(x0 + barW * (acc / total), y + rowH * .3, fw * fdone, rowH * .34);
+      if (fdone >= 1) {
+        ctx.fillStyle = "#B8241A";
+        ctx.fillRect(x0 + barW * (acc / total), y + rowH * .3, fw, 2);
+        ctx.font = "500 " + Math.max(8, w * .009) + "px 'DM Mono', monospace";
+        ctx.fillText("worker lost", x0 + barW * (acc / total) + 5, y + rowH * .22);
+      }
+      acc += 6;
+    }
+    var sw = barW * (s[1] / total), done = Math.max(0, Math.min(1, (played - acc) / s[1]));
+    ctx.fillStyle = "#1E2429";
+    ctx.fillRect(x0 + barW * (acc / total), y + rowH * .3, sw, rowH * .34);
+    ctx.fillStyle = s[2] ? "#4FD39B" : "#4F9BE8";
+    ctx.globalAlpha = done > 0 ? 1 : .25;
+    ctx.fillRect(x0 + barW * (acc / total), y + rowH * .3, sw * done, rowH * .34);
+    ctx.globalAlpha = 1;
+    if (done >= 1) {
+      ctx.fillStyle = DIM;
+      ctx.font = "400 " + Math.max(8, w * .0092) + "px 'DM Mono', monospace";
+      ctx.fillText(s[1] + "s", x0 + barW * (acc / total) + sw + 6, y + rowH * .58);
+    }
+    acc += s[1];
+  }
+}
+
+function embed(ctx, w, h, t){
+  ctx.fillStyle = "#0B0C0E"; ctx.fillRect(0, 0, w, h);
+  var r = seeded("medrag-space"), pts = [];
+  [[.24,.32],[.70,.26],[.42,.72],[.80,.68],[.55,.46]].forEach(function(c, ci){
+    for (var i = 0; i < 30; i++) {
+      var a = r() * Math.PI * 2, rad = Math.pow(r(), .6) * .12;
+      pts.push({ x:c[0] + Math.cos(a) * rad, y:c[1] + Math.sin(a) * rad * .82, c:ci });
+    }
+  });
+  var u = (t % 9) / 9, qi = Math.floor(u * 2) % 2;
+  var q = qi === 0 ? { x:.28, y:.36, ok:true } : { x:.60, y:.58, ok:false };
+  var pulse = (u * 2) % 1;
+  pts.forEach(function(p){
+    var dx = p.x - q.x, dy = p.y - q.y, d = Math.sqrt(dx * dx + dy * dy);
+    var cited = q.ok && d < .14;
+    ctx.beginPath(); ctx.arc(p.x * w, p.y * h, cited ? 3.4 : 2.3, 0, Math.PI * 2);
+    ctx.fillStyle = cited ? "#4FD39B" : "#333A40"; ctx.fill();
+    if (cited && pulse > .12) {
+      ctx.strokeStyle = "rgba(79,211,155,.32)"; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(q.x * w, q.y * h); ctx.lineTo(p.x * w, p.y * h); ctx.stroke();
+    }
+  });
+  ctx.strokeStyle = q.ok ? "rgba(79,211,155,.4)" : "rgba(184,36,26,.45)";
+  ctx.setLineDash([3, 4]);
+  ctx.beginPath(); ctx.arc(q.x * w, q.y * h, .14 * Math.min(w, h) * .9, 0, Math.PI * 2); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.beginPath(); ctx.arc(q.x * w, q.y * h, 5.5, 0, Math.PI * 2);
+  ctx.fillStyle = q.ok ? "#4FD39B" : "#B8241A"; ctx.fill();
+  ctx.font = "500 " + Math.max(10, w * .011) + "px 'DM Mono', monospace";
+  ctx.fillStyle = q.ok ? "#4FD39B" : "#B8241A";
+  ctx.fillText(q.ok ? "4 sources cited" : "no support in range, refused", 20, h * .93);
+}
+
+function cluster(ctx, w, h, t){
+  ctx.fillStyle = "#0B0C0E"; ctx.fillRect(0, 0, w, h);
+  var r = seeded("tathya-sources"), n = 260;
+  var settle = Math.min(1, Math.pow(Math.min(((t % 10) / 10) / .7, 1), .8));
+  var C = [];
+  for (var k = 0; k < 9; k++) C.push([.13 + (k % 3) * .37, .20 + ((k / 3) | 0) * .30]);
+  for (var i = 0; i < n; i++) {
+    var sx = r(), sy = r(), ci = (r() * 9) | 0;
+    var a = r() * Math.PI * 2, rad = Math.pow(r(), .7) * .08;
+    var tx = C[ci][0] + Math.cos(a) * rad, ty = C[ci][1] + Math.sin(a) * rad * .9;
+    var e = Math.min(1, Math.max(0, settle * 1.25 - (i / n) * .25));
+    ctx.beginPath();
+    ctx.arc((sx + (tx - sx) * e) * w, (sy + (ty - sy) * e) * h, 1.9, 0, Math.PI * 2);
+    ctx.fillStyle = e > .92 ? "#4FD39B" : "#39424A";
+    ctx.globalAlpha = .45 + e * .55; ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+  ctx.font = "500 " + Math.max(10, w * .011) + "px 'DM Mono', monospace";
+  ctx.fillStyle = INK;
+  ctx.fillText("no topic chosen by hand", 20, h * .93);
+}
+
+function unbuilt(ctx, w, h){
+  ctx.fillStyle = "#101215"; ctx.fillRect(0, 0, w, h);
+  ctx.strokeStyle = "#1E242A"; ctx.lineWidth = 1;
+  for (var y = (h % 40) / 2; y < h; y += 40) {
+    ctx.beginPath(); ctx.moveTo(0, y + .5); ctx.lineTo(w, y + .5); ctx.stroke();
+  }
+  ctx.strokeStyle = "#262D34";
+  ctx.setLineDash([6, 8]);
+  ctx.strokeRect(w * .08, h * .16, w * .84, h * .62);
+  ctx.setLineDash([]);
+}
+
+var GEN = { waves:waves, denoise:denoise, trace:trace, embed:embed, cluster:cluster, unbuilt:unbuilt };
+
+/* ---------- one clock ---------- */
+var cv = document.getElementById("worldCanvas"), cx = cv.getContext("2d");
+var CUR = "waves", vw = 0, vh = 0;
+function sizeCanvas(){
+  var dpr = Math.min(devicePixelRatio || 1, 2);
+  vw = innerWidth; vh = innerHeight;
+  cv.width = Math.round(vw * dpr); cv.height = Math.round(vh * dpr);
+  cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+sizeCanvas();
+var t0 = performance.now(), lastFrame = 0, drawnOnce = false;
+function tick(now){
+  requestAnimationFrame(tick);
+  if (now - lastFrame < 33) return;            /* 30fps ceiling */
+  lastFrame = now;
+  if (document.hidden) return;
+  if (reduce) { if (drawnOnce) return; GEN[CUR](cx, vw, vh, 7.2); drawnOnce = true; return; }
+  GEN[CUR](cx, vw, vh, (now - t0) / 1000);
+}
+requestAnimationFrame(tick);
+
+/* ==========================================================================
+   THE TEAR
+   The sheet splits along a jagged seam and the two halves leave in opposite
+   directions. Nothing is gated behind it: the world's content is real DOM
+   underneath, so the tear can fail and the case study still opens.
+   ========================================================================== */
+function seam(seed){
+  var r = seeded(seed), pts = [], i, y;
+  var mid = 34 + r() * 30;
+  for (i = 0; i <= 26; i++) {
+    y = mid + (r() - .5) * 15 + Math.sin(i * .8) * 2.6;
+    pts.push([(i / 26 * 100), y]);
+  }
+  var top = "polygon(-2% -2%," + pts.map(function(p){ return p[0].toFixed(2) + "% " + p[1].toFixed(2) + "%"; }).join(",") + ",102% -2%)";
+  var bot = "polygon(-2% 102%," + pts.map(function(p){ return p[0].toFixed(2) + "% " + p[1].toFixed(2) + "%"; }).join(",") + ",102% 102%)";
+  return [top, bot];
+}
+
+var wrap    = document.getElementById("sheetWrap");
+var worldEl = document.getElementById("world");
+var backBtn = document.getElementById("wBack");
+var wName   = document.getElementById("wName");
+var wLede   = document.getElementById("wLede");
+var wTag    = document.getElementById("wTag");
+var wBody   = document.getElementById("wBody");
+var busy = false, openId = null;
+
+function fillWorld(e){
+  wName.textContent = e.name;
+  wLede.textContent = e.lede || "";
+  wTag.textContent  = e.world ? "Case study" : "World not built yet";
+  wBody.innerHTML = "";
+  var rows = e.body || [
+    ["Not written yet","This entry has an index row and no world behind it. <strong>An empty slot beats a mocked up one</strong>, so it says so rather than filling the space."]
+  ];
+  rows.forEach(function(row){
+    var k = document.createElement("div"); k.className = "w-k"; k.textContent = row[0];
+    var v = document.createElement("div"); v.className = "w-v";
+    v.innerHTML = row[0] === "Built with"
+      ? '<div class="stack">' + row[1].split(" · ").map(function(s){ return "<span>" + s + "</span>"; }).join("") + "</div>"
+      : row[1];
+    wBody.appendChild(k); wBody.appendChild(v);
+  });
+}
+
+function openWorld(i){
+  if (busy) return;
+  var e = ENTRIES[i];
+  busy = true; openId = i;
+  CUR = e.world || "unbuilt"; drawnOnce = false;
+  fillWorld(e);
+
+  var reveal = function(){
+    worldEl.classList.add("on");
+    worldEl.setAttribute("aria-hidden", "false");
+    backBtn.classList.add("on");
+    worldEl.scrollTop = 0;
+    busy = false;
+  };
+
+  if (reduce) { wrap.style.display = "none"; reveal(); return; }
+
+  clearPeek();
+  wrap.classList.remove("lit");
+  sheetbox.classList.remove("lit");
+  veil.classList.remove("peeking");
+  var pair = seam("tear-" + e.id);
+  var halves = [];
+  [0, 1].forEach(function(k){
+    var sh = sheetbox.cloneNode(true);
+    sh.removeAttribute("id");
+    sh.className = "shred";
+    var pp = sh.querySelector(".paper");
+    if (pp) {
+      pp.style.backgroundImage = "url(" + STOCK + ")";
+      pp.style.webkitMaskImage = "none";
+      pp.style.maskImage = "none";
+    }
+    sh.style.clipPath = pair[k];
+    sh.style.transition = "transform 900ms var(--tear-ease), opacity 620ms ease-in 60ms";
+    wrap.appendChild(sh);
+    halves.push(sh);
+  });
+  sheetbox.style.visibility = "hidden";
+  sheetshadow.style.opacity = "0";
+  sheetshadow.style.transition = "opacity 420ms ease-out";
+
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      halves[0].style.transform = "translate(-9%,-64%) rotate(-4.5deg)";
+      halves[1].style.transform = "translate(9%,66%) rotate(3.5deg)";
+      halves[0].style.opacity = "0";
+      halves[1].style.opacity = "0";
+    });
+  });
+
+  setTimeout(reveal, 520);
+  setTimeout(function(){
+    halves.forEach(function(s){ s.remove(); });
+    wrap.style.display = "none";
+  }, 1000);
+}
+
+function closeWorld(){
+  if (busy) return;
+  busy = true;
+  worldEl.classList.remove("on");
+  worldEl.setAttribute("aria-hidden", "true");
+  backBtn.classList.remove("on");
+  wrap.style.display = "";
+  sheetbox.style.visibility = "";
+  sheetshadow.style.transition = "opacity 520ms ease-in";
+  sheetshadow.style.opacity = "";
+  if (reduce) { busy = false; restoreFocus(); return; }
+  sheetbox.style.transition = "none";
+  sheetbox.style.transform = "scale(1.035)";
+  sheetbox.style.opacity = "0";
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      sheetbox.style.transition = "transform 620ms var(--ease), opacity 420ms ease-out";
+      sheetbox.style.transform = "scale(1)";
+      sheetbox.style.opacity = "1";
+    });
+  });
+  setTimeout(function(){
+    sheetbox.style.transition = ""; sheetbox.style.transform = ""; sheetbox.style.opacity = "";
+    busy = false; restoreFocus();
+  }, 640);
+}
+
+function restoreFocus(){
+  if (openId == null) return;
+  var el = idx.querySelector('.entry[data-i="' + openId + '"]');
+  if (el) el.focus();
+  openId = null;
+}
+
+/* ==========================================================================
+   THE PEEK
+   Hovering an entry thins the stock over that row, so the world running
+   underneath shows through before anything is torn. This is the invitation:
+   you see the world, then you decide to go in. The type is a separate layer,
+   so it stays on paper while the paper around it opens.
+   ========================================================================== */
+var peekRow = null;
+var light = document.getElementById("peekLight");
+function setPeek(cx, cy, on){
+  light.style.setProperty("--px", cx + "px");
+  light.style.setProperty("--py", cy + "px");
+  light.classList.toggle("on", !!on);
+  wrap.classList.toggle("lit", !!on);
+  sheetbox.classList.toggle("lit", !!on);
+}
+var veil = document.getElementById("worldVeil");
+function clearPeek(){
+  peekRow = null;
+  setPeek(-9999, -9999, false);
+  veil.classList.remove("peeking");
+}
+
+if (!reduce) {
+  idx.addEventListener("pointermove", function(ev){
+    var row = ev.target.closest(".entry");
+    if (!row) { if (peekRow) clearPeek(); return; }
+    var pe = ENTRIES[Number(row.getAttribute("data-i"))];
+    if (!pe.world) { if (peekRow) clearPeek(); return; }
+    var rr = row.getBoundingClientRect();
+    if (row !== peekRow) {
+      CUR = pe.world; drawnOnce = false;
+      veil.classList.add("peeking");
+    }
+    peekRow = row;
+    setPeek(ev.clientX, rr.top + rr.height / 2, true);
+  }, { passive: true });
+  idx.addEventListener("pointerleave", clearPeek, { passive: true });
+  idx.addEventListener("focusin", function(ev){
+    var row = ev.target.closest(".entry");
+    if (!row) return;
+    var fe = ENTRIES[Number(row.getAttribute("data-i"))];
+    if (!fe.world) { clearPeek(); return; }
+    var rr = row.getBoundingClientRect();
+    CUR = fe.world; drawnOnce = false;
+    veil.classList.add("peeking");
+    setPeek(rr.left + rr.width * 0.62, rr.top + rr.height / 2, true);
+  });
+  idx.addEventListener("focusout", clearPeek);
+}
+
+/* ---------- the sheet has weight: it leans toward the pointer ---------- */
+if (!reduce && matchMedia("(hover:hover) and (pointer:fine)").matches) {
+  var tiltRaf = 0, tiltX = 0, tiltY = 0;
+  addEventListener("pointermove", function(ev){
+    tiltX = (ev.clientX / innerWidth - 0.5) * 2;
+    tiltY = (ev.clientY / innerHeight - 0.5) * 2;
+    if (tiltRaf) return;
+    tiltRaf = requestAnimationFrame(function(){
+      tiltRaf = 0;
+      if (sheetbox.classList.contains("landing")) return;
+      sheetbox.style.transform =
+        "rotateY(" + (tiltX * 1.5).toFixed(2) + "deg) rotateX(" + (-tiltY * 1.1).toFixed(2) + "deg)";
+    });
+  }, { passive: true });
+}
+
+/* ---------- arrival: the sheet settles, then the ink goes down ---------- */
+if (!reduce) {
+  idx.classList.add("wick");
+  sheetbox.classList.add("landing");
+  var inkRows = idx.querySelectorAll(".entry");
+  setTimeout(function(){
+    inkRows.forEach(function(r, i){
+      setTimeout(function(){ r.classList.add("inked"); }, i * 62);
+    });
+  }, 560);
+  setTimeout(function(){ sheetbox.classList.remove("landing"); }, 1050);
+}
+
+idx.addEventListener("click", function(ev){
+  var b = ev.target.closest(".entry");
+  if (b) openWorld(Number(b.getAttribute("data-i")));
+});
+backBtn.addEventListener("click", closeWorld);
+addEventListener("keydown", function(ev){
+  if (ev.key === "Escape" && worldEl.classList.contains("on")) closeWorld();
+});
+
+var resizeTimer;
+addEventListener("resize", function(){
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(function(){ sizeCanvas(); drawnOnce = false; }, 120);
+}, { passive:true });
+})();
+</script>
