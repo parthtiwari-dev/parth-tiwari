@@ -103,8 +103,8 @@ a{color:inherit;text-decoration:none}
 .route.live{display:block}
 
 /* ---------------- ACT 1: the scrubbed hero ---------------- */
-.scrub{position:relative;height:340vh}
-@media(max-width:899px){.scrub{height:270vh}}
+.scrub{position:relative;height:210vh;scroll-margin-top:88px}
+@media(max-width:899px){.scrub{height:190vh}}
 .pin{position:sticky;top:0;height:100svh;display:flex;align-items:center;overflow:hidden}
 .pin-grid{display:grid;gap:var(--s6);width:100%;align-items:center}
 @media(min-width:960px){.pin-grid{grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:var(--s8)}}
@@ -115,24 +115,20 @@ a{color:inherit;text-decoration:none}
 @keyframes ping{0%{transform:scale(1);opacity:.55}70%,100%{transform:scale(3.2);opacity:0}}
 
 h1{font-size:clamp(38px,6.6vw,76px);line-height:1.0;letter-spacing:-.042em;margin:0 0 var(--s5);
-   max-width:15ch;font-variation-settings:"wght" 760,"wdth" 88;min-height:3.1em}
+   max-width:15ch;font-variation-settings:"wght" 760,"wdth" 88}
 .scram{display:inline-block;white-space:pre-wrap}
 .scram u{text-decoration:none;color:var(--ink3);opacity:.55}
 
-.hero-lede{font-size:clamp(16px,1.85vw,20px);line-height:1.55;color:var(--ink2);max-width:44ch;margin:0 0 var(--s6);
-           opacity:0;transform:translateY(14px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
-.hero-lede.on{opacity:1;transform:none}
+.hero-lede{font-size:clamp(16px,1.85vw,20px);line-height:1.55;color:var(--ink2);max-width:44ch;margin:0 0 var(--s6)}
 .hero-lede b{color:var(--ink);font-variation-settings:"wght" 620}
-.hero-cta{display:flex;flex-wrap:wrap;gap:var(--s4);align-items:center;
-          opacity:0;transform:translateY(14px);transition:opacity .6s var(--ease) .08s,transform .6s var(--ease) .08s}
-.hero-cta.on{opacity:1;transform:none}
+.hero-cta{display:flex;flex-wrap:wrap;gap:var(--s4);align-items:center}
 
 .stage{position:relative;aspect-ratio:16/10;border:1px solid var(--edge);background:#000;overflow:hidden}
 .stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .stage .tag{position:absolute;left:var(--s4);bottom:var(--s4);z-index:2;display:flex;align-items:center;gap:var(--s2);
             font-family:var(--fm);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
             color:rgba(255,255,255,.8);text-shadow:0 1px 6px rgba(0,0,0,.85)}
-.hint{position:absolute;left:50%;bottom:var(--s6);transform:translateX(-50%);z-index:3;
+.hint{position:absolute;left:50%;bottom:var(--s8);transform:translateX(-50%);z-index:3;
       font-family:var(--fm);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);
       display:flex;flex-direction:column;align-items:center;gap:var(--s2);transition:opacity .4s ease}
 .hint i{display:block;width:1px;height:26px;background:linear-gradient(var(--ink3),transparent);
@@ -141,7 +137,7 @@ h1{font-size:clamp(38px,6.6vw,76px);line-height:1.0;letter-spacing:-.042em;margi
                 56%{transform-origin:50% 100%}100%{transform:scaleY(0);transform-origin:50% 100%}}
 
 /* ---------------- generic sections ---------------- */
-.sec{padding:var(--s10) 0}
+.sec{padding:var(--s9) 0;scroll-margin-top:88px}
 .sec-lab{font-family:var(--fm);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);
          margin-bottom:var(--s5);display:flex;align-items:center;gap:var(--s3)}
 .sec-lab i{font-style:normal;color:var(--act)}
@@ -285,7 +281,6 @@ footer span{font-family:var(--fm);font-size:12px;letter-spacing:.08em;text-trans
   .rail{height:auto} .rail-pin{position:static;height:auto;display:block}
   .rail-track{flex-direction:column;transform:none!important;padding:0;gap:var(--s9)}
   .panel{width:100%}
-  .hero-lede,.hero-cta{opacity:1;transform:none;transition:none}
   h1{min-height:0}
 }
 </style>
@@ -572,36 +567,47 @@ var Hero = (function(){
     }
     ctx.putImageData(work,0,0);
   }
-  /* type resolves left to right: settled characters are real, the
-     frontier is random glyphs, the tail is still noise */
-  function drawText(p){
-    var n=TEXT.length, settled=Math.floor(p*n*1.18), out='';
+  /* The headline assembles once, on load, and starts mostly resolved so it
+     is legible from the first frame. Scroll no longer touches it: gating the
+     message behind a gesture left the arrival state with no message at all. */
+  function drawText(f){
+    var n=TEXT.length, settled=Math.floor(f*n), out='';
     for(var i=0;i<n;i++){
       var ch=TEXT[i];
       if(ch===' '){ out+=' '; continue; }
       if(i<settled) out+=ch;
-      else if(i<settled+9) out+='<u>'+GLYPH[(Math.random()*GLYPH.length)|0]+'</u>';
-      else out+='<u> </u>';
+      else if(i<settled+7) out+='<u>'+GLYPH[(Math.random()*GLYPH.length)|0]+'</u>';
+      else out+=ch;
     }
     sc1.innerHTML=out;
   }
+  function assemble(){
+    if(reduce){ sc1.textContent=TEXT; return; }
+    var t0=0, DUR=900;
+    (function step(ts){
+      if(!t0) t0=ts;
+      var f=Math.min(1,(ts-t0)/DUR);
+      drawText(0.35+f*0.65);
+      if(f<1) requestAnimationFrame(step); else sc1.textContent=TEXT;
+    })(performance.now());
+  }
+
   function render(){
     raf=null;
     var r=sc.getBoundingClientRect();
     var total=sc.offsetHeight-innerHeight;
     var p=total>0 ? Math.min(1,Math.max(0,(-r.top)/total)) : 1;
-    var e=Math.min(1,p/0.72);                 /* resolve completes before the pin releases */
+    var e=Math.min(1,p/0.85);
     if(Math.abs(e-lastP)<0.004 && e<1 && lastP>=0) return;
     lastP=e;
-    drawAt(e);
-    if(!reduce) drawText(e); else sc1.textContent=TEXT;
-    hl.classList.toggle('on', e>0.62);
-    hc.classList.toggle('on', e>0.72);
-    if(hint) hint.style.opacity = e>0.08 ? '0' : '1';
+    /* starts at 45% resolved, so the capture reads as a real screenshot
+       on arrival and sharpens as you scroll */
+    drawAt(0.62+e*0.38);
+    if(hint) hint.style.opacity = e>0.06 ? '0' : '1';
     if(hud){
       hud.classList.toggle('on', p>0.01 && p<0.98);
-      hudn.textContent=Math.round(e*2250);
-      hudb.style.width=(e*100)+'%';
+      hudn.textContent=Math.round((0.62+e*0.38)*2250);
+      hudb.style.width=((0.62+e*0.38)*100)+'%';
     }
   }
   function onScroll(){ if(!raf) raf=requestAnimationFrame(render); }
@@ -614,7 +620,7 @@ var Hero = (function(){
   }
   addEventListener('scroll',onScroll,{passive:true});
   addEventListener('resize',function(){ lastP=-1; if(paintBase()) render(); },{passive:true});
-  if(reduce){ sc1.textContent=TEXT; hl.classList.add('on'); hc.classList.add('on'); }
+  assemble();
   return { refresh:function(){ lastP=-1; if(paintBase()) render(); } };
 })();
 
