@@ -106,10 +106,21 @@ a{color:inherit;text-decoration:none}
 .scrub{position:relative;height:210vh;scroll-margin-top:88px}
 @media(max-width:899px){.scrub{height:190vh}}
 .pin{position:sticky;top:0;height:100svh;display:flex;align-items:center;overflow:hidden}
+@media(max-width:899px){
+  .pin{padding:var(--s7) 0 var(--s8)}
+  .pin-grid{gap:var(--s5)}
+  .hero-lede{margin-bottom:var(--s5)}
+}
 .pin-grid{display:grid;gap:var(--s6);width:100%;align-items:center}
 @media(min-width:960px){.pin-grid{grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:var(--s8)}}
 .eyebrow{font-family:var(--fm);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);
-         display:flex;align-items:center;gap:var(--s2);margin-bottom:var(--s5)}
+         display:flex;align-items:baseline;gap:var(--s2);margin-bottom:var(--s5)}
+.eyebrow .pulse{position:relative;top:-1px}
+@media(max-width:719px){
+  /* it wrapped to two lines and left the dot floating beside the block */
+  .eyebrow{font-size:10.5px;letter-spacing:.11em;gap:6px}
+  .eyebrow .sep,.eyebrow .long{display:none}
+}
 .pulse{width:7px;height:7px;background:var(--live);border-radius:50%;display:inline-block;position:relative;flex:none}
 .pulse::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--live);animation:ping 2.6s var(--ease) infinite}
 @keyframes ping{0%{transform:scale(1);opacity:.55}70%,100%{transform:scale(3.2);opacity:0}}
@@ -195,12 +206,18 @@ h2{font-size:clamp(27px,4.2vw,50px);line-height:1.03;letter-spacing:-.035em;marg
 .rail-count{padding:0 var(--s7);text-align:right;flex:none;font-family:var(--fm);font-size:11px;
             letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
 .rail-count b{color:var(--ink);font-weight:500}
+/* The mobile fallback for the rail. It previously stripped ALL horizontal
+   padding, so captures ran edge to edge and body copy was cut off on the
+   right: .panel p caps at 52ch, which is wider than a 390px viewport. */
 @media(max-width:899px){
   .rail{height:auto}
-  .rail-pin{position:static;height:auto;display:block;padding:var(--s6) 0;gap:0}
-  .rail-track{flex-direction:column;padding:0;gap:var(--s9);transform:none!important}
-  .panel{width:100%}
-  .rail-head,.rail-count{padding:0;text-align:left;margin-bottom:var(--s7)}
+  .rail-pin{position:static;height:auto;display:block;padding:var(--s7) var(--s5);gap:0}
+  .rail-track{flex-direction:column;padding:0;gap:var(--s8);transform:none!important;align-items:stretch}
+  .panel{width:100%;max-width:100%}
+  .panel p{max-width:100%;margin-top:var(--s3)}
+  .panel .cap{gap:var(--s4);margin-top:var(--s4)}
+  .rail-head{padding:0;text-align:left;margin-bottom:var(--s6)}
+  .rail-count{padding:0;text-align:left;margin-top:var(--s6);margin-bottom:0}
 }
 
 /* ---------------- steps / offers ---------------- */
@@ -314,7 +331,7 @@ footer span{font-family:var(--fm);font-size:12px;letter-spacing:.08em;text-trans
       <div class="wrap" style="width:100%">
         <div class="pin-grid">
           <div>
-            <div class="eyebrow"><span class="pulse"></span> AI Engineer &middot; available for build work</div>
+            <div class="eyebrow"><span class="pulse"></span> AI Engineer<span class="sep"> &middot; </span><span class="long">available for build work</span></div>
             <h1><span class="scram" id="sc1" data-text="You can describe the product. I get it live."></span></h1>
             <p class="hero-lede" id="hl">Three AI products in five months, working alone. <b>Every one is live. So is the record of what broke.</b></p>
             <div class="hero-cta" id="hc">
