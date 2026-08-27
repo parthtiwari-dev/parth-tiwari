@@ -65,10 +65,23 @@ HTML page, PDF as the download beside it.
 
 ## 4. The landing sheet
 
-**Stock.** Warm rag paper `#EAE3D5`. Fibre and flecks are a canvas tile drawn once
-and repeated. **Foxing is not in the tile** — a 240px tile turned seven stains into a
-visible grid of blobs. Staining is a whole-sheet property and lives in a
-non-repeating CSS layer.
+**Stock.** A real scanned sheet, not a procedural texture. `public/media/paper-stock.jpg`,
+prepared by `design/make-stock.mjs` from a CC0 1.0 photograph (creator "Teddy", via
+rawpixel; source and licence in `public/media/paper-stock.LICENSE.txt`). CC0 is a public
+domain dedication, so commercial use is unrestricted and no attribution is required.
+
+Three things the script does that a raw photo cannot:
+
+1. **Crops off the fold crease.** The sheet's type runs down the middle and a crease
+   through the copy is not a nice detail.
+2. **Flattens the slow luminance gradient**, by dividing out a heavily blurred copy of
+   the image. Left in, it survives tiling as a visible rhythm down the roll.
+3. **Mirrors the crop below itself**, so `repeat-y` joins exactly at any sheet length.
+
+Measured on the rendered stock: the darkest 1% of the texture is **9.52:1** against
+`--ink` and **4.91:1** against `--ink-2`, so body copy clears AA even on the darkest
+fibre. The CSS layer over it now carries only light falling on the sheet and the edge
+burn; the old procedural foxing double-stained a photograph that already has its own.
 
 **Edges.** Seeded deckle polygon, generated once so the sheet has the same torn edge
 every load. Rolled top and bottom edges, lit on top and creased into shadow beneath.

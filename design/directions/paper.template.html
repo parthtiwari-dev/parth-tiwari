@@ -19,7 +19,7 @@ m.name='viewport';m.content='width=device-width, initial-scale=1';document.head.
    research flags as the current generated default, so it is avoided on purpose.
    ========================================================================== */
 :root{
-  --paper:#EAE3D5; --paper-2:#E2DACA; --paper-deep:#C7BCA5;
+  --paper:#E7DFD1; --paper-2:#DFD6C6; --paper-deep:#C6BAA3;
   --ink:#1A1613; --ink-2:#4E463C; --ink-3:#6B6153;
   --rule:#BCB09980;
   --oxblood:#8E2116; --oxblood-deep:#6E170F; --on-ox:#F6EDE6;
@@ -79,18 +79,20 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;te
   transition:opacity 460ms var(--ease)}
 #sheetWrap.lit .sheetshadow{opacity:.18}
 .sheetbox{position:relative}
-.paper{position:absolute;inset:0;background-color:var(--paper);background-repeat:repeat;
+/* A real sheet, CC0, flattened and mirrored so it tiles down the roll without
+   a seam or a banding rhythm. See public/media/paper-stock.LICENSE.txt. */
+.paper{position:absolute;inset:0;background-color:var(--paper);
+  background-image:url(__IMG_paper-stock.jpg__);
+  background-size:100% auto;background-repeat:repeat-y;background-position:0 0;
   transition:opacity 460ms var(--ease)}
-/* foxing and edge burn: a whole-sheet property, never inside the repeating tile */
+/* The scan carries its own fibre, flecks and mottle, so this layer is now only
+   the two things a flat scan cannot have: light falling on the sheet, and the
+   edges darkening where it lifts. Stacking the old procedural foxing on top of
+   a real photograph double-stained it. */
 .paper::before{content:"";position:absolute;inset:0;pointer-events:none;
   background:
-    radial-gradient(60% 22% at 26% 3%,  rgba(255,253,247,.55), transparent 60%),
-    radial-gradient(14% 5%  at 88% 12%, rgba(158,126,78,.20), transparent 74%),
-    radial-gradient(10% 4%  at 12% 31%, rgba(158,126,78,.17), transparent 76%),
-    radial-gradient(9%  3%  at 63% 54%, rgba(166,134,86,.16), transparent 78%),
-    radial-gradient(7%  3%  at 34% 72%, rgba(166,134,86,.13), transparent 78%),
-    radial-gradient(12% 4%  at 79% 88%, rgba(150,118,72,.15), transparent 76%),
-    linear-gradient(90deg, rgba(96,76,48,.30), transparent 9%, transparent 91%, rgba(96,76,48,.30));}
+    radial-gradient(70% 26% at 28% 2%, rgba(255,253,247,.42), transparent 62%),
+    linear-gradient(90deg, rgba(88,68,42,.26), transparent 7%, transparent 93%, rgba(88,68,42,.26));}
 .curl{position:absolute;left:0;right:0;pointer-events:none;z-index:2;
   transition:opacity 460ms var(--ease)}
 .curl-t{top:0;height:clamp(13px,2vh,28px);
@@ -535,40 +537,17 @@ function seeded(str){
 
 /* ==========================================================================
    THE STOCK
-   A fibre tile drawn once and repeated. Fine grain tiles without a visible
-   seam. Foxing is deliberately NOT in here: a 240px tile repeated down a long
-   sheet turns soft stains into a grid of blobs, so staining lives in the
-   non-repeating CSS layer instead.
+   A real scanned sheet, CC0, prepared by design/make-stock.mjs: cropped off its
+   fold crease, gradient-flattened, and mirrored below itself so `repeat-y`
+   joins exactly down a sheet of any length.
    ========================================================================== */
-function stock(size){
-  var c = document.createElement("canvas");
-  c.width = c.height = size;
-  var x = c.getContext("2d"), i, n;
-  x.fillStyle = "#EAE3D5"; x.fillRect(0, 0, size, size);
-  for (i = 0; i < size * 5; i++) {
-    var px = Math.random() * size, py = Math.random() * size;
-    var a = Math.random() * Math.PI, len = 1.5 + Math.random() * 5;
-    x.strokeStyle = Math.random() > 0.5
-      ? "rgba(255,252,244," + (0.05 + Math.random() * 0.16) + ")"
-      : "rgba(112,96,70,"   + (0.03 + Math.random() * 0.10) + ")";
-    x.lineWidth = Math.random() > 0.85 ? 1.2 : 0.6;
-    x.beginPath(); x.moveTo(px, py);
-    x.lineTo(px + Math.cos(a) * len, py + Math.sin(a) * len); x.stroke();
-  }
-  for (n = 0; n < size / 3; n++) {
-    x.fillStyle = "rgba(96,80,56," + (0.05 + Math.random() * 0.20) + ")";
-    x.beginPath();
-    x.arc(Math.random() * size, Math.random() * size, Math.random() * 0.9 + 0.25, 0, Math.PI * 2);
-    x.fill();
-  }
-  return c.toDataURL();
-}
-var STOCK = stock(240);
 var sheetbox = document.getElementById("sheetbox");
 var paper    = document.getElementById("paper");
 var shadow   = document.getElementById("sheetshadow");
 var wrap     = document.getElementById("sheetWrap");
-paper.style.backgroundImage = "url(" + STOCK + ")";
+/* read the stock off the stylesheet rather than re-declaring it, so the torn
+   halves are guaranteed to be the same sheet they came from */
+var STOCK_BG = getComputedStyle(paper).backgroundImage;
 
 /* ==========================================================================
    THE DECKLE
@@ -1005,8 +984,11 @@ function openWorld(i){
     var sh = document.createElement("div");
     sh.className = "shred";
     sh.style.clipPath = pair[k];
-    sh.style.backgroundColor = "#EAE3D5";
-    sh.style.backgroundImage = "url(" + STOCK + ")";
+    sh.style.backgroundColor = "#E7DFD1";
+    sh.style.backgroundImage = STOCK_BG;
+    sh.style.backgroundSize = "100% auto";
+    sh.style.backgroundRepeat = "repeat-y";
+    sh.style.backgroundPosition = "0 " + (-scrollY % 2000) + "px";
     sh.style.transition = "transform 900ms var(--tear-ease), opacity 620ms ease-in 60ms";
     shredHost.appendChild(sh);
     return sh;
