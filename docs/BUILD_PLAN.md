@@ -1,5 +1,10 @@
 # BUILD PLAN — v2
 
+> ⚠️ **Partly superseded 2026-08-27.** Two of this plan's decisions did not survive
+> contact: the scroll-scrubbed pin and the kinetic-type fusion are both gone, because each
+> gated the message behind a gesture. Read [`SESSION_HANDOFF.md`](SESSION_HANDOFF.md) §4
+> for the corrections and §6 for what to do next. The sequence in §4 below still stands.
+
 Written 2026-08-27, after Phase 0 research closed. This supersedes the open questions in
 `DECISIONS.md` §4 for the direction choice only. Everything else in that register stands.
 

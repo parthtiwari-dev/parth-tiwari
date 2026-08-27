@@ -137,6 +137,13 @@ its own proof, and every word of this one is checkable in shape even with the cl
 
 ## §2 — Content. What actually goes on it?
 
+> 🔴 **Still open, and this is the gap that cost the Phase 0 session.** Nothing in
+> §2 or §3 was ever answered, so every page built so far runs on copy invented in the
+> moment. The brief warned about exactly this: content before form, every word in plain
+> Markdown first. **Answer these before opening another design file.** See
+> [`SESSION_HANDOFF.md`](SESSION_HANDOFF.md) §2.
+
+
 Decided before form (`REBUILD_BRIEF.md` §3).
 
 | # | Question | Notes |
