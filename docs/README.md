@@ -49,8 +49,9 @@ nine-beat case studies, twelve Errata entries, typed content schemas, route copy
 experience, claim records and the text-only test artifact. Automated schema, provenance and
 Astro build checks pass. The owner deferred the unrun text-only human test without marking
 it passed. Phase 2 is open. The three initial landing directions were rejected and removed.
-One full-width scroll landing now awaits checkpoint-by-checkpoint owner review; its first
-screen is not approved and the other routes have not begun. A real
+The owner approved the overall full-width scroll direction. Its custom fold/curl, tighter
+section rhythm, damaged edges, marginalia and torn-ink project hover now await focused review;
+the other routes have not begun. A real
 five-person comprehension test remains mandatory on the Phase 3 static preview.
 
-**Last documentation truth audit:** 2026-08-28, Phase 2 single-scroll landing checkpoint built and awaiting owner review.
+**Last documentation truth audit:** 2026-08-28, Phase 2 landing craft refinement built and awaiting owner review.

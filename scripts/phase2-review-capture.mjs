@@ -15,6 +15,7 @@ const base = argOf('--url', 'http://127.0.0.1:4321').replace(/\/$/, '')
 const output = path.resolve('.shots', argOf('--tag', 'phase2-sections'))
 const viewports = [
   { name: 'phone-390', width: 390, height: 844, touch: true, scale: 2 },
+  { name: 'tablet-800', width: 800, height: 1024, touch: true, scale: 1 },
   { name: 'desktop-1440', width: 1440, height: 900, touch: false, scale: 1 },
 ]
 const sections = [
@@ -71,6 +72,10 @@ for (const viewport of viewports) {
     for (const [name, selector] of sections) {
       const section = page.locator(selector)
       await section.screenshot({ path: path.join(output, `${viewport.name}-${name}.png`) })
+    }
+    if (!viewport.touch) {
+      await page.locator('.project-row').first().hover()
+      await page.locator('#projects').screenshot({ path: path.join(output, `${viewport.name}-projects-hover.png`) })
     }
     await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight))
     await page.screenshot({ path: path.join(output, `${viewport.name}-bottom-roll.png`) })

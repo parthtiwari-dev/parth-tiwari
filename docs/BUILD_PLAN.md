@@ -253,9 +253,11 @@ the production pages.
 
 **Active checkpoint, 2026-08-28:** the owner rejected the complete A/B/C landing studies.
 They were removed and replaced by one full-width paper-scroll review at
-`/review/phase-2/`. Review now proceeds section by section on that one artifact, beginning
-with its upper roll, unfurl and hero. No Phase 2 checklist item is complete merely because
-this checkpoint renders; owner approval and the full gate are still required.
+`/review/phase-2/`. The owner approved the overall direction and requested a focused craft
+pass: replace the literal cylindrical scroll ends, remove artificial viewport-height gaps,
+strengthen damaged edges and study the project-row hover. That pass remains a review artifact;
+owner approval and the full gate are still required before any Phase 2 checklist item is
+treated as complete.
 
 **Owner review before work**
 

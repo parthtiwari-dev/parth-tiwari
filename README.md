@@ -6,9 +6,10 @@ static, multi-page Astro site whose project case studies use each project's real
 The current code has completed Phase 1 and is working through Phase 2. It contains validated
 content collections, twelve complete case-study records, twelve Errata entries, route copy,
 services, experience, and source-linked claims. One interactive full-width scroll landing
-review lives at `/review/phase-2/`; its first-screen structure is awaiting owner review. The
-rejected A/B/C studies were removed. The public root remains an unstyled placeholder. There
-is still no canvas, tear interaction, production visual system, or world implementation.
+review lives at `/review/phase-2/`; its overall direction is approved and a focused paper,
+spacing, edge and project-hover refinement awaits owner review. The rejected A/B/C studies
+were removed. The public root remains an unstyled placeholder. There is still no canvas,
+production tear interaction, production visual system, or world implementation.
 
 ## Stack
 

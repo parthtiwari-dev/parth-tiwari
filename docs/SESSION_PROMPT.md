@@ -27,13 +27,15 @@ Phase 2 is design-system and route-architecture work:
 - Research references before designing and record a reference lock.
 - One interactive full-width scroll landing exists at `/review/phase-2/` from the real
   Phase 1 content. The rejected A/B/C routes were removed.
+- The owner approved its overall direction. The current checkpoint is the custom fold/curl,
+  tighter content-driven rhythm, damaged edges, marginalia and torn-ink project hover.
 - Review one route at a time. The landing page is the only active route.
 - Do not build the production site, tear, backlight, canvas or animated worlds.
 - Refresh the 390, 800 and 1440 evidence after changes. Refine the landing one checkpoint at
-  a time, beginning with the top roll, unfurl and hero.
+  a time; do not begin `/work` until the landing structure is approved.
 
 Begin by confirming the current branch and diff. Run the local review route and collect the
-owner's feedback on the current checkpoint. Record the approved landing structure before
+owner's feedback on the current craft checkpoint. Record the approved landing structure before
 starting `/work`. Phase 2 remains incomplete until every route structure,
 shared token, accessibility state and rendered-contrast gate is approved and verified.
 ```

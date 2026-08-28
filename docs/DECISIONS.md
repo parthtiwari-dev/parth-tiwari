@@ -44,6 +44,9 @@ in the same commit.
 | Home includes every project in a simple editorial index | Decided | Every project remains an entry on the paper; `/work` owns exhaustive comparison and controls | Showing only selected work |
 | A featured world may sit behind the first viewport | Decided with phase boundary | A still can enrich Phase 3; motion waits for the shared world system | A live canvas required for comprehension |
 | Oxblood stays role-bound | Decided | Rare color makes the action and bleed meaningful | Accent used as general decoration |
+| Scroll ends use broad paper folds, not parchment cylinders | Owner-approved refinement direction | The folds must belong to the site's rag-paper system rather than resemble the supplied reference image | Brown rolled rods and a traced reference silhouette |
+| Hand-made character comes from sparse marginalia and damaged edges | Owner review in Phase 2 | Readable display, body and data typography still has to serve clients, recruiters and assistive technology | Replacing interface copy with handwriting fonts |
+| Landing sections are content-driven after the hero | Owner-approved refinement direction | The page should read as one continuous old message, not one empty viewport per section | Forcing every section to fill the screen |
 
 ## Preview and tear
 
@@ -148,7 +151,16 @@ instead of creating more alternatives.
 
 The working hero sentence is `I build AI products, break them, fix them, and write down what
 actually happened.` It is the validated Phase 1 sentence and the most direct of the three
-owner-approved candidates. Final visual approval remains open until the first-screen review.
+owner-approved candidates.
+
+The owner liked the overall single-scroll landing on 2026-08-28. The literal cylindrical
+scroll ends, excess viewport-height spacing, quiet project-row hover and insufficient
+hand-made edge detail were not approved. The current refinement replaces the cylinders with
+original folded-paper CSS, tightens later sections to their content, adds irregular side and
+corner bites, and tests a torn-ink hover/focus state. A generated transparent oxblood
+marginalia sheet supplies sparse proofreader marks; it does not replace the locked readable
+font roles. Final landing approval remains open until this refinement is reviewed at phone,
+tablet and desktop widths.
 
 ### Phase 4
 

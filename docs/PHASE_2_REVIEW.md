@@ -18,14 +18,16 @@ complete production pages, deployment and new runtime dependencies.
 The reference set for the current landing review is:
 
 - the owner's 2026-08-28 screenshots of the strongest sections from Direction C;
-- the owner-supplied parchment-scroll image for physical structure only;
+- the owner-supplied parchment-scroll image for the broad physical idea only;
 - the real licensed `public/media/paper-stock.jpg` used for the implementation;
 - the Phase 1 content collections and claim records;
 - the approved local craft references recorded before the first exploration.
 
 The supplied parchment image contains a watermark and is not a site asset. The build does
-not copy, crop, ship or trace it. It borrows only the recognisable top roll, long message and
-bottom roll arrangement, recreated from the project's real paper stock and CSS lighting.
+not copy, crop, ship or trace it. The first recreation followed its cylindrical silhouette
+too literally and the owner rejected that result. The replacement uses the project's real
+paper stock and CSS to construct broad folded lips, shadows and irregular edges in the site's
+own visual language.
 
 ## First exploration, rejected
 
@@ -77,6 +79,23 @@ second batch of competing landing directions.
 
 ## Current implementation checkpoint
 
+The owner approved the overall single-scroll direction on 2026-08-28 and asked for one
+focused craft pass before the landing structure is locked. That pass changes four things:
+
+- the literal brown cylinder treatment is replaced by a lighter folded-paper unfurl and
+  upper/lower curl built from the real paper stock and CSS;
+- non-hero sections use content-driven height and tighter spacing, so the document reads as
+  one continuous message rather than a stack of artificial viewport pages;
+- paper sides and corners expose irregular dark bites without cutting into the content grid;
+- project rows receive a fast torn-ink hover/focus study. It is an interaction preview only;
+  project-specific backlights and real world stills remain Phase 4 work.
+
+The pass also introduces one original transparent oxblood marginalia sheet at
+`public/media/oxblood-marginalia-phase2.png`. It was generated as separated pen and dry-ink
+marks without words or paper texture, then positioned sparingly as editorial evidence of a
+hand. Bricolage Grotesque, Archivo and DM Mono remain the readable type system; handwriting
+is not applied to body copy or controls.
+
 `/review/phase-2/` is now the only landing review route. It contains:
 
 - a CSS-only reload unfurl study using the real paper stock;
@@ -95,17 +114,16 @@ visit is intentionally not decided here because that requires a later behavior d
 client state. The production tear, centre-row world preview and animated project worlds are
 still absent.
 
-Run with `npm.cmd run dev` and open
-`http://127.0.0.1:4321/review/phase-2/`. Capture all review sections with
-`npm.cmd run phase2:capture -- --url http://127.0.0.1:4321`.
+Run with `npm.cmd run dev` and open the printed local URL followed by
+`/review/phase-2/` (Astro increments the port when the default is occupied). Capture all
+review sections with `npm.cmd run phase2:capture -- --url <local-origin>`.
 
 ## Review sequence
 
-1. Review the physical top roll, opening unfurl and first-screen hero at desktop width.
-2. Refine that checkpoint until the owner approves it.
-3. Review the retained portrait beat, then project register, proof, services, Notes and
-   contact in order.
-4. Lock the landing tokens and responsive rules only after the desktop structure works.
+1. Review the folded top roll, opening unfurl, side/corner damage and lower curl.
+2. Review whether the tightened section rhythm now feels like one continuous message.
+3. Review the torn-ink project hover/focus and the amount of marginalia.
+4. Lock the landing tokens and responsive rules only after desktop, tablet and phone pass.
 5. Build and review `/work` structure only after the landing checkpoint is approved.
 
 ## Already locked, not reopened here
