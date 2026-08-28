@@ -251,6 +251,12 @@ owner. Phase 1 is complete under this amended gate.
 This phase decides how the locked direction behaves across the full site. It does not build
 the production pages.
 
+**Active checkpoint, 2026-08-28:** the owner rejected the complete A/B/C landing studies.
+They were removed and replaced by one full-width paper-scroll review at
+`/review/phase-2/`. Review now proceeds section by section on that one artifact, beginning
+with its upper roll, unfurl and hero. No Phase 2 checklist item is complete merely because
+this checkpoint renders; owner approval and the full gate are still required.
+
 **Owner review before work**
 
 - Show a reference lock for the paper system, dark world system, editorial notes and

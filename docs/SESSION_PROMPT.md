@@ -25,16 +25,16 @@ Phase 2 is design-system and route-architecture work:
 - Do not implement the production paper shell, project backlight, tearing, canvas,
   animation, or worlds. Phase 2 review stubs are allowed.
 - Research references before designing and record a reference lock.
-- Three interactive landing directions already exist under `/review/phase-2/` from the
-  same real Phase 1 content.
+- One interactive full-width scroll landing exists at `/review/phase-2/` from the real
+  Phase 1 content. The rejected A/B/C routes were removed.
 - Review one route at a time. The landing page is the only active route.
 - Do not build the production site, tear, backlight, canvas or animated worlds.
-- Reuse the captured 390, 800 and 1440 evidence, refresh it after changes, and ask the owner
-  to choose one direction or explicitly combine named traits.
+- Refresh the 390, 800 and 1440 evidence after changes. Refine the landing one checkpoint at
+  a time, beginning with the top roll, unfurl and hero.
 
-Begin by confirming the current branch and diff. Run the local review hub, inspect all three
-landing demos and collect the owner's landing-specific feedback. Record the selected landing
-structure before starting `/work`. Phase 2 remains incomplete until every route structure,
+Begin by confirming the current branch and diff. Run the local review route and collect the
+owner's feedback on the current checkpoint. Record the approved landing structure before
+starting `/work`. Phase 2 remains incomplete until every route structure,
 shared token, accessibility state and rendered-contrast gate is approved and verified.
 ```
 

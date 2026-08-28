@@ -14,7 +14,7 @@ Where to look, and what is still true.
 | [`DECISIONS.md`](DECISIONS.md) | The register. Every settled choice with its reason and its rejected alternatives |
 | [`CONTENT_PROVENANCE.md`](CONTENT_PROVENANCE.md) | The publication queue for claims, counts, benchmarks and deployment facts |
 | [`PHASE_1_EVIDENCE_AUDIT.md`](PHASE_1_EVIDENCE_AUDIT.md) | The source audit, corrected metrics, blocked claims and public-link evidence |
-| [`PHASE_2_REVIEW.md`](PHASE_2_REVIEW.md) | Phase 2 research synthesis, owner input and the three interactive landing-page demos |
+| [`PHASE_2_REVIEW.md`](PHASE_2_REVIEW.md) | Phase 2 reference lock, rejected A/B/C checkpoint and the single scroll landing review |
 | [`REBUILD_BRIEF.md`](REBUILD_BRIEF.md) | Why v1 is being replaced. The guards that prevent a repeat |
 | [`TEN_SECOND_TEST.md`](TEN_SECOND_TEST.md) | 🔴 The acceptance gate. **Still never run** |
 | [`TEN_SECOND_ARTIFACT.md`](TEN_SECOND_ARTIFACT.md) | The exact plain-text artifact for the Phase 1 human test |
@@ -48,8 +48,9 @@ Phase 0 and Phase 1 are complete on `redesign/v2`. Phase 1 produced twelve
 nine-beat case studies, twelve Errata entries, typed content schemas, route copy, services,
 experience, claim records and the text-only test artifact. Automated schema, provenance and
 Astro build checks pass. The owner deferred the unrun text-only human test without marking
-it passed. Phase 2 is open. Three interactive landing-page directions now await owner
-review; no direction is approved and the other routes have not begun. A real
+it passed. Phase 2 is open. The three initial landing directions were rejected and removed.
+One full-width scroll landing now awaits checkpoint-by-checkpoint owner review; its first
+screen is not approved and the other routes have not begun. A real
 five-person comprehension test remains mandatory on the Phase 3 static preview.
 
-**Last documentation truth audit:** 2026-08-28, Phase 2 landing exploration built and awaiting owner review.
+**Last documentation truth audit:** 2026-08-28, Phase 2 single-scroll landing checkpoint built and awaiting owner review.

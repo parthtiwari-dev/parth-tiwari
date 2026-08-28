@@ -132,11 +132,23 @@ review with the Phase 2 arrival demos.
 - Route-specific composition within the locked system
 - Final responsive type and spacing tokens
 - Coming-soon treatment
-- Landing-page direction after comparing the three interactive demos
+- Final approval of the single scroll landing, checkpoint by checkpoint
 
 Phase 2 review proceeds one route at a time by owner decision on 2026-08-28. Answers given
 before rendered comparison are design inputs and may change; they are not recorded as final
 visual decisions merely because an option was selected in chat.
+
+The owner rejected the complete A, B and C landing directions on 2026-08-28. The replacement
+direction is one full-width rag-paper scroll with navigation inside the upper roll, a physical
+lower roll and a contained hero project study. Paper floating in a dark gutter and product UI
+behind the sheet are rejected. Direction C contributes only its illustrated introduction,
+proof grid, service grid and starting split composition. The owner-supplied watermarked scroll
+image is a structural reference only and is not shipped. Refinement proceeds on this one route
+instead of creating more alternatives.
+
+The working hero sentence is `I build AI products, break them, fix them, and write down what
+actually happened.` It is the validated Phase 1 sentence and the most direct of the three
+owner-approved candidates. Final visual approval remains open until the first-screen review.
 
 ### Phase 4
 
