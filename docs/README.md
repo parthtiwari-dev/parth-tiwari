@@ -41,8 +41,9 @@ None of it needs redoing.
 
 ## Current state
 
-Phase 0 is complete on `codex/rebuild-astro`: the Vue and constellation application is gone,
-Astro 7.2.9 produces static HTML, and the built placeholder passes its foundation gates.
-Phase 1 has not started and still requires its owner review.
+Phase 0 is complete and merged locally into `redesign/v2`: the Vue and constellation
+application is gone, Astro 7.2.9 produces static HTML, and the built placeholder passes its
+foundation gates. Further work happens directly on `redesign/v2` unless the owner requests
+another branch. Phase 1 has not started and still requires its owner review.
 
 **Last documentation truth audit:** 2026-08-28, Phase 0.

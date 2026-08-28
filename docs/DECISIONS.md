@@ -96,6 +96,7 @@ The detailed evidence queue is `CONTENT_PROVENANCE.md`.
 | Reconsider analytics at cutover | Owner review in Phase 7 | Measurement may earn a bounded addition after the real site exists | Treating analytics as permanently forbidden |
 | Phase 3 deploys to a preview alias | Decided | The complete static site can be reviewed live without replacing v1 early | Production cutover before creative phases |
 | Production cutover happens in Phase 7 | Decided | Domain and redirects move only after all gates | Conflating preview deployment with launch |
+| Continue directly on local `redesign/v2` after Phase 0 | Owner decided 2026-08-28 | The owner prefers one visible local line of work; phase commits and gates still provide rollback | Creating a new `codex/*` branch for every phase by default |
 
 ## Publishing
 

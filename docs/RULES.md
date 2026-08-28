@@ -119,7 +119,9 @@ true.
 
 ## 9. Commit and handoff
 
-- Work on a feature branch.
+- Work directly on the owner-selected local branch. For this rebuild, that branch is
+  `redesign/v2`. Create another feature or experiment branch only when the owner asks for it
+  or approves a specific isolation need.
 - Use lowercase, imperative, type-prefixed commit messages.
 - Keep phase commits independently revertable.
 - Before committing, inspect the complete diff for scope leakage and unintended deletion.
