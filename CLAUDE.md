@@ -73,14 +73,14 @@ runtime, or client-side router in the current Phase 1 foundation.
 - Screenshots are evidence only when someone inspects them. A successful capture command
   does not prove the page looks correct.
 
-## Current Phase 1 gate
+## Current phase
 
 - `npm run phase1:gate` runs negative schema tests, cross-content provenance checks and the
   static Astro build with telemetry disabled for restricted environments.
-- The automated portion passes. The remaining gate is the five-person text-only test in
-  `docs/TEN_SECOND_TEST.md`.
-- An agent cannot simulate the participants or start Phase 2 before the owner approves the
-  recorded result and the final hero sentence.
+- Phase 1 is complete under its owner-amended gate. The text-only human test was deferred,
+  not passed, and may never be reported otherwise.
+- Phase 2 is open. Research and owner-reviewed demos precede production visual code.
+- Do not build the production pages, tear, backlight, canvas or animated worlds in Phase 2.
 
 ## Dependencies and external actions
 

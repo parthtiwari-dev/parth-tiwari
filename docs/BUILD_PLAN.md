@@ -236,12 +236,15 @@ visual component. This phase has been skipped twice and is not skipped again.
 
 - Schemas reject a missing case-study beat, missing claim source and invalid link shape.
 - Every public number maps to a provenance entry.
-- Five people see the text-only artifact for ten seconds. Their verbatim answers are
-  recorded in `TEN_SECOND_TEST.md`.
-- At least four of five identify both the work and a credible hiring reason according to
-  the rubric in that file.
+- `npm run phase1:gate` exits zero and includes the static Astro build.
 
-The human test is an owner gate. The agent cannot simulate it. Show the results and stop.
+The owner deferred the five-person text-only test on 2026-08-28 because participants are
+not currently available. The test is not recorded as passed and the agent does not simulate
+it. The next required comprehension test is the built static preview in Phase 3, where the
+real page structure can be tested instead of blocking visual exploration indefinitely.
+
+**Gate result, 2026-08-28:** automated gate passed. Human test explicitly deferred by the
+owner. Phase 1 is complete under this amended gate.
 
 ### Phase 2: Design system and page architecture
 
@@ -518,7 +521,8 @@ framework, stop and review the architecture before adding more.
 
 ## 7. Current blockers and owner-supplied facts
 
-- The text-only ten-second test has not been run.
+- The text-only ten-second test was not run and was explicitly deferred by the owner. The
+  built static preview still requires a real five-person test in Phase 3.
 - BeatMind's conflicting build-count snapshots are excluded. The owner reports **18 Clerk
   accounts** as of 2026-08-28; publication still requires the Clerk record and exact
   counting definition. The attached Vercel screenshot does not prove this count.

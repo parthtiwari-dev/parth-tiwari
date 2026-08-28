@@ -78,6 +78,7 @@ in the same commit.
 | UPI evaluation and replay metrics stay separate | Decided and verified | Different datasets answer different questions | One context-free precision claim |
 | Oracle duration and automatic-stop language stay unpublished | Decided after source audit | Retry configuration is visible; uptime is not, and the stop helper lacks its token | Trusting remembered uptime or unwired code |
 | No public price anywhere | Owner decided 2026-08-28 | The owner wants scope and fit to lead into a direct conversation | Price bands, starting prices and cost estimates |
+| Phase 1 text-only human test is deferred, not passed | Owner decided 2026-08-28 | Five participants are not currently available; blocking visual exploration adds little value | Simulating participants or recording a false pass |
 
 The detailed evidence queue is `CONTENT_PROVENANCE.md`.
 
@@ -123,8 +124,8 @@ The detailed evidence queue is `CONTENT_PROVENANCE.md`.
 
 ### Phase 1
 
-- Exact hero sentence after the text-only human test
-- Human-test results and owner decision
+No open Phase 1 decisions. The current hero is a working draft and receives final owner
+review with the Phase 2 arrival demos.
 
 ### Phase 2
 

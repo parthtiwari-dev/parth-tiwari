@@ -43,11 +43,11 @@ None of it needs redoing.
 
 ## Current state
 
-Phase 0 is complete on `redesign/v2`. Phase 1 content implementation is complete: twelve
+Phase 0 and Phase 1 are complete on `redesign/v2`. Phase 1 produced twelve
 nine-beat case studies, twelve Errata entries, typed content schemas, route copy, services,
 experience, claim records and the text-only test artifact. Automated schema, provenance and
-Astro build checks pass. Phase 1 remains open at its human gate: five real participants must
-see the text artifact and at least four must pass the recorded rubric. No Phase 2 work may
-begin before the owner reviews those results and approves the hero sentence.
+Astro build checks pass. The owner deferred the unrun text-only human test without marking
+it passed. Phase 2 is open for reference research, demos and owner decisions. A real
+five-person comprehension test remains mandatory on the Phase 3 static preview.
 
-**Last documentation truth audit:** 2026-08-28, Phase 1 automated gate complete; human gate pending.
+**Last documentation truth audit:** 2026-08-28, Phase 1 complete under the amended gate; Phase 2 open.

@@ -53,7 +53,11 @@ Artifact:
 
 [`TEN_SECOND_ARTIFACT.md`](TEN_SECOND_ARTIFACT.md)
 
-Date:
+Date: 2026-08-28
+
+Status: **Deferred by the owner.** No participants were available. This round was not run,
+has no score, and must never be described as passing. The next required round is the Phase 3
+static preview.
 
 | # | Participant context | Verbatim answer | Work clear? | Hiring reason clear? | Pass? |
 |---|---|---|---|---|---|
@@ -63,9 +67,10 @@ Date:
 | 4 | | | | | |
 | 5 | | | | | |
 
-**Score: _ / 5**
+**Score: not run**
 
-**Owner decision:**
+**Owner decision:** Defer this round and continue to Phase 2. Keep the Phase 3 built-site
+test as the required comprehension gate.
 
 ## Round 2: Phase 3 static preview
 

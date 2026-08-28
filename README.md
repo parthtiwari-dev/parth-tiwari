@@ -3,7 +3,7 @@
 This repository is rebuilding Parth Tiwari's portfolio as **Paper and Worlds**: a
 static, multi-page Astro site whose project case studies use each project's real data.
 
-The current code is at the Phase 1 human gate. It contains validated content collections,
+The current code has completed Phase 1 and is opening Phase 2. It contains validated content collections,
 twelve complete case-study records, twelve Errata entries, route copy, services,
 experience, and source-linked claims. The visible route remains an unstyled placeholder.
 There is still no canvas, tear interaction, final visual system, or world implementation.
@@ -44,5 +44,5 @@ Read [`docs/RULES.md`](docs/RULES.md), [`docs/DESIGN_LOCK.md`](docs/DESIGN_LOCK.
 [`CLAUDE.md`](CLAUDE.md) before making changes. Work one phase at a time and stop when
 its measured gate passes.
 
-Phase 1 is waiting on the five-person text-only test in
-[`docs/TEN_SECOND_TEST.md`](docs/TEN_SECOND_TEST.md). The agent cannot simulate it.
+The owner deferred the unrun Phase 1 text-only test. It was not marked as passing. A real
+five-person comprehension test remains required on the Phase 3 static preview.

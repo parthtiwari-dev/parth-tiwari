@@ -1,7 +1,7 @@
 # Build-session prompt
 
-Use this prompt in a fresh session to finish the Phase 1 human gate. The content,
-provenance and automated checks are already implemented. Do not rebuild them or start Phase 2.
+Use this prompt in a fresh session to work on Phase 2 design-system and page-architecture
+exploration. Phase 1 is complete under its owner-amended gate.
 
 ```text
 Read these in order before taking action:
@@ -15,25 +15,26 @@ Read these in order before taking action:
 7. CLAUDE.md
 
 The portfolio is being rebuilt as Paper and Worlds on Astro 7.2.9 with static output. Phase 0
-established the foundation. Phase 1 now has validated content, claims and a text artifact.
+established the foundation. Phase 1 established validated content and claims. The owner
+deferred the unrun text-only test; do not call it passed.
 
-Work phases in BUILD_PLAN.md in order. Finish the Phase 1 human gate and stop.
+Work phases in BUILD_PLAN.md in order. Start Phase 2 owner review and visual exploration.
 
-The remaining Phase 1 work is human validation only:
+Phase 2 is design-system and route-architecture work:
 
 - Do not open design/directions/*.
 - Do not create CSS.
 - Do not create visual components.
 - Do not implement paper, previews, tearing, canvas, animation, or worlds.
-- Use `docs/TEN_SECOND_ARTIFACT.md` exactly as instructed.
-- The owner recruits five people who have not seen it and records verbatim answers in
-  `docs/TEN_SECOND_TEST.md`.
-- The agent does not simulate participants, paraphrase their answers, or mark the gate passed.
-- Review the working hero sentence with the real answers before locking it.
+- Research references before designing and record a reference lock.
+- Build three distinct local demo directions from the same real Phase 1 content.
+- Ask the owner one comprehensive batch of visual and route-structure questions.
+- Do not build the production site, tear, backlight, canvas or animated worlds.
+- Show real renders at 390, 800 and 1440 pixels before asking the owner to lock a direction.
 
-Begin by running `npm run phase1:gate` and confirming the current content commit. Then help
-the owner administer and record the five-person test. Show the score, ask for the final hero
-decision, update the affected live documents in the same commit, and stop before Phase 2.
+Begin by confirming the Phase 1 commit and clean worktree. Inspect the approved design lock,
+research artifacts and paper prototype as references, not code to port. Present the research
+synthesis and comprehensive owner choices before production implementation.
 ```
 
 ## Drift checks
