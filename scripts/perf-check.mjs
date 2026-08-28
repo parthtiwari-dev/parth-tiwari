@@ -1,4 +1,4 @@
-/** Small, explicit transfer baseline. Update its ceilings when later phases add assets. */
+/** Small, explicit transfer baseline for the maintained Phase 2 root landing. */
 
 import { chromium } from 'playwright'
 import { chromiumLaunchOptions } from './browser.mjs'
@@ -9,7 +9,7 @@ const argOf = (flag, fallback) => {
   return index !== -1 && args[index + 1] ? args[index + 1] : fallback
 }
 const base = argOf('--url', 'http://127.0.0.1:4321').replace(/\/$/, '')
-const maxScriptBytes = Number(argOf('--max-script-kb', '0')) * 1024
+const maxScriptBytes = Number(argOf('--max-script-kb', '30')) * 1024
 
 const browser = await chromium.launch(chromiumLaunchOptions())
 const page = await (await browser.newContext({ viewport: { width: 390, height: 844 } })).newPage()

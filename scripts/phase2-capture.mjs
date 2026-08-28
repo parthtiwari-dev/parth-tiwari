@@ -1,4 +1,4 @@
-/** Capture the single landing review, including its opening unfurl study. */
+/** Capture the maintained Phase 2 root landing and its paper-motion states. */
 
 import { mkdir } from 'node:fs/promises'
 import path from 'node:path'
@@ -32,12 +32,31 @@ await mkdir(output, { recursive: true })
 const browser = await chromium.launch(chromiumLaunchOptions())
 let failures = 0
 
-const motionContext = await browser.newContext({ viewport: { width: 1440, height: 900 } })
-const motionPage = await motionContext.newPage()
-await motionPage.goto(`${base}/review/phase-2/`, { waitUntil: 'load' })
-await motionPage.waitForTimeout(900)
-await motionPage.screenshot({ path: path.join(output, 'desktop-1440-unfurl.png') })
-await motionContext.close()
+for (const viewport of viewports) {
+  const motionContext = await browser.newContext({ viewport: { width: viewport.width, height: viewport.height } })
+  const motionPage = await motionContext.newPage()
+  await motionPage.goto(`${base}/`, { waitUntil: 'load' })
+  await motionPage.addStyleTag({ content: '.skip-link { display: none !important; }' })
+  await motionPage.waitForTimeout(160)
+  await motionPage.screenshot({ path: path.join(output, `${viewport.name}-unfurl-light-start.png`) })
+  await motionPage.waitForTimeout(430)
+  await motionPage.screenshot({ path: path.join(output, `${viewport.name}-unfurl-light-settled.png`) })
+  await motionPage.waitForTimeout(1200)
+  await motionPage.locator('[data-nav-sentinel]').scrollIntoViewIfNeeded()
+  await motionPage.evaluate(() => window.scrollBy(0, 8))
+  await motionPage.waitForTimeout(50)
+  await motionPage.locator('[data-paper-nav]').screenshot({ path: path.join(output, `${viewport.name}-nav-fold-start.png`) })
+  await motionPage.waitForTimeout(430)
+  await motionPage.locator('[data-paper-nav]').screenshot({ path: path.join(output, `${viewport.name}-nav-fold-settled.png`) })
+  await motionPage.locator('#projects').scrollIntoViewIfNeeded()
+  await motionPage.waitForTimeout(760)
+  await motionPage.locator('#projects').screenshot({ path: path.join(output, `${viewport.name}-ink-settle-start.png`) })
+  await motionPage.waitForTimeout(700)
+  await motionPage.locator('#projects').screenshot({ path: path.join(output, `${viewport.name}-ink-settle-finish.png`) })
+  const runningAnimations = await motionPage.evaluate(() => document.getAnimations().filter((animation) => animation.playState === 'running').length)
+  console.log(`MOTION ${viewport.name}: ${runningAnimations} animations still running after settle`)
+  await motionContext.close()
+}
 
 for (const viewport of viewports) {
     const context = await browser.newContext({
@@ -50,7 +69,7 @@ for (const viewport of viewports) {
     const page = await context.newPage()
     const errors = []
     page.on('pageerror', (error) => errors.push(error.message))
-    const response = await page.goto(`${base}/review/phase-2/`, { waitUntil: 'load' })
+    const response = await page.goto(`${base}/`, { waitUntil: 'load' })
     await page.evaluate(() => document.fonts.ready)
     await page.addStyleTag({ content: '.skip-link { display: none !important; }' })
 
@@ -61,6 +80,11 @@ for (const viewport of viewports) {
     }))
 
     await page.screenshot({ path: path.join(output, `${viewport.name}-first-screen.png`) })
+
+    await page.locator('[data-nav-sentinel]').scrollIntoViewIfNeeded()
+    await page.evaluate(() => window.scrollBy(0, 8))
+    await page.waitForTimeout(450)
+    await page.screenshot({ path: path.join(output, `${viewport.name}-post-hero-nav.png`) })
 
     if (!response?.ok() || state.overflow > 1 || errors.length > 0) {
       failures += 1

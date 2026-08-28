@@ -23,12 +23,14 @@ quietly choosing one.
 - static output
 - strict TypeScript
 - validated content collections established in Phase 1
-- vanilla CSS beginning in Phase 2
+- vanilla CSS for the active Phase 2 landing system
 - one direct production dependency: `astro`
 - Playwright as development-only browser tooling
 
 There is no Vue application, SPA rewrite, Three.js scene, canvas, Tailwind layer, analytics
-runtime, or client-side router in the current Phase 1 foundation.
+runtime, or client-side router. The current Phase 2 root landing uses one small progressive
+enhancement script for post-hero navigation and bounded paper-motion states; its complete
+content remains static HTML.
 
 ## Phase protocol
 
@@ -79,7 +81,8 @@ runtime, or client-side router in the current Phase 1 foundation.
   static Astro build with telemetry disabled for restricted environments.
 - Phase 1 is complete under its owner-amended gate. The text-only human test was deferred,
   not passed, and may never be reported otherwise.
-- Phase 2 is open. Research and owner-reviewed demos precede production visual code.
+- Phase 2 is open. The maintained landing stub is on `/`; its craft evidence awaits owner
+  review before the landing structure is locked or another route begins.
 - Do not build the production pages, tear, backlight, canvas or animated worlds in Phase 2.
 
 ## Dependencies and external actions

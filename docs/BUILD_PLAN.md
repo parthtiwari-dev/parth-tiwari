@@ -1,6 +1,6 @@
 # BUILD PLAN: Paper and Worlds
 
-Revised 2026-08-28. This is the execution plan for the portfolio rebuild.
+Revised 2026-08-29. This is the execution plan for the portfolio rebuild.
 
 The public brand is **Parth Tiwari**. **Paper and Worlds** is the internal name of the
 design system: one continuous sheet of real rag paper, a register of work printed on it,
@@ -251,13 +251,18 @@ owner. Phase 1 is complete under this amended gate.
 This phase decides how the locked direction behaves across the full site. It does not build
 the production pages.
 
-**Active checkpoint, 2026-08-28:** the owner rejected the complete A/B/C landing studies.
-They were removed and replaced by one full-width paper-scroll review at
-`/review/phase-2/`. The owner approved the overall direction and requested a focused craft
-pass: replace the literal cylindrical scroll ends, remove artificial viewport-height gaps,
-strengthen damaged edges and study the project-row hover. That pass remains a review artifact;
-owner approval and the full gate are still required before any Phase 2 checklist item is
-treated as complete.
+**Active checkpoint, 2026-08-29:** the owner rejected the complete A/B/C landing studies and
+approved maintaining one full-width paper-scroll stub. It now lives at `/`; the obsolete
+`/review/phase-2/` route is removed. Root placement does not promote the stub into Phase 3:
+the other routes, production shell contract and Phase 3 gate remain unbuilt. The current
+craft pass tightens arrival restraint, uses one shared asymmetric split, replaces repeated
+edge polygons with three stable generated fibre segments per side, improves directional
+fold lighting and prototypes three bounded one-shot paper motions. The rendered slice
+evidence is in `.shots/phase2-a1-restraint`, `.shots/phase2-a2-edge-fibres`,
+`.shots/phase2-a3-paper-folds` and `.shots/phase2-a4-paper-motion`. The worlds-animation
+memo is research only. The final built-preview evidence is in `.shots/phase2-final-built`;
+its `a11y`, `craft` and `perf` checks pass, but owner approval and the full gate are still
+required before any new Phase 2 checklist item is treated as complete.
 
 **Owner review before work**
 

@@ -22,21 +22,26 @@ Work phases in BUILD_PLAN.md in order. Continue Phase 2 owner review and visual 
 
 Phase 2 is design-system and route-architecture work:
 
-- Do not implement the production paper shell, project backlight, tearing, canvas,
-  animation, or worlds. Phase 2 review stubs are allowed.
+- Do not implement the Phase 3 production routes, project backlight, tearing, canvas or
+  animated worlds. The maintained Phase 2 root stub and bounded paper-motion studies are
+  allowed.
 - Research references before designing and record a reference lock.
-- One interactive full-width scroll landing exists at `/review/phase-2/` from the real
-  Phase 1 content. The rejected A/B/C routes were removed.
-- The owner approved its overall direction. The current checkpoint is the custom fold/curl,
-  tighter content-driven rhythm, damaged edges, marginalia and torn-ink project hover.
+- One interactive full-width scroll landing exists at `/` from the real Phase 1 content.
+  The obsolete review route and rejected A/B/C routes were removed.
+- The owner approved its overall direction. The current checkpoint includes the restraint
+  pass, stable segmented fibre edges, directional opening/end folds, bounded one-shot paper
+  motion and the existing torn-ink project hover.
+- `docs/PHASE_2_WORLDS_ANIMATION_MEMO.md` records candidate graphics for the seven specced
+  worlds. It is research only and authorizes no world implementation.
 - Review one route at a time. The landing page is the only active route.
 - Do not build the production site, tear, backlight, canvas or animated worlds.
 - Refresh the 390, 800 and 1440 evidence after changes. Refine the landing one checkpoint at
   a time; do not begin `/work` until the landing structure is approved.
 
-Begin by confirming the current branch and diff. Run the local review route and collect the
-owner's feedback on the current craft checkpoint. Record the approved landing structure before
-starting `/work`. Phase 2 remains incomplete until every route structure,
+Begin by confirming the current branch and diff. Run the local root and collect the owner's
+feedback on the evidence in `.shots/phase2-a1-restraint`, `.shots/phase2-a2-edge-fibres`,
+`.shots/phase2-a3-paper-folds` and `.shots/phase2-a4-paper-motion`. Record the approved
+landing structure before starting `/work`. Phase 2 remains incomplete until every route structure,
 shared token, accessibility state and rendered-contrast gate is approved and verified.
 ```
 

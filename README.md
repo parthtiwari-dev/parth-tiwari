@@ -5,18 +5,19 @@ static, multi-page Astro site whose project case studies use each project's real
 
 The current code has completed Phase 1 and is working through Phase 2. It contains validated
 content collections, twelve complete case-study records, twelve Errata entries, route copy,
-services, experience, and source-linked claims. One interactive full-width scroll landing
-review lives at `/review/phase-2/`; its overall direction is approved and a focused paper,
-spacing, edge and project-hover refinement awaits owner review. The rejected A/B/C studies
-were removed. The public root remains an unstyled placeholder. There is still no canvas,
-production tear interaction, production visual system, or world implementation.
+services, experience, and source-linked claims. The maintained Phase 2 landing now lives at
+`/`. It is a reviewable static stub, not the Phase 3 production site: the other public routes
+have not begun. The landing includes the approved full-width rag sheet, post-hero sticky
+paper fold, content-driven sections, stable fibre-edge segments, bounded one-shot paper
+motion and the current project-hover study. The rejected A/B/C studies were removed. There
+is still no production tear, backlight, canvas, animated world or deployment.
 
 ## Stack
 
 - Astro 7.2.9, exactly pinned
 - static HTML output
 - strict TypeScript configuration
-- vanilla CSS when visual work begins in Phase 2
+- vanilla CSS for the active Phase 2 landing system
 - Playwright as a development-only browser verification tool
 
 `astro` is the only direct production dependency.
@@ -50,3 +51,6 @@ its measured gate passes.
 
 The owner deferred the unrun Phase 1 text-only test. It was not marked as passing. A real
 five-person comprehension test remains required on the Phase 3 static preview.
+
+Phase 2 remains open. The current landing craft evidence and the worlds animation research
+memo need owner review before the landing structure can be locked or `/work` can begin.
