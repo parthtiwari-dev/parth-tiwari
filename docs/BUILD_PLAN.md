@@ -93,7 +93,7 @@ compromise.
 | `/notes/[slug]` | One full erratum or article with sources and related work | Both |
 | `/about` | Portrait, path, work-experience timeline and operating rules | Human check |
 | `/resume` | Crawlable HTML CV with PDF download and print styles | Employer and ATS |
-| `/hire` | Scope, process, price band and direct contact | Client conversion |
+| `/hire` | Scope, process, fit and direct contact; no public pricing | Client conversion |
 
 The initial number of generated HTML pages is not called “eight routes” in a gate. The
 gate enumerates the files Astro actually produced: the fixed pages, every project slug,
@@ -155,9 +155,9 @@ rather than hard-coding today's count into pages.
 
 Each project contains identity, tier, status, dates, audience, summary, nine case-study
 beats, verified links, media, world storyboard, world data source and claim references.
-Sorting fields are typed. “Cost” cannot become a sorting control until Phase 1 defines
-whether it means money, time, compute or effort and proves that the value is comparable
-across projects.
+Sorting fields are typed. The owner rejected cost sorting and chose qualitative build
+effort: `flagship`, `substantial` or `focused`. The labels describe repository and system
+scope, never invented hours or money.
 
 ### Note entry
 
@@ -211,26 +211,26 @@ visual component. This phase has been skipped twice and is not skipped again.
 
 **Owner review before work**
 
-- Settle the public hero sentence and exact meaning of the two doors.
-- Confirm the price band and what “cost” means in the work register.
+- Settle the public hero sentence and exact meaning of the two doors. The two-door meaning
+  is approved; the working hero sentence is reviewed with the human-test results.
+- Apply the owner's decision to show no price anywhere and sort the register by qualitative
+  build effort.
 - Review the claims queue, including BeatMind, Vivid, QueryPilot, UPI and Oracle.
-- Confirm which existing notes are Errata and whether any general Post is ready. If none
-  is ready, approve the “Coming soon” Posts state.
+- Publish Errata now; keep general Posts empty with the approved “Coming soon” state.
 
 **Do**
 
-- [ ] Write all project case studies in `src/content/work/`, using the nine required beats.
-- [ ] Write the existing errata and any approved posts in `src/content/notes/`.
-- [ ] Write route copy for home, work, notes, about, resume and hire.
-- [ ] Create typed schemas for projects, notes, experience, services and claims.
-- [ ] Create a source-linked claim record for every public number.
-- [ ] Resolve the BeatMind scope conflict; record the owner-supplied 17-user count only
-  after its evidence and `asOf` date are attached.
-- [ ] Record Vivid's backed user count with evidence and `asOf` date; do not freeze a
-  changing count inside undated prose.
-- [ ] Correct QueryPilot and UPI metric context and remove unverifiable Oracle language.
-- [ ] Verify every public URL without assuming a deployment alias.
-- [ ] Complete the text-only ten-second-test artifact.
+- [x] Write all project case studies in `src/content/work/`, using the nine required beats.
+- [x] Write the existing errata in `src/content/notes/`; no general Post is approved yet.
+- [x] Write route copy for home, work, notes, about, resume and hire.
+- [x] Create typed schemas for projects, notes, experience, services and claims.
+- [x] Create a source-linked claim record for every public number.
+- [x] Resolve the BeatMind scope conflict by excluding build-count snapshots and the
+  owner-reported 18 Clerk accounts until the missing account record is attached.
+- [x] Record Vivid's owner-known lower bound as blocked and exclude it from public copy.
+- [x] Correct QueryPilot and UPI metric context and remove unverifiable Oracle language.
+- [x] Verify every included public URL without assuming a deployment alias.
+- [x] Complete the text-only ten-second-test artifact.
 
 **Gate**
 
@@ -322,7 +322,7 @@ commit with the matching plan items ticked.
 
 #### 3F. Hire
 
-- [ ] Three kinds of work, scope boundaries, four-step process and owner-approved price band.
+- [ ] Three kinds of work, scope boundaries, four-step process and a direct conversation path; no public price.
 - [ ] Booking, email and WhatsApp paths verified on phone and desktop.
 - [ ] No unsupported testimonial, client logo or urgency claim.
 
@@ -519,15 +519,15 @@ framework, stop and review the architecture before adding more.
 ## 7. Current blockers and owner-supplied facts
 
 - The text-only ten-second test has not been run.
-- BeatMind's build-effort figures still describe conflicting snapshots and need a scope
-  decision. The owner reports **17 users** as of 2026-08-27; publication still requires the
-  evidence reference and exact counting definition.
-- Vivid's user count is backed and may increase; Phase 1 records it as a dated snapshot with
-  evidence rather than permanent prose.
+- BeatMind's conflicting build-count snapshots are excluded. The owner reports **18 Clerk
+  accounts** as of 2026-08-28; publication still requires the Clerk record and exact
+  counting definition. The attached Vercel screenshot does not prove this count.
+- The owner knows at least 10 Vivid users, but no durable analytics or counting record was
+  attached. The count remains unpublished.
 - QueryPilot's `+5.7pp` belongs to the 70-query core set; the 12 adversarial queries are
   reported separately unless new evidence establishes another denominator.
 - UPI's model-evaluation precision and operational backtest precision must not be collapsed
   into one number.
 - Oracle duration and uptime language remains unpublished until evidence exists.
 - Vivid and QueryPilot need useful product captures before their worlds ship.
-- The price band on `/hire` is confirmed in Phase 1 before it appears publicly.
+- The owner decided that no price or price band appears anywhere on the public site.

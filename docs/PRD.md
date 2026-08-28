@@ -22,7 +22,7 @@ phone. They want:
 
 - what Parth can build for them;
 - evidence that he can finish and operate it;
-- scope, process and a real price band;
+- scope, process, fit and a direct conversation path, with no public pricing;
 - a direct way to start.
 
 ### Employer
@@ -119,7 +119,7 @@ the page. The Google Drive viewer is removed.
 
 ### Hire
 
-The three kinds of work, scope boundaries, four-step process, owner-approved price band,
+The three kinds of work, scope boundaries, four-step process, fit guidance,
 booking, email and WhatsApp. It does not use fake urgency, unsupported testimonials or
 client logos.
 
@@ -165,7 +165,7 @@ attached.
 
 - Contact is one tap away on every route and viewport.
 - The first viewport presents one client door and one work door.
-- The Hire page contains a real, owner-approved price band.
+- The Hire page contains no public price or price band.
 - Email, WhatsApp, booking and project links are tested on phone and desktop.
 - No contact path is hidden behind a tear, canvas, menu-only interaction or login.
 
@@ -231,7 +231,7 @@ claim provenance. Admin authentication and secrets never enter the public bundle
 ### Commercial
 
 - Booking and direct contact work from every route.
-- The Hire page states scope, process and an approved price band.
+- The Hire page states scope, process, fit and a direct next step without public pricing.
 - No unsupported proof is used to manufacture trust.
 
 ## 12. Out of scope before launch

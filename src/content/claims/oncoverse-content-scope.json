@@ -1,0 +1,11 @@
+{
+  "wording": "OncoVerse currently has 1 complete atlas entry across a 5-entry directory, and the complete entry still needs medical review.",
+  "display": "1 complete of 5",
+  "context": "Repository content inventory; four entries are stubs and the Medullary Thyroid Carcinoma entry is marked needs-review.",
+  "denominator": "5 cancer directory entries",
+  "verifiedAt": "2026-08-28",
+  "asOf": "2026-08-28",
+  "status": "verified",
+  "publish": true,
+  "sources": [{ "kind": "repository", "locator": "C:/great learning self paced/z Final Projects/oncoverse content JSON and README", "public": false }]
+}

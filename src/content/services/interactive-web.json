@@ -1,0 +1,8 @@
+{
+  "order": 3,
+  "title": "Interactive product storytelling",
+  "outcome": "A web experience that explains how the system works without hiding the useful page behind motion.",
+  "scope": ["Data-led visual stories", "Accessible interaction and reduced motion", "Static fallbacks that keep the whole argument"],
+  "boundaries": ["Motion never owns navigation", "A visual never invents project data"],
+  "evidenceProjects": ["vivid", "oncoverse"]
+}

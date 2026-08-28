@@ -51,6 +51,8 @@ This is qualitative evidence, not a scored round.
 
 Artifact:
 
+[`TEN_SECOND_ARTIFACT.md`](TEN_SECOND_ARTIFACT.md)
+
 Date:
 
 | # | Participant context | Verbatim answer | Work clear? | Hiring reason clear? | Pass? |

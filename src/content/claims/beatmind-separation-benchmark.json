@@ -1,0 +1,10 @@
+{
+  "wording": "On the documented 120-second benchmark input, BeatMind's L4 separation run took 56.5 seconds versus 97.2 seconds on T4.",
+  "display": "97.2s to 56.5s",
+  "context": "Stem-separation benchmark for one fixed 120-second audio input; this is not full pipeline latency.",
+  "denominator": "one 120-second benchmark track on each GPU profile",
+  "verifiedAt": "2026-08-28",
+  "status": "verified",
+  "publish": true,
+  "sources": [{ "kind": "repository", "locator": "C:/great learning self paced/Stick and dot/beatmind/docs/PLAN.md section 2.3c", "public": false }]
+}

@@ -1,0 +1,10 @@
+{
+  "wording": "Vivid's recorded LoRA training run completed 2,500 steps over a 1,996-image training set.",
+  "display": "2,500 steps",
+  "context": "Completed training run on Vivid main; this trained a LoRA adapter, not a foundation model.",
+  "denominator": "1,996 discovered training images in one completed run",
+  "verifiedAt": "2026-08-28",
+  "status": "verified",
+  "publish": true,
+  "sources": [{ "kind": "artifact", "locator": "C:/great learning self paced/Stick and dot/Vivid main:lora_training/runp.txt", "revision": "030564b", "public": false }]
+}

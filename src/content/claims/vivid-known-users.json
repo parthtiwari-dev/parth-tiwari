@@ -1,0 +1,11 @@
+{
+  "wording": "At least 10 people are known to have used Vivid.",
+  "display": "at least 10 known users",
+  "context": "Owner knowledge only; no Vercel Analytics or other durable counting source was installed.",
+  "denominator": "people individually known by the owner",
+  "verifiedAt": "2026-08-28",
+  "asOf": "2026-08-28",
+  "status": "blocked",
+  "publish": false,
+  "sources": [{ "kind": "owner-record", "locator": "Named or exported record required before publication", "public": false }]
+}

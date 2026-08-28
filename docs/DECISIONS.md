@@ -33,7 +33,7 @@ in the same commit.
 | Posts may say “Coming soon” at launch | Decided | Honest absence is better than filler | Invented launch posts or an empty nav destination |
 | Experience lives on About and Resume | Decided | One human narrative and one structured employment record cover the need without duplication | Separate `/experience` route |
 | Work register may sort by recency and running status | Decided | Those fields have stable meanings | Unexplained novelty filters |
-| Cost sorting requires a shared definition and sources | Owner review in Phase 1 | Money, time, compute and effort are not interchangeable | Shipping a misleading “cost” control |
+| Work may sort by qualitative build effort | Decided | `flagship`, `substantial` and `focused` communicate scope without inventing hours or money | A misleading cost control |
 
 ## Landing and paper
 
@@ -72,12 +72,12 @@ in the same commit.
 | Decision | Status | Reason | Rejected or bounded alternative |
 |---|---|---|---|
 | Claims have source, context, verification date and `asOf` where changeable | Decided | User counts and deployments change | Permanent undated numbers in prose |
-| BeatMind 17 users is owner-supplied as of 2026-08-27 | Evidence blocked | The owner says it is real; publication still needs the record and counting definition | Retaining the now-false zero-user claim |
-| Vivid user count is a dated snapshot | Evidence blocked | The owner confirms evidence exists and the count may grow | Freezing “10+” forever |
-| QueryPilot lift uses the 70-query core denominator | Evidence blocked pending final artifact link | Current repo evidence separates 70 core and 12 adversarial queries | Saying +5.7pp across all 82 |
-| UPI evaluation and backtest metrics stay separate | Evidence blocked pending final wording | Different datasets answer different questions | One context-free precision claim |
-| Oracle duration language stays unpublished | Evidence blocked | Retry behavior is visible; “months” and “longest” were not verified | Trusting remembered uptime |
-| Hire shows a real price band | Owner review in Phase 1 | A ready client should not have to guess whether the work is in range | “Contact for pricing” only |
+| BeatMind's 18 registered-account statement remains unpublished | Evidence blocked | The owner reports the Clerk count, but the supplied screenshot is Vercel Analytics and does not prove it | Calling visitors or remembered signups users |
+| Vivid's owner-known lower bound remains unpublished | Evidence blocked | No durable analytics or counting record is attached | Freezing “10+” into prose |
+| QueryPilot lift uses the 70-query core denominator | Decided and verified | The artifact separates 70 core and 12 adversarial queries | Saying +5.7pp across all 82 |
+| UPI evaluation and replay metrics stay separate | Decided and verified | Different datasets answer different questions | One context-free precision claim |
+| Oracle duration and automatic-stop language stay unpublished | Decided after source audit | Retry configuration is visible; uptime is not, and the stop helper lacks its token | Trusting remembered uptime or unwired code |
+| No public price anywhere | Owner decided 2026-08-28 | The owner wants scope and fit to lead into a direct conversation | Price bands, starting prices and cost estimates |
 
 The detailed evidence queue is `CONTENT_PROVENANCE.md`.
 
@@ -123,11 +123,8 @@ The detailed evidence queue is `CONTENT_PROVENANCE.md`.
 
 ### Phase 1
 
-- Exact hero sentence
-- Public price band
-- Meaning and comparability of project cost
-- Final claim wording and sources
-- Which general Posts, if any, launch
+- Exact hero sentence after the text-only human test
+- Human-test results and owner decision
 
 ### Phase 2
 

@@ -1,0 +1,10 @@
+{
+  "wording": "A Vivid Turbo evaluation was 5.90 times faster across 42 shots, but it was rejected because identity and text-scene quality regressed.",
+  "display": "5.90x faster, not shipped",
+  "context": "Phase 2 comparison over 12 scenes and 42 shots; accepted GPU work fell from 5,188.2 seconds to 879.8 seconds.",
+  "denominator": "42 shots across 12 scripted scenes",
+  "verifiedAt": "2026-08-28",
+  "status": "verified",
+  "publish": true,
+  "sources": [{ "kind": "artifact", "locator": "C:/great learning self paced/Stick and dot/Vivid/evals/baselines/2026-08-phase2-turbo.json", "public": false }]
+}

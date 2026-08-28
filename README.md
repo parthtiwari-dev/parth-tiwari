@@ -3,9 +3,10 @@
 This repository is rebuilding Parth Tiwari's portfolio as **Paper and Worlds**: a
 static, multi-page Astro site whose project case studies use each project's real data.
 
-The current code is the Phase 0 foundation only. It intentionally contains one unstyled,
-server-rendered placeholder route and no canvas, tear interaction, final copy, content
-collection, or world implementation.
+The current code is at the Phase 1 human gate. It contains validated content collections,
+twelve complete case-study records, twelve Errata entries, route copy, services,
+experience, and source-linked claims. The visible route remains an unstyled placeholder.
+There is still no canvas, tear interaction, final visual system, or world implementation.
 
 ## Stack
 
@@ -23,6 +24,7 @@ collection, or world implementation.
 npm install
 npm run dev
 npm run build
+npm run phase1:gate
 npm run preview
 ```
 
@@ -41,3 +43,6 @@ Read [`docs/RULES.md`](docs/RULES.md), [`docs/DESIGN_LOCK.md`](docs/DESIGN_LOCK.
 [`docs/WORLDS.md`](docs/WORLDS.md), [`docs/BUILD_PLAN.md`](docs/BUILD_PLAN.md), and
 [`CLAUDE.md`](CLAUDE.md) before making changes. Work one phase at a time and stop when
 its measured gate passes.
+
+Phase 1 is waiting on the five-person text-only test in
+[`docs/TEN_SECOND_TEST.md`](docs/TEN_SECOND_TEST.md). The agent cannot simulate it.

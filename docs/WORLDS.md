@@ -116,12 +116,12 @@ durations, including the `separate` stage failing, the worker being lost in red,
 the retry completing in green. This is the most distinctive single graphic on the whole
 site and no competitor's portfolio has one.
 
-**Content awaiting provenance lock.** The later case-study snapshot says 24 days solo,
-307 commits, about 30,500 lines and 299 tests across four tiers; an earlier resume
-snapshot says 19 days, 194 commits and 27,000 lines. Stem separation improved from 70s
-to 23.4s after root-causing a missing `libcublasLt.so.13`. The owner reports 17 users
-as of 2026-08-27. None of these values ships until its scope, source and `asOf` date are
-recorded in `CONTENT_PROVENANCE.md`.
+**Verified content.** The current local web workspace passed 381 tests across 39 test
+files on 2026-08-28. A documented fixed-input separation comparison records 97.2 seconds
+on T4 and 56.5 seconds on L4 for one 120-second track; this is separation latency, not the
+full pipeline. Conflicting duration, commit and line-count snapshots remain excluded.
+The owner reports 18 Clerk accounts, but the attached Vercel Analytics screenshot does
+not prove that count, so it remains unpublished.
 
 **Errata.** The copyright tickbox that got deleted.
 
@@ -135,7 +135,8 @@ not a working mixer. No runtime fetch.
 ### 02 · Vivid (Stick and Dot) — *flagship · live · ✅ prototyped*
 
 **The story.** A script becomes a shot-by-shot storyboard with one character who stays
-the same person across every frame. He trained the model it runs on.
+the same person across every frame. A project-specific LoRA adapter supports the generation
+experiments; this is not foundation-model training.
 
 **The graphic.** Diffusion. Noise resolving into a composed frame over 28 steps, with a
 step counter and a progress rule. **This is the one place the v2 denoise idea is true**:
@@ -148,9 +149,10 @@ and the failed comparison side by side.
 
 **Accent.** The dusk palette of the frame it resolves to.
 
-**Content.** 2,250 LoRA training steps, the dataset pipeline, CLIP scoring for prompt
-alignment and face consistency. The backed user count is a dated claim, not permanent
-copy; attach its evidence and `asOf` date before publication.
+**Content.** The recorded completed LoRA run used 1,996 discovered images and finished
+2,500 steps. A separate 42-shot Turbo comparison was 5.90 times faster but was rejected
+after identity and text-scene regressions. The owner knows at least 10 people who used
+Vivid, but no durable count source is attached, so the number remains unpublished.
 
 **Errata.** Conditioning each shot on the previous shot's pixels made it worse: the
 previous frame's hand pose overrode the text prompt and later shots ran roughly four
@@ -219,9 +221,10 @@ coordinates. Do not fake the geometry.
 **The graphic.** The Temporal state machine as nodes and edges, with the human gate lit
 and every model-proposed transition shown arriving at a gate rather than at the state.
 
-**Scroll story.** A customer message becomes a proposed action, the model reaches the
-gate, authoritative order state is checked, a human approval lands, and only then does
-the order advance. Reduced motion parks the proposal at the gate.
+**Scroll story.** A customer message becomes a proposed action, authoritative order state
+is checked, deterministic workflow code accepts or rejects the action, and the event is
+recorded. The current source does not guarantee human approval for every transition, so
+the world does not depict one. Reduced motion parks the proposal at the authority boundary.
 
 **Accent.** One colour for the machine, `--oxblood` for the gate.
 
@@ -355,7 +358,8 @@ tomorrow. Say why that matters.
 ### 12 · Oracle Auto Provision — *minor · running · 📐 specced*
 
 **The story.** A small provisioning automation whose value is retrying safely after a
-failed run. Duration and uptime remain unpublished until evidence is attached.
+failed run. It is configured to retry every five minutes and checks for an existing
+instance first. Duration and uptime remain unpublished until evidence is attached.
 
 **The graphic.** A cron heartbeat: a long row of run ticks, most green, with the failed
 attempts and the retry that finally landed marked in red.
@@ -364,7 +368,9 @@ attempts and the retry that finally landed marked in red.
 attempt lands. Reduced motion shows the failed and successful attempts together.
 
 **Content.** Keep the scope small and state what the retry protected. Do not claim
-“months” or “longest uptime” until logs establish the duration and comparison.
+“months” or “longest uptime” until logs establish the duration and comparison. The code
+contains an auto-disable helper, but the current workflow does not pass its required token;
+manual disable is the verified operating instruction.
 
 ---
 

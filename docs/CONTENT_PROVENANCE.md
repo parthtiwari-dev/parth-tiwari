@@ -25,21 +25,24 @@ dated snapshot, not as an undated live fact.
 
 ## Current queue
 
-| Claim | Current evidence | Status | Required before publication |
-|---|---|---|---|
-| BeatMind build duration, commits and source size | Earlier resume snapshot says 19 days, 194 commits and 27,000 lines; later case study says 24 days, 307 commits and about 30,500 lines | Blocked | Define the date range and repository scope for each snapshot, then choose or label the intended one |
-| BeatMind tests | Later case study says 299 tests across four tiers | Blocked | Reproduce or cite the dated test inventory |
-| BeatMind separation speed | 70s to 23.4s is present in project records | Blocked | Attach benchmark command, input conditions and dated output |
-| BeatMind users | Owner reports 17 users on 2026-08-27 | Blocked | Attach the source record, define what counts as a user and record the snapshot date |
-| Vivid training | 2,250 LoRA steps appears in project records | Blocked | Attach the training log or checkpoint record and exact run |
-| Vivid users | Owner confirms the current count is backed and may increase | Blocked | Attach the record, counting definition and `asOf` date before choosing public wording |
-| Vivid previous-frame experiment | Project source records worse prompt adherence and about four-times slower later shots | Blocked | Attach the measured comparison and conditions |
-| MedRAG refusal | Final evaluation records 4 refusals in 20 cases | Blocked | Name the evaluation and publish the denominator with the percentage |
-| QueryPilot correction lift | 63/70 to 67/70 on the core set, a +5.7 percentage-point lift; 12 adversarial queries are separate | Blocked | Attach the benchmark artifact and keep the two sets distinct |
-| UPI precision | 92.06% appears in a named model evaluation at a 0.5% alert budget; a separate operational backtest reports another overall precision | Blocked | Name both datasets and decide which claim serves the case-study beat |
-| Oracle duration and uptime | Source confirms retry behavior; “months” and “longest uptime” were not verified | Blocked | Attach dated logs or remove the duration/comparison |
-| Live deployments | Existing documentation lists candidate Vercel URLs | Blocked | Re-check ownership, status, authentication and route behavior immediately before publication |
-| Hire price band | Existing PRD frames engagements at ₹50,000 to ₹1,00,000 | Owner review | Confirm whether this remains the public band and what is included |
+The machine-readable records are in `src/content/claims/`. The detailed inspection record
+is [`PHASE_1_EVIDENCE_AUDIT.md`](PHASE_1_EVIDENCE_AUDIT.md).
+
+| Claim group | Status | Publication decision |
+|---|---|---|
+| BeatMind tests and fixed-input separation benchmark | Verified | Publish with the dated working-tree and benchmark boundaries |
+| Vivid LoRA training and rejected Turbo evaluation | Verified | Publish as an adapter run and a rejected speed experiment, not foundation-model training |
+| MedRAG refusals | Verified | Publish as 4 of 20 in the named final recorded evaluation |
+| QueryPilot correction | Verified | Publish 63 to 67 of 70 core queries; keep 12 adversarial queries separate |
+| SecondSelf internal RAGAS faithfulness | Verified | Publish with the 20-question denominator and no job-outcome implication |
+| OncoVerse content scope | Verified | Publish 1 complete of 5 and the needs-review state |
+| UPI held-out evaluation and operational replay | Verified | Publish as two separate claims with separate denominators |
+| Fraud Risk held-out evaluation | Verified | Publish with the held-out denominator and standard-dataset limitation |
+| Oracle schedule and duplicate guard | Verified | Publish as configuration, not uptime or automatic stop |
+| BeatMind accounts | Blocked | Owner reports 18 Clerk accounts; exclude until the Clerk record and definition are attached |
+| Vivid users | Blocked | Owner knows at least 10 people; exclude until a durable counting record is attached |
+| Public project links | Verified where included | All included URLs returned HTTP 200 on 2026-08-28; the timed-out QueryPilot backend URL is excluded |
+| Public pricing | Retired by owner decision | Do not display a price, price band, or cost estimate anywhere on the site |
 
 ## Claims that do not ship
 

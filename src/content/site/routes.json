@@ -1,0 +1,47 @@
+{
+  "home": {
+    "hero": "I build AI products, break them, fix them, and write down what actually happened.",
+    "employerDoor": {
+      "label": "See the work",
+      "href": "/work",
+      "note": "The systems, decisions, measurements, and mistakes."
+    },
+    "clientDoor": {
+      "label": "Start a project",
+      "href": "/hire",
+      "note": "What I can build, how I work, and the fastest honest way to start."
+    },
+    "intro": [
+      "I am Parth, an AI engineer in Bengaluru. I like products that feel alive on the surface and stay strict underneath.",
+      "The work here includes music tools, retrieval systems, agents, diffusion pipelines, fraud models, and small automations. Every case study includes the part that failed."
+    ]
+  },
+  "work": {
+    "heading": "The work",
+    "intro": "Every project is here. Start with the flagships, sort by the effort they took, or look at what is newest and what is still running.",
+    "sortLabels": ["Featured", "Build effort", "Most recent", "Still running"]
+  },
+  "notes": {
+    "heading": "Notes",
+    "intro": "What I predicted, what happened, and what I had to change. Writing lives here too when there is something worth publishing.",
+    "filters": ["All", "What went wrong", "Writing"],
+    "writingEmpty": "Writing is coming soon. The errata are already open."
+  },
+  "about": {
+    "heading": "Hi, I am Parth.",
+    "paragraphs": [
+      "I build AI products and the systems around them: retrieval, agents, generation, workflows, evaluation, and the interfaces people actually use.",
+      "I care about what happens after a demo works once. Where does the evidence come from? What happens when a worker dies? What is the model not allowed to decide? Those questions shape most of my work."
+    ]
+  },
+  "resume": {
+    "heading": "Resume",
+    "intro": "A real HTML resume for recruiters, search, and screen readers, with the source PDF available beside it.",
+    "downloadLabel": "Download PDF"
+  },
+  "hire": {
+    "heading": "Have something real to build?",
+    "intro": "Tell me what you are trying to make. I will tell you what I can own, what needs proving first, and the smallest useful way to start.",
+    "contactLabel": "Email Parth"
+  }
+}

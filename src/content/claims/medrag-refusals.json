@@ -1,0 +1,11 @@
+{
+  "wording": "MedRAG refused 4 of 20 questions in its final recorded evaluation.",
+  "display": "4 of 20 refused",
+  "context": "Final RAGAS evaluation recorded on 2026-02-03; refusal is reported as an observed outcome, not proof of medical safety.",
+  "denominator": "20 evaluation questions",
+  "verifiedAt": "2026-08-28",
+  "asOf": "2026-02-03",
+  "status": "verified",
+  "publish": true,
+  "sources": [{ "kind": "artifact", "locator": "C:/great learning self paced/z Final Projects/Evidence-Bound-Drug-RAG/data/evaluation/ragas_results.json", "public": false }]
+}

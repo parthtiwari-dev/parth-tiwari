@@ -1,0 +1,10 @@
+{
+  "wording": "QueryPilot's correction loop moved execution success from 63 to 67 queries on the 70-query core set.",
+  "display": "63 to 67 of 70",
+  "context": "The correction recovered 4 of 7 initial failures, a 5.7 percentage-point lift; 12 adversarial queries are a separate set.",
+  "denominator": "70 core benchmark queries",
+  "verifiedAt": "2026-08-28",
+  "status": "verified",
+  "publish": true,
+  "sources": [{ "kind": "artifact", "locator": "C:/great learning self paced/z Final Projects/querypilot/backend/evaluation_results/day6_full_results.json", "public": false }]
+}

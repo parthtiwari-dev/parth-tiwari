@@ -90,8 +90,8 @@ The full checklists and gates live only in `BUILD_PLAN.md`.
 
 - The text-only ten-second test has not been run.
 - Several numeric claims need their source, scope and snapshot date.
-- BeatMind's 17-user count and Vivid's changing count need attached evidence before
-  publication.
-- The public price band and meaning of cost sorting require Phase 1 owner decisions.
+- BeatMind's owner-reported 18 Clerk accounts and Vivid's owner-known lower bound need
+  durable evidence and counting definitions before publication.
+- Public pricing is rejected. Work sorting uses qualitative build effort.
 
 These block claims or later gates. They do not reopen the Paper and Worlds direction.

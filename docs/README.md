@@ -13,8 +13,10 @@ Where to look, and what is still true.
 | [`SESSION_PROMPT.md`](SESSION_PROMPT.md) | The prompt to open the build session |
 | [`DECISIONS.md`](DECISIONS.md) | The register. Every settled choice with its reason and its rejected alternatives |
 | [`CONTENT_PROVENANCE.md`](CONTENT_PROVENANCE.md) | The publication queue for claims, counts, benchmarks and deployment facts |
+| [`PHASE_1_EVIDENCE_AUDIT.md`](PHASE_1_EVIDENCE_AUDIT.md) | The source audit, corrected metrics, blocked claims and public-link evidence |
 | [`REBUILD_BRIEF.md`](REBUILD_BRIEF.md) | Why v1 is being replaced. The guards that prevent a repeat |
 | [`TEN_SECOND_TEST.md`](TEN_SECOND_TEST.md) | 🔴 The acceptance gate. **Still never run** |
+| [`TEN_SECOND_ARTIFACT.md`](TEN_SECOND_ARTIFACT.md) | The exact plain-text artifact for the Phase 1 human test |
 | [`PRD.md`](PRD.md) | Audience, route contracts, conversion, worlds and future publishing |
 
 ## Superseded — kept for the reasoning, not the instructions
@@ -41,9 +43,11 @@ None of it needs redoing.
 
 ## Current state
 
-Phase 0 is complete and merged locally into `redesign/v2`: the Vue and constellation
-application is gone, Astro 7.2.9 produces static HTML, and the built placeholder passes its
-foundation gates. Further work happens directly on `redesign/v2` unless the owner requests
-another branch. Phase 1 has not started and still requires its owner review.
+Phase 0 is complete on `redesign/v2`. Phase 1 content implementation is complete: twelve
+nine-beat case studies, twelve Errata entries, typed content schemas, route copy, services,
+experience, claim records and the text-only test artifact. Automated schema, provenance and
+Astro build checks pass. Phase 1 remains open at its human gate: five real participants must
+see the text artifact and at least four must pass the recorded rubric. No Phase 2 work may
+begin before the owner reviews those results and approves the hero sentence.
 
-**Last documentation truth audit:** 2026-08-28, Phase 0.
+**Last documentation truth audit:** 2026-08-28, Phase 1 automated gate complete; human gate pending.

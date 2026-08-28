@@ -1,0 +1,10 @@
+{
+  "wording": "Fraud Risk Intelligence recorded 0.8499 PR-AUC on its 56,962-row held-out test split.",
+  "display": "0.8499 PR-AUC",
+  "context": "XGBoost evaluation on the standard credit-card fraud dataset; the denominator is the confusion-matrix total.",
+  "denominator": "56,962 held-out rows",
+  "verifiedAt": "2026-08-28",
+  "status": "verified",
+  "publish": true,
+  "sources": [{ "kind": "artifact", "locator": "C:/great learning self paced/z Final Projects/Fraud-Risk-Intelligence-System/experiments/metrics/XGboost_metrics.json", "public": false }]
+}

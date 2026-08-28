@@ -22,13 +22,13 @@ quietly choosing one.
 - Astro 7.2.9, exactly pinned
 - static output
 - strict TypeScript
-- content collections beginning in Phase 1
+- validated content collections established in Phase 1
 - vanilla CSS beginning in Phase 2
 - one direct production dependency: `astro`
 - Playwright as development-only browser tooling
 
 There is no Vue application, SPA rewrite, Three.js scene, canvas, Tailwind layer, analytics
-runtime, or client-side router in the Phase 0 foundation.
+runtime, or client-side router in the current Phase 1 foundation.
 
 ## Phase protocol
 
@@ -72,6 +72,15 @@ runtime, or client-side router in the Phase 0 foundation.
 - Browser checks accept `--url`; run them against the built static output for gates.
 - Screenshots are evidence only when someone inspects them. A successful capture command
   does not prove the page looks correct.
+
+## Current Phase 1 gate
+
+- `npm run phase1:gate` runs negative schema tests, cross-content provenance checks and the
+  static Astro build with telemetry disabled for restricted environments.
+- The automated portion passes. The remaining gate is the five-person text-only test in
+  `docs/TEN_SECOND_TEST.md`.
+- An agent cannot simulate the participants or start Phase 2 before the owner approves the
+  recorded result and the final hero sentence.
 
 ## Dependencies and external actions
 

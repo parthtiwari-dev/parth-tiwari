@@ -1,0 +1,11 @@
+{
+  "wording": "BeatMind has 18 registered accounts as of 2026-08-28.",
+  "display": "18 registered accounts",
+  "context": "Owner-reported Clerk dashboard count. The supplied Vercel screenshot shows visitors and pageviews, not Clerk accounts.",
+  "denominator": "all Clerk accounts in the BeatMind production instance",
+  "verifiedAt": "2026-08-28",
+  "asOf": "2026-08-28",
+  "status": "blocked",
+  "publish": false,
+  "sources": [{ "kind": "owner-record", "locator": "Clerk dashboard screenshot or export still required", "public": false }]
+}

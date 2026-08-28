@@ -1,0 +1,11 @@
+{
+  "wording": "SecondSelf recorded 0.9753 faithfulness on a 20-question internal RAGAS evaluation.",
+  "display": "0.9753 faithfulness",
+  "context": "Internal RAGAS run recorded on 2026-05-14; it measures the retrieval-answer pipeline, not job-placement outcomes.",
+  "denominator": "20 evaluation questions",
+  "verifiedAt": "2026-08-28",
+  "asOf": "2026-05-14",
+  "status": "verified",
+  "publish": true,
+  "sources": [{ "kind": "artifact", "locator": "C:/great learning self paced/z Final Projects/secondself/backend/eval/logs/ragas_20260514_213310.json", "public": false }]
+}

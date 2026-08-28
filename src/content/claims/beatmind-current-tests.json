@@ -1,0 +1,11 @@
+{
+  "wording": "The current BeatMind web workspace passes 381 tests across 39 test files.",
+  "display": "381 tests",
+  "context": "A local Vitest run against the repository working tree on 2026-08-28; external services are mocked at their test boundaries.",
+  "denominator": "39 passing test files",
+  "verifiedAt": "2026-08-28",
+  "asOf": "2026-08-28",
+  "status": "verified",
+  "publish": true,
+  "sources": [{ "kind": "command", "locator": "C:/great learning self paced/Stick and dot/beatmind/apps/web: npm.cmd test", "public": false }]
+}

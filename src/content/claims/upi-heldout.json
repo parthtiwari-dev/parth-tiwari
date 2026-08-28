@@ -1,0 +1,11 @@
+{
+  "wording": "On an 85,429-row held-out test set, the UPI model reached 92.06% precision and 12.81% recall at a 0.5% alert budget.",
+  "display": "92.06% precision",
+  "context": "Named production XGBoost evaluation at the fixed alert-budget operating point; this is separate from the replay backtest.",
+  "denominator": "85,429 held-out transactions",
+  "verifiedAt": "2026-08-28",
+  "asOf": "2026-01-22",
+  "status": "verified",
+  "publish": true,
+  "sources": [{ "kind": "artifact", "locator": "C:/great learning self paced/z Final Projects/upi-fraud-engine/models/production/pipeline_results.json", "public": false }]
+}

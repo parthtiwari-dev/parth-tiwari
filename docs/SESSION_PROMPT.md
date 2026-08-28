@@ -1,8 +1,7 @@
 # Build-session prompt
 
-Use this prompt in a fresh build session after the Phase 0 gate and owner approval. The
-repository carries the detailed plan, so the session should execute Phase 1 directly without
-replanning the whole rebuild.
+Use this prompt in a fresh session to finish the Phase 1 human gate. The content,
+provenance and automated checks are already implemented. Do not rebuild them or start Phase 2.
 
 ```text
 Read these in order before taking action:
@@ -16,26 +15,25 @@ Read these in order before taking action:
 7. CLAUDE.md
 
 The portfolio is being rebuilt as Paper and Worlds on Astro 7.2.9 with static output. Phase 0
-removed the Vue/Three.js constellation and established the verified static foundation.
+established the foundation. Phase 1 now has validated content, claims and a text artifact.
 
-Work phases in BUILD_PLAN.md in order. Start with Phase 1 only and stop at its gate.
+Work phases in BUILD_PLAN.md in order. Finish the Phase 1 human gate and stop.
 
-Phase 1 is content and provenance only:
+The remaining Phase 1 work is human validation only:
 
 - Do not open design/directions/*.
 - Do not create CSS.
 - Do not create visual components.
 - Do not implement paper, previews, tearing, canvas, animation, or worlds.
-- Inspect the retained source data as an inventory, not as approved public copy.
-- Ask the owner every Phase 1 question before settling public wording or uncertain facts.
-- Never invent a number, testimonial, client, user count, price, result, link, or deployment.
-- Every publishable claim needs a CONTENT_PROVENANCE.md record.
+- Use `docs/TEN_SECOND_ARTIFACT.md` exactly as instructed.
+- The owner recruits five people who have not seen it and records verbatim answers in
+  `docs/TEN_SECOND_TEST.md`.
+- The agent does not simulate participants, paraphrase their answers, or mark the gate passed.
+- Review the working hero sentence with the real answers before locking it.
 
-Begin by reporting the repository state, Phase 1 scope and exclusions, the files expected to
-change, and the exact owner decisions required by BUILD_PLAN.md. Do not open a design artifact.
-
-Build only after those questions are answered. Run the Phase 1 gate, update every affected
-live document and checklist in the same commit, show the evidence, and stop before Phase 2.
+Begin by running `npm run phase1:gate` and confirming the current content commit. Then help
+the owner administer and record the five-person test. Show the score, ask for the final hero
+decision, update the affected live documents in the same commit, and stop before Phase 2.
 ```
 
 ## Drift checks

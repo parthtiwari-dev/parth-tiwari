@@ -1,0 +1,8 @@
+{
+  "order": 1,
+  "title": "AI products people can use",
+  "outcome": "A working product in the browser, with the model, data, evaluation, and interface connected.",
+  "scope": ["Retrieval over private material", "Agents with bounded actions", "Generation workflows with durable jobs"],
+  "boundaries": ["No unsupported benchmark or user claim", "No pretending a prototype is production"],
+  "evidenceProjects": ["beatmind", "vivid", "querypilot", "medrag", "secondself"]
+}

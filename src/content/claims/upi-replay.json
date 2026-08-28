@@ -1,0 +1,10 @@
+{
+  "wording": "Across a 22,071-transaction seven-day replay, the UPI system recorded 75.22% precision, 12.13% recall, and no alert-budget violations.",
+  "display": "75.22% replay precision",
+  "context": "Operational replay covering 2025-06-01 through 2025-06-07; not the held-out model test.",
+  "denominator": "22,071 transactions across 7 days",
+  "verifiedAt": "2026-08-28",
+  "status": "verified",
+  "publish": true,
+  "sources": [{ "kind": "artifact", "locator": "C:/great learning self paced/z Final Projects/upi-fraud-engine/evaluation/backtest_results/backtest_results.json", "public": false }]
+}

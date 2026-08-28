@@ -1,0 +1,18 @@
+{
+  "role": "AI/ML Intern",
+  "organization": "Stick and Dot",
+  "location": "Bengaluru, India",
+  "start": "2026-03",
+  "current": true,
+  "summary": "Building generative media systems and the product workflows around them.",
+  "highlights": [
+    "Built and evaluated Vivid's script-to-storyboard generation pipeline.",
+    "Developed the LoRA data and training workflow used for character and style experiments.",
+    "Worked across model evaluation, backend jobs, product surfaces, and failure recovery."
+  ],
+  "source": {
+    "kind": "artifact",
+    "locator": "C:/great learning self paced/z Final Projects/parth-os/resume/Parth_Tiwari_Resume_B.pdf",
+    "public": false
+  }
+}

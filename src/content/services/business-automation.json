@@ -1,0 +1,8 @@
+{
+  "order": 2,
+  "title": "Business workflow automation",
+  "outcome": "Repeated work moves through a visible, recoverable workflow while people keep authority over consequential decisions.",
+  "scope": ["Long-running workflow orchestration", "Risk and fraud scoring", "Scheduled infrastructure tasks"],
+  "boundaries": ["The model does not own lifecycle state", "High-impact actions keep an explicit gate"],
+  "evidenceProjects": ["order-supervisor", "upi-fraud-engine", "oracle-auto-provision"]
+}

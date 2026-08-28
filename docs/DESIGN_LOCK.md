@@ -47,7 +47,7 @@ and tear material. Those improvements happen in Phases 2 through 4 with owner re
 
 ## 3. Two readers, eight route families
 
-A client wants outcome, speed, scope and cost. An employer wants engineering depth,
+A client wants outcome, speed, scope and fit. An employer wants engineering depth,
 decisions, evidence and a CV. The first viewport offers two doors without splitting the
 brand into two sites:
 
@@ -66,7 +66,7 @@ through the persistent navigation and the resume route.
 | `/notes/[slug]` | Full erratum or article with sources, related project and next reading |
 | `/about` | Portrait, path, work-experience timeline, training and operating rules |
 | `/resume` | Semantic HTML CV, print view and verified PDF download |
-| `/hire` | Scope, process, price band, booking and direct contact |
+| `/hire` | Scope, process, fit, booking and direct contact; no public pricing |
 
 No separate `/blog` page is needed. Posts and Errata are two types inside Notes. No separate
 `/experience` route is needed. The human story belongs on About; the structured employment
@@ -258,11 +258,12 @@ These are production requirements, not reasons to polish `paper.html`.
 ## 12. Open evidence, not open direction
 
 - The ten-second test has not been run.
-- BeatMind's build-effort figures represent conflicting snapshots. The owner reports
-  17 users as of 2026-08-27; the evidence and counting definition must be attached before
-  publication.
-- Vivid's user count is backed and changes over time; publish a dated snapshot.
+- BeatMind's conflicting build-count snapshots stay excluded. The owner reports 18 Clerk
+  accounts as of 2026-08-28, but the Clerk record and counting definition are still missing.
+- Vivid has an owner-known lower bound of 10 people but no durable count source; do not
+  publish it yet.
 - QueryPilot and UPI metrics need their exact denominators and evaluation context.
 - Oracle uptime language remains unpublished until evidence exists.
 - Vivid and QueryPilot need useful product captures before their worlds ship.
-- The exact price band and the meaning of “cost” sorting are Phase 1 owner decisions.
+- The owner rejected public pricing and cost sorting. The register uses qualitative build
+  effort: flagship, substantial and focused.

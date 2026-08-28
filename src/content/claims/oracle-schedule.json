@@ -1,0 +1,10 @@
+{
+  "wording": "Oracle Auto Provision is configured to retry every 5 minutes, with a duplicate-instance guard before creation.",
+  "display": "5-minute retry cadence",
+  "context": "Workflow configuration, not measured uptime. The success auto-disable helper exists but is not wired with the required token.",
+  "denominator": "one configured GitHub Actions schedule",
+  "verifiedAt": "2026-08-28",
+  "status": "verified",
+  "publish": true,
+  "sources": [{ "kind": "repository", "locator": "C:/great learning self paced/z Final Projects/oracle-auto-provision/.github/workflows/retry.yml and create_instance.py", "public": false }]
+}
