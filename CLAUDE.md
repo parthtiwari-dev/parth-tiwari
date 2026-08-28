@@ -81,8 +81,9 @@ content remains static HTML.
   static Astro build with telemetry disabled for restricted environments.
 - Phase 1 is complete under its owner-amended gate. The text-only human test was deferred,
   not passed, and may never be reported otherwise.
-- Phase 2 is open. The maintained landing stub is on `/`; its craft evidence awaits owner
-  review before the landing structure is locked or another route begins.
+- Phase 2 is open. The maintained landing stub is on `/`; its structure and interim public
+  release were owner-approved on 2026-08-29. `/work` route architecture is the next review,
+  while production route implementation remains Phase 3.
 - Do not build the production pages, tear, backlight, canvas or animated worlds in Phase 2.
 
 ## Dependencies and external actions

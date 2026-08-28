@@ -46,12 +46,13 @@ nine-beat case studies, twelve Errata entries, typed content schemas, route copy
 experience, claim records and the text-only test artifact. Automated schema, provenance and
 Astro build checks pass. The owner deferred the unrun text-only human test without marking
 it passed. Phase 2 is open. The three initial landing directions were rejected and removed.
-The owner approved the overall full-width scroll direction. The maintained landing stub is
+The owner approved the overall full-width scroll direction and the refined landing
+checkpoint for an interim public release. The maintained landing stub is
 now at `/`; the obsolete `/review/phase-2/` route is removed. Its restraint pass, segmented
 fibre edges, directional folds and three bounded one-shot motion studies have rendered
-evidence at 390, 800 and 1440 pixels. The evidence and the separate worlds-animation memo
-await owner review; no Phase 2 checklist item is newly marked complete, and the other routes
+evidence at 390, 800 and 1440 pixels. The separate worlds-animation memo remains research
+only; no Phase 2 checklist item is newly marked complete, and the other route structures
 have not begun. A real
 five-person comprehension test remains mandatory on the Phase 3 static preview.
 
-**Last documentation truth audit:** 2026-08-29, Phase 2 landing craft evidence and worlds research memo awaiting owner review.
+**Last documentation truth audit:** 2026-08-29, landing checkpoint approved for interim release; remaining Phase 2 route architecture is open.

@@ -10,7 +10,9 @@ services, experience, and source-linked claims. The maintained Phase 2 landing n
 have not begun. The landing includes the approved full-width rag sheet, post-hero sticky
 paper fold, content-driven sections, stable fibre-edge segments, bounded one-shot paper
 motion and the current project-hover study. The rejected A/B/C studies were removed. There
-is still no production tear, backlight, canvas, animated world or deployment.
+is still no production tear, backlight, canvas or animated world. The owner approved the
+current root landing for an interim public release while the rest of Phase 2 continues;
+that release is not the complete Phase 3 or Phase 7 site.
 
 ## Stack
 
@@ -52,5 +54,6 @@ its measured gate passes.
 The owner deferred the unrun Phase 1 text-only test. It was not marked as passing. A real
 five-person comprehension test remains required on the Phase 3 static preview.
 
-Phase 2 remains open. The current landing craft evidence and the worlds animation research
-memo need owner review before the landing structure can be locked or `/work` can begin.
+Phase 2 remains open. The landing checkpoint is approved. `/work` route architecture, the
+remaining route structures, shared-token closeout and rendered contrast are still required
+before the Phase 2 gate can pass.

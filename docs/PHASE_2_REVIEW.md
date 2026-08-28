@@ -1,8 +1,8 @@
 # Phase 2 owner review: system and page architecture
 
-Opened 2026-08-28; updated 2026-08-29. Phase 2 proceeds one route and one review checkpoint at a time. The
-landing page is the only active route. `/work` and every other route wait until the landing
-structure is approved.
+Opened 2026-08-28; updated 2026-08-29. Phase 2 proceeds one route and one review checkpoint
+at a time. The owner approved the refined landing structure and its interim public release
+on 2026-08-29. `/work` is the next route architecture review; implementation remains Phase 3.
 
 ## Scope
 
@@ -11,7 +11,8 @@ content density, static world framing and accessibility states. It produces revi
 and stub renders, not the production site.
 
 Excluded: production tear and backlight implementation, canvas, animated project worlds,
-complete production pages, deployment and new runtime dependencies.
+complete production pages and new runtime dependencies. The owner-approved interim release
+publishes this reviewed root unchanged; it does not expand the Phase 2 implementation scope.
 
 ## Research and source boundary
 
@@ -179,7 +180,7 @@ The memo is storyboard input only and authorizes no world code.
 2. Review whether the tightened section rhythm now feels like one continuous message.
 3. Review the torn-ink project hover/focus and the amount of marginalia.
 4. Lock the landing tokens and responsive rules only after desktop, tablet and phone pass.
-5. Build and review `/work` structure only after the landing checkpoint is approved.
+5. Begin the `/work` structure review next; do not implement its production route in Phase 2.
 
 ## Already locked, not reopened here
 

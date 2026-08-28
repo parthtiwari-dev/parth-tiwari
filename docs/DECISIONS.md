@@ -103,8 +103,9 @@ The detailed evidence queue is `CONTENT_PROVENANCE.md`.
 | Static Vercel deployment without an adapter | Decided for initial build | The public site has no server feature | Adapter installed by habit |
 | Remove analytics in Phase 0 | Decided | It conflicts with the one-dependency static baseline | Carrying half-configured analytics through the rewrite |
 | Reconsider analytics at cutover | Owner review in Phase 7 | Measurement may earn a bounded addition after the real site exists | Treating analytics as permanently forbidden |
-| Phase 3 deploys to a preview alias | Decided | The complete static site can be reviewed live without replacing v1 early | Production cutover before creative phases |
-| Production cutover happens in Phase 7 | Decided | Domain and redirects move only after all gates | Conflating preview deployment with launch |
+| Phase 3 deploys to a preview alias | Decided | The complete static multi-route site needs live review independently of the interim root release | Treating the root-only release as the Phase 3 preview gate |
+| An interim root-only landing may replace v1 during Phase 2 | Owner decided 2026-08-29 | The reviewed landing is useful now and a public Vercel URL can collect feedback while the remaining route architecture is designed | Reporting Phase 2, Phase 3 or Phase 7 complete because one route is public |
+| Complete-site production cutover happens in Phase 7 | Decided with interim exception | Domain, redirects and every route move only after all full-site gates; the Phase 2 release is only the reviewed root landing | Conflating an interim landing with the complete launch |
 | Continue directly on local `redesign/v2` after Phase 0 | Owner decided 2026-08-28 | The owner prefers one visible local line of work; phase commits and gates still provide rollback | Creating a new `codex/*` branch for every phase by default |
 | The maintained Phase 2 landing stub lives at `/` | Owner decided 2026-08-28 | Refinement happens on the real entry URL without maintaining a second review-mode route | Keeping `/` as a placeholder and duplicating the landing under `/review/phase-2/` |
 
@@ -160,7 +161,8 @@ The working hero sentence is `I build AI products, break them, fix them, and wri
 actually happened.` It is the validated Phase 1 sentence and the most direct of the three
 owner-approved candidates.
 
-The owner liked the overall single-scroll landing on 2026-08-28. The literal cylindrical
+The owner liked the overall single-scroll landing on 2026-08-28 and approved the refined
+landing checkpoint for an interim public release on 2026-08-29. The literal cylindrical
 scroll ends, excess viewport-height spacing, quiet project-row hover and insufficient
 hand-made edge detail were not approved. The maintained stub is now on `/`. The current
 refinement replaces cylinders with directional folded-paper CSS, tightens later sections,
@@ -168,8 +170,9 @@ uses three stable generated fibre profiles per side, and keeps the torn-ink hove
 Generated transparent oxblood sheets supply sparse proofreader marks; they do not replace the
 locked readable font roles. Opening-light, nav-fold and ink-settle motion each run once and
 then stop. Full-sheet grain parallax was rejected because it would require repainting a
-background on scroll or promoting a page-height layer. Final landing approval remains open
-until the rendered phone, tablet and desktop evidence is approved.
+background on scroll or promoting a page-height layer. The landing structure is now
+approved; Phase 2 remains open for the shared tokens, rendered contrast and remaining route
+structures.
 
 The seven `📐 specced` worlds have a research-only data and accent inventory in
 `PHASE_2_WORLDS_ANIMATION_MEMO.md`. It does not satisfy the owner-approved storyboard gate and

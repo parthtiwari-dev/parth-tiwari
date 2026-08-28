@@ -33,16 +33,15 @@ Phase 2 is design-system and route-architecture work:
   motion and the existing torn-ink project hover.
 - `docs/PHASE_2_WORLDS_ANIMATION_MEMO.md` records candidate graphics for the seven specced
   worlds. It is research only and authorizes no world implementation.
-- Review one route at a time. The landing page is the only active route.
+- Review one route at a time. The landing is approved; `/work` architecture is next.
 - Do not build the production site, tear, backlight, canvas or animated worlds.
-- Refresh the 390, 800 and 1440 evidence after changes. Refine the landing one checkpoint at
-  a time; do not begin `/work` until the landing structure is approved.
+- Refresh the 390, 800 and 1440 evidence after changes. Preserve the approved landing while
+  reviewing `/work`; production route implementation remains Phase 3.
 
-Begin by confirming the current branch and diff. Run the local root and collect the owner's
-feedback on the evidence in `.shots/phase2-a1-restraint`, `.shots/phase2-a2-edge-fibres`,
-`.shots/phase2-a3-paper-folds` and `.shots/phase2-a4-paper-motion`. Record the approved
-landing structure before starting `/work`. Phase 2 remains incomplete until every route structure,
-shared token, accessibility state and rendered-contrast gate is approved and verified.
+Begin by confirming the current branch and diff. Preserve the approved landing checkpoint.
+Review `/work` structure next at phone and desktop widths. Phase 2 remains incomplete until
+every route structure, shared token, accessibility state and rendered-contrast gate is
+approved and verified.
 ```
 
 ## Drift checks

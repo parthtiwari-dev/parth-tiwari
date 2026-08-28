@@ -252,7 +252,10 @@ This phase decides how the locked direction behaves across the full site. It doe
 the production pages.
 
 **Active checkpoint, 2026-08-29:** the owner rejected the complete A/B/C landing studies and
-approved maintaining one full-width paper-scroll stub. It now lives at `/`; the obsolete
+approved maintaining one full-width paper-scroll stub. After reviewing the final phone,
+tablet and desktop craft evidence, the owner approved this landing checkpoint for an interim
+public release so the old v1 can be replaced and the shared URL can collect feedback. It now
+lives at `/`; the obsolete
 `/review/phase-2/` route is removed. Root placement does not promote the stub into Phase 3:
 the other routes, production shell contract and Phase 3 gate remain unbuilt. The current
 craft pass tightens arrival restraint, uses one shared asymmetric split, replaces repeated
@@ -263,6 +266,10 @@ evidence is in `.shots/phase2-a1-restraint`, `.shots/phase2-a2-edge-fibres`,
 memo is research only. The final built-preview evidence is in `.shots/phase2-final-built`;
 its `a11y`, `craft` and `perf` checks pass, but owner approval and the full gate are still
 required before any new Phase 2 checklist item is treated as complete.
+
+The interim root-only production release is a deliberate plan exception, not a phase-gate
+shortcut. It does not mark Phase 2 complete, does not create the missing route families and
+does not satisfy the Phase 3 preview or Phase 7 full-site cutover gates.
 
 **Owner review before work**
 
@@ -299,7 +306,9 @@ Show the visual evidence and stop.
 ### Phase 3: Complete static site
 
 No canvas. No tear. No animated world. The result is a complete, useful portfolio by itself.
-It deploys to a verified preview alias; production remains on v1 until Phase 7.
+It deploys to a verified preview alias. The approved interim Phase 2 root may already be
+public for feedback, but the complete multi-route site does not replace that checkpoint on
+production until Phase 7.
 
 Build in reviewable route slices. Each slice receives screenshots, owner review and its own
 commit with the matching plan items ticked.
@@ -461,7 +470,10 @@ dependency decision is approved.
 After the final world, run the complete route, accessibility, performance and link suites.
 Show the results and stop.
 
-### Phase 7: Production cutover
+### Phase 7: Complete-site production cutover
+
+The owner-authorized Phase 2 root-only release does not satisfy this phase. Phase 7 replaces
+that interim landing with the complete reviewed site and verifies every public route.
 
 **Owner review before work**
 
