@@ -14,6 +14,7 @@ Where to look, and what is still true.
 | [`DECISIONS.md`](DECISIONS.md) | The register. Every settled choice with its reason and its rejected alternatives |
 | [`CONTENT_PROVENANCE.md`](CONTENT_PROVENANCE.md) | The publication queue for claims, counts, benchmarks and deployment facts |
 | [`PHASE_1_EVIDENCE_AUDIT.md`](PHASE_1_EVIDENCE_AUDIT.md) | The source audit, corrected metrics, blocked claims and public-link evidence |
+| [`PHASE_2_REVIEW.md`](PHASE_2_REVIEW.md) | Phase 2 research synthesis, three demo directions and the owner decision batch |
 | [`REBUILD_BRIEF.md`](REBUILD_BRIEF.md) | Why v1 is being replaced. The guards that prevent a repeat |
 | [`TEN_SECOND_TEST.md`](TEN_SECOND_TEST.md) | 🔴 The acceptance gate. **Still never run** |
 | [`TEN_SECOND_ARTIFACT.md`](TEN_SECOND_ARTIFACT.md) | The exact plain-text artifact for the Phase 1 human test |
