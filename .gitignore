@@ -157,6 +157,9 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
 
+# Astro generated metadata
+.astro/
+
 # design-pass skill working files (screenshots, concept previews)
 .design-pass/
 inbox/refero/

@@ -6,6 +6,7 @@ Where to look, and what is still true.
 
 | File | What it settles |
 |---|---|
+| [`RULES.md`](RULES.md) | **How work is done.** Ask-before-assuming boundaries, phase discipline, evidence, documentation and handoff rules |
 | [`DESIGN_LOCK.md`](DESIGN_LOCK.md) | **The design.** Paper and Worlds: the long sheet, routes, preview, tear and visual system |
 | [`WORLDS.md`](WORLDS.md) | **What is behind each tear.** Scroll-directed case stories for all twelve projects |
 | [`BUILD_PLAN.md`](BUILD_PLAN.md) | **The stack and execution.** Review protocol, deletion manifest, nine phases and gates |
@@ -20,9 +21,10 @@ Where to look, and what is still true.
 
 `ARCHITECTURE.md`, `DESIGN.md`, `PLAN.md`, `PROGRESS_AUDIT.md`, `AUDIT.md`,
 `EVIDENCEBOUND_BUILD_ROADMAP.md`, `MEMORY.md`, `PORTFOLIO_DISCOVERY_AND_IDEAS.md`,
-`SESSION_HANDOFF.md`, `skill-2.md`, and the root `DESIGN_LOCK.md` and
-`DESIGN_REVIEW.md`. They describe v1, preserve discovery evidence or carry an obsolete
-workflow. They are not build instructions.
+`SESSION_HANDOFF.md`, and `skill-2.md`. They describe v1, preserve discovery evidence or
+carry an obsolete workflow. They are not build instructions. The superseded root
+`DESIGN_LOCK.md` and `DESIGN_REVIEW.md` were removed in Phase 0 and remain recoverable from
+Git history.
 
 `SESSION_HANDOFF.md` §5, the mistakes made twice, is still worth reading before any
 build session.
@@ -36,3 +38,11 @@ this rebuild.
 skill repos, `CRAFT-VALUES.md` with every concrete number and its source,
 `ASSET-INVENTORY.md`, and the direction prototypes under `design/directions/`.
 None of it needs redoing.
+
+## Current state
+
+Phase 0 is complete on `codex/rebuild-astro`: the Vue and constellation application is gone,
+Astro 7.2.9 produces static HTML, and the built placeholder passes its foundation gates.
+Phase 1 has not started and still requires its owner review.
+
+**Last documentation truth audit:** 2026-08-28, Phase 0.

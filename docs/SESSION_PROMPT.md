@@ -1,71 +1,50 @@
 # Build-session prompt
 
-Use this prompt in a fresh build session. The repository carries the detailed plan, so the
-session should execute Phase 0 directly without requiring a separate plan-mode pass.
+Use this prompt in a fresh build session after the Phase 0 gate and owner approval. The
+repository carries the detailed plan, so the session should execute Phase 1 directly without
+replanning the whole rebuild.
 
 ```text
 Read these in order before taking action:
 
-1. docs/DESIGN_LOCK.md
-2. docs/WORLDS.md
-3. docs/BUILD_PLAN.md
-4. docs/CONTENT_PROVENANCE.md
-5. docs/DECISIONS.md
-6. CLAUDE.md
+1. docs/RULES.md
+2. docs/DESIGN_LOCK.md
+3. docs/WORLDS.md
+4. docs/BUILD_PLAN.md
+5. docs/CONTENT_PROVENANCE.md
+6. docs/DECISIONS.md
+7. CLAUDE.md
 
-The portfolio is being rebuilt from the Vue/Three.js constellation into Paper and Worlds.
-The public brand is Parth Tiwari. The landing is one long sheet of real rag paper. Projects
-are entries on it. The paper can backlight to reveal a project preview, then tear into that
-project's real route and scroll-directed world.
+The portfolio is being rebuilt as Paper and Worlds on Astro 7.2.9 with static output. Phase 0
+removed the Vue/Three.js constellation and established the verified static foundation.
 
-The design direction is locked, but no phase is assumed perfect. Follow the working protocol
-in BUILD_PLAN.md section 0. At the start of every phase, state the scope and exclusions, ask
-the owner the phase-specific questions, and show the proposed reference lock, route structure
-or storyboard where applicable. Build in the named checkpoints, keep the owner updated, run
-the gate, show the evidence and stop. Do not begin the next phase until the owner approves.
+Work phases in BUILD_PLAN.md in order. Start with Phase 1 only and stop at its gate.
 
-Work phases in BUILD_PLAN.md in order. Start with Phase 0 only.
+Phase 1 is content and provenance only:
 
-Before deleting anything:
+- Do not open design/directions/*.
+- Do not create CSS.
+- Do not create visual components.
+- Do not implement paper, previews, tearing, canvas, animation, or worlds.
+- Inspect the retained source data as an inventory, not as approved public copy.
+- Ask the owner every Phase 1 question before settling public wording or uncertain facts.
+- Never invent a number, testimonial, client, user count, price, result, link, or deployment.
+- Every publishable claim needs a CONTENT_PROVENANCE.md record.
 
-- inspect git status and the current diff;
-- resolve the exact deletion manifest from BUILD_PLAN.md section 3;
-- show the full list of files/directories and dependency changes;
-- explain what survives;
-- wait for the owner's approval.
+Begin by reporting the repository state, Phase 1 scope and exclusions, the files expected to
+change, and the exact owner decisions required by BUILD_PLAN.md. Do not open a design artifact.
 
-Phase 1 is content and provenance only. Do not open design/directions files, create CSS or
-build visual components. It has been skipped twice and is not skipped again.
-
-Phase 3 must ship a complete, readable, crawlable preview site with no canvas, no tear and no
-animated world. Phase 4 adds the paper signature as a revertable enhancement. Phase 5 builds
-the shared world lifecycle and BeatMind pilot. Phase 6 builds the other worlds one reviewed
-story at a time.
-
-Rules:
-
-- One phase at a time.
-- A gate passes only when its command, render or human-test evidence exists.
-- Tick plan items only in the same commit that completes and verifies them.
-- Fix every documentation sentence made false by the work.
-- Preserve dirty or unrelated user changes.
-- Do not add a public runtime dependency without a recorded DECISIONS.md entry and owner
-  approval.
-- Never invent a number, testimonial, client, user count or deployment status.
-- Every public number must have a CONTENT_PROVENANCE.md record with context and snapshot date.
-- Do not polish or port design/directions/paper.html. It is evidence and a visual reference.
-
-Begin Phase 0 by reporting the repository state and the exact deletion manifest. Do not
-delete until the owner approves it.
+Build only after those questions are answered. Run the Phase 1 gate, update every affected
+live document and checklist in the same commit, show the evidence, and stop before Phase 2.
 ```
 
 ## Drift checks
 
 Stop the session if:
 
-- a later phase begins before the current gate;
-- content components appear while Phase 1 content or provenance is incomplete;
-- a visual phase starts without its owner review;
-- a world is coded before its storyboard and real-data inventory;
-- production is cut over during the Phase 3 preview;
-- a gate is described as passing without output.
+- any file under `design/directions/` is opened during Phase 1;
+- CSS or a visual component is created during Phase 1;
+- retained v1 prose is treated as verified merely because it exists;
+- a public claim has no provenance record;
+- a later phase begins before the current gate and owner approval;
+- a gate is described as passing without current output.

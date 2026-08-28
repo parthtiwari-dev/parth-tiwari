@@ -1,6 +1,6 @@
 # BUILD PLAN: Paper and Worlds
 
-Revised 2026-08-27. This is the execution plan for the portfolio rebuild.
+Revised 2026-08-28. This is the execution plan for the portfolio rebuild.
 
 The public brand is **Parth Tiwari**. **Paper and Worlds** is the internal name of the
 design system: one continuous sheet of real rag paper, a register of work printed on it,
@@ -37,7 +37,7 @@ The 2026-08-27 documentation commit completed this planning pass:
 - [x] Set the public brand to Parth Tiwari and kept Paper and Worlds as the design name.
 - [x] Reconciled the route model, including full note pages and no duplicate Blog or
   Experience route.
-- [x] Updated the stack to pinned Astro 6.x, defined the dependency rule and removed
+- [x] Updated the stack to Astro 7.2.9, defined the dependency rule and removed
   analytics from the initial baseline.
 - [x] Added the phase opening, owner-review, checkpoint, evidence and stop protocol.
 - [x] Separated Phase 3 preview deployment from Phase 7 production cutover.
@@ -50,7 +50,7 @@ The 2026-08-27 documentation commit completed this planning pass:
 
 | Layer | Decision |
 |---|---|
-| Framework | **Astro 6.x**, exact stable version pinned during Phase 0 |
+| Framework | **Astro 7.2.9**, exact pin verified from the npm registry in Phase 0 |
 | Output | Static HTML. No server rendering in the public site |
 | Language | TypeScript strict |
 | Content | Astro build-time content collections; Markdown entries with schemas from `astro/zod` |
@@ -135,10 +135,11 @@ is deleted from a glob whose resolved targets have not been reviewed.
 | Source | Purpose |
 |---|---|
 | `src/data/projects.ts` | Source inventory only; becomes validated project content, not a runtime module |
-| `src/data/{about,services,training,capabilities,socialLinks}.ts` | Audited inputs for Phase 1; every sentence is rechecked before reuse |
+| `src/data/{about,services,training,capabilities,socialLinks,projectLinks}.ts`, `src/config/site.ts`, `src/types/{project,slider}.ts` | Audited inputs and the types they currently require for Phase 1; every sentence and legacy field is rechecked before reuse |
 | `public/media/**` | Captures, portrait, paper stock and licensed media |
 | `scripts/browser.mjs` | Existing browser launch/proxy solution; preserve unless a current check proves it obsolete |
 | `scripts/{shots,a11y-check,perf-check,craft-check}.mjs` | Audit and adapt to real routes; do not blindly copy v1 assumptions |
+| `scripts/capture-demos.mjs` | Maintains the verified project captures in `public/media/**`; it is evidence tooling, not a v1 rendering contract |
 | `design/**` | Research, direction artifacts, prototype and material tools |
 | `docs/**` | Project memory and gates |
 
@@ -177,18 +178,20 @@ live. The working register is [`CONTENT_PROVENANCE.md`](CONTENT_PROVENANCE.md).
 **Owner review before work**
 
 - Show the resolved delete manifest and dependency changes.
-- Confirm the Astro 6.x version that will be pinned.
+- Confirm the Astro 7.2.9 version that will be pinned. The owner approved replacing the
+  earlier 6.4.8 plan after the Phase 0 audit found advisories with fixes only in Astro 7.
 - Confirm the retained source/content files and whether any uncommitted work exists.
 
 **Do**
 
-- [ ] Create `codex/rebuild-astro` from `redesign/v2`.
-- [ ] Delete the reviewed v1 files and packages in one revertable commit.
-- [ ] Scaffold Astro 6.x with strict TypeScript and static output.
-- [ ] Create only minimal placeholder routes needed to prove the build pipeline.
-- [ ] Audit and adapt the browser/check scripts; remove v1-only contracts.
-- [ ] Rewrite `CLAUDE.md` for Astro and the phase protocol.
-- [ ] Update this checklist and any documentation made untrue by the work.
+- [x] Create `codex/rebuild-astro` from `redesign/v2`.
+- [x] Delete the reviewed v1 files and packages in one revertable commit.
+- [x] Scaffold Astro 7.2.9 with strict TypeScript and static output.
+- [x] Create only minimal placeholder routes needed to prove the build pipeline.
+- [x] Audit and adapt the browser/check scripts; remove v1-only contracts.
+- [x] Rewrite `CLAUDE.md` for Astro and the phase protocol.
+- [x] Add `docs/RULES.md` as the durable ask-before-assuming and documentation contract.
+- [x] Update this checklist and any documentation made untrue by the work.
 
 **Gate**
 

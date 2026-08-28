@@ -1,6 +1,6 @@
 # Decision ledger
 
-Revised 2026-08-27. This file contains current decisions and the reason each one exists.
+Revised 2026-08-28. This file contains current decisions and the reason each one exists.
 It is not an open questionnaire. Historical v1 reasoning remains in the superseded docs.
 
 When this file and `DESIGN_LOCK.md` disagree, the design lock wins and this file is fixed
@@ -85,7 +85,7 @@ The detailed evidence queue is `CONTENT_PROVENANCE.md`.
 
 | Decision | Status | Reason | Rejected or bounded alternative |
 |---|---|---|---|
-| Astro 6.x, exact stable version pinned in Phase 0 | Decided | Static HTML, typed content and isolated enhancements match the product | Stale Astro 5 pin |
+| Astro 7.2.9, exactly pinned in Phase 0 | Decided | Static HTML, typed content and isolated enhancements match the product; the owner approved replacing 6.4.8 after `npm audit` found advisories whose maintained fix is Astro 7 | Floating versions or knowingly starting on the unmaintained, advisory-affected Astro 6 line |
 | Static output and strict TypeScript | Decided | Crawlability and content validation should be structural | Client-rendered SPA |
 | Astro build-time content collections and `astro/zod` | Decided | Projects and notes need typed, growing content without another direct dependency | Hand-maintained HTML |
 | Vanilla CSS | Decided | The visual system is small and bespoke | Tailwind runtime conventions |
