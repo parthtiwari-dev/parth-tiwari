@@ -30,7 +30,8 @@ Phase 2 is design-system and route-architecture work:
   The obsolete review route and rejected A/B/C routes were removed.
 - The owner approved its overall direction. The current checkpoint includes the restraint
   pass, stable segmented fibre edges, directional opening/end folds, bounded one-shot paper
-  motion and the existing torn-ink project hover.
+  motion and the existing torn-ink project hover. This approved root is live at
+  `https://parth-tiwari-1.vercel.app/` as an interim feedback release.
 - `docs/PHASE_2_WORLDS_ANIMATION_MEMO.md` records candidate graphics for the seven specced
   worlds. It is research only and authorizes no world implementation.
 - Review one route at a time. The landing is approved; `/work` architecture is next.

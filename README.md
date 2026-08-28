@@ -14,6 +14,10 @@ is still no production tear, backlight, canvas or animated world. The owner appr
 current root landing for an interim public release while the rest of Phase 2 continues;
 that release is not the complete Phase 3 or Phase 7 site.
 
+**Live interim landing:** [parth-tiwari-1.vercel.app](https://parth-tiwari-1.vercel.app/).
+The Astro release replaced v1 from `main` on 2026-08-29 and passed live accessibility,
+no-JavaScript, reduced-motion and script-budget checks at 390, 800 and 1440 pixels.
+
 ## Stack
 
 - Astro 7.2.9, exactly pinned

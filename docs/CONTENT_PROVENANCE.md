@@ -42,6 +42,7 @@ is [`PHASE_1_EVIDENCE_AUDIT.md`](PHASE_1_EVIDENCE_AUDIT.md).
 | BeatMind accounts | Blocked | Owner reports 18 Clerk accounts; exclude until the Clerk record and definition are attached |
 | Vivid users | Blocked | Owner knows at least 10 people; exclude until a durable counting record is attached |
 | Public project links | Verified where included | All included URLs returned HTTP 200 on 2026-08-28; the timed-out QueryPilot backend URL is excluded |
+| Portfolio interim deployment | Verified | `https://parth-tiwari-1.vercel.app/` returned the new Astro landing with HTTP 200 on 2026-08-29 after Vercel marked the `main` deployment successful |
 | Public pricing | Retired by owner decision | Do not display a price, price band, or cost estimate anywhere on the site |
 
 ## Claims that do not ship

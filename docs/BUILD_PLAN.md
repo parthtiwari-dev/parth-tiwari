@@ -271,6 +271,11 @@ The interim root-only production release is a deliberate plan exception, not a p
 shortcut. It does not mark Phase 2 complete, does not create the missing route families and
 does not satisfy the Phase 3 preview or Phase 7 full-site cutover gates.
 
+**Interim release evidence, 2026-08-29:** `main` fast-forwarded to the reviewed Astro line
+and Vercel reported deployment success. A cache-bypassed request to
+`https://parth-tiwari-1.vercel.app/` returned HTTP 200, the new landing title and hero, and no
+old EPHEMERIS marker. Live `a11y`, `craft` and `perf` checks passed at 390, 800 and 1440.
+
 **Owner review before work**
 
 - Show a reference lock for the paper system, dark world system, editorial notes and

@@ -52,7 +52,8 @@ now at `/`; the obsolete `/review/phase-2/` route is removed. Its restraint pass
 fibre edges, directional folds and three bounded one-shot motion studies have rendered
 evidence at 390, 800 and 1440 pixels. The separate worlds-animation memo remains research
 only; no Phase 2 checklist item is newly marked complete, and the other route structures
-have not begun. A real
+have not begun. The approved interim root is live at
+`https://parth-tiwari-1.vercel.app/` and has passed live browser checks. A real
 five-person comprehension test remains mandatory on the Phase 3 static preview.
 
-**Last documentation truth audit:** 2026-08-29, landing checkpoint approved for interim release; remaining Phase 2 route architecture is open.
+**Last documentation truth audit:** 2026-08-29, interim landing deployed and verified; remaining Phase 2 route architecture is open.

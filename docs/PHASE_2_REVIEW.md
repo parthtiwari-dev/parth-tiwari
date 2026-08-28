@@ -166,6 +166,15 @@ because Astro inlined the small enhancement below the 30 kB Phase 2 ceiling. The
 prove this landing craft slice only. Owner approval and the remaining Phase 2 route/system
 work are still required before the phase gate can pass.
 
+## Interim production evidence
+
+The owner approved replacing v1 with this reviewed root landing to collect feedback. On
+2026-08-29 `main` was fast-forwarded to the Astro rebuild and Vercel reported the commit as
+successful. A cache-bypassed request to `https://parth-tiwari-1.vercel.app/` returned HTTP
+200 with the new title and hero and without the old EPHEMERIS marker. The live URL then
+passed `a11y`, `craft` and `perf` at 390, 800 and 1440 pixels. This evidence covers the
+interim root only and does not satisfy the remaining Phase 2, Phase 3 or Phase 7 gates.
+
 ## Worlds research boundary
 
 [`PHASE_2_WORLDS_ANIMATION_MEMO.md`](PHASE_2_WORLDS_ANIMATION_MEMO.md) inventories the real
