@@ -1,6 +1,6 @@
 # Decision ledger
 
-Revised 2026-08-28. This file contains current decisions and the reason each one exists.
+Revised 2026-08-29. This file contains current decisions and the reason each one exists.
 It is not an open questionnaire. Historical v1 reasoning remains in the superseded docs.
 
 When this file and `DESIGN_LOCK.md` disagree, the design lock wins and this file is fixed
@@ -45,6 +45,11 @@ in the same commit.
 | A featured world may sit behind the first viewport | Decided with phase boundary | A still can enrich Phase 3; motion waits for the shared world system | A live canvas required for comprehension |
 | Oxblood stays role-bound | Decided | Rare color makes the action and bleed meaningful | Accent used as general decoration |
 | Scroll ends use broad paper folds, not parchment cylinders | Owner-approved refinement direction | The folds must belong to the site's rag-paper system rather than resemble the supplied reference image | Brown rolled rods and a traced reference silhouette |
+| Arrival has no persistent navigation | Owner decided 2026-08-28 | The headline and two doors need to read as the complete first arrival | A paper nav visible before the hero |
+| Navigation unfolds after the hero and then sticks | Owner decided 2026-08-28 | The fold becomes a continuation of the sheet instead of chrome placed above it | A permanently visible top roll |
+| Edge damage uses stable generated fibre segments | Owner-approved refinement direction | Three distinct transparent profiles per side avoid a page-height repeating polygon and remain identical between reloads | Random damage per load and one stretched sawtooth |
+| Japanese references contribute restraint and pacing only | Owner decided 2026-08-29 | Ma, material light and reveal order can sharpen the paper system without turning culture into decoration | Japanese script, symbols or ornamental iconography |
+| Landing paper motion is bounded and one-shot | Owner-approved refinement direction | Opening light, sticky-fold shadow and ink settling support continuity, then stop | Infinite ambience and full-sheet grain parallax |
 | Hand-made character comes from sparse marginalia and damaged edges | Owner review in Phase 2 | Readable display, body and data typography still has to serve clients, recruiters and assistive technology | Replacing interface copy with handwriting fonts |
 | Landing sections are content-driven after the hero | Owner-approved refinement direction | The page should read as one continuous old message, not one empty viewport per section | Forcing every section to fill the screen |
 
@@ -101,6 +106,7 @@ The detailed evidence queue is `CONTENT_PROVENANCE.md`.
 | Phase 3 deploys to a preview alias | Decided | The complete static site can be reviewed live without replacing v1 early | Production cutover before creative phases |
 | Production cutover happens in Phase 7 | Decided | Domain and redirects move only after all gates | Conflating preview deployment with launch |
 | Continue directly on local `redesign/v2` after Phase 0 | Owner decided 2026-08-28 | The owner prefers one visible local line of work; phase commits and gates still provide rollback | Creating a new `codex/*` branch for every phase by default |
+| The maintained Phase 2 landing stub lives at `/` | Owner decided 2026-08-28 | Refinement happens on the real entry URL without maintaining a second review-mode route | Keeping `/` as a placeholder and duplicating the landing under `/review/phase-2/` |
 
 ## Publishing
 
@@ -142,8 +148,9 @@ before rendered comparison are design inputs and may change; they are not record
 visual decisions merely because an option was selected in chat.
 
 The owner rejected the complete A, B and C landing directions on 2026-08-28. The replacement
-direction is one full-width rag-paper scroll with navigation inside the upper roll, a physical
-lower roll and a contained hero project study. Paper floating in a dark gutter and product UI
+direction is one full-width rag-paper scroll with no navigation in the arrival, a folded paper
+nav that appears after the hero, a physical lower fold and a contained hero project study.
+Paper floating in a dark gutter and product UI
 behind the sheet are rejected. Direction C contributes only its illustrated introduction,
 proof grid, service grid and starting split composition. The owner-supplied watermarked scroll
 image is a structural reference only and is not shipped. Refinement proceeds on this one route
@@ -155,12 +162,18 @@ owner-approved candidates.
 
 The owner liked the overall single-scroll landing on 2026-08-28. The literal cylindrical
 scroll ends, excess viewport-height spacing, quiet project-row hover and insufficient
-hand-made edge detail were not approved. The current refinement replaces the cylinders with
-original folded-paper CSS, tightens later sections to their content, adds irregular side and
-corner bites, and tests a torn-ink hover/focus state. A generated transparent oxblood
-marginalia sheet supplies sparse proofreader marks; it does not replace the locked readable
-font roles. Final landing approval remains open until this refinement is reviewed at phone,
-tablet and desktop widths.
+hand-made edge detail were not approved. The maintained stub is now on `/`. The current
+refinement replaces cylinders with directional folded-paper CSS, tightens later sections,
+uses three stable generated fibre profiles per side, and keeps the torn-ink hover/focus state.
+Generated transparent oxblood sheets supply sparse proofreader marks; they do not replace the
+locked readable font roles. Opening-light, nav-fold and ink-settle motion each run once and
+then stop. Full-sheet grain parallax was rejected because it would require repainting a
+background on scroll or promoting a page-height layer. Final landing approval remains open
+until the rendered phone, tablet and desktop evidence is approved.
+
+The seven `📐 specced` worlds have a research-only data and accent inventory in
+`PHASE_2_WORLDS_ANIMATION_MEMO.md`. It does not satisfy the owner-approved storyboard gate and
+does not authorize world implementation.
 
 ### Phase 4
 

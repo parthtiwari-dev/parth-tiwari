@@ -1,6 +1,6 @@
 # Phase 2 owner review: system and page architecture
 
-Opened 2026-08-28. Phase 2 proceeds one route and one review checkpoint at a time. The
+Opened 2026-08-28; updated 2026-08-29. Phase 2 proceeds one route and one review checkpoint at a time. The
 landing page is the only active route. `/work` and every other route wait until the landing
 structure is approved.
 
@@ -44,14 +44,15 @@ recoverable from Git history. This rejection is useful evidence:
 - the sheet must span the desktop rather than float inside a dark gutter;
 - the project demo must be contained in the hero, never used as wallpaper behind paper;
 - the page should feel like an old message being physically unrolled;
-- the nav belongs in the upper roll and the lower roll must read as a real ending;
+- the arrival stays free of navigation; after the hero, navigation arrives as its own folded
+  paper edge and the lower roll must read as a real ending;
 - refinement now happens on one version, one checkpoint at a time.
 
 ## Current landing reference lock
 
-**Primary direction:** one full-width, continuous rag-paper scroll. Preserve the physical
-top and bottom rolls, blunt display type, sparse mono labels, strict ruled grids and rare
-oxblood.
+**Primary direction:** one full-width, continuous rag-paper scroll. Preserve the opening
+unfurl, the post-hero folded navigation, the broad lower fold, blunt display type, sparse
+mono labels, strict ruled grids and rare oxblood.
 
 **Retain from the rejected C study:**
 
@@ -79,14 +80,20 @@ second batch of competing landing directions.
 
 ## Current implementation checkpoint
 
-The owner approved the overall single-scroll direction on 2026-08-28 and asked for one
-focused craft pass before the landing structure is locked. That pass changes four things:
+The owner approved the overall single-scroll direction on 2026-08-28 and asked for focused
+craft passes before the landing structure is locked. The completed review slices change the
+following:
 
-- the literal brown cylinder treatment is replaced by a lighter folded-paper unfurl and
-  upper/lower curl built from the real paper stock and CSS;
+- the arrival support copy is shorter, the hero and About share one asymmetric split ratio,
+  and the portrait column keeps its deliberate empty space;
+- the literal brown cylinder treatment is replaced by a lighter folded-paper unfurl, a
+  post-hero sticky fold and a broad lower curl built from the real paper stock and CSS;
 - non-hero sections use content-driven height and tighter spacing, so the document reads as
   one continuous message rather than a stack of artificial viewport pages;
-- paper sides and corners expose irregular dark bites without cutting into the content grid;
+- paper sides use three original transparent fibre profiles per side in a fixed order, so
+  the damage is stable between reloads and no page-height polygon repeats;
+- opening light, nav-fold shadow and ink-settle motion are one-shot transform/opacity
+  studies and all stop after settling;
 - project rows receive a fast torn-ink hover/focus study. It is an interaction preview only;
   project-specific backlights and real world stills remain Phase 4 work.
 
@@ -96,16 +103,24 @@ marks without words or paper texture, then positioned sparingly as editorial evi
 hand. Bricolage Grotesque, Archivo and DM Mono remain the readable type system; handwriting
 is not applied to body copy or controls.
 
-`/review/phase-2/` is now the only landing review route. It contains:
+The root landing also uses `public/media/oxblood-handscroll-marks.png` and three generated
+transparent edge assets at `public/media/paper-edge-fibre-{a,b,c}.png`. The edge assets are
+near-black alpha profiles with no paper fill, text, iconography, product evidence or invented
+data. Each side uses the three profiles in a different fixed order.
+
+`/` is now the single maintained Phase 2 landing stub. The obsolete
+`/review/phase-2/` route is removed. Root placement does not mark the Phase 3 home slice as
+complete. The stub contains:
 
 - a CSS-only reload unfurl study using the real paper stock;
-- a full-width top roll containing navigation;
+- no navigation during the arrival, followed by a full-width sticky paper fold after the
+  hero;
 - the chosen human hero line and two reader doors;
 - one contained static BeatMind world study;
 - the retained portrait, proof and services structures;
 - the complete twelve-project register, latest Errata, honest Writing coming-soon state,
   contact section and physical bottom roll;
-- a reduced-motion state that skips the opening animation and exposes the finished page
+- a reduced-motion state that skips the opening and exposes every finished state
   immediately;
 - a no-JavaScript reading experience because all content is static HTML.
 
@@ -114,13 +129,46 @@ visit is intentionally not decided here because that requires a later behavior d
 client state. The production tear, centre-row world preview and animated project worlds are
 still absent.
 
-Run with `npm.cmd run dev` and open the printed local URL followed by
-`/review/phase-2/` (Astro increments the port when the default is occupied). Capture all
-review sections with `npm.cmd run phase2:capture -- --url <local-origin>`.
+Run with `npm.cmd run dev` and open the printed local root URL. Astro increments the port when
+the default is occupied. Capture all review sections and paired motion states with
+`npm.cmd run phase2:capture -- --url <local-origin>`.
+
+## 2026-08-29 rendered evidence
+
+Each named slice passed HTTP, font and horizontal-overflow checks at 390, 800 and 1440
+pixels, and its screenshots were visually inspected before the next slice began:
+
+- `.shots/phase2-a1-restraint`: arrival breathing room, shared split ratio, About emptiness
+  and mobile marginalia restraint;
+- `.shots/phase2-a2-edge-fibres`: the three fixed edge profiles through the hero and long
+  project register;
+- `.shots/phase2-a3-paper-folds`: opening directional crease and lower broad fold, including
+  the phone treatment without the cropped seal;
+- `.shots/phase2-a4-paper-motion`: paired opening-light, nav-fold and ink-settle frames. The
+  capture reported zero animations still running after settle at all three widths.
+
+Full-sheet grain parallax was rejected before implementation. Moving the stock with
+`background-position` would repaint during scroll; moving a separate overlay would promote a
+page-height layer. Neither cost earns a barely visible effect. The retained motion changes
+only transform and opacity, is bounded, and is removed under reduced motion.
+
+The technical basis is current [MDN animation-performance guidance](https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/Animation_performance_and_frame_rate):
+transform and opacity can remain in composition while geometry and painted backgrounds are
+more expensive. The retained studies also stop under
+[`prefers-reduced-motion`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/%40media/prefers-reduced-motion).
+The site still needs a built-output performance gate before Phase 2 can complete.
+
+## Worlds research boundary
+
+[`PHASE_2_WORLDS_ANIMATION_MEMO.md`](PHASE_2_WORLDS_ANIMATION_MEMO.md) inventories the real
+data export, demonstrated interaction and accent status for the seven projects marked
+`📐 specced` in `WORLDS.md`. Missing exports and unspecified accents are explicitly blocked.
+The memo is storyboard input only and authorizes no world code.
 
 ## Review sequence
 
-1. Review the folded top roll, opening unfurl, side/corner damage and lower curl.
+1. Review the post-hero navigation fold, opening unfurl, segmented side damage and lower
+   curl.
 2. Review whether the tightened section rhythm now feels like one continuous message.
 3. Review the torn-ink project hover/focus and the amount of marginalia.
 4. Lock the landing tokens and responsive rules only after desktop, tablet and phone pass.

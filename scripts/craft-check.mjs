@@ -1,4 +1,4 @@
-/** Phase-aware checks for a complete static foundation and honest fallback. */
+/** Phase-aware checks for the maintained static landing and its honest fallback. */
 
 import { chromium } from 'playwright'
 import { chromiumLaunchOptions } from './browser.mjs'
@@ -26,6 +26,7 @@ async function readPage(javaScriptEnabled, reducedMotion = 'no-preference') {
     mainText: document.querySelector('main')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
     canvases: document.querySelectorAll('canvas').length,
     scripts: document.scripts.length,
+    scriptSources: [...document.scripts].map((script) => script.src).filter(Boolean),
     vueRoots: document.querySelectorAll('#app,[data-v-app]').length,
   }))
   await context.close()
@@ -39,8 +40,9 @@ const reducedMotion = await readPage(true, 'reduce')
 check('page title is meaningful', normal.title.length >= 10, normal.title)
 check('page has a named h1', normal.h1.length > 0, normal.h1)
 check('main copy is meaningful', normal.mainText.length >= 100, `${normal.mainText.length} characters`)
-check('Phase 0 has no canvas', normal.canvases === 0, String(normal.canvases))
-check('Phase 0 ships no client script', normal.scripts === 0, String(normal.scripts))
+check('Phase 2 landing has no canvas', normal.canvases === 0, String(normal.canvases))
+check('Phase 2 landing has at most one enhancement script', normal.scripts <= 1, String(normal.scripts))
+check('all client scripts are first-party', normal.scriptSources.every((source) => new URL(source).origin === new URL(base).origin), normal.scriptSources.join(', '))
 check('Vue mount contracts are gone', normal.vueRoots === 0, String(normal.vueRoots))
 check('no-JavaScript page returns successfully', noJavaScript.ok)
 check('no-JavaScript page keeps the complete copy', noJavaScript.mainText === normal.mainText)
