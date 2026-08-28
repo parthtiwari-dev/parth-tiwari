@@ -18,23 +18,24 @@ The portfolio is being rebuilt as Paper and Worlds on Astro 7.2.9 with static ou
 established the foundation. Phase 1 established validated content and claims. The owner
 deferred the unrun text-only test; do not call it passed.
 
-Work phases in BUILD_PLAN.md in order. Start Phase 2 owner review and visual exploration.
+Work phases in BUILD_PLAN.md in order. Continue Phase 2 owner review and visual exploration.
 
 Phase 2 is design-system and route-architecture work:
 
-- Do not open design/directions/*.
-- Do not create CSS.
-- Do not create visual components.
-- Do not implement paper, previews, tearing, canvas, animation, or worlds.
+- Do not implement the production paper shell, project backlight, tearing, canvas,
+  animation, or worlds. Phase 2 review stubs are allowed.
 - Research references before designing and record a reference lock.
-- Build three distinct local demo directions from the same real Phase 1 content.
-- Ask the owner one comprehensive batch of visual and route-structure questions.
+- Three interactive landing directions already exist under `/review/phase-2/` from the
+  same real Phase 1 content.
+- Review one route at a time. The landing page is the only active route.
 - Do not build the production site, tear, backlight, canvas or animated worlds.
-- Show real renders at 390, 800 and 1440 pixels before asking the owner to lock a direction.
+- Reuse the captured 390, 800 and 1440 evidence, refresh it after changes, and ask the owner
+  to choose one direction or explicitly combine named traits.
 
-Begin by confirming the Phase 1 commit and clean worktree. Inspect the approved design lock,
-research artifacts and paper prototype as references, not code to port. Present the research
-synthesis and comprehensive owner choices before production implementation.
+Begin by confirming the current branch and diff. Run the local review hub, inspect all three
+landing demos and collect the owner's landing-specific feedback. Record the selected landing
+structure before starting `/work`. Phase 2 remains incomplete until every route structure,
+shared token, accessibility state and rendered-contrast gate is approved and verified.
 ```
 
 ## Drift checks

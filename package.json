@@ -13,6 +13,7 @@
     "content:check": "node scripts/phase1-content-check.mjs",
     "content:test-schemas": "node scripts/phase1-schema-test.mjs",
     "phase1:gate": "npm run content:test-schemas && npm run content:check && npm run build",
+    "phase2:capture": "node scripts/phase2-review-capture.mjs",
     "preview": "astro preview --host 127.0.0.1",
     "shots": "node scripts/shots.mjs",
     "capture": "node scripts/capture-demos.mjs",

@@ -1,7 +1,8 @@
 # Phase 2 owner review: system and page architecture
 
-Opened 2026-08-28. No production visual implementation begins until the owner answers the
-first decision batch and reviews the resulting local demos.
+Opened 2026-08-28. No production visual implementation begins until the owner reviews the
+resulting local demos. The owner asked to work page by page, section by section, rather
+than settle every route in one questionnaire.
 
 ## Scope
 
@@ -86,44 +87,88 @@ static BeatMind cutaway behind the arrival and smaller controlled glimpses near 
 entries. The paper remains the complete page. This direction spends more of the visual
 budget on the contrast between material and world, so typography and metadata become quieter.
 
-## Demo delivery
+## Owner input synthesis, 2026-08-28
+
+The answers are exploration inputs, not permanent locks. The owner may revise them after
+seeing rendered evidence.
+
+- Build interactive Astro demos rather than screenshot-only mockups.
+- Explore all three directions instead of choosing from prose.
+- Work page by page. The first checkpoint is the complete landing page only; `/work` and
+  every other route wait for a later owner review.
+- Keep the landing tactile and human while also testing a more cinematic exposure of the
+  void. Do not average those traits into one safe design; let the three demos disagree.
+- Use strong display type, real paper irregularity and rare oxblood. Button and control
+  treatment remains an explicit exploration area.
+- Compare the real portrait with a generated hand-drawn treatment. The drawing is a
+  concept asset and is not approved as the production portrait.
+- Keep both hero doors important. Their final visual hierarchy and exact hero sentence
+  remain open until the landing demos are reviewed.
+- Home follows the locked long-sheet flow and includes every project.
+- Project previews should eventually respond to the entry nearest the viewport centre,
+  but Phase 2 shows only static preview framing. Backlight behavior remains Phase 4.
+- Worlds remain scroll-directed stories with complete written explanation. Native scroll
+  is never trapped or replaced.
+- BeatMind may prompt the visitor to enable sound, but audio starts only from a labelled
+  user action and always has a visible stop.
+- The paper can move subtly with document scroll on the landing. Inside a world, the paper
+  layer is absent rather than continuing to move behind the case study. Returning restores
+  the correct document position; implementation of that navigation remains Phase 4.
+- Notes uses one chronological hub, every published note receives a page, and Writing
+  launches with the approved honest coming-soon state.
+- Contact methods should be easy to find. The exact primary method remains open for the
+  later Hire-page review.
+
+## Landing demo delivery
 
 After the first owner answers, build:
 
 - `/review/phase-2` as a local comparison index;
 - `/review/phase-2/a`, `/b` and `/c` as live Astro demos;
-- representative frames for Home, Work, one case study, Notes and Hire;
-- structural wireframes for About and Resume;
+- one complete landing-page exploration in each direction, using the same real content;
 - 390px, 800px and 1440px screenshots for each direction;
 - keyboard, reduced-motion and no-JavaScript review states.
 
 Run with `npm.cmd run dev` and open `http://127.0.0.1:4321/review/phase-2`.
 
-## Owner decision batch
+## Landing exploration checkpoint, 2026-08-28
 
-The chat presents these as short A/B/C choices. Record the answers here before demo code.
+Implemented for owner review, not approved as the production direction:
 
-1. Demo medium and comparison format.
-2. Which representative routes deserve high-fidelity demos.
-3. Hero voice and supporting line.
-4. Relative visual weight of the two doors.
-5. Whether the featured world appears in the first viewport.
-6. How much of the black void remains visible around the paper.
-7. Paper texture and edge intensity.
-8. Desktop and mobile navigation behavior.
-9. Portrait prominence and crop.
-10. Home register hierarchy.
-11. Number and kind of proof claims on Home.
-12. Services presentation.
-13. Errata presentation.
-14. Contact hierarchy and channels.
-15. Work register controls and visible metadata.
-16. Case-study visual and text arrangement.
-17. Notes information architecture.
-18. About, Resume and Hire density.
-19. Source and provenance presentation.
-20. Motion restraint on the paper layer.
-21. Review cadence and what becomes locked after each checkpoint.
+- `/review/phase-2/` comparison hub;
+- `/review/phase-2/a/` Working Sheet landing demo;
+- `/review/phase-2/b/` Technical Register landing demo;
+- `/review/phase-2/c/` Paper Over the Void landing demo;
+- one shared review component fed by the validated projects, claims, services, notes and
+  route copy;
+- self-hosted Bricolage Grotesque 700, Archivo 400/600 and DM Mono 400 subsets, with their
+  OFL licences retained. The combined WOFF2 payload is 55,916 bytes;
+- one generated transparent ink-and-graphite portrait study derived from the real portrait,
+  stored as a Phase 2 concept asset. It is not approved as final imagery;
+- a reusable lower-section capture command, `npm.cmd run phase2:capture`.
+
+Current rendered findings:
+
+- Direction A integrates the drawing into the paper most naturally.
+- Direction B produces the clearest first-viewport information hierarchy and the densest
+  engineering register.
+- Direction C creates the strongest paper-to-world contrast.
+- A and C use compact non-flagship rows; B deliberately keeps every summary visible as the
+  technical alternative.
+
+The Astro build, configured accessibility checks and no-JavaScript/reduced-motion content
+checks pass for all three directions at 390, 800 and 1440 pixels. That does not complete the
+Phase 2 gate: the owner has not selected or combined a landing direction, other route
+structures are not built, and rendered contrast has not yet been measured.
+
+## Review sequence
+
+1. Build and inspect the three landing-page demos.
+2. Ask only landing-specific questions that rendered evidence exposes.
+3. The owner selects one direction or explicitly combines named traits.
+4. Record the approved landing structure and shared tokens.
+5. Continue route by route, beginning with `/work`, only after the landing checkpoint is
+   approved.
 
 ## Already locked, not reopened in this review
 

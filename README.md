@@ -3,10 +3,12 @@
 This repository is rebuilding Parth Tiwari's portfolio as **Paper and Worlds**: a
 static, multi-page Astro site whose project case studies use each project's real data.
 
-The current code has completed Phase 1 and is opening Phase 2. It contains validated content collections,
+The current code has completed Phase 1 and is working through Phase 2. It contains validated content collections,
 twelve complete case-study records, twelve Errata entries, route copy, services,
-experience, and source-linked claims. The visible route remains an unstyled placeholder.
-There is still no canvas, tear interaction, final visual system, or world implementation.
+experience, and source-linked claims. Three interactive landing-page review directions live
+under `/review/phase-2/`; none is approved as the production design yet. The public root
+remains an unstyled placeholder. There is still no canvas, tear interaction, production
+visual system, or world implementation.
 
 ## Stack
 
@@ -25,6 +27,7 @@ npm install
 npm run dev
 npm run build
 npm run phase1:gate
+npm run phase2:capture -- --url http://127.0.0.1:4321
 npm run preview
 ```
 

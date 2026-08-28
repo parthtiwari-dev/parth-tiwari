@@ -132,6 +132,11 @@ review with the Phase 2 arrival demos.
 - Route-specific composition within the locked system
 - Final responsive type and spacing tokens
 - Coming-soon treatment
+- Landing-page direction after comparing the three interactive demos
+
+Phase 2 review proceeds one route at a time by owner decision on 2026-08-28. Answers given
+before rendered comparison are design inputs and may change; they are not recorded as final
+visual decisions merely because an option was selected in chat.
 
 ### Phase 4
 

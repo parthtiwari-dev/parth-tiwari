@@ -256,13 +256,14 @@ the production pages.
 - Show a reference lock for the paper system, dark world system, editorial notes and
   conversion page.
 - Show low-fidelity page structures for all route families at phone and desktop widths.
-- Ask route-specific questions in one batch, not one question at a time.
+- Review one route at a time, beginning with the landing page. Within that route, group
+  related questions around rendered evidence instead of mixing unrelated pages together.
 
 **Do**
 
 - [ ] Define tokens for paper, ink, type, spacing, grid, focus, motion and world surfaces.
-- [ ] Self-host and subset Bricolage Grotesque, Archivo and DM Mono using Astro's font
-  support where appropriate.
+- [x] Self-host and subset Bricolage Grotesque, Archivo and DM Mono. The four approved
+  WOFF2 files total 55,916 bytes and loaded in rendered phone and desktop review pages.
 - [ ] Define the reusable paper primitives without copying `paper.html` line by line.
 - [ ] Define route wireframes and content hierarchy for home, work, case study, notes hub,
   note article, about, resume and hire.

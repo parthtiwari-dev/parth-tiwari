@@ -1,0 +1,68 @@
+---
+import '../../../styles/phase2-review.css'
+
+const directions = [
+  {
+    id: 'a',
+    name: 'The Working Sheet',
+    thesis: 'The closest evolution of the prototype. Human first, tactile throughout, with the project register doing the heavy lifting.',
+    traits: ['Hand-drawn portrait study', 'Bold arrival', 'Editorial register', 'Local world preview'],
+  },
+  {
+    id: 'b',
+    name: 'The Technical Register',
+    thesis: 'The engineering argument arrives sooner. Grid, evidence and metadata lead, with the photograph interrupting the system.',
+    traits: ['Dense grid', 'Real portrait', 'Proof near the top', 'Quietest world treatment'],
+  },
+  {
+    id: 'c',
+    name: 'Paper Over the Void',
+    thesis: 'The most cinematic interpretation. The dark project world is present from arrival, but the paper still owns every word.',
+    traits: ['Wide void', 'Featured BeatMind frame', 'Restrained paper copy', 'Strongest paper-world contrast'],
+  },
+]
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="description" content="Interactive Phase 2 landing-page design directions for Paper and Worlds." />
+    <title>Phase 2 landing review | Parth Tiwari</title>
+  </head>
+  <body class="review-index-page">
+    <main class="review-index">
+      <header>
+        <p class="eyebrow">Paper and Worlds / Phase 2</p>
+        <h1>Three landing pages.<br />One idea under test.</h1>
+        <p class="review-lede">These are interactive design studies, not production pages. Use the same real content to judge hierarchy, paper, portrait, project density and how much of the world should appear.</p>
+      </header>
+
+      <section class="direction-grid" aria-label="Landing-page directions">
+        {directions.map((direction, index) => (
+          <article class={`direction-card card-${direction.id}`}>
+            <span class="direction-number">0{index + 1}</span>
+            <div class="card-stage" aria-hidden="true">
+              <div class="mini-paper">
+                <i></i><i></i><i></i>
+              </div>
+            </div>
+            <h2>{direction.name}</h2>
+            <p>{direction.thesis}</p>
+            <ul>
+              {direction.traits.map((trait) => <li>{trait}</li>)}
+            </ul>
+            <a href={`/review/phase-2/${direction.id}/`}>Open direction {direction.id.toUpperCase()} <span aria-hidden="true">↗</span></a>
+          </article>
+        ))}
+      </section>
+
+      <footer>
+        <p>Review order: first choose the landing direction, then refine it section by section. Other routes wait.</p>
+        <a href="/">Back to the Phase 1 placeholder</a>
+      </footer>
+    </main>
+  </body>
+</html>
