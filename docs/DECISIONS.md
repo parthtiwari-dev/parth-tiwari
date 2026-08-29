@@ -178,6 +178,25 @@ The seven `📐 specced` worlds have a research-only data and accent inventory i
 `PHASE_2_WORLDS_ANIMATION_MEMO.md`. It does not satisfy the owner-approved storyboard gate and
 does not authorize world implementation.
 
+The `/work` review slice on 2026-08-29 interprets the owner's route-only answers as follows:
+
+- the opening uses a human sentence and keeps the controls visible in the first viewport,
+  while retaining enough scale and empty paper to feel editorial;
+- the twelve projects remain one continuous register. Flagship, substantial and focused
+  scope is expressed through row density instead of repeated tier headings;
+- `Featured`, `Build effort` and `Most recent` are ordering modes. `Active now` is an
+  isolated, removable filter whose review meaning is `live`, `running` or `in-progress`;
+- every row shows title, summary, status, qualitative effort, sourced start date and route
+  affordance. Only flagship rows may surface one already-published verified claim;
+- the localised BeatMind composition is explicitly a static preview study. Hover/focus,
+  centred-row mobile behaviour and tear navigation remain assigned to Phase 4;
+- the real `/work` URL is built on `redesign/v2` for local owner review. It is not part of
+  the interim production landing and does not satisfy Phase 3.
+
+These are provisional composition decisions until the owner reviews the rendered phone,
+tablet and desktop evidence. In particular, `Active now` and the amount of tier hierarchy
+remain open.
+
 ### Phase 4
 
 - Production tear study

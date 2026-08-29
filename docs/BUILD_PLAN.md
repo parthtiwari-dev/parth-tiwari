@@ -283,6 +283,15 @@ brought the same local pass to 16.7-16.8 ms p95 at all three widths, with no fra
 ms. Paper depth remains local to the generated edge fibres and fold shadows. This is a craft
 fix to the approved landing checkpoint, not a newly completed Phase 2 architecture item.
 
+**`/work` review checkpoint, 2026-08-29:** a real `/work/` composition demo now exists on
+`redesign/v2` only. It renders all twelve content-collection entries as one continuous
+register, with scope hierarchy carried by row density, three qualitative ordering modes and
+an isolated experimental active-state filter. The BeatMind backlight is a static study;
+hover/focus behaviour, centred-row mobile preview, tear navigation and case-study routes are
+still deferred to their assigned phases. Evidence in `.shots/phase2-work-register-review`
+covers 390, 800 and 1440 pixels plus a no-JavaScript state. This checkpoint is awaiting owner
+review and does not tick a Phase 2 item, satisfy Phase 3 or authorize production publishing.
+
 **Owner review before work**
 
 - Show a reference lock for the paper system, dark world system, editorial notes and

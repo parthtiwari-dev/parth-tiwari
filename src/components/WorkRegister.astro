@@ -1,0 +1,135 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import '../styles/work-register.css'
+
+interface Props {
+  projects: CollectionEntry<'work'>[]
+  claims: CollectionEntry<'claims'>[]
+  heading: string
+  intro: string
+  sortLabels: ['Featured', 'Build effort', 'Most recent']
+  activeFilterLabel: 'Active now'
+}
+
+const { projects, claims, heading, intro, sortLabels, activeFilterLabel } = Astro.props
+const orderedProjects = [...projects].sort((left, right) => left.data.order - right.data.order)
+const publishedClaims = new Map(
+  claims.filter((claim) => claim.data.publish && claim.data.status === 'verified').map((claim) => [claim.id, claim]),
+)
+const effortLabels = { flagship: 'Flagship', substantial: 'Substantial', focused: 'Focused' }
+const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In progress', running: 'Running', 'take-home': 'Take-home' }
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="The complete register of Parth Tiwari's AI products, systems, experiments, evidence, and case studies." />
+    <title>Work | Parth Tiwari</title>
+  </head>
+  <body class="work-review-page">
+    <a class="skip-link" href="#work-register">Skip to the work</a>
+
+    <main class="work-sheet">
+      <div class="work-paper">
+        <div class="work-edge work-edge-left" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="work-edge work-edge-right" aria-hidden="true"><i></i><i></i><i></i></div>
+
+        <header class="work-nav">
+          <a class="work-wordmark" href="/">Parth Tiwari</a>
+          <nav aria-label="Portfolio navigation">
+            <a aria-current="page" href="/work/">Work</a>
+            <a href="/notes/">Notes</a>
+            <a href="/about/">About</a>
+            <a href="/resume/">Resume</a>
+          </nav>
+          <a class="work-contact" href="/hire/">Start a project</a>
+          <details class="work-mobile-menu">
+            <summary>Menu</summary>
+            <nav aria-label="Mobile portfolio navigation"><a href="/">Home</a><a aria-current="page" href="/work/">Work</a><a href="/notes/">Notes</a><a href="/about/">About</a><a href="/resume/">Resume</a></nav>
+          </details>
+        </header>
+
+        <section class="work-intro" aria-labelledby="work-title">
+          <div>
+            <p class="work-eyebrow">The complete register / Phase 2 review</p>
+            <h1 id="work-title">{heading}</h1>
+          </div>
+          <div class="work-intro-copy">
+            <p>{intro}</p>
+            <dl>
+              <div><dt>Entries</dt><dd>{orderedProjects.length}</dd></div>
+              <div><dt>Default</dt><dd>Editorial order</dd></div>
+            </dl>
+          </div>
+        </section>
+
+        <section class="work-controls" aria-label="Order and filter the work" data-work-controls>
+          <div class="order-controls">
+            <span>Order by</span>
+            <button type="button" data-sort="editorial" aria-pressed="true">{sortLabels[0]}</button>
+            <button type="button" data-sort="effort" aria-pressed="false">{sortLabels[1]}</button>
+            <button type="button" data-sort="recent" aria-pressed="false">{sortLabels[2]}</button>
+          </div>
+          <label class="active-control"><input type="checkbox" data-active-filter /> <span>{activeFilterLabel}</span></label>
+          <p class="work-count" aria-live="polite"><span data-visible-count>{orderedProjects.length}</span> projects shown</p>
+        </section>
+
+        <section id="work-register" class="register-section" aria-labelledby="register-title">
+          <div class="register-heading">
+            <p id="register-title">Project</p><p>Status</p><p>Effort</p><p>Started</p><span aria-hidden="true">Open</span>
+          </div>
+
+          <div class="static-preview-study" aria-label="Static study of the future BeatMind row preview">
+            <div class="preview-window"><img src="/media/beatmind-stems-clean.png" alt="" width="1904" height="974" decoding="async" /></div>
+            <p><span>Static interaction study</span>The final hover and centred-row preview is deferred to Phase 4.</p>
+          </div>
+
+          <ol class="work-register" data-work-list>
+            {orderedProjects.map((project, index) => {
+              const evidence = project.data.tier === 'flagship'
+                ? project.data.claimRefs.map((id) => publishedClaims.get(id)).find(Boolean)
+                : undefined
+              return (
+                <li
+                  class:list={['work-row', project.data.tier === 'flagship' && 'is-flagship']}
+                  data-project-row
+                  data-editorial={project.data.order}
+                  data-effort={project.data.effort}
+                  data-started={project.data.started ?? ''}
+                  data-status={project.data.status}
+                  data-tier={project.data.tier}
+                >
+                  <a href={`/work/${project.id}/`} aria-label={`Open the ${project.data.title} case study`}>
+                    <span class="row-number">{String(index + 1).padStart(2, '0')}</span>
+                    <span class="row-copy">
+                      <strong>{project.data.title}</strong>
+                      <span class="row-summary">{project.data.summary}</span>
+                      {evidence && <span class="row-evidence"><b>{evidence.data.display}</b>{evidence.data.denominator}</span>}
+                    </span>
+                    <span class="row-meta row-status">{statusLabels[project.data.status]}</span>
+                    <span class="row-meta row-effort">{effortLabels[project.data.effort]}</span>
+                    <span class="row-meta row-started">{project.data.started ?? 'Not dated'}</span>
+                    <span class="row-arrow" aria-hidden="true">↗</span>
+                  </a>
+                </li>
+              )
+            })}
+          </ol>
+        </section>
+
+        <section class="work-close" id="work-review-note">
+          <p class="work-eyebrow">End of the register</p>
+          <h2>Start with the work that matters most.</h2>
+          <div><a href="/work/beatmind/">Open BeatMind <span aria-hidden="true">↗</span></a><a href="/resume/">Read the resume <span aria-hidden="true">→</span></a></div>
+          <small>This is a Phase 2 architecture demo. Complete case-study routes arrive in Phase 3.</small>
+        </section>
+      </div>
+    </main>
+
+    <script>
+      import '../scripts/work-register'
+    </script>
+  </body>
+</html>
