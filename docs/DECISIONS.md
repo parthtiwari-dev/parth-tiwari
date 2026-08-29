@@ -74,6 +74,11 @@ in the same commit.
 | Storyboard approval precedes each implementation | Decided | The owner stays involved and narrative mistakes are cheaper to fix before code | One-shot world generation |
 | BeatMind is the pilot | Decided | It exercises audio, stages, measurement, failure, retry and render | Building shared infrastructure inside an arbitrary first world |
 | Optional audio is user-initiated | Decided | Sound can deepen BeatMind without blocking or surprising visitors | Autoplay |
+| Case-study opening is a dark evidence-led world followed by readable paper | Owner selected 2026-08-29 | The project can establish its own visual language while the document remains crawlable and familiar | An all-dark article or a paper-only opening |
+| Case-study desktop navigation combines chapter index and reading progress | Owner selected 2026-08-29 | Long technical stories need orientation without scroll capture | Scroll snapping and a floating table-of-contents panel |
+| Phone case studies stack and keep progress out of sticky chrome | Phase 2 rendered refinement | A persistent strip crossed large headings and reduced the usable reading surface | Copying the desktop sticky rail onto mobile |
+| What broke is an inserted oxblood correction | Owner selected 2026-08-29 | Failure should interrupt the victory narrative rather than look like another feature section | A normal chapter or a second dark-world scene |
+| BeatMind audio stays disabled until its excerpt is approved | Evidence blocked | The repository has a screen recording but no standalone licensed or owner-created audio source with publication permission | Extracting or assuming rights to the recording soundtrack |
 | One shared world lifecycle | Decided | Prevents orphaned clocks and inconsistent reduced-motion behavior | A separate animation system per world |
 | 2D or pre-rendered OncoVerse is the default | Decided | One sitewide Three.js dependency is not justified by one page | Adding Three.js before a measured comparison |
 

@@ -307,6 +307,9 @@ production publishing.
 - Home and `/work` have completed their Phase 2 structure reviews. The register remains one
   merit-based catalogue without a Personal/Company split. The next review slice is the
   shared `/work/[slug]` case-study structure, using BeatMind as the real-content pilot.
+- The BeatMind pilot now has final 390, 800 and 1440 evidence and remains an owner-review
+  checkpoint. Its real run trace and audio source are blocked inputs, not placeholders.
+  After approval, review Notes and its article structure next.
 
 **Do**
 

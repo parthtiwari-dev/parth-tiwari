@@ -15,6 +15,7 @@ Where to look, and what is still true.
 | [`CONTENT_PROVENANCE.md`](CONTENT_PROVENANCE.md) | The publication queue for claims, counts, benchmarks and deployment facts |
 | [`PHASE_1_EVIDENCE_AUDIT.md`](PHASE_1_EVIDENCE_AUDIT.md) | The source audit, corrected metrics, blocked claims and public-link evidence |
 | [`PHASE_2_REVIEW.md`](PHASE_2_REVIEW.md) | Phase 2 reference lock, rejected A/B/C checkpoint and the single scroll landing review |
+| [`PHASE_2_CASE_STUDY_REVIEW.md`](PHASE_2_CASE_STUDY_REVIEW.md) | The shared `/work/[slug]` structure, BeatMind pilot, rendered evidence and blocked real-data inputs |
 | [`PHASE_2_WORLDS_ANIMATION_MEMO.md`](PHASE_2_WORLDS_ANIMATION_MEMO.md) | Research-only candidate graphics and missing real-data sources for the seven specced worlds |
 | [`REBUILD_BRIEF.md`](REBUILD_BRIEF.md) | Why v1 is being replaced. The guards that prevent a repeat |
 | [`TEN_SECOND_TEST.md`](TEN_SECOND_TEST.md) | 🔴 The acceptance gate. **Still never run** |
@@ -53,9 +54,10 @@ fibre edges, directional folds and three bounded one-shot motion studies have re
 evidence at 390, 800 and 1440 pixels. The `/work` structure review now has a real-content
 register demo and responsive evidence; the owner rejected a Personal/Company filter, so
 verified employment context will be handled per case study. The shared `/work/[slug]`
-structure is the next review slice. The separate worlds-animation memo remains research
-only; no Phase 2 checklist item is newly marked complete. The approved interim root is live at
+structure now has a BeatMind pilot and final 390, 800 and 1440 evidence; it awaits owner
+approval. The separate worlds-animation memo remains research only; no Phase 2 checklist
+item is newly marked complete. The approved interim root is live at
 `https://parth-tiwari-1.vercel.app/` and has passed live browser checks. A real
 five-person comprehension test remains mandatory on the Phase 3 static preview.
 
-**Last documentation truth audit:** 2026-08-29, Home and Work structures reviewed; shared case-study structure is next.
+**Last documentation truth audit:** 2026-08-29, BeatMind case-study pilot rendered and awaiting owner review.

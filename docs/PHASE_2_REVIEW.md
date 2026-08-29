@@ -241,6 +241,23 @@ inside each case study before publication. The mentioned Stick and Dot website i
 of the twelve validated project records, so this decision does not add or imply a thirteenth
 project.
 
+## Shared case-study review slice
+
+The BeatMind pilot now renders at `/work/beatmind/` from the real content and verified claim
+collections. It proves the dark arrival, paper reading sequence, desktop chapter rail,
+responsive stack, measurement ledger, architecture diagram, boundary, inserted erratum,
+links and ending without building an animated world. Only BeatMind is generated in Phase 2.
+
+The owner selected the combined opening evidence, chapter index plus progress, primary-plus-
+supporting measurement hierarchy, decision-led architecture diagram, unnamed current-role
+context, complete ending and opt-in audio placement. The final audio control stays disabled
+because no approved standalone excerpt exists. The run-trace strip remains labelled as a
+story path because its real timing export does not exist in this repository.
+
+Rendered evidence and exact limits are recorded in
+[`PHASE_2_CASE_STUDY_REVIEW.md`](PHASE_2_CASE_STUDY_REVIEW.md). The structure still needs
+owner visual approval before Notes begins.
+
 ## Review sequence
 
 1. Review the post-hero navigation fold, opening unfurl, segmented side damage and lower
@@ -249,8 +266,8 @@ project.
 3. Review the torn-ink project hover/focus and the amount of marginalia.
 4. Lock the landing tokens and responsive rules only after desktop, tablet and phone pass.
 5. Preserve the approved `/work` information architecture without an ownership filter.
-6. Review the shared case-study structure, then Notes, About, Resume and Hire
-   one route family at a time.
+6. Approve the rendered shared case-study structure, then review Notes, About, Resume and
+   Hire one route family at a time.
 
 ## Already locked, not reopened here
 

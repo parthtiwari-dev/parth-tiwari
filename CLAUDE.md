@@ -83,8 +83,9 @@ content remains static HTML.
   not passed, and may never be reported otherwise.
 - Phase 2 is open. The maintained landing stub is on `/`; its structure and interim public
   release were owner-approved on 2026-08-29 and are live at
-  `https://parth-tiwari-1.vercel.app/`. `/work` route architecture is the next review, while
-  production route implementation remains Phase 3.
+  `https://parth-tiwari-1.vercel.app/`. `/work` architecture is approved. The single
+  `/work/beatmind/` Phase 2 case-study pilot has rendered evidence and awaits owner review;
+  Notes is next only after that approval. Production route implementation remains Phase 3.
 - Do not build the production pages, tear, backlight, canvas or animated worlds in Phase 2.
 
 ## Dependencies and external actions
