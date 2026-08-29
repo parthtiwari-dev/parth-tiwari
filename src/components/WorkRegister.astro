@@ -45,8 +45,8 @@ const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In prog
             <a href="/resume/">Resume</a>
           </nav>
           <a class="work-contact" href="/hire/">Start a project</a>
-          <details class="work-mobile-menu">
-            <summary>Menu</summary>
+          <details class="work-mobile-menu paper-mobile-menu">
+            <summary><span class="menu-label-open">Menu</span><span class="menu-label-close">Close</span></summary>
             <nav aria-label="Mobile portfolio navigation"><a href="/">Home</a><a aria-current="page" href="/work/">Work</a><a href="/notes/">Notes</a><a href="/about/">About</a><a href="/resume/">Resume</a></nav>
           </details>
         </header>
@@ -72,18 +72,13 @@ const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In prog
             <button type="button" data-sort="effort" aria-pressed="false">{sortLabels[1]}</button>
             <button type="button" data-sort="recent" aria-pressed="false">{sortLabels[2]}</button>
           </div>
-          <label class="active-control"><input type="checkbox" data-active-filter /> <span>{activeFilterLabel}</span></label>
+          <label class="active-control"><input type="checkbox" data-active-filter aria-label={activeFilterLabel} /> <span>{activeFilterLabel}</span></label>
           <p class="work-count" aria-live="polite"><span data-visible-count>{orderedProjects.length}</span> projects shown</p>
         </section>
 
         <section id="work-register" class="register-section" aria-labelledby="register-title">
           <div class="register-heading">
             <p id="register-title">Project</p><p>Status</p><p>Effort</p><p>Started</p><span aria-hidden="true">Open</span>
-          </div>
-
-          <div class="static-preview-study" aria-label="Static study of the future BeatMind row preview">
-            <div class="preview-window"><img src="/media/beatmind-stems-clean.png" alt="" width="1904" height="974" decoding="async" /></div>
-            <p><span>Static interaction study</span>The final hover and centred-row preview is deferred to Phase 4.</p>
           </div>
 
           <ol class="work-register" data-work-list>

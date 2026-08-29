@@ -130,9 +130,9 @@ The Phase 2 `/work` study uses three comparable ordering controls:
 - Build effort
 - Most recent
 
-`Active now` is a separate provisional state filter, not another ordering mode. In the
-review study it means `live`, `running` or `in-progress`; the owner may remove the filter
-after rendered review. No price or cost control appears on the site.
+`Active now` is a separate state filter, not another ordering mode. It means `live`,
+`running` or `in-progress`. The owner approved that control and meaning on 2026-08-29.
+No price or cost control appears on the site.
 
 Hovering or focusing an entry backlights the sheet and reveals that project's approved world
 frame behind it. Motion may begin after a deliberate dwell only if it improves recognition

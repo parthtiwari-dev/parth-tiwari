@@ -286,11 +286,16 @@ fix to the approved landing checkpoint, not a newly completed Phase 2 architectu
 **`/work` review checkpoint, 2026-08-29:** a real `/work/` composition demo now exists on
 `redesign/v2` only. It renders all twelve content-collection entries as one continuous
 register, with scope hierarchy carried by row density, three qualitative ordering modes and
-an isolated experimental active-state filter. The BeatMind backlight is a static study;
-hover/focus behaviour, centred-row mobile preview, tear navigation and case-study routes are
-still deferred to their assigned phases. Evidence in `.shots/phase2-work-register-review`
-covers 390, 800 and 1440 pixels plus a no-JavaScript state. This checkpoint is awaiting owner
-review and does not tick a Phase 2 item, satisfy Phase 3 or authorize production publishing.
+a separate active-state filter. The owner approved the opening, hierarchy and controls, but
+rejected the first desktop BeatMind panel because it covered row content. The revised static
+study uses a faint under-row aperture shared across phone, tablet and desktop; its owner
+review is pending. Production hover/focus behaviour, centred-row mobile preview, tear
+navigation and case-study routes are still deferred to their assigned phases. Evidence in
+`.shots/phase2-work-register-review`
+covers the initial study; `.shots/phase2-work-detail-refinement` and
+`.shots/phase2-route-audit` cover the refinement and Home-to-Work flow. This checkpoint is
+awaiting owner review and does not tick a Phase 2 item, satisfy Phase 3 or authorize
+production publishing.
 
 **Owner review before work**
 

@@ -184,8 +184,8 @@ The `/work` review slice on 2026-08-29 interprets the owner's route-only answers
   while retaining enough scale and empty paper to feel editorial;
 - the twelve projects remain one continuous register. Flagship, substantial and focused
   scope is expressed through row density instead of repeated tier headings;
-- `Featured`, `Build effort` and `Most recent` are ordering modes. `Active now` is an
-  isolated, removable filter whose review meaning is `live`, `running` or `in-progress`;
+- `Featured`, `Build effort` and `Most recent` are ordering modes. `Active now` is a
+  separate filter meaning `live`, `running` or `in-progress`;
 - every row shows title, summary, status, qualitative effort, sourced start date and route
   affordance. Only flagship rows may surface one already-published verified claim;
 - the localised BeatMind composition is explicitly a static preview study. Hover/focus,
@@ -193,9 +193,12 @@ The `/work` review slice on 2026-08-29 interprets the owner's route-only answers
 - the real `/work` URL is built on `redesign/v2` for local owner review. It is not part of
   the interim production landing and does not satisfy Phase 3.
 
-These are provisional composition decisions until the owner reviews the rendered phone,
-tablet and desktop evidence. In particular, `Active now` and the amount of tier hierarchy
-remain open.
+The owner approved the opening, continuous hierarchy, controls and filter on 2026-08-29.
+The first desktop BeatMind study was rejected because its dark panel covered row content.
+The next review replaces that panel with the same faint under-row aperture used on phone,
+increases register copy sizes and applies one shared paper-menu treatment to Home and Work.
+The revised preview remains a Phase 2 static study; production reveal behaviour remains in
+Phase 4.
 
 ### Phase 4
 

@@ -60,7 +60,7 @@ const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In prog
             <h1>{siteCopy.home.hero}</h1>
             <p class="hero-support">I build across music, retrieval, agents and generation. The case studies show the decision, the evidence and what broke.</p>
             <div class="doors" aria-label="Choose how to enter the portfolio">
-              <a class="door door-work" href="#projects"><span>{siteCopy.home.employerDoor.label}</span><small>{siteCopy.home.employerDoor.note}</small><b aria-hidden="true">↘</b></a>
+              <a class="door door-work" href={siteCopy.home.employerDoor.href}><span>{siteCopy.home.employerDoor.label}</span><small>{siteCopy.home.employerDoor.note}</small><b aria-hidden="true">↘</b></a>
               <a class="door door-hire" href="#contact"><span>{siteCopy.home.clientDoor.label}</span><small>{siteCopy.home.clientDoor.note}</small><b aria-hidden="true">↘</b></a>
             </div>
           </div>
@@ -71,7 +71,7 @@ const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In prog
               <img src="/media/beatmind-stems-clean.png" alt="BeatMind editor showing a track split into four coloured stems" width="1904" height="974" decoding="async" fetchpriority="high" />
               <div class="world-scan" aria-hidden="true"></div>
             </div>
-            <figcaption><p>A song goes in whole and comes back in parts you can actually work with.</p><a href="#projects">Read the case study <span aria-hidden="true">↗</span></a></figcaption>
+            <figcaption><p>A song goes in whole and comes back in parts you can actually work with.</p><a href="/work/">Open the work register <span aria-hidden="true">↗</span></a></figcaption>
           </figure>
 
           <div class="quiet-proof" aria-label="Three verified examples from the work">
@@ -85,13 +85,13 @@ const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In prog
             <div class="nav-content">
               <a class="wordmark" href="#arrival" aria-label="Parth Tiwari, back to the top">Parth Tiwari</a>
               <nav class="desktop-nav" aria-label="Portfolio navigation">
-                <a href="#projects">Work</a><a href="#notes">Notes</a><a href="#about">About</a><a href="#contact">Resume</a>
+                <a href="/work/">Work</a><a href="#notes">Notes</a><a href="#about">About</a><a href="#contact">Resume</a>
               </nav>
               <a class="nav-action" href="#contact">Start a project</a>
-              <details class="mobile-menu">
-                <summary>Menu</summary>
+              <details class="mobile-menu paper-mobile-menu">
+                <summary><span class="menu-label-open">Menu</span><span class="menu-label-close">Close</span></summary>
                 <nav aria-label="Mobile portfolio navigation">
-                  <a href="#projects">Work</a><a href="#notes">Notes</a><a href="#about">About</a><a href="#contact">Contact</a>
+                  <a href="/work/">Work</a><a href="#notes">Notes</a><a href="#about">About</a><a href="#contact">Contact</a>
                 </nav>
               </details>
             </div>
