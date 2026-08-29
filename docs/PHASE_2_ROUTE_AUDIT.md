@@ -46,9 +46,9 @@ must remain readable with keyboard, touch, reduced motion and no JavaScript.
 - `/notes`, `/about`, `/resume`, `/hire` and `/work/[slug]` are future route contracts and
   remain unbuilt until Phase 3. The current Work-page navigation therefore demonstrates the
   intended information architecture but does not yet form a complete live journey.
-- Project records do not state whether work is personal, employment work or a take-home,
-  except that Spur Chat is explicitly a take-home. No ownership filter or badge can ship
-  until the owner supplies a public-safe mapping.
+- The owner rejected a Personal/Company register split on 2026-08-29. Verified employment
+  context may appear inside an individual case study after its exact public wording and
+  contribution are approved; it is not a register filter or row badge.
 - The new desktop aperture and paper menu need owner visual approval.
 - Actual foreground/background contrast on the paper and world surfaces remains a Phase 2
   gate check; screenshots alone cannot prove it.
@@ -64,5 +64,5 @@ contrast measurements remain outstanding and must not be reported as passing yet
 ## Recommendation
 
 Keep the compact all-project index on Home and the complete sortable register on `/work`.
-Do not duplicate the full Work layout on Home. Approve the revised aperture and menu, obtain
-the project-ownership mapping, then move to the shared case-study structure review.
+Do not duplicate the full Work layout on Home or add an ownership filter. Continue with the
+shared case-study structure review.

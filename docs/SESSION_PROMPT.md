@@ -34,13 +34,16 @@ Phase 2 is design-system and route-architecture work:
   `https://parth-tiwari-1.vercel.app/` as an interim feedback release.
 - `docs/PHASE_2_WORLDS_ANIMATION_MEMO.md` records candidate graphics for the seven specced
   worlds. It is research only and authorizes no world implementation.
-- Review one route at a time. The landing is approved; `/work` architecture is next.
+- Review one route at a time. Home and `/work` architecture are approved. Do not add a
+  Personal/Company register filter; verified employment context belongs inside a case study.
+- The shared `/work/[slug]` case-study structure is next, using BeatMind as the real-content
+  pilot. Ask only case-study questions before rendering it.
 - Do not build the production site, tear, backlight, canvas or animated worlds.
 - Refresh the 390, 800 and 1440 evidence after changes. Preserve the approved landing while
   reviewing `/work`; production route implementation remains Phase 3.
 
 Begin by confirming the current branch and diff. Preserve the approved landing checkpoint.
-Review `/work` structure next at phone and desktop widths. Phase 2 remains incomplete until
+Review the shared `/work/[slug]` structure next at phone and desktop widths. Phase 2 remains incomplete until
 every route structure, shared token, accessibility state and rendered-contrast gate is
 approved and verified.
 ```

@@ -50,10 +50,12 @@ The owner approved the overall full-width scroll direction and the refined landi
 checkpoint for an interim public release. The maintained landing stub is
 now at `/`; the obsolete `/review/phase-2/` route is removed. Its restraint pass, segmented
 fibre edges, directional folds and three bounded one-shot motion studies have rendered
-evidence at 390, 800 and 1440 pixels. The separate worlds-animation memo remains research
-only; no Phase 2 checklist item is newly marked complete, and the other route structures
-have not begun. The approved interim root is live at
+evidence at 390, 800 and 1440 pixels. The `/work` structure review now has a real-content
+register demo and responsive evidence; the owner rejected a Personal/Company filter, so
+verified employment context will be handled per case study. The shared `/work/[slug]`
+structure is the next review slice. The separate worlds-animation memo remains research
+only; no Phase 2 checklist item is newly marked complete. The approved interim root is live at
 `https://parth-tiwari-1.vercel.app/` and has passed live browser checks. A real
 five-person comprehension test remains mandatory on the Phase 3 static preview.
 
-**Last documentation truth audit:** 2026-08-29, interim landing deployed and verified; remaining Phase 2 route architecture is open.
+**Last documentation truth audit:** 2026-08-29, Home and Work structures reviewed; shared case-study structure is next.

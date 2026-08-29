@@ -234,10 +234,12 @@ requires every project there. `/work` remains distinct by adding full summaries,
 dates, ordering and state filtering; copying its complete layout back onto Home would erase
 that distinction. This is a design recommendation awaiting owner confirmation.
 
-No `personal` or `company` ownership field exists in the validated project records. Only
-Spur Chat is explicitly sourced as a take-home. A context filter or badge is blocked until
-the owner identifies which projects were produced during employment and which organization
-may be named publicly.
+The owner decided on 2026-08-29 that `/work` will not sort or badge projects as personal
+versus company work. BeatMind and Vivid were owner-reported as work made in the owner's
+flexible role, but exact public organization and contribution wording still needs approval
+inside each case study before publication. The mentioned Stick and Dot website is not one
+of the twelve validated project records, so this decision does not add or imply a thirteenth
+project.
 
 ## Review sequence
 
@@ -246,9 +248,8 @@ may be named publicly.
 2. Review whether the tightened section rhythm now feels like one continuous message.
 3. Review the torn-ink project hover/focus and the amount of marginalia.
 4. Lock the landing tokens and responsive rules only after desktop, tablet and phone pass.
-5. Review the revised `/work` under-row preview and paper mobile menu. Keep the route on
-   `redesign/v2` until that review is approved.
-6. After `/work`, review the shared case-study structure, then Notes, About, Resume and Hire
+5. Preserve the approved `/work` information architecture without an ownership filter.
+6. Review the shared case-study structure, then Notes, About, Resume and Hire
    one route family at a time.
 
 ## Already locked, not reopened here

@@ -34,6 +34,8 @@ in the same commit.
 | Experience lives on About and Resume | Decided | One human narrative and one structured employment record cover the need without duplication | Separate `/experience` route |
 | Work register may sort by recency and running status | Decided | Those fields have stable meanings | Unexplained novelty filters |
 | Work may sort by qualitative build effort | Decided | `flagship`, `substantial` and `focused` communicate scope without inventing hours or money | A misleading cost control |
+| Work has no Personal/Company split | Owner decided 2026-08-29 | The owner's flexible employment context makes a binary register taxonomy reductive; projects should be compared by the work itself | Ownership filters and company badges on every row |
+| Verified employment context belongs inside a case study | Decided | Role, organization and contribution need project-specific explanation and publication permission | Inferring ownership from repository location or adding an unsourced global label |
 
 ## Landing and paper
 

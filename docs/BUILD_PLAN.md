@@ -304,6 +304,9 @@ production publishing.
 - Show low-fidelity page structures for all route families at phone and desktop widths.
 - Review one route at a time, beginning with the landing page. Within that route, group
   related questions around rendered evidence instead of mixing unrelated pages together.
+- Home and `/work` have completed their Phase 2 structure reviews. The register remains one
+  merit-based catalogue without a Personal/Company split. The next review slice is the
+  shared `/work/[slug]` case-study structure, using BeatMind as the real-content pilot.
 
 **Do**
 
