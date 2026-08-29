@@ -166,6 +166,13 @@ because Astro inlined the small enhancement below the 30 kB Phase 2 ceiling. The
 prove this landing craft slice only. Owner approval and the remaining Phase 2 route/system
 work are still required before the phase gate can pass.
 
+A later scroll-frame pass found that the large `drop-shadow()` applied to the complete
+6,800-8,400px sheet was the source of visible jank. The one-variable A/B at 390, 800 and
+1440px reduced p95 frame intervals from 33.4/66.6/83.4 ms to 16.7/16.7/16.8 ms after that
+filter was removed, with no frames over 50 ms. The design keeps depth through the small
+generated edge fibres and the local top/bottom fold shadows instead of filtering the full
+document. Run `npm.cmd run perf:scroll -- --url <local-origin>` to repeat the diagnostic.
+
 ## Interim production evidence
 
 The owner approved replacing v1 with this reviewed root landing to collect feedback. On

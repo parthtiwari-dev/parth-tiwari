@@ -19,7 +19,8 @@
     "capture": "node scripts/capture-demos.mjs",
     "craft": "node scripts/craft-check.mjs",
     "a11y": "node scripts/a11y-check.mjs",
-    "perf": "node scripts/perf-check.mjs"
+    "perf": "node scripts/perf-check.mjs",
+    "perf:scroll": "node scripts/scroll-perf-check.mjs"
   },
   "dependencies": {
     "astro": "7.2.9"

@@ -54,7 +54,7 @@ img { display: block; max-width: 100%; }
 @keyframes intro-label { 30% { opacity: 1; } 70%, 100% { opacity: 0; } }
 @keyframes intro-away { 0%, 76% { opacity: 1; visibility: visible; } 100% { opacity: 0; visibility: hidden; } }
 
-.scroll-sheet { position: relative; z-index: 1; width: 100%; overflow-x: clip; filter: drop-shadow(0 0 4rem rgb(0 0 0 / 55%)); }
+.scroll-sheet { position: relative; z-index: 1; width: 100%; overflow-x: clip; }
 .paper-message { position: relative; clip-path: polygon(9px 0, calc(100% - 13px) 0, calc(100% - 4px) 9px, 100% 24px, calc(100% - 7px) 39px, 100% 56px, 100% calc(100% - 54px), calc(100% - 8px) calc(100% - 38px), 100% calc(100% - 22px), calc(100% - 15px) 100%, 11px 100%, 0 calc(100% - 17px), 8px calc(100% - 35px), 0 calc(100% - 51px), 0 54px, 7px 38px, 0 21px); background-color: var(--paper); background-image: linear-gradient(90deg, rgb(82 50 27 / 13%), transparent 2.8%, transparent 97.2%, rgb(82 50 27 / 13%)), linear-gradient(rgb(244 237 223 / 38%), rgb(233 225 210 / 26%)), url('/media/paper-stock.jpg'); background-repeat: repeat-y; background-size: 100% auto; }
 .paper-edge { position: absolute; z-index: 70; top: 0; bottom: 0; width: clamp(10px, 1.15vw, 17px); display: grid; grid-template-rows: 31% 36% 33%; pointer-events: none; }
 .paper-edge-left { left: 0; }

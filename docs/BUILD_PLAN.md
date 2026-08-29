@@ -276,6 +276,13 @@ and Vercel reported deployment success. A cache-bypassed request to
 `https://parth-tiwari-1.vercel.app/` returned HTTP 200, the new landing title and hero, and no
 old EPHEMERIS marker. Live `a11y`, `craft` and `perf` checks passed at 390, 800 and 1440.
 
+**Landing scroll craft evidence, 2026-08-29:** a deterministic frame-paced pass isolated the
+full-sheet CSS `drop-shadow()` as the scroll bottleneck. With it present, p95 frame intervals
+were 33.4 ms at 390px, 66.6 ms at 800px and 83.4 ms at 1440px. Removing only that filter
+brought the same local pass to 16.7-16.8 ms p95 at all three widths, with no frames over 50
+ms. Paper depth remains local to the generated edge fibres and fold shadows. This is a craft
+fix to the approved landing checkpoint, not a newly completed Phase 2 architecture item.
+
 **Owner review before work**
 
 - Show a reference lock for the paper system, dark world system, editorial notes and

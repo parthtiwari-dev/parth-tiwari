@@ -13,11 +13,17 @@ const argOf = (flag, fallback) => {
 
 const base = argOf('--url', 'http://127.0.0.1:4321').replace(/\/$/, '')
 const output = path.resolve('.shots', argOf('--tag', 'phase2-sections'))
-const viewports = [
+const allViewports = [
   { name: 'phone-390', width: 390, height: 844, touch: true, scale: 2 },
   { name: 'tablet-800', width: 800, height: 1024, touch: true, scale: 1 },
   { name: 'desktop-1440', width: 1440, height: 900, touch: false, scale: 1 },
 ]
+const only = argOf('--only', '')
+const viewports = only ? allViewports.filter((viewport) => viewport.name === only) : allViewports
+
+if (viewports.length === 0) {
+  throw new Error(`Unknown viewport "${only}". Use phone-390, tablet-800 or desktop-1440.`)
+}
 const sections = [
   ['hero', '#arrival'],
   ['about', '#about'],
