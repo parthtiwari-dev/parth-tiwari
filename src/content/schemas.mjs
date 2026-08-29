@@ -129,7 +129,8 @@ export const siteCopySchema = z.object({
   work: z.object({
     heading: z.string(),
     intro: z.string().min(12),
-    sortLabels: z.array(z.enum(['Featured', 'Build effort', 'Most recent', 'Still running'])).length(4),
+    sortLabels: z.array(z.enum(['Featured', 'Build effort', 'Most recent'])).length(3),
+    activeFilterLabel: z.literal('Active now'),
   }),
   notes: z.object({
     heading: z.string(),

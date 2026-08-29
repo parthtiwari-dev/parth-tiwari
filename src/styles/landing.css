@@ -1,42 +1,8 @@
-@font-face { font-family: 'Bricolage Grotesque'; src: url('/fonts/bricolage-grotesque-700.woff2') format('woff2'); font-weight: 700; font-display: swap; }
-@font-face { font-family: 'Archivo'; src: url('/fonts/archivo-400.woff2') format('woff2'); font-weight: 400; font-display: swap; }
-@font-face { font-family: 'Archivo'; src: url('/fonts/archivo-600.woff2') format('woff2'); font-weight: 600; font-display: swap; }
-@font-face { font-family: 'DM Mono'; src: url('/fonts/dm-mono-400.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@import './paper-system.css';
 
 :root {
-  --paper: #e9e1d2;
-  --paper-light: #f4eddf;
-  --paper-dark: #a48463;
-  --paper-burn: #5c3d29;
-  --ink: #181411;
-  --ink-secondary: #51493f;
-  --ink-quiet: #706659;
-  --oxblood: #942418;
-  --void: #08090a;
-  --world-rule: #2c3032;
-  --world-ink: #f4f4ef;
-  --world-secondary: #9da2a1;
-  --font-display: 'Bricolage Grotesque', 'Arial Black', sans-serif;
-  --font-body: 'Archivo', Arial, sans-serif;
-  --font-mono: 'DM Mono', Consolas, monospace;
-  --content: min(100% - clamp(2rem, 8vw, 10rem), 1640px);
   --split-columns: minmax(0, 1.08fr) minmax(20rem, .92fr);
-  --duration-fast: 130ms;
-  --duration-default: 240ms;
-  --duration-reveal: 460ms;
-  --duration-paper: 900ms;
-  --ease-out: cubic-bezier(0, 0, .2, 1);
-  --ease-paper: cubic-bezier(.22, .76, .2, 1);
 }
-
-* { box-sizing: border-box; touch-action: manipulation; }
-html { overflow-x: clip; scroll-behavior: smooth; background: var(--void); }
-body { overflow-x: clip; margin: 0; min-width: 320px; color: var(--ink); background: var(--void); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
-a { color: inherit; }
-img { display: block; max-width: 100%; }
-:focus-visible { outline: 3px solid var(--oxblood); outline-offset: 4px; }
-.skip-link { position: fixed; z-index: 200; top: .5rem; left: .5rem; padding: .75rem 1rem; color: white; background: var(--oxblood); transform: translateY(-150%); }
-.skip-link:focus { transform: translateY(0); }
 
 /* The opening is CSS-only so the first meaningful frame never waits on JavaScript. */
 .unfurl-intro { position: fixed; z-index: 150; inset: 0; overflow: hidden; pointer-events: none; color: #eee8dc; background: var(--void); animation: intro-away 1.65s var(--ease-paper) forwards; }
@@ -222,7 +188,6 @@ img { display: block; max-width: 100%; }
 }
 
 @media (max-width: 680px) {
-  :root { --content: calc(100% - 2rem); }
   .unfurl-sheet { left: .25rem; right: .25rem; }
   .unfurl-crease { left: .25rem; right: .25rem; height: 1rem; }
   @keyframes intro-crease-top { to { top: calc(8% - .5rem); transform: scaleY(.72); } }
@@ -233,9 +198,6 @@ img { display: block; max-width: 100%; }
   .desktop-nav { display: none; }
   .nav-action { min-height: 2.35rem; padding: .55rem .65rem; font-size: .72rem; }
   .mobile-menu { display: block; position: relative; }
-  .mobile-menu summary { cursor: pointer; font-size: .78rem; font-weight: 600; }
-  .mobile-menu nav { position: absolute; z-index: 50; right: 0; top: calc(100% + .75rem); min-width: 9rem; display: grid; border: 1px solid var(--ink); background: var(--paper-light); box-shadow: .5rem .5rem 0 rgb(24 20 17 / 18%); }
-  .mobile-menu nav a { padding: .75rem; border-bottom: 1px solid rgb(24 20 17 / 25%); text-decoration: none; }
   .wordmark { max-width: 6rem; line-height: 1; }
   .section-pad { padding: 3.75rem 1.25rem; }
   .arrival { min-height: 100svh; gap: 3rem; padding-top: 3.5rem; }
@@ -274,7 +236,6 @@ img { display: block; max-width: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
   .unfurl-intro { display: none; }
   .paper-nav-fold, .motion-ready [data-reveal], .motion-ready [data-reveal] .ink-print { opacity: 1 !important; transform: none !important; clip-path: none !important; }
   .world-scan { animation: none; transform: translateX(68%); }

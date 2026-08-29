@@ -34,6 +34,8 @@ in the same commit.
 | Experience lives on About and Resume | Decided | One human narrative and one structured employment record cover the need without duplication | Separate `/experience` route |
 | Work register may sort by recency and running status | Decided | Those fields have stable meanings | Unexplained novelty filters |
 | Work may sort by qualitative build effort | Decided | `flagship`, `substantial` and `focused` communicate scope without inventing hours or money | A misleading cost control |
+| Work has no Personal/Company split | Owner decided 2026-08-29 | The owner's flexible employment context makes a binary register taxonomy reductive; projects should be compared by the work itself | Ownership filters and company badges on every row |
+| Verified employment context belongs inside a case study | Decided | Role, organization and contribution need project-specific explanation and publication permission | Inferring ownership from repository location or adding an unsourced global label |
 
 ## Landing and paper
 
@@ -177,6 +179,28 @@ structures.
 The seven `📐 specced` worlds have a research-only data and accent inventory in
 `PHASE_2_WORLDS_ANIMATION_MEMO.md`. It does not satisfy the owner-approved storyboard gate and
 does not authorize world implementation.
+
+The `/work` review slice on 2026-08-29 interprets the owner's route-only answers as follows:
+
+- the opening uses a human sentence and keeps the controls visible in the first viewport,
+  while retaining enough scale and empty paper to feel editorial;
+- the twelve projects remain one continuous register. Flagship, substantial and focused
+  scope is expressed through row density instead of repeated tier headings;
+- `Featured`, `Build effort` and `Most recent` are ordering modes. `Active now` is a
+  separate filter meaning `live`, `running` or `in-progress`;
+- every row shows title, summary, status, qualitative effort, sourced start date and route
+  affordance. Only flagship rows may surface one already-published verified claim;
+- the localised BeatMind composition is explicitly a static preview study. Hover/focus,
+  centred-row mobile behaviour and tear navigation remain assigned to Phase 4;
+- the real `/work` URL is built on `redesign/v2` for local owner review. It is not part of
+  the interim production landing and does not satisfy Phase 3.
+
+The owner approved the opening, continuous hierarchy, controls and filter on 2026-08-29.
+The first desktop BeatMind study was rejected because its dark panel covered row content.
+The next review replaces that panel with the same faint under-row aperture used on phone,
+increases register copy sizes and applies one shared paper-menu treatment to Home and Work.
+The revised preview remains a Phase 2 static study; production reveal behaviour remains in
+Phase 4.
 
 ### Phase 4
 

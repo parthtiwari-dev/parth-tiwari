@@ -17,9 +17,10 @@
     ]
   },
   "work": {
-    "heading": "The work",
-    "intro": "Every project is here. Start with the flagships, sort by the effort they took, or look at what is newest and what is still running.",
-    "sortLabels": ["Featured", "Build effort", "Most recent", "Still running"]
+    "heading": "Things I built, and what they taught me.",
+    "intro": "Every project stays in the record. Start with the work I would show first, compare the effort behind it, or see what is newest and still active.",
+    "sortLabels": ["Featured", "Build effort", "Most recent"],
+    "activeFilterLabel": "Active now"
   },
   "notes": {
     "heading": "Notes",

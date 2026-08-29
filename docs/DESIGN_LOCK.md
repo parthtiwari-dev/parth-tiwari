@@ -124,12 +124,20 @@ actual stock.
 The default order is editorial and expresses which work matters most. Sorting is a useful
 control only when its fields mean the same thing across every project.
 
-Candidate controls are:
+The Phase 2 `/work` study uses three comparable ordering controls:
 
 - Featured
+- Build effort
 - Most recent
-- Still running
-- Cost, only after Phase 1 defines and sources a comparable cost model
+
+`Active now` is a separate state filter, not another ordering mode. It means `live`,
+`running` or `in-progress`. The owner approved that control and meaning on 2026-08-29.
+No price or cost control appears on the site.
+
+The register does not sort or label projects as personal versus company work. That split
+does not describe the owner's flexible working context clearly enough to improve comparison.
+When employment context matters, a verified role and organization belong inside the
+individual case study rather than in a global filter.
 
 Hovering or focusing an entry backlights the sheet and reveals that project's approved world
 frame behind it. Motion may begin after a deliberate dwell only if it improves recognition

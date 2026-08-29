@@ -189,6 +189,58 @@ data export, demonstrated interaction and accent status for the seven projects m
 `📐 specced` in `WORLDS.md`. Missing exports and unspecified accents are explicitly blocked.
 The memo is storyboard input only and authorizes no world code.
 
+## `/work` register review slice
+
+The first `/work` study now lives on the real `/work/` URL on `redesign/v2`, while remaining
+off `main` and production. It is a Phase 2 composition demo, not the Phase 3 production
+route. Its case-study links intentionally point at the future `/work/[slug]/` URLs; those
+destinations are not built in this phase.
+
+The study uses the existing paper material, type and oxblood roles. Reference synthesis
+adds a dense continuous catalogue, a thin separation between ordering and state filtering,
+and compact project-row anatomy without importing another site's visual language. The
+twelve real collection entries remain in one register. Row depth carries the
+flagship/substantial/focused hierarchy so the page does not become three disconnected
+lists.
+
+Owner inputs currently represented in the render are:
+
+- a human opening with editorial scale but controls still visible in the first viewport;
+- `Featured`, `Build effort` and `Most recent` ordering;
+- a separate `Active now` filter, matching `live`, `running` and
+  `in-progress` entries;
+- title, summary, status, qualitative effort, sourced start date and arrow on every row;
+- one already-published verified fact on a flagship row only when the content collection
+  supplies one;
+- a static localised BeatMind preview study. No hover-driven world, centred-row touch
+  preview, tear or animated world is implemented early.
+
+The owner approved the opening, row hierarchy and controls on 2026-08-29, then rejected the
+desktop preview panel because it overlaid row metadata and read as a separate black strip.
+The refinement removes that panel and uses one faded BeatMind aperture behind the right edge
+of the first row at every width. It also raises summary, evidence and metadata type sizes,
+adds a shared torn-paper mobile menu, and makes Home's primary Work door enter `/work/`.
+
+Rendered refinement evidence is in `.shots/phase2-work-detail-refinement`. The scripted pass
+checks 390, 800 and 1440 pixel widths, all twelve default rows, six currently active rows,
+most-recent ordering, overflow, image alternatives, named controls and browser errors. It
+separately checks that all twelve entries remain visible and the enhancement controls
+disappear with JavaScript disabled. The route-flow audit is in `.shots/phase2-route-audit`. The revised
+preview and menu still need owner review; this does not complete a Phase 2 checklist item or
+authorize a production merge.
+
+Home keeps its lighter editorial index of all twelve projects because the complete-site plan
+requires every project there. `/work` remains distinct by adding full summaries, evidence,
+dates, ordering and state filtering; copying its complete layout back onto Home would erase
+that distinction. This is a design recommendation awaiting owner confirmation.
+
+The owner decided on 2026-08-29 that `/work` will not sort or badge projects as personal
+versus company work. BeatMind and Vivid were owner-reported as work made in the owner's
+flexible role, but exact public organization and contribution wording still needs approval
+inside each case study before publication. The mentioned Stick and Dot website is not one
+of the twelve validated project records, so this decision does not add or imply a thirteenth
+project.
+
 ## Review sequence
 
 1. Review the post-hero navigation fold, opening unfurl, segmented side damage and lower
@@ -196,7 +248,9 @@ The memo is storyboard input only and authorizes no world code.
 2. Review whether the tightened section rhythm now feels like one continuous message.
 3. Review the torn-ink project hover/focus and the amount of marginalia.
 4. Lock the landing tokens and responsive rules only after desktop, tablet and phone pass.
-5. Begin the `/work` structure review next; do not implement its production route in Phase 2.
+5. Preserve the approved `/work` information architecture without an ownership filter.
+6. Review the shared case-study structure, then Notes, About, Resume and Hire
+   one route family at a time.
 
 ## Already locked, not reopened here
 

@@ -283,6 +283,20 @@ brought the same local pass to 16.7-16.8 ms p95 at all three widths, with no fra
 ms. Paper depth remains local to the generated edge fibres and fold shadows. This is a craft
 fix to the approved landing checkpoint, not a newly completed Phase 2 architecture item.
 
+**`/work` review checkpoint, 2026-08-29:** a real `/work/` composition demo now exists on
+`redesign/v2` only. It renders all twelve content-collection entries as one continuous
+register, with scope hierarchy carried by row density, three qualitative ordering modes and
+a separate active-state filter. The owner approved the opening, hierarchy and controls, but
+rejected the first desktop BeatMind panel because it covered row content. The revised static
+study uses a faint under-row aperture shared across phone, tablet and desktop; its owner
+review is pending. Production hover/focus behaviour, centred-row mobile preview, tear
+navigation and case-study routes are still deferred to their assigned phases. Evidence in
+`.shots/phase2-work-register-review`
+covers the initial study; `.shots/phase2-work-detail-refinement` and
+`.shots/phase2-route-audit` cover the refinement and Home-to-Work flow. This checkpoint is
+awaiting owner review and does not tick a Phase 2 item, satisfy Phase 3 or authorize
+production publishing.
+
 **Owner review before work**
 
 - Show a reference lock for the paper system, dark world system, editorial notes and
@@ -290,6 +304,9 @@ fix to the approved landing checkpoint, not a newly completed Phase 2 architectu
 - Show low-fidelity page structures for all route families at phone and desktop widths.
 - Review one route at a time, beginning with the landing page. Within that route, group
   related questions around rendered evidence instead of mixing unrelated pages together.
+- Home and `/work` have completed their Phase 2 structure reviews. The register remains one
+  merit-based catalogue without a Personal/Company split. The next review slice is the
+  shared `/work/[slug]` case-study structure, using BeatMind as the real-content pilot.
 
 **Do**
 
