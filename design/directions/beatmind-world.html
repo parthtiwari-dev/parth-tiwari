@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="description" content="A scroll-only BeatMind Sound Foundry animatic. This is a Phase 2 design study, not a production route." />
+    <title>BeatMind Sound Foundry study</title>
+    <link rel="stylesheet" href="./beatmind-world.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#world-ending">Skip to the case-study handoff</a>
+
+    <header class="study-bar">
+      <span>BeatMind / Sound Foundry</span>
+      <span>Phase 2 animatic · native scroll only</span>
+    </header>
+
+    <main>
+      <section class="world" data-world aria-labelledby="world-title">
+        <div class="world-stage" aria-hidden="true">
+          <div class="foundry-plates">
+            <i class="foundry-plate plate-chamber"></i>
+            <i class="foundry-plate plate-gantry"></i>
+            <i class="foundry-plate plate-scanner"></i>
+            <i class="foundry-plate plate-arrangement"></i>
+            <i class="foundry-plate plate-recovery"></i>
+            <i class="foundry-plate plate-render"></i>
+          </div>
+          <canvas data-world-canvas></canvas>
+          <div class="world-light"></div>
+          <div class="world-vignette"></div>
+
+          <div class="machine-spine">
+            <span>INPUT</span><i></i><span>SEPARATE</span><i></i><span>MAP</span><i></i><span>RENDER</span>
+          </div>
+
+          <div class="stage-readout">
+            <span data-scene-count>01 / 09</span>
+            <span data-scene-label>Specimen chamber</span>
+          </div>
+
+          <div class="world-progress"><i data-world-progress></i></div>
+
+          <div class="data-note">
+            <span>Animatic score</span>
+            <strong>BeatMind browser synth</strong>
+            <small>124 BPM · C♯ minor · 8 bars · 5 stems</small>
+          </div>
+
+          <div class="stem-key">
+            <span style="--stem: var(--vocals)">Vocals</span>
+            <span style="--stem: var(--backing)">Backing</span>
+            <span style="--stem: var(--drums)">Drums</span>
+            <span style="--stem: var(--bass)">Bass</span>
+            <span style="--stem: var(--other)">Other</span>
+          </div>
+        </div>
+
+        <div class="world-scenes">
+          <section class="scene scene-centre" data-scene="Specimen chamber" data-plate="0">
+            <div class="scene-copy">
+              <p>World 01 / BeatMind</p>
+              <h1 id="world-title">A song enters whole.</h1>
+              <span>One source. One clock. Keep scrolling.</span>
+            </div>
+          </section>
+
+          <section class="scene scene-left" data-scene="Separation gantry" data-plate="1">
+            <div class="scene-copy">
+              <p>01 / Separate</p>
+              <h2>The machine pulls it apart without losing time.</h2>
+              <span>One source becomes vocals, backing vocals, drums, bass and everything else.</span>
+            </div>
+          </section>
+
+          <section class="scene scene-right scene-failure" data-scene="Worker loss" data-plate="4">
+            <div class="scene-copy">
+              <p>02 / A worker disappears</p>
+              <h2>The job does not disappear with it.</h2>
+              <span>Storyboard state. A publishable failure trace is still required.</span>
+            </div>
+          </section>
+
+          <section class="scene scene-left scene-recovery" data-scene="Retry" data-plate="4">
+            <div class="scene-copy">
+              <p>03 / Recover</p>
+              <h2>The same operation finds a way forward.</h2>
+              <span>A retry continues the durable run and a late result cannot rewrite it.</span>
+            </div>
+          </section>
+
+          <section class="scene scene-right" data-scene="Analysis scanner" data-plate="2">
+            <div class="scene-copy">
+              <p>04 / Understand</p>
+              <h2>Now the parts acquire musical coordinates.</h2>
+              <span>Tempo, key, bars, chords and sections attach to the shared timeline.</span>
+            </div>
+          </section>
+
+          <section class="scene scene-left" data-scene="Arrangement deck" data-plate="3">
+            <div class="scene-copy">
+              <p>05 / Arrange</p>
+              <h2>The song can change without falling out of step.</h2>
+              <span>Sections move and stem emphasis changes while the clock stays shared.</span>
+            </div>
+          </section>
+
+          <section class="scene scene-right" data-scene="Mix chamber" data-plate="3">
+            <div class="scene-copy">
+              <p>06 / Mix</p>
+              <h2>Five voices become one decision.</h2>
+              <span>The same source can return with a different balance, still in time.</span>
+            </div>
+          </section>
+
+          <section class="scene scene-left" data-scene="Render press" data-plate="5">
+            <div class="scene-copy">
+              <p>07 / Render</p>
+              <h2>The foundry closes the loop.</h2>
+              <span>Five working parts collapse into one playable result.</span>
+            </div>
+          </section>
+
+          <section id="world-ending" class="scene scene-centre scene-final" data-scene="Deep dive" data-plate="5">
+            <div class="scene-copy">
+              <p>08 / The world ends here</p>
+              <h2>That is what BeatMind does. Here is how I made it survive.</h2>
+              <span>The full case study has the architecture, measurements, tradeoffs and the worker failure that changed the system.</span>
+              <a class="world-deep-dive" href="http://127.0.0.1:4322/work/beatmind/">Read the full case study <b aria-hidden="true">↗</b></a>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <noscript>
+      <style>
+        .world-stage { display: none; }
+        .world-scenes { margin-top: 0; }
+        .scene { min-height: auto; padding-block: 5rem; background: #0b0c0e; }
+        .scene-copy { opacity: 1; transform: none; }
+      </style>
+    </noscript>
+    <script type="module" src="./beatmind-world.js"></script>
+  </body>
+</html>

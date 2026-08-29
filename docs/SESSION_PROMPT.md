@@ -40,6 +40,11 @@ Phase 2 is design-system and route-architecture work:
   evidence in `.shots/phase2-beatmind-case-final`. Obtain owner visual approval before
   moving on. The disabled audio control and storyboard-only run trace are honest blocked
   inputs, not implementation omissions to fill with invented media or timings.
+- The owner approved BeatMind's Sound Foundry storyboard and current five-stem language on
+  2026-08-30. Its standalone animatic and evidence live under `design/directions/` and
+  `.shots/phase2-beatmind-world-study/`. It ends in the dark world with one explicit case-study
+  CTA and no appended paper section. This is a Phase 2 review artifact, not an Astro route
+  and not permission to implement the production world before Phase 5.
 - Do not build the production site, tear, backlight, canvas or animated worlds.
 - Refresh the 390, 800 and 1440 evidence after changes. Preserve the approved landing while
   reviewing `/work`; production route implementation remains Phase 3.

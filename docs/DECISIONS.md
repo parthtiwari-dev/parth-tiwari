@@ -54,6 +54,7 @@ in the same commit.
 | Landing paper motion is bounded and one-shot | Owner-approved refinement direction | Opening light, sticky-fold shadow and ink settling support continuity, then stop | Infinite ambience and full-sheet grain parallax |
 | Hand-made character comes from sparse marginalia and damaged edges | Owner review in Phase 2 | Readable display, body and data typography still has to serve clients, recruiters and assistive technology | Replacing interface copy with handwriting fonts |
 | Landing sections are content-driven after the hero | Owner-approved refinement direction | The page should read as one continuous old message, not one empty viewport per section | Forcing every section to fill the screen |
+| The first viewport explains **Paper → World → Case study** | Owner refinement 2026-08-30 | The headline says what Parth builds; the supporting sentence and contained BeatMind plate must also explain what this portfolio is and how to use it | A product screenshot whose relationship to the portfolio is implicit |
 
 ## Preview and tear
 
@@ -73,6 +74,11 @@ in the same commit.
 | A world demonstrates rather than impersonates the product | Decided | Fake editors weaken trust and create inaccessible controls | Rebuilding twelve mini-apps |
 | Storyboard approval precedes each implementation | Decided | The owner stays involved and narrative mistakes are cheaper to fix before code | One-shot world generation |
 | BeatMind is the pilot | Decided | It exercises audio, stages, measurement, failure, retry and render | Building shared infrastructure inside an arbitrary first world |
+| BeatMind's world is the **Sound Foundry** | Owner decided 2026-08-30 | One continuous precision machine keeps every effect attached to BeatMind's waveform, stems, analysis and run state | The first diagram-and-card study, a robot mascot, fantasy world or unrelated effects per scene |
+| BeatMind follows the current five-stem product language | Owner decided 2026-08-30 | Current source defines vocals, backing vocals, drums, bass and other; the world should not preserve a stale four-stem specimen | The older four-stem storyboard |
+| Generated BeatMind machinery is decorative only | Decided | Atmosphere can be generated, but waveforms, analysis and traces must remain code-drawn from real project data | Generated product screenshots, invented data graphics or simulated evidence |
+| BeatMind uses vertical native scroll as its only required input | Owner decided 2026-08-30 | It preserves the continuous foundry descent and composes cleanly for phone without scroll capture | Horizontal traversal, drag, sound gate or mandatory controls |
+| BeatMind's world ends before the paper case study | Owner decided 2026-08-30 | The world should remain fully inside its own visual language and offer one explicit deep-dive action | Appending a paper section below the animatic or visually blending both surfaces |
 | Optional audio is user-initiated | Decided | Sound can deepen BeatMind without blocking or surprising visitors | Autoplay |
 | Case-study opening is a dark evidence-led world followed by readable paper | Owner selected 2026-08-29 | The project can establish its own visual language while the document remains crawlable and familiar | An all-dark article or a paper-only opening |
 | Case-study desktop navigation combines chapter index and reading progress | Owner selected 2026-08-29 | Long technical stories need orientation without scroll capture | Scroll snapping and a floating table-of-contents panel |

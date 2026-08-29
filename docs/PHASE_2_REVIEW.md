@@ -97,6 +97,10 @@ following:
   studies and all stop after settling;
 - project rows receive a fast torn-ink hover/focus study. It is an interaction preview only;
   project-specific backlights and real world stills remain Phase 4 work.
+- the arrival now says this is Parth's working record and teaches the
+  `Paper → World → Case study` sequence inside the contained BeatMind plate. The headline,
+  two doors, paper system and quiet proof remain unchanged. This is a clarity correction,
+  not a fourth landing direction.
 
 The pass also introduces one original transparent oxblood marginalia sheet at
 `public/media/oxblood-marginalia-phase2.png`. It was generated as separated pen and dry-ink
@@ -149,6 +153,14 @@ pixels, and its screenshots were visually inspected before the next slice began:
   capture reported zero animations still running after settle at all three widths.
 - `.shots/phase2-final-built`: the same responsive and motion evidence captured from the
   built static preview rather than the development server.
+- `.shots/phase2-arrival-clarity`: the clarified support sentence and three-step portfolio
+  grammar before the world-specific still was added.
+- `.shots/phase2-arrival-world-still-built`: final static-build evidence for the first-person
+  arrival copy and the 67 KB Sound Foundry frame at 390, 800 and 1440 pixels. The frame is a
+  capture from the Phase 2 browser-synth animatic, not real separated-track evidence and not a
+  production world implementation.
+  grammar. The pass reported zero overflow and zero browser errors at all three widths, the
+  correct Bricolage and Archivo font roles, and zero animations still running after settle.
 
 Full-sheet grain parallax was rejected before implementation. Moving the stock with
 `background-position` would repaint during scroll; moving a separate overlay would promote a
