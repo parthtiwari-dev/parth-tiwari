@@ -307,6 +307,23 @@ production publishing.
 - Home and `/work` have completed their Phase 2 structure reviews. The register remains one
   merit-based catalogue without a Personal/Company split. The next review slice is the
   shared `/work/[slug]` case-study structure, using BeatMind as the real-content pilot.
+- The BeatMind pilot now has final 390, 800 and 1440 evidence and remains an owner-review
+  checkpoint. Its real run trace and audio source are blocked inputs, not placeholders.
+- The owner approved the **Sound Foundry** premise, nine-scene order and current five-stem
+  language on 2026-08-30. A replacement standalone animatic now tests the continuous machine,
+  failure/retry interruption, separate phone composition and a dark case-study handoff. It has final 390,
+  800, 1440, no-JavaScript and reduced-motion evidence and remains outside the Astro build.
+  It does not authorize Phase 5 or tick its implementation checklist. Real separated-track
+  envelopes, analysis markers, a publishable failure trace and an approved audio excerpt
+  remain blocked inputs.
+- The landing arrival clarity pass keeps the approved headline and two doors, identifies Parth
+  in normal reading text, and explains that projects move from paper to a world to a case study.
+  Its contained BeatMind plate carries the same three-step grammar over a 67 KB static frame
+  captured from the approved Sound Foundry animatic. Final built-output evidence at 390, 800
+  and 1440 pixels is in `.shots/phase2-arrival-world-still-built`; this refinement does not
+  start Phase 3 or add landing-page canvas motion.
+- After the paper pilot and world storyboard decisions, review Notes and its article
+  structure next.
 
 **Do**
 

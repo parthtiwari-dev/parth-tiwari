@@ -36,14 +36,22 @@ Phase 2 is design-system and route-architecture work:
   worlds. It is research only and authorizes no world implementation.
 - Review one route at a time. Home and `/work` architecture are approved. Do not add a
   Personal/Company register filter; verified employment context belongs inside a case study.
-- The shared `/work/[slug]` case-study structure is next, using BeatMind as the real-content
-  pilot. Ask only case-study questions before rendering it.
+- The shared `/work/[slug]` structure now has a BeatMind pilot at `/work/beatmind/` and final
+  evidence in `.shots/phase2-beatmind-case-final`. Obtain owner visual approval before
+  moving on. The disabled audio control and storyboard-only run trace are honest blocked
+  inputs, not implementation omissions to fill with invented media or timings.
+- The owner approved BeatMind's Sound Foundry storyboard and current five-stem language on
+  2026-08-30. Its standalone animatic and evidence live under `design/directions/` and
+  `.shots/phase2-beatmind-world-study/`. It ends in the dark world with one explicit case-study
+  CTA and no appended paper section. This is a Phase 2 review artifact, not an Astro route
+  and not permission to implement the production world before Phase 5.
 - Do not build the production site, tear, backlight, canvas or animated worlds.
 - Refresh the 390, 800 and 1440 evidence after changes. Preserve the approved landing while
   reviewing `/work`; production route implementation remains Phase 3.
 
 Begin by confirming the current branch and diff. Preserve the approved landing checkpoint.
-Review the shared `/work/[slug]` structure next at phone and desktop widths. Phase 2 remains incomplete until
+After the owner approves the BeatMind structure, review `/notes` and `/notes/[slug]` next.
+Phase 2 remains incomplete until
 every route structure, shared token, accessibility state and rendered-contrast gate is
 approved and verified.
 ```

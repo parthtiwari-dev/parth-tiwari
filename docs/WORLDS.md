@@ -46,7 +46,7 @@ a missing section is visibly missing rather than quietly absent.
    envelopes, real distributions. If a number in a graphic is invented, the graphic is
    a lie and the site's whole thesis goes with it.
 3. **One accent per world, taken from the product.** Not chosen for the page.
-   BeatMind's four stem colours are BeatMind's own.
+   BeatMind's five current stem colours are BeatMind's own.
 4. **Reduced motion gets the final frame**, composed to stand alone, not a shortened
    animation.
 5. **30fps ceiling, paused off-screen and on hidden tabs.** One clock for the site.
@@ -98,18 +98,20 @@ in an artifact. **📐 specced** means designed here, not yet built.
 **The story.** A song goes in whole and comes back in parts. The interesting half is
 not the model, it is that the pipeline survives its own workers dying.
 
-**The graphic.** Four stem envelopes in coloured lanes with a playhead sweeping left to
-right, played bars saturated and unplayed bars grey. Drawn from real envelope data
-exported from a separated track, not from `Math.random()`.
+**The graphic.** The **Sound Foundry**: one waveform travels through a continuous precision
+machine and becomes five coloured stem lanes. The generated machinery is decorative; every
+waveform, analysis mark and run state is drawn from BeatMind data. Production uses real
+envelope data exported from a separated track, never `Math.random()` or generated data art.
 
-**Scroll story.** The page rehearses the product in scenes: a whole track arrives; four
-stems separate; musical analysis labels key, tempo and sections; the arrangement opens;
-the mix changes; the render completes; then a real failed worker and retry reveal how the
-system survives. The playhead follows the active scene rather than looping forever.
-Reduced motion shows the composed four-lane result and the completed run trace.
+**Scroll story.** Native vertical scroll moves down through one machine: specimen chamber,
+separation gantry, worker loss, retry, analysis scanner, arrangement deck, mix chamber,
+render press and a dark deep-dive handoff. No other input is required. The five stems remain connected to
+one clock as the view changes. The failure and retry become factual only when a real
+publishable trace replaces the labelled storyboard state. Reduced motion shows the composed
+five-lane mixdown and the complete readable story.
 
-**Accent.** BeatMind's own stem colours: vocals `#E86A8A`, drums `#E8913C`,
-bass `#4F9BE8`, other `#4FD39B`.
+**Accent.** BeatMind's current stem colours: vocals `#F0A2C0`, backing vocals `#C58FD6`,
+drums `#F0955A`, bass `#5AA8F0`, other `#7DE3A8`.
 
 **Second graphic, below the fold.** The **run trace**: eight stages with real
 durations, including the `separate` stage failing, the worker being lost in red, and
@@ -125,10 +127,12 @@ not prove that count, so it remains unpublished.
 
 **Errata.** The copyright tickbox that got deleted.
 
-**Build notes.** Export a real envelope array, analysis markers and job trace to JSON at
-build time. Use a licensed or owner-created audio excerpt only after explicit approval.
-Listening is optional and user-initiated. The world is a storytelling demonstration,
-not a working mixer. No runtime fetch.
+**Build notes.** The owner approved the Sound Foundry and current five-stem language on
+2026-08-30. The Phase 2 animatic uses the owner-authored browser-synth score only to test
+camera continuity and legibility. Phase 5 must export a real envelope array, analysis
+markers and job trace to JSON at build time. Use a licensed or owner-created audio excerpt
+only after explicit approval. Listening is optional and user-initiated. The world is a
+storytelling demonstration, not a working mixer. No runtime fetch.
 
 ---
 

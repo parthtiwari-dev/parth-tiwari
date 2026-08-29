@@ -179,6 +179,12 @@ The DOM carries the full case study. If every canvas and animation is deleted, t
 still contains the problem, architecture, measurement, boundary, what broke, links and next
 case. Reduced motion gets a deliberately composed final frame.
 
+The shared Phase 2 structure opens on roughly one dark viewport with a real still, one
+verified result and compact project facts, then hands reading to the paper. Desktop combines
+a quiet sticky chapter index, progress line and static world reminder beside the chapters.
+Phone stacks the story and keeps progress in normal document flow. The failure chapter reads
+as an inserted oxblood correction. This layout remains static until Phase 5.
+
 `WORLDS.md` defines the shared grammar and every project's narrative material. Each world
 receives an owner-approved storyboard before implementation.
 

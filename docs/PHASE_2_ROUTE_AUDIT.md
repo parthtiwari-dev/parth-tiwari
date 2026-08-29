@@ -43,9 +43,10 @@ must remain readable with keyboard, touch, reduced motion and no JavaScript.
 
 ## Risks and open decisions
 
-- `/notes`, `/about`, `/resume`, `/hire` and `/work/[slug]` are future route contracts and
-  remain unbuilt until Phase 3. The current Work-page navigation therefore demonstrates the
-  intended information architecture but does not yet form a complete live journey.
+- `/notes`, `/about`, `/resume` and `/hire` remain future route contracts. A single
+  `/work/beatmind/` Phase 2 pilot now proves the shared case-study structure, but the other
+  eleven case-study URLs are still intentionally unbuilt. The review routes therefore do
+  not yet form a complete live journey.
 - The owner rejected a Personal/Company register split on 2026-08-29. Verified employment
   context may appear inside an individual case study after its exact public wording and
   contribution are approved; it is not a register filter or row badge.

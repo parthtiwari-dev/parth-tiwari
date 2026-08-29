@@ -15,6 +15,9 @@ Where to look, and what is still true.
 | [`CONTENT_PROVENANCE.md`](CONTENT_PROVENANCE.md) | The publication queue for claims, counts, benchmarks and deployment facts |
 | [`PHASE_1_EVIDENCE_AUDIT.md`](PHASE_1_EVIDENCE_AUDIT.md) | The source audit, corrected metrics, blocked claims and public-link evidence |
 | [`PHASE_2_REVIEW.md`](PHASE_2_REVIEW.md) | Phase 2 reference lock, rejected A/B/C checkpoint and the single scroll landing review |
+| [`PHASE_2_CASE_STUDY_REVIEW.md`](PHASE_2_CASE_STUDY_REVIEW.md) | The shared `/work/[slug]` structure, BeatMind pilot, rendered evidence and blocked real-data inputs |
+| [`PHASE_2_BEATMIND_WORLD_STUDY.md`](PHASE_2_BEATMIND_WORLD_STUDY.md) | Approved Sound Foundry animatic, real BeatMind source lock, rendered evidence and production inputs still blocked |
+| [`PHASE_2_BEATMIND_WORLD_RESEARCH.md`](PHASE_2_BEATMIND_WORLD_RESEARCH.md) | Pudding and 124-entry Awwwards research, approved Sound Foundry reference lock and implementation boundary |
 | [`PHASE_2_WORLDS_ANIMATION_MEMO.md`](PHASE_2_WORLDS_ANIMATION_MEMO.md) | Research-only candidate graphics and missing real-data sources for the seven specced worlds |
 | [`REBUILD_BRIEF.md`](REBUILD_BRIEF.md) | Why v1 is being replaced. The guards that prevent a repeat |
 | [`TEN_SECOND_TEST.md`](TEN_SECOND_TEST.md) | 🔴 The acceptance gate. **Still never run** |
@@ -50,12 +53,20 @@ The owner approved the overall full-width scroll direction and the refined landi
 checkpoint for an interim public release. The maintained landing stub is
 now at `/`; the obsolete `/review/phase-2/` route is removed. Its restraint pass, segmented
 fibre edges, directional folds and three bounded one-shot motion studies have rendered
-evidence at 390, 800 and 1440 pixels. The `/work` structure review now has a real-content
+evidence at 390, 800 and 1440 pixels. The first viewport now identifies Parth in normal
+reading text and explicitly explains the `Paper → World → Case study` grammar. Its contained
+BeatMind plate uses a lightweight static frame from the approved Sound Foundry animatic; it
+does not claim to be real separated-track evidence. The `/work` structure review now has a real-content
 register demo and responsive evidence; the owner rejected a Personal/Company filter, so
 verified employment context will be handled per case study. The shared `/work/[slug]`
-structure is the next review slice. The separate worlds-animation memo remains research
-only; no Phase 2 checklist item is newly marked complete. The approved interim root is live at
+structure now has a BeatMind pilot and final 390, 800 and 1440 evidence; it awaits owner
+approval. Follow-up Pudding and Awwwards research produced the continuous Sound Foundry.
+The owner approved its premise, nine-scene order and current five-stem product language on
+2026-08-30. A replacement standalone animatic now proves the continuous machine, separately
+composed phone view, fallback states and dark deep-dive handoff. It remains a
+review artifact, not an Astro route or Phase 5 implementation. The separate worlds-animation memo remains
+research only; no Phase 2 checklist item is newly marked complete. The approved interim root is live at
 `https://parth-tiwari-1.vercel.app/` and has passed live browser checks. A real
 five-person comprehension test remains mandatory on the Phase 3 static preview.
 
-**Last documentation truth audit:** 2026-08-29, Home and Work structures reviewed; shared case-study structure is next.
+**Last documentation truth audit:** 2026-08-30, BeatMind dark ending and the built landing's first-person arrival plus static Sound Foundry plate verified.

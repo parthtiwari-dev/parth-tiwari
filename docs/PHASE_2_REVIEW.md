@@ -97,6 +97,10 @@ following:
   studies and all stop after settling;
 - project rows receive a fast torn-ink hover/focus study. It is an interaction preview only;
   project-specific backlights and real world stills remain Phase 4 work.
+- the arrival now says this is Parth's working record and teaches the
+  `Paper → World → Case study` sequence inside the contained BeatMind plate. The headline,
+  two doors, paper system and quiet proof remain unchanged. This is a clarity correction,
+  not a fourth landing direction.
 
 The pass also introduces one original transparent oxblood marginalia sheet at
 `public/media/oxblood-marginalia-phase2.png`. It was generated as separated pen and dry-ink
@@ -149,6 +153,14 @@ pixels, and its screenshots were visually inspected before the next slice began:
   capture reported zero animations still running after settle at all three widths.
 - `.shots/phase2-final-built`: the same responsive and motion evidence captured from the
   built static preview rather than the development server.
+- `.shots/phase2-arrival-clarity`: the clarified support sentence and three-step portfolio
+  grammar before the world-specific still was added.
+- `.shots/phase2-arrival-world-still-built`: final static-build evidence for the first-person
+  arrival copy and the 67 KB Sound Foundry frame at 390, 800 and 1440 pixels. The frame is a
+  capture from the Phase 2 browser-synth animatic, not real separated-track evidence and not a
+  production world implementation.
+  grammar. The pass reported zero overflow and zero browser errors at all three widths, the
+  correct Bricolage and Archivo font roles, and zero animations still running after settle.
 
 Full-sheet grain parallax was rejected before implementation. Moving the stock with
 `background-position` would repaint during scroll; moving a separate overlay would promote a
@@ -241,6 +253,23 @@ inside each case study before publication. The mentioned Stick and Dot website i
 of the twelve validated project records, so this decision does not add or imply a thirteenth
 project.
 
+## Shared case-study review slice
+
+The BeatMind pilot now renders at `/work/beatmind/` from the real content and verified claim
+collections. It proves the dark arrival, paper reading sequence, desktop chapter rail,
+responsive stack, measurement ledger, architecture diagram, boundary, inserted erratum,
+links and ending without building an animated world. Only BeatMind is generated in Phase 2.
+
+The owner selected the combined opening evidence, chapter index plus progress, primary-plus-
+supporting measurement hierarchy, decision-led architecture diagram, unnamed current-role
+context, complete ending and opt-in audio placement. The final audio control stays disabled
+because no approved standalone excerpt exists. The run-trace strip remains labelled as a
+story path because its real timing export does not exist in this repository.
+
+Rendered evidence and exact limits are recorded in
+[`PHASE_2_CASE_STUDY_REVIEW.md`](PHASE_2_CASE_STUDY_REVIEW.md). The structure still needs
+owner visual approval before Notes begins.
+
 ## Review sequence
 
 1. Review the post-hero navigation fold, opening unfurl, segmented side damage and lower
@@ -249,8 +278,8 @@ project.
 3. Review the torn-ink project hover/focus and the amount of marginalia.
 4. Lock the landing tokens and responsive rules only after desktop, tablet and phone pass.
 5. Preserve the approved `/work` information architecture without an ownership filter.
-6. Review the shared case-study structure, then Notes, About, Resume and Hire
-   one route family at a time.
+6. Approve the rendered shared case-study structure, then review Notes, About, Resume and
+   Hire one route family at a time.
 
 ## Already locked, not reopened here
 

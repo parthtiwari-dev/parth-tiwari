@@ -1,0 +1,27 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content'
+import CaseStudyReview from '../../components/CaseStudyReview.astro'
+
+interface Props {
+  project: CollectionEntry<'work'>
+  claims: CollectionEntry<'claims'>[]
+  relatedNote?: CollectionEntry<'notes'>
+}
+
+export async function getStaticPaths() {
+  const [projects, claims, notes] = await Promise.all([
+    getCollection('work'),
+    getCollection('claims'),
+    getCollection('notes'),
+  ])
+  const project = projects.find((entry) => entry.id === 'beatmind')
+  if (!project) throw new Error('The BeatMind Phase 2 case-study pilot is missing.')
+  const relatedNote = notes.find((entry) => entry.id === project.data.whatBroke.noteSlug)
+
+  return [{ params: { slug: project.id }, props: { project, claims, relatedNote } }]
+}
+
+const { project, claims, relatedNote } = Astro.props as Props
+---
+
+<CaseStudyReview project={project} claims={claims} relatedNote={relatedNote} />
