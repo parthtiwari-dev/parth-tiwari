@@ -316,8 +316,17 @@ weight and keeps general Posts as an explicit `Coming soon` shelf. All twelve
 publishable measurement, honest source boundary and previous/next paths. The reference lock,
 route structure and evidence are in `docs/PHASE_2_NOTES_REVIEW.md`. The exact built output
 passes the Notes capture, all article links, no-JavaScript, accessibility, craft, transfer
-and deterministic scroll checks at 390, 800 and 1440 pixels. Owner visual approval remains,
-so the combined route-family checklist item stays unticked and About has not begun.
+and deterministic scroll checks at 390, 800 and 1440 pixels. The owner then supplied the
+About route decisions and asked work to continue. The combined route-family checklist item
+stays unticked until all route reviews and owner visual approvals are complete.
+
+**About review checkpoint, 2026-08-30:** `/about/` now renders the real portrait, casual
+first-person introduction, one typed chronology with two education records and the current
+role, three current-work lines and five operating rules. Its built-output capture passes at
+390, 800 and 1440 pixels with zero overflow, browser errors or client scripts, and the full
+route remains present without JavaScript. Reference limits and evidence are recorded in
+`docs/PHASE_2_ABOUT_REVIEW.md`. Resume is the next review slice; this does not tick the
+combined route-family item or begin Phase 3.
 
 **Owner review before work**
 
@@ -345,8 +354,8 @@ so the combined route-family checklist item stays unticked and About has not beg
   captured from the approved Sound Foundry animatic. Final built-output evidence at 390, 800
   and 1440 pixels is in `.shots/phase2-arrival-world-still-built`; this refinement does not
   start Phase 3 or add landing-page canvas motion.
-- Review the rendered Notes hub, Writing empty state and concise article structure. About is
-  next only after that owner review.
+- Review the rendered Notes and About slices. Resume is the next route review, using the
+  supplied local Resume B PDF as the download and verified collection records for HTML copy.
 
 **Do**
 

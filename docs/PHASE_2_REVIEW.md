@@ -285,7 +285,23 @@ The existing paper system remains the primary visual source. Linear contributes 
 density, Maggie Appleton contributes content-type separation, and Cloudflare contributes the
 correction anatomy. The full reference lock and exact browser evidence are in
 [`PHASE_2_NOTES_REVIEW.md`](PHASE_2_NOTES_REVIEW.md). The owner still needs to inspect the
-rendered hub, Writing state and article at phone and desktop sizes before About begins.
+rendered hub, Writing state and article. The owner then supplied the About decisions and
+asked the route sequence to continue, so that visual approval remains open without blocking
+the separately reviewable About slice.
+
+## About review slice
+
+The About pilot now renders at `/about/` with the real candid portrait, a casual first-person
+opening, equal treatment of education and work, one typed chronological ledger, current-role
+detail and five evidence-led operating rules. It adds no endorsements, user counts or
+unsupported outcomes. Josh Comeau informs only the candid chronology; Maggie Appleton
+informs only the explicit naming of work categories. The portfolio's paper system remains
+the visual source.
+
+The complete lock, source boundary and 390, 800 and 1440 pixel evidence are in
+[`PHASE_2_ABOUT_REVIEW.md`](PHASE_2_ABOUT_REVIEW.md). The route uses zero client scripts and
+remains complete without JavaScript. Owner visual approval remains; Resume is the next
+review slice.
 
 ## Review sequence
 
@@ -296,8 +312,8 @@ rendered hub, Writing state and article at phone and desktop sizes before About 
 4. Lock the landing tokens and responsive rules only after desktop, tablet and phone pass.
 5. Preserve the approved `/work` information architecture without an ownership filter.
 6. Preserve the approved shared case-study structure.
-7. Approve the rendered Notes hub and article, then review About, Resume and Hire one route
-   family at a time.
+7. Approve the rendered Notes and About slices, then review Resume and Hire one route family
+   at a time.
 
 ## Already locked, not reopened here
 

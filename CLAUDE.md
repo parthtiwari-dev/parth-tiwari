@@ -88,7 +88,10 @@ content remains static HTML.
   real product media and has final responsive, accessibility, craft, transfer and scroll
   evidence. The owner approved it by starting Notes on 2026-08-30. `/notes` and all twelve
   concise `/notes/[slug]` Errata now have final responsive, accessibility, craft, transfer,
-  no-JavaScript and scroll evidence; owner visual approval remains before About begins. The owner approved BeatMind's Sound Foundry
+  no-JavaScript and scroll evidence; owner visual approval remains. `/about/` now has its
+  real portrait, typed education-and-work chronology, current-role detail, operating rules
+  and final 390, 800, 1440 and no-JavaScript evidence; owner visual approval remains and
+  Resume is the next review slice. The owner approved BeatMind's Sound Foundry
   storyboard and current five-stem language on 2026-08-30; its standalone verified animatic
   is a Phase 2 review artifact only. Its dark ending and explicit case-study CTA are locked;
   no paper section appears below the world. Production route implementation remains Phase 3 and

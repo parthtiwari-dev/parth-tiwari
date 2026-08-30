@@ -1,0 +1,14 @@
+---
+import { getCollection } from 'astro:content'
+import AboutPage from '../components/AboutPage.astro'
+
+const [education, experience, siteEntries] = await Promise.all([
+  getCollection('education'),
+  getCollection('experience'),
+  getCollection('site'),
+])
+const copy = siteEntries[0]?.data.about
+if (!copy) throw new Error('The About route requires validated site copy.')
+---
+
+<AboutPage copy={copy} education={education} experience={experience} />

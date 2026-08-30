@@ -90,13 +90,13 @@ const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In prog
             <div class="nav-content">
               <a class="wordmark" href="#arrival" aria-label="Parth Tiwari, back to the top">Parth Tiwari</a>
               <nav class="desktop-nav" aria-label="Portfolio navigation">
-                <a href="/work/">Work</a><a href="#notes">Notes</a><a href="#about">About</a><a href="#contact">Resume</a>
+                <a href="/work/">Work</a><a href="/notes/">Notes</a><a href="/about/">About</a><a href="#contact">Resume</a>
               </nav>
               <a class="nav-action" href="#contact">Start a project</a>
               <details class="mobile-menu paper-mobile-menu">
                 <summary><span class="menu-label-open">Menu</span><span class="menu-label-close">Close</span></summary>
                 <nav aria-label="Mobile portfolio navigation">
-                  <a href="/work/">Work</a><a href="#notes">Notes</a><a href="#about">About</a><a href="#contact">Contact</a>
+                  <a href="/work/">Work</a><a href="/notes/">Notes</a><a href="/about/">About</a><a href="#contact">Contact</a>
                 </nav>
               </details>
             </div>
@@ -105,7 +105,7 @@ const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In prog
 
         <section id="about" class="about-beat section-pad ruled-section" data-reveal>
           <div class="section-heading"><p class="eyebrow">The person on the sheet</p><h2>Hi, I am Parth.</h2></div>
-          <div class="intro-copy">{siteCopy.home.intro.map((paragraph) => <p>{paragraph}</p>)}<a class="text-link" href="#contact">More about how I work <span aria-hidden="true">→</span></a></div>
+          <div class="intro-copy">{siteCopy.home.intro.map((paragraph) => <p>{paragraph}</p>)}<a class="text-link" href="/about/">More about how I work <span aria-hidden="true">→</span></a></div>
           <figure class="portrait-frame"><img src="/media/parth-portrait-drawn-phase2-768.png" alt="A hand-drawn study of Parth wearing a cap and sunglasses" width="768" height="1152" loading="lazy" decoding="async" /><figcaption>A drawing study from the real portrait</figcaption></figure>
         </section>
 

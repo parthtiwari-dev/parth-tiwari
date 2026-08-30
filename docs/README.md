@@ -17,6 +17,7 @@ Where to look, and what is still true.
 | [`PHASE_2_REVIEW.md`](PHASE_2_REVIEW.md) | Phase 2 reference lock, rejected A/B/C checkpoint and the single scroll landing review |
 | [`PHASE_2_CASE_STUDY_REVIEW.md`](PHASE_2_CASE_STUDY_REVIEW.md) | The shared `/work/[slug]` structure, BeatMind pilot, rendered evidence and blocked real-data inputs |
 | [`PHASE_2_NOTES_REVIEW.md`](PHASE_2_NOTES_REVIEW.md) | The Notes hub and Errata article reference lock, owner inputs, responsive evidence and publication boundaries |
+| [`PHASE_2_ABOUT_REVIEW.md`](PHASE_2_ABOUT_REVIEW.md) | The About route reference lock, typed chronology, real portrait and responsive evidence |
 | [`CASE_STUDY_CONTRACT.md`](CASE_STUDY_CONTRACT.md) | Required evidence, media, accessibility and publication contract for every paper case study |
 | [`PHASE_2_BEATMIND_WORLD_STUDY.md`](PHASE_2_BEATMIND_WORLD_STUDY.md) | Approved Sound Foundry animatic, real BeatMind source lock, rendered evidence and production inputs still blocked |
 | [`PHASE_2_BEATMIND_WORLD_RESEARCH.md`](PHASE_2_BEATMIND_WORLD_RESEARCH.md) | Pudding and 124-entry Awwwards research, approved Sound Foundry reference lock and implementation boundary |
@@ -73,10 +74,13 @@ composed phone view, fallback states and dark deep-dive handoff. It remains a
 review artifact, not an Astro route or Phase 5 implementation. The separate worlds-animation memo remains
 research only. The Notes hub and all twelve concise Errata routes now have final responsive,
 no-JavaScript, accessibility, craft, transfer and scroll evidence in
-`PHASE_2_NOTES_REVIEW.md`; owner visual approval remains. No Phase 2 checklist item is newly
-marked complete. The approved interim root is live at
+`PHASE_2_NOTES_REVIEW.md`; owner visual approval remains. The About pilot now adds the real
+portrait, one typed education-and-work chronology, current-role detail and operating rules,
+with final responsive and no-JavaScript evidence in `PHASE_2_ABOUT_REVIEW.md`; owner visual
+approval remains. Resume is the next review slice. No Phase 2 checklist item is newly marked
+complete. The approved interim root is live at
 `https://parth-tiwari-1.vercel.app/` and has passed live browser checks. A real
 five-person comprehension test remains mandatory on the Phase 3 static preview.
 
-**Last documentation truth audit:** 2026-08-30, Notes hub and Errata article review slice,
+**Last documentation truth audit:** 2026-08-30, About route review slice, typed chronology,
 final built-output evidence and remaining owner-approval boundary recorded.

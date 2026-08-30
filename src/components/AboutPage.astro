@@ -1,0 +1,135 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { aboutPortrait } from '../data/about'
+import PaperRouteNav from './PaperRouteNav.astro'
+import '../styles/profile-pages.css'
+
+interface Props {
+  copy: CollectionEntry<'site'>['data']['about']
+  education: CollectionEntry<'education'>[]
+  experience: CollectionEntry<'experience'>[]
+}
+
+const { copy, education, experience } = Astro.props
+const educationByStart = [...education].sort((left, right) => left.data.start.localeCompare(right.data.start))
+const experienceByStart = [...experience].sort((left, right) => left.data.start.localeCompare(right.data.start))
+const path = [
+  ...educationByStart.map((entry) => ({
+    id: entry.id,
+    kind: 'Education',
+    start: entry.data.start,
+    end: entry.data.end,
+    title: entry.data.credential,
+    organization: entry.data.institution,
+    location: entry.data.location,
+    detail: entry.data.focus,
+  })),
+  ...experienceByStart.map((entry) => ({
+    id: entry.id,
+    kind: 'Work',
+    start: entry.data.start,
+    end: entry.data.current ? 'Present' : entry.data.end ?? '',
+    title: entry.data.role,
+    organization: entry.data.organization,
+    location: entry.data.location,
+    detail: entry.data.summary,
+  })),
+].sort((left, right) => left.start.localeCompare(right.start))
+
+const displayMonth = (value: string) => {
+  if (value === 'Present') return value
+  const [year, month] = value.split('-').map(Number)
+  return new Intl.DateTimeFormat('en-GB', { month: 'short', year: 'numeric', timeZone: 'UTC' })
+    .format(new Date(Date.UTC(year, month - 1, 1)))
+}
+
+const rules = [
+  ['01', 'Evidence before the sentence.', 'If I cannot point to the run, record, or source behind a claim, it does not belong in the public version.'],
+  ['02', 'Keep the failure in the story.', 'The interesting part is usually what broke, why it broke, and what the correction still does not solve.'],
+  ['03', 'Give consequential decisions a human owner.', 'Models can retrieve, generate, rank, and suggest. They should not quietly inherit authority they were never given.'],
+  ['04', 'Make the useful version work first.', 'The readable page, durable job, and honest fallback come before the cinematic layer built on top.'],
+  ['05', 'Start with the smallest real test.', 'I would rather learn from one bounded run than hide uncertainty inside a bigger build.'],
+] as const
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="About Parth Tiwari: AI engineer in Bengaluru, his path, current work, and the operating rules behind his projects." />
+    <title>About | Parth Tiwari</title>
+  </head>
+  <body class="profile-page about-page">
+    <a class="skip-link" href="#about-story">Skip to the story</a>
+    <main class="profile-sheet">
+      <div class="profile-paper">
+        <div class="profile-edge profile-edge-left" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="profile-edge profile-edge-right" aria-hidden="true"><i></i><i></i><i></i></div>
+        <PaperRouteNav current="about" />
+
+        <section id="about-story" class="about-hero" aria-labelledby="about-title">
+          <div class="about-hero-copy">
+            <p class="profile-eyebrow">About / The person on the sheet</p>
+            <h1 id="about-title">{copy.heading}</h1>
+            <div class="about-introduction">
+              {copy.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+              <p>I like ideas that are a little too ambitious. I just want the system underneath them to stay honest.</p>
+            </div>
+          </div>
+          <figure class="about-portrait">
+            <picture>
+              <source media="(max-width: 680px)" srcset={aboutPortrait.srcSmall} />
+              <img src={aboutPortrait.src} width={aboutPortrait.width} height={aboutPortrait.height} alt={aboutPortrait.alt} fetchpriority="high" decoding="async" />
+            </picture>
+            <figcaption>Parth Tiwari / Bengaluru</figcaption>
+          </figure>
+        </section>
+
+        <section class="path-section" aria-labelledby="path-title">
+          <header class="profile-section-heading">
+            <div><p class="profile-eyebrow">Path / Education and work</p><h2 id="path-title">How I got here.</h2></div>
+            <p>Study and work receive equal space here because both changed what I could build next.</p>
+          </header>
+          <ol class="path-ledger">
+            {path.map((entry, index) => (
+              <li>
+                <span class="path-index">{String(index + 1).padStart(2, '0')}</span>
+                <span class="path-date">{displayMonth(entry.start)} – {displayMonth(entry.end)}</span>
+                <div><span class="path-kind">{entry.kind}</span><h3>{entry.title}</h3><p>{entry.organization} · {entry.location}</p><p>{entry.detail}</p></div>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section class="current-work" aria-labelledby="current-work-title">
+          <header class="profile-section-heading">
+            <div><p class="profile-eyebrow">Current / Work in practice</p><h2 id="current-work-title">Right now, I build at Stick and Dot.</h2></div>
+            <p>{experienceByStart.at(-1)?.data.summary}</p>
+          </header>
+          {experienceByStart.at(-1) && (
+            <ul class="work-lines">
+              {experienceByStart.at(-1)!.data.highlights.map((highlight, index) => <li><span>{String(index + 1).padStart(2, '0')}</span><p>{highlight}</p></li>)}
+            </ul>
+          )}
+        </section>
+
+        <section class="rules-section" aria-labelledby="rules-title">
+          <header class="profile-section-heading">
+            <div><p class="profile-eyebrow">Operating rules / What survives the demo</p><h2 id="rules-title">A few rules I try not to break.</h2></div>
+            <p>These are not values written for a wall. They are the checks I use when the interesting version and the responsible version pull in different directions.</p>
+          </header>
+          <ol class="rules-ledger">
+            {rules.map(([number, title, detail]) => <li><span>{number}</span><h3>{title}</h3><p>{detail}</p></li>)}
+          </ol>
+        </section>
+
+        <footer class="profile-close">
+          <p class="profile-eyebrow">The shorter version</p>
+          <h2>The work has the receipts. The resume has the chronology.</h2>
+          <div><a href="/work/">See the work <span aria-hidden="true">→</span></a><a href="/resume/">Read the resume <span aria-hidden="true">→</span></a></div>
+        </footer>
+      </div>
+    </main>
+  </body>
+</html>

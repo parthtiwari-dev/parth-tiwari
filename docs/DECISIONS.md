@@ -32,6 +32,8 @@ in the same commit.
 | Every note has `/notes/[slug]` | Decided | Full pages are linkable, crawlable and suitable for future publishing | Modal or accordion-only articles |
 | Posts may say “Coming soon” at launch | Decided | Honest absence is better than filler | Invented launch posts or an empty nav destination |
 | Experience lives on About and Resume | Decided | One human narrative and one structured employment record cover the need without duplication | Separate `/experience` route |
+| About balances education and work in one chronology | Owner decided 2026-08-30 | Both changed what the owner could build next; neither should read as a footnote | A work-only biography or a second ATS resume |
+| About uses a casual first-person voice and the real candid portrait | Owner decided 2026-08-30 | The page is the human check, while Resume owns formal parsing | Corporate third-person biography and generic values cards |
 | Work register may sort by recency and running status | Decided | Those fields have stable meanings | Unexplained novelty filters |
 | Work may sort by qualitative build effort | Decided | `flagship`, `substantial` and `focused` communicate scope without inventing hours or money | A misleading cost control |
 | Work has no Personal/Company split | Owner decided 2026-08-29 | The owner's flexible employment context makes a binary register taxonomy reductive; projects should be compared by the work itself | Ownership filters and company badges on every row |

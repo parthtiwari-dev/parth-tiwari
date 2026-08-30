@@ -163,6 +163,17 @@ export const experienceSchema = z.object({
   source: sourceSchema,
 })
 
+export const educationSchema = z.object({
+  institution: z.string().min(2),
+  location: z.string().min(2),
+  start: z.string().regex(/^\d{4}-\d{2}$/),
+  end: z.string().regex(/^\d{4}-\d{2}$/),
+  credential: z.string().min(4),
+  focus: z.string().min(2),
+  note: z.string().min(12),
+  source: sourceSchema,
+})
+
 export const serviceSchema = z.object({
   order: z.number().int().min(1),
   title: z.string().min(4),
