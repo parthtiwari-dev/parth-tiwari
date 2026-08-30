@@ -34,6 +34,7 @@ const site = await readJsonDirectory('src/content/site', siteCopySchema)
 
 assert.equal(work.length, 12, 'the register must contain all twelve projects')
 assert.equal(new Set(work.map((entry) => entry.data.order)).size, 12, 'project order values must be unique')
+assert(work.find((entry) => entry.id === 'beatmind')?.data.caseStudy, 'BeatMind must satisfy the Phase 2 case-study contract')
 
 const workIds = new Set(work.map((entry) => entry.id))
 const noteIds = new Set(notes.map((entry) => entry.id))
@@ -68,7 +69,8 @@ const publicText = [...work, ...notes, ...services, ...site].map((entry) => entr
 assert.equal(publicText.includes('—'), false, 'user-facing content must not contain em dashes')
 
 const publishedClaims = claims.filter((entry) => entry.data.publish)
-console.log(`PASS ${work.length} project entries validate with all nine beats`)
+console.log(`PASS ${work.length} project entries validate with all base beats`)
+console.log('PASS BeatMind validates against the complete Phase 2 case-study contract')
 console.log(`PASS ${notes.length} errata entries validate; general Posts remain empty by decision`)
 console.log(`PASS ${publishedClaims.length} public quantitative claims resolve to verified source records`)
 console.log(`PASS ${experience.length} experience and ${services.length} service records validate`)

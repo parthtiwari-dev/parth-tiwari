@@ -41,10 +41,155 @@
   },
   "next": { "slug": "vivid", "label": "Next: Vivid" },
   "world": {
-    "story": "Native scroll moves from one track through four separated stems, analysis, arrangement, render, a dead worker, and a successful retry.",
+    "story": "Native scroll moves from one track through five separated stems, analysis, arrangement, render, a dead worker, and a successful retry.",
     "dataSources": ["real exported stem envelopes", "analysis markers", "durable job trace"],
     "storyboardStatus": "prototyped",
     "motionDeferred": true
+  },
+  "caseStudy": {
+    "thesis": "BeatMind turns a generated or uploaded track into musical material a person can inspect, rearrange, mix, and render without lying about work still happening in the background.",
+    "credit": {
+      "organization": "Stick and Dot",
+      "role": "AI/ML Intern",
+      "contribution": "I designed and built BeatMind end to end. Founder and early-user feedback shaped later product refinements; no one else contributed to the implementation."
+    },
+    "intendedUser": "Electronic music makers who want more control than a prompt box without beginning every idea inside a full digital audio workstation.",
+    "demo": {
+      "src": "/media/beatmind.webm",
+      "poster": "/media/beatmind-desktop.jpg",
+      "durationLabel": "10.7-second product capture",
+      "caption": "A real capture of the current BeatMind product. It shows the public product surface; it is not a simulated interface or an animated world frame."
+    },
+    "workflow": [
+      {
+        "title": "Begin with intent",
+        "description": "Start from a prompt or bring an existing track. Both paths become durable project work rather than a browser request that must stay open.",
+        "media": "/media/beatmind-create.jpg",
+        "alt": "BeatMind's real dark Create screen with prompt, lyrics, duration, and mode controls",
+        "width": 1552,
+        "height": 784
+      },
+      {
+        "title": "Pull the track apart",
+        "description": "Separation produces practical vocals, backing, drums, bass, and other lanes, then analysis maps sections, chords, tempo, key, and energy.",
+        "media": "/media/beatmind-editor.jpg",
+        "alt": "BeatMind's real editor showing separated coloured stem lanes and musical controls",
+        "width": 1552,
+        "height": 784
+      },
+      {
+        "title": "Work section by section",
+        "description": "The arrangement turns musical structure into an editable section-by-stem grid before the result is mixed and rendered.",
+        "media": "/media/beatmind-arrangement-clean.png",
+        "alt": "BeatMind's real arrangement workspace with sections and five stem families",
+        "width": 1904,
+        "height": 972
+      }
+    ],
+    "research": [
+      {
+        "source": "BandLab, Splice, Suno, and Udio",
+        "finding": "Generation tools made starting fast, while production tools exposed more control after the first result.",
+        "changed": "BeatMind was framed around the handoff from whole track to editable musical parts instead of another prompt-only generator."
+      },
+      {
+        "source": "ElevenLabs Music and Moises",
+        "finding": "People need clear identity, progressive disclosure, and visible structure while expensive audio work continues.",
+        "changed": "The interface reveals completed layers and keeps project state durable across refreshes instead of showing cosmetic progress."
+      },
+      {
+        "source": "ACE-Step and source-separation model trials",
+        "finding": "One model did not cover generation, reference conditioning, separation, repainting, and instrument-level work equally well.",
+        "changed": "The system split generation, separation, analysis, and rendering into independently deployable services with explicit boundaries."
+      },
+      {
+        "source": "Founder and early-user feedback",
+        "finding": "The product needed clearer progress, safer upload language, and a path from an initial track into meaningful editing.",
+        "changed": "Later refinements restored the rights gate, clarified long-running state, and tightened the path into the arrangement."
+      }
+    ],
+    "decisions": [
+      {
+        "decision": "Make every expensive stage a durable operation with attempt identity and recovery.",
+        "rejected": "Hold one browser request open until generation or separation finishes.",
+        "tradeoff": "The state machine is more work to build, but refreshes and late workers can no longer silently rewrite the current project state."
+      },
+      {
+        "decision": "Send audio directly between the browser and object storage.",
+        "rejected": "Route large audio files through the application host.",
+        "tradeoff": "Direct transfer needs careful signed URLs and CORS rules, but it avoids using the web server as an expensive byte pipe."
+      },
+      {
+        "decision": "Use polling for the current small-pilot operating target.",
+        "rejected": "Add sockets and a queue before the product needed them.",
+        "tradeoff": "Updates are not instant to the millisecond, but the recovery model stays simpler and inspectable while the product is still learning."
+      }
+    ],
+    "failures": [
+      {
+        "title": "Regenerate finished, but playback did not change",
+        "symptom": "The interface reported a completed regeneration while the player still used the original audio and showed a mismatched duration.",
+        "cause": "Overlapping playback and result-selection defects hid each other, so fixing one symptom did not repair the visible experience.",
+        "correction": "I traced the complete result path, corrected which asset became current, and made duration follow the selected audio rather than stale state.",
+        "remainingRisk": "Every new render path still needs an end-to-end playback check, not only a worker success response."
+      },
+      {
+        "title": "The website survived while the pipeline died",
+        "symptom": "The application stayed available, but a completed worker could not commit its result and the project never became usable.",
+        "cause": "A callback followed an unexpected POST redirect while object-storage CORS separately blocked the browser transfer path.",
+        "correction": "I corrected the callback target and storage policy, then treated application health and pipeline health as separate release checks.",
+        "remainingRisk": "An HTTP-success smoke test cannot prove that remote audio work completes, commits, and reloads correctly."
+      },
+      {
+        "title": "Musical bars cut through sung phrases",
+        "symptom": "Technically aligned section cuts landed inside vocal phrases and sounded broken when rearranged.",
+        "cause": "Bar boundaries were treated as sufficient even when the vocal energy around the boundary said otherwise.",
+        "correction": "Section edges moved toward quieter vocal points and gained short fades so musical edits did not sound like raw array slices.",
+        "remainingRisk": "Automatic boundaries remain an assistive first pass; difficult material still needs a person to listen."
+      },
+      {
+        "title": "I removed the upload consent gate",
+        "symptom": "The upload flow became cleaner while the product stopped asking the person to confirm their right to use the audio.",
+        "cause": "I treated a trust and rights requirement as removable interface friction.",
+        "correction": "I restored explicit consent and made rights lineage part of the product boundary rather than optional copy.",
+        "remainingRisk": "A consent checkbox cannot establish ownership by itself, so export rules still have to follow the track's origin."
+      }
+    ],
+    "limitations": [
+      "Separation is most dependable as vocals, backing, drums, bass, and other; lead instruments and pads can still collapse into the other lane.",
+      "The backing-vocal path can retain lead-vocal bleed, especially when the source already has dense effects or stacked voices.",
+      "Energy is currently understood at project level rather than as a separately editable curve for every stem.",
+      "Groove and sound-palette controls stay out of the product until their timing and timbre data can be verified and wired honestly.",
+      "This is still a small pilot, not evidence of broad multi-user adoption, and some touch targets still need a dedicated device pass."
+    ],
+    "future": [
+      {
+        "status": "planned",
+        "title": "Whole-track lane generation",
+        "detail": "Generate a missing musical lane across the complete arrangement while preserving section boundaries and project lineage."
+      },
+      {
+        "status": "planned",
+        "title": "A broader pilot",
+        "detail": "Test the complete create, separate, arrange, render, retry, and reload path with more people before making adoption claims."
+      },
+      {
+        "status": "investigating",
+        "title": "Groove editing",
+        "detail": "Expose timing feel only after microtiming measurements survive real material and do not reduce groove to a decorative control."
+      },
+      {
+        "status": "blocked",
+        "title": "Sound-palette matching",
+        "detail": "This remains blocked until useful timbre embeddings can support a result that is explainable and repeatable."
+      }
+    ],
+    "sources": [
+      { "label": "BeatMind product repository and release records", "locator": "private BeatMind repository", "public": false },
+      { "label": "BeatMind architecture, product, and research documents", "locator": "private BeatMind docs", "public": false },
+      { "label": "Published BeatMind product", "locator": "https://www.beatmind.tech", "public": true },
+      { "label": "Portfolio claim records", "locator": "src/content/claims", "public": true }
+    ]
   },
   "claimRefs": ["beatmind-current-tests", "beatmind-separation-benchmark"]
 }

@@ -88,7 +88,7 @@ compromise.
 |---|---|---|
 | `/` | Arrival, two doors, person, the complete paper index, proof, services, errata and contact | Both |
 | `/work` | Complete register with honest sorting and filtering | Both |
-| `/work/[slug]` | One complete case study and its project world | Employer depth |
+| `/work/[slug]` | One complete paper case study; its separate project world enters through the Paper and Worlds transition | Employer depth |
 | `/notes` | Errata and writing hub; a clear coming-soon state if no general posts exist | Both |
 | `/notes/[slug]` | One full erratum or article with sources and related work | Both |
 | `/about` | Portrait, path, work-experience timeline and operating rules | Human check |
@@ -297,6 +297,18 @@ covers the initial study; `.shots/phase2-work-detail-refinement` and
 awaiting owner review and does not tick a Phase 2 item, satisfy Phase 3 or authorize
 production publishing.
 
+**BeatMind paper case-study checkpoint, 2026-08-30:** the first complete typed
+`caseStudy` record and paper-first pilot now exist at `/work/beatmind/`. The stale dark
+world masthead, four-stem still, disabled audio placeholder and invented story-path strip
+were removed. Real product media now leads into responsibility, development research,
+architecture, rejected alternatives, two publishable measurements, four audited failures,
+limitations, status-labelled future work and source boundaries. The reusable reading and
+publication rules are locked in `docs/CASE_STUDY_CONTRACT.md`. Initial 390, 800 and 1440
+structural captures pass with no overflow or page errors. The exact built output also passes
+schema, content, build, accessibility, craft, transfer and deterministic scroll checks; the
+scroll pass holds 16.7-16.8 ms p95 with no frames above 20 ms. Owner visual approval remains
+required, so this checkpoint does not tick the combined route-family item or start Phase 3.
+
 **Owner review before work**
 
 - Show a reference lock for the paper system, dark world system, editorial notes and
@@ -307,8 +319,9 @@ production publishing.
 - Home and `/work` have completed their Phase 2 structure reviews. The register remains one
   merit-based catalogue without a Personal/Company split. The next review slice is the
   shared `/work/[slug]` case-study structure, using BeatMind as the real-content pilot.
-- The BeatMind pilot now has final 390, 800 and 1440 evidence and remains an owner-review
-  checkpoint. Its real run trace and audio source are blocked inputs, not placeholders.
+- The BeatMind paper pilot now has its complete contract and final 390, 800 and 1440
+  built-output evidence. Owner review remains. Real trace and standalone
+  audio inputs belong to the separate Sound Foundry world, not the paper page.
 - The owner approved the **Sound Foundry** premise, nine-scene order and current five-stem
   language on 2026-08-30. A replacement standalone animatic now tests the continuous machine,
   failure/retry interruption, separate phone composition and a dark case-study handoff. It has final 390,
@@ -370,7 +383,8 @@ commit with the matching plan items ticked.
 
 - [ ] `/work` lists every project without a hard-coded count in prose.
 - [ ] Sorting controls operate on real typed fields and preserve a meaningful default order.
-- [ ] Every `/work/[slug]` page contains all nine beats and an approved still world frame.
+- [ ] Every `/work/[slug]` page satisfies `CASE_STUDY_CONTRACT.md`, including real
+  product proof, contribution, research, trade-offs, evidence, failures and limits.
 - [ ] Previous/next and back-to-register links prevent dead ends.
 
 #### 3C. Notes and errata
@@ -445,9 +459,10 @@ Show the evidence and stop.
 
 ### Phase 5: World foundation and BeatMind pilot
 
-Worlds are scroll-directed case stories, not looping hero decoration and not miniature
-copies of the real products. Native document scroll advances a bounded visual stage while
-the complete DOM case study remains readable beside or below it.
+Worlds are scroll-directed product stories, not looping hero decoration and not miniature
+copies of the real products. Native document scroll advances a bounded visual stage. The
+world's own narration and final frame remain understandable without animation, then one
+explicit action opens the separate complete paper case study.
 
 **Owner review before work**
 

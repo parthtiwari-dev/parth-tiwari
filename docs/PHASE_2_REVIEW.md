@@ -255,10 +255,13 @@ project.
 
 ## Shared case-study review slice
 
-The BeatMind pilot now renders at `/work/beatmind/` from the real content and verified claim
-collections. It proves the dark arrival, paper reading sequence, desktop chapter rail,
-responsive stack, measurement ledger, architecture diagram, boundary, inserted erratum,
-links and ending without building an animated world. Only BeatMind is generated in Phase 2.
+The BeatMind pilot now renders at `/work/beatmind/` from real content and verified claim
+collections. The revised 2026-08-30 version removes the dark-world masthead and opens
+directly on paper with real product media, a complete evidence-led reading sequence,
+desktop chapter rail, responsive stack, measurement ledger, research, architecture,
+trade-offs, four failures, limitations, future states, sources and closing paths. The
+required structure is locked in `CASE_STUDY_CONTRACT.md`. Only BeatMind is generated in
+Phase 2.
 
 The owner selected the combined opening evidence, chapter index plus progress, primary-plus-
 supporting measurement hierarchy, decision-led architecture diagram, unnamed current-role

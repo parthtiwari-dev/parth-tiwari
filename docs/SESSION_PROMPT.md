@@ -36,10 +36,14 @@ Phase 2 is design-system and route-architecture work:
   worlds. It is research only and authorizes no world implementation.
 - Review one route at a time. Home and `/work` architecture are approved. Do not add a
   Personal/Company register filter; verified employment context belongs inside a case study.
-- The shared `/work/[slug]` structure now has a BeatMind pilot at `/work/beatmind/` and final
-  evidence in `.shots/phase2-beatmind-case-final`. Obtain owner visual approval before
-  moving on. The disabled audio control and storyboard-only run trace are honest blocked
-  inputs, not implementation omissions to fill with invented media or timings.
+- The shared `/work/[slug]` structure now has a paper-first BeatMind pilot at
+  `/work/beatmind/`. Its required reading order is locked in
+  `docs/CASE_STUDY_CONTRACT.md`. It uses real product video and captures and contains
+  typed responsibility, research, trade-offs, verified proof, failures, limitations and
+  future states. Final responsive evidence exists in
+  `.shots/phase2-beatmind-case-paper-final`; built-output accessibility, craft, transfer
+  and scroll checks pass. Owner approval is still required before moving on. Real run-trace and standalone audio inputs belong
+  to the separate Sound Foundry world.
 - The owner approved BeatMind's Sound Foundry storyboard and current five-stem language on
   2026-08-30. Its standalone animatic and evidence live under `design/directions/` and
   `.shots/phase2-beatmind-world-study/`. It ends in the dark world with one explicit case-study

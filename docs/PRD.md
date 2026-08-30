@@ -135,7 +135,8 @@ A world should feel like entering the project, not reading another portfolio tem
   ordinary DOM.
 - Optional audio is user-initiated and has a visible stop.
 - Reduced motion receives a composed final frame.
-- JavaScript-off receives the entire case study and still imagery.
+- JavaScript-off receives the world's complete concise narration, final still and direct
+  action to the separate complete paper case study.
 - One shared clock, a 30fps ceiling and offscreen suspension apply to all worlds.
 
 BeatMind is the pilot because it exercises the full model: audio, stages, measurement,
@@ -215,7 +216,7 @@ claim provenance. Admin authentication and secrets never enter the public bundle
 
 ### Content
 
-- Every project has a complete nine-beat case study.
+- Every project satisfies the complete paper contract in `CASE_STUDY_CONTRACT.md`.
 - Every public number maps to provenance.
 - Errata has full individual pages.
 - Posts has either real entries or an honest coming-soon state.
