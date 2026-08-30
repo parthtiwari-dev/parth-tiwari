@@ -36,6 +36,58 @@ const measurementSchema = z.object({
   }
 })
 
+const caseStudySchema = z.object({
+  thesis: z.string().min(20),
+  credit: z.object({
+    organization: z.string().min(2),
+    role: z.string().min(2),
+    contribution: z.string().min(20),
+  }),
+  intendedUser: z.string().min(20),
+  demo: z.object({
+    src: z.string().startsWith('/'),
+    poster: z.string().startsWith('/'),
+    durationLabel: z.string().min(3),
+    caption: z.string().min(20),
+  }),
+  workflow: z.array(z.object({
+    title: z.string().min(2),
+    description: z.string().min(20),
+    media: z.string().startsWith('/'),
+    alt: z.string().min(20),
+    width: z.number().int().positive(),
+    height: z.number().int().positive(),
+  })).min(3),
+  research: z.array(z.object({
+    source: z.string().min(2),
+    finding: z.string().min(20),
+    changed: z.string().min(20),
+  })).min(3),
+  decisions: z.array(z.object({
+    decision: z.string().min(12),
+    rejected: z.string().min(12),
+    tradeoff: z.string().min(20),
+  })).min(2),
+  failures: z.array(z.object({
+    title: z.string().min(4),
+    symptom: z.string().min(20),
+    cause: z.string().min(20),
+    correction: z.string().min(20),
+    remainingRisk: z.string().min(12),
+  })).min(2),
+  limitations: z.array(z.string().min(20)).min(2),
+  future: z.array(z.object({
+    status: z.enum(['planned', 'investigating', 'blocked']),
+    title: z.string().min(4),
+    detail: z.string().min(20),
+  })).min(2),
+  sources: z.array(z.object({
+    label: z.string().min(3),
+    locator: z.string().min(3),
+    public: z.boolean(),
+  })).min(2),
+})
+
 export const workSchema = z.object({
   title: z.string().min(2),
   order: z.number().int().min(1),
@@ -79,6 +131,7 @@ export const workSchema = z.object({
     storyboardStatus: z.enum(['specced', 'prototyped']),
     motionDeferred: z.literal(true),
   }),
+  caseStudy: caseStudySchema.optional(),
   claimRefs: z.array(z.string().min(3)),
 }).superRefine((work, context) => {
   if (work.started && !work.startedSource) {

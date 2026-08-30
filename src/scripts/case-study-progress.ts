@@ -10,7 +10,7 @@ if (article && chapters.length) {
 
   const updateProgress = () => {
     frame = 0
-    const start = article.offsetTop
+    const start = article.getBoundingClientRect().top + window.scrollY
     const distance = Math.max(article.offsetHeight - window.innerHeight, 1)
     const value = Math.min(100, Math.max(0, ((window.scrollY - start) / distance) * 100))
     progressBars.forEach((progress) => { progress.value = value })

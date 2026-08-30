@@ -3,9 +3,10 @@
 Written 2026-08-27. Reads after [`DESIGN_LOCK.md`](DESIGN_LOCK.md), which settles the
 landing sheet. This file settles **what a world is**, and specifies all twelve.
 
-A world is a scroll-directed case study. It is not a gallery, not a looping hero, not
+A world is a scroll-directed product story. It is not a gallery, not a looping hero, not
 a screenshot carousel, and not a miniature fake version of the product. It lets the
-visitor watch a real workflow unfold while the document explains why each step exists.
+visitor watch a real workflow unfold while concise DOM narration explains why each step
+exists. The separate paper case study provides the engineering deep dive.
 It answers the question an employer or client is asking: *did this person build a real
 thing, and can they explain what mattered.*
 
@@ -17,31 +18,26 @@ thing, and can they explain what mattered.*
 
 🔴 **The graphic is never the only control or the only source of information.** Native
 scroll may advance its story and an optional labelled control may start sound or replay
-a sequence, but route navigation and case-study content remain ordinary DOM. Delete every
-canvas on the site and twelve complete, readable case studies remain. Break this and it
-is v1's constellation in new clothes.
+a sequence, but route navigation and world narration remain ordinary DOM. Delete every
+canvas on the site and the twelve complete paper case studies still remain on their
+canonical routes. Break this and it is v1's constellation in new clothes.
 
-### The skeleton, identical for all twelve
+### What is shared and what is not
 
-Same shape everywhere, so a reader who has read one knows how to read the next, and so
-a missing section is visibly missing rather than quietly absent.
+Each world uses the project-specific scenes recorded below. It must arrive clearly,
+demonstrate one causal workflow, include a real failure or boundary where specified, resolve
+to a useful final frame and offer one explicit action into the full paper case study.
+Worlds do not share a visual template.
 
-| # | Beat | What it does | Length |
-|---|---|---|---|
-| 1 | **Arrival** | Full-bleed final frame, the name, one sentence. Motion is not required to understand it | 1 screen |
-| 2 | **What it is** | Plain language. What a person gets, not which library was used | 2-4 sentences |
-| 3 | **The problem** | Why it was hard, concretely. Not "AI is complex" | 3-5 sentences |
-| 4 | **How it is built** | The architecture, and the one decision that mattered | 4-8 sentences, one diagram if it earns it |
-| 5 | **The measurement** | A number with a denominator, or an honest absence | 1-6 figures |
-| 6 | **The boundary** | What it refuses to do, and why that is a feature | 2-4 sentences |
-| 7 | **What broke** | The errata entry for this project. First person | 3-5 sentences |
-| 8 | **Stack and links** | Real, verified public URLs only | a row |
-| 9 | **Next** | Sideways to another world. Never a dead end | a line |
+Paper case studies do share a reading contract so missing evidence cannot hide behind
+visual novelty. That contract lives in `CASE_STUDY_CONTRACT.md`.
 
 ### The rules a world obeys
 
-1. **The static frame is complete.** A world with JavaScript off shows a still first
-   frame of its graphic and the entire case study. Nothing is gated behind motion.
+1. **The static state is complete.** A world with JavaScript off shows a composed frame,
+   the complete concise world narration and the case-study action. The paper route contains
+   the full case study. Nothing required to understand or leave the world is gated behind
+   motion.
 2. **The graphic is drawn from that project's own material.** Real timings, real
    envelopes, real distributions. If a number in a graphic is invented, the graphic is
    a lie and the site's whole thesis goes with it.
@@ -54,7 +50,8 @@ a missing section is visibly missing rather than quietly absent.
 7. **Every claim in the copy is checkable** against the repo, the deployment, or the
    errata. No estimated metrics, no implied clients, no invented users.
 8. **Native scroll controls time, not access.** A bounded sticky stage may progress as
-   the case study scrolls, but scroll is never hijacked and the user can always continue.
+   the world narration scrolls, but scroll is never hijacked and the user can always
+   continue.
 9. **It demonstrates, it does not impersonate.** Product actions may be rehearsed as a
    story, but a portfolio page does not pretend to be the production editor, dashboard
    or medical tool.

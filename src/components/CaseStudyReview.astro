@@ -10,23 +10,27 @@ interface Props {
 }
 
 const { project, claims, relatedNote } = Astro.props
+const caseStudy = project.data.caseStudy
+if (!caseStudy) throw new Error(`${project.data.title} is missing the Phase 2 case-study contract.`)
+
 const claimById = new Map(claims.map((claim) => [claim.id, claim]))
 const measurements = project.data.measurement.claimIds
   .map((id) => claimById.get(id))
   .filter((claim): claim is CollectionEntry<'claims'> => Boolean(claim?.data.publish && claim.data.status === 'verified'))
-const primaryMeasurement = measurements[0]
-const stackPreview = project.data.stackAndLinks.stack.slice(0, 3).join(' / ')
 const statusLabel = project.data.status === 'in-progress'
   ? 'In progress'
   : project.data.status.charAt(0).toUpperCase() + project.data.status.slice(1)
 const chapters = [
-  ['what-it-is', 'What it is'],
-  ['problem', 'The problem'],
-  ['architecture', 'How it is built'],
-  ['measurement', 'The measurement'],
-  ['boundary', 'The boundary'],
-  ['what-broke', 'What broke'],
-  ['stack-and-links', 'Stack and links'],
+  ['overview', 'What it is'],
+  ['product-demo', 'Product proof'],
+  ['problem', 'Problem and role'],
+  ['research', 'Research'],
+  ['architecture', 'Architecture'],
+  ['decisions', 'Decisions'],
+  ['evidence', 'Evidence'],
+  ['failures', 'What failed'],
+  ['limits', 'Limits and future'],
+  ['sources', 'Stack and sources'],
 ] as const
 ---
 
@@ -35,91 +39,86 @@ const chapters = [
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta
-      name="description"
-      content={`${project.data.title}: ${project.data.summary}`}
-    />
+    <meta name="description" content={`${project.data.title}: ${project.data.summary}`} />
     <title>{project.data.title} case study | Parth Tiwari</title>
   </head>
   <body class="case-review-page">
     <a class="skip-link" href="#case-reading">Skip to the case study</a>
 
-    <main>
-      <section class="case-world" aria-labelledby="case-title">
-        <header class="case-world-nav">
+    <main class="case-sheet">
+      <div class="case-paper">
+        <div class="case-paper-edge case-paper-edge-left" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="case-paper-edge case-paper-edge-right" aria-hidden="true"><i></i><i></i><i></i></div>
+
+        <header class="case-nav">
           <a class="case-wordmark" href="/">Parth Tiwari</a>
-          <nav aria-label="Case-study navigation">
-            <a href="/work/">All work</a>
+          <nav aria-label="Portfolio navigation">
+            <a aria-current="page" href="/work/">Work</a>
             <a href="/notes/">Notes</a>
+            <a href="/about/">About</a>
             <a href="/resume/">Resume</a>
           </nav>
           <a class="case-contact" href="/hire/">Start a project</a>
+          <details class="case-mobile-menu paper-mobile-menu">
+            <summary><span class="menu-label-open">Menu</span><span class="menu-label-close">Close</span></summary>
+            <nav aria-label="Mobile portfolio navigation">
+              <a href="/">Home</a><a aria-current="page" href="/work/">Work</a><a href="/notes/">Notes</a><a href="/about/">About</a><a href="/resume/">Resume</a>
+            </nav>
+          </details>
         </header>
 
-        <div class="case-world-grid">
-          <div class="case-arrival-copy">
-            <p class="case-kicker">World 01 / Music systems</p>
+        <section class="case-masthead" aria-labelledby="case-title">
+          <div class="case-masthead-copy">
+            <p class="case-kicker">Case 01 / Music systems</p>
             <h1 id="case-title">{project.data.title}</h1>
-            <p class="case-arrival-sentence">{project.data.arrival.sentence}</p>
-
-            <dl class="case-arrival-facts">
+            <p class="case-thesis">{caseStudy.thesis}</p>
+            <div class="case-actions">
+              <a class="case-primary-action" href="#product-demo">Watch the product <span aria-hidden="true">↓</span></a>
+              {project.data.stackAndLinks.links.map((link) => (
+                <a href={link.url.toString()} rel="noreferrer">{link.label} <span aria-hidden="true">↗</span></a>
+              ))}
+            </div>
+            <dl class="case-facts">
+              <div><dt>Role</dt><dd>{caseStudy.credit.role}</dd></div>
+              <div><dt>Built at</dt><dd>{caseStudy.credit.organization}</dd></div>
+              <div><dt>Contribution</dt><dd>Design and engineering, end to end</dd></div>
               <div><dt>Status</dt><dd>{statusLabel}</dd></div>
-              <div><dt>Built</dt><dd>As part of my current role</dd></div>
-              <div><dt>Core stack</dt><dd>{stackPreview}</dd></div>
             </dl>
-
-            {primaryMeasurement && (
-              <div class="case-primary-proof">
-                <strong>{primaryMeasurement.data.display}</strong>
-                <span>{primaryMeasurement.data.denominator}</span>
-              </div>
-            )}
           </div>
 
-          <figure class="case-world-frame">
-            <div class="stem-frame">
-              <img
-                src="/media/beatmind-stems-clean.png"
-                width="1904"
-                height="972"
-                fetchpriority="high"
-                alt="BeatMind's real four-lane separated-stem workspace"
-              />
-              <div class="stem-frame-caption">
-                <span>Real product capture</span>
-                <span>Four separated stems</span>
-              </div>
-            </div>
-            <figcaption>A real frame now. Scroll-directed separation, mixing and recovery arrive only after storyboard approval.</figcaption>
+          <figure class="case-cover">
+            <img
+              src="/media/beatmind-desktop.jpg"
+              width="2880"
+              height="1800"
+              fetchpriority="high"
+              alt="BeatMind's real public product page showing a five-stem record visualization"
+            />
+            <figcaption><span>Real product surface</span><span>Five-stem model</span></figcaption>
           </figure>
-        </div>
+        </section>
 
-        <div class="case-story-path" aria-label="BeatMind world storyboard path">
-          <span>Ingest</span><span>Separate</span><span>Analyse</span><span>Arrange</span>
-          <span>Mix</span><span>Render</span><span>Worker lost</span><span>Retry</span>
-          <small>Story path only: real trace timings still require export</small>
-        </div>
-
-        <div class="case-audio-invitation" aria-describedby="audio-source-note">
-          <button type="button" disabled aria-label="Play an approved BeatMind audio excerpt when available">
-            <span aria-hidden="true">▶</span> Hear the separation
-          </button>
-          <p id="audio-source-note">Opt-in by design. An approved owner-created or licensed excerpt is still required.</p>
-        </div>
-
-        <a class="case-scroll-cue" href="#case-reading">Read the case study <span aria-hidden="true">↓</span></a>
-      </section>
-
-      <section class="case-paper" id="case-reading" aria-label={`${project.data.title} case study`}>
-        <div class="case-paper-edge case-paper-edge-left" aria-hidden="true"><i></i><i></i><i></i></div>
-        <div class="case-paper-edge case-paper-edge-right" aria-hidden="true"><i></i><i></i><i></i></div>
+        <section class="case-proof-strip" aria-label="Verified BeatMind evidence">
+          <div class="case-proof-intro">
+            <p>Measured, with the denominator attached</p>
+            <strong>Proof before polish.</strong>
+          </div>
+          {measurements.map((claim) => (
+            <article>
+              <strong>{claim.data.display}</strong>
+              <p>{claim.data.wording}</p>
+              <small>{claim.data.denominator}</small>
+              <small>Verified {claim.data.verifiedAt.toISOString().slice(0, 10)}</small>
+            </article>
+          ))}
+        </section>
 
         <div class="case-mobile-progress" data-mobile-progress>
           <span data-current-chapter>What it is</span>
           <progress max="100" value="0" aria-label="Case-study reading progress"></progress>
         </div>
 
-        <div class="case-reading-layout">
+        <section class="case-reading-layout" id="case-reading" aria-label={`${project.data.title} case study`}>
           <aside class="case-reading-rail" aria-label="Case-study chapters">
             <div class="case-rail-sticky">
               <p>Reading path</p>
@@ -131,55 +130,109 @@ const chapters = [
                   </a>
                 ))}
               </nav>
-              <figure>
-                <img
-                  src="/media/beatmind-stems-clean.png"
-                  width="1904"
-                  height="972"
-                  loading="lazy"
-                  alt="A compact view of BeatMind's separated stem lanes"
-                />
-                <figcaption>Static world frame</figcaption>
-              </figure>
+              <div class="case-rail-note">
+                <span>Reading scope</span>
+                <strong>Product to postmortem</strong>
+                <small>Proof, architecture, failures, and limits.</small>
+              </div>
             </div>
           </aside>
 
           <article class="case-article">
-            <section id="what-it-is" class="case-chapter case-lead" data-case-chapter>
+            <section id="overview" class="case-chapter case-overview" data-case-chapter>
               <p class="case-section-label">01 / What it is</p>
-              <h2>A music tool whose loading states have to tell the truth.</h2>
+              <h2>More control than a prompt box. Less friction than starting in a DAW.</h2>
               {project.data.whatItIs.map((paragraph) => <p>{paragraph}</p>)}
-              <aside class="case-context-note">
-                <span>Working context</span>
-                <p>Built as part of my current role. The organization is intentionally not named here.</p>
-              </aside>
+              <div class="case-audience">
+                <span>Built for</span>
+                <p>{caseStudy.intendedUser}</p>
+              </div>
+              <blockquote>
+                <p>{caseStudy.credit.contribution}</p>
+                <cite>Contribution record</cite>
+              </blockquote>
+            </section>
+
+            <section id="product-demo" class="case-chapter case-demo" data-case-chapter>
+              <p class="case-section-label">02 / Product proof</p>
+              <div class="case-heading-row">
+                <h2>See the actual product before reading the argument.</h2>
+                <p>{caseStudy.demo.durationLabel}</p>
+              </div>
+              <figure class="case-video-frame">
+                <video controls muted playsinline preload="none" poster={caseStudy.demo.poster}>
+                  <source src={caseStudy.demo.src} type="video/webm" />
+                  Your browser cannot play this recording. The product frames below show the same workflow.
+                </video>
+                <figcaption>{caseStudy.demo.caption}</figcaption>
+              </figure>
+
+              <div class="case-contact-sheet" aria-label="BeatMind product workflow">
+                {caseStudy.workflow.map((step, index) => (
+                  <figure>
+                    <div class="case-contact-number">{String(index + 1).padStart(2, '0')}</div>
+                    <img src={step.media} width={step.width} height={step.height} loading="lazy" alt={step.alt} />
+                    <figcaption><strong>{step.title}</strong><p>{step.description}</p></figcaption>
+                  </figure>
+                ))}
+              </div>
             </section>
 
             <section id="problem" class="case-chapter" data-case-chapter>
-              <p class="case-section-label">02 / The problem</p>
+              <p class="case-section-label">03 / Problem and responsibility</p>
               <h2>The browser can stop waiting. The work cannot pretend it stopped.</h2>
               {project.data.problem.map((paragraph) => <p>{paragraph}</p>)}
+              <dl class="case-responsibility">
+                <div><dt>Product</dt><dd>Workflow, interaction model, feedback-led refinements, and rights boundary.</dd></div>
+                <div><dt>Frontend</dt><dd>Creation, library, editor, arrangement, mixing, rendering, and truthful state.</dd></div>
+                <div><dt>Systems</dt><dd>Generation, separation, analysis, storage transport, durable jobs, retries, and recovery.</dd></div>
+              </dl>
+            </section>
+
+            <section id="research" class="case-chapter case-research" data-case-chapter>
+              <p class="case-section-label">04 / Research that changed the build</p>
+              <h2>Research only matters here when it changed a decision.</h2>
+              <ol>
+                {caseStudy.research.map((item, index) => (
+                  <li>
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <div><h3>{item.source}</h3><p>{item.finding}</p><strong>{item.changed}</strong></div>
+                  </li>
+                ))}
+              </ol>
             </section>
 
             <section id="architecture" class="case-chapter" data-case-chapter>
-              <p class="case-section-label">03 / How it is built</p>
+              <p class="case-section-label">05 / Architecture</p>
               <h2>{project.data.architecture.decision}</h2>
               {project.data.architecture.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
-
               <figure class="case-system-diagram">
                 <figcaption>One durable path, with late work fenced out</figcaption>
                 <ol>
-                  <li><span>01</span><strong>Web application</strong><small>Projects and visible state</small></li>
-                  <li><span>02</span><strong>Durable operation</strong><small>Stage, lock and attempt identity</small></li>
-                  <li><span>03</span><strong>Remote worker</strong><small>Generation, separation or render</small></li>
-                  <li><span>04</span><strong>Fenced callback</strong><small>Current result accepted; late result refused</small></li>
+                  <li><span>01</span><strong>Browser</strong><small>Uploads directly and reads committed project state</small></li>
+                  <li><span>02</span><strong>Web application</strong><small>Creates the operation and exposes honest progress</small></li>
+                  <li><span>03</span><strong>Audio service</strong><small>Generates, separates, analyses, or renders</small></li>
+                  <li><span>04</span><strong>Fenced commit</strong><small>Accepts the current attempt and refuses late work</small></li>
                 </ol>
               </figure>
             </section>
 
-            <section id="measurement" class="case-chapter case-measurement" data-case-chapter>
-              <p class="case-section-label">04 / The measurement</p>
-              <h2>Proof, with the denominator attached.</h2>
+            <section id="decisions" class="case-chapter case-decisions" data-case-chapter>
+              <p class="case-section-label">06 / Decisions and trade-offs</p>
+              <h2>What I chose, what I rejected, and what the choice costs.</h2>
+              <div class="case-decision-table" role="table" aria-label="BeatMind engineering decisions">
+                <div class="case-decision-head" role="row"><span role="columnheader">Decision</span><span role="columnheader">Rejected</span><span role="columnheader">Trade-off</span></div>
+                {caseStudy.decisions.map((item) => (
+                  <div class="case-decision-row" role="row">
+                    <strong role="cell">{item.decision}</strong><p role="cell">{item.rejected}</p><p role="cell">{item.tradeoff}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section id="evidence" class="case-chapter case-evidence" data-case-chapter>
+              <p class="case-section-label">07 / Evidence</p>
+              <h2>Two measurements I can defend. No adoption theatre.</h2>
               <div class="measurement-ledger">
                 {measurements.map((claim, index) => (
                   <article class:list={[index === 0 && 'is-primary']}>
@@ -190,54 +243,72 @@ const chapters = [
                   </article>
                 ))}
               </div>
+              <p class="case-evidence-note">I am not publishing a user count here. The account record and the definition of “user” need to agree before that number belongs in a case study.</p>
             </section>
 
-            <section id="boundary" class="case-chapter" data-case-chapter>
-              <p class="case-section-label">05 / The boundary</p>
-              <h2>What it does, and what it refuses to claim.</h2>
-              <div class="case-boundaries">
-                <div><h3>It will</h3><ul>{project.data.boundary.will.map((item) => <li>{item}</li>)}</ul></div>
-                <div><h3>It refuses</h3><ul>{project.data.boundary.refuses.map((item) => <li>{item}</li>)}</ul></div>
+            <section id="failures" class="case-chapter case-failures" data-case-chapter>
+              <p class="case-section-label">08 / What failed</p>
+              <h2>The failures are part of the architecture record.</h2>
+              <ol>
+                {caseStudy.failures.map((failure, index) => (
+                  <li>
+                    <header><span>{String(index + 1).padStart(2, '0')}</span><h3>{failure.title}</h3></header>
+                    <dl>
+                      <div><dt>What I saw</dt><dd>{failure.symptom}</dd></div>
+                      <div><dt>Why</dt><dd>{failure.cause}</dd></div>
+                      <div><dt>What changed</dt><dd>{failure.correction}</dd></div>
+                      <div><dt>Still true</dt><dd>{failure.remainingRisk}</dd></div>
+                    </dl>
+                  </li>
+                ))}
+              </ol>
+              {relatedNote && <a href={`/notes/${relatedNote.id}/`}>Read the consent-gate erratum <span aria-hidden="true">↗</span></a>}
+            </section>
+
+            <section id="limits" class="case-chapter case-limits" data-case-chapter>
+              <p class="case-section-label">09 / Limits and future</p>
+              <h2>What the product cannot do yet, beside what may come next.</h2>
+              <div class="case-limits-grid">
+                <div><h3>Current limitations</h3><ul>{caseStudy.limitations.map((item) => <li>{item}</li>)}</ul></div>
+                <div><h3>Deliberate boundaries</h3><ul>{project.data.boundary.refuses.map((item) => <li>{item}</li>)}</ul></div>
+              </div>
+              <div class="case-future-list">
+                {caseStudy.future.map((item) => (
+                  <article><span data-status={item.status}>{item.status}</span><div><h3>{item.title}</h3><p>{item.detail}</p></div></article>
+                ))}
               </div>
             </section>
 
-            <section id="what-broke" class="case-chapter case-erratum" data-case-chapter>
-              <p class="case-section-label">06 / What broke</p>
-              <h2>{project.data.whatBroke.title}</h2>
-              {project.data.whatBroke.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
-              {relatedNote && <a href={`/notes/${relatedNote.id}/`}>Read the complete erratum <span aria-hidden="true">↗</span></a>}
-            </section>
-
-            <section id="stack-and-links" class="case-chapter case-stack" data-case-chapter>
-              <p class="case-section-label">07 / Stack and links</p>
-              <h2>The systems underneath it.</h2>
+            <section id="sources" class="case-chapter case-sources" data-case-chapter>
+              <p class="case-section-label">10 / Stack and sources</p>
+              <h2>The systems underneath it, and where this account comes from.</h2>
               <ul class="case-stack-list">{project.data.stackAndLinks.stack.map((item) => <li>{item}</li>)}</ul>
-              <div class="case-link-row">
-                {project.data.stackAndLinks.links.map((link) => (
-                  <a href={link.url.toString()} rel="noreferrer">{link.label} <span aria-hidden="true">↗</span></a>
+              <div class="case-source-ledger">
+                {caseStudy.sources.map((source) => (
+                  <div>
+                    <span>{source.public ? 'Public' : 'Audited internally'}</span>
+                    {source.public && source.locator.startsWith('https://')
+                      ? <a href={source.locator} rel="noreferrer">{source.label} <span aria-hidden="true">↗</span></a>
+                      : <strong>{source.label}</strong>}
+                  </div>
                 ))}
               </div>
             </section>
 
             <footer class="case-ending">
-              <p class="case-section-label">End of world 01</p>
-              <h2>The next world turns scenes into shots.</h2>
+              <p class="case-section-label">Case 01 / Complete</p>
+              <h2>The product is live. The record stays open.</h2>
+              <p>BeatMind will change. When the evidence changes, this page should change with it.</p>
               <div class="case-ending-links">
                 <a class="case-next" href={`/work/${project.data.next.slug}/`}>{project.data.next.label} <span aria-hidden="true">→</span></a>
                 <a href="/work/">Back to all work</a>
                 {relatedNote && <a href={`/notes/${relatedNote.id}/`}>Related erratum</a>}
-                <a href="/hire/">Start a project</a>
+                <a href={`${CONTACT_EMAIL_HREF}?subject=BeatMind%20case%20study`}>Ask me about BeatMind</a>
               </div>
-              <div class="case-feedback">
-                <p>Was this useful?</p>
-                <a href={`/work/${project.data.next.slug}/`}>Yes, show me the next one</a>
-                <a href={`${CONTACT_EMAIL_HREF}?subject=BeatMind%20case%20study%20feedback`}>Not yet, tell Parth what was missing</a>
-              </div>
-              <small>Phase 2 structure review. The final animated world is deliberately not built yet.</small>
             </footer>
           </article>
-        </div>
-      </section>
+        </section>
+      </div>
     </main>
 
     <script>

@@ -34,7 +34,7 @@ for (const viewport of viewports) {
   page.on('pageerror', (error) => errors.push(error.message))
   const response = await page.goto(`${base}/work/beatmind/`, { waitUntil: 'load' })
   await page.evaluate(() => document.fonts.ready)
-  await page.addStyleTag({ content: '.skip-link { display: none !important; }' })
+  await page.addStyleTag({ content: 'html { scroll-behavior: auto !important; } .skip-link { display: none !important; }' })
 
   const state = await page.evaluate(() => ({
     overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
@@ -42,28 +42,46 @@ for (const viewport of viewports) {
     h1Count: document.querySelectorAll('h1').length,
     chapters: document.querySelectorAll('[data-case-chapter]').length,
     measurements: document.querySelectorAll('.measurement-ledger article').length,
+    videos: document.querySelectorAll('video source[type="video/webm"]').length,
+    productFrames: document.querySelectorAll('.case-contact-sheet img').length,
     missingAlt: document.querySelectorAll('img:not([alt])').length,
     unnamedControls: [...document.querySelectorAll('a[href],button')].filter((element) => {
       const name = element.getAttribute('aria-label') || element.textContent || ''
       return !name.trim()
     }).length,
-    audioDisabled: document.querySelector('.case-audio-invitation button')?.hasAttribute('disabled'),
+    darkHero: document.querySelectorAll('.case-world').length,
+    paperSurface: document.querySelectorAll('.case-paper').length,
   }))
 
-  await page.screenshot({ path: path.join(output, `${viewport.name}-arrival.png`) })
-  await page.locator('#case-reading').screenshot({ path: path.join(output, `${viewport.name}-reading.png`) })
-  await page.locator('#architecture').screenshot({ path: path.join(output, `${viewport.name}-architecture.png`) })
-  await page.locator('#measurement').screenshot({ path: path.join(output, `${viewport.name}-measurement.png`) })
-  await page.locator('#what-broke').screenshot({ path: path.join(output, `${viewport.name}-erratum.png`) })
-  await page.locator('.case-ending').screenshot({ path: path.join(output, `${viewport.name}-ending.png`) })
+  const captureViewport = async (selector, label) => {
+    const offset = viewport.width <= 820 ? 145 : 100
+    await page.locator(selector).evaluate((element, scrollOffset) => {
+      window.scrollTo(0, element.getBoundingClientRect().top + window.scrollY - scrollOffset)
+    }, offset)
+    await page.waitForTimeout(120)
+    await page.screenshot({ path: path.join(output, `${viewport.name}-${label}.png`) })
+  }
 
-  await page.locator('#measurement').scrollIntoViewIfNeeded()
+  await page.screenshot({ path: path.join(output, `${viewport.name}-arrival.png`) })
+  await captureViewport('#product-demo', 'product-demo')
+  await captureViewport('#research', 'research')
+  await captureViewport('#architecture', 'architecture')
+  await captureViewport('#evidence', 'evidence')
+  await captureViewport('#failures', 'failures')
+  await captureViewport('#limits', 'limits')
+  await captureViewport('.case-ending', 'ending')
+
+  await page.locator('#evidence').evaluate((element, scrollOffset) => {
+    window.scrollTo(0, element.getBoundingClientRect().top + window.scrollY - scrollOffset)
+  }, viewport.width <= 820 ? 145 : 100)
+  await page.waitForTimeout(120)
   const progress = await page.locator('progress').first().evaluate((element) => element.value)
   const passed = response?.ok() && state.overflow <= 1 && state.h1 === 'BeatMind'
-    && state.h1Count === 1 && state.chapters === 7 && state.measurements === 2
-    && state.missingAlt === 0 && state.unnamedControls === 0 && state.audioDisabled
+    && state.h1Count === 1 && state.chapters === 10 && state.measurements === 2
+    && state.videos === 1 && state.productFrames === 3 && state.missingAlt === 0
+    && state.unnamedControls === 0 && state.darkHero === 0 && state.paperSurface === 1
     && progress > 0 && errors.length === 0
-  console.log(`${passed ? 'PASS' : 'FAIL'} ${viewport.name}: status=${response?.status() ?? 'none'} overflow=${state.overflow}px chapters=${state.chapters} measurements=${state.measurements} progress=${progress.toFixed(1)} errors=${errors.join(' | ')}`)
+  console.log(`${passed ? 'PASS' : 'FAIL'} ${viewport.name}: status=${response?.status() ?? 'none'} overflow=${state.overflow}px chapters=${state.chapters} measurements=${state.measurements} productFrames=${state.productFrames} progress=${progress.toFixed(1)} errors=${errors.join(' | ')}`)
   if (!passed) failures += 1
   await context.close()
 }
@@ -76,10 +94,12 @@ const noScript = await noScriptPage.evaluate(() => ({
   measurements: document.querySelectorAll('.measurement-ledger article').length,
   links: document.querySelectorAll('.case-ending a[href]').length,
   stills: document.querySelectorAll('img[alt]').length,
+  videos: document.querySelectorAll('video source[type="video/webm"]').length,
+  darkHero: document.querySelectorAll('.case-world').length,
 }))
-const noScriptPassed = noScriptResponse?.ok() && noScript.chapters === 7 && noScript.measurements === 2
-  && noScript.links >= 6 && noScript.stills === 2
-console.log(`${noScriptPassed ? 'PASS' : 'FAIL'} no-JavaScript: chapters=${noScript.chapters} measurements=${noScript.measurements} endingLinks=${noScript.links} stills=${noScript.stills}`)
+const noScriptPassed = noScriptResponse?.ok() && noScript.chapters === 10 && noScript.measurements === 2
+  && noScript.links === 4 && noScript.stills === 4 && noScript.videos === 1 && noScript.darkHero === 0
+console.log(`${noScriptPassed ? 'PASS' : 'FAIL'} no-JavaScript: chapters=${noScript.chapters} measurements=${noScript.measurements} endingLinks=${noScript.links} stills=${noScript.stills} videos=${noScript.videos}`)
 if (!noScriptPassed) failures += 1
 await noScriptContext.close()
 

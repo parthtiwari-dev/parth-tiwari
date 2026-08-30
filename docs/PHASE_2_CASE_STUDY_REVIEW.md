@@ -1,97 +1,112 @@
 # Phase 2 shared case-study review
 
-Revised 2026-08-29. This is the owner-review record for the shared `/work/[slug]`
-structure. It is not the Phase 3 implementation record and it does not authorize an
+Revised 2026-08-30. This is the owner-review record for the shared `/work/[slug]/`
+paper structure. It is not the Phase 3 implementation record and it does not authorize an
 animated project world.
 
 ## Reference lock
 
-**Primary direction:** the approved Paper and Worlds system. The world owns the dark
-arrival; the paper owns the complete readable case study.
+**Primary direction:** the approved full-width Paper and Worlds rag sheet, used here as an
+evidence-led technical document rather than as a landing-page repeat.
 
-**Preserve:** one project-specific accent, a real product still, the nine-beat content
-skeleton, native scrolling, editorial type scale, thin ruled evidence and an honest static
-fallback.
+**Preserve:** blunt Bricolage display type, readable Archivo body copy, DM Mono evidence,
+thin ruled structures, rare oxblood, torn stable edges, asymmetry and real product media.
 
-**Borrow only:** the compact progress/index pattern used by long-form editorial case studies.
-The progress treatment is sticky on desktop and remains in normal document flow on phone so
-it cannot cover the reading surface.
+**Borrow only:**
 
-**Reject:** a generic SaaS case-study card stack, a screenshot carousel, a fake mixer, an
-invented data trace, scroll snapping, trapped scrolling and any company badge in the global
-register.
+- Work & Co's progression from product overview through outcomes, architecture and
+  after-launch work;
+- ustwo's candid challenge, process, tool limits and future implications;
+- the compact sticky index used by long-form editorial case studies.
 
-**Media rule:** the Phase 2 BeatMind pilot uses the real local
-`beatmind-stems-clean.png` capture. The eight-stage strip is labelled as a storyboard path,
-not measurement. The real run trace still requires the export specified in `WORLDS.md`.
+**Reject:** a dark-world masthead, generic SaaS cards, a screenshot carousel, a fake mixer,
+invented traces, technology-logo wallpaper, scroll snapping and trapped scroll.
+
+**Media rule:** the BeatMind pilot uses the real `beatmind.webm` product recording, current
+public product capture and three real workflow captures. Dark product UI may appear inside
+media frames, but it does not become the page surface. The Sound Foundry still is not used
+as product proof.
+
+The reusable content order is locked in
+[`CASE_STUDY_CONTRACT.md`](CASE_STUDY_CONTRACT.md).
 
 ## Owner decisions represented
 
-- The dark opening occupies roughly 80% of a desktop viewport and leaves a visible cue of
-  the paper below it.
-- The opening carries the title, one-sentence arrival, status, unnamed working context,
-  compact stack and one verified result.
-- Desktop uses a sticky chapter index, reading-progress line and static world still beside
-  the chapters. Phone stacks the complete story and keeps progress out of the sticky chrome.
-- Measurement gives one result more visual weight while keeping every denominator and
-  verification date attached.
-- Architecture leads with the decision and earns one plain system diagram.
-- What broke is an inserted oxblood correction rather than a normal content section.
-- Working context says only `Built as part of my current role`; the organization is not named.
-- The ending contains next project, register, erratum, contact and a small feedback prompt.
-- Audio remains opt-in. The control is shown disabled because the repository contains no
-  approved standalone owner-created or licensed excerpt. A screen recording is not treated
-  as audio provenance.
+- The paper page starts on paper. BeatMind's dark Sound Foundry is a separate experience
+  that ends with an explicit deep-dive action.
+- BeatMind is identified as work built at Stick and Dot. The public contribution record
+  says Parth designed and built it end to end; founder and early-user feedback shaped later
+  refinements; no one else contributed to the implementation.
+- The case study may publish the four audited failure stories.
+- The repository remains private. The public page names internally audited source groups
+  without exposing repository paths, identifiers, user data or private audio.
+- The current account count remains absent because a durable Clerk record and a definition
+  of user are not attached to the portfolio claim record.
+- Product media is user-controlled. The recording is muted and never autoplays.
+- The recording uses `preload="none"`; the 1.3 MB WebM transfers only after the visitor
+  chooses to play it.
 
-## Review implementation
+## Implemented pilot
 
-The single Phase 2 pilot is generated at `/work/beatmind/` by
-`src/pages/work/[slug].astro`. Its `getStaticPaths()` intentionally emits BeatMind only.
-That proves the shared structure without implementing all twelve Phase 3 routes early.
+The BeatMind pilot at `/work/beatmind/` now contains ten visible chapters:
 
-The DOM contains all required reading beats, two published verified measurements, the real
-static still, the architecture decision, boundary, erratum, verified public link, next-case
-link and back-to-register path. A small first-party enhancement updates reading progress and
-the current desktop chapter. It does not control navigation or access to content.
+1. product and intended user;
+2. real product proof and workflow;
+3. problem, responsibility and contribution;
+4. development research and changed decisions;
+5. architecture;
+6. decisions, rejected alternatives and trade-offs;
+7. verified evidence;
+8. four failures using symptom, cause, correction and remaining risk;
+9. current limits, deliberate boundaries and status-labelled future work;
+10. stack, public sources and internally audited source groups.
 
-## Rendered evidence
+The masthead, proof strip and close sit around those chapters. A small first-party script
+updates reading progress and current chapter only. It does not control navigation or access
+to content.
 
-Final screenshots are under `.shots/phase2-beatmind-case-final/`:
+## Final built-output evidence
 
-- `phone-390-*`
-- `tablet-800-*`
-- `desktop-1440-*`
+The final paper build passed typed schema checks, cross-content validation and the static
+Astro build. Responsive evidence is in
+`.shots/phase2-beatmind-case-paper-final/`. The 390, 800 and 1440 capture reported:
 
-Each width has arrival, reading, architecture, measurement, erratum and ending captures.
-The final scripted capture reported HTTP 200, seven chapters, two published measurements,
-zero horizontal overflow, zero page errors, named controls and complete image alternatives
-at all three widths. With JavaScript disabled it still found seven chapters, two
-measurements, six ending links and two static stills.
+- HTTP 200;
+- ten chapters and two published measurements;
+- one real WebM recording and three workflow frames;
+- no dark world masthead;
+- zero horizontal overflow, missing image alternatives, unnamed controls or page errors;
+- the same ten chapters, two measurements, four ending links, four stills and one video
+  source with JavaScript disabled.
 
-Final local checks against the rebuilt static output:
+The normal-viewport screenshots were visually inspected. The earlier tall element
+screenshots exposed a Playwright stitching artifact in which the sticky navigation appeared
+inside an off-screen section. They were replaced rather than treated as final evidence.
+The first normal-viewport inspection also exposed black compositing gaps caused by applying
+one polygon clip-path to the complete long sheet. The full-height mask was removed. The
+three fixed fibre assets continue to carry the damaged paper edge without promoting or
+clipping the complete document.
+
+Final checks against the same built output:
 
 ```text
-npm.cmd run build
-npm.cmd run phase2:case-capture -- --url http://127.0.0.1:4323 --tag phase2-beatmind-case-final
-npm.cmd run a11y -- --url http://127.0.0.1:4323/work/beatmind
-npm.cmd run craft -- --url http://127.0.0.1:4323/work/beatmind
-npm.cmd run perf -- --url http://127.0.0.1:4323/work/beatmind
-npm.cmd run perf:scroll -- --url http://127.0.0.1:4323/work/beatmind
+PASS content:test-schemas
+PASS content:check
+PASS build: 3 static routes
+PASS phase2:case-capture at 390, 800 and 1440
+PASS no-JavaScript: 10 chapters, 2 measurements, 4 ending links, 4 stills, 1 video source
+PASS a11y at 390, 800 and 1440
+PASS craft with complete no-JavaScript and reduced-motion copy
+PASS perf: 0 script transfer bytes, 767,660 resource bytes before optional video playback
+PASS perf:scroll: 16.7-16.8 ms p95, 0 frames above 20 ms at all three widths
 ```
 
-The accessibility baseline passed at 390, 800 and 1440 pixels. The static-fallback checks
-passed. Script transfer stayed below the existing 30 KiB ceiling. The deterministic scroll
-pass reported a 16.7-16.8 ms p95 across the three widths, with no frames above 20 ms. These
-automated results do not substitute for the owner visual review or the final textured-surface
-contrast gate.
+## Still open
 
-## Still blocked or deferred
-
-- Owner approval of this rendered structure is still required.
-- A real BeatMind run-trace JSON export is still required before the run trace can be drawn.
-- A licensed or owner-created audio excerpt and its publication permission are still required
-  before the audio control can be enabled.
-- The other eleven case-study routes, including Vivid, remain intentionally unbuilt in
-  Phase 2.
-- Animated separation, mixing, worker failure and retry remain Phase 5 work after storyboard
-  approval.
+- The owner must inspect and approve the final paper page.
+- The other eleven entries still need their own evidence audit and typed `caseStudy`
+  content before Phase 3. The schema is intentionally optional until then.
+- The real BeatMind envelope, analysis and failure-trace exports remain inputs to the
+  Phase 5 Sound Foundry, not omissions from this paper case study.
+- Exact production routing between a project world and its canonical paper page remains a
+  later implementation decision. No broken placeholder world link is published here.
