@@ -20,6 +20,7 @@
     "phase2:about-capture": "node scripts/phase2-about-capture.mjs",
     "phase2:resume-capture": "node scripts/phase2-resume-capture.mjs",
     "phase2:hire-capture": "node scripts/phase2-hire-capture.mjs",
+    "phase2:gate": "node scripts/phase2-gate.mjs",
     "preview": "astro preview --host 127.0.0.1",
     "shots": "node scripts/shots.mjs",
     "capture": "node scripts/capture-demos.mjs",

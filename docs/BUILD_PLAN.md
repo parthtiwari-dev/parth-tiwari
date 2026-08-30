@@ -349,6 +349,15 @@ returned HTTP 200 during read-only checks. Evidence and reference limits are rec
 visual approval and the shared token, state and contrast closeout remain before the Phase 2
 gate can run.
 
+**Phase 2 gate result, 2026-08-31:** the owner accepted the current route designs as the
+review baseline and deferred further polish. The shared system now names paper, ink, type,
+spacing, grid, focus, motion and world roles. The consolidated gate passed all eight route
+families at 390, 800 and 1440 pixels, plus no-JavaScript, reduced-motion, touch-menu,
+keyboard-focus, contrast, font-budget and static-boundary checks. The lowest paper contrast
+is quiet ink at 4.88:1. Representative captures were inspected. Exact evidence and commands
+are in `docs/PHASE_2_GATE.md`. Phase 2 is complete; the acceptance does not claim that the
+deferred visual-polish pass is complete.
+
 **Owner review before work**
 
 - Show a reference lock for the paper system, dark world system, editorial notes and
@@ -375,21 +384,21 @@ gate can run.
   captured from the approved Sound Foundry animatic. Final built-output evidence at 390, 800
   and 1440 pixels is in `.shots/phase2-arrival-world-still-built`; this refinement does not
   start Phase 3 or add landing-page canvas motion.
-- Review the rendered Notes, About, Resume and Hire slices, then close the shared tokens,
-  responsive states and rendered-contrast evidence before running the Phase 2 gate.
+- Notes, About, Resume and Hire are accepted as the current review baseline. Further visual
+  polish is intentionally deferred and does not reopen the completed Phase 2 gate by itself.
 
 **Do**
 
-- [ ] Define tokens for paper, ink, type, spacing, grid, focus, motion and world surfaces.
+- [x] Define tokens for paper, ink, type, spacing, grid, focus, motion and world surfaces.
 - [x] Self-host and subset Bricolage Grotesque, Archivo and DM Mono. The four approved
   WOFF2 files total 55,916 bytes and loaded in rendered phone and desktop review pages.
-- [ ] Define the reusable paper primitives without copying `paper.html` line by line.
-- [ ] Define route wireframes and content hierarchy for home, work, case study, notes hub,
+- [x] Define the reusable paper primitives without copying `paper.html` line by line.
+- [x] Define route wireframes and content hierarchy for home, work, case study, notes hub,
   note article, about, resume and hire.
-- [ ] Define responsive, keyboard, touch, reduced-motion and no-JavaScript states.
-- [ ] Define the visual treatment for “Coming soon” so it is honest and useful, not an
+- [x] Define responsive, keyboard, touch, reduced-motion and no-JavaScript states.
+- [x] Define the visual treatment for “Coming soon” so it is honest and useful, not an
   empty card.
-- [ ] Run rendered contrast checks on the actual paper stock and world ground.
+- [x] Run rendered contrast checks on the actual paper stock and world ground.
 
 **Gate**
 
@@ -400,7 +409,8 @@ gate can run.
 - Fonts remain within the recorded budget.
 - No tear, backlight or animated world has been implemented.
 
-Show the visual evidence and stop.
+**Gate: passed 2026-08-31.** Evidence: `docs/PHASE_2_GATE.md` and
+`.shots/phase2-gate-final`. Stop before Phase 3.
 
 ### Phase 3: Complete static site
 

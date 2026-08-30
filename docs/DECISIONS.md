@@ -192,8 +192,8 @@ Generated transparent oxblood sheets supply sparse proofreader marks; they do no
 locked readable font roles. Opening-light, nav-fold and ink-settle motion each run once and
 then stop. Full-sheet grain parallax was rejected because it would require repainting a
 background on scroll or promoting a page-height layer. The landing structure is now
-approved; Phase 2 remains open for the shared tokens, rendered contrast and remaining route
-structures.
+approved. At that checkpoint Phase 2 remained open for shared tokens, rendered contrast and
+the remaining route structures; those later closed on 2026-08-31.
 
 The seven `📐 specced` worlds have a research-only data and accent inventory in
 `PHASE_2_WORLDS_ANIMATION_MEMO.md`. It does not satisfy the owner-approved storyboard gate and
@@ -232,8 +232,17 @@ are not published.
 The `/hire` review slice uses the three validated service records, their boundaries and a
 four-step risk-reduction path. Booking is the first contact action; email and WhatsApp stay
 equally visible as direct alternatives. The page has no price or sales form. This is the
-current rendered proposal and remains subject to owner visual approval before the Phase 2
-route-hierarchy item closes.
+current rendered proposal.
+
+On 2026-08-31 the owner accepted the current Home, Work, case-study, Notes, About, Resume and
+Hire designs as the Phase 2 review baseline and asked to close the phase without another
+approval round. This is an explicit acceptance-for-now decision: minute visual refinement
+is deferred, not declared unnecessary or complete. The shared render, state and contract
+gates pass and `PHASE_2_GATE.md` records the evidence. Phase 2 is closed.
+
+The next requested Vivid work is planning and generated concept imagery aligned to the
+current `upgrade-flux` end-state plan. That exploratory review does not authorize production
+world implementation before the build-plan phase that owns it.
 
 ### Phase 4
 

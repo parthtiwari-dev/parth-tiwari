@@ -20,6 +20,7 @@ Where to look, and what is still true.
 | [`PHASE_2_ABOUT_REVIEW.md`](PHASE_2_ABOUT_REVIEW.md) | The About route reference lock, typed chronology, real portrait and responsive evidence |
 | [`PHASE_2_RESUME_REVIEW.md`](PHASE_2_RESUME_REVIEW.md) | The HTML Resume structure, source PDF boundary, optional Drive configuration, responsive and print evidence |
 | [`PHASE_2_HIRE_REVIEW.md`](PHASE_2_HIRE_REVIEW.md) | The Hire route reference lock, service boundaries, four-step process, fit guidance and verified contact paths |
+| [`PHASE_2_GATE.md`](PHASE_2_GATE.md) | The completed route matrix, state checks, contrast results, font budget and owner-acceptance boundary |
 | [`CASE_STUDY_CONTRACT.md`](CASE_STUDY_CONTRACT.md) | Required evidence, media, accessibility and publication contract for every paper case study |
 | [`PHASE_2_BEATMIND_WORLD_STUDY.md`](PHASE_2_BEATMIND_WORLD_STUDY.md) | Approved Sound Foundry animatic, real BeatMind source lock, rendered evidence and production inputs still blocked |
 | [`PHASE_2_BEATMIND_WORLD_RESEARCH.md`](PHASE_2_BEATMIND_WORLD_RESEARCH.md) | Pudding and 124-entry Awwwards research, approved Sound Foundry reference lock and implementation boundary |
@@ -49,11 +50,11 @@ None of it needs redoing.
 
 ## Current state
 
-Phase 0 and Phase 1 are complete on `redesign/v2`. Phase 1 produced twelve
+Phase 0, Phase 1 and Phase 2 are complete on `redesign/v2`. Phase 1 produced twelve
 base project records, twelve Errata entries, typed content schemas, route copy, services,
 experience, claim records and the text-only test artifact. Automated schema, provenance and
 Astro build checks pass. The owner deferred the unrun text-only human test without marking
-it passed. Phase 2 is open. The three initial landing directions were rejected and removed.
+it passed. During Phase 2, the three initial landing directions were rejected and removed.
 The owner approved the overall full-width scroll direction and the refined landing
 checkpoint for an interim public release. The maintained landing stub is
 now at `/`; the obsolete `/review/phase-2/` route is removed. Its restraint pass, segmented
@@ -76,20 +77,20 @@ composed phone view, fallback states and dark deep-dive handoff. It remains a
 review artifact, not an Astro route or Phase 5 implementation. The separate worlds-animation memo remains
 research only. The Notes hub and all twelve concise Errata routes now have final responsive,
 no-JavaScript, accessibility, craft, transfer and scroll evidence in
-`PHASE_2_NOTES_REVIEW.md`; owner visual approval remains. The About pilot now adds the real
+`PHASE_2_NOTES_REVIEW.md`. The About pilot now adds the real
 portrait, one typed education-and-work chronology, current-role detail and operating rules,
-with final responsive and no-JavaScript evidence in `PHASE_2_ABOUT_REVIEW.md`; owner visual
-approval remains. The Resume pilot now adds the semantic HTML CV, unchanged local Resume B
+with final responsive and no-JavaScript evidence in `PHASE_2_ABOUT_REVIEW.md`. The Resume pilot now adds the semantic HTML CV, unchanged local Resume B
 download, verified selected-work claims, optional env-configured Drive link and inspected
-two-page print output; `PHASE_2_RESUME_REVIEW.md` records the final route evidence. Owner
-visual approval remains. The Hire pilot now adds the three typed work scopes, boundaries,
+two-page print output; `PHASE_2_RESUME_REVIEW.md` records the final route evidence. The Hire pilot now adds the three typed work scopes, boundaries,
 four-step risk-reduction path, fit guidance and direct booking, email and WhatsApp; its
 final responsive and no-JavaScript evidence is in `PHASE_2_HIRE_REVIEW.md`. Every route
-family now has a Phase 2 review implementation. Shared-token, route-state, rendered-contrast
-and owner-approval closeout remain, so no Phase 2 checklist item is newly marked complete.
+family now has a Phase 2 review implementation. On 2026-08-31 the owner accepted these
+designs as the current baseline and deferred a later polish pass. The final 24-render route
+matrix plus no-JavaScript, reduced-motion, touch, keyboard, contrast, font and static-boundary
+checks passed. `PHASE_2_GATE.md` records the evidence and Phase 2 is closed.
 The approved interim root is live at
 `https://parth-tiwari-1.vercel.app/` and has passed live browser checks. A real
 five-person comprehension test remains mandatory on the Phase 3 static preview.
 
-**Last documentation truth audit:** 2026-08-31, Hire route review slice, responsive and
-no-JavaScript evidence, external contact checks, and remaining Phase 2 closeout recorded.
+**Last documentation truth audit:** 2026-08-31, Phase 2 owner acceptance, shared-system
+closeout, rendered/state/contract gate and deferred-polish boundary recorded.

@@ -3,7 +3,7 @@
 This repository is rebuilding Parth Tiwari's portfolio as **Paper and Worlds**: a
 static, multi-page Astro site whose project case studies use each project's real data.
 
-The current code has completed Phase 1 and is working through Phase 2. It contains validated
+The current code has completed Phases 1 and 2. It contains validated
 content collections, twelve complete case-study records, twelve Errata entries, route copy,
 services, experience, and source-linked claims. The maintained Phase 2 landing now lives at
 `/`. It is a reviewable static stub, not the Phase 3 production site. `/work/` has its
@@ -43,6 +43,9 @@ npm run phase2:notes-capture -- --url http://127.0.0.1:4321
 npm run phase2:about-capture -- --url http://127.0.0.1:4321
 npm run phase2:resume-capture -- --url http://127.0.0.1:4321
 npm run phase2:hire-capture -- --url http://127.0.0.1:4321
+npm run phase2:gate -- --part render --url http://127.0.0.1:4321
+npm run phase2:gate -- --part states --url http://127.0.0.1:4321
+npm run phase2:gate -- --part contracts --url http://127.0.0.1:4321
 npm run preview
 ```
 
@@ -65,7 +68,7 @@ its measured gate passes.
 The owner deferred the unrun Phase 1 text-only test. It was not marked as passing. A real
 five-person comprehension test remains required on the Phase 3 static preview.
 
-Phase 2 remains open. Every route family now has a review implementation, and the BeatMind
-case-study pilot is approved. Owner visual approval for the recent Notes, About, Resume and
-Hire slices, shared-token and route-state closeout, and rendered contrast are still required
-before the Phase 2 gate can pass. Vivid has not begun.
+Phase 2 closed on 2026-08-31. Every route family has an accepted-for-now review
+implementation, and the shared render, state, contrast, font-budget and static-boundary gates
+pass. Further visual polish is deferred rather than reported as finished. Vivid production
+work has not begun.

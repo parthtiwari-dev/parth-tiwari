@@ -1,9 +1,10 @@
 # Phase 2 owner review: system and page architecture
 
-Opened 2026-08-28; updated 2026-08-31. Phase 2 proceeds one route and one review checkpoint
+Opened 2026-08-28; closed 2026-08-31. Phase 2 proceeded one route and one review checkpoint
 at a time. The owner approved the refined landing structure and its interim public release
-on 2026-08-29. Every route family now has a review implementation; shared-system closeout,
-rendered contrast and owner visual approval remain before the Phase 2 gate.
+on 2026-08-29, then accepted every current route as the review baseline on 2026-08-31 while
+deferring further polish. Shared-system, rendered-contrast and state checks now pass. Exact
+gate evidence is in [`PHASE_2_GATE.md`](PHASE_2_GATE.md).
 
 ## Scope
 
@@ -176,8 +177,8 @@ On 2026-08-29 the built static preview passed `a11y`, `craft` and `perf`: no pag
 horizontal overflow at 390, 800 or 1440 pixels; complete no-JavaScript and reduced-motion
 copy; no canvas; one first-party enhancement script; and zero transferred script bytes
 because Astro inlined the small enhancement below the 30 kB Phase 2 ceiling. These checks
-prove this landing craft slice only. Owner approval and the remaining Phase 2 route/system
-work are still required before the phase gate can pass.
+prove this landing craft slice only. At that checkpoint, owner approval and the remaining
+Phase 2 route/system work were still required before the phase gate could pass.
 
 A later scroll-frame pass found that the large `drop-shadow()` applied to the complete
 6,800-8,400px sheet was the source of visible jank. The one-variable A/B at 390, 800 and
@@ -193,7 +194,8 @@ The owner approved replacing v1 with this reviewed root landing to collect feedb
 successful. A cache-bypassed request to `https://parth-tiwari-1.vercel.app/` returned HTTP
 200 with the new title and hero and without the old EPHEMERIS marker. The live URL then
 passed `a11y`, `craft` and `perf` at 390, 800 and 1440 pixels. This evidence covers the
-interim root only and does not satisfy the remaining Phase 2, Phase 3 or Phase 7 gates.
+interim root only and did not satisfy the then-remaining Phase 2 gate or the Phase 3 and
+Phase 7 gates.
 
 ## Worlds research boundary
 
@@ -245,7 +247,8 @@ authorize a production merge.
 Home keeps its lighter editorial index of all twelve projects because the complete-site plan
 requires every project there. `/work` remains distinct by adding full summaries, evidence,
 dates, ordering and state filtering; copying its complete layout back onto Home would erase
-that distinction. This is a design recommendation awaiting owner confirmation.
+that distinction. The owner accepted this distinction with the Phase 2 baseline on
+2026-08-31.
 
 The owner decided on 2026-08-29 that `/work` will not sort or badge projects as personal
 versus company work. BeatMind and Vivid were owner-reported as work made in the owner's
@@ -329,9 +332,10 @@ testimonial, client logo, urgency claim or client script.
 thoughtbot contributes only the separation of service shapes and risk-first validation;
 Josh Comeau contributes only direct human contact framing. Paper and Worlds remains the
 visual source. The complete reference lock, copy boundary, contact verification and
-responsive evidence are in [`PHASE_2_HIRE_REVIEW.md`](PHASE_2_HIRE_REVIEW.md). Owner visual
-approval remains. Every route family now has a Phase 2 review implementation, so the next
-slice is the shared system and gate closeout rather than Vivid.
+responsive evidence are in [`PHASE_2_HIRE_REVIEW.md`](PHASE_2_HIRE_REVIEW.md). The owner
+accepted the current route as the Phase 2 baseline on 2026-08-31 and deferred another polish
+pass. Every route family now has a Phase 2 review implementation and the shared gate is
+complete.
 
 ## Review sequence
 
@@ -344,7 +348,7 @@ slice is the shared system and gate closeout rather than Vivid.
 6. Preserve the approved shared case-study structure.
 7. Approve the rendered Notes, About, Resume and Hire slices.
 8. Reconcile shared tokens and route states, run rendered contrast at all three widths,
-   then show the complete Phase 2 gate and stop.
+   then show the complete Phase 2 gate and stop. Completed 2026-08-31.
 
 ## Already locked, not reopened here
 
