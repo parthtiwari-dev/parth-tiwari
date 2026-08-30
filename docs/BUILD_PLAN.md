@@ -306,8 +306,18 @@ limitations, status-labelled future work and source boundaries. The reusable rea
 publication rules are locked in `docs/CASE_STUDY_CONTRACT.md`. Initial 390, 800 and 1440
 structural captures pass with no overflow or page errors. The exact built output also passes
 schema, content, build, accessibility, craft, transfer and deterministic scroll checks; the
-scroll pass holds 16.7-16.8 ms p95 with no frames above 20 ms. Owner visual approval remains
-required, so this checkpoint does not tick the combined route-family item or start Phase 3.
+scroll pass holds 16.7-16.8 ms p95 with no frames above 20 ms. The owner approved the pilot
+by asking to begin Notes on 2026-08-30. This checkpoint still does not tick the combined
+route-family item or start Phase 3.
+
+**Notes review checkpoint, 2026-08-30:** `/notes/` now renders all twelve Errata at equal
+weight and keeps general Posts as an explicit `Coming soon` shelf. All twelve
+`/notes/[slug]/` routes render their concise audited Markdown, related project, any
+publishable measurement, honest source boundary and previous/next paths. The reference lock,
+route structure and evidence are in `docs/PHASE_2_NOTES_REVIEW.md`. The exact built output
+passes the Notes capture, all article links, no-JavaScript, accessibility, craft, transfer
+and deterministic scroll checks at 390, 800 and 1440 pixels. Owner visual approval remains,
+so the combined route-family checklist item stays unticked and About has not begun.
 
 **Owner review before work**
 
@@ -320,7 +330,7 @@ required, so this checkpoint does not tick the combined route-family item or sta
   merit-based catalogue without a Personal/Company split. The next review slice is the
   shared `/work/[slug]` case-study structure, using BeatMind as the real-content pilot.
 - The BeatMind paper pilot now has its complete contract and final 390, 800 and 1440
-  built-output evidence. Owner review remains. Real trace and standalone
+  built-output evidence. The owner approved it by asking to begin Notes. Real trace and standalone
   audio inputs belong to the separate Sound Foundry world, not the paper page.
 - The owner approved the **Sound Foundry** premise, nine-scene order and current five-stem
   language on 2026-08-30. A replacement standalone animatic now tests the continuous machine,
@@ -335,8 +345,8 @@ required, so this checkpoint does not tick the combined route-family item or sta
   captured from the approved Sound Foundry animatic. Final built-output evidence at 390, 800
   and 1440 pixels is in `.shots/phase2-arrival-world-still-built`; this refinement does not
   start Phase 3 or add landing-page canvas motion.
-- After the paper pilot and world storyboard decisions, review Notes and its article
-  structure next.
+- Review the rendered Notes hub, Writing empty state and concise article structure. About is
+  next only after that owner review.
 
 **Do**
 

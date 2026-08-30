@@ -270,8 +270,22 @@ because no approved standalone excerpt exists. The run-trace strip remains label
 story path because its real timing export does not exist in this repository.
 
 Rendered evidence and exact limits are recorded in
-[`PHASE_2_CASE_STUDY_REVIEW.md`](PHASE_2_CASE_STUDY_REVIEW.md). The structure still needs
-owner visual approval before Notes begins.
+[`PHASE_2_CASE_STUDY_REVIEW.md`](PHASE_2_CASE_STUDY_REVIEW.md). The owner approved the
+structure by asking to begin Notes on 2026-08-30.
+
+## Notes and Errata review slice
+
+The Notes pilot now renders at `/notes/` with twelve equal-weight Errata, a casual
+first-person opening, an enhanced-only three-state filter and an honest Writing shelf with
+no fake posts. Every published record has a static `/notes/[slug]/` page containing the
+complete concise audit, related work, publishable measurements, source boundary and adjacent
+reading paths. Private repository and artifact paths are never printed.
+
+The existing paper system remains the primary visual source. Linear contributes only scan
+density, Maggie Appleton contributes content-type separation, and Cloudflare contributes the
+correction anatomy. The full reference lock and exact browser evidence are in
+[`PHASE_2_NOTES_REVIEW.md`](PHASE_2_NOTES_REVIEW.md). The owner still needs to inspect the
+rendered hub, Writing state and article at phone and desktop sizes before About begins.
 
 ## Review sequence
 
@@ -281,8 +295,9 @@ owner visual approval before Notes begins.
 3. Review the torn-ink project hover/focus and the amount of marginalia.
 4. Lock the landing tokens and responsive rules only after desktop, tablet and phone pass.
 5. Preserve the approved `/work` information architecture without an ownership filter.
-6. Approve the rendered shared case-study structure, then review Notes, About, Resume and
-   Hire one route family at a time.
+6. Preserve the approved shared case-study structure.
+7. Approve the rendered Notes hub and article, then review About, Resume and Hire one route
+   family at a time.
 
 ## Already locked, not reopened here
 

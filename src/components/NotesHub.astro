@@ -1,0 +1,135 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import '../styles/notes.css'
+
+interface Props {
+  notes: CollectionEntry<'notes'>[]
+  projects: CollectionEntry<'work'>[]
+  intro: string
+  filters: ['All', 'What went wrong', 'Writing']
+  writingEmpty: string
+}
+
+const { notes, projects, intro, filters, writingEmpty } = Astro.props
+const projectTitles = new Map(projects.map((project) => [project.id, project.data.title]))
+const publishedNotes = notes
+  .filter((note) => note.data.state === 'published')
+  .sort((left, right) => (right.data.publishedAt?.getTime() ?? 0) - (left.data.publishedAt?.getTime() ?? 0))
+const errata = publishedNotes.filter((note) => note.data.type === 'erratum')
+const posts = publishedNotes.filter((note) => note.data.type === 'post')
+const archiveDates = [...new Set(errata.map((note) => note.data.publishedAt?.toISOString().slice(0, 10)).filter(Boolean))]
+const archiveLabel = archiveDates.length === 1 && errata[0]?.data.publishedAt
+  ? new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }).format(errata[0].data.publishedAt)
+  : 'Newest first'
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Parth Tiwari's engineering errata: what went wrong, what changed, and the evidence behind each correction." />
+    <title>Notes and Errata | Parth Tiwari</title>
+  </head>
+  <body class="notes-review-page">
+    <a class="skip-link" href="#notes-archive">Skip to the notes</a>
+
+    <main class="notes-sheet">
+      <div class="notes-paper">
+        <div class="notes-edge notes-edge-left" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="notes-edge notes-edge-right" aria-hidden="true"><i></i><i></i><i></i></div>
+
+        <header class="notes-nav">
+          <a class="notes-wordmark" href="/">Parth Tiwari</a>
+          <nav aria-label="Portfolio navigation">
+            <a href="/work/">Work</a>
+            <a aria-current="page" href="/notes/">Notes</a>
+            <a href="/about/">About</a>
+            <a href="/resume/">Resume</a>
+          </nav>
+          <a class="notes-contact" href="/hire/">Start a project</a>
+          <details class="notes-mobile-menu paper-mobile-menu">
+            <summary><span class="menu-label-open">Menu</span><span class="menu-label-close">Close</span></summary>
+            <nav aria-label="Mobile portfolio navigation"><a href="/">Home</a><a href="/work/">Work</a><a aria-current="page" href="/notes/">Notes</a><a href="/about/">About</a><a href="/resume/">Resume</a></nav>
+          </details>
+        </header>
+
+        <section class="notes-intro" aria-labelledby="notes-title">
+          <div class="notes-intro-title">
+            <p class="notes-eyebrow">Notes / Errata and writing</p>
+            <h1 id="notes-title">Things went wrong. <br />I wrote them down.</h1>
+          </div>
+          <div class="notes-intro-copy">
+            <p>{intro}</p>
+            <dl aria-label="Publishing status">
+              <div><dt>Corrections</dt><dd>{errata.length}</dd></div>
+              <div><dt>General posts</dt><dd>{posts.length === 0 ? 'Coming soon' : posts.length}</dd></div>
+            </dl>
+          </div>
+        </section>
+
+        <section class="notes-controls" aria-label="Filter notes" data-notes-controls>
+          <div role="group" aria-label="Show notes by type">
+            {filters.map((filter, index) => (
+              <button type="button" data-note-filter={index === 0 ? 'all' : index === 1 ? 'erratum' : 'post'} aria-pressed={index === 0 ? 'true' : 'false'}>{filter}</button>
+            ))}
+          </div>
+          <p aria-live="polite"><span data-note-count>{publishedNotes.length}</span> records shown</p>
+        </section>
+
+        <section id="notes-archive" class="notes-archive" aria-labelledby="archive-title" data-errata-section>
+          <header class="archive-heading">
+            <div>
+              <p class="notes-eyebrow">Filed {archiveLabel}</p>
+              <h2 id="archive-title">What went wrong</h2>
+            </div>
+            <p>Not victory laps. Corrections with the source boundary still attached.</p>
+          </header>
+
+          <div class="notes-column-labels" aria-hidden="true"><span>Project</span><span>Correction</span><span>Evidence</span><span>Open</span></div>
+          <ol class="notes-register" data-notes-list>
+            {errata.map((note, index) => {
+              const projectsForNote = note.data.relatedProjects.map((slug) => projectTitles.get(slug) ?? slug)
+              const publicSources = note.data.sources.filter((source) => source.public).length
+              const sourceLabel = publicSources > 0
+                ? `${publicSources} public ${publicSources === 1 ? 'source' : 'sources'}`
+                : `${note.data.sources.length} internally audited ${note.data.sources.length === 1 ? 'source' : 'sources'}`
+              return (
+                <li class="note-row" data-note-entry data-note-type="erratum">
+                  <a href={`/notes/${note.id}/`} aria-label={`Read ${note.data.title}`}>
+                    <span class="note-number">{String(index + 1).padStart(2, '0')}</span>
+                    <span class="note-project">{projectsForNote.join(', ')}</span>
+                    <span class="note-copy"><strong>{note.data.title}</strong><span>{note.data.summary}</span></span>
+                    <span class="note-source">{sourceLabel}</span>
+                    <span class="note-open" aria-hidden="true">↗</span>
+                  </a>
+                </li>
+              )
+            })}
+          </ol>
+        </section>
+
+        <section class="writing-state" aria-labelledby="writing-title" data-writing-section>
+          <div>
+            <p class="notes-eyebrow">Writing / Open shelf</p>
+            <h2 id="writing-title">There is nothing here yet.</h2>
+          </div>
+          <div>
+            <p>{writingEmpty}</p>
+            <p>I will publish when a thought has survived the work, not to keep a schedule alive.</p>
+          </div>
+        </section>
+
+        <footer class="notes-close">
+          <p class="notes-eyebrow">End of the ledger</p>
+          <h2>See the systems behind the corrections.</h2>
+          <div><a href="/work/">Open the work register <span aria-hidden="true">→</span></a><a href="/about/">More about me <span aria-hidden="true">→</span></a></div>
+        </footer>
+      </div>
+    </main>
+
+    <script>
+      import '../scripts/notes-filter'
+    </script>
+  </body>
+</html>

@@ -1,0 +1,110 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import '../styles/notes.css'
+
+interface Props {
+  note: CollectionEntry<'notes'>
+  relatedProjects: CollectionEntry<'work'>[]
+  claims: CollectionEntry<'claims'>[]
+  previous?: CollectionEntry<'notes'>
+  next?: CollectionEntry<'notes'>
+}
+
+const { note, relatedProjects, claims, previous, next } = Astro.props
+const publishedAt = note.data.publishedAt
+  ? new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }).format(note.data.publishedAt)
+  : 'Publication date withheld'
+const updatedAt = note.data.updatedAt
+  ? new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }).format(note.data.updatedAt)
+  : undefined
+const claimMap = new Map(claims.map((claim) => [claim.id, claim]))
+const attachedClaims = note.data.claimRefs
+  .map((id) => claimMap.get(id))
+  .filter((claim): claim is CollectionEntry<'claims'> => Boolean(claim?.data.publish && claim.data.status === 'verified'))
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={note.data.summary} />
+    <title>{note.data.title} | Notes | Parth Tiwari</title>
+  </head>
+  <body class="note-article-page">
+    <a class="skip-link" href="#note-record">Skip to the record</a>
+
+    <main class="notes-sheet">
+      <article class="notes-paper article-paper">
+        <div class="notes-edge notes-edge-left" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="notes-edge notes-edge-right" aria-hidden="true"><i></i><i></i><i></i></div>
+
+        <header class="notes-nav article-nav">
+          <a class="notes-wordmark" href="/">Parth Tiwari</a>
+          <nav aria-label="Portfolio navigation">
+            <a href="/work/">Work</a><a aria-current="page" href="/notes/">Notes</a><a href="/about/">About</a><a href="/resume/">Resume</a>
+          </nav>
+          <a class="notes-contact" href="/hire/">Start a project</a>
+          <details class="notes-mobile-menu paper-mobile-menu">
+            <summary><span class="menu-label-open">Menu</span><span class="menu-label-close">Close</span></summary>
+            <nav aria-label="Mobile portfolio navigation"><a href="/">Home</a><a href="/work/">Work</a><a aria-current="page" href="/notes/">Notes</a><a href="/about/">About</a><a href="/resume/">Resume</a></nav>
+          </details>
+        </header>
+
+        <header class="article-masthead">
+          <div class="article-index"><span>Erratum</span><span>{publishedAt}</span>{updatedAt && <span>Updated {updatedAt}</span>}</div>
+          <h1>{note.data.title}</h1>
+          <p>{note.data.summary}</p>
+          <div class="article-projects" aria-label="Related projects">
+            {relatedProjects.map((project) => <a href={`/work/${project.id}/`}>{project.data.title} <span aria-hidden="true">↗</span></a>)}
+          </div>
+        </header>
+
+        <div id="note-record" class="article-body">
+          <aside aria-label="Reading guide">
+            <p class="notes-eyebrow">The correction</p>
+            <p>The original claim stays visible through the record. The correction does not erase how the mistake happened.</p>
+          </aside>
+          <section class="article-prose" aria-labelledby="record-title">
+            <h2 id="record-title">What happened</h2>
+            <slot />
+          </section>
+        </div>
+
+        {attachedClaims.length > 0 && (
+          <section class="article-evidence" aria-labelledby="evidence-title">
+            <header><p class="notes-eyebrow">Attached measurements</p><h2 id="evidence-title">The denominator stays with the number.</h2></header>
+            <dl>
+              {attachedClaims.map((claim) => (
+                <div><dt>{claim.data.display}</dt><dd>{claim.data.wording}</dd><dd>{claim.data.denominator}</dd></div>
+              ))}
+            </dl>
+          </section>
+        )}
+
+        <section class="article-sources" aria-labelledby="sources-title">
+          <header><p class="notes-eyebrow">Source boundary</p><h2 id="sources-title">What this record was checked against</h2></header>
+          <ol>
+            {note.data.sources.map((source, index) => (
+              <li>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <strong>{source.kind.replace('-', ' ')}</strong>
+                {source.public && source.locator.startsWith('https://')
+                  ? <a href={source.locator} target="_blank" rel="noreferrer">Open public source <span aria-hidden="true">↗</span></a>
+                  : <p>Reviewed internally. The repository or artifact is private, so its path is not published.</p>}
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <footer class="article-close">
+          <a class="back-to-notes" href="/notes/">← Back to all notes</a>
+          <nav aria-label="Other errata">
+            {previous && <a href={`/notes/${previous.id}/`}><span>Previous correction</span><strong>{previous.data.title}</strong></a>}
+            {next && <a href={`/notes/${next.id}/`}><span>Next correction</span><strong>{next.data.title}</strong></a>}
+          </nav>
+        </footer>
+      </article>
+    </main>
+  </body>
+</html>

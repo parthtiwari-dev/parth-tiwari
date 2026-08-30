@@ -1,0 +1,14 @@
+---
+import { getCollection } from 'astro:content'
+import NotesHub from '../components/NotesHub.astro'
+
+const [notes, projects, siteEntries] = await Promise.all([
+  getCollection('notes'),
+  getCollection('work'),
+  getCollection('site'),
+])
+const copy = siteEntries[0]?.data.notes
+if (!copy) throw new Error('The Notes route requires validated site copy.')
+---
+
+<NotesHub notes={notes} projects={projects} intro={copy.intro} filters={copy.filters} writingEmpty={copy.writingEmpty} />

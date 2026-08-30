@@ -16,6 +16,7 @@ Where to look, and what is still true.
 | [`PHASE_1_EVIDENCE_AUDIT.md`](PHASE_1_EVIDENCE_AUDIT.md) | The source audit, corrected metrics, blocked claims and public-link evidence |
 | [`PHASE_2_REVIEW.md`](PHASE_2_REVIEW.md) | Phase 2 reference lock, rejected A/B/C checkpoint and the single scroll landing review |
 | [`PHASE_2_CASE_STUDY_REVIEW.md`](PHASE_2_CASE_STUDY_REVIEW.md) | The shared `/work/[slug]` structure, BeatMind pilot, rendered evidence and blocked real-data inputs |
+| [`PHASE_2_NOTES_REVIEW.md`](PHASE_2_NOTES_REVIEW.md) | The Notes hub and Errata article reference lock, owner inputs, responsive evidence and publication boundaries |
 | [`CASE_STUDY_CONTRACT.md`](CASE_STUDY_CONTRACT.md) | Required evidence, media, accessibility and publication contract for every paper case study |
 | [`PHASE_2_BEATMIND_WORLD_STUDY.md`](PHASE_2_BEATMIND_WORLD_STUDY.md) | Approved Sound Foundry animatic, real BeatMind source lock, rendered evidence and production inputs still blocked |
 | [`PHASE_2_BEATMIND_WORLD_RESEARCH.md`](PHASE_2_BEATMIND_WORLD_RESEARCH.md) | Pudding and 124-entry Awwwards research, approved Sound Foundry reference lock and implementation boundary |
@@ -62,16 +63,20 @@ register demo and responsive evidence; the owner rejected a Personal/Company fil
 verified employment context will be handled per case study. The shared `/work/[slug]`
 structure now has a paper-first BeatMind pilot with real product video, workflow captures,
 typed research, decisions, failures, limits and future states. Its final built-output
-responsive, accessibility, craft, transfer and scroll checks pass; owner approval remains.
+responsive, accessibility, craft, transfer and scroll checks pass; the owner approved it by
+asking to begin Notes on 2026-08-30.
 The reusable reading order is locked in `CASE_STUDY_CONTRACT.md`. Follow-up Pudding and
 Awwwards research produced the separate continuous Sound Foundry.
 The owner approved its premise, nine-scene order and current five-stem product language on
 2026-08-30. A replacement standalone animatic now proves the continuous machine, separately
 composed phone view, fallback states and dark deep-dive handoff. It remains a
 review artifact, not an Astro route or Phase 5 implementation. The separate worlds-animation memo remains
-research only; no Phase 2 checklist item is newly marked complete. The approved interim root is live at
+research only. The Notes hub and all twelve concise Errata routes now have final responsive,
+no-JavaScript, accessibility, craft, transfer and scroll evidence in
+`PHASE_2_NOTES_REVIEW.md`; owner visual approval remains. No Phase 2 checklist item is newly
+marked complete. The approved interim root is live at
 `https://parth-tiwari-1.vercel.app/` and has passed live browser checks. A real
 five-person comprehension test remains mandatory on the Phase 3 static preview.
 
-**Last documentation truth audit:** 2026-08-30, BeatMind paper case-study contract, final
-built-output evidence and remaining owner-approval boundary recorded.
+**Last documentation truth audit:** 2026-08-30, Notes hub and Errata article review slice,
+final built-output evidence and remaining owner-approval boundary recorded.

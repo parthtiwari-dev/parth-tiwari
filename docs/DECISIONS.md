@@ -215,6 +215,14 @@ increases register copy sizes and applies one shared paper-menu treatment to Hom
 The revised preview remains a Phase 2 static study; production reveal behaviour remains in
 Phase 4.
 
+The Notes review slice on 2026-08-30 keeps all twelve Errata at equal weight. BeatMind is not
+pinned as a featured mistake. The hub uses the casual working line `Things went wrong. I
+wrote them down.` and prints the shared publication date once instead of repeating it on
+every row. Individual records remain concise and evidence-led; they are not expanded with
+invented detail or padded prose. General Posts remain empty and receive an intentional
+Writing `Coming soon` state. Private source paths are described as internally reviewed but
+are not published.
+
 ### Phase 4
 
 - Production tear study

@@ -86,7 +86,9 @@ content remains static HTML.
   `https://parth-tiwari-1.vercel.app/`. `/work` architecture is approved. The single
   `/work/beatmind/` Phase 2 paper pilot now follows `docs/CASE_STUDY_CONTRACT.md`, uses
   real product media and has final responsive, accessibility, craft, transfer and scroll
-  evidence; owner review remains. Notes is next only after that approval. The owner approved BeatMind's Sound Foundry
+  evidence. The owner approved it by starting Notes on 2026-08-30. `/notes` and all twelve
+  concise `/notes/[slug]` Errata now have final responsive, accessibility, craft, transfer,
+  no-JavaScript and scroll evidence; owner visual approval remains before About begins. The owner approved BeatMind's Sound Foundry
   storyboard and current five-stem language on 2026-08-30; its standalone verified animatic
   is a Phase 2 review artifact only. Its dark ending and explicit case-study CTA are locked;
   no paper section appears below the world. Production route implementation remains Phase 3 and
