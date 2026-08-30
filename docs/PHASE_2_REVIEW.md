@@ -1,8 +1,9 @@
 # Phase 2 owner review: system and page architecture
 
-Opened 2026-08-28; updated 2026-08-29. Phase 2 proceeds one route and one review checkpoint
+Opened 2026-08-28; updated 2026-08-31. Phase 2 proceeds one route and one review checkpoint
 at a time. The owner approved the refined landing structure and its interim public release
-on 2026-08-29. `/work` is the next route architecture review; implementation remains Phase 3.
+on 2026-08-29. Every route family now has a review implementation; shared-system closeout,
+rendered contrast and owner visual approval remain before the Phase 2 gate.
 
 ## Scope
 
@@ -317,6 +318,21 @@ two-page A4 print proof are in
 [`PHASE_2_RESUME_REVIEW.md`](PHASE_2_RESUME_REVIEW.md). Owner visual approval remains; Hire is
 the next route review.
 
+## Hire review slice
+
+The Hire pilot now renders at `/hire/` from the three typed service records and approved
+route copy. One continuous paper route contains the direct arrival, an informal first-message
+note, service scope and boundaries, a four-step risk-reduction path, equal fit and not-fit
+guidance, and booking, email and WhatsApp at both ends. It contains no price, form,
+testimonial, client logo, urgency claim or client script.
+
+thoughtbot contributes only the separation of service shapes and risk-first validation;
+Josh Comeau contributes only direct human contact framing. Paper and Worlds remains the
+visual source. The complete reference lock, copy boundary, contact verification and
+responsive evidence are in [`PHASE_2_HIRE_REVIEW.md`](PHASE_2_HIRE_REVIEW.md). Owner visual
+approval remains. Every route family now has a Phase 2 review implementation, so the next
+slice is the shared system and gate closeout rather than Vivid.
+
 ## Review sequence
 
 1. Review the post-hero navigation fold, opening unfurl, segmented side damage and lower
@@ -326,7 +342,9 @@ the next route review.
 4. Lock the landing tokens and responsive rules only after desktop, tablet and phone pass.
 5. Preserve the approved `/work` information architecture without an ownership filter.
 6. Preserve the approved shared case-study structure.
-7. Approve the rendered Notes, About and Resume slices, then review Hire.
+7. Approve the rendered Notes, About, Resume and Hire slices.
+8. Reconcile shared tokens and route states, run rendered contrast at all three widths,
+   then show the complete Phase 2 gate and stop.
 
 ## Already locked, not reopened here
 

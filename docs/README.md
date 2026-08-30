@@ -19,6 +19,7 @@ Where to look, and what is still true.
 | [`PHASE_2_NOTES_REVIEW.md`](PHASE_2_NOTES_REVIEW.md) | The Notes hub and Errata article reference lock, owner inputs, responsive evidence and publication boundaries |
 | [`PHASE_2_ABOUT_REVIEW.md`](PHASE_2_ABOUT_REVIEW.md) | The About route reference lock, typed chronology, real portrait and responsive evidence |
 | [`PHASE_2_RESUME_REVIEW.md`](PHASE_2_RESUME_REVIEW.md) | The HTML Resume structure, source PDF boundary, optional Drive configuration, responsive and print evidence |
+| [`PHASE_2_HIRE_REVIEW.md`](PHASE_2_HIRE_REVIEW.md) | The Hire route reference lock, service boundaries, four-step process, fit guidance and verified contact paths |
 | [`CASE_STUDY_CONTRACT.md`](CASE_STUDY_CONTRACT.md) | Required evidence, media, accessibility and publication contract for every paper case study |
 | [`PHASE_2_BEATMIND_WORLD_STUDY.md`](PHASE_2_BEATMIND_WORLD_STUDY.md) | Approved Sound Foundry animatic, real BeatMind source lock, rendered evidence and production inputs still blocked |
 | [`PHASE_2_BEATMIND_WORLD_RESEARCH.md`](PHASE_2_BEATMIND_WORLD_RESEARCH.md) | Pudding and 124-entry Awwwards research, approved Sound Foundry reference lock and implementation boundary |
@@ -81,10 +82,14 @@ with final responsive and no-JavaScript evidence in `PHASE_2_ABOUT_REVIEW.md`; o
 approval remains. The Resume pilot now adds the semantic HTML CV, unchanged local Resume B
 download, verified selected-work claims, optional env-configured Drive link and inspected
 two-page print output; `PHASE_2_RESUME_REVIEW.md` records the final route evidence. Owner
-visual approval remains and Hire is next. No Phase 2 checklist item is newly marked complete.
+visual approval remains. The Hire pilot now adds the three typed work scopes, boundaries,
+four-step risk-reduction path, fit guidance and direct booking, email and WhatsApp; its
+final responsive and no-JavaScript evidence is in `PHASE_2_HIRE_REVIEW.md`. Every route
+family now has a Phase 2 review implementation. Shared-token, route-state, rendered-contrast
+and owner-approval closeout remain, so no Phase 2 checklist item is newly marked complete.
 The approved interim root is live at
 `https://parth-tiwari-1.vercel.app/` and has passed live browser checks. A real
 five-person comprehension test remains mandatory on the Phase 3 static preview.
 
-**Last documentation truth audit:** 2026-08-30, Resume route review slice, local PDF and
-optional Drive boundary, responsive and print evidence, and remaining owner approval recorded.
+**Last documentation truth audit:** 2026-08-31, Hire route review slice, responsive and
+no-JavaScript evidence, external contact checks, and remaining Phase 2 closeout recorded.

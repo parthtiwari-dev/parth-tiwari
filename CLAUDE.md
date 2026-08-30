@@ -93,8 +93,12 @@ content remains static HTML.
   and final 390, 800, 1440 and no-JavaScript evidence; owner visual approval remains and
   Resume followed as the next review slice. `/resume/` now has semantic HTML, the unchanged
   local Resume B download, verified project claims, an optional env-configured Drive link,
-  final responsive/no-JavaScript evidence and an inspected two-page A4 print proof. Owner
-  visual approval remains and Hire is next. The owner approved BeatMind's Sound Foundry
+  final responsive/no-JavaScript evidence and an inspected two-page A4 print proof.
+  `/hire/` now has the three typed service scopes, boundaries, a four-step risk-reduction
+  path, fit guidance and direct booking, email and WhatsApp, with final 390, 800, 1440 and
+  no-JavaScript evidence. Owner visual approval remains for the recent route slices. The
+  next Phase 2 work is shared-system and gate closeout, not Vivid. The owner approved
+  BeatMind's Sound Foundry
   storyboard and current five-stem language on 2026-08-30; its standalone verified animatic
   is a Phase 2 review artifact only. Its dark ending and explicit case-study CTA are locked;
   no paper section appears below the world. Production route implementation remains Phase 3 and

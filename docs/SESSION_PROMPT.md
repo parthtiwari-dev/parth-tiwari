@@ -50,11 +50,15 @@ Phase 2 is design-system and route-architecture work:
   CTA and no appended paper section. This is a Phase 2 review artifact, not an Astro route
   and not permission to implement the production world before Phase 5.
 - Do not build the production site, tear, backlight, canvas or animated worlds.
-- Refresh the 390, 800 and 1440 evidence after changes. Preserve the approved landing while
-  reviewing `/work`; production route implementation remains Phase 3.
+- `/notes`, every `/notes/[slug]`, `/about`, `/resume` and `/hire` now have Phase 2 review
+  implementations and built responsive evidence. Hire uses the typed service records,
+  boundaries, a four-step risk-reduction path and direct booking, email and WhatsApp with no
+  public pricing. Owner visual approval remains for the recent route slices.
+- Refresh the 390, 800 and 1440 evidence after changes. Preserve the reviewed routes and do
+  not begin Vivid. The next work is shared-token, responsive-state and rendered-contrast
+  closeout, followed by the complete Phase 2 gate.
 
 Begin by confirming the current branch and diff. Preserve the approved landing checkpoint.
-After the owner approves the BeatMind structure, review `/notes` and `/notes/[slug]` next.
 Phase 2 remains incomplete until
 every route structure, shared token, accessibility state and rendered-contrast gate is
 approved and verified.

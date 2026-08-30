@@ -335,8 +335,19 @@ The supplied Resume B PDF is served unchanged as the stable download. An optiona
 there is no embed or runtime fetch. The final route capture passes at 390, 800 and 1440
 pixels, the no-JavaScript document remains complete, the local PDF returns the expected byte
 length, and the inspected print proof is two clean A4 pages. Evidence and the stale-PDF-claim
-boundary are recorded in `docs/PHASE_2_RESUME_REVIEW.md`. Hire is the next route review; the
-combined route-family item remains unticked.
+boundary are recorded in `docs/PHASE_2_RESUME_REVIEW.md`. Hire followed as the next route
+review; the combined route-family item remains unticked.
+
+**Hire review checkpoint, 2026-08-31:** `/hire/` now renders the three typed service
+records with explicit boundaries, a four-step risk-reduction path, balanced fit and
+not-fit guidance, and direct booking, email and WhatsApp paths. The page contains no public
+pricing, form, testimonial, client logo, urgency claim or client script. Built-output
+captures pass at 390, 800 and 1440 pixels with zero overflow or page errors, and the full
+route remains available without JavaScript. The configured Cal.com and WhatsApp URLs also
+returned HTTP 200 during read-only checks. Evidence and reference limits are recorded in
+`docs/PHASE_2_HIRE_REVIEW.md`. All route structures now have review implementations; owner
+visual approval and the shared token, state and contrast closeout remain before the Phase 2
+gate can run.
 
 **Owner review before work**
 
@@ -364,7 +375,8 @@ combined route-family item remains unticked.
   captured from the approved Sound Foundry animatic. Final built-output evidence at 390, 800
   and 1440 pixels is in `.shots/phase2-arrival-world-still-built`; this refinement does not
   start Phase 3 or add landing-page canvas motion.
-- Review the rendered Notes, About and Resume slices. Hire is the next route review.
+- Review the rendered Notes, About, Resume and Hire slices, then close the shared tokens,
+  responsive states and rendered-contrast evidence before running the Phase 2 gate.
 
 **Do**
 

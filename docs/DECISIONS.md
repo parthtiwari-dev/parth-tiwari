@@ -37,6 +37,7 @@ in the same commit.
 | Resume is semantic HTML backed by current verified records | Owner decided 2026-08-30 | Recruiters, crawlers and assistive technology need a real page; project numbers must follow the current evidence collection | A PDF viewer as the page or copying stale numbers from the supplied artifact |
 | Resume B remains the unchanged local download | Owner decided 2026-08-30 | The owner named this artifact as the resume source; preserving its bytes keeps the handoff exact | Re-exporting or silently rewriting the supplied PDF |
 | Google Drive is an optional external resume link | Owner decided 2026-08-30 | A public env-configured link can point to a later copy without making the static HTML or local download depend on Google | Drive embed, build-time download, API key or required runtime fetch |
+| Hire uses service scope, risk-first process, explicit fit and direct contact | Owner review 2026-08-31 | The route should qualify a real conversation without manufacturing trust or requiring a polished brief | Pricing table, long inquiry form, testimonials, client logos and fake urgency |
 | Work register may sort by recency and running status | Decided | Those fields have stable meanings | Unexplained novelty filters |
 | Work may sort by qualitative build effort | Decided | `flagship`, `substantial` and `focused` communicate scope without inventing hours or money | A misleading cost control |
 | Work has no Personal/Company split | Owner decided 2026-08-29 | The owner's flexible employment context makes a binary register taxonomy reductive; projects should be compared by the work itself | Ownership filters and company badges on every row |
@@ -227,6 +228,12 @@ every row. Individual records remain concise and evidence-led; they are not expa
 invented detail or padded prose. General Posts remain empty and receive an intentional
 Writing `Coming soon` state. Private source paths are described as internally reviewed but
 are not published.
+
+The `/hire` review slice uses the three validated service records, their boundaries and a
+four-step risk-reduction path. Booking is the first contact action; email and WhatsApp stay
+equally visible as direct alternatives. The page has no price or sales form. This is the
+current rendered proposal and remains subject to owner visual approval before the Phase 2
+route-hierarchy item closes.
 
 ### Phase 4
 
