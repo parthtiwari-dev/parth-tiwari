@@ -38,7 +38,7 @@
   "resume": {
     "heading": "Resume",
     "intro": "A real HTML resume for recruiters, search, and screen readers, with the source PDF available beside it.",
-    "downloadLabel": "Download PDF"
+    "downloadLabel": "Download source PDF"
   },
   "hire": {
     "heading": "Have something real to build?",

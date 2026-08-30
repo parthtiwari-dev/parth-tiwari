@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { readdir, readFile } from 'node:fs/promises'
 import path from 'node:path'
-import { claimSchema, educationSchema, experienceSchema, noteSchema, serviceSchema, siteCopySchema, workSchema } from '../src/content/schemas.mjs'
+import { claimSchema, educationSchema, experienceSchema, noteSchema, resumeSchema, serviceSchema, siteCopySchema, workSchema } from '../src/content/schemas.mjs'
 
 const root = process.cwd()
 
@@ -30,6 +30,7 @@ const work = await readMarkdownDirectory('src/content/work', workSchema)
 const notes = await readMarkdownDirectory('src/content/notes', noteSchema)
 const education = await readJsonDirectory('src/content/education', educationSchema)
 const experience = await readJsonDirectory('src/content/experience', experienceSchema)
+const resume = await readJsonDirectory('src/content/resume', resumeSchema)
 const services = await readJsonDirectory('src/content/services', serviceSchema)
 const site = await readJsonDirectory('src/content/site', siteCopySchema)
 
@@ -67,7 +68,10 @@ for (const service of services) {
   for (const projectId of service.data.evidenceProjects) assert(workIds.has(projectId), `${service.id} references missing evidence project ${projectId}`)
 }
 
-const publicText = [...work, ...notes, ...education, ...experience, ...services, ...site].map((entry) => entry.raw).join('\n')
+assert.equal(resume.length, 1, 'the HTML resume must have one validated profile')
+for (const projectId of resume[0].data.projectIds) assert(workIds.has(projectId), `resume references missing project ${projectId}`)
+
+const publicText = [...work, ...notes, ...education, ...experience, ...resume, ...services, ...site].map((entry) => entry.raw).join('\n')
 assert.equal(publicText.includes('—'), false, 'user-facing content must not contain em dashes')
 
 const publishedClaims = claims.filter((entry) => entry.data.publish)
@@ -76,5 +80,6 @@ console.log('PASS BeatMind validates against the complete Phase 2 case-study con
 console.log(`PASS ${notes.length} errata entries validate; general Posts remain empty by decision`)
 console.log(`PASS ${publishedClaims.length} public quantitative claims resolve to verified source records`)
 console.log(`PASS ${education.length} education, ${experience.length} experience and ${services.length} service records validate`)
+console.log(`PASS ${resume.length} resume profile references verified project records`)
 console.log('PASS project, note, next-project, and evidence references resolve')
 console.log('PASS user-facing content contains no em dash')

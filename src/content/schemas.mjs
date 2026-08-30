@@ -174,6 +174,19 @@ export const educationSchema = z.object({
   source: sourceSchema,
 })
 
+export const resumeSchema = z.object({
+  headline: z.string().min(8),
+  location: z.string().min(2),
+  summary: z.string().min(24),
+  skillGroups: z.array(z.object({
+    label: z.string().min(3),
+    items: z.array(z.string().min(1)).min(2),
+  })).min(3),
+  projectIds: z.array(z.string().min(2)).min(3).max(6),
+  reviewedAt: z.coerce.date(),
+  source: sourceSchema,
+})
+
 export const serviceSchema = z.object({
   order: z.number().int().min(1),
   title: z.string().min(4),

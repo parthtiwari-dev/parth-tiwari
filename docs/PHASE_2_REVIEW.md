@@ -301,7 +301,21 @@ the visual source.
 The complete lock, source boundary and 390, 800 and 1440 pixel evidence are in
 [`PHASE_2_ABOUT_REVIEW.md`](PHASE_2_ABOUT_REVIEW.md). The route uses zero client scripts and
 remains complete without JavaScript. Owner visual approval remains; Resume is the next
-review slice.
+review slice and now follows below.
+
+## Resume review slice
+
+The Resume pilot now renders at `/resume/` as a crawlable HTML document backed by the typed
+resume, experience, education, work and claim collections. The supplied Resume B artifact is
+served unchanged as a clearly labelled source PDF; its older numeric project statements are
+not copied into the HTML. A separate optional Drive link is controlled by
+`PUBLIC_RESUME_GOOGLE_DRIVE_URL`, accepts only HTTPS Google Drive or Docs hosts, and adds no
+embed, runtime fetch or dependency.
+
+The complete source boundary, configuration proof, responsive capture and inspected
+two-page A4 print proof are in
+[`PHASE_2_RESUME_REVIEW.md`](PHASE_2_RESUME_REVIEW.md). Owner visual approval remains; Hire is
+the next route review.
 
 ## Review sequence
 
@@ -312,8 +326,7 @@ review slice.
 4. Lock the landing tokens and responsive rules only after desktop, tablet and phone pass.
 5. Preserve the approved `/work` information architecture without an ownership filter.
 6. Preserve the approved shared case-study structure.
-7. Approve the rendered Notes and About slices, then review Resume and Hire one route family
-   at a time.
+7. Approve the rendered Notes, About and Resume slices, then review Hire.
 
 ## Already locked, not reopened here
 

@@ -325,8 +325,18 @@ first-person introduction, one typed chronology with two education records and t
 role, three current-work lines and five operating rules. Its built-output capture passes at
 390, 800 and 1440 pixels with zero overflow, browser errors or client scripts, and the full
 route remains present without JavaScript. Reference limits and evidence are recorded in
-`docs/PHASE_2_ABOUT_REVIEW.md`. Resume is the next review slice; this does not tick the
+`docs/PHASE_2_ABOUT_REVIEW.md`. Resume followed as the next review slice; this does not tick the
 combined route-family item or begin Phase 3.
+
+**Resume review checkpoint, 2026-08-30:** `/resume/` now emits a semantic HTML CV from one
+validated resume profile plus the shared experience, education, work and claim collections.
+The supplied Resume B PDF is served unchanged as the stable download. An optional
+`PUBLIC_RESUME_GOOGLE_DRIVE_URL` adds a separately labelled HTTPS Drive link at build time;
+there is no embed or runtime fetch. The final route capture passes at 390, 800 and 1440
+pixels, the no-JavaScript document remains complete, the local PDF returns the expected byte
+length, and the inspected print proof is two clean A4 pages. Evidence and the stale-PDF-claim
+boundary are recorded in `docs/PHASE_2_RESUME_REVIEW.md`. Hire is the next route review; the
+combined route-family item remains unticked.
 
 **Owner review before work**
 
@@ -354,8 +364,7 @@ combined route-family item or begin Phase 3.
   captured from the approved Sound Foundry animatic. Final built-output evidence at 390, 800
   and 1440 pixels is in `.shots/phase2-arrival-world-still-built`; this refinement does not
   start Phase 3 or add landing-page canvas motion.
-- Review the rendered Notes and About slices. Resume is the next route review, using the
-  supplied local Resume B PDF as the download and verified collection records for HTML copy.
+- Review the rendered Notes, About and Resume slices. Hire is the next route review.
 
 **Do**
 

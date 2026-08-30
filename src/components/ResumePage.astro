@@ -1,0 +1,139 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { CONTACT_EMAIL, CONTACT_EMAIL_HREF, WHATSAPP_NUMBER } from '../config/site'
+import { socialLinks } from '../data/socialLinks'
+import PaperRouteNav from './PaperRouteNav.astro'
+import '../styles/profile-pages.css'
+
+interface Props {
+  copy: CollectionEntry<'site'>['data']['resume']
+  profile: CollectionEntry<'resume'>['data']
+  education: CollectionEntry<'education'>[]
+  experience: CollectionEntry<'experience'>[]
+  projects: CollectionEntry<'work'>[]
+  claims: CollectionEntry<'claims'>[]
+  driveUrl?: string
+}
+
+const { copy, profile, education, experience, projects, claims, driveUrl } = Astro.props
+const projectMap = new Map(projects.map((project) => [project.id, project]))
+const claimMap = new Map(claims.filter((claim) => claim.data.status === 'verified' && claim.data.publish).map((claim) => [claim.id, claim]))
+const selectedProjects = profile.projectIds.map((id) => projectMap.get(id)).filter((project): project is CollectionEntry<'work'> => Boolean(project))
+const educationByStart = [...education].sort((left, right) => right.data.start.localeCompare(left.data.start))
+const experienceByStart = [...experience].sort((left, right) => right.data.start.localeCompare(left.data.start))
+const publicLinks = socialLinks.filter((link) => ['github', 'linkedin'].includes(link.kind))
+const phoneHref = `tel:+${WHATSAPP_NUMBER}`
+const phoneLabel = '+91 70001 81882'
+const formatMonth = (value: string) => {
+  const [year, month] = value.split('-').map(Number)
+  return new Intl.DateTimeFormat('en-GB', { month: 'short', year: 'numeric', timeZone: 'UTC' })
+    .format(new Date(Date.UTC(year, month - 1, 1)))
+}
+const reviewedAt = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(profile.reviewedAt)
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Parth Tiwari's crawlable HTML resume: experience, selected AI product work, skills, education, and a PDF download." />
+    <title>Resume | Parth Tiwari</title>
+  </head>
+  <body class="profile-page resume-page">
+    <a class="skip-link" href="#resume-document">Skip to the resume</a>
+    <main class="profile-sheet">
+      <div class="profile-paper">
+        <div class="profile-edge profile-edge-left" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="profile-edge profile-edge-right" aria-hidden="true"><i></i><i></i><i></i></div>
+        <PaperRouteNav current="resume" />
+
+        <header class="resume-arrival">
+          <div>
+            <p class="profile-eyebrow">Resume / HTML first</p>
+            <h1>{copy.heading}.</h1>
+            <p>{copy.intro}</p>
+          </div>
+          <nav class="resume-actions" aria-label="Resume actions">
+            <a class="resume-download" href="/resume/Parth_Tiwari_Resume_B.pdf" download>{copy.downloadLabel}</a>
+            {driveUrl && <a href={driveUrl} target="_blank" rel="noreferrer">View latest Drive copy <span aria-hidden="true">↗</span></a>}
+            <button type="button" data-print-resume hidden>Print this page</button>
+            <p>Resume B is preserved as supplied. This HTML page carries the latest verified project evidence.</p>
+          </nav>
+        </header>
+
+        <article id="resume-document" class="resume-document" aria-labelledby="resume-name">
+          <header class="resume-identity">
+            <div><p class="profile-eyebrow">Parth Tiwari / Curriculum vitae</p><h2 id="resume-name">Parth Tiwari</h2><p>{profile.headline}</p></div>
+            <address>
+              <span>{profile.location}</span>
+              <a href={CONTACT_EMAIL_HREF}>{CONTACT_EMAIL}</a>
+              <a href={phoneHref}>{phoneLabel}</a>
+              {publicLinks.map((link) => <a href={link.href} target="_blank" rel="noreferrer">{link.label}: {link.value}</a>)}
+            </address>
+          </header>
+
+          <section class="resume-section resume-summary" aria-labelledby="resume-summary-title">
+            <h2 id="resume-summary-title">Profile</h2>
+            <p>{profile.summary}</p>
+          </section>
+
+          <section class="resume-section" aria-labelledby="resume-experience-title">
+            <h2 id="resume-experience-title">Experience</h2>
+            <div class="resume-records">
+              {experienceByStart.map((entry) => (
+                <article class="resume-record">
+                  <header><div><h3>{entry.data.role}</h3><p>{entry.data.organization} · {entry.data.location}</p></div><p>{formatMonth(entry.data.start)} – {entry.data.current ? 'Present' : formatMonth(entry.data.end!)}</p></header>
+                  <p>{entry.data.summary}</p>
+                  <ul>{entry.data.highlights.map((highlight) => <li>{highlight}</li>)}</ul>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section class="resume-section" aria-labelledby="resume-projects-title">
+            <h2 id="resume-projects-title">Selected work</h2>
+            <div class="resume-records resume-project-records">
+              {selectedProjects.map((project) => {
+                const projectClaims = project.data.claimRefs.map((id) => claimMap.get(id)).filter((claim): claim is CollectionEntry<'claims'> => Boolean(claim))
+                return (
+                  <article class="resume-record resume-project">
+                    <header><div><h3><a href={`/work/${project.id}/`}>{project.data.title}</a></h3><p>{project.data.stackAndLinks.stack.slice(0, 5).join(' · ')}</p></div><p>{project.data.status.replace('-', ' ')}</p></header>
+                    <p>{project.data.summary}</p>
+                    {projectClaims.length > 0 && <ul class="resume-proof">{projectClaims.map((claim) => <li><strong>{claim.data.display}</strong><span>{claim.data.wording}</span></li>)}</ul>}
+                  </article>
+                )
+              })}
+            </div>
+          </section>
+
+          <section class="resume-section" aria-labelledby="resume-skills-title">
+            <h2 id="resume-skills-title">Skills</h2>
+            <dl class="resume-skills">
+              {profile.skillGroups.map((group) => <div><dt>{group.label}</dt><dd>{group.items.join(' · ')}</dd></div>)}
+            </dl>
+          </section>
+
+          <section class="resume-section" aria-labelledby="resume-education-title">
+            <h2 id="resume-education-title">Education</h2>
+            <div class="resume-records resume-education-records">
+              {educationByStart.map((entry) => (
+                <article class="resume-record">
+                  <header><div><h3>{entry.data.credential}</h3><p>{entry.data.institution} · {entry.data.location}</p></div><p>{formatMonth(entry.data.start)} – {formatMonth(entry.data.end)}</p></header>
+                  <p>{entry.data.focus}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <footer class="resume-footnote">
+            <p>HTML record reviewed {reviewedAt}. Quantitative project claims use the portfolio's verified claim collection; the supplied PDF is preserved unchanged as a separate downloadable artifact.</p>
+          </footer>
+        </article>
+      </div>
+    </main>
+    <script>
+      import '../scripts/resume-print'
+    </script>
+  </body>
+</html>

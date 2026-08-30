@@ -18,6 +18,7 @@
     "phase2:case-capture": "node scripts/phase2-case-study-capture.mjs",
     "phase2:notes-capture": "node scripts/phase2-notes-capture.mjs",
     "phase2:about-capture": "node scripts/phase2-about-capture.mjs",
+    "phase2:resume-capture": "node scripts/phase2-resume-capture.mjs",
     "preview": "astro preview --host 127.0.0.1",
     "shots": "node scripts/shots.mjs",
     "capture": "node scripts/capture-demos.mjs",
