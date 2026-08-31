@@ -37,8 +37,21 @@ const site = await readJsonDirectory('src/content/site', siteCopySchema)
 assert.equal(work.length, 12, 'the register must contain all twelve projects')
 assert.equal(education.length, 2, 'the profile must contain both verified education records')
 assert.equal(new Set(work.map((entry) => entry.data.order)).size, 12, 'project order values must be unique')
-for (const projectId of ['beatmind', 'vivid']) {
+const publishedCaseStudyIds = [
+  'beatmind', 'vivid', 'tathya', 'medrag', 'order-supervisor', 'querypilot',
+  'secondself', 'oncoverse', 'upi-fraud-engine', 'spur-chat',
+]
+const deferredCaseStudyIds = ['fraud-risk-intelligence', 'oracle-auto-provision']
+for (const projectId of publishedCaseStudyIds) {
   assert(work.find((entry) => entry.id === projectId)?.data.caseStudy, `${projectId} must satisfy the paper case-study contract`)
+}
+assert.deepEqual(
+  work.filter((entry) => entry.data.caseStudy).map((entry) => entry.id).sort(),
+  [...publishedCaseStudyIds].sort(),
+  'exactly the ten approved case studies must be published',
+)
+for (const projectId of deferredCaseStudyIds) {
+  assert.equal(work.find((entry) => entry.id === projectId)?.data.caseStudy, undefined, `${projectId} must remain deferred`)
 }
 
 const workIds = new Set(work.map((entry) => entry.id))
@@ -78,7 +91,8 @@ assert.equal(publicText.includes('—'), false, 'user-facing content must not co
 
 const publishedClaims = claims.filter((entry) => entry.data.publish)
 console.log(`PASS ${work.length} project entries validate with all base beats`)
-console.log('PASS BeatMind and Vivid validate against the complete paper case-study contract')
+console.log(`PASS exactly ${publishedCaseStudyIds.length} projects validate against the complete paper case-study contract`)
+console.log(`PASS exactly ${deferredCaseStudyIds.length} projects remain deferred without placeholder records`)
 console.log(`PASS ${notes.length} errata entries validate; general Posts remain empty by decision`)
 console.log(`PASS ${publishedClaims.length} public quantitative claims resolve to verified source records`)
 console.log(`PASS ${education.length} education, ${experience.length} experience and ${services.length} service records validate`)

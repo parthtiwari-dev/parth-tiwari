@@ -112,6 +112,65 @@ console.log(`${noScriptPassed ? 'PASS' : 'FAIL'} no-JavaScript: chapters=${noScr
 if (!noScriptPassed) failures += 1
 await noScriptContext.close()
 
+const reducedContext = await browser.newContext({
+  viewport: { width: 390, height: 844 },
+  hasTouch: true,
+  isMobile: true,
+  reducedMotion: 'reduce',
+})
+const reducedPage = await reducedContext.newPage()
+const reducedErrors = []
+reducedPage.on('pageerror', (error) => reducedErrors.push(error.message))
+const reducedResponse = await reducedPage.goto(`${base}/work/${slug}/`, { waitUntil: 'load' })
+const reduced = await reducedPage.evaluate(() => ({
+  preference: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+  chapters: document.querySelectorAll('[data-case-chapter]').length,
+  proofs: document.querySelectorAll('[data-proof-surface]').length,
+}))
+const reducedPassed = reducedResponse?.ok() && reduced.preference && reduced.overflow <= 1
+  && reduced.chapters === 10 && reduced.proofs === 4 && reducedErrors.length === 0
+console.log(`${reducedPassed ? 'PASS' : 'FAIL'} reduced-motion: overflow=${reduced.overflow}px chapters=${reduced.chapters} proofs=${reduced.proofs} errors=${reducedErrors.join(' | ')}`)
+if (!reducedPassed) failures += 1
+await reducedContext.close()
+
+const keyboardContext = await browser.newContext({ viewport: { width: 1440, height: 900 } })
+const keyboardPage = await keyboardContext.newPage()
+const keyboardResponse = await keyboardPage.goto(`${base}/work/${slug}/`, { waitUntil: 'load' })
+await keyboardPage.keyboard.press('Tab')
+const keyboard = await keyboardPage.evaluate(() => {
+  const active = document.activeElement
+  const bounds = active?.getBoundingClientRect()
+  const style = active ? getComputedStyle(active) : null
+  return {
+    name: active?.getAttribute('aria-label') || active?.textContent?.trim() || '',
+    visible: Boolean(bounds && bounds.width > 0 && bounds.height > 0
+      && bounds.bottom > 0 && bounds.right > 0
+      && bounds.top < window.innerHeight && bounds.left < window.innerWidth),
+    styled: Boolean(style && (style.outlineStyle !== 'none' || style.boxShadow !== 'none')),
+  }
+})
+const keyboardPassed = keyboardResponse?.ok() && keyboard.visible && keyboard.styled && keyboard.name.length > 0
+console.log(`${keyboardPassed ? 'PASS' : 'FAIL'} keyboard-focus: name=${JSON.stringify(keyboard.name)} visible=${keyboard.visible} styled=${keyboard.styled}`)
+if (!keyboardPassed) failures += 1
+await keyboardContext.close()
+
+const printContext = await browser.newContext({ viewport: { width: 800, height: 1024 } })
+const printPage = await printContext.newPage()
+const printResponse = await printPage.goto(`${base}/work/${slug}/`, { waitUntil: 'load' })
+await printPage.emulateMedia({ media: 'print', colorScheme: 'light' })
+const printState = await printPage.evaluate(() => ({
+  overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+  chapters: document.querySelectorAll('[data-case-chapter]').length,
+  proofs: document.querySelectorAll('[data-proof-surface]').length,
+}))
+await printPage.screenshot({ path: path.join(output, 'print-800.png'), fullPage: true })
+const printPassed = printResponse?.ok() && printState.overflow <= 1
+  && printState.chapters === 10 && printState.proofs === 4
+console.log(`${printPassed ? 'PASS' : 'FAIL'} print: overflow=${printState.overflow}px chapters=${printState.chapters} proofs=${printState.proofs}`)
+if (!printPassed) failures += 1
+await printContext.close()
+
 await browser.close()
 console.log(`Case-study screenshots: ${output}`)
 process.exit(failures === 0 ? 0 : 1)

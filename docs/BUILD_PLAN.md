@@ -439,7 +439,7 @@ commit with the matching plan items ticked.
   variants; empty measurements state their absence instead of rendering blank space.
 - [x] Route availability is derived from a validated `caseStudy` record. Deferred register
   rows are non-clickable and related Notes links return to the register.
-- [ ] Tathya, MedRAG, Order Supervisor, QueryPilot, SecondSelf, OncoVerse, UPI Fraud Engine
+- [x] Tathya, MedRAG, Order Supervisor, QueryPilot, SecondSelf, OncoVerse, UPI Fraud Engine
   and Spur Chat receive audited `caseStudy` records in the approved batch.
   - [x] Tathya: committed source, real product recording and captures, source-to-case-file
     story, failures, explicit no-measurement state, limits and sources.
@@ -457,11 +457,12 @@ commit with the matching plan items ticked.
     alert-budget story, separate held-out/replay records and risk-score boundary.
   - [x] Spur Chat: real desktop/mobile captures, SSE and recovery architecture, fictional
     take-home boundary, frontend/backend split failure and current suspended-backend state.
-- [ ] Fraud Risk Intelligence and Oracle Auto Provision remain explicitly deferred as
+- [x] Fraud Risk Intelligence and Oracle Auto Provision remain explicitly deferred as
   **Case study in development** until their later audits.
-- [ ] Every `/work/[slug]` page satisfies `CASE_STUDY_CONTRACT.md`, including real
+- [x] Every emitted `/work/[slug]` page satisfies `CASE_STUDY_CONTRACT.md`, including real
   product proof, contribution, research, trade-offs, evidence, failures and limits.
-- [ ] Previous/next and back-to-register links prevent dead ends.
+- [x] Previous/next and back-to-register links prevent dead ends; navigation omits the two
+  deferred routes.
 
 #### 3C. Notes and errata
 

@@ -34,6 +34,14 @@ const productProofLabel = caseStudy.demo.kind === 'video'
   : caseStudy.demo.kind === 'image'
     ? caseStudy.demo.label
     : caseStudy.demo.label
+const productActionLabel = caseStudy.demo.kind === 'video'
+  ? 'Watch the product recording'
+  : caseStudy.demo.kind === 'image'
+    ? 'View the product proof'
+    : 'Read the evidence record'
+const productHeading = caseStudy.demo.kind === 'record'
+  ? 'Read the source evidence before the argument.'
+  : 'See the actual product before reading the argument.'
 const chapters = [
   ['overview', 'What it is'],
   ['product-demo', 'Product proof'],
@@ -87,7 +95,7 @@ const chapters = [
             <h1 id="case-title">{project.data.title}</h1>
             <p class="case-thesis">{caseStudy.thesis}</p>
             <div class="case-actions">
-              <a class="case-primary-action" href="#product-demo">Watch the product <span aria-hidden="true">↓</span></a>
+              <a class="case-primary-action" href="#product-demo">{productActionLabel} <span aria-hidden="true">↓</span></a>
               {project.data.stackAndLinks.links.map((link) => (
                 <a href={link.url.toString()} rel="noreferrer">{link.label} <span aria-hidden="true">↗</span></a>
               ))}
@@ -181,7 +189,7 @@ const chapters = [
             <section id="product-demo" class="case-chapter case-demo" data-case-chapter>
               <p class="case-section-label">02 / Product proof</p>
               <div class="case-heading-row">
-                <h2>See the actual product before reading the argument.</h2>
+                <h2>{productHeading}</h2>
                 <p>{productProofLabel}</p>
               </div>
               {caseStudy.demo.kind === 'video' && (

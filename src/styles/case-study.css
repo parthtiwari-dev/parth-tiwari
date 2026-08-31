@@ -256,7 +256,7 @@
   .case-nav { padding-inline: 1.25rem; }
   .case-wordmark { max-width: 6rem; line-height: 1; }
   .case-masthead { width: calc(100% - 2rem); padding-top: 4.5rem; }
-  .case-masthead-copy h1 { font-size: clamp(4.5rem, 22vw, 6.4rem); }
+  .case-masthead-copy h1 { max-width: 100%; font-size: clamp(3.5rem, 17vw, 5.1rem); line-height: .88; overflow-wrap: anywhere; text-wrap: balance; }
   .case-thesis { font-size: 1rem; }
   .case-actions { display: grid; grid-template-columns: 1fr; }
   .case-actions a + a { border-top: 0; border-left: 1px solid var(--ink); }

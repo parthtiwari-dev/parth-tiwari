@@ -79,6 +79,9 @@ content remains static HTML.
 
 - `npm run phase1:gate` runs negative schema tests, cross-content provenance checks and the
   static Astro build with telemetry disabled for restricted environments.
+- `npm run phase3:case-batch-gate` validates exactly ten published case studies, exactly two
+  deferred records, the static build, proof variants, chapter contracts, internal links and
+  private-path exclusions.
 - Phase 1 is complete under its owner-amended gate. The text-only human test was deferred,
   not passed, and may never be reported otherwise.
 - Phase 2 closed on 2026-08-31. The maintained landing stub is on `/`; its structure and interim public
@@ -108,9 +111,11 @@ content remains static HTML.
 - Do not treat Phase 2 review stubs as the complete Phase 3 static site. Production tear,
   backlight, canvas and animated-world implementation remain in their assigned later phases.
 - Phase 3B is active. `/work/[slug].astro` emits a static page for each project with a
-  validated `caseStudy` object. BeatMind and Vivid currently satisfy that full paper contract;
-  the other ten project routes remain incomplete until their source audits and content records
-  are added. `docs/VIVID_CASE_STUDY_AUDIT.md` records the Vivid repository history, current
+  validated `caseStudy` object. BeatMind, Vivid and the approved eight-project batch satisfy
+  that full paper contract. Fraud Risk Intelligence and Oracle Auto Provision remain
+  explicitly deferred, non-clickable and route-less. `docs/CASE_STUDY_BATCH_AUDIT.md`
+  records the batch source boundaries and current gate evidence.
+  `docs/VIVID_CASE_STUDY_AUDIT.md` records the Vivid repository history, current
   proof, unachieved plan targets and update workflow. The Vivid source worktree is read-only
   portfolio evidence and its current Phase 4 changes must not be modified from this repository.
 
