@@ -453,7 +453,8 @@ commit with the matching plan items ticked.
     faithfulness denominator, personal-data exclusion and assisted-action boundaries.
   - [x] OncoVerse: committed atlas asset and content inventory, MTC acceptance record,
     verified scope denominator, medical-review boundary and dirty anatomy exclusion.
-  - [ ] UPI Fraud Engine.
+  - [x] UPI Fraud Engine: real evaluation visualisations, time-aware pipeline, fixed
+    alert-budget story, separate held-out/replay records and risk-score boundary.
   - [ ] Spur Chat.
 - [ ] Fraud Risk Intelligence and Oracle Auto Provision remain explicitly deferred as
   **Case study in development** until their later audits.
