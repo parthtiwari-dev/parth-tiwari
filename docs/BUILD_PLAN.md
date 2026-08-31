@@ -451,7 +451,8 @@ commit with the matching plan items ticked.
     denominator separation, safety-correction failure and semantic-accuracy boundary.
   - [x] SecondSelf: safe committed fixtures only, evidence-to-review workflow, verified
     faithfulness denominator, personal-data exclusion and assisted-action boundaries.
-  - [ ] OncoVerse.
+  - [x] OncoVerse: committed atlas asset and content inventory, MTC acceptance record,
+    verified scope denominator, medical-review boundary and dirty anatomy exclusion.
   - [ ] UPI Fraud Engine.
   - [ ] Spur Chat.
 - [ ] Fraud Risk Intelligence and Oracle Auto Provision remain explicitly deferred as
