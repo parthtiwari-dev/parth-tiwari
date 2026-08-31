@@ -455,7 +455,8 @@ commit with the matching plan items ticked.
     verified scope denominator, medical-review boundary and dirty anatomy exclusion.
   - [x] UPI Fraud Engine: real evaluation visualisations, time-aware pipeline, fixed
     alert-budget story, separate held-out/replay records and risk-score boundary.
-  - [ ] Spur Chat.
+  - [x] Spur Chat: real desktop/mobile captures, SSE and recovery architecture, fictional
+    take-home boundary, frontend/backend split failure and current suspended-backend state.
 - [ ] Fraud Risk Intelligence and Oracle Auto Provision remain explicitly deferred as
   **Case study in development** until their later audits.
 - [ ] Every `/work/[slug]` page satisfies `CASE_STUDY_CONTRACT.md`, including real

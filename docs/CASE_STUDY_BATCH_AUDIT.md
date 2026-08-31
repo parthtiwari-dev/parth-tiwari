@@ -13,8 +13,15 @@ listed so it cannot silently enter the public account.
 | SecondSelf | `v2-dev` at `4a1447c` | Personal KB changes excluded | Safe evaluation and test-fixture DOM records only | Implemented |
 | OncoVerse | `main` at `f8bdbd3` | Current anatomy work excluded | Committed atlas asset, content directory and MTC record | Implemented |
 | UPI Fraud Engine | `main` at `dbc43ad` | Clean | Real evaluation visualisations and separate raw held-out/replay records | Implemented |
-| Spur Chat | `main` at `562ca32` | Clean | Existing real desktop/mobile captures; successful streamed answer not claimed | Audited, pending implementation |
+| Spur Chat | `main` at `562ca32` | Clean | Real desktop/mobile captures; frontend 200, backend suspended, no successful answer claimed | Implemented |
 
 Fraud Risk Intelligence and Oracle Auto Provision are outside this batch. Their work-register
 rows remain visible and non-clickable as **Case study in development**. This document records
 source state, not owner visual approval, deployment, or completion of Phase 3.
+
+## Live verification exception
+
+On 2026-08-31, the Spur Chat frontend returned HTTP 200. The Render health endpoint and
+message endpoint returned a **Service Suspended** response, so a complete chat turn could not
+run. The public action is therefore **View the interface**, and the page labels interaction
+unverified. This check does not alter or deploy either service.
