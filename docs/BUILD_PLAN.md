@@ -424,15 +424,15 @@ commit with the matching plan items ticked.
 
 #### 3A. Shell and home
 
-- [ ] Persistent navigation, contact action, footer, skip link and responsive shell.
-- [ ] Home flow: arrival and two doors, portrait and short introduction, every project
+- [x] Persistent navigation, contact action, footer, skip link and responsive shell.
+- [x] Home flow: arrival and two doors, portrait and short introduction, every project
   in an editorial paper index, verified proof, services, latest errata and contact.
 - [ ] Above the fold contains one sentence, two doors and no content that requires motion.
 
 #### 3B. Work register and case-study pages
 
-- [ ] `/work` lists every project without a hard-coded count in prose.
-- [ ] Sorting controls operate on real typed fields and preserve a meaningful default order.
+- [x] `/work` lists every project without a hard-coded count in prose.
+- [x] Sorting controls operate on real typed fields and preserve a meaningful default order.
 - [x] BeatMind and Vivid use one content-driven paper case-study component and validated
   project-specific evidence records.
 - [x] The shared proof contract accepts real video, real image and accessible evidence-record
@@ -466,28 +466,35 @@ commit with the matching plan items ticked.
 
 #### 3C. Notes and errata
 
-- [ ] `/notes` separates Errata and Posts without making either feel secondary.
-- [ ] `/notes/[slug]` renders complete articles, sources and related work.
-- [ ] RSS includes published notes only.
-- [ ] If Posts is empty, the approved “Coming soon” state ships while Errata remains live.
+- [x] `/notes` separates Errata and Posts without making either feel secondary.
+- [x] `/notes/[slug]` renders complete articles, sources and related work.
+- [x] RSS includes published notes only.
+- [x] If Posts is empty, the approved “Coming soon” state ships while Errata remains live.
 
 #### 3D. About and experience
 
-- [ ] Portrait and first-person introduction.
-- [ ] Work-experience and training timeline from one typed source.
-- [ ] Operating rules and working style, with no invented endorsements.
+- [x] Portrait and first-person introduction.
+- [x] Work-experience and training timeline from one typed source.
+- [x] Operating rules and working style, with no invented endorsements.
 
 #### 3E. Resume
 
-- [ ] Real semantic HTML suitable for crawlers and ATS parsing.
-- [ ] Verified PDF download, print styles, email and route metadata.
-- [ ] No Drive embed.
+- [x] Real semantic HTML suitable for crawlers and ATS parsing.
+- [x] Verified PDF download, print styles, email and route metadata.
+- [x] No Drive embed.
 
 #### 3F. Hire
 
-- [ ] Three kinds of work, scope boundaries, four-step process and a direct conversation path; no public price.
-- [ ] Booking, email and WhatsApp paths verified on phone and desktop.
-- [ ] No unsupported testimonial, client logo or urgency claim.
+- [x] Three kinds of work, scope boundaries, four-step process and a direct conversation path; no public price.
+- [x] Booking, email and WhatsApp paths verified on phone and desktop.
+- [x] No unsupported testimonial, client logo or urgency claim.
+
+**Local static closeout, 2026-09-01:** all Phase 3 route implementation items above except
+the rendered first-viewport assertion are present. `npm run phase3:static-gate` verifies the typed content, static build, case-study
+contracts, internal links, metadata, generated sitemap, RSS and 404 output. The gate below
+remains open because the revised mobile arrival still needs rendered owner review, the real
+five-person ten-second test remains deferred, and the complete site has not been deployed to
+the preview alias.
 
 **Gate**
 

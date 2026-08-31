@@ -11,4 +11,6 @@ const result = spawnSync(
 )
 
 if (result.error) throw result.error
-process.exit(result.status ?? 1)
+if ((result.status ?? 1) !== 0) process.exit(result.status ?? 1)
+
+await import('./generate-sitemap.mjs')

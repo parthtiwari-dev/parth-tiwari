@@ -123,3 +123,8 @@ source map and update procedure.
 and its false-positive overflow gate were corrected. Ten published routes pass rendered
 title-versus-proof collision checks at 390, 800, 1440 and 1920 pixels. Fraud Risk
 Intelligence and Oracle Auto Provision remain focused register entries with deferred routes.
+The following local Phase 3 ship pass links all ten published projects from Home, removes
+visitor-facing Phase 2 scaffolding, adds shared canonical/social/JSON-LD metadata, builds a
+real 404 and twelve-entry RSS feed, and generates a 28-route sitemap after every static build.
+`npm run phase3:static-gate` passes. The revised mobile arrival, complete visual batch,
+five-person comprehension test and preview deployment remain open, so Phase 3 is not closed.

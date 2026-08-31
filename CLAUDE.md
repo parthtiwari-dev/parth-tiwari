@@ -84,6 +84,8 @@ content remains static HTML.
 - `npm run phase3:case-batch-gate` validates exactly ten published case studies, exactly two
   deferred records, the static build, proof variants, chapter contracts, internal links and
   private-path exclusions.
+- `npm run phase3:static-gate` extends that proof to shared metadata, the Home route links,
+  generated sitemap, RSS, 404 and removal of visitor-facing Phase 2 scaffolding copy.
 - Phase 1 is complete under its owner-amended gate. The text-only human test was deferred,
   not passed, and may never be reported otherwise.
 - Phase 2 closed on 2026-08-31. The maintained landing stub is on `/`; its structure and interim public
@@ -117,6 +119,10 @@ content remains static HTML.
   that full paper contract. Fraud Risk Intelligence and Oracle Auto Provision remain
   explicitly deferred, non-clickable and route-less. `docs/CASE_STUDY_BATCH_AUDIT.md`
   records the batch source boundaries and current gate evidence.
+- All Phase 3 route implementation checklist items are now present locally. The local static
+  gate passes, but Phase 3 remains open until the revised mobile arrival and complete route
+  matrix receive rendered owner review, the real five-person test is run, and the complete
+  site is deployed to the verified preview alias.
   `docs/VIVID_CASE_STUDY_AUDIT.md` records the Vivid repository history, current
   proof, unachieved plan targets and update workflow. The Vivid source worktree is read-only
   portfolio evidence and its current Phase 4 changes must not be modified from this repository.

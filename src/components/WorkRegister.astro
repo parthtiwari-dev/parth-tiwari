@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content'
+import SiteMeta from './SiteMeta.astro'
 import '../styles/work-register.css'
 
 interface Props {
@@ -23,10 +24,7 @@ const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In prog
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="The complete register of Parth Tiwari's AI products, systems, experiments, evidence, and case studies." />
-    <title>Work | Parth Tiwari</title>
+    <SiteMeta title="Work | Parth Tiwari" description="The complete register of Parth Tiwari's AI products, systems, experiments, evidence, and case studies." path="/work/" />
   </head>
   <body class="work-review-page">
     <a class="skip-link" href="#work-register">Skip to the work</a>
@@ -53,7 +51,7 @@ const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In prog
 
         <section class="work-intro" aria-labelledby="work-title">
           <div>
-            <p class="work-eyebrow">The complete register / Phase 2 review</p>
+            <p class="work-eyebrow">The complete register / Built work and evidence</p>
             <h1 id="work-title">{heading}</h1>
           </div>
           <div class="work-intro-copy">
@@ -125,7 +123,7 @@ const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In prog
           <p class="work-eyebrow">End of the register</p>
           <h2>Start with the work that matters most.</h2>
           <div><a href="/work/beatmind/">Open BeatMind <span aria-hidden="true">↗</span></a><a href="/resume/">Read the resume <span aria-hidden="true">→</span></a></div>
-          <small>This is a Phase 2 architecture demo. Complete case-study routes arrive in Phase 3.</small>
+          <small>Ten complete case studies are open. Two focused utilities remain in the register while their records are prepared.</small>
         </section>
       </div>
     </main>

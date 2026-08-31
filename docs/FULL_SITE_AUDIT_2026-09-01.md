@@ -23,6 +23,15 @@ This document is a review, not a phase. No source, plan checkbox or gate state c
 
 ## 0. The one-paragraph verdict
 
+**Local correction after this audit, 2026-09-01.** P0 items 1–4 are now implemented in the
+working branch: the home register links every published case study and leaves the two
+deferred utilities static; owner-only Phase 2 copy is removed; the mobile arrival scale and
+copy are reduced with the goal of bringing its doors into the first viewport; and every emitted HTML page receives
+canonical, Open Graph, Twitter, JSON-LD, favicon and RSS discovery metadata. The build now
+emits a real 404, twelve-entry RSS feed and a generated 28-route sitemap. These changes pass
+the local static gate but still require rendered owner review. P0 item 5, preview deployment,
+remains open.
+
 The concept is right and the content is genuinely strong. The execution has one systemic
 problem — the type-and-space system is scaled for a three-page art object, not a
 twenty-page technical portfolio — which makes the site read as loud and empty rather than

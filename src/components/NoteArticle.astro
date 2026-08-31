@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content'
+import SiteMeta from './SiteMeta.astro'
 import '../styles/notes.css'
 
 interface Props {
@@ -26,10 +27,7 @@ const attachedClaims = note.data.claimRefs
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content={note.data.summary} />
-    <title>{note.data.title} | Notes | Parth Tiwari</title>
+    <SiteMeta title={`${note.data.title} | Notes | Parth Tiwari`} description={note.data.summary} path={`/notes/${note.id}/`} type="article" />
   </head>
   <body class="note-article-page">
     <a class="skip-link" href="#note-record">Skip to the record</a>

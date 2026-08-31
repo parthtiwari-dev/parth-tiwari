@@ -9,6 +9,7 @@ import {
   WHATSAPP_URL,
 } from '../config/site'
 import PaperRouteNav from './PaperRouteNav.astro'
+import SiteMeta from './SiteMeta.astro'
 import '../styles/profile-pages.css'
 import '../styles/hire.css'
 
@@ -61,10 +62,7 @@ const notFit = [
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Work with Parth Tiwari on AI products, durable workflow automation, or interactive product storytelling. See scope, process, fit, and direct contact options." />
-    <title>Start a project | Parth Tiwari</title>
+    <SiteMeta title="Start a project | Parth Tiwari" description="Work with Parth Tiwari on AI products, durable workflow automation, or interactive product storytelling. See scope, process, fit, and direct contact options." path="/hire/" />
   </head>
   <body class="profile-page hire-page">
     <a class="skip-link" href="#hire-arrival">Skip to project details</a>

@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content'
+import SiteMeta from './SiteMeta.astro'
 import '../styles/notes.css'
 
 interface Props {
@@ -26,10 +27,7 @@ const archiveLabel = archiveDates.length === 1 && errata[0]?.data.publishedAt
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Parth Tiwari's engineering errata: what went wrong, what changed, and the evidence behind each correction." />
-    <title>Notes and Errata | Parth Tiwari</title>
+    <SiteMeta title="Notes and Errata | Parth Tiwari" description="Parth Tiwari's engineering errata: what went wrong, what changed, and the evidence behind each correction." path="/notes/" />
   </head>
   <body class="notes-review-page">
     <a class="skip-link" href="#notes-archive">Skip to the notes</a>

@@ -1,0 +1,58 @@
+@import './paper-system.css';
+
+.missing-page {
+  min-height: calc(100svh - 6rem);
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 1.5rem;
+  width: var(--content);
+  margin: auto;
+  padding-block: clamp(5rem, 12vw, 10rem);
+}
+
+.missing-page h1 {
+  max-width: 10ch;
+  margin: 0;
+  font: 700 clamp(3rem, 7vw, 7rem)/.92 var(--font-display);
+  letter-spacing: -.055em;
+  text-wrap: balance;
+}
+
+.missing-page > p:not(.profile-eyebrow) {
+  max-width: 46rem;
+  margin: 0;
+  color: var(--ink-secondary);
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  line-height: 1.65;
+}
+
+.missing-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: .75rem;
+}
+
+.missing-actions a {
+  font-weight: 650;
+  text-underline-offset: .25em;
+}
+
+.missing-actions .missing-primary {
+  min-height: 3.25rem;
+  display: inline-flex;
+  align-items: center;
+  padding: .8rem 1.15rem;
+  color: #fff8ed;
+  border: 1px solid #65140d;
+  background: var(--oxblood);
+  box-shadow: 3px 3px 0 rgb(58 14 9 / 30%);
+  text-decoration: none;
+}
+
+@media (max-width: 680px) {
+  .missing-page { min-height: calc(100svh - 4.5rem); }
+  .missing-page h1 { font-size: clamp(2.7rem, 14vw, 4rem); }
+}
