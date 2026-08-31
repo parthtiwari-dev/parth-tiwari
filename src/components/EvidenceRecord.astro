@@ -1,0 +1,32 @@
+---
+interface Row {
+  label: string
+  value: string
+  tone?: 'default' | 'pass' | 'warn' | 'blocked'
+}
+
+interface Props {
+  label: string
+  title: string
+  sourceLabel: string
+  rows: Row[]
+}
+
+const { label, title, sourceLabel, rows } = Astro.props
+---
+
+<section class="evidence-record" aria-label={`${label}: ${title}`} data-evidence-record>
+  <header>
+    <span>{label}</span>
+    <strong>{title}</strong>
+  </header>
+  <dl>
+    {rows.map((row) => (
+      <div data-tone={row.tone ?? 'default'}>
+        <dt>{row.label}</dt>
+        <dd>{row.value}</dd>
+      </div>
+    ))}
+  </dl>
+  <footer>Source: {sourceLabel}</footer>
+</section>

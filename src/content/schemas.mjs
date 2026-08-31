@@ -36,7 +36,48 @@ const measurementSchema = z.object({
   }
 })
 
+const imageProofSchema = z.object({
+  kind: z.literal('image'),
+  src: z.string().startsWith('/'),
+  alt: z.string().min(20),
+  width: z.number().int().positive(),
+  height: z.number().int().positive(),
+  fit: z.enum(['cover', 'contain']).optional(),
+})
+
+const evidenceRecordSchema = z.object({
+  kind: z.literal('record'),
+  label: z.string().min(3),
+  title: z.string().min(8),
+  sourceLabel: z.string().min(8),
+  rows: z.array(z.object({
+    label: z.string().min(2),
+    value: z.string().min(2),
+    tone: z.enum(['default', 'pass', 'warn', 'blocked']).optional(),
+  })).min(2).max(8),
+})
+
+const proofFrameSchema = z.discriminatedUnion('kind', [imageProofSchema, evidenceRecordSchema])
+
+const demoProofSchema = z.discriminatedUnion('kind', [
+  z.object({
+    kind: z.literal('video'),
+    src: z.string().startsWith('/'),
+    poster: z.string().startsWith('/'),
+    durationLabel: z.string().min(3),
+    caption: z.string().min(20),
+  }),
+  imageProofSchema.extend({
+    label: z.string().min(3),
+    caption: z.string().min(20),
+  }),
+  evidenceRecordSchema.extend({
+    caption: z.string().min(20),
+  }),
+])
+
 const caseStudySchema = z.object({
+  reviewedAt: z.coerce.date(),
   classification: z.string().min(4),
   thesis: z.string().min(20),
   credit: z.object({
@@ -46,10 +87,7 @@ const caseStudySchema = z.object({
     contributionSummary: z.string().min(8),
   }),
   cover: z.object({
-    src: z.string().startsWith('/'),
-    alt: z.string().min(20),
-    width: z.number().int().positive(),
-    height: z.number().int().positive(),
+    proof: proofFrameSchema,
     labels: z.array(z.string().min(3)).length(2),
   }),
   headings: z.object({
@@ -59,20 +97,11 @@ const caseStudySchema = z.object({
     evidence: z.string().min(20),
   }),
   intendedUser: z.string().min(20),
-  demo: z.object({
-    src: z.string().startsWith('/'),
-    poster: z.string().startsWith('/'),
-    durationLabel: z.string().min(3),
-    caption: z.string().min(20),
-  }),
+  demo: demoProofSchema,
   workflow: z.array(z.object({
     title: z.string().min(2),
     description: z.string().min(20),
-    media: z.string().startsWith('/'),
-    alt: z.string().min(20),
-    width: z.number().int().positive(),
-    height: z.number().int().positive(),
-    fit: z.enum(['cover', 'contain']).optional(),
+    proof: proofFrameSchema,
   })).min(3),
   responsibilities: z.array(z.object({
     label: z.string().min(2),

@@ -62,6 +62,7 @@
     "motionDeferred": true
   },
   "caseStudy": {
+    "reviewedAt": "2026-08-31",
     "classification": "Generative imaging",
     "thesis": "Vivid turns a written scene into a sequence of photographs, then treats continuity, visual review, and the decision not to ship a faster but worse model as first-class product work.",
     "credit": {
@@ -71,10 +72,7 @@
       "contributionSummary": "Generation pipeline, evaluation, and product delivery"
     },
     "cover": {
-      "src": "/media/vivid-eval-shot-04.jpg",
-      "alt": "A real Vivid evaluation frame showing the recurring ceramic artist holding a blue bowl in her workshop",
-      "width": 1152,
-      "height": 640,
+      "proof": { "kind": "image", "src": "/media/vivid-eval-shot-04.jpg", "alt": "A real Vivid evaluation frame showing the recurring ceramic artist holding a blue bowl in her workshop", "width": 1152, "height": 640 },
       "labels": ["Real evaluation frame", "Fixed sequence, not a mockup"]
     },
     "headings": {
@@ -85,6 +83,7 @@
     },
     "intendedUser": "Filmmakers pitching a scene, writers pre-visualising a script, and small creative teams that need a coherent visual sequence before they have a camera, cast, or production budget.",
     "demo": {
+      "kind": "video",
       "src": "/media/stick-and-dot.webm",
       "poster": "/media/stick-and-dot-desktop.jpg",
       "durationLabel": "10.1-second product capture",
@@ -94,27 +93,17 @@
       {
         "title": "Describe the scene",
         "description": "The browser accepts a scene, seed, style, and generation mode. Planning can turn the same input into a structured sequence instead of one disconnected image.",
-        "media": "/media/stick-and-dot-desktop.jpg",
-        "alt": "The real Vivid generation interface with scene, seed, style, planning, and render controls",
-        "width": 2880,
-        "height": 1800,
-        "fit": "contain"
+        "proof": { "kind": "image", "src": "/media/stick-and-dot-desktop.jpg", "alt": "The real Vivid generation interface with scene, seed, style, planning, and render controls", "width": 2880, "height": 1800, "fit": "contain" }
       },
       {
         "title": "Establish the person",
         "description": "The first evaluated shot establishes the recurring ceramic artist, workshop, wardrobe, light, and visual texture that later shots must preserve.",
-        "media": "/media/vivid-eval-shot-01.jpg",
-        "alt": "A real Vivid evaluation frame establishing a ceramic artist seated in a wooden workshop",
-        "width": 1152,
-        "height": 640
+        "proof": { "kind": "image", "src": "/media/vivid-eval-shot-01.jpg", "alt": "A real Vivid evaluation frame establishing a ceramic artist seated in a wooden workshop", "width": 1152, "height": 640 }
       },
       {
         "title": "Advance the story",
         "description": "A later shot changes framing and action while keeping the person and workshop recognisable. The sequence remains evaluation evidence, not a claim that identity is solved.",
-        "media": "/media/vivid-eval-shot-04.jpg",
-        "alt": "A later real Vivid evaluation frame showing the same ceramic artist presenting a blue bowl",
-        "width": 1152,
-        "height": 640
+        "proof": { "kind": "image", "src": "/media/vivid-eval-shot-04.jpg", "alt": "A later real Vivid evaluation frame showing the same ceramic artist presenting a blue bowl", "width": 1152, "height": 640 }
       }
     ],
     "responsibilities": [

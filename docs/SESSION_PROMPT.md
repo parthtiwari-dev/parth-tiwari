@@ -23,10 +23,11 @@ all eight route families at 390, 800 and 1440 pixels, plus no-JavaScript, reduce
 touch, keyboard focus, contrast, font budget and the static dependency boundary. Do not
 report the deferred polish pass as complete.
 
-The maintained routes are /, /work/, /work/beatmind/, /work/vivid/, /notes/, /notes/[slug]/, /about/,
-/resume/ and /hire/. The owner-approved BeatMind Sound Foundry remains a standalone research
-animatic, not a production world. There is still no production tear, backlight or canvas
-world in Astro.
+The maintained routes are /, /work/, ten validated /work/[slug]/ case studies, /notes/,
+/notes/[slug]/, /about/, /resume/ and /hire/. Fraud Risk Intelligence and Oracle Auto
+Provision remain visible deferred register entries without placeholder routes. The
+owner-approved BeatMind Sound Foundry remains a standalone research animatic, not a
+production world. There is still no production tear, backlight or canvas world in Astro.
 
 The Vivid Story Loom remains a standalone native-scroll study and the owner deferred its deep
 review. `/work/vivid/` is now a separate static paper case study generated through the shared
@@ -35,9 +36,15 @@ typed contract. `docs/VIVID_CASE_STUDY_AUDIT.md` records the inspected `main` an
 source repository was read only and its dirty Phase 4 work remains untouched. Do not present
 the source-only named-reference checkpoint or the plan's identity and speed targets as achieved.
 
-The next safe work stays inside Phase 3B: audit and add the next project case-study record, or
-perform an owner-requested Vivid paper refinement. Do not move either Vivid or BeatMind world
-study into Astro yet. Production worlds remain Phases 5 and 6.
+The approved eight-project case-study batch is implemented in separate project commits and
+closed by `docs/CASE_STUDY_BATCH_AUDIT.md`. Its static, link, privacy, responsive,
+no-JavaScript, reduced-motion, keyboard-focus and print gates pass. Owner visual approval,
+Fraud Risk Intelligence, Oracle Auto Provision and the complete Phase 3 gate remain open.
+
+The next safe work stays inside Phase 3: run the owner batch review, audit one of the two
+deferred projects when requested, or complete the remaining static-site gate work. Do not
+move either Vivid or BeatMind world study into Astro yet. Production worlds remain Phases 5
+and 6.
 
 Begin with git status and diff. Preserve all current work. Stop at the applicable gate.
 ```

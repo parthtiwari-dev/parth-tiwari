@@ -27,17 +27,18 @@ const validWork = {
   next: { slug: 'next-project', label: 'Next project' },
   world: { story: 'A complete data-led scroll story for a later phase.', dataSources: ['evaluation artifact'], storyboardStatus: 'specced', motionDeferred: true },
   caseStudy: {
+    reviewedAt: '2026-08-31',
     classification: 'Systems work',
     thesis: 'A specific project thesis that explains the complete product argument.',
     credit: { organization: 'Organization', role: 'Engineer', contribution: 'I designed and built the complete implementation end to end.', contributionSummary: 'Design and engineering' },
-    cover: { src: '/media/cover.jpg', alt: 'A useful alternative for the real product cover image', width: 1600, height: 1000, labels: ['Real product', 'Current surface'] },
+    cover: { proof: { kind: 'image', src: '/media/cover.jpg', alt: 'A useful alternative for the real product cover image', width: 1600, height: 1000 }, labels: ['Real product', 'Current surface'] },
     headings: { overview: 'A project-specific overview heading for the complete argument.', problem: 'A project-specific problem heading for the complete argument.', architectureCaption: 'One legible system path', evidence: 'A project-specific evidence heading with an honest boundary.' },
     intendedUser: 'A clearly defined person with a real need for this product workflow.',
-    demo: { src: '/media/demo.webm', poster: '/media/poster.jpg', durationLabel: '10-second capture', caption: 'A real product capture with an honest explanation of what it proves.' },
+    demo: { kind: 'video', src: '/media/demo.webm', poster: '/media/poster.jpg', durationLabel: '10-second capture', caption: 'A real product capture with an honest explanation of what it proves.' },
     workflow: [
-      { title: 'Start', description: 'A complete description of the first product workflow step.', media: '/media/one.jpg', alt: 'A useful alternative for the first real product frame', width: 1600, height: 1000 },
-      { title: 'Work', description: 'A complete description of the second product workflow step.', media: '/media/two.jpg', alt: 'A useful alternative for the second real product frame', width: 1600, height: 1000 },
-      { title: 'Finish', description: 'A complete description of the third product workflow step.', media: '/media/three.jpg', alt: 'A useful alternative for the third real product frame', width: 1600, height: 1000 },
+      { title: 'Start', description: 'A complete description of the first product workflow step.', proof: { kind: 'image', src: '/media/one.jpg', alt: 'A useful alternative for the first real product frame', width: 1600, height: 1000 } },
+      { title: 'Work', description: 'A complete description of the second product workflow step.', proof: { kind: 'image', src: '/media/two.jpg', alt: 'A useful alternative for the second real product frame', width: 1600, height: 1000 } },
+      { title: 'Finish', description: 'A complete description of the third product workflow step.', proof: { kind: 'image', src: '/media/three.jpg', alt: 'A useful alternative for the third real product frame', width: 1600, height: 1000 } },
     ],
     responsibilities: [
       { label: 'Product', detail: 'The complete workflow and the visible product behaviour.' },

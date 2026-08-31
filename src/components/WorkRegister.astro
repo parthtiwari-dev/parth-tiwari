@@ -86,9 +86,25 @@ const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In prog
               const evidence = project.data.tier === 'flagship'
                 ? project.data.claimRefs.map((id) => publishedClaims.get(id)).find(Boolean)
                 : undefined
+              const isPublished = Boolean(project.data.caseStudy)
+              const rowContent = (
+                <>
+                  <span class="row-number">{String(index + 1).padStart(2, '0')}</span>
+                  <span class="row-copy">
+                    <strong>{project.data.title}</strong>
+                    <span class="row-summary">{project.data.summary}</span>
+                    {evidence && <span class="row-evidence"><b>{evidence.data.display}</b>{evidence.data.denominator}</span>}
+                    {!isPublished && <span class="row-availability">Case study in development</span>}
+                  </span>
+                  <span class="row-meta row-status">{statusLabels[project.data.status]}</span>
+                  <span class="row-meta row-effort">{effortLabels[project.data.effort]}</span>
+                  <span class="row-meta row-started">{project.data.started ?? 'Not dated'}</span>
+                  <span class="row-arrow" aria-hidden="true">{isPublished ? '↗' : '—'}</span>
+                </>
+              )
               return (
                 <li
-                  class:list={['work-row', project.data.tier === 'flagship' && 'is-flagship']}
+                  class:list={['work-row', project.data.tier === 'flagship' && 'is-flagship', !isPublished && 'is-deferred']}
                   data-project-row
                   data-editorial={project.data.order}
                   data-effort={project.data.effort}
@@ -96,18 +112,9 @@ const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In prog
                   data-status={project.data.status}
                   data-tier={project.data.tier}
                 >
-                  <a href={`/work/${project.id}/`} aria-label={`Open the ${project.data.title} case study`}>
-                    <span class="row-number">{String(index + 1).padStart(2, '0')}</span>
-                    <span class="row-copy">
-                      <strong>{project.data.title}</strong>
-                      <span class="row-summary">{project.data.summary}</span>
-                      {evidence && <span class="row-evidence"><b>{evidence.data.display}</b>{evidence.data.denominator}</span>}
-                    </span>
-                    <span class="row-meta row-status">{statusLabels[project.data.status]}</span>
-                    <span class="row-meta row-effort">{effortLabels[project.data.effort]}</span>
-                    <span class="row-meta row-started">{project.data.started ?? 'Not dated'}</span>
-                    <span class="row-arrow" aria-hidden="true">↗</span>
-                  </a>
+                  {isPublished
+                    ? <a href={`/work/${project.id}/`} aria-label={`Open the ${project.data.title} case study`}>{rowContent}</a>
+                    : <div class="work-row-static" aria-label={`${project.data.title}. Case study in development.`}>{rowContent}</div>}
                 </li>
               )
             })}

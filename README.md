@@ -7,7 +7,8 @@ The current code has completed Phases 1 and 2 and is working through Phase 3. It
 content collections, twelve base project records, twelve Errata entries, route copy,
 services, experience, and source-linked claims. The maintained Phase 2 landing now lives at
 `/`. It is a reviewable static stub, not the Phase 3 production site. `/work/` has its
-register study, `/work/beatmind/` and `/work/vivid/` use the shared paper case-study system, and Notes, About, Resume
+register study, ten published `/work/[slug]/` routes use the shared paper case-study system,
+and Notes, About, Resume
 and Hire now have route-review implementations. The landing includes the approved full-width rag sheet, post-hero sticky
 paper fold, content-driven sections, stable fibre-edge segments, bounded one-shot paper
 motion and the current project-hover study. The rejected A/B/C studies were removed. There
@@ -47,6 +48,7 @@ npm run phase2:hire-capture -- --url http://127.0.0.1:4321
 npm run phase2:gate -- --part render --url http://127.0.0.1:4321
 npm run phase2:gate -- --part states --url http://127.0.0.1:4321
 npm run phase2:gate -- --part contracts --url http://127.0.0.1:4321
+npm run phase3:case-batch-gate
 npm run preview
 ```
 
@@ -68,8 +70,9 @@ its measured gate passes.
 
 The owner deferred the unrun Phase 1 text-only test. It was not marked as passing. A real
 five-person comprehension test remains required on the Phase 3 static preview. Phase 3B now
-generates case-study routes from validated content; BeatMind and Vivid are complete records,
-while the remaining ten still require source audits before the combined checklist can pass.
+generates case-study routes from validated content. BeatMind, Vivid and the approved
+eight-project batch are complete records. Fraud Risk Intelligence and Oracle Auto Provision
+remain visible, non-clickable deferred rows and emit no placeholder routes.
 
 Phase 2 closed on 2026-08-31. Every route family has an accepted-for-now review
 implementation, and the shared render, state, contrast, font-budget and static-boundary gates

@@ -19,12 +19,15 @@ Every published case study must contain these beats in this order. Adjacent beat
 one visual section when that improves the story, but none may silently disappear.
 
 1. **Masthead.** Project title, one human thesis, status, date where sourced, role,
-   organization and exact contribution. Include one real product image and only verified
-   public links.
+   organization and exact contribution. Lead with real product evidence or a labelled,
+   accessible source record when no publication-cleared product image exists. Include only
+   verified public links.
 2. **What it is.** The product, intended user and complete workflow in plain language.
-3. **Product proof.** A real muted recording, read-only demo or real capture sequence.
-   State what the media proves. Supply a static image and complete DOM explanation when
-   playback or JavaScript is unavailable.
+3. **Product proof.** Use one of three typed proof forms: a real muted recording with poster,
+   duration and caption; a real interface or evaluation image with intrinsic dimensions and
+   useful alternative text; or an accessible DOM record of a real workflow, evaluation or
+   source trace. Label records as evidence, never simulated product UI. State what each proof
+   establishes. Playback and JavaScript may disappear without removing the explanation.
 4. **Problem and responsibility.** The problem, constraints, working context and what Parth
    personally owned. Do not imply sole authorship, employment or a client relationship
    without owner approval and evidence.
@@ -54,8 +57,10 @@ one visual section when that improves the story, but none may silently disappear
 Paper case studies use the optional `caseStudy` object in `src/content/schemas.mjs`. It
 contains:
 
-- classification, thesis, credit, exact contribution, cover media and intended user;
-- real demo media and a real workflow capture sequence;
+- a required review date, classification, thesis, credit, exact contribution, cover proof
+  and intended user;
+- a typed video, image or evidence-record lead proof and three workflow proofs that may each
+  be a real image or evidence record;
 - project-specific headings, responsibilities and architecture steps;
 - research findings and the decisions each changed;
 - selected decisions, rejected alternatives and trade-offs;
@@ -63,12 +68,12 @@ contains:
 - current limitations, an evidence note and status-labelled future work;
 - public and internally audited sources, related-note wording and the closing handoff.
 
-BeatMind and Vivid are the first complete records. `src/pages/work/[slug].astro` generates a
+BeatMind and Vivid are the reference records. `src/pages/work/[slug].astro` generates a
 static page for every validated project that contains this object, so new case studies do not
-need a hard-coded route or component fork. The object stays optional while the other ten
-projects are being audited. Before Phase 3 generates all twelve routes, every entry must
-satisfy this contract and the schema must become required. Missing data is a blocker, not a
-reason to invent placeholder prose.
+need a hard-coded route or component fork. The object stays optional while project audits are
+incomplete. A missing object means the register renders a non-clickable **Case study in
+development** state, and related Notes links return to `/work/` rather than opening a missing
+route. Missing data is a blocker, not a reason to invent placeholder prose.
 
 ## Visual and interaction rules
 
@@ -94,6 +99,8 @@ A case study is reviewable only when:
 - every displayed number resolves to a publishable claim record;
 - contribution and organization wording is owner-approved;
 - every product image or recording is real and has publication permission;
+- every evidence record names its source boundary and remains readable without CSS or
+  JavaScript;
 - private repository paths, secrets, user data, audio filenames and internal identifiers
   are absent from public copy;
 - the static build passes;

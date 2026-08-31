@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content'
 import { CONTACT_EMAIL_HREF } from '../config/site'
+import EvidenceRecord from './EvidenceRecord.astro'
 import '../styles/case-study.css'
 
 interface Props {
@@ -28,6 +29,19 @@ const nextHref = nextCaseStudyIsPublished ? `/work/${project.data.next.slug}/` :
 const nextLabel = nextCaseStudyIsPublished
   ? project.data.next.label
   : `Find ${project.data.next.label.replace(/^Next:\s*/i, '')} in the register`
+const productProofLabel = caseStudy.demo.kind === 'video'
+  ? caseStudy.demo.durationLabel
+  : caseStudy.demo.kind === 'image'
+    ? caseStudy.demo.label
+    : caseStudy.demo.label
+const productActionLabel = caseStudy.demo.kind === 'video'
+  ? 'Watch the product recording'
+  : caseStudy.demo.kind === 'image'
+    ? 'View the product proof'
+    : 'Read the evidence record'
+const productHeading = caseStudy.demo.kind === 'record'
+  ? 'Read the source evidence before the argument.'
+  : 'See the actual product before reading the argument.'
 const chapters = [
   ['overview', 'What it is'],
   ['product-demo', 'Product proof'],
@@ -81,7 +95,7 @@ const chapters = [
             <h1 id="case-title">{project.data.title}</h1>
             <p class="case-thesis">{caseStudy.thesis}</p>
             <div class="case-actions">
-              <a class="case-primary-action" href="#product-demo">Watch the product <span aria-hidden="true">↓</span></a>
+              <a class="case-primary-action" href="#product-demo">{productActionLabel} <span aria-hidden="true">↓</span></a>
               {project.data.stackAndLinks.links.map((link) => (
                 <a href={link.url.toString()} rel="noreferrer">{link.label} <span aria-hidden="true">↗</span></a>
               ))}
@@ -95,13 +109,16 @@ const chapters = [
           </div>
 
           <figure class="case-cover">
-            <img
-              src={caseStudy.cover.src}
-              width={caseStudy.cover.width}
-              height={caseStudy.cover.height}
-              fetchpriority="high"
-              alt={caseStudy.cover.alt}
-            />
+            {caseStudy.cover.proof.kind === 'image'
+              ? <img
+                  src={caseStudy.cover.proof.src}
+                  width={caseStudy.cover.proof.width}
+                  height={caseStudy.cover.proof.height}
+                  data-fit={caseStudy.cover.proof.fit ?? 'cover'}
+                  fetchpriority="high"
+                  alt={caseStudy.cover.proof.alt}
+                />
+              : <EvidenceRecord {...caseStudy.cover.proof} />}
             <figcaption>{caseStudy.cover.labels.map((label) => <span>{label}</span>)}</figcaption>
           </figure>
         </section>
@@ -119,6 +136,14 @@ const chapters = [
               <small>Verified {claim.data.verifiedAt.toISOString().slice(0, 10)}</small>
             </article>
           ))}
+          {measurements.length === 0 && (
+            <article class="case-proof-absence">
+              <strong>No publishable outcome number</strong>
+              <p>{project.data.measurement.absence}</p>
+              <small>Architecture and source evidence only</small>
+              <small>Reviewed {caseStudy.reviewedAt.toISOString().slice(0, 10)}</small>
+            </article>
+          )}
         </section>
 
         <div class="case-mobile-progress" data-mobile-progress>
@@ -164,22 +189,38 @@ const chapters = [
             <section id="product-demo" class="case-chapter case-demo" data-case-chapter>
               <p class="case-section-label">02 / Product proof</p>
               <div class="case-heading-row">
-                <h2>See the actual product before reading the argument.</h2>
-                <p>{caseStudy.demo.durationLabel}</p>
+                <h2>{productHeading}</h2>
+                <p>{productProofLabel}</p>
               </div>
-              <figure class="case-video-frame">
-                <video controls muted playsinline preload="none" poster={caseStudy.demo.poster}>
-                  <source src={caseStudy.demo.src} type="video/webm" />
-                  Your browser cannot play this recording. The product frames below show the same workflow.
-                </video>
-                <figcaption>{caseStudy.demo.caption}</figcaption>
-              </figure>
+              {caseStudy.demo.kind === 'video' && (
+                <figure class="case-video-frame" data-proof-surface>
+                  <video controls muted playsinline preload="none" poster={caseStudy.demo.poster}>
+                    <source src={caseStudy.demo.src} type="video/webm" />
+                    Your browser cannot play this recording. The product evidence below shows the same workflow.
+                  </video>
+                  <figcaption>{caseStudy.demo.caption}</figcaption>
+                </figure>
+              )}
+              {caseStudy.demo.kind === 'image' && (
+                <figure class="case-video-frame case-image-proof" data-proof-surface>
+                  <img data-fit={caseStudy.demo.fit ?? 'cover'} src={caseStudy.demo.src} width={caseStudy.demo.width} height={caseStudy.demo.height} alt={caseStudy.demo.alt} />
+                  <figcaption>{caseStudy.demo.caption}</figcaption>
+                </figure>
+              )}
+              {caseStudy.demo.kind === 'record' && (
+                <figure class="case-video-frame case-record-proof" data-proof-surface>
+                  <EvidenceRecord {...caseStudy.demo} />
+                  <figcaption>{caseStudy.demo.caption}</figcaption>
+                </figure>
+              )}
 
               <div class="case-contact-sheet" aria-label={`${project.data.title} product workflow`}>
                 {caseStudy.workflow.map((step, index) => (
-                  <figure>
+                  <figure data-workflow-step data-proof-surface>
                     <div class="case-contact-number">{String(index + 1).padStart(2, '0')}</div>
-                    <img data-fit={step.fit ?? 'cover'} src={step.media} width={step.width} height={step.height} loading="lazy" alt={step.alt} />
+                    {step.proof.kind === 'image'
+                      ? <img data-fit={step.proof.fit ?? 'cover'} src={step.proof.src} width={step.proof.width} height={step.proof.height} loading="lazy" alt={step.proof.alt} />
+                      : <EvidenceRecord {...step.proof} />}
                     <figcaption><strong>{step.title}</strong><p>{step.description}</p></figcaption>
                   </figure>
                 ))}
@@ -247,6 +288,13 @@ const chapters = [
                     <small>Verified {claim.data.verifiedAt.toISOString().slice(0, 10)}</small>
                   </article>
                 ))}
+                {measurements.length === 0 && (
+                  <article class="is-primary case-measurement-absence">
+                    <strong>Not measured</strong>
+                    <p>{project.data.measurement.absence}</p>
+                    <small>No publishable outcome or usage denominator</small>
+                  </article>
+                )}
               </div>
               <p class="case-evidence-note">{caseStudy.evidenceNote}</p>
             </section>

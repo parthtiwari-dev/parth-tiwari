@@ -22,6 +22,7 @@ Where to look, and what is still true.
 | [`PHASE_2_HIRE_REVIEW.md`](PHASE_2_HIRE_REVIEW.md) | The Hire route reference lock, service boundaries, four-step process, fit guidance and verified contact paths |
 | [`PHASE_2_GATE.md`](PHASE_2_GATE.md) | The completed route matrix, state checks, contrast results, font budget and owner-acceptance boundary |
 | [`CASE_STUDY_CONTRACT.md`](CASE_STUDY_CONTRACT.md) | Required evidence, media, accessibility and publication contract for every paper case study |
+| [`CASE_STUDY_BATCH_AUDIT.md`](CASE_STUDY_BATCH_AUDIT.md) | Source branches, commit boundaries, proof decisions, route matrix and gate evidence for the eight-project Phase 3 batch |
 | [`PHASE_2_BEATMIND_WORLD_STUDY.md`](PHASE_2_BEATMIND_WORLD_STUDY.md) | Approved Sound Foundry animatic, real BeatMind source lock, rendered evidence and production inputs still blocked |
 | [`PHASE_2_BEATMIND_WORLD_RESEARCH.md`](PHASE_2_BEATMIND_WORLD_RESEARCH.md) | Pudding and 124-entry Awwwards research, approved Sound Foundry reference lock and implementation boundary |
 | [`PHASE_2_WORLDS_ANIMATION_MEMO.md`](PHASE_2_WORLDS_ANIMATION_MEMO.md) | Research-only candidate graphics and missing real-data sources for the seven specced worlds |
@@ -68,11 +69,14 @@ BeatMind plate uses a lightweight static frame from the approved Sound Foundry a
 does not claim to be real separated-track evidence. The `/work` structure review now has a real-content
 register demo and responsive evidence; the owner rejected a Personal/Company filter, so
 verified employment context will be handled per case study. The shared `/work/[slug]`
-structure now has paper-first BeatMind and Vivid case studies with real product video,
-workflow captures, typed research, decisions, failures, limits and future states. Routes are
-generated from the validated case-study content object instead of a project-name switch. The
-BeatMind page's final built-output responsive, accessibility, craft, transfer and scroll checks pass; the owner approved it by
-asking to begin Notes on 2026-08-30.
+structure now has ten paper-first case studies: BeatMind, Vivid, Tathya, MedRAG, Order
+Supervisor, QueryPilot, SecondSelf, OncoVerse, UPI Fraud Engine and Spur Chat. Their proof
+surfaces use real video, real images or source-labelled accessible evidence records. Routes
+are generated from validated case-study content. Fraud Risk Intelligence and Oracle Auto
+Provision remain visible, non-clickable deferred rows and emit no placeholder routes. The
+ten-route batch passes static content, link, privacy, no-JavaScript, reduced-motion,
+keyboard-focus, print and responsive-render checks. Owner visual approval of the batch
+remains open, so Phase 3 is not complete.
 The reusable reading order is locked in `CASE_STUDY_CONTRACT.md`. Follow-up Pudding and
 Awwwards research produced the separate continuous Sound Foundry.
 The owner approved its premise, nine-scene order and current five-stem product language on
@@ -114,5 +118,6 @@ baseline, failures, limitations, licensing boundary and future gates. It does no
 the current plan's identity or speed goal is achieved. `VIVID_CASE_STUDY_AUDIT.md` is the
 source map and update procedure.
 
-**Last documentation truth audit:** 2026-08-31, Vivid paper case study, reusable route contract,
-repository-history evidence and current-versus-target boundary recorded during Phase 3B.
+**Last documentation truth audit:** 2026-08-31, eight-project case-study batch, ten-route
+matrix, two deferred records, proof variants, source boundaries and current gate evidence
+recorded during Phase 3B.
