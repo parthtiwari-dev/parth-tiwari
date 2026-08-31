@@ -25,6 +25,8 @@ Where to look, and what is still true.
 | [`PHASE_2_BEATMIND_WORLD_STUDY.md`](PHASE_2_BEATMIND_WORLD_STUDY.md) | Approved Sound Foundry animatic, real BeatMind source lock, rendered evidence and production inputs still blocked |
 | [`PHASE_2_BEATMIND_WORLD_RESEARCH.md`](PHASE_2_BEATMIND_WORLD_RESEARCH.md) | Pudding and 124-entry Awwwards research, approved Sound Foundry reference lock and implementation boundary |
 | [`PHASE_2_WORLDS_ANIMATION_MEMO.md`](PHASE_2_WORLDS_ANIMATION_MEMO.md) | Research-only candidate graphics and missing real-data sources for the seven specced worlds |
+| [`VIVID_WORLD_CONCEPT_REVIEW.md`](VIVID_WORLD_CONCEPT_REVIEW.md) | Current-product audit, three Vivid world directions, truthful data contract and pending owner choice |
+| [`VIVID_WORLD_STUDY.md`](VIVID_WORLD_STUDY.md) | Story Loom review animatic, real Vivid evidence boundary, responsive checks and production blockers |
 | [`REBUILD_BRIEF.md`](REBUILD_BRIEF.md) | Why v1 is being replaced. The guards that prevent a repeat |
 | [`TEN_SECOND_TEST.md`](TEN_SECOND_TEST.md) | 🔴 The acceptance gate. **Still never run** |
 | [`TEN_SECOND_ARTIFACT.md`](TEN_SECOND_ARTIFACT.md) | The exact plain-text artifact for the Phase 1 human test |
@@ -92,5 +94,15 @@ The approved interim root is live at
 `https://parth-tiwari-1.vercel.app/` and has passed live browser checks. A real
 five-person comprehension test remains mandatory on the Phase 3 static preview.
 
-**Last documentation truth audit:** 2026-08-31, Phase 2 owner acceptance, shared-system
-closeout, rendered/state/contract gate and deferred-polish boundary recorded.
+After Phase 2 closed, the current Vivid `upgrade-flux` plan and real local evaluation outputs
+were audited for a world review. Three directions were generated: Continuity Darkroom, Story
+Loom and Latent Cinema. The owner authorized Story Loom implementation; a standalone
+native-scroll animatic now combines its decorative concept plate with unchanged real Vivid
+evaluation frames. It remains outside Astro and awaits owner storyboard approval. The audit
+also corrected the stale fixed 28-step assumption and the false implication that generated
+images have no model-licensing boundary. `VIVID_WORLD_CONCEPT_REVIEW.md` records the selection
+history and `VIVID_WORLD_STUDY.md` records implementation evidence and blockers.
+
+**Last documentation truth audit:** 2026-08-31, Vivid Story Loom review implementation,
+current-product truth boundary and pending owner storyboard approval recorded after the
+completed Phase 2 gate.

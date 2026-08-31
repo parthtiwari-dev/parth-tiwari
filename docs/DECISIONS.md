@@ -240,9 +240,16 @@ approval round. This is an explicit acceptance-for-now decision: minute visual r
 is deferred, not declared unnecessary or complete. The shared render, state and contract
 gates pass and `PHASE_2_GATE.md` records the evidence. Phase 2 is closed.
 
-The next requested Vivid work is planning and generated concept imagery aligned to the
-current `upgrade-flux` end-state plan. That exploratory review does not authorize production
-world implementation before the build-plan phase that owns it.
+The Vivid planning audit on 2026-08-31 found that photographic continuity is the verified
+current product direction; the older anime, watercolour and illustration LoRAs were removed
+during the FLUX.2 migration and cannot be presented as current modes. Three generated
+preview-only directions were reviewed: Continuity Darkroom, Story Loom and Latent Cinema.
+After Story Loom was recommended, the owner authorized its implementation. The resulting
+standalone animatic uses the generated loom only as decorative art direction and unchanged
+real Vivid evaluation frames as the foreground evidence. This selects Story Loom for owner
+storyboard review, not for production publication; `VIVID_WORLD_STUDY.md` records the evidence
+and blockers. No concept image is product evidence and no production world implementation is
+authorized before the build-plan phase that owns it.
 
 ### Phase 4
 

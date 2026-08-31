@@ -28,12 +28,15 @@ The maintained routes are /, /work/, /work/beatmind/, /notes/, /notes/[slug]/, /
 animatic, not a production world. There is still no production tear, backlight or canvas
 world in Astro.
 
-The owner's next requested task is a Vivid world planning and concept-image review. Treat it
-as research/storyboard input only: inspect the current Vivid upgrade-flux branch and its plan
-before proposing anything, map the world to the intended final product rather than a stale
-snapshot, use only real capabilities and evidence, and generate concept imagery for owner
-review before implementation. Do not start Phase 5 production world code out of order.
-Phase 3 remains the next implementation phase unless the owner explicitly amends BUILD_PLAN.
+The current paused task is owner review of the Vivid Story Loom animatic. The current Vivid
+`upgrade-flux` branch, plan and real local evaluation contact sheets were inspected on
+2026-08-31. Three directions were generated and the owner authorized Story Loom
+implementation. `design/directions/vivid-world.html` is now a standalone native-scroll study;
+`docs/VIVID_WORLD_STUDY.md` records its real-frame provenance, rendered evidence and unverified
+states. Ask the owner to approve, revise or reject the storyboard direction. Do not move the
+study into Astro or treat its concept plate as product output. Do not start Phase 5 production
+world code out of order. Phase 3 remains the next implementation phase unless the owner
+explicitly amends BUILD_PLAN.
 
 Begin with git status and diff. Preserve all current work. Stop at the applicable gate.
 ```

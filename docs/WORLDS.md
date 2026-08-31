@@ -139,16 +139,21 @@ storytelling demonstration, not a working mixer. No runtime fetch.
 the same person across every frame. A project-specific LoRA adapter supports the generation
 experiments; this is not foundation-model training.
 
-**The graphic.** Diffusion. Noise resolving into a composed frame over 28 steps, with a
-step counter and a progress rule. **This is the one place the v2 denoise idea is true**:
-it is literally what the product does, on the one page that is about it.
+**The graphic.** A reference-first contact sheet: one neutral character anchor binds to
+successive shots while the script becomes a readable sequence. Diffusion may remain one
+chapter of the story, but its counter must come from the selected run's real inference
+profile rather than a hard-coded number. The current `upgrade-flux` source uses 32 steps for
+base storyboard renders and 8 for the pinned Turbo evaluation profile; neither number is a
+permanent visual-design token.
 
 **Scroll story.** Script beats become shots, references bind to characters, sampling
 resolves each frame, consistency is checked, and the failed previous-frame conditioning
 experiment becomes the turn in the story. Reduced motion shows the resolved storyboard
 and the failed comparison side by side.
 
-**Accent.** The dusk palette of the frame it resolves to.
+**Accent.** The palette of the owner-approved publishable sequence. Until that sequence is
+selected, the concept studies use darkroom black, indigo, pottery amber and one oxblood
+failure mark as exploratory colours rather than product evidence.
 
 **Content.** The recorded completed LoRA run used 1,996 discovered images and finished
 2,500 steps. A separate 42-shot Turbo comparison was 5.90 times faster but was rejected
@@ -159,10 +164,14 @@ Vivid, but no durable count source is attached, so the number remains unpublishe
 previous frame's hand pose overrode the text prompt and later shots ran roughly four
 times slower.
 
-**Build notes.** The resolved frame is generated, not photographed, so there is no
-licensing question and no asset to ship. 🔴 **The current capture is an empty state**
-("READY TO RENDER" with four blank slots). Re-shoot it showing generated shots before
-this world ships.
+**Build notes.** Real local evaluation contact sheets now exist, including single-, two- and
+three-character sequences, but none has been selected and cleared as the public portfolio
+sequence. A generated image is still a shipped asset and its model provenance matters:
+current FLUX.2-dev self-hosting is non-commercial under the model licence. Before this world
+ships, choose one publishable run, export its real plan, character references, shot images,
+inference profile and evaluation/failure evidence at build time, and record the applicable
+rights. The prior empty-state capture is no longer the only available source, but it remains
+unsuitable.
 
 ---
 
@@ -382,8 +391,9 @@ shell, because a sourced world still can carry the arrival. It does block claimi
 product has been visually demonstrated when it has not. Each storyboard inventory states
 whether it relies on a capture, generated data graphic or both.
 
-Two captures that do exist should be replaced before their world ships: Vivid's empty
-state, and QueryPilot's Swagger page.
+Two existing captures remain unsuitable for their final worlds: Vivid's old empty state
+must be replaced by an owner-approved real generated sequence, and QueryPilot's Swagger
+page must be replaced by a real correction trace.
 
 ## 5. Known gaps in the prototype, carried forward
 
