@@ -445,7 +445,8 @@ commit with the matching plan items ticked.
     story, failures, explicit no-measurement state, limits and sources.
   - [x] MedRAG: bounded-corpus retrieval, supported/refused evaluation traces, verified
     refusal denominator, clinical boundary and service-dependent capture limitation.
-  - [ ] Order Supervisor.
+  - [x] Order Supervisor: durable lifecycle, bounded model proposal, authoritative workflow
+    validation, persistence ordering, honest no-measurement state and approval correction.
   - [ ] QueryPilot.
   - [ ] SecondSelf.
   - [ ] OncoVerse.
