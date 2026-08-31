@@ -443,7 +443,8 @@ commit with the matching plan items ticked.
   and Spur Chat receive audited `caseStudy` records in the approved batch.
   - [x] Tathya: committed source, real product recording and captures, source-to-case-file
     story, failures, explicit no-measurement state, limits and sources.
-  - [ ] MedRAG.
+  - [x] MedRAG: bounded-corpus retrieval, supported/refused evaluation traces, verified
+    refusal denominator, clinical boundary and service-dependent capture limitation.
   - [ ] Order Supervisor.
   - [ ] QueryPilot.
   - [ ] SecondSelf.
