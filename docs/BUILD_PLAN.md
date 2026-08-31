@@ -447,7 +447,8 @@ commit with the matching plan items ticked.
     refusal denominator, clinical boundary and service-dependent capture limitation.
   - [x] Order Supervisor: durable lifecycle, bounded model proposal, authoritative workflow
     validation, persistence ordering, honest no-measurement state and approval correction.
-  - [ ] QueryPilot.
+  - [x] QueryPilot: real API surface, committed correction trace, core/adversarial
+    denominator separation, safety-correction failure and semantic-accuracy boundary.
   - [ ] SecondSelf.
   - [ ] OncoVerse.
   - [ ] UPI Fraud Engine.

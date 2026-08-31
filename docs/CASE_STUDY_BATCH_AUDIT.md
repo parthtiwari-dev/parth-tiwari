@@ -9,7 +9,7 @@ listed so it cannot silently enter the public account.
 | Tathya | `main` at `bf4606f` | Modified `shared/config.py` excluded | Existing real video and responsive captures plus a DOM boundary record | Implemented |
 | MedRAG | `main` at `a741897` | Untracked `system_architecture.md` excluded | Committed evaluation and retrieval records; no fabricated service-dependent capture | Implemented |
 | Order Supervisor | `main` at `ba544e0` | Clean | Workflow event, allowlist and lifecycle DOM records | Implemented |
-| QueryPilot | `main` at `1b75476` | Clean | Existing API capture plus one committed Day 6 correction trace | Audited, pending implementation |
+| QueryPilot | `main` at `1b75476` | Clean | Existing API capture plus one committed Day 6 correction trace | Implemented |
 | SecondSelf | `v2-dev` at `4a1447c` | Personal KB changes excluded | Safe evaluation and test-fixture DOM records only | Audited, pending implementation |
 | OncoVerse | `main` at `f8bdbd3` | Current anatomy work excluded | Committed atlas asset, content directory and MTC record | Audited, pending implementation |
 | UPI Fraud Engine | `main` at `dbc43ad` | Clean | Existing real evaluation visualisations and separate raw held-out/replay records | Audited, pending implementation |
