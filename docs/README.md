@@ -33,6 +33,7 @@ Where to look, and what is still true.
 | [`TEN_SECOND_TEST.md`](TEN_SECOND_TEST.md) | 🔴 The acceptance gate. **Still never run** |
 | [`TEN_SECOND_ARTIFACT.md`](TEN_SECOND_ARTIFACT.md) | The exact plain-text artifact for the Phase 1 human test |
 | [`PRD.md`](PRD.md) | Audience, route contracts, conversion, worlds and future publishing |
+| [`FULL_SITE_AUDIT_2026-09-01.md`](FULL_SITE_AUDIT_2026-09-01.md) | Owner-requested whole-site visual + strategic review: the 30-day commercial question, the type/space diagnosis, a prioritised bug list, the two worlds, the unroll intro, the Japanese direction and a four-track plan. Evidence in `.shots/full-audit-2026-09-01/` |
 
 ## Superseded — kept for the reasoning, not the instructions
 
