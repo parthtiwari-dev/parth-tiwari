@@ -441,6 +441,15 @@ commit with the matching plan items ticked.
   rows are non-clickable and related Notes links return to the register.
 - [ ] Tathya, MedRAG, Order Supervisor, QueryPilot, SecondSelf, OncoVerse, UPI Fraud Engine
   and Spur Chat receive audited `caseStudy` records in the approved batch.
+  - [x] Tathya: committed source, real product recording and captures, source-to-case-file
+    story, failures, explicit no-measurement state, limits and sources.
+  - [ ] MedRAG.
+  - [ ] Order Supervisor.
+  - [ ] QueryPilot.
+  - [ ] SecondSelf.
+  - [ ] OncoVerse.
+  - [ ] UPI Fraud Engine.
+  - [ ] Spur Chat.
 - [ ] Fraud Risk Intelligence and Oracle Auto Provision remain explicitly deferred as
   **Case study in development** until their later audits.
 - [ ] Every `/work/[slug]` page satisfies `CASE_STUDY_CONTRACT.md`, including real
