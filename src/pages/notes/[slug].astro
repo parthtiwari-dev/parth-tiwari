@@ -1,0 +1,42 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content'
+import NoteArticle from '../../components/NoteArticle.astro'
+
+interface Props {
+  note: CollectionEntry<'notes'>
+  projects: CollectionEntry<'work'>[]
+  claims: CollectionEntry<'claims'>[]
+  previous?: CollectionEntry<'notes'>
+  next?: CollectionEntry<'notes'>
+}
+
+export async function getStaticPaths() {
+  const [notes, projects, claims] = await Promise.all([
+    getCollection('notes', ({ data }) => data.state === 'published'),
+    getCollection('work'),
+    getCollection('claims'),
+  ])
+  const ordered = [...notes].sort((left, right) => left.id.localeCompare(right.id))
+
+  return ordered.map((note, index) => ({
+    params: { slug: note.id },
+    props: {
+      note,
+      projects,
+      claims,
+      previous: ordered[index - 1],
+      next: ordered[index + 1],
+    },
+  }))
+}
+
+const { note, projects, claims, previous, next } = Astro.props as Props
+const relatedProjects = note.data.relatedProjects
+  .map((slug) => projects.find((project) => project.id === slug))
+  .filter((project): project is CollectionEntry<'work'> => Boolean(project))
+const { Content } = await render(note)
+---
+
+<NoteArticle note={note} relatedProjects={relatedProjects} claims={claims} previous={previous} next={next}>
+  <Content />
+</NoteArticle>

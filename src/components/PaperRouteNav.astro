@@ -1,0 +1,28 @@
+---
+interface Props {
+  current?: 'work' | 'notes' | 'about' | 'resume' | 'hire'
+}
+
+const { current } = Astro.props
+const links = [
+  { key: 'work', label: 'Work', href: '/work/' },
+  { key: 'notes', label: 'Notes', href: '/notes/' },
+  { key: 'about', label: 'About', href: '/about/' },
+  { key: 'resume', label: 'Resume', href: '/resume/' },
+] as const
+---
+
+<header class="profile-nav">
+  <a class="profile-wordmark" href="/">Parth Tiwari</a>
+  <nav aria-label="Portfolio navigation">
+    {links.map((link) => <a aria-current={current === link.key ? 'page' : undefined} href={link.href}>{link.label}</a>)}
+  </nav>
+  <a class="profile-contact" aria-current={current === 'hire' ? 'page' : undefined} href="/hire/">Start a project</a>
+  <details class="profile-mobile-menu paper-mobile-menu">
+    <summary><span class="menu-label-open">Menu</span><span class="menu-label-close">Close</span></summary>
+    <nav aria-label="Mobile portfolio navigation">
+      <a href="/">Home</a>
+      {links.map((link) => <a aria-current={current === link.key ? 'page' : undefined} href={link.href}>{link.label}</a>)}
+    </nav>
+  </details>
+</header>

@@ -1,8 +1,10 @@
 # Phase 2 owner review: system and page architecture
 
-Opened 2026-08-28; updated 2026-08-29. Phase 2 proceeds one route and one review checkpoint
+Opened 2026-08-28; closed 2026-08-31. Phase 2 proceeded one route and one review checkpoint
 at a time. The owner approved the refined landing structure and its interim public release
-on 2026-08-29. `/work` is the next route architecture review; implementation remains Phase 3.
+on 2026-08-29, then accepted every current route as the review baseline on 2026-08-31 while
+deferring further polish. Shared-system, rendered-contrast and state checks now pass. Exact
+gate evidence is in [`PHASE_2_GATE.md`](PHASE_2_GATE.md).
 
 ## Scope
 
@@ -175,8 +177,8 @@ On 2026-08-29 the built static preview passed `a11y`, `craft` and `perf`: no pag
 horizontal overflow at 390, 800 or 1440 pixels; complete no-JavaScript and reduced-motion
 copy; no canvas; one first-party enhancement script; and zero transferred script bytes
 because Astro inlined the small enhancement below the 30 kB Phase 2 ceiling. These checks
-prove this landing craft slice only. Owner approval and the remaining Phase 2 route/system
-work are still required before the phase gate can pass.
+prove this landing craft slice only. At that checkpoint, owner approval and the remaining
+Phase 2 route/system work were still required before the phase gate could pass.
 
 A later scroll-frame pass found that the large `drop-shadow()` applied to the complete
 6,800-8,400px sheet was the source of visible jank. The one-variable A/B at 390, 800 and
@@ -192,7 +194,8 @@ The owner approved replacing v1 with this reviewed root landing to collect feedb
 successful. A cache-bypassed request to `https://parth-tiwari-1.vercel.app/` returned HTTP
 200 with the new title and hero and without the old EPHEMERIS marker. The live URL then
 passed `a11y`, `craft` and `perf` at 390, 800 and 1440 pixels. This evidence covers the
-interim root only and does not satisfy the remaining Phase 2, Phase 3 or Phase 7 gates.
+interim root only and did not satisfy the then-remaining Phase 2 gate or the Phase 3 and
+Phase 7 gates.
 
 ## Worlds research boundary
 
@@ -244,7 +247,8 @@ authorize a production merge.
 Home keeps its lighter editorial index of all twelve projects because the complete-site plan
 requires every project there. `/work` remains distinct by adding full summaries, evidence,
 dates, ordering and state filtering; copying its complete layout back onto Home would erase
-that distinction. This is a design recommendation awaiting owner confirmation.
+that distinction. The owner accepted this distinction with the Phase 2 baseline on
+2026-08-31.
 
 The owner decided on 2026-08-29 that `/work` will not sort or badge projects as personal
 versus company work. BeatMind and Vivid were owner-reported as work made in the owner's
@@ -270,8 +274,68 @@ because no approved standalone excerpt exists. The run-trace strip remains label
 story path because its real timing export does not exist in this repository.
 
 Rendered evidence and exact limits are recorded in
-[`PHASE_2_CASE_STUDY_REVIEW.md`](PHASE_2_CASE_STUDY_REVIEW.md). The structure still needs
-owner visual approval before Notes begins.
+[`PHASE_2_CASE_STUDY_REVIEW.md`](PHASE_2_CASE_STUDY_REVIEW.md). The owner approved the
+structure by asking to begin Notes on 2026-08-30.
+
+## Notes and Errata review slice
+
+The Notes pilot now renders at `/notes/` with twelve equal-weight Errata, a casual
+first-person opening, an enhanced-only three-state filter and an honest Writing shelf with
+no fake posts. Every published record has a static `/notes/[slug]/` page containing the
+complete concise audit, related work, publishable measurements, source boundary and adjacent
+reading paths. Private repository and artifact paths are never printed.
+
+The existing paper system remains the primary visual source. Linear contributes only scan
+density, Maggie Appleton contributes content-type separation, and Cloudflare contributes the
+correction anatomy. The full reference lock and exact browser evidence are in
+[`PHASE_2_NOTES_REVIEW.md`](PHASE_2_NOTES_REVIEW.md). The owner still needs to inspect the
+rendered hub, Writing state and article. The owner then supplied the About decisions and
+asked the route sequence to continue, so that visual approval remains open without blocking
+the separately reviewable About slice.
+
+## About review slice
+
+The About pilot now renders at `/about/` with the real candid portrait, a casual first-person
+opening, equal treatment of education and work, one typed chronological ledger, current-role
+detail and five evidence-led operating rules. It adds no endorsements, user counts or
+unsupported outcomes. Josh Comeau informs only the candid chronology; Maggie Appleton
+informs only the explicit naming of work categories. The portfolio's paper system remains
+the visual source.
+
+The complete lock, source boundary and 390, 800 and 1440 pixel evidence are in
+[`PHASE_2_ABOUT_REVIEW.md`](PHASE_2_ABOUT_REVIEW.md). The route uses zero client scripts and
+remains complete without JavaScript. Owner visual approval remains; Resume is the next
+review slice and now follows below.
+
+## Resume review slice
+
+The Resume pilot now renders at `/resume/` as a crawlable HTML document backed by the typed
+resume, experience, education, work and claim collections. The supplied Resume B artifact is
+served unchanged as a clearly labelled source PDF; its older numeric project statements are
+not copied into the HTML. A separate optional Drive link is controlled by
+`PUBLIC_RESUME_GOOGLE_DRIVE_URL`, accepts only HTTPS Google Drive or Docs hosts, and adds no
+embed, runtime fetch or dependency.
+
+The complete source boundary, configuration proof, responsive capture and inspected
+two-page A4 print proof are in
+[`PHASE_2_RESUME_REVIEW.md`](PHASE_2_RESUME_REVIEW.md). Owner visual approval remains; Hire is
+the next route review.
+
+## Hire review slice
+
+The Hire pilot now renders at `/hire/` from the three typed service records and approved
+route copy. One continuous paper route contains the direct arrival, an informal first-message
+note, service scope and boundaries, a four-step risk-reduction path, equal fit and not-fit
+guidance, and booking, email and WhatsApp at both ends. It contains no price, form,
+testimonial, client logo, urgency claim or client script.
+
+thoughtbot contributes only the separation of service shapes and risk-first validation;
+Josh Comeau contributes only direct human contact framing. Paper and Worlds remains the
+visual source. The complete reference lock, copy boundary, contact verification and
+responsive evidence are in [`PHASE_2_HIRE_REVIEW.md`](PHASE_2_HIRE_REVIEW.md). The owner
+accepted the current route as the Phase 2 baseline on 2026-08-31 and deferred another polish
+pass. Every route family now has a Phase 2 review implementation and the shared gate is
+complete.
 
 ## Review sequence
 
@@ -281,8 +345,10 @@ owner visual approval before Notes begins.
 3. Review the torn-ink project hover/focus and the amount of marginalia.
 4. Lock the landing tokens and responsive rules only after desktop, tablet and phone pass.
 5. Preserve the approved `/work` information architecture without an ownership filter.
-6. Approve the rendered shared case-study structure, then review Notes, About, Resume and
-   Hire one route family at a time.
+6. Preserve the approved shared case-study structure.
+7. Approve the rendered Notes, About, Resume and Hire slices.
+8. Reconcile shared tokens and route states, run rendered contrast at all three widths,
+   then show the complete Phase 2 gate and stop. Completed 2026-08-31.
 
 ## Already locked, not reopened here
 

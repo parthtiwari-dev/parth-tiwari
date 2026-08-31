@@ -47,11 +47,26 @@
     "motionDeferred": true
   },
   "caseStudy": {
+    "classification": "Music systems",
     "thesis": "BeatMind turns a generated or uploaded track into musical material a person can inspect, rearrange, mix, and render without lying about work still happening in the background.",
     "credit": {
       "organization": "Stick and Dot",
       "role": "AI/ML Intern",
-      "contribution": "I designed and built BeatMind end to end. Founder and early-user feedback shaped later product refinements; no one else contributed to the implementation."
+      "contribution": "I designed and built BeatMind end to end. Founder and early-user feedback shaped later product refinements; no one else contributed to the implementation.",
+      "contributionSummary": "Design and engineering, end to end"
+    },
+    "cover": {
+      "src": "/media/beatmind-desktop.jpg",
+      "alt": "BeatMind's real public product page showing a five-stem record visualization",
+      "width": 2880,
+      "height": 1800,
+      "labels": ["Real product surface", "Five-stem model"]
+    },
+    "headings": {
+      "overview": "More control than a prompt box. Less friction than starting in a DAW.",
+      "problem": "The browser can stop waiting. The work cannot pretend it stopped.",
+      "architectureCaption": "One durable path, with late work fenced out",
+      "evidence": "Two measurements I can defend. No adoption theatre."
     },
     "intendedUser": "Electronic music makers who want more control than a prompt box without beginning every idea inside a full digital audio workstation.",
     "demo": {
@@ -85,6 +100,11 @@
         "width": 1904,
         "height": 972
       }
+    ],
+    "responsibilities": [
+      { "label": "Product", "detail": "Workflow, interaction model, feedback-led refinements, and rights boundary." },
+      { "label": "Frontend", "detail": "Creation, library, editor, arrangement, mixing, rendering, and truthful state." },
+      { "label": "Systems", "detail": "Generation, separation, analysis, storage transport, durable jobs, retries, and recovery." }
     ],
     "research": [
       {
@@ -125,6 +145,12 @@
         "tradeoff": "Updates are not instant to the millisecond, but the recovery model stays simpler and inspectable while the product is still learning."
       }
     ],
+    "architectureSteps": [
+      { "label": "Browser", "detail": "Uploads directly and reads committed project state" },
+      { "label": "Web application", "detail": "Creates the operation and exposes honest progress" },
+      { "label": "Audio service", "detail": "Generates, separates, analyses, or renders" },
+      { "label": "Fenced commit", "detail": "Accepts the current attempt and refuses late work" }
+    ],
     "failures": [
       {
         "title": "Regenerate finished, but playback did not change",
@@ -162,6 +188,7 @@
       "Groove and sound-palette controls stay out of the product until their timing and timbre data can be verified and wired honestly.",
       "This is still a small pilot, not evidence of broad multi-user adoption, and some touch targets still need a dedicated device pass."
     ],
+    "evidenceNote": "I am not publishing a user count here. The account record and the definition of user need to agree before that number belongs in a case study.",
     "future": [
       {
         "status": "planned",
@@ -189,7 +216,13 @@
       { "label": "BeatMind architecture, product, and research documents", "locator": "private BeatMind docs", "public": false },
       { "label": "Published BeatMind product", "locator": "https://www.beatmind.tech", "public": true },
       { "label": "Portfolio claim records", "locator": "src/content/claims", "public": true }
-    ]
+    ],
+    "relatedNoteLabel": "Read the consent-gate erratum",
+    "ending": {
+      "heading": "The product is live. The record stays open.",
+      "body": "BeatMind will change. When the evidence changes, this page should change with it.",
+      "contactLabel": "Ask me about BeatMind"
+    }
   },
   "claimRefs": ["beatmind-current-tests", "beatmind-separation-benchmark"]
 }

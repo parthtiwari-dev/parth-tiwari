@@ -306,8 +306,57 @@ limitations, status-labelled future work and source boundaries. The reusable rea
 publication rules are locked in `docs/CASE_STUDY_CONTRACT.md`. Initial 390, 800 and 1440
 structural captures pass with no overflow or page errors. The exact built output also passes
 schema, content, build, accessibility, craft, transfer and deterministic scroll checks; the
-scroll pass holds 16.7-16.8 ms p95 with no frames above 20 ms. Owner visual approval remains
-required, so this checkpoint does not tick the combined route-family item or start Phase 3.
+scroll pass holds 16.7-16.8 ms p95 with no frames above 20 ms. The owner approved the pilot
+by asking to begin Notes on 2026-08-30. This checkpoint still does not tick the combined
+route-family item or start Phase 3.
+
+**Notes review checkpoint, 2026-08-30:** `/notes/` now renders all twelve Errata at equal
+weight and keeps general Posts as an explicit `Coming soon` shelf. All twelve
+`/notes/[slug]/` routes render their concise audited Markdown, related project, any
+publishable measurement, honest source boundary and previous/next paths. The reference lock,
+route structure and evidence are in `docs/PHASE_2_NOTES_REVIEW.md`. The exact built output
+passes the Notes capture, all article links, no-JavaScript, accessibility, craft, transfer
+and deterministic scroll checks at 390, 800 and 1440 pixels. The owner then supplied the
+About route decisions and asked work to continue. The combined route-family checklist item
+stays unticked until all route reviews and owner visual approvals are complete.
+
+**About review checkpoint, 2026-08-30:** `/about/` now renders the real portrait, casual
+first-person introduction, one typed chronology with two education records and the current
+role, three current-work lines and five operating rules. Its built-output capture passes at
+390, 800 and 1440 pixels with zero overflow, browser errors or client scripts, and the full
+route remains present without JavaScript. Reference limits and evidence are recorded in
+`docs/PHASE_2_ABOUT_REVIEW.md`. Resume followed as the next review slice; this does not tick the
+combined route-family item or begin Phase 3.
+
+**Resume review checkpoint, 2026-08-30:** `/resume/` now emits a semantic HTML CV from one
+validated resume profile plus the shared experience, education, work and claim collections.
+The supplied Resume B PDF is served unchanged as the stable download. An optional
+`PUBLIC_RESUME_GOOGLE_DRIVE_URL` adds a separately labelled HTTPS Drive link at build time;
+there is no embed or runtime fetch. The final route capture passes at 390, 800 and 1440
+pixels, the no-JavaScript document remains complete, the local PDF returns the expected byte
+length, and the inspected print proof is two clean A4 pages. Evidence and the stale-PDF-claim
+boundary are recorded in `docs/PHASE_2_RESUME_REVIEW.md`. Hire followed as the next route
+review; the combined route-family item remains unticked.
+
+**Hire review checkpoint, 2026-08-31:** `/hire/` now renders the three typed service
+records with explicit boundaries, a four-step risk-reduction path, balanced fit and
+not-fit guidance, and direct booking, email and WhatsApp paths. The page contains no public
+pricing, form, testimonial, client logo, urgency claim or client script. Built-output
+captures pass at 390, 800 and 1440 pixels with zero overflow or page errors, and the full
+route remains available without JavaScript. The configured Cal.com and WhatsApp URLs also
+returned HTTP 200 during read-only checks. Evidence and reference limits are recorded in
+`docs/PHASE_2_HIRE_REVIEW.md`. All route structures now have review implementations; owner
+visual approval and the shared token, state and contrast closeout remain before the Phase 2
+gate can run.
+
+**Phase 2 gate result, 2026-08-31:** the owner accepted the current route designs as the
+review baseline and deferred further polish. The shared system now names paper, ink, type,
+spacing, grid, focus, motion and world roles. The consolidated gate passed all eight route
+families at 390, 800 and 1440 pixels, plus no-JavaScript, reduced-motion, touch-menu,
+keyboard-focus, contrast, font-budget and static-boundary checks. The lowest paper contrast
+is quiet ink at 4.88:1. Representative captures were inspected. Exact evidence and commands
+are in `docs/PHASE_2_GATE.md`. Phase 2 is complete; the acceptance does not claim that the
+deferred visual-polish pass is complete.
 
 **Owner review before work**
 
@@ -320,7 +369,7 @@ required, so this checkpoint does not tick the combined route-family item or sta
   merit-based catalogue without a Personal/Company split. The next review slice is the
   shared `/work/[slug]` case-study structure, using BeatMind as the real-content pilot.
 - The BeatMind paper pilot now has its complete contract and final 390, 800 and 1440
-  built-output evidence. Owner review remains. Real trace and standalone
+  built-output evidence. The owner approved it by asking to begin Notes. Real trace and standalone
   audio inputs belong to the separate Sound Foundry world, not the paper page.
 - The owner approved the **Sound Foundry** premise, nine-scene order and current five-stem
   language on 2026-08-30. A replacement standalone animatic now tests the continuous machine,
@@ -335,21 +384,21 @@ required, so this checkpoint does not tick the combined route-family item or sta
   captured from the approved Sound Foundry animatic. Final built-output evidence at 390, 800
   and 1440 pixels is in `.shots/phase2-arrival-world-still-built`; this refinement does not
   start Phase 3 or add landing-page canvas motion.
-- After the paper pilot and world storyboard decisions, review Notes and its article
-  structure next.
+- Notes, About, Resume and Hire are accepted as the current review baseline. Further visual
+  polish is intentionally deferred and does not reopen the completed Phase 2 gate by itself.
 
 **Do**
 
-- [ ] Define tokens for paper, ink, type, spacing, grid, focus, motion and world surfaces.
+- [x] Define tokens for paper, ink, type, spacing, grid, focus, motion and world surfaces.
 - [x] Self-host and subset Bricolage Grotesque, Archivo and DM Mono. The four approved
   WOFF2 files total 55,916 bytes and loaded in rendered phone and desktop review pages.
-- [ ] Define the reusable paper primitives without copying `paper.html` line by line.
-- [ ] Define route wireframes and content hierarchy for home, work, case study, notes hub,
+- [x] Define the reusable paper primitives without copying `paper.html` line by line.
+- [x] Define route wireframes and content hierarchy for home, work, case study, notes hub,
   note article, about, resume and hire.
-- [ ] Define responsive, keyboard, touch, reduced-motion and no-JavaScript states.
-- [ ] Define the visual treatment for “Coming soon” so it is honest and useful, not an
+- [x] Define responsive, keyboard, touch, reduced-motion and no-JavaScript states.
+- [x] Define the visual treatment for “Coming soon” so it is honest and useful, not an
   empty card.
-- [ ] Run rendered contrast checks on the actual paper stock and world ground.
+- [x] Run rendered contrast checks on the actual paper stock and world ground.
 
 **Gate**
 
@@ -360,7 +409,8 @@ required, so this checkpoint does not tick the combined route-family item or sta
 - Fonts remain within the recorded budget.
 - No tear, backlight or animated world has been implemented.
 
-Show the visual evidence and stop.
+**Gate: passed 2026-08-31.** Evidence: `docs/PHASE_2_GATE.md` and
+`.shots/phase2-gate-final`. Stop before Phase 3.
 
 ### Phase 3: Complete static site
 
@@ -383,6 +433,10 @@ commit with the matching plan items ticked.
 
 - [ ] `/work` lists every project without a hard-coded count in prose.
 - [ ] Sorting controls operate on real typed fields and preserve a meaningful default order.
+- [x] BeatMind and Vivid use one content-driven paper case-study component and validated
+  project-specific evidence records.
+- [ ] The remaining ten projects receive audited `caseStudy` records before their routes are
+  counted as complete.
 - [ ] Every `/work/[slug]` page satisfies `CASE_STUDY_CONTRACT.md`, including real
   product proof, contribution, research, trade-offs, evidence, failures and limits.
 - [ ] Previous/next and back-to-register links prevent dead ends.
@@ -620,5 +674,7 @@ framework, stop and review the architecture before adding more.
 - UPI's model-evaluation precision and operational backtest precision must not be collapsed
   into one number.
 - Oracle duration and uptime language remains unpublished until evidence exists.
-- Vivid and QueryPilot need useful product captures before their worlds ship.
+- QueryPilot still needs a useful product capture before its world ships. Vivid now has one
+  real browser capture and a real evaluation sequence in its paper case study; world media
+  approval remains a separate gate.
 - The owner decided that no price or price band appears anywhere on the public site.

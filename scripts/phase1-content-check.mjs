@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { readdir, readFile } from 'node:fs/promises'
 import path from 'node:path'
-import { claimSchema, experienceSchema, noteSchema, serviceSchema, siteCopySchema, workSchema } from '../src/content/schemas.mjs'
+import { claimSchema, educationSchema, experienceSchema, noteSchema, resumeSchema, serviceSchema, siteCopySchema, workSchema } from '../src/content/schemas.mjs'
 
 const root = process.cwd()
 
@@ -28,13 +28,18 @@ async function readMarkdownDirectory(relativeDirectory, schema) {
 const claims = await readJsonDirectory('src/content/claims', claimSchema)
 const work = await readMarkdownDirectory('src/content/work', workSchema)
 const notes = await readMarkdownDirectory('src/content/notes', noteSchema)
+const education = await readJsonDirectory('src/content/education', educationSchema)
 const experience = await readJsonDirectory('src/content/experience', experienceSchema)
+const resume = await readJsonDirectory('src/content/resume', resumeSchema)
 const services = await readJsonDirectory('src/content/services', serviceSchema)
 const site = await readJsonDirectory('src/content/site', siteCopySchema)
 
 assert.equal(work.length, 12, 'the register must contain all twelve projects')
+assert.equal(education.length, 2, 'the profile must contain both verified education records')
 assert.equal(new Set(work.map((entry) => entry.data.order)).size, 12, 'project order values must be unique')
-assert(work.find((entry) => entry.id === 'beatmind')?.data.caseStudy, 'BeatMind must satisfy the Phase 2 case-study contract')
+for (const projectId of ['beatmind', 'vivid']) {
+  assert(work.find((entry) => entry.id === projectId)?.data.caseStudy, `${projectId} must satisfy the paper case-study contract`)
+}
 
 const workIds = new Set(work.map((entry) => entry.id))
 const noteIds = new Set(notes.map((entry) => entry.id))
@@ -65,14 +70,18 @@ for (const service of services) {
   for (const projectId of service.data.evidenceProjects) assert(workIds.has(projectId), `${service.id} references missing evidence project ${projectId}`)
 }
 
-const publicText = [...work, ...notes, ...services, ...site].map((entry) => entry.raw).join('\n')
+assert.equal(resume.length, 1, 'the HTML resume must have one validated profile')
+for (const projectId of resume[0].data.projectIds) assert(workIds.has(projectId), `resume references missing project ${projectId}`)
+
+const publicText = [...work, ...notes, ...education, ...experience, ...resume, ...services, ...site].map((entry) => entry.raw).join('\n')
 assert.equal(publicText.includes('—'), false, 'user-facing content must not contain em dashes')
 
 const publishedClaims = claims.filter((entry) => entry.data.publish)
 console.log(`PASS ${work.length} project entries validate with all base beats`)
-console.log('PASS BeatMind validates against the complete Phase 2 case-study contract')
+console.log('PASS BeatMind and Vivid validate against the complete paper case-study contract')
 console.log(`PASS ${notes.length} errata entries validate; general Posts remain empty by decision`)
 console.log(`PASS ${publishedClaims.length} public quantitative claims resolve to verified source records`)
-console.log(`PASS ${experience.length} experience and ${services.length} service records validate`)
+console.log(`PASS ${education.length} education, ${experience.length} experience and ${services.length} service records validate`)
+console.log(`PASS ${resume.length} resume profile references verified project records`)
 console.log('PASS project, note, next-project, and evidence references resolve')
 console.log('PASS user-facing content contains no em dash')

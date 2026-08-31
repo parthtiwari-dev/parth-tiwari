@@ -1,0 +1,17 @@
+{
+  "wording": "Vivid's accepted base-model evaluation covers 12 fixed scenes and 42 generated shots, with identity 0.3528, adherence 0.8437, and realism 0.8562.",
+  "display": "12 scenes / 42 shots",
+  "context": "Accepted pre-rebuild baseline run 20260818T001400Z-full on the fixed Vivid evaluation set.",
+  "denominator": "42 generated shots across 12 scripted scenes",
+  "verifiedAt": "2026-08-19",
+  "status": "verified",
+  "publish": true,
+  "sources": [
+    {
+      "kind": "artifact",
+      "locator": "C:/great learning self paced/Stick and dot/Vivid/evals/baselines/2026-08-pre-rebuild.json",
+      "revision": "0f4477b",
+      "public": false
+    }
+  ]
+}

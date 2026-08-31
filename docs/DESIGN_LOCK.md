@@ -281,6 +281,7 @@ These are production requirements, not reasons to polish `paper.html`.
   publish it yet.
 - QueryPilot and UPI metrics need their exact denominators and evaluation context.
 - Oracle uptime language remains unpublished until evidence exists.
-- Vivid and QueryPilot need useful product captures before their worlds ship.
+- Vivid's paper case now has a real browser capture and two real evaluation frames, but its
+  world still needs an approved complete sequence. QueryPilot still needs useful product proof.
 - The owner rejected public pricing and cost sorting. The register uses qualitative build
   effort: flagship, substantial and focused.

@@ -1,0 +1,179 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import {
+  CONTACT_EMAIL,
+  CONTACT_EMAIL_HREF,
+  IS_WHATSAPP_CONFIGURED,
+  PRIMARY_CONTACT_HREF,
+  PRIMARY_CONTACT_LABEL,
+  WHATSAPP_URL,
+} from '../config/site'
+import PaperRouteNav from './PaperRouteNav.astro'
+import '../styles/profile-pages.css'
+import '../styles/hire.css'
+
+interface Props {
+  copy: CollectionEntry<'site'>['data']['hire']
+  services: CollectionEntry<'services'>[]
+}
+
+const { copy, services } = Astro.props
+const orderedServices = [...services].sort((left, right) => left.data.order - right.data.order)
+
+const process = [
+  {
+    title: 'Start with the actual problem.',
+    detail: 'We get clear on who is stuck, what exists today, and what a useful change would look like.',
+    output: 'A problem worth solving',
+  },
+  {
+    title: 'Prove the risky part first.',
+    detail: 'Before a large build, we test the assumption most likely to make the idea fail.',
+    output: 'Evidence, not momentum',
+  },
+  {
+    title: 'Build the smallest useful version.',
+    detail: 'The interface, model, data, evaluation, and recovery path are connected around one real job.',
+    output: 'Something people can use',
+  },
+  {
+    title: 'Ship it, measure it, leave it clear.',
+    detail: 'We document the decisions, keep the failure states visible, and decide the next step from what happened.',
+    output: 'A product you can continue',
+  },
+] as const
+
+const goodFit = [
+  'There is a real workflow, user problem, or product idea behind the AI request.',
+  'The riskiest assumption can be tested with actual material or a bounded prototype.',
+  'A human keeps authority over decisions that affect money, access, health, or people.',
+  'You want the useful page and reliable system, not only the impressive demo.',
+] as const
+
+const notFit = [
+  'The brief needs invented proof, hidden limitations, or a claim the evidence cannot support.',
+  'The model is expected to own consequential decisions without a review boundary.',
+  'The request is only “add AI” and there is no user problem to examine yet.',
+  'The project depends on pretending a prototype is already a production system.',
+] as const
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Work with Parth Tiwari on AI products, durable workflow automation, or interactive product storytelling. See scope, process, fit, and direct contact options." />
+    <title>Start a project | Parth Tiwari</title>
+  </head>
+  <body class="profile-page hire-page">
+    <a class="skip-link" href="#hire-arrival">Skip to project details</a>
+    <main class="profile-sheet">
+      <div class="profile-paper">
+        <div class="profile-edge profile-edge-left" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="profile-edge profile-edge-right" aria-hidden="true"><i></i><i></i><i></i></div>
+        <PaperRouteNav current="hire" />
+
+        <section id="hire-arrival" class="hire-arrival" aria-labelledby="hire-title">
+          <div class="hire-arrival-copy">
+            <p class="profile-eyebrow">Start a project / A direct conversation</p>
+            <h1 id="hire-title">{copy.heading}</h1>
+            <p>{copy.intro}</p>
+          </div>
+
+          <aside class="hire-first-note" aria-labelledby="first-note-title">
+            <p class="hire-note-label">A useful first message</p>
+            <h2 id="first-note-title">Send the rough version.</h2>
+            <p>What are you trying to change? What already exists? What feels uncertain?</p>
+            <p>You do not need a polished brief before we talk.</p>
+          </aside>
+
+          <nav class="hire-arrival-actions" aria-label="Start a conversation">
+            <a class="hire-primary-action" href={PRIMARY_CONTACT_HREF} target={PRIMARY_CONTACT_HREF.startsWith('http') ? '_blank' : undefined} rel={PRIMARY_CONTACT_HREF.startsWith('http') ? 'noreferrer' : undefined}>
+              <span>{PRIMARY_CONTACT_LABEL}</span><span aria-hidden="true">↗</span>
+            </a>
+            <a href={CONTACT_EMAIL_HREF}><span>Email</span><small>{CONTACT_EMAIL}</small></a>
+            {IS_WHATSAPP_CONFIGURED && <a href={WHATSAPP_URL} target="_blank" rel="noreferrer"><span>WhatsApp</span><small>Send a message</small></a>}
+          </nav>
+        </section>
+
+        <section class="hire-services" aria-labelledby="services-title">
+          <header class="hire-section-heading">
+            <div>
+              <p class="profile-eyebrow">Scope / Three kinds of work</p>
+              <h2 id="services-title">Where I can be useful.</h2>
+            </div>
+            <p>The shape can change. The boundary does not: the product has to remain understandable, testable, and honest about what the model cannot own.</p>
+          </header>
+
+          <ol class="hire-service-ledger">
+            {orderedServices.map((service, index) => (
+              <li>
+                <span class="hire-index">{String(index + 1).padStart(2, '0')}</span>
+                <div class="hire-service-intro"><h3>{service.data.title}</h3><p>{service.data.outcome}</p></div>
+                <div class="hire-service-list"><p>Useful for</p><ul>{service.data.scope.map((item) => <li>{item}</li>)}</ul></div>
+                <div class="hire-service-list hire-service-boundary"><p>Boundary</p><ul>{service.data.boundaries.map((item) => <li>{item}</li>)}</ul></div>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section class="hire-process" aria-labelledby="process-title">
+          <header class="hire-section-heading">
+            <div>
+              <p class="profile-eyebrow">Process / Four clear moves</p>
+              <h2 id="process-title">We make the uncertainty smaller.</h2>
+            </div>
+            <p>This is the default path, not ceremony for its own sake. A project can begin smaller when the evidence says it should.</p>
+          </header>
+
+          <ol class="hire-process-path">
+            {process.map((step, index) => (
+              <li>
+                <span class="hire-process-number">{String(index + 1).padStart(2, '0')}</span>
+                <div><h3>{step.title}</h3><p>{step.detail}</p></div>
+                <p class="hire-process-output">{step.output}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section class="hire-fit" aria-labelledby="fit-title">
+          <header class="hire-section-heading">
+            <div>
+              <p class="profile-eyebrow">Fit / Better to know early</p>
+              <h2 id="fit-title">A good fit is more useful than a forced yes.</h2>
+            </div>
+            <p>If I am not the right person, I will say so. If the idea needs proof before implementation, that is where I will suggest we start.</p>
+          </header>
+
+          <div class="hire-fit-ledger">
+            <section aria-labelledby="good-fit-title">
+              <p class="hire-fit-mark">Likely a fit</p>
+              <h3 id="good-fit-title">There is something real underneath the idea.</h3>
+              <ul>{goodFit.map((item) => <li>{item}</li>)}</ul>
+            </section>
+            <section aria-labelledby="not-fit-title">
+              <p class="hire-fit-mark">Probably not a fit</p>
+              <h3 id="not-fit-title">The request needs the story to outrun the evidence.</h3>
+              <ul>{notFit.map((item) => <li>{item}</li>)}</ul>
+            </section>
+          </div>
+        </section>
+
+        <footer class="hire-close" aria-labelledby="hire-close-title">
+          <div>
+            <p class="profile-eyebrow">The next step / No pitch deck required</p>
+            <h2 id="hire-close-title">Tell me what you are trying to make.</h2>
+            <p>I will reply with what I can own, what needs proving first, and the smallest useful way to begin.</p>
+          </div>
+          <nav aria-label="Contact Parth">
+            <a class="hire-primary-action" href={PRIMARY_CONTACT_HREF} target={PRIMARY_CONTACT_HREF.startsWith('http') ? '_blank' : undefined} rel={PRIMARY_CONTACT_HREF.startsWith('http') ? 'noreferrer' : undefined}><span>{PRIMARY_CONTACT_LABEL}</span><span aria-hidden="true">↗</span></a>
+            <a href={CONTACT_EMAIL_HREF}><span>Email Parth</span><small>{CONTACT_EMAIL}</small></a>
+            {IS_WHATSAPP_CONFIGURED && <a href={WHATSAPP_URL} target="_blank" rel="noreferrer"><span>WhatsApp</span><small>Open a chat ↗</small></a>}
+          </nav>
+        </footer>
+      </div>
+    </main>
+  </body>
+</html>

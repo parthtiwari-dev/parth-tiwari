@@ -51,18 +51,21 @@ one visual section when that improves the story, but none may silently disappear
 
 ## Typed content
 
-Phase 2 pilots use the optional `caseStudy` object in `src/content/schemas.mjs`. It
+Paper case studies use the optional `caseStudy` object in `src/content/schemas.mjs`. It
 contains:
 
-- thesis, credit and intended user;
+- classification, thesis, credit, exact contribution, cover media and intended user;
 - real demo media and a real workflow capture sequence;
+- project-specific headings, responsibilities and architecture steps;
 - research findings and the decisions each changed;
 - selected decisions, rejected alternatives and trade-offs;
 - structured failures;
-- current limitations and status-labelled future work;
-- public and internally audited sources.
+- current limitations, an evidence note and status-labelled future work;
+- public and internally audited sources, related-note wording and the closing handoff.
 
-BeatMind is the first complete record. The object stays optional while the other eleven
+BeatMind and Vivid are the first complete records. `src/pages/work/[slug].astro` generates a
+static page for every validated project that contains this object, so new case studies do not
+need a hard-coded route or component fork. The object stays optional while the other ten
 projects are being audited. Before Phase 3 generates all twelve routes, every entry must
 satisfy this contract and the schema must become required. Missing data is a blocker, not a
 reason to invent placeholder prose.

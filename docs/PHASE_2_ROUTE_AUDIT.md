@@ -4,6 +4,11 @@ Audited 2026-08-29 from fresh local browser captures at 1440 and 390 pixels. Evi
 stored in `.shots/phase2-route-audit`. This audit covers the current Home to Work journey;
 it is not a full-site accessibility claim.
 
+**Closeout, 2026-08-31:** the owner later accepted the corrected desktop aperture and mobile
+paper menu as part of the Phase 2 baseline. The missing routes and contrast checks named
+below were subsequently built and passed in `PHASE_2_GATE.md`. The notes below retain the
+state of the original 2026-08-29 audit.
+
 ## User goal and accessibility target
 
 A client or employer should understand the arrival, choose the Work door, reach the complete
@@ -21,14 +26,14 @@ must remain readable with keyboard, touch, reduced motion and no JavaScript.
    denser evidence, dates and controls.
 3. **Work opening — healthy.** `03-work-desktop.png` gives the register its own purpose,
    keeps controls in the first desktop viewport and states the default order.
-4. **Desktop register — corrected, awaiting owner review.** `04-work-desktop-preview.png`
+4. **Desktop register — corrected, later accepted.** `04-work-desktop-preview.png`
    records the rejected dark overlay. `10-work-desktop-refined.png` replaces it with a faint
    under-row BeatMind aperture and raises the register's summary, evidence and metadata type
    sizes.
 5. **Mobile register — healthy.** `05-work-mobile.png` and `07-work-mobile-refined.png` show
    native scrolling, readable rows and the same localised preview principle without hiding
    the project name or summary.
-6. **Mobile navigation — corrected, awaiting owner review.** `06-work-mobile-menu.png`
+6. **Mobile navigation — corrected, later accepted.** `06-work-mobile-menu.png`
    records the generic boxed menu. `09-work-mobile-menu-final.png` uses a shared paper-stock
    surface, oxblood state and torn lower edge while retaining native `details` and `summary`
    keyboard behaviour.
@@ -50,17 +55,18 @@ must remain readable with keyboard, touch, reduced motion and no JavaScript.
 - The owner rejected a Personal/Company register split on 2026-08-29. Verified employment
   context may appear inside an individual case study after its exact public wording and
   contribution are approved; it is not a register filter or row badge.
-- The new desktop aperture and paper menu need owner visual approval.
-- Actual foreground/background contrast on the paper and world surfaces remains a Phase 2
-  gate check; screenshots alone cannot prove it.
+- The new desktop aperture and paper menu needed owner visual approval at this checkpoint;
+  that acceptance was supplied on 2026-08-31.
+- Actual foreground/background contrast on the paper and world surfaces remained a Phase 2
+  gate check at this checkpoint; it later passed in `PHASE_2_GATE.md`.
 
 ## Accessibility evidence and limits
 
 Automated checks cover landmarks, heading order, alternative text, named controls,
 horizontal overflow and browser errors at 390, 800 and 1440 pixels. Native links, buttons,
 checkboxes, `details` and `summary` preserve keyboard semantics. The register has sticky-nav
-scroll clearance. Manual screen-reader output, zoom above 200%, forced colors and actual
-contrast measurements remain outstanding and must not be reported as passing yet.
+scroll clearance. Manual screen-reader output, zoom above 200% and forced colors remain
+outside this audit; the separate Phase 2 gate later measured the contrast contract.
 
 ## Recommendation
 

@@ -32,6 +32,12 @@ in the same commit.
 | Every note has `/notes/[slug]` | Decided | Full pages are linkable, crawlable and suitable for future publishing | Modal or accordion-only articles |
 | Posts may say “Coming soon” at launch | Decided | Honest absence is better than filler | Invented launch posts or an empty nav destination |
 | Experience lives on About and Resume | Decided | One human narrative and one structured employment record cover the need without duplication | Separate `/experience` route |
+| About balances education and work in one chronology | Owner decided 2026-08-30 | Both changed what the owner could build next; neither should read as a footnote | A work-only biography or a second ATS resume |
+| About uses a casual first-person voice and the real candid portrait | Owner decided 2026-08-30 | The page is the human check, while Resume owns formal parsing | Corporate third-person biography and generic values cards |
+| Resume is semantic HTML backed by current verified records | Owner decided 2026-08-30 | Recruiters, crawlers and assistive technology need a real page; project numbers must follow the current evidence collection | A PDF viewer as the page or copying stale numbers from the supplied artifact |
+| Resume B remains the unchanged local download | Owner decided 2026-08-30 | The owner named this artifact as the resume source; preserving its bytes keeps the handoff exact | Re-exporting or silently rewriting the supplied PDF |
+| Google Drive is an optional external resume link | Owner decided 2026-08-30 | A public env-configured link can point to a later copy without making the static HTML or local download depend on Google | Drive embed, build-time download, API key or required runtime fetch |
+| Hire uses service scope, risk-first process, explicit fit and direct contact | Owner review 2026-08-31 | The route should qualify a real conversation without manufacturing trust or requiring a polished brief | Pricing table, long inquiry form, testimonials, client logos and fake urgency |
 | Work register may sort by recency and running status | Decided | Those fields have stable meanings | Unexplained novelty filters |
 | Work may sort by qualitative build effort | Decided | `flagship`, `substantial` and `focused` communicate scope without inventing hours or money | A misleading cost control |
 | Work has no Personal/Company split | Owner decided 2026-08-29 | The owner's flexible employment context makes a binary register taxonomy reductive; projects should be compared by the work itself | Ownership filters and company badges on every row |
@@ -86,6 +92,8 @@ in the same commit.
 | What broke is an inserted oxblood correction | Owner selected 2026-08-29 | Failure should interrupt the victory narrative rather than look like another feature section | A normal chapter or a second dark-world scene |
 | BeatMind audio stays disabled until its excerpt is approved | Evidence blocked | The repository has a screen recording but no standalone licensed or owner-created audio source with publication permission | Extracting or assuming rights to the recording soundtrack |
 | Every paper case study follows one evidence contract | Owner decided 2026-08-30 | Employers and clients need a repeatable path through proof, responsibility, research, architecture, trade-offs, failures and limits even though every project world is visually unique | Letting visual novelty erase required evidence or forcing every world into one visual template |
+| Paper case-study routes are generated from the validated content contract | Implemented 2026-08-31 | BeatMind, Vivid and later projects should share one readable paper system while their facts, media, headings, architecture and evidence remain project-specific | A hard-coded component or route fork for every continuously changing project |
+| Vivid's case study separates current proof from the rebuild target | Implemented 2026-08-31 | The accepted baseline, rejected Turbo arm and current legacy reference path are proven; named reference candidates, identity target and speed target remain gated future work | Writing the current `PLAN.md` target as if it were already achieved |
 | BeatMind contribution names Stick and Dot and end-to-end implementation | Owner confirmed 2026-08-30 | Parth states that he designed and built the implementation; founder and early-user feedback shaped refinements; no other person contributed to implementation | Leaving the organization unnamed or implying that user feedback was code contribution |
 | One shared world lifecycle | Decided | Prevents orphaned clocks and inconsistent reduced-motion behavior | A separate animation system per world |
 | 2D or pre-rendered OncoVerse is the default | Decided | One sitewide Three.js dependency is not justified by one page | Adding Three.js before a measured comparison |
@@ -186,8 +194,8 @@ Generated transparent oxblood sheets supply sparse proofreader marks; they do no
 locked readable font roles. Opening-light, nav-fold and ink-settle motion each run once and
 then stop. Full-sheet grain parallax was rejected because it would require repainting a
 background on scroll or promoting a page-height layer. The landing structure is now
-approved; Phase 2 remains open for the shared tokens, rendered contrast and remaining route
-structures.
+approved. At that checkpoint Phase 2 remained open for shared tokens, rendered contrast and
+the remaining route structures; those later closed on 2026-08-31.
 
 The seven `📐 specced` worlds have a research-only data and accent inventory in
 `PHASE_2_WORLDS_ANIMATION_MEMO.md`. It does not satisfy the owner-approved storyboard gate and
@@ -214,6 +222,36 @@ The next review replaces that panel with the same faint under-row aperture used 
 increases register copy sizes and applies one shared paper-menu treatment to Home and Work.
 The revised preview remains a Phase 2 static study; production reveal behaviour remains in
 Phase 4.
+
+The Notes review slice on 2026-08-30 keeps all twelve Errata at equal weight. BeatMind is not
+pinned as a featured mistake. The hub uses the casual working line `Things went wrong. I
+wrote them down.` and prints the shared publication date once instead of repeating it on
+every row. Individual records remain concise and evidence-led; they are not expanded with
+invented detail or padded prose. General Posts remain empty and receive an intentional
+Writing `Coming soon` state. Private source paths are described as internally reviewed but
+are not published.
+
+The `/hire` review slice uses the three validated service records, their boundaries and a
+four-step risk-reduction path. Booking is the first contact action; email and WhatsApp stay
+equally visible as direct alternatives. The page has no price or sales form. This is the
+current rendered proposal.
+
+On 2026-08-31 the owner accepted the current Home, Work, case-study, Notes, About, Resume and
+Hire designs as the Phase 2 review baseline and asked to close the phase without another
+approval round. This is an explicit acceptance-for-now decision: minute visual refinement
+is deferred, not declared unnecessary or complete. The shared render, state and contract
+gates pass and `PHASE_2_GATE.md` records the evidence. Phase 2 is closed.
+
+The Vivid planning audit on 2026-08-31 found that photographic continuity is the verified
+current product direction; the older anime, watercolour and illustration LoRAs were removed
+during the FLUX.2 migration and cannot be presented as current modes. Three generated
+preview-only directions were reviewed: Continuity Darkroom, Story Loom and Latent Cinema.
+After Story Loom was recommended, the owner authorized its implementation. The resulting
+standalone animatic uses the generated loom only as decorative art direction and unchanged
+real Vivid evaluation frames as the foreground evidence. This selects Story Loom for owner
+storyboard review, not for production publication; `VIVID_WORLD_STUDY.md` records the evidence
+and blockers. No concept image is product evidence and no production world implementation is
+authorized before the build-plan phase that owns it.
 
 ### Phase 4
 

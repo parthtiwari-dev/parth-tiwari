@@ -37,11 +37,26 @@ const measurementSchema = z.object({
 })
 
 const caseStudySchema = z.object({
+  classification: z.string().min(4),
   thesis: z.string().min(20),
   credit: z.object({
     organization: z.string().min(2),
     role: z.string().min(2),
     contribution: z.string().min(20),
+    contributionSummary: z.string().min(8),
+  }),
+  cover: z.object({
+    src: z.string().startsWith('/'),
+    alt: z.string().min(20),
+    width: z.number().int().positive(),
+    height: z.number().int().positive(),
+    labels: z.array(z.string().min(3)).length(2),
+  }),
+  headings: z.object({
+    overview: z.string().min(20),
+    problem: z.string().min(20),
+    architectureCaption: z.string().min(12),
+    evidence: z.string().min(20),
   }),
   intendedUser: z.string().min(20),
   demo: z.object({
@@ -57,7 +72,12 @@ const caseStudySchema = z.object({
     alt: z.string().min(20),
     width: z.number().int().positive(),
     height: z.number().int().positive(),
+    fit: z.enum(['cover', 'contain']).optional(),
   })).min(3),
+  responsibilities: z.array(z.object({
+    label: z.string().min(2),
+    detail: z.string().min(20),
+  })).min(2).max(4),
   research: z.array(z.object({
     source: z.string().min(2),
     finding: z.string().min(20),
@@ -68,6 +88,10 @@ const caseStudySchema = z.object({
     rejected: z.string().min(12),
     tradeoff: z.string().min(20),
   })).min(2),
+  architectureSteps: z.array(z.object({
+    label: z.string().min(2),
+    detail: z.string().min(12),
+  })).min(3).max(5),
   failures: z.array(z.object({
     title: z.string().min(4),
     symptom: z.string().min(20),
@@ -76,6 +100,7 @@ const caseStudySchema = z.object({
     remainingRisk: z.string().min(12),
   })).min(2),
   limitations: z.array(z.string().min(20)).min(2),
+  evidenceNote: z.string().min(20),
   future: z.array(z.object({
     status: z.enum(['planned', 'investigating', 'blocked']),
     title: z.string().min(4),
@@ -86,6 +111,12 @@ const caseStudySchema = z.object({
     locator: z.string().min(3),
     public: z.boolean(),
   })).min(2),
+  relatedNoteLabel: z.string().min(8).optional(),
+  ending: z.object({
+    heading: z.string().min(16),
+    body: z.string().min(20),
+    contactLabel: z.string().min(8),
+  }),
 })
 
 export const workSchema = z.object({
@@ -160,6 +191,30 @@ export const experienceSchema = z.object({
   current: z.boolean(),
   summary: z.string().min(12),
   highlights: z.array(z.string().min(8)).min(1),
+  source: sourceSchema,
+})
+
+export const educationSchema = z.object({
+  institution: z.string().min(2),
+  location: z.string().min(2),
+  start: z.string().regex(/^\d{4}-\d{2}$/),
+  end: z.string().regex(/^\d{4}-\d{2}$/),
+  credential: z.string().min(4),
+  focus: z.string().min(2),
+  note: z.string().min(12),
+  source: sourceSchema,
+})
+
+export const resumeSchema = z.object({
+  headline: z.string().min(8),
+  location: z.string().min(2),
+  summary: z.string().min(24),
+  skillGroups: z.array(z.object({
+    label: z.string().min(3),
+    items: z.array(z.string().min(1)).min(2),
+  })).min(3),
+  projectIds: z.array(z.string().min(2)).min(3).max(6),
+  reviewedAt: z.coerce.date(),
   source: sourceSchema,
 })
 

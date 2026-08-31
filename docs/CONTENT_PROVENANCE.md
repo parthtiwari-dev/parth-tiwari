@@ -32,7 +32,7 @@ is [`PHASE_1_EVIDENCE_AUDIT.md`](PHASE_1_EVIDENCE_AUDIT.md).
 |---|---|---|
 | BeatMind tests and fixed-input separation benchmark | Verified | Publish with the dated working-tree and benchmark boundaries |
 | BeatMind contribution and qualitative case-study record | Owner-approved and repository-audited | Name Stick and Dot, end-to-end design and implementation, feedback-led refinements, audited failures, limitations and future states; do not expose private repository paths or user material |
-| Vivid LoRA training and rejected Turbo evaluation | Verified | Publish as an adapter run and a rejected speed experiment, not foundation-model training |
+| Vivid fixed baseline, LoRA training and rejected Turbo evaluation | Verified | Publish the 12-scene / 42-shot baseline and the rejected speed experiment with their denominators; describe the LoRA record only as adapter training, not foundation-model training |
 | MedRAG refusals | Verified | Publish as 4 of 20 in the named final recorded evaluation |
 | QueryPilot correction | Verified | Publish 63 to 67 of 70 core queries; keep 12 adversarial queries separate |
 | SecondSelf internal RAGAS faithfulness | Verified | Publish with the 20-question denominator and no job-outcome implication |
@@ -45,6 +45,7 @@ is [`PHASE_1_EVIDENCE_AUDIT.md`](PHASE_1_EVIDENCE_AUDIT.md).
 | Public project links | Verified where included | All included URLs returned HTTP 200 on 2026-08-28; the timed-out QueryPilot backend URL is excluded |
 | Portfolio interim deployment | Verified | `https://parth-tiwari-1.vercel.app/` returned the new Astro landing with HTTP 200 on 2026-08-29 after Vercel marked the `main` deployment successful |
 | Public pricing | Retired by owner decision | Do not display a price, price band, or cost estimate anywhere on the site |
+| Resume B project numbers | Retained only inside the unchanged source PDF | The HTML resume uses current verified claim records and identifies the supplied PDF as a separate source snapshot; do not copy its older `24 days`, `500 seconds`, `95.7%` or `1000 seconds` statements into site prose |
 
 ## Claims that do not ship
 

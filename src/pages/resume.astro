@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content'
+import ResumePage from '../components/ResumePage.astro'
+
+const [claims, education, experience, profiles, projects, siteEntries] = await Promise.all([
+  getCollection('claims'),
+  getCollection('education'),
+  getCollection('experience'),
+  getCollection('resume'),
+  getCollection('work'),
+  getCollection('site'),
+])
+const copy = siteEntries[0]?.data.resume
+const profile = profiles[0]?.data
+if (!copy || !profile) throw new Error('The Resume route requires validated site copy and a resume profile.')
+
+const configuredDriveUrl = import.meta.env.PUBLIC_RESUME_GOOGLE_DRIVE_URL?.trim()
+let driveUrl: string | undefined
+if (configuredDriveUrl) {
+  const parsed = new URL(configuredDriveUrl)
+  const allowedHosts = new Set(['drive.google.com', 'docs.google.com'])
+  if (parsed.protocol !== 'https:' || !allowedHosts.has(parsed.hostname)) {
+    throw new Error('PUBLIC_RESUME_GOOGLE_DRIVE_URL must be an HTTPS Google Drive or Google Docs URL.')
+  }
+  driveUrl = parsed.toString()
+}
+---
+
+<ResumePage copy={copy} profile={profile} education={education} experience={experience} projects={projects} claims={claims} driveUrl={driveUrl} />

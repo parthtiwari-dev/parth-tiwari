@@ -23,7 +23,7 @@ quietly choosing one.
 - static output
 - strict TypeScript
 - validated content collections established in Phase 1
-- vanilla CSS for the active Phase 2 landing system
+- vanilla CSS for the locked Phase 2 paper system
 - one direct production dependency: `astro`
 - Playwright as development-only browser tooling
 
@@ -81,17 +81,38 @@ content remains static HTML.
   static Astro build with telemetry disabled for restricted environments.
 - Phase 1 is complete under its owner-amended gate. The text-only human test was deferred,
   not passed, and may never be reported otherwise.
-- Phase 2 is open. The maintained landing stub is on `/`; its structure and interim public
+- Phase 2 closed on 2026-08-31. The maintained landing stub is on `/`; its structure and interim public
   release were owner-approved on 2026-08-29 and are live at
   `https://parth-tiwari-1.vercel.app/`. `/work` architecture is approved. The single
   `/work/beatmind/` Phase 2 paper pilot now follows `docs/CASE_STUDY_CONTRACT.md`, uses
   real product media and has final responsive, accessibility, craft, transfer and scroll
-  evidence; owner review remains. Notes is next only after that approval. The owner approved BeatMind's Sound Foundry
+  evidence. The owner approved it by starting Notes on 2026-08-30. `/notes` and all twelve
+  concise `/notes/[slug]` Errata now have final responsive, accessibility, craft, transfer,
+  no-JavaScript and scroll evidence. `/about/` now has its
+  real portrait, typed education-and-work chronology, current-role detail, operating rules
+  and final 390, 800, 1440 and no-JavaScript evidence, and
+  Resume followed as the next review slice. `/resume/` now has semantic HTML, the unchanged
+  local Resume B download, verified project claims, an optional env-configured Drive link,
+  final responsive/no-JavaScript evidence and an inspected two-page A4 print proof.
+  `/hire/` now has the three typed service scopes, boundaries, a four-step risk-reduction
+  path, fit guidance and direct booking, email and WhatsApp, with final 390, 800, 1440 and
+  no-JavaScript evidence. The owner accepted all current route designs as the Phase 2
+  baseline and explicitly deferred another polish pass. The 24-render route matrix plus
+  no-JavaScript, reduced-motion, touch, keyboard, contrast, font-budget and static-boundary
+  checks pass; `docs/PHASE_2_GATE.md` records the evidence. The owner approved
+  BeatMind's Sound Foundry
   storyboard and current five-stem language on 2026-08-30; its standalone verified animatic
   is a Phase 2 review artifact only. Its dark ending and explicit case-study CTA are locked;
   no paper section appears below the world. Production route implementation remains Phase 3 and
   production world implementation remains Phase 5.
-- Do not build the production pages, tear, backlight, canvas or animated worlds in Phase 2.
+- Do not treat Phase 2 review stubs as the complete Phase 3 static site. Production tear,
+  backlight, canvas and animated-world implementation remain in their assigned later phases.
+- Phase 3B is active. `/work/[slug].astro` emits a static page for each project with a
+  validated `caseStudy` object. BeatMind and Vivid currently satisfy that full paper contract;
+  the other ten project routes remain incomplete until their source audits and content records
+  are added. `docs/VIVID_CASE_STUDY_AUDIT.md` records the Vivid repository history, current
+  proof, unachieved plan targets and update workflow. The Vivid source worktree is read-only
+  portfolio evidence and its current Phase 4 changes must not be modified from this repository.
 
 ## Dependencies and external actions
 

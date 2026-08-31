@@ -1,7 +1,6 @@
 # Build-session prompt
 
-Use this prompt in a fresh session to work on Phase 2 design-system and page-architecture
-exploration. Phase 1 is complete under its owner-amended gate.
+Use this prompt in a fresh session after the completed Phase 2 gate.
 
 ```text
 Read these in order before taking action:
@@ -14,59 +13,42 @@ Read these in order before taking action:
 6. docs/DECISIONS.md
 7. CLAUDE.md
 
-The portfolio is being rebuilt as Paper and Worlds on Astro 7.2.9 with static output. Phase 0
-established the foundation. Phase 1 established validated content and claims. The owner
-deferred the unrun text-only test; do not call it passed.
+The portfolio is Paper and Worlds on Astro 7.2.9 with static output. Phase 0 established the
+foundation. Phase 1 established validated content and claims; its unrun text-only human test
+was deferred, not passed. Phase 2 closed on 2026-08-31 after the owner accepted the current
+route designs as the review baseline and deferred further visual polish.
 
-Work phases in BUILD_PLAN.md in order. Continue Phase 2 owner review and visual exploration.
+The Phase 2 gate evidence is in docs/PHASE_2_GATE.md and .shots/phase2-gate-final. It covers
+all eight route families at 390, 800 and 1440 pixels, plus no-JavaScript, reduced-motion,
+touch, keyboard focus, contrast, font budget and the static dependency boundary. Do not
+report the deferred polish pass as complete.
 
-Phase 2 is design-system and route-architecture work:
+The maintained routes are /, /work/, /work/beatmind/, /work/vivid/, /notes/, /notes/[slug]/, /about/,
+/resume/ and /hire/. The owner-approved BeatMind Sound Foundry remains a standalone research
+animatic, not a production world. There is still no production tear, backlight or canvas
+world in Astro.
 
-- Do not implement the Phase 3 production routes, project backlight, tearing, canvas or
-  animated worlds. The maintained Phase 2 root stub and bounded paper-motion studies are
-  allowed.
-- Research references before designing and record a reference lock.
-- One interactive full-width scroll landing exists at `/` from the real Phase 1 content.
-  The obsolete review route and rejected A/B/C routes were removed.
-- The owner approved its overall direction. The current checkpoint includes the restraint
-  pass, stable segmented fibre edges, directional opening/end folds, bounded one-shot paper
-  motion and the existing torn-ink project hover. This approved root is live at
-  `https://parth-tiwari-1.vercel.app/` as an interim feedback release.
-- `docs/PHASE_2_WORLDS_ANIMATION_MEMO.md` records candidate graphics for the seven specced
-  worlds. It is research only and authorizes no world implementation.
-- Review one route at a time. Home and `/work` architecture are approved. Do not add a
-  Personal/Company register filter; verified employment context belongs inside a case study.
-- The shared `/work/[slug]` structure now has a paper-first BeatMind pilot at
-  `/work/beatmind/`. Its required reading order is locked in
-  `docs/CASE_STUDY_CONTRACT.md`. It uses real product video and captures and contains
-  typed responsibility, research, trade-offs, verified proof, failures, limitations and
-  future states. Final responsive evidence exists in
-  `.shots/phase2-beatmind-case-paper-final`; built-output accessibility, craft, transfer
-  and scroll checks pass. Owner approval is still required before moving on. Real run-trace and standalone audio inputs belong
-  to the separate Sound Foundry world.
-- The owner approved BeatMind's Sound Foundry storyboard and current five-stem language on
-  2026-08-30. Its standalone animatic and evidence live under `design/directions/` and
-  `.shots/phase2-beatmind-world-study/`. It ends in the dark world with one explicit case-study
-  CTA and no appended paper section. This is a Phase 2 review artifact, not an Astro route
-  and not permission to implement the production world before Phase 5.
-- Do not build the production site, tear, backlight, canvas or animated worlds.
-- Refresh the 390, 800 and 1440 evidence after changes. Preserve the approved landing while
-  reviewing `/work`; production route implementation remains Phase 3.
+The Vivid Story Loom remains a standalone native-scroll study and the owner deferred its deep
+review. `/work/vivid/` is now a separate static paper case study generated through the shared
+typed contract. `docs/VIVID_CASE_STUDY_AUDIT.md` records the inspected `main` and
+`upgrade-flux` history, current plan boundary, evidence and maintenance workflow. The Vivid
+source repository was read only and its dirty Phase 4 work remains untouched. Do not present
+the source-only named-reference checkpoint or the plan's identity and speed targets as achieved.
 
-Begin by confirming the current branch and diff. Preserve the approved landing checkpoint.
-After the owner approves the BeatMind structure, review `/notes` and `/notes/[slug]` next.
-Phase 2 remains incomplete until
-every route structure, shared token, accessibility state and rendered-contrast gate is
-approved and verified.
+The next safe work stays inside Phase 3B: audit and add the next project case-study record, or
+perform an owner-requested Vivid paper refinement. Do not move either Vivid or BeatMind world
+study into Astro yet. Production worlds remain Phases 5 and 6.
+
+Begin with git status and diff. Preserve all current work. Stop at the applicable gate.
 ```
 
 ## Drift checks
 
 Stop the session if:
 
-- any file under `design/directions/` is opened during Phase 1;
-- CSS or a visual component is created during Phase 1;
-- retained v1 prose is treated as verified merely because it exists;
 - a public claim has no provenance record;
-- a later phase begins before the current gate and owner approval;
+- a later implementation phase begins before the current gate;
+- exploratory Vivid imagery is presented as a real product output without evidence;
+- the Vivid world is planned from stale portfolio assumptions instead of the current
+  `upgrade-flux` end-state plan;
 - a gate is described as passing without current output.

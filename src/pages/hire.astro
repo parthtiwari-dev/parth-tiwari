@@ -1,0 +1,13 @@
+---
+import { getCollection } from 'astro:content'
+import HirePage from '../components/HirePage.astro'
+
+const [services, siteEntries] = await Promise.all([
+  getCollection('services'),
+  getCollection('site'),
+])
+const copy = siteEntries[0]?.data.hire
+if (!copy) throw new Error('The Hire route requires validated site copy.')
+---
+
+<HirePage copy={copy} services={services} />

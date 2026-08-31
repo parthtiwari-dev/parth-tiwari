@@ -1,0 +1,30 @@
+{
+  "headline": "AI Engineer and GenAI Application Developer",
+  "location": "Bengaluru, India",
+  "summary": "I build AI products end to end across retrieval, agents, generative media, evaluation, durable backend work, and the interfaces people use. I care about evidence, failure recovery, and keeping consequential decisions with a person.",
+  "skillGroups": [
+    {
+      "label": "GenAI and retrieval",
+      "items": ["LangGraph", "LangChain", "hybrid vector and BM25 retrieval", "RAGAS", "prompt evaluation", "Groq", "OpenAI API"]
+    },
+    {
+      "label": "Diffusion and audio",
+      "items": ["FLUX", "LoRA", "ACE-Step", "BS-RoFormer", "Diffusers", "PyTorch", "GPU inference"]
+    },
+    {
+      "label": "ML engineering",
+      "items": ["XGBoost", "leakage-safe features", "ROC-AUC and PR-AUC", "SHAP", "backtesting", "evaluation harnesses"]
+    },
+    {
+      "label": "Systems and product",
+      "items": ["Python", "TypeScript", "FastAPI", "Next.js", "PostgreSQL", "Neon", "Modal", "Docker", "Cloudflare R2", "GitHub Actions"]
+    }
+  ],
+  "projectIds": ["beatmind", "vivid", "querypilot", "tathya"],
+  "reviewedAt": "2026-08-30",
+  "source": {
+    "kind": "artifact",
+    "locator": "C:/great learning self paced/z Final Projects/parth-os/resume/Parth_Tiwari_Resume_B.pdf",
+    "public": false
+  }
+}

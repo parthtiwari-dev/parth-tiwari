@@ -58,7 +58,7 @@ must not be required to answer what the site is about.
 | `/notes/[slug]` | Read one complete sourced note |
 | `/about` | Understand the person, experience and way of working |
 | `/resume` | Parse, print or download the CV |
-| `/hire` | Understand scope, process, cost and start a conversation |
+| `/hire` | Understand scope, process, fit and start a conversation without public pricing |
 
 ### Home
 
