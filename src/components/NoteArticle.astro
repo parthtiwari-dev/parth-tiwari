@@ -56,7 +56,9 @@ const attachedClaims = note.data.claimRefs
           <h1>{note.data.title}</h1>
           <p>{note.data.summary}</p>
           <div class="article-projects" aria-label="Related projects">
-            {relatedProjects.map((project) => <a href={`/work/${project.id}/`}>{project.data.title} <span aria-hidden="true">↗</span></a>)}
+            {relatedProjects.map((project) => project.data.caseStudy
+              ? <a href={`/work/${project.id}/`}>{project.data.title} <span aria-hidden="true">↗</span></a>
+              : <a href="/work/">{project.data.title} / Case study in development <span aria-hidden="true">→</span></a>)}
           </div>
         </header>
 

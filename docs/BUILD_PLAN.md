@@ -435,8 +435,14 @@ commit with the matching plan items ticked.
 - [ ] Sorting controls operate on real typed fields and preserve a meaningful default order.
 - [x] BeatMind and Vivid use one content-driven paper case-study component and validated
   project-specific evidence records.
-- [ ] The remaining ten projects receive audited `caseStudy` records before their routes are
-  counted as complete.
+- [x] The shared proof contract accepts real video, real image and accessible evidence-record
+  variants; empty measurements state their absence instead of rendering blank space.
+- [x] Route availability is derived from a validated `caseStudy` record. Deferred register
+  rows are non-clickable and related Notes links return to the register.
+- [ ] Tathya, MedRAG, Order Supervisor, QueryPilot, SecondSelf, OncoVerse, UPI Fraud Engine
+  and Spur Chat receive audited `caseStudy` records in the approved batch.
+- [ ] Fraud Risk Intelligence and Oracle Auto Provision remain explicitly deferred as
+  **Case study in development** until their later audits.
 - [ ] Every `/work/[slug]` page satisfies `CASE_STUDY_CONTRACT.md`, including real
   product proof, contribution, research, trade-offs, evidence, failures and limits.
 - [ ] Previous/next and back-to-register links prevent dead ends.

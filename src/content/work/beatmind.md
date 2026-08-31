@@ -47,6 +47,7 @@
     "motionDeferred": true
   },
   "caseStudy": {
+    "reviewedAt": "2026-08-31",
     "classification": "Music systems",
     "thesis": "BeatMind turns a generated or uploaded track into musical material a person can inspect, rearrange, mix, and render without lying about work still happening in the background.",
     "credit": {
@@ -56,10 +57,7 @@
       "contributionSummary": "Design and engineering, end to end"
     },
     "cover": {
-      "src": "/media/beatmind-desktop.jpg",
-      "alt": "BeatMind's real public product page showing a five-stem record visualization",
-      "width": 2880,
-      "height": 1800,
+      "proof": { "kind": "image", "src": "/media/beatmind-desktop.jpg", "alt": "BeatMind's real public product page showing a five-stem record visualization", "width": 2880, "height": 1800 },
       "labels": ["Real product surface", "Five-stem model"]
     },
     "headings": {
@@ -70,6 +68,7 @@
     },
     "intendedUser": "Electronic music makers who want more control than a prompt box without beginning every idea inside a full digital audio workstation.",
     "demo": {
+      "kind": "video",
       "src": "/media/beatmind.webm",
       "poster": "/media/beatmind-desktop.jpg",
       "durationLabel": "10.7-second product capture",
@@ -79,26 +78,17 @@
       {
         "title": "Begin with intent",
         "description": "Start from a prompt or bring an existing track. Both paths become durable project work rather than a browser request that must stay open.",
-        "media": "/media/beatmind-create.jpg",
-        "alt": "BeatMind's real dark Create screen with prompt, lyrics, duration, and mode controls",
-        "width": 1552,
-        "height": 784
+        "proof": { "kind": "image", "src": "/media/beatmind-create.jpg", "alt": "BeatMind's real dark Create screen with prompt, lyrics, duration, and mode controls", "width": 1552, "height": 784 }
       },
       {
         "title": "Pull the track apart",
         "description": "Separation produces practical vocals, backing, drums, bass, and other lanes, then analysis maps sections, chords, tempo, key, and energy.",
-        "media": "/media/beatmind-editor.jpg",
-        "alt": "BeatMind's real editor showing separated coloured stem lanes and musical controls",
-        "width": 1552,
-        "height": 784
+        "proof": { "kind": "image", "src": "/media/beatmind-editor.jpg", "alt": "BeatMind's real editor showing separated coloured stem lanes and musical controls", "width": 1552, "height": 784 }
       },
       {
         "title": "Work section by section",
         "description": "The arrangement turns musical structure into an editable section-by-stem grid before the result is mixed and rendered.",
-        "media": "/media/beatmind-arrangement-clean.png",
-        "alt": "BeatMind's real arrangement workspace with sections and five stem families",
-        "width": 1904,
-        "height": 972
+        "proof": { "kind": "image", "src": "/media/beatmind-arrangement-clean.png", "alt": "BeatMind's real arrangement workspace with sections and five stem families", "width": 1904, "height": 972 }
       }
     ],
     "responsibilities": [
