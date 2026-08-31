@@ -37,7 +37,9 @@ const site = await readJsonDirectory('src/content/site', siteCopySchema)
 assert.equal(work.length, 12, 'the register must contain all twelve projects')
 assert.equal(education.length, 2, 'the profile must contain both verified education records')
 assert.equal(new Set(work.map((entry) => entry.data.order)).size, 12, 'project order values must be unique')
-assert(work.find((entry) => entry.id === 'beatmind')?.data.caseStudy, 'BeatMind must satisfy the Phase 2 case-study contract')
+for (const projectId of ['beatmind', 'vivid']) {
+  assert(work.find((entry) => entry.id === projectId)?.data.caseStudy, `${projectId} must satisfy the paper case-study contract`)
+}
 
 const workIds = new Set(work.map((entry) => entry.id))
 const noteIds = new Set(notes.map((entry) => entry.id))
@@ -76,7 +78,7 @@ assert.equal(publicText.includes('—'), false, 'user-facing content must not co
 
 const publishedClaims = claims.filter((entry) => entry.data.publish)
 console.log(`PASS ${work.length} project entries validate with all base beats`)
-console.log('PASS BeatMind validates against the complete Phase 2 case-study contract')
+console.log('PASS BeatMind and Vivid validate against the complete paper case-study contract')
 console.log(`PASS ${notes.length} errata entries validate; general Posts remain empty by decision`)
 console.log(`PASS ${publishedClaims.length} public quantitative claims resolve to verified source records`)
 console.log(`PASS ${education.length} education, ${experience.length} experience and ${services.length} service records validate`)

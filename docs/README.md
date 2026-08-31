@@ -27,6 +27,7 @@ Where to look, and what is still true.
 | [`PHASE_2_WORLDS_ANIMATION_MEMO.md`](PHASE_2_WORLDS_ANIMATION_MEMO.md) | Research-only candidate graphics and missing real-data sources for the seven specced worlds |
 | [`VIVID_WORLD_CONCEPT_REVIEW.md`](VIVID_WORLD_CONCEPT_REVIEW.md) | Current-product audit, three Vivid world directions, truthful data contract and pending owner choice |
 | [`VIVID_WORLD_STUDY.md`](VIVID_WORLD_STUDY.md) | Story Loom review animatic, real Vivid evidence boundary, responsive checks and production blockers |
+| [`VIVID_CASE_STUDY_AUDIT.md`](VIVID_CASE_STUDY_AUDIT.md) | Main-to-upgrade-flux history audit, evidence map and durable update workflow for `/work/vivid/` |
 | [`REBUILD_BRIEF.md`](REBUILD_BRIEF.md) | Why v1 is being replaced. The guards that prevent a repeat |
 | [`TEN_SECOND_TEST.md`](TEN_SECOND_TEST.md) | 🔴 The acceptance gate. **Still never run** |
 | [`TEN_SECOND_ARTIFACT.md`](TEN_SECOND_ARTIFACT.md) | The exact plain-text artifact for the Phase 1 human test |
@@ -67,9 +68,10 @@ BeatMind plate uses a lightweight static frame from the approved Sound Foundry a
 does not claim to be real separated-track evidence. The `/work` structure review now has a real-content
 register demo and responsive evidence; the owner rejected a Personal/Company filter, so
 verified employment context will be handled per case study. The shared `/work/[slug]`
-structure now has a paper-first BeatMind pilot with real product video, workflow captures,
-typed research, decisions, failures, limits and future states. Its final built-output
-responsive, accessibility, craft, transfer and scroll checks pass; the owner approved it by
+structure now has paper-first BeatMind and Vivid case studies with real product video,
+workflow captures, typed research, decisions, failures, limits and future states. Routes are
+generated from the validated case-study content object instead of a project-name switch. The
+BeatMind page's final built-output responsive, accessibility, craft, transfer and scroll checks pass; the owner approved it by
 asking to begin Notes on 2026-08-30.
 The reusable reading order is locked in `CASE_STUDY_CONTRACT.md`. Follow-up Pudding and
 Awwwards research produced the separate continuous Sound Foundry.
@@ -103,6 +105,14 @@ also corrected the stale fixed 28-step assumption and the false implication that
 images have no model-licensing boundary. `VIVID_WORLD_CONCEPT_REVIEW.md` records the selection
 history and `VIVID_WORLD_STUDY.md` records implementation evidence and blockers.
 
-**Last documentation truth audit:** 2026-08-31, Vivid Story Loom review implementation,
-current-product truth boundary and pending owner storyboard approval recorded after the
-completed Phase 2 gate.
+The owner then deferred a deep Story Loom review and asked for the Vivid paper case study.
+The full `main` and `upgrade-flux` histories, current dirty Phase 4 source checkpoint, current
+plan, PRD, architecture, audit and accepted baselines were read without changing the Vivid
+repository. `/work/vivid/` now presents the current product, real browser workflow, real
+evaluation frames, contribution, research, architecture, rejected alternatives, measured
+baseline, failures, limitations, licensing boundary and future gates. It does not claim that
+the current plan's identity or speed goal is achieved. `VIVID_CASE_STUDY_AUDIT.md` is the
+source map and update procedure.
+
+**Last documentation truth audit:** 2026-08-31, Vivid paper case study, reusable route contract,
+repository-history evidence and current-versus-target boundary recorded during Phase 3B.

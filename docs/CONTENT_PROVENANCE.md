@@ -32,7 +32,7 @@ is [`PHASE_1_EVIDENCE_AUDIT.md`](PHASE_1_EVIDENCE_AUDIT.md).
 |---|---|---|
 | BeatMind tests and fixed-input separation benchmark | Verified | Publish with the dated working-tree and benchmark boundaries |
 | BeatMind contribution and qualitative case-study record | Owner-approved and repository-audited | Name Stick and Dot, end-to-end design and implementation, feedback-led refinements, audited failures, limitations and future states; do not expose private repository paths or user material |
-| Vivid LoRA training and rejected Turbo evaluation | Verified | Publish as an adapter run and a rejected speed experiment, not foundation-model training |
+| Vivid fixed baseline, LoRA training and rejected Turbo evaluation | Verified | Publish the 12-scene / 42-shot baseline and the rejected speed experiment with their denominators; describe the LoRA record only as adapter training, not foundation-model training |
 | MedRAG refusals | Verified | Publish as 4 of 20 in the named final recorded evaluation |
 | QueryPilot correction | Verified | Publish 63 to 67 of 70 core queries; keep 12 adversarial queries separate |
 | SecondSelf internal RAGAS faithfulness | Verified | Publish with the 20-question denominator and no job-outcome implication |

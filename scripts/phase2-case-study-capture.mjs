@@ -1,4 +1,4 @@
-/** Capture and check the Phase 2 BeatMind case-study structure. */
+/** Capture and check any validated paper case-study route. */
 
 import { mkdir } from 'node:fs/promises'
 import path from 'node:path'
@@ -11,7 +11,9 @@ const argOf = (flag, fallback) => {
   return index !== -1 && args[index + 1] ? args[index + 1] : fallback
 }
 const base = argOf('--url', 'http://127.0.0.1:4323').replace(/\/$/, '')
-const output = path.resolve('.shots', argOf('--tag', 'phase2-beatmind-case'))
+const slug = argOf('--slug', 'beatmind')
+const expectedTitle = argOf('--title', slug === 'beatmind' ? 'BeatMind' : slug.charAt(0).toUpperCase() + slug.slice(1))
+const output = path.resolve('.shots', argOf('--tag', `${slug}-case`))
 const viewports = [
   { name: 'phone-390', width: 390, height: 844, touch: true },
   { name: 'tablet-800', width: 800, height: 1024, touch: true },
@@ -32,7 +34,7 @@ for (const viewport of viewports) {
   const page = await context.newPage()
   const errors = []
   page.on('pageerror', (error) => errors.push(error.message))
-  const response = await page.goto(`${base}/work/beatmind/`, { waitUntil: 'load' })
+  const response = await page.goto(`${base}/work/${slug}/`, { waitUntil: 'load' })
   await page.evaluate(() => document.fonts.ready)
   await page.addStyleTag({ content: 'html { scroll-behavior: auto !important; } .skip-link { display: none !important; }' })
 
@@ -76,7 +78,7 @@ for (const viewport of viewports) {
   }, viewport.width <= 820 ? 145 : 100)
   await page.waitForTimeout(120)
   const progress = await page.locator('progress').first().evaluate((element) => element.value)
-  const passed = response?.ok() && state.overflow <= 1 && state.h1 === 'BeatMind'
+  const passed = response?.ok() && state.overflow <= 1 && state.h1 === expectedTitle
     && state.h1Count === 1 && state.chapters === 10 && state.measurements === 2
     && state.videos === 1 && state.productFrames === 3 && state.missingAlt === 0
     && state.unnamedControls === 0 && state.darkHero === 0 && state.paperSurface === 1
@@ -88,7 +90,7 @@ for (const viewport of viewports) {
 
 const noScriptContext = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } })
 const noScriptPage = await noScriptContext.newPage()
-const noScriptResponse = await noScriptPage.goto(`${base}/work/beatmind/`, { waitUntil: 'load' })
+const noScriptResponse = await noScriptPage.goto(`${base}/work/${slug}/`, { waitUntil: 'load' })
 const noScript = await noScriptPage.evaluate(() => ({
   chapters: document.querySelectorAll('[data-case-chapter]').length,
   measurements: document.querySelectorAll('.measurement-ledger article').length,

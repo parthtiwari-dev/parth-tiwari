@@ -151,8 +151,8 @@ resolves each frame, consistency is checked, and the failed previous-frame condi
 experiment becomes the turn in the story. Reduced motion shows the resolved storyboard
 and the failed comparison side by side.
 
-**Accent.** The palette of the owner-approved publishable sequence. Until that sequence is
-selected, the concept studies use darkroom black, indigo, pottery amber and one oxblood
+**Accent.** The palette of the owner-approved publishable world sequence. Until that complete
+sequence is selected, the concept studies use darkroom black, indigo, pottery amber and one oxblood
 failure mark as exploratory colours rather than product evidence.
 
 **Content.** The recorded completed LoRA run used 1,996 discovered images and finished
@@ -165,8 +165,9 @@ previous frame's hand pose overrode the text prompt and later shots ran roughly 
 times slower.
 
 **Build notes.** Real local evaluation contact sheets now exist, including single-, two- and
-three-character sequences, but none has been selected and cleared as the public portfolio
-sequence. A generated image is still a shipped asset and its model provenance matters:
+three-character sequences. Two unchanged single-character frames are now used as labelled
+product proof in the static `/work/vivid/` paper case study. That does not select or clear a
+complete production-world sequence. A generated image is still a shipped asset and its model provenance matters:
 current FLUX.2-dev self-hosting is non-commercial under the model licence. Before this world
 ships, choose one publishable run, export its real plan, character references, shot images,
 inference profile and evaluation/failure evidence at build time, and record the applicable
@@ -391,8 +392,9 @@ shell, because a sourced world still can carry the arrival. It does block claimi
 product has been visually demonstrated when it has not. Each storyboard inventory states
 whether it relies on a capture, generated data graphic or both.
 
-Two existing captures remain unsuitable for their final worlds: Vivid's old empty state
-must be replaced by an owner-approved real generated sequence, and QueryPilot's Swagger
+Two existing captures remain unsuitable for their final worlds: Vivid's old empty state is
+used only as workflow evidence in the paper case and still must be replaced by an
+owner-approved real generated sequence for the world, and QueryPilot's Swagger
 page must be replaced by a real correction trace.
 
 ## 5. Known gaps in the prototype, carried forward

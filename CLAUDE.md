@@ -107,6 +107,12 @@ content remains static HTML.
   production world implementation remains Phase 5.
 - Do not treat Phase 2 review stubs as the complete Phase 3 static site. Production tear,
   backlight, canvas and animated-world implementation remain in their assigned later phases.
+- Phase 3B is active. `/work/[slug].astro` emits a static page for each project with a
+  validated `caseStudy` object. BeatMind and Vivid currently satisfy that full paper contract;
+  the other ten project routes remain incomplete until their source audits and content records
+  are added. `docs/VIVID_CASE_STUDY_AUDIT.md` records the Vivid repository history, current
+  proof, unachieved plan targets and update workflow. The Vivid source worktree is read-only
+  portfolio evidence and its current Phase 4 changes must not be modified from this repository.
 
 ## Dependencies and external actions
 

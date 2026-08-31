@@ -23,20 +23,21 @@ all eight route families at 390, 800 and 1440 pixels, plus no-JavaScript, reduce
 touch, keyboard focus, contrast, font budget and the static dependency boundary. Do not
 report the deferred polish pass as complete.
 
-The maintained routes are /, /work/, /work/beatmind/, /notes/, /notes/[slug]/, /about/,
+The maintained routes are /, /work/, /work/beatmind/, /work/vivid/, /notes/, /notes/[slug]/, /about/,
 /resume/ and /hire/. The owner-approved BeatMind Sound Foundry remains a standalone research
 animatic, not a production world. There is still no production tear, backlight or canvas
 world in Astro.
 
-The current paused task is owner review of the Vivid Story Loom animatic. The current Vivid
-`upgrade-flux` branch, plan and real local evaluation contact sheets were inspected on
-2026-08-31. Three directions were generated and the owner authorized Story Loom
-implementation. `design/directions/vivid-world.html` is now a standalone native-scroll study;
-`docs/VIVID_WORLD_STUDY.md` records its real-frame provenance, rendered evidence and unverified
-states. Ask the owner to approve, revise or reject the storyboard direction. Do not move the
-study into Astro or treat its concept plate as product output. Do not start Phase 5 production
-world code out of order. Phase 3 remains the next implementation phase unless the owner
-explicitly amends BUILD_PLAN.
+The Vivid Story Loom remains a standalone native-scroll study and the owner deferred its deep
+review. `/work/vivid/` is now a separate static paper case study generated through the shared
+typed contract. `docs/VIVID_CASE_STUDY_AUDIT.md` records the inspected `main` and
+`upgrade-flux` history, current plan boundary, evidence and maintenance workflow. The Vivid
+source repository was read only and its dirty Phase 4 work remains untouched. Do not present
+the source-only named-reference checkpoint or the plan's identity and speed targets as achieved.
+
+The next safe work stays inside Phase 3B: audit and add the next project case-study record, or
+perform an owner-requested Vivid paper refinement. Do not move either Vivid or BeatMind world
+study into Astro yet. Production worlds remain Phases 5 and 6.
 
 Begin with git status and diff. Preserve all current work. Stop at the applicable gate.
 ```

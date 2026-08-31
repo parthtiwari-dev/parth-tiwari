@@ -70,10 +70,12 @@ derive responsive, licensed AVIF/WebP plates only after the direction and crops 
 
 ## What this does not authorize
 
-- It does not add `/work/vivid/` or another production route.
-- It does not complete the Vivid case study.
+- This study itself did not add `/work/vivid/`. A later Phase 3B change added the separate
+  static paper case study through the shared case-study contract.
 - It does not claim the current identity/reference phase passed in the Vivid repository.
-- It does not publish the current evaluation frames or settle their model-licence boundary.
+- It does not approve the current four-shot set as the complete world dataset. The paper case
+  now uses two unchanged frames as explicitly labelled evaluation evidence; the full world
+  sequence and model-licence boundary still require their own production review.
 - It does not move the portfolio from Phase 3 to the later project-world implementation
   phase.
 

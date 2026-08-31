@@ -27,8 +27,11 @@ const validWork = {
   next: { slug: 'next-project', label: 'Next project' },
   world: { story: 'A complete data-led scroll story for a later phase.', dataSources: ['evaluation artifact'], storyboardStatus: 'specced', motionDeferred: true },
   caseStudy: {
+    classification: 'Systems work',
     thesis: 'A specific project thesis that explains the complete product argument.',
-    credit: { organization: 'Organization', role: 'Engineer', contribution: 'I designed and built the complete implementation end to end.' },
+    credit: { organization: 'Organization', role: 'Engineer', contribution: 'I designed and built the complete implementation end to end.', contributionSummary: 'Design and engineering' },
+    cover: { src: '/media/cover.jpg', alt: 'A useful alternative for the real product cover image', width: 1600, height: 1000, labels: ['Real product', 'Current surface'] },
+    headings: { overview: 'A project-specific overview heading for the complete argument.', problem: 'A project-specific problem heading for the complete argument.', architectureCaption: 'One legible system path', evidence: 'A project-specific evidence heading with an honest boundary.' },
     intendedUser: 'A clearly defined person with a real need for this product workflow.',
     demo: { src: '/media/demo.webm', poster: '/media/poster.jpg', durationLabel: '10-second capture', caption: 'A real product capture with an honest explanation of what it proves.' },
     workflow: [
@@ -36,10 +39,20 @@ const validWork = {
       { title: 'Work', description: 'A complete description of the second product workflow step.', media: '/media/two.jpg', alt: 'A useful alternative for the second real product frame', width: 1600, height: 1000 },
       { title: 'Finish', description: 'A complete description of the third product workflow step.', media: '/media/three.jpg', alt: 'A useful alternative for the third real product frame', width: 1600, height: 1000 },
     ],
+    responsibilities: [
+      { label: 'Product', detail: 'The complete workflow and the visible product behaviour.' },
+      { label: 'Systems', detail: 'The durable processing path and its recovery boundaries.' },
+    ],
     research: Array.from({ length: 3 }, (_, index) => ({ source: `Source ${index}`, finding: 'A specific finding long enough to affect the product decision.', changed: 'A concrete product or engineering decision changed because of the finding.' })),
     decisions: Array.from({ length: 2 }, () => ({ decision: 'Use durable state for expensive work.', rejected: 'Keep one request open until completion.', tradeoff: 'The implementation grows, but recovery and visible state become truthful.' })),
+    architectureSteps: [
+      { label: 'Browser', detail: 'Collects the request and reads durable state' },
+      { label: 'Application', detail: 'Creates the bounded operation and reports it' },
+      { label: 'Worker', detail: 'Completes the expensive work and commits once' },
+    ],
     failures: Array.from({ length: 2 }, () => ({ title: 'Visible failure', symptom: 'The interface showed a result that did not match the committed state.', cause: 'Two independent defects hid each other during the original diagnosis.', correction: 'The complete path was traced and current state became explicit.', remainingRisk: 'New paths still need end-to-end checks.' })),
     limitations: ['The current model has one specific practical limit that remains visible.', 'The current pilot has not established broad adoption or scale evidence.'],
+    evidenceNote: 'No unsupported adoption measurement is presented as a verified outcome.',
     future: [
       { status: 'planned', title: 'Next capability', detail: 'A concrete capability planned after the current evidence is stable.' },
       { status: 'blocked', title: 'Blocked capability', detail: 'A capability blocked until its required source data can be verified.' },
@@ -48,6 +61,7 @@ const validWork = {
       { label: 'Private repository evidence', locator: 'private repository', public: false },
       { label: 'Public product evidence', locator: 'https://example.com', public: true },
     ],
+    ending: { heading: 'The product changes. The record stays current.', body: 'Future evidence updates the content record without forking the complete page layout.', contactLabel: 'Ask about the project' },
   },
   claimRefs: ['claim-one'],
 }

@@ -433,6 +433,10 @@ commit with the matching plan items ticked.
 
 - [ ] `/work` lists every project without a hard-coded count in prose.
 - [ ] Sorting controls operate on real typed fields and preserve a meaningful default order.
+- [x] BeatMind and Vivid use one content-driven paper case-study component and validated
+  project-specific evidence records.
+- [ ] The remaining ten projects receive audited `caseStudy` records before their routes are
+  counted as complete.
 - [ ] Every `/work/[slug]` page satisfies `CASE_STUDY_CONTRACT.md`, including real
   product proof, contribution, research, trade-offs, evidence, failures and limits.
 - [ ] Previous/next and back-to-register links prevent dead ends.
@@ -670,5 +674,7 @@ framework, stop and review the architecture before adding more.
 - UPI's model-evaluation precision and operational backtest precision must not be collapsed
   into one number.
 - Oracle duration and uptime language remains unpublished until evidence exists.
-- Vivid and QueryPilot need useful product captures before their worlds ship.
+- QueryPilot still needs a useful product capture before its world ships. Vivid now has one
+  real browser capture and a real evaluation sequence in its paper case study; world media
+  approval remains a separate gate.
 - The owner decided that no price or price band appears anywhere on the public site.

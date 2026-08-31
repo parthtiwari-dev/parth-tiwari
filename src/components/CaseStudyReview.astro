@@ -7,9 +7,10 @@ interface Props {
   project: CollectionEntry<'work'>
   claims: CollectionEntry<'claims'>[]
   relatedNote?: CollectionEntry<'notes'>
+  caseStudySlugs: string[]
 }
 
-const { project, claims, relatedNote } = Astro.props
+const { project, claims, relatedNote, caseStudySlugs } = Astro.props
 const caseStudy = project.data.caseStudy
 if (!caseStudy) throw new Error(`${project.data.title} is missing the Phase 2 case-study contract.`)
 
@@ -20,6 +21,13 @@ const measurements = project.data.measurement.claimIds
 const statusLabel = project.data.status === 'in-progress'
   ? 'In progress'
   : project.data.status.charAt(0).toUpperCase() + project.data.status.slice(1)
+const caseNumber = String(project.data.order).padStart(2, '0')
+const contactSubject = encodeURIComponent(`${project.data.title} case study`)
+const nextCaseStudyIsPublished = caseStudySlugs.includes(project.data.next.slug)
+const nextHref = nextCaseStudyIsPublished ? `/work/${project.data.next.slug}/` : '/work/'
+const nextLabel = nextCaseStudyIsPublished
+  ? project.data.next.label
+  : `Find ${project.data.next.label.replace(/^Next:\s*/i, '')} in the register`
 const chapters = [
   ['overview', 'What it is'],
   ['product-demo', 'Product proof'],
@@ -69,7 +77,7 @@ const chapters = [
 
         <section class="case-masthead" aria-labelledby="case-title">
           <div class="case-masthead-copy">
-            <p class="case-kicker">Case 01 / Music systems</p>
+            <p class="case-kicker">Case {caseNumber} / {caseStudy.classification}</p>
             <h1 id="case-title">{project.data.title}</h1>
             <p class="case-thesis">{caseStudy.thesis}</p>
             <div class="case-actions">
@@ -81,30 +89,30 @@ const chapters = [
             <dl class="case-facts">
               <div><dt>Role</dt><dd>{caseStudy.credit.role}</dd></div>
               <div><dt>Built at</dt><dd>{caseStudy.credit.organization}</dd></div>
-              <div><dt>Contribution</dt><dd>Design and engineering, end to end</dd></div>
+              <div><dt>Contribution</dt><dd>{caseStudy.credit.contributionSummary}</dd></div>
               <div><dt>Status</dt><dd>{statusLabel}</dd></div>
             </dl>
           </div>
 
           <figure class="case-cover">
             <img
-              src="/media/beatmind-desktop.jpg"
-              width="2880"
-              height="1800"
+              src={caseStudy.cover.src}
+              width={caseStudy.cover.width}
+              height={caseStudy.cover.height}
               fetchpriority="high"
-              alt="BeatMind's real public product page showing a five-stem record visualization"
+              alt={caseStudy.cover.alt}
             />
-            <figcaption><span>Real product surface</span><span>Five-stem model</span></figcaption>
+            <figcaption>{caseStudy.cover.labels.map((label) => <span>{label}</span>)}</figcaption>
           </figure>
         </section>
 
-        <section class="case-proof-strip" aria-label="Verified BeatMind evidence">
+        <section class="case-proof-strip" aria-label={`Verified ${project.data.title} evidence`}>
           <div class="case-proof-intro">
             <p>Measured, with the denominator attached</p>
             <strong>Proof before polish.</strong>
           </div>
           {measurements.map((claim) => (
-            <article>
+            <article class:list={[claim.data.display.length > 20 && 'has-long-display']}>
               <strong>{claim.data.display}</strong>
               <p>{claim.data.wording}</p>
               <small>{claim.data.denominator}</small>
@@ -141,7 +149,7 @@ const chapters = [
           <article class="case-article">
             <section id="overview" class="case-chapter case-overview" data-case-chapter>
               <p class="case-section-label">01 / What it is</p>
-              <h2>More control than a prompt box. Less friction than starting in a DAW.</h2>
+              <h2>{caseStudy.headings.overview}</h2>
               {project.data.whatItIs.map((paragraph) => <p>{paragraph}</p>)}
               <div class="case-audience">
                 <span>Built for</span>
@@ -167,11 +175,11 @@ const chapters = [
                 <figcaption>{caseStudy.demo.caption}</figcaption>
               </figure>
 
-              <div class="case-contact-sheet" aria-label="BeatMind product workflow">
+              <div class="case-contact-sheet" aria-label={`${project.data.title} product workflow`}>
                 {caseStudy.workflow.map((step, index) => (
                   <figure>
                     <div class="case-contact-number">{String(index + 1).padStart(2, '0')}</div>
-                    <img src={step.media} width={step.width} height={step.height} loading="lazy" alt={step.alt} />
+                    <img data-fit={step.fit ?? 'cover'} src={step.media} width={step.width} height={step.height} loading="lazy" alt={step.alt} />
                     <figcaption><strong>{step.title}</strong><p>{step.description}</p></figcaption>
                   </figure>
                 ))}
@@ -180,12 +188,10 @@ const chapters = [
 
             <section id="problem" class="case-chapter" data-case-chapter>
               <p class="case-section-label">03 / Problem and responsibility</p>
-              <h2>The browser can stop waiting. The work cannot pretend it stopped.</h2>
+              <h2>{caseStudy.headings.problem}</h2>
               {project.data.problem.map((paragraph) => <p>{paragraph}</p>)}
               <dl class="case-responsibility">
-                <div><dt>Product</dt><dd>Workflow, interaction model, feedback-led refinements, and rights boundary.</dd></div>
-                <div><dt>Frontend</dt><dd>Creation, library, editor, arrangement, mixing, rendering, and truthful state.</dd></div>
-                <div><dt>Systems</dt><dd>Generation, separation, analysis, storage transport, durable jobs, retries, and recovery.</dd></div>
+                {caseStudy.responsibilities.map((item) => <div><dt>{item.label}</dt><dd>{item.detail}</dd></div>)}
               </dl>
             </section>
 
@@ -207,12 +213,11 @@ const chapters = [
               <h2>{project.data.architecture.decision}</h2>
               {project.data.architecture.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
               <figure class="case-system-diagram">
-                <figcaption>One durable path, with late work fenced out</figcaption>
+                <figcaption>{caseStudy.headings.architectureCaption}</figcaption>
                 <ol>
-                  <li><span>01</span><strong>Browser</strong><small>Uploads directly and reads committed project state</small></li>
-                  <li><span>02</span><strong>Web application</strong><small>Creates the operation and exposes honest progress</small></li>
-                  <li><span>03</span><strong>Audio service</strong><small>Generates, separates, analyses, or renders</small></li>
-                  <li><span>04</span><strong>Fenced commit</strong><small>Accepts the current attempt and refuses late work</small></li>
+                  {caseStudy.architectureSteps.map((step, index) => (
+                    <li><span>{String(index + 1).padStart(2, '0')}</span><strong>{step.label}</strong><small>{step.detail}</small></li>
+                  ))}
                 </ol>
               </figure>
             </section>
@@ -220,7 +225,7 @@ const chapters = [
             <section id="decisions" class="case-chapter case-decisions" data-case-chapter>
               <p class="case-section-label">06 / Decisions and trade-offs</p>
               <h2>What I chose, what I rejected, and what the choice costs.</h2>
-              <div class="case-decision-table" role="table" aria-label="BeatMind engineering decisions">
+              <div class="case-decision-table" role="table" aria-label={`${project.data.title} engineering decisions`}>
                 <div class="case-decision-head" role="row"><span role="columnheader">Decision</span><span role="columnheader">Rejected</span><span role="columnheader">Trade-off</span></div>
                 {caseStudy.decisions.map((item) => (
                   <div class="case-decision-row" role="row">
@@ -232,10 +237,10 @@ const chapters = [
 
             <section id="evidence" class="case-chapter case-evidence" data-case-chapter>
               <p class="case-section-label">07 / Evidence</p>
-              <h2>Two measurements I can defend. No adoption theatre.</h2>
+              <h2>{caseStudy.headings.evidence}</h2>
               <div class="measurement-ledger">
                 {measurements.map((claim, index) => (
-                  <article class:list={[index === 0 && 'is-primary']}>
+                  <article class:list={[index === 0 && 'is-primary', claim.data.display.length > 20 && 'has-long-display']}>
                     <strong>{claim.data.display}</strong>
                     <p>{claim.data.wording}</p>
                     <small>{claim.data.denominator}</small>
@@ -243,7 +248,7 @@ const chapters = [
                   </article>
                 ))}
               </div>
-              <p class="case-evidence-note">I am not publishing a user count here. The account record and the definition of “user” need to agree before that number belongs in a case study.</p>
+              <p class="case-evidence-note">{caseStudy.evidenceNote}</p>
             </section>
 
             <section id="failures" class="case-chapter case-failures" data-case-chapter>
@@ -262,7 +267,7 @@ const chapters = [
                   </li>
                 ))}
               </ol>
-              {relatedNote && <a href={`/notes/${relatedNote.id}/`}>Read the consent-gate erratum <span aria-hidden="true">↗</span></a>}
+              {relatedNote && <a href={`/notes/${relatedNote.id}/`}>{caseStudy.relatedNoteLabel ?? 'Read the related erratum'} <span aria-hidden="true">↗</span></a>}
             </section>
 
             <section id="limits" class="case-chapter case-limits" data-case-chapter>
@@ -296,14 +301,14 @@ const chapters = [
             </section>
 
             <footer class="case-ending">
-              <p class="case-section-label">Case 01 / Complete</p>
-              <h2>The product is live. The record stays open.</h2>
-              <p>BeatMind will change. When the evidence changes, this page should change with it.</p>
+              <p class="case-section-label">Case {caseNumber} / Complete</p>
+              <h2>{caseStudy.ending.heading}</h2>
+              <p>{caseStudy.ending.body}</p>
               <div class="case-ending-links">
-                <a class="case-next" href={`/work/${project.data.next.slug}/`}>{project.data.next.label} <span aria-hidden="true">→</span></a>
+                <a class="case-next" href={nextHref}>{nextLabel} <span aria-hidden="true">→</span></a>
                 <a href="/work/">Back to all work</a>
                 {relatedNote && <a href={`/notes/${relatedNote.id}/`}>Related erratum</a>}
-                <a href={`${CONTACT_EMAIL_HREF}?subject=BeatMind%20case%20study`}>Ask me about BeatMind</a>
+                <a href={`${CONTACT_EMAIL_HREF}?subject=${contactSubject}`}>{caseStudy.ending.contactLabel}</a>
               </div>
             </footer>
           </article>
