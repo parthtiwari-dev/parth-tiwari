@@ -449,7 +449,8 @@ commit with the matching plan items ticked.
     validation, persistence ordering, honest no-measurement state and approval correction.
   - [x] QueryPilot: real API surface, committed correction trace, core/adversarial
     denominator separation, safety-correction failure and semantic-accuracy boundary.
-  - [ ] SecondSelf.
+  - [x] SecondSelf: safe committed fixtures only, evidence-to-review workflow, verified
+    faithfulness denominator, personal-data exclusion and assisted-action boundaries.
   - [ ] OncoVerse.
   - [ ] UPI Fraud Engine.
   - [ ] Spur Chat.
