@@ -71,6 +71,8 @@ content remains static HTML.
 - Launch Chromium through `scripts/browser.mjs`; do not call `chromium.launch()` with an
   ad hoc configuration.
 - Required review widths are 390, 800, and 1440 pixels.
+- Case-study mastheads also retain a 1920-pixel regression check for rendered title and proof
+  collisions after the SecondSelf false-positive overflow gate found on 2026-09-01.
 - Browser checks accept `--url`; run them against the built static output for gates.
 - Screenshots are evidence only when someone inspects them. A successful capture command
   does not prove the page looks correct.

@@ -42,6 +42,7 @@ in the same commit.
 | Work may sort by qualitative build effort | Decided | `flagship`, `substantial` and `focused` communicate scope without inventing hours or money | A misleading cost control |
 | Work has no Personal/Company split | Owner decided 2026-08-29 | The owner's flexible employment context makes a binary register taxonomy reductive; projects should be compared by the work itself | Ownership filters and company badges on every row |
 | Verified employment context belongs inside a case study | Decided | Role, organization and contribution need project-specific explanation and publication permission | Inferring ownership from repository location or adding an unsourced global label |
+| Fraud Risk Intelligence and Oracle Auto Provision stay in the register as focused work | Owner confirmed after review 2026-09-01 | Fraud Risk shows the earlier reproducible modelling and explanation layer before UPI's operational alert-budget system; Oracle is a small self-use automation with safe retry and duplicate-guard lessons | Removing smaller work solely to shorten the register or presenting either as flagship work |
 
 ## Landing and paper
 

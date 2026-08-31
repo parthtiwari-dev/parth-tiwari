@@ -119,6 +119,7 @@ baseline, failures, limitations, licensing boundary and future gates. It does no
 the current plan's identity or speed goal is achieved. `VIVID_CASE_STUDY_AUDIT.md` is the
 source map and update procedure.
 
-**Last documentation truth audit:** 2026-08-31, eight-project case-study batch, ten-route
-matrix, two deferred records, proof variants, source boundaries and current gate evidence
-recorded during Phase 3B.
+**Last documentation truth audit:** 2026-09-01, the wide-screen SecondSelf title collision
+and its false-positive overflow gate were corrected. Ten published routes pass rendered
+title-versus-proof collision checks at 390, 800, 1440 and 1920 pixels. Fraud Risk
+Intelligence and Oracle Auto Provision remain focused register entries with deferred routes.
