@@ -496,6 +496,13 @@ remains open because the revised mobile arrival still needs rendered owner revie
 five-person ten-second test remains deferred, and the complete site has not been deployed to
 the preview alias.
 
+**Owner-directed phase exception, 2026-09-01:** the owner chose to begin Phase 4 without
+performing the remaining Phase 3 rendered review. This does not pass or waive the Phase 3
+gate. The mobile arrival review, complete-route visual review, five-person test and verified
+preview deployment remain open and must be reported as deferred until they are actually run.
+Phase 4 may proceed only through its own owner-review checkpoints and must not be used as
+evidence that the underlying static-site gate passed.
+
 **Gate**
 
 - Build, type, accessibility, screenshot, link and craft checks pass.
