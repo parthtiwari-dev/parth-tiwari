@@ -525,6 +525,17 @@ This phase perfects the transition between paper and world without making it nav
   coarse-pointer equivalent.
 - Get explicit approval for one study before production implementation.
 
+**Motion-study checkpoint, 2026-09-01:** `design/directions/phase-4-paper-transition.html`
+compares Row Rip, Edge Peel and Sheet Fault with the real paper stock and approved BeatMind
+world still. All three were captured at 390, 800 and 1440 pixels, including preview, mid-tear,
+final and reduced-motion states. The capture gate found zero overflow or browser errors and
+zero tear pieces under reduced motion. Fresh-page measurements keep Row Rip at 16.7-16.8 ms
+p95 at all three widths; Sheet Fault rises to 83.3 ms at 800 pixels and 166.7 ms at 1440
+pixels, so it is not a production candidate in its current form. Evidence and the comparison
+are recorded in `docs/PHASE_4_MOTION_STUDIES.md` and `.shots/phase4-motion-studies/`.
+Owner selection is pending. No production checklist item below is ticked and implementation
+must stop at this checkpoint.
+
 **Do**
 
 - [ ] Backlight an entry using that project's approved still frame by default.

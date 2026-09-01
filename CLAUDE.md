@@ -28,7 +28,7 @@ quietly choosing one.
 - Playwright as development-only browser tooling
 
 There is no Vue application, SPA rewrite, Three.js scene, canvas, Tailwind layer, analytics
-runtime, or client-side router. The current Phase 2 root landing uses one small progressive
+runtime, or client-side router. The current root landing uses one small progressive
 enhancement script for post-hero navigation and bounded paper-motion states; its complete
 content remains static HTML.
 
@@ -86,9 +86,12 @@ content remains static HTML.
   private-path exclusions.
 - `npm run phase3:static-gate` extends that proof to shared metadata, the Home route links,
   generated sitemap, RSS, 404 and removal of visitor-facing Phase 2 scaffolding copy.
+- `npm run phase4:study-capture` renders the three non-production paper-transition studies
+  at 390, 800 and 1440 pixels, checks overflow and browser errors, verifies reduced motion
+  and records comparative frame timing.
 - Phase 1 is complete under its owner-amended gate. The text-only human test was deferred,
   not passed, and may never be reported otherwise.
-- Phase 2 closed on 2026-08-31. The maintained landing stub is on `/`; its structure and interim public
+- Phase 2 closed on 2026-08-31. The maintained Home route is on `/`; its structure and interim public
   release were owner-approved on 2026-08-29 and are live at
   `https://parth-tiwari-1.vercel.app/`. `/work` architecture is approved. The single
   `/work/beatmind/` Phase 2 paper pilot now follows `docs/CASE_STUDY_CONTRACT.md`, uses
@@ -110,11 +113,11 @@ content remains static HTML.
   BeatMind's Sound Foundry
   storyboard and current five-stem language on 2026-08-30; its standalone verified animatic
   is a Phase 2 review artifact only. Its dark ending and explicit case-study CTA are locked;
-  no paper section appears below the world. Production route implementation remains Phase 3 and
-  production world implementation remains Phase 5.
+  no paper section appears below the world. The separate static paper route is present in
+  Phase 3; production world implementation remains Phase 5.
 - Do not treat Phase 2 review stubs as the complete Phase 3 static site. Production tear,
   backlight, canvas and animated-world implementation remain in their assigned later phases.
-- Phase 3B is active. `/work/[slug].astro` emits a static page for each project with a
+- Phase 3B implementation is present. `/work/[slug].astro` emits a static page for each project with a
   validated `caseStudy` object. BeatMind, Vivid and the approved eight-project batch satisfy
   that full paper contract. Fraud Risk Intelligence and Oracle Auto Provision remain
   explicitly deferred, non-clickable and route-less. `docs/CASE_STUDY_BATCH_AUDIT.md`
@@ -126,6 +129,11 @@ content remains static HTML.
   `docs/VIVID_CASE_STUDY_AUDIT.md` records the Vivid repository history, current
   proof, unachieved plan targets and update workflow. The Vivid source worktree is read-only
   portfolio evidence and its current Phase 4 changes must not be modified from this repository.
+- The owner directed Phase 4 to begin on 2026-09-01 without completing those Phase 3 checks.
+  This is a phase-order exception, not a Phase 3 pass. Row Rip, Edge Peel and Sheet Fault now
+  exist only as standalone studies. Sheet Fault misses the performance budget at 800 and
+  1440 pixels. Production implementation must stop until the owner explicitly selects Row
+  Rip, Edge Peel or requests a bounded revision. No Phase 4 checklist item is complete.
 
 ## Dependencies and external actions
 

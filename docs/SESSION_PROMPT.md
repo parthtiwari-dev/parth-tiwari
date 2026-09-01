@@ -41,10 +41,17 @@ closed by `docs/CASE_STUDY_BATCH_AUDIT.md`. Its static, link, privacy, responsiv
 no-JavaScript, reduced-motion, keyboard-focus and print gates pass. Owner visual approval,
 Fraud Risk Intelligence, Oracle Auto Provision and the complete Phase 3 gate remain open.
 
-The next safe work stays inside Phase 3: run the owner batch review, audit one of the two
-deferred projects when requested, or complete the remaining static-site gate work. Do not
-move either Vivid or BeatMind world study into Astro yet. Production worlds remain Phases 5
-and 6.
+On 2026-09-01 the owner explicitly directed Phase 4 to begin without completing those Phase
+3 reviews. This is a work-order exception, not a Phase 3 pass. Three non-production studies
+in `design/directions/phase-4-paper-transition.html` compare Row Rip, Edge Peel and Sheet
+Fault using the real paper stock and approved BeatMind still. Evidence is in
+`docs/PHASE_4_MOTION_STUDIES.md` and `.shots/phase4-motion-studies/`. Sheet Fault misses the
+performance budget and is not recommended.
+
+The next safe action is owner selection between Row Rip and Edge Peel. Do not implement
+production backlighting, tear navigation or route handoff until that selection is explicit.
+Do not tick a Phase 4 item from the studies alone. BeatMind and Vivid production worlds
+remain Phases 5 and 6.
 
 Begin with git status and diff. Preserve all current work. Stop at the applicable gate.
 ```
@@ -54,7 +61,8 @@ Begin with git status and diff. Preserve all current work. Stop at the applicabl
 Stop the session if:
 
 - a public claim has no provenance record;
-- a later implementation phase begins before the current gate;
+- a later implementation phase begins before the current gate without a recorded owner
+  exception and its own required checkpoint;
 - exploratory Vivid imagery is presented as a real product output without evidence;
 - the Vivid world is planned from stale portfolio assumptions instead of the current
   `upgrade-flux` end-state plan;

@@ -3,18 +3,20 @@
 This repository is rebuilding Parth Tiwari's portfolio as **Paper and Worlds**: a
 static, multi-page Astro site whose project case studies use each project's real data.
 
-The current code has completed Phases 1 and 2 and is working through Phase 3. It contains validated
+The current code has completed Phases 1 and 2, has an open Phase 3 gate and is at the
+owner-selection checkpoint for Phase 4. It contains validated
 content collections, twelve base project records, twelve Errata entries, route copy,
-services, experience, and source-linked claims. The maintained Phase 2 landing now lives at
-`/`. It is a reviewable static stub, not the Phase 3 production site. `/work/` has its
-register study, ten published `/work/[slug]/` routes use the shared paper case-study system,
-and Notes, About, Resume
-and Hire now have route-review implementations. The landing includes the approved full-width rag sheet, post-hero sticky
+services, experience, and source-linked claims. The maintained Home route lives at `/`.
+`/work/` has its complete register, ten published `/work/[slug]/` routes use the shared paper
+case-study system, and Notes, About, Resume and Hire have static route implementations. The
+landing includes the approved full-width rag sheet, post-hero sticky
 paper fold, content-driven sections, stable fibre-edge segments, bounded one-shot paper
-motion and the current project-hover study. The rejected A/B/C studies were removed. There
-is still no production tear, backlight, canvas or animated world. The owner approved the
-current root landing for an interim public release while the rest of Phase 2 continues;
-that release is not the complete Phase 3 or Phase 7 site.
+motion and the current project-hover study. The rejected Phase 2 A/B/C directions were
+removed. There is still no production tear, backlight, canvas or animated world. Three
+standalone Phase 4 studies now compare Row Rip, Edge Peel and Sheet Fault with real paper and
+the approved BeatMind still. They are review artifacts, not production behavior. The current
+interim deployment still contains the earlier root-only release; the complete static site has
+not passed the Phase 3 preview gate or the Phase 7 production cutover.
 
 **Live interim landing:** [parth-tiwari-1.vercel.app](https://parth-tiwari-1.vercel.app/).
 The Astro release replaced v1 from `main` on 2026-08-29 and passed live accessibility,
@@ -49,6 +51,9 @@ npm run phase2:gate -- --part render --url http://127.0.0.1:4321
 npm run phase2:gate -- --part states --url http://127.0.0.1:4321
 npm run phase2:gate -- --part contracts --url http://127.0.0.1:4321
 npm run phase3:case-batch-gate
+npm run phase3:static-gate
+npm run phase4:study
+npm run phase4:study-capture
 npm run preview
 ```
 
@@ -77,4 +82,8 @@ remain visible, non-clickable deferred rows and emit no placeholder routes.
 Phase 2 closed on 2026-08-31. Every route family has an accepted-for-now review
 implementation, and the shared render, state, contrast, font-budget and static-boundary gates
 pass. Further visual polish is deferred rather than reported as finished. Vivid production
-work has not begun.
+work has not begun. The owner directed Phase 4 to begin while the remaining Phase 3 render
+review, human test and preview deployment stay deferred. The Phase 4 motion studies are
+captured at 390, 800 and 1440 pixels; owner selection between Row Rip and Edge Peel is
+required before production implementation. Sheet Fault is not recommended because its
+full-sheet animation misses the measured performance budget.

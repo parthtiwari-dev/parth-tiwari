@@ -21,6 +21,7 @@ Where to look, and what is still true.
 | [`PHASE_2_RESUME_REVIEW.md`](PHASE_2_RESUME_REVIEW.md) | The HTML Resume structure, source PDF boundary, optional Drive configuration, responsive and print evidence |
 | [`PHASE_2_HIRE_REVIEW.md`](PHASE_2_HIRE_REVIEW.md) | The Hire route reference lock, service boundaries, four-step process, fit guidance and verified contact paths |
 | [`PHASE_2_GATE.md`](PHASE_2_GATE.md) | The completed route matrix, state checks, contrast results, font budget and owner-acceptance boundary |
+| [`PHASE_4_MOTION_STUDIES.md`](PHASE_4_MOTION_STUDIES.md) | Row Rip, Edge Peel and rejected-for-performance Sheet Fault comparison, responsive evidence and the owner-selection stop |
 | [`CASE_STUDY_CONTRACT.md`](CASE_STUDY_CONTRACT.md) | Required evidence, media, accessibility and publication contract for every paper case study |
 | [`CASE_STUDY_BATCH_AUDIT.md`](CASE_STUDY_BATCH_AUDIT.md) | Source branches, commit boundaries, proof decisions, route matrix and gate evidence for the eight-project Phase 3 batch |
 | [`PHASE_2_BEATMIND_WORLD_STUDY.md`](PHASE_2_BEATMIND_WORLD_STUDY.md) | Approved Sound Foundry animatic, real BeatMind source lock, rendered evidence and production inputs still blocked |
@@ -61,8 +62,8 @@ experience, claim records and the text-only test artifact. Automated schema, pro
 Astro build checks pass. The owner deferred the unrun text-only human test without marking
 it passed. During Phase 2, the three initial landing directions were rejected and removed.
 The owner approved the overall full-width scroll direction and the refined landing
-checkpoint for an interim public release. The maintained landing stub is
-now at `/`; the obsolete `/review/phase-2/` route is removed. Its restraint pass, segmented
+checkpoint for an interim public release. The maintained Home route is at `/`; the obsolete
+`/review/phase-2/` route is removed. Its restraint pass, segmented
 fibre edges, directional folds and three bounded one-shot motion studies have rendered
 evidence at 390, 800 and 1440 pixels. The first viewport now identifies Parth in normal
 reading text and explicitly explains the `Paper → World → Case study` grammar. Its contained
@@ -128,3 +129,9 @@ visitor-facing Phase 2 scaffolding, adds shared canonical/social/JSON-LD metadat
 real 404 and twelve-entry RSS feed, and generates a 28-route sitemap after every static build.
 `npm run phase3:static-gate` passes. The revised mobile arrival, complete visual batch,
 five-person comprehension test and preview deployment remain open, so Phase 3 is not closed.
+The owner nevertheless directed Phase 4 to begin under an explicit phase-order exception.
+Three non-production transition studies now compare Row Rip, Edge Peel and Sheet Fault using
+the real paper stock and approved BeatMind world still. Responsive and reduced-motion
+captures pass; Sheet Fault misses the performance budget at 800 and 1440 pixels. Owner
+selection between Row Rip and Edge Peel is the next safe step. No production preview, tear or
+routing enhancement has been added to Astro.

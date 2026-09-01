@@ -68,9 +68,12 @@ in the same commit.
 | Decision | Status | Reason | Rejected or bounded alternative |
 |---|---|---|---|
 | Entry preview uses the project's approved world still first | Decided | Fast, stable and truthful before animated worlds exist | Starting every canvas on page load |
+| Home and `/work` receive the same eventual preview-and-tear behavior | Owner decided 2026-09-01 | Both registers are doors into the same projects and should not teach two interaction grammars | Shipping the enhancement on only one register |
+| A real published proof may temporarily stand in when no approved world still exists | Owner decided 2026-09-01 | The fallback keeps the preview truthful while later worlds are still unbuilt; it must be visibly labelled as proof | Generated placeholder worlds, simulated screenshots or an empty black aperture |
 | Touch preview follows the centered entry during native scroll | Decided | It provides hover parity without adding a separate mobile interface | Tap-first hover emulation that traps the first tap |
 | Tear visualizes navigation to a real route | Decided | Refresh, deep links and accessibility remain correct | Overlay-only world state |
 | Production tear is chosen from motion studies | Owner review in Phase 4 | Material behavior needs visual comparison, not prose certainty | Copying the prototype timings and stock |
+| Pointer preview dwell is 180 ms and the tactile handoff is capped at 500 ms | Owner decided 2026-09-01 | The preview should feel intentional while navigation remains immediate enough to trust | Instant hover flicker or a decorative transition that delays the route |
 | Reduced motion skips the tear | Decided | The destination matters; the transition does not | A shorter but still disruptive tear |
 
 ## Worlds
@@ -257,8 +260,11 @@ authorized before the build-plan phase that owns it.
 
 ### Phase 4
 
-- Production tear study
-- Backlight strength, dwell and motion behavior
+- Owner selection between rendered Row Rip and Edge Peel studies. Sheet Fault is not
+  recommended in its current form because the full-sheet animation misses the measured
+  performance budget at 800 and 1440 pixels.
+- Production backlight, coarse-pointer behavior, routing and focus restoration remain
+  unimplemented until that selection.
 
 ### Phase 5 and 6
 
