@@ -52,6 +52,39 @@ const percentile = (values, share) => {
 }
 
 try {
+  const controlsContext = await browser.newContext({ viewport: { width: 1440, height: 900 } })
+  const controlsPage = await controlsContext.newPage()
+  const controlsErrors = []
+  controlsPage.on('pageerror', (error) => controlsErrors.push(error.message))
+  await controlsPage.goto(base, { waitUntil: 'load' })
+  await controlsPage.evaluate(() => document.fonts.ready)
+  const controlStates = []
+  for (const study of studies) {
+    await controlsPage.locator(`[data-study-choice="${study}"]`).click()
+    controlStates.push(await controlsPage.evaluate(() => ({
+      study: document.body.dataset.study,
+      selected: document.querySelector('[data-study-choice][aria-pressed="true"]')?.dataset.studyChoice,
+    })))
+  }
+  await controlsPage.locator('[data-replay]').click()
+  await controlsPage.waitForTimeout(40)
+  const controlsResult = await controlsPage.evaluate(() => ({
+    hasApi: typeof window.phase4Study?.play === 'function',
+    stylesheetCount: document.styleSheets.length,
+    tearing: document.body.classList.contains('is-tearing'),
+    pieces: document.querySelectorAll('.tear-piece').length,
+  }))
+  const controlsPass = controlsErrors.length === 0
+    && controlStates.every((state) => state.study === state.selected)
+    && controlStates.map((state) => state.study).join(',') === studies.join(',')
+    && controlsResult.hasApi
+    && controlsResult.stylesheetCount > 0
+    && controlsResult.tearing
+    && controlsResult.pieces > 0
+  console.log(`${controlsPass ? 'PASS' : 'FAIL'} study controls: states=${controlStates.map((state) => state.study).join(',')} stylesheets=${controlsResult.stylesheetCount} tearing=${controlsResult.tearing} pieces=${controlsResult.pieces} errors=${controlsErrors.join(' | ') || 'none'}`)
+  if (!controlsPass) failures += 1
+  await controlsContext.close()
+
   for (const viewport of viewports) {
     for (const study of studies) {
       const context = await browser.newContext({
