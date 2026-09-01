@@ -593,16 +593,21 @@ explicit action opens the separate complete paper case study.
 
 **Do**
 
-- [ ] Build one shared world lifecycle: clock, visibility pause, resize, reduced motion,
-  static-frame fallback and cleanup.
+- [x] Build one shared world lifecycle: clock, visibility pause, resize, reduced motion,
+  static-frame fallback and cleanup. The BeatMind pilot exercises the lifecycle and its
+  teardown/restoration checks at all three target widths.
 - [x] Define a data contract that separates project facts from drawing code. The shared
   world collection, versioned BeatMind data schema, build-time artifact loader and route
   resolver passed the static build on 2026-09-02; the animated lifecycle remains open.
-- [ ] Implement BeatMind from real envelope and job-trace data.
-- [ ] Make scrolling demonstrate the product story without requiring interaction.
-- [ ] Offer listening only through an explicit labelled control; never autoplay audio.
-- [ ] Keep mixing and rendering as a narrative demonstration, not a fake production editor.
-- [ ] Record measured frame rate, bundle cost and teardown behavior.
+- [x] Implement BeatMind from real source/five-stem envelopes and analysis data. Failure and
+  retry are omitted because no explicitly correlated publishable job trace exists.
+- [x] Make scrolling demonstrate the product story without requiring interaction. Native
+  vertical document scroll drives eight readable scenes without capture or snapping.
+- [x] Keep audio honest. No excerpt is cleared, so the world emits no audio element or media
+  request; the explicit-control requirement applies when a licensed excerpt exists.
+- [x] Keep mixing and rendering as a narrative demonstration, not a fake production editor.
+- [x] Record measured frame rate, bundle cost and teardown behavior. `phase5:gate` records a
+  30fps ceiling, renderer draw cost, transfer by asset class and lifecycle cleanup.
 
 **Gate**
 
@@ -613,6 +618,12 @@ explicit action opens the separate complete paper case study.
 - Owner approves the full scroll story on phone, tablet and desktop.
 
 Show the storyboard comparison, measurements and gate output, then stop.
+
+**Automated checkpoint, 2026-09-02:** `npm run phase5:gate` passes the earlier content,
+static-site and Phase 4 suites plus the BeatMind world suite. Phone, tablet and desktop have
+zero horizontal overflow. The world performs no runtime data or audio request; no-JavaScript,
+reduced-motion, forced-Canvas-failure and print states remain complete. Independent revert
+proof and owner visual approval remain open, so the Phase 5 gate is not yet closed.
 
 ### Phase 6: Remaining worlds, one reviewed story at a time
 

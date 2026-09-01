@@ -22,6 +22,8 @@ const publishedClaims = new Map(
 )
 const effortLabels = { flagship: 'Flagship', substantial: 'Substantial', focused: 'Focused' }
 const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In progress', running: 'Running', 'take-home': 'Take-home' }
+const beatMindProject = orderedProjects.find((project) => project.id === 'beatmind')
+const beatMindHref = beatMindProject ? projectDoorHref(beatMindProject, worlds) : '/work/'
 ---
 
 <!doctype html>
@@ -127,7 +129,7 @@ const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In prog
         <section class="work-close" id="work-review-note">
           <p class="work-eyebrow">End of the register</p>
           <h2>Start with the work that matters most.</h2>
-          <div><a href="/work/beatmind/">Open BeatMind <span aria-hidden="true">↗</span></a><a href="/resume/">Read the resume <span aria-hidden="true">→</span></a></div>
+          <div><a href={beatMindHref}>Enter BeatMind <span aria-hidden="true">↗</span></a><a href="/resume/">Read the resume <span aria-hidden="true">→</span></a></div>
           <small>Ten complete case studies are open. Two focused utilities remain in the register while their records are prepared.</small>
         </section>
       </div>

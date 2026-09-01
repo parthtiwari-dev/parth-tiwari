@@ -144,3 +144,12 @@ focus, Back restoration, reduced-motion and failure fallbacks. `npm run phase4:g
 390, 800 and 1440 pixels with 16.7-16.8 ms p95 transition measurements. The isolated revert
 gate also passes. The owner explicitly waived personal render inspection and closed Phase 4
 on 2026-09-01; that waiver is not recorded as an inspection that occurred.
+
+Phase 5 now has an independent shared-world foundation and the BeatMind Precision Descent
+pilot at `/work/beatmind/world/`. Home and `/work` enter the world first; its only primary
+handoff opens the unchanged paper case study. The world uses one sanitized build artifact
+with real source/five-stem envelopes, BPM, key, downbeats and sections. It omits an
+uncorrelated failure/retry trace and emits no audio request. `npm run phase5:gate` passes the
+390, 800 and 1440 pixel animated renders plus static, reduced-motion, Canvas-failure, print,
+teardown and Back-restoration states. Owner visual approval and independent revert evidence
+remain open before Phase 5 can close.

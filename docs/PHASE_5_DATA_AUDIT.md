@@ -40,8 +40,11 @@ At this checkpoint BeatMind is the only published world. Static build output con
 Home and `/work` link BeatMind to `/work/beatmind/world/`, while the world and the BeatMind
 paper page link to each other. No placeholder world route is emitted for another project.
 
-## What this checkpoint proves
+## What the implementation proves
 
-The content schemas, sanitized data contract, build-time resolver and static route build.
-It does not yet prove the animated lifecycle, 30fps budget, responsive world composition or
-Phase 5 gate. Those remain open until the BeatMind implementation and evidence pass.
+The foundation commit proves the content schemas, sanitized data contract, build-time
+resolver and static route independently. The subsequent Sound Foundry implementation passes
+`phase5:gate`: responsive animated composition, native scrolling, the 30fps ceiling,
+off-screen/hidden-page pauses, restoration, cleanup, no-JavaScript, reduced-motion,
+Canvas-failure and print fallbacks. Owner visual approval and the independent revert proof
+remain the final Phase 5 closeout conditions.

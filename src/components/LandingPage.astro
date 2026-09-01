@@ -28,6 +28,8 @@ const proofClaims = proofIds
   .filter((claim): claim is CollectionEntry<'claims'> => Boolean(claim?.data.publish))
 const effortLabels = { flagship: 'Flagship', substantial: 'Substantial', focused: 'Focused' }
 const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In progress', running: 'Running', 'take-home': 'Take-home' }
+const beatMindProject = orderedProjects.find((project) => project.id === 'beatmind')
+const beatMindHref = beatMindProject ? projectDoorHref(beatMindProject, worlds) : '/work/'
 ---
 
 <!doctype html>
@@ -82,7 +84,7 @@ const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In prog
                 <span><b>03</b> Read the record</span>
               </div>
             </div>
-            <figcaption><p>The case studies are open now. The interactive world layer is being built one project at a time.</p><a href="/work/beatmind/">Read BeatMind <span aria-hidden="true">↗</span></a></figcaption>
+            <figcaption><p>The case studies are open now. Published worlds open first, then hand off to the engineering record.</p><a href={beatMindHref}>Enter BeatMind <span aria-hidden="true">↗</span></a></figcaption>
           </figure>
 
           <div class="quiet-proof" aria-label="Three verified examples from the work">

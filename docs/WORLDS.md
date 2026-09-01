@@ -85,12 +85,13 @@ must revert alone.
 
 ## 3. The twelve
 
-Status legend: **✅ prototyped** means the generator exists and has been seen running
-in an artifact. **📐 specced** means designed here, not yet built.
+Status legend: **✅ built** means the validated production route and fallbacks pass their
+automated gate. **🧪 prototyped** means the generator exists and has been seen running in an
+artifact. **📐 specced** means designed here, not yet built.
 
 ---
 
-### 01 · BeatMind — *flagship · live · ✅ prototyped*
+### 01 · BeatMind — *flagship · live · ✅ built*
 
 **The story.** A song goes in whole and comes back in parts. The interesting half is
 not the model, it is that the pipeline survives its own workers dying.
@@ -136,7 +137,7 @@ storytelling demonstration, not a working mixer, and performs no runtime fetch.
 
 ---
 
-### 02 · Vivid (Stick and Dot) — *flagship · live · ✅ prototyped*
+### 02 · Vivid (Stick and Dot) — *flagship · live · 🧪 prototyped*
 
 **The story.** A script becomes a shot-by-shot storyboard with one character who stays
 the same person across every frame. A project-specific LoRA adapter supports the generation
@@ -179,7 +180,7 @@ unsuitable.
 
 ---
 
-### 03 · Tathya — *flagship · in progress · ✅ prototyped*
+### 03 · Tathya — *flagship · in progress · 🧪 prototyped*
 
 **The story.** An autonomous record of a government that issues no verdict. Every claim
 carries its source and the reader decides.
@@ -204,7 +205,7 @@ time, so the graphic's numbers are the real ones.
 
 ---
 
-### 04 · MedRAG — *major · shipped · ✅ prototyped*
+### 04 · MedRAG — *major · shipped · 🧪 prototyped*
 
 **The story.** A retrieval system whose feature is refusing to answer.
 
@@ -228,7 +229,7 @@ coordinates. Do not fake the geometry.
 
 ---
 
-### 05 · Order Supervisor — *minor · shipped · ✅ prototyped*
+### 05 · Order Supervisor — *minor · shipped · 🧪 prototyped*
 
 **The story.** An agent handles the conversation and never owns the order state.
 
