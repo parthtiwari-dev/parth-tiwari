@@ -86,5 +86,5 @@ work has not begun. The owner directed Phase 4 to begin while the remaining Phas
 review, human test and preview deployment stay deferred. The Phase 4 motion studies are
 captured at 390, 800 and 1440 pixels; the owner selected Sheet Fault. Production replaces
 the study's slow full-root snapshot with two transform-only paper panels and measures
-16.7-16.8 ms p95 across Home and `/work`. Final rendered owner approval and the independent
-revert check remain open.
+16.7-16.8 ms p95 across Home and `/work`. Its independent revert gate passes. Final rendered
+owner approval remains open.

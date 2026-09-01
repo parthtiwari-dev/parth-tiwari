@@ -51,8 +51,8 @@ the real selected row, approved stills or published proof fallbacks and real rou
 touch, reduced-motion, no-JavaScript and failure-fallback checks. Evidence is in
 `.shots/phase4-production/` and `docs/PHASE_4_MOTION_STUDIES.md`.
 
-The next safe action is the independent revert check and owner review of the final rendered
-Phase 4 behavior. BeatMind and Vivid production worlds remain Phases 5 and 6.
+The independent revert check passes. The next safe action is owner review of the final
+rendered Phase 4 behavior. BeatMind and Vivid production worlds remain Phases 5 and 6.
 
 Begin with git status and diff. Preserve all current work. Stop at the applicable gate.
 ```

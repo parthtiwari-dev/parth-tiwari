@@ -136,4 +136,5 @@ reduced motion, no-JavaScript navigation and forced-failure navigation pass. Evi
 in `.shots/phase4-production/`.
 
 This closes the study-selection checkpoint. The remaining Phase 4 owner gate is approval of
-the final production renders, not another A/B/C selection.
+the final production renders, not another A/B/C selection. The independent revert gate is
+recorded in `docs/PHASE_4_GATE.md` and passes.

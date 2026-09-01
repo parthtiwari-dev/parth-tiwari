@@ -134,7 +134,7 @@ content remains static HTML.
   production implementation replaces its slow full-root snapshot with two transform-only
   paper panels and inert clones of the selected real row. Home and `/work` preview, route,
   focus, Back, touch, reduced-motion, no-JavaScript and failure checks pass at 390, 800 and
-  1440 pixels. Stop for the independent revert check and owner review of final renders before
+  1440 pixels. The isolated revert gate passes. Stop for owner review of final renders before
   calling the Phase 4 gate complete.
 
 ## Dependencies and external actions

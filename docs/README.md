@@ -22,6 +22,7 @@ Where to look, and what is still true.
 | [`PHASE_2_HIRE_REVIEW.md`](PHASE_2_HIRE_REVIEW.md) | The Hire route reference lock, service boundaries, four-step process, fit guidance and verified contact paths |
 | [`PHASE_2_GATE.md`](PHASE_2_GATE.md) | The completed route matrix, state checks, contrast results, font budget and owner-acceptance boundary |
 | [`PHASE_4_MOTION_STUDIES.md`](PHASE_4_MOTION_STUDIES.md) | Row Rip, Edge Peel and Sheet Fault comparison, owner selection, optimized production translation and responsive evidence |
+| [`PHASE_4_GATE.md`](PHASE_4_GATE.md) | Production Sheet Fault render, interaction, resilience, bundle and independent-revert evidence |
 | [`CASE_STUDY_CONTRACT.md`](CASE_STUDY_CONTRACT.md) | Required evidence, media, accessibility and publication contract for every paper case study |
 | [`CASE_STUDY_BATCH_AUDIT.md`](CASE_STUDY_BATCH_AUDIT.md) | Source branches, commit boundaries, proof decisions, route matrix and gate evidence for the eight-project Phase 3 batch |
 | [`PHASE_2_BEATMIND_WORLD_STUDY.md`](PHASE_2_BEATMIND_WORLD_STUDY.md) | Approved Sound Foundry animatic, real BeatMind source lock, rendered evidence and production inputs still blocked |
@@ -136,5 +137,5 @@ full-root snapshot missed the performance budget, so production now recreates th
 composition with two transform-only paper panels and inert clones of the selected real row.
 Home and `/work` share the preview, touch-centred selection, real-route handoff, destination
 focus, Back restoration, reduced-motion and failure fallbacks. `npm run phase4:gate` passes at
-390, 800 and 1440 pixels with 16.7-16.8 ms p95 transition measurements. Final rendered owner
-approval and the independent revert check remain open.
+390, 800 and 1440 pixels with 16.7-16.8 ms p95 transition measurements. The isolated revert
+gate also passes. Final rendered owner approval remains open.

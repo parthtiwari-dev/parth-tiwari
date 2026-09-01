@@ -264,8 +264,8 @@ authorized before the build-plan phase that owns it.
 - The owner selected Sheet Fault. Production backlight, centred-row touch behavior, real
   routing, destination focus, Back restoration, reduced motion and failure fallback are
   implemented and pass the automated gate at 390, 800 and 1440 pixels.
-- Final owner approval of the production renders and the independent revert check remain the
-  Phase 4 stop conditions.
+- The independent revert gate passes. Final owner approval of the production renders remains
+  the Phase 4 stop condition.
 
 ### Phase 5 and 6
 

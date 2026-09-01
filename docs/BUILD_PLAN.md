@@ -558,7 +558,8 @@ measure 16.7-16.8 ms p95 with zero overflow or browser errors. Pointer, keyboard
 touch, reduced motion, no-JavaScript, forced-failure, real-route focus and Back restoration
 checks pass. Responsive images are in `.shots/phase4-production/`. The shipped client cost is
 5,184 bytes of transition JavaScript and 5,950 bytes of transition CSS before compression;
-no runtime dependency was added.
+no runtime dependency was added. Reverting commit `9d195b0` in an isolated temporary worktree
+and rerunning `npm run phase3:static-gate` also passes, proving the Phase 3 rollback target.
 
 **Gate**
 
