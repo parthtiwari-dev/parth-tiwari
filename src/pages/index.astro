@@ -2,12 +2,13 @@
 import { getCollection } from 'astro:content'
 import LandingPage from '../components/LandingPage.astro'
 
-const [projects, claims, notes, services, siteEntries] = await Promise.all([
+const [projects, claims, notes, services, siteEntries, worlds] = await Promise.all([
   getCollection('work'),
   getCollection('claims'),
   getCollection('notes'),
   getCollection('services'),
   getCollection('site'),
+  getCollection('worlds'),
 ])
 
 const siteCopy = siteEntries[0]?.data
@@ -20,4 +21,5 @@ if (!siteCopy) throw new Error('The landing page requires the validated site cop
   notes={notes}
   services={services}
   siteCopy={siteCopy}
+  worlds={worlds}
 />

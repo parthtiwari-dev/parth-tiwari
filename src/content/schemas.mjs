@@ -11,6 +11,89 @@ const sourceSchema = z.object({
   public: z.boolean(),
 })
 
+const worldAudioSchema = z.discriminatedUnion('status', [
+  z.object({ status: z.literal('withheld'), explanation: z.string().min(20) }),
+  z.object({
+    status: z.literal('published'),
+    source: z.string().min(3),
+    licenceRecord: z.string().min(8),
+    excerptUrl: z.string().startsWith('/'),
+    durationSeconds: z.number().positive(),
+  }),
+])
+
+export const worldSchema = z.object({
+  projectSlug: z.string().min(2),
+  published: z.boolean(),
+  reviewedAt: z.coerce.date(),
+  selectedTreatment: z.string().min(4),
+  staticFrame: z.object({
+    src: z.string().startsWith('/'),
+    alt: z.string().min(24),
+    width: z.number().int().positive(),
+    height: z.number().int().positive(),
+  }),
+  scenes: z.array(z.object({
+    id: z.string().regex(/^[a-z0-9-]+$/),
+    label: z.string().min(3),
+    heading: z.string().min(8),
+    narration: z.string().min(20),
+  })).min(3),
+  accents: z.object({
+    primary: z.string().regex(/^#[0-9a-f]{6}$/i),
+    secondary: z.string().regex(/^#[0-9a-f]{6}$/i),
+    fault: z.string().regex(/^#[0-9a-f]{6}$/i),
+  }),
+  dataArtifact: z.string().regex(/^[a-z0-9-]+\.json$/),
+  audio: worldAudioSchema,
+  sourceAudit: z.array(z.object({
+    label: z.string().min(3),
+    revision: z.string().min(7),
+  })).min(1),
+})
+
+const envelopeSchema = z.object({
+  rms: z.array(z.number().min(0).max(1)).length(256),
+  peak: z.array(z.number().min(0).max(1)).length(256),
+})
+
+export const beatMindWorldDataV1Schema = z.object({
+  version: z.literal(1),
+  project: z.literal('beatmind'),
+  reviewedOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  exportedAt: z.string().datetime(),
+  sourceAudit: z.object({ repository: z.literal('BeatMind'), commit: z.string().regex(/^[0-9a-f]{7,40}$/i) }),
+  analysis: z.object({
+    durationSeconds: z.number().positive(),
+    bpm: z.number().positive(),
+    key: z.string().min(2),
+    downbeatTimes: z.array(z.number().nonnegative()).min(2),
+    sections: z.array(z.object({
+      index: z.number().int().nonnegative(),
+      label: z.string().min(1),
+      startSeconds: z.number().nonnegative(),
+      endSeconds: z.number().positive(),
+      barCount: z.number().int().nonnegative().nullable(),
+    })).min(1),
+  }),
+  envelopes: z.object({
+    source: envelopeSchema,
+    vocals: envelopeSchema,
+    backing_vocals: envelopeSchema,
+    drums: envelopeSchema,
+    bass: envelopeSchema,
+    other: envelopeSchema,
+  }),
+  trace: z.discriminatedUnion('available', [
+    z.object({ available: z.literal(false), reason: z.string().min(20) }),
+    z.object({ available: z.literal(true), stages: z.array(z.object({
+      state: z.enum(['failed', 'recovered']),
+      type: z.string().min(2),
+      stage: z.string().min(2),
+    })).length(2) }),
+  ]),
+})
+
 export const claimSchema = z.object({
   wording: z.string().min(8),
   display: z.string().min(1),

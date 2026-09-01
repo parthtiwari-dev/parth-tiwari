@@ -1,0 +1,76 @@
+{
+  "projectSlug": "beatmind",
+  "published": true,
+  "reviewedAt": "2026-09-02",
+  "selectedTreatment": "Precision Descent",
+  "staticFrame": {
+    "src": "/media/beatmind-precision-descent-machinery.webp",
+    "alt": "Dark precision sound foundry with an empty specimen chamber, five processing rails, and a circular render press.",
+    "width": 1536,
+    "height": 1024
+  },
+  "scenes": [
+    {
+      "id": "specimen",
+      "label": "01 / Specimen chamber",
+      "heading": "A song enters whole.",
+      "narration": "One source waveform enters the machine on the same 214.024-second clock used by every later stem."
+    },
+    {
+      "id": "separation",
+      "label": "02 / Separation gantry",
+      "heading": "One signal becomes five connected lanes.",
+      "narration": "The real export separates vocals, backing vocals, drums, bass, and other without pretending these parts came from different timelines."
+    },
+    {
+      "id": "analysis",
+      "label": "03 / Analysis scanner",
+      "heading": "Structure appears without changing the audio.",
+      "narration": "Real BPM, key, downbeats, and twelve detected sections move across the same shared envelope data."
+    },
+    {
+      "id": "arrangement",
+      "label": "04 / Arrangement deck",
+      "heading": "The five lanes become a readable arrangement.",
+      "narration": "Section boundaries turn a long signal into material that can be reasoned about without inventing a miniature editor."
+    },
+    {
+      "id": "mix",
+      "label": "05 / Mix chamber",
+      "heading": "Relative levels remain visible as the lanes converge.",
+      "narration": "All six envelopes use one normalization scale, preserving the real relationship between source and stems."
+    },
+    {
+      "id": "render",
+      "label": "06 / Render press",
+      "heading": "Five lanes resolve into one representation.",
+      "narration": "The visual closes the product loop without claiming to be a working mixer or shipping any audio bytes."
+    },
+    {
+      "id": "boundary",
+      "label": "07 / Measurement and boundary",
+      "heading": "The demonstration stops where the evidence stops.",
+      "narration": "No publishable retry trace is visualized, audio remains withheld, and the separation benchmark keeps its one-input denominator."
+    },
+    {
+      "id": "handoff",
+      "label": "08 / Deep-dive handoff",
+      "heading": "The world ends. The engineering record begins.",
+      "narration": "The complete paper case study carries the architecture, research, failures, measurements, limitations, and sources."
+    }
+  ],
+  "accents": {
+    "primary": "#7de3a8",
+    "secondary": "#5aa8f0",
+    "fault": "#b8241a"
+  },
+  "dataArtifact": "beatmind-world-v1.json",
+  "audio": {
+    "status": "withheld",
+    "explanation": "No cleared standalone excerpt and licence record exist, so this world makes no audio request."
+  },
+  "sourceAudit": [
+    { "label": "BeatMind application state used for the export", "revision": "ca55ad8" },
+    { "label": "Read-only sanitized exporter", "revision": "30cab81" }
+  ]
+}

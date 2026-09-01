@@ -24,6 +24,7 @@ Where to look, and what is still true.
 | [`PHASE_4_MOTION_STUDIES.md`](PHASE_4_MOTION_STUDIES.md) | Row Rip, Edge Peel and Sheet Fault comparison, owner selection, optimized production translation and responsive evidence |
 | [`PHASE_4_GATE.md`](PHASE_4_GATE.md) | Production Sheet Fault render, interaction, resilience, bundle and independent-revert evidence |
 | [`PHASE_5_BEATMIND_STORYBOARD.md`](PHASE_5_BEATMIND_STORYBOARD.md) | Selected Precision Descent treatment, conditional trace scenes, generated-machinery boundary and responsive storyboard gate |
+| [`PHASE_5_DATA_AUDIT.md`](PHASE_5_DATA_AUDIT.md) | Sanitized BeatMind export, isolated exporter branch, omitted trace, withheld audio and world-to-case-study route contract |
 | [`CASE_STUDY_CONTRACT.md`](CASE_STUDY_CONTRACT.md) | Required evidence, media, accessibility and publication contract for every paper case study |
 | [`CASE_STUDY_BATCH_AUDIT.md`](CASE_STUDY_BATCH_AUDIT.md) | Source branches, commit boundaries, proof decisions, route matrix and gate evidence for the eight-project Phase 3 batch |
 | [`PHASE_2_BEATMIND_WORLD_STUDY.md`](PHASE_2_BEATMIND_WORLD_STUDY.md) | Approved Sound Foundry animatic, real BeatMind source lock, rendered evidence and production inputs still blocked |
@@ -128,7 +129,9 @@ title-versus-proof collision checks at 390, 800, 1440 and 1920 pixels. Fraud Ris
 Intelligence and Oracle Auto Provision remain focused register entries with deferred routes.
 The following local Phase 3 ship pass links all ten published projects from Home, removes
 visitor-facing Phase 2 scaffolding, adds shared canonical/social/JSON-LD metadata, builds a
-real 404 and twelve-entry RSS feed, and generates a 28-route sitemap after every static build.
+real 404 and twelve-entry RSS feed, and generates a sitemap from every emitted public route
+after each static build. The shared Phase 5 foundation adds the first validated world route,
+bringing the current sitemap to 29 routes without freezing that count in the gate.
 `npm run phase3:static-gate` passes. The revised mobile arrival, complete visual batch,
 five-person comprehension test and preview deployment remain open, so Phase 3 is not closed.
 The owner nevertheless directed Phase 4 to begin under an explicit phase-order exception.

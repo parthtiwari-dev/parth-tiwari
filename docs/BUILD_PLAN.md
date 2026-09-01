@@ -595,7 +595,9 @@ explicit action opens the separate complete paper case study.
 
 - [ ] Build one shared world lifecycle: clock, visibility pause, resize, reduced motion,
   static-frame fallback and cleanup.
-- [ ] Define a data contract that separates project facts from drawing code.
+- [x] Define a data contract that separates project facts from drawing code. The shared
+  world collection, versioned BeatMind data schema, build-time artifact loader and route
+  resolver passed the static build on 2026-09-02; the animated lifecycle remains open.
 - [ ] Implement BeatMind from real envelope and job-trace data.
 - [ ] Make scrolling demonstrate the product story without requiring interaction.
 - [ ] Offer listening only through an explicit labelled control; never autoplay audio.

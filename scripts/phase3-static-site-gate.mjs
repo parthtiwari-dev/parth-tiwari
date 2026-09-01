@@ -61,7 +61,14 @@ assert((rss.match(/<item>/g) ?? []).length === 12, 'RSS does not contain exactly
 
 const sitemap = await readFile(join(dist, 'sitemap.xml'), 'utf8')
 const sitemapUrls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1])
-assert(sitemapUrls.length === 28, `sitemap contains ${sitemapUrls.length} routes instead of 28`)
+const expectedSitemapRoutes = htmlFiles
+  .map((file) => relative(dist, file).split(sep).join('/'))
+  .filter((path) => path === 'index.html' || path.endsWith('/index.html'))
+  .filter((path) => path !== '404.html')
+assert(
+  sitemapUrls.length === expectedSitemapRoutes.length,
+  `sitemap contains ${sitemapUrls.length} routes instead of ${expectedSitemapRoutes.length} emitted public HTML routes`,
+)
 assert(sitemapUrls.every((url) => url.startsWith(siteUrl)), 'sitemap contains a URL outside the verified preview origin')
 for (const slug of publishedProjects) {
   assert(sitemapUrls.includes(`${siteUrl}/work/${slug}/`), `sitemap is missing /work/${slug}/`)
@@ -78,5 +85,5 @@ if (failures.length > 0) {
 console.log(`PASS ${htmlFiles.length} HTML pages carry canonical, social, JSON-LD and favicon metadata`)
 console.log('PASS home exposes ten published case studies and keeps two deferred rows non-clickable')
 console.log('PASS 404 output is noindex and RSS contains twelve published notes')
-console.log('PASS sitemap contains 28 public routes on the verified preview origin')
+console.log(`PASS sitemap contains all ${sitemapUrls.length} emitted public routes on the verified preview origin`)
 console.log('PASS public HTML contains no Phase 2 owner scaffolding copy')

@@ -1,0 +1,45 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import type { BeatMindWorldDataV1 } from '../lib/worlds'
+import SiteMeta from './SiteMeta.astro'
+import '../styles/world-foundation.css'
+
+interface Props {
+  project: CollectionEntry<'work'>
+  world: CollectionEntry<'worlds'>
+  data: BeatMindWorldDataV1
+}
+
+const { project, world, data } = Astro.props
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <SiteMeta title={`${project.data.title} world | Parth Tiwari`} description={world.data.scenes[0].narration} path={`/work/${project.id}/world/`} type="article" />
+  </head>
+  <body class="world-foundation-page">
+    <a class="world-skip" href="#world-story">Skip to the story</a>
+    <header class="world-nav"><a href="/work/">Back to work</a><span>{project.data.title} / {world.data.selectedTreatment}</span></header>
+    <main id="world-story">
+      <figure class="world-static-frame">
+        <img src={world.data.staticFrame.src} width={world.data.staticFrame.width} height={world.data.staticFrame.height} alt={world.data.staticFrame.alt} />
+        <figcaption>Static foundation frame. The animated data layer follows in this phase.</figcaption>
+      </figure>
+      <article class="world-story-copy">
+        <p class="world-eyebrow">World 01 / BeatMind</p>
+        <h1>{world.data.scenes[0].heading}</h1>
+        <p>{world.data.scenes[0].narration}</p>
+        <dl><div><dt>Duration</dt><dd>{data.analysis.durationSeconds} seconds</dd></div><div><dt>Tempo</dt><dd>{data.analysis.bpm} BPM</dd></div><div><dt>Key</dt><dd>{data.analysis.key}</dd></div></dl>
+      </article>
+      <ol class="world-scenes">
+        {world.data.scenes.map((scene) => <li id={scene.id}><span>{scene.label}</span><h2>{scene.heading}</h2><p>{scene.narration}</p></li>)}
+      </ol>
+      <aside class="world-boundary">
+        <p>{world.data.audio.explanation}</p>
+        {!data.trace.available && <p>{data.trace.reason}</p>}
+      </aside>
+      <footer class="world-handoff"><h2>Read the engineering record.</h2><a href={`/work/${project.id}/`}>Read the full case study <span aria-hidden="true">→</span></a></footer>
+    </main>
+  </body>
+</html>

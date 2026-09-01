@@ -2,6 +2,7 @@
 import type { CollectionEntry } from 'astro:content'
 import ProjectTransitionLayer from './ProjectTransitionLayer.astro'
 import SiteMeta from './SiteMeta.astro'
+import { projectDoorHref } from '../lib/worlds'
 import '../styles/work-register.css'
 
 interface Props {
@@ -11,9 +12,10 @@ interface Props {
   intro: string
   sortLabels: ['Featured', 'Build effort', 'Most recent']
   activeFilterLabel: 'Active now'
+  worlds: CollectionEntry<'worlds'>[]
 }
 
-const { projects, claims, heading, intro, sortLabels, activeFilterLabel } = Astro.props
+const { projects, claims, heading, intro, sortLabels, activeFilterLabel, worlds } = Astro.props
 const orderedProjects = [...projects].sort((left, right) => left.data.order - right.data.order)
 const publishedClaims = new Map(
   claims.filter((claim) => claim.data.publish && claim.data.status === 'verified').map((claim) => [claim.id, claim]),
@@ -87,6 +89,7 @@ const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In prog
                 ? project.data.claimRefs.map((id) => publishedClaims.get(id)).find(Boolean)
                 : undefined
               const isPublished = Boolean(project.data.caseStudy)
+              const projectHref = projectDoorHref(project, worlds)
               const rowContent = (
                 <>
                   <span class="row-number">{String(index + 1).padStart(2, '0')}</span>
@@ -112,8 +115,8 @@ const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In prog
                   data-status={project.data.status}
                   data-tier={project.data.tier}
                 >
-                  {isPublished
-                    ? <a href={`/work/${project.id}/`} aria-label={`Open the ${project.data.title} case study`} data-paper-project data-project-slug={project.id}>{rowContent}</a>
+                  {projectHref
+                    ? <a href={projectHref} aria-label={`Open ${project.data.title}`} data-paper-project data-project-slug={project.id}>{rowContent}</a>
                     : <div class="work-row-static" aria-label={`${project.data.title}. Case study in development.`}>{rowContent}</div>}
                 </li>
               )

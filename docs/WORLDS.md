@@ -126,10 +126,13 @@ not prove that count, so it remains unpublished.
 
 **Build notes.** The owner approved the Sound Foundry and current five-stem language on
 2026-08-30. The Phase 2 animatic uses the owner-authored browser-synth score only to test
-camera continuity and legibility. Phase 5 must export a real envelope array, analysis
-markers and job trace to JSON at build time. Use a licensed or owner-created audio excerpt
-only after explicit approval. Listening is optional and user-initiated. The world is a
-storytelling demonstration, not a working mixer. No runtime fetch.
+camera continuity and legibility. The Phase 5 read-only export produced real source and
+five-stem envelope arrays plus analysis markers from BeatMind commit `ca55ad8`. No explicitly
+correlated publishable failure/retry trace exists, so those scenes are omitted. The exporter
+is isolated on BeatMind branch `codex/portfolio-world-export` at `30cab81`; it is not in the
+product branch and has not been pushed or deployed. Use a licensed or owner-created audio
+excerpt only after explicit approval. Audio is currently withheld. The world is a
+storytelling demonstration, not a working mixer, and performs no runtime fetch.
 
 ---
 

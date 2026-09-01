@@ -274,6 +274,14 @@ authorized before the build-plan phase that owns it.
 
 - BeatMind storyboard and machinery treatment are locked in
   `PHASE_5_BEATMIND_STORYBOARD.md`; later worlds still require their own approval.
+- Published world records own the project door. Home and `/work` enter
+  `/work/[slug]/world/` when that validated route exists; otherwise they use the paper case
+  study. The world hands off to `/work/[slug]/` for the engineering deep dive.
+- BeatMind's read-only portfolio exporter remains isolated on
+  `codex/portfolio-world-export`. It is developer tooling, not a BeatMind production change,
+  and has not been pushed or deployed.
+- BeatMind ships no failure/retry scene without an explicitly correlated trace and no audio
+  element without a cleared excerpt plus licence record.
 - Whether any optional interaction teaches enough to justify its complexity
 
 ### Phase 7

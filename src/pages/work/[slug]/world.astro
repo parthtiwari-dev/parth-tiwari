@@ -1,0 +1,26 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content'
+import WorldFoundation from '../../../components/WorldFoundation.astro'
+import { loadValidatedWorldData } from '../../../lib/worlds'
+
+interface Props {
+  project: CollectionEntry<'work'>
+  world: CollectionEntry<'worlds'>
+}
+
+export async function getStaticPaths() {
+  const [projects, worlds] = await Promise.all([getCollection('work'), getCollection('worlds')])
+  return worlds
+    .filter((entry) => entry.data.published)
+    .map((world) => {
+      const project = projects.find((entry) => entry.id === world.data.projectSlug && entry.data.caseStudy)
+      if (!project) throw new Error(`Published world ${world.id} has no published paper case study.`)
+      return { params: { slug: world.data.projectSlug }, props: { project, world } }
+    })
+}
+
+const { project, world } = Astro.props as Props
+const data = loadValidatedWorldData(world)
+---
+
+<WorldFoundation project={project} world={world} data={data} />
