@@ -27,10 +27,11 @@ quietly choosing one.
 - one direct production dependency: `astro`
 - Playwright as development-only browser tooling
 
-There is no Vue application, SPA rewrite, Three.js scene, canvas, Tailwind layer, analytics
-runtime, or client-side router. The current root landing uses one small progressive
-enhancement script for post-hero navigation and bounded paper-motion states; its complete
-content remains static HTML.
+There is no Vue application, SPA rewrite, Three.js scene, Tailwind layer, analytics runtime,
+or client-side router. The current root landing uses small progressive-enhancement scripts
+for post-hero navigation, bounded paper motion and the Sheet Fault route transition. The
+BeatMind world uses one dependency-free Canvas2D enhancement, while its complete narration,
+final frame and case-study handoff remain static HTML.
 
 ## Phase protocol
 
@@ -89,6 +90,9 @@ content remains static HTML.
 - `npm run phase4:study-capture` renders the three non-production paper-transition studies
   at 390, 800 and 1440 pixels, checks overflow and browser errors, verifies reduced motion
   and records comparative frame timing.
+- `npm run phase5:gate` reruns all earlier static and Phase 4 checks, then verifies the
+  BeatMind world at 390, 800 and 1440 pixels across animated, no-JavaScript, reduced-motion,
+  Canvas-failure, print, lifecycle, Back-restoration, privacy and transfer states.
 - Phase 1 is complete under its owner-amended gate. The text-only human test was deferred,
   not passed, and may never be reported otherwise.
 - Phase 2 closed on 2026-08-31. The maintained Home route is on `/`; its structure and interim public
@@ -110,13 +114,14 @@ content remains static HTML.
   baseline and explicitly deferred another polish pass. The 24-render route matrix plus
   no-JavaScript, reduced-motion, touch, keyboard, contrast, font-budget and static-boundary
   checks pass; `docs/PHASE_2_GATE.md` records the evidence. The owner approved
-  BeatMind's Sound Foundry
-  storyboard and current five-stem language on 2026-08-30; its standalone verified animatic
-  is a Phase 2 review artifact only. Its dark ending and explicit case-study CTA are locked;
-  no paper section appears below the world. The separate static paper route is present in
-  Phase 3; production world implementation remains Phase 5.
-- Do not treat Phase 2 review stubs as the complete Phase 3 static site. Production tear,
-  backlight, canvas and animated-world implementation remain in their assigned later phases.
+  BeatMind's Sound Foundry storyboard and current five-stem language on 2026-08-30. Its
+  Phase 2 animatic remains a historical review artifact; the production Precision Descent
+  world now lives at `/work/beatmind/world/`. Its dark ending and explicit case-study CTA are
+  locked, and no paper section appears below the world. The separate complete paper case
+  study remains canonical at `/work/beatmind/`.
+- Do not treat Phase 2 review stubs as the complete Phase 3 static site. Phase 4 now owns the
+  production backlight and tear transition, and Phase 5 owns the shared world foundation and
+  BeatMind pilot. The remaining project worlds stay in Phase 6.
 - Phase 3B implementation is present. `/work/[slug].astro` emits a static page for each project with a
   validated `caseStudy` object. BeatMind, Vivid and the approved eight-project batch satisfy
   that full paper contract. Fraud Risk Intelligence and Oracle Auto Provision remain
@@ -136,7 +141,15 @@ content remains static HTML.
   focus, Back, touch, reduced-motion, no-JavaScript and failure checks pass at 390, 800 and
   1440 pixels. The isolated revert gate passes. The owner explicitly waived personal render
   inspection and closed Phase 4 on 2026-09-01; do not report the waived inspection as having
-  occurred. Do not begin Phase 5 without a new explicit instruction.
+  occurred.
+- The owner explicitly authorized Phase 5 under the same recorded Phase 3 work-order
+  exception. Home and `/work` now route BeatMind to `/work/beatmind/world/`; the final world
+  action opens `/work/beatmind/`, and projects without published worlds still open their
+  paper case studies. The world uses a sanitized real BeatMind export with six 256-bin
+  envelope series, real BPM, key, sections and downbeats. It omits failure/retry because no
+  correlated publishable trace exists and emits no audio because no cleared excerpt exists.
+  `npm run phase5:gate` and both isolated revert proofs pass. Owner visual approval at 390,
+  800 and 1440 pixels remains open, so Phase 5 is not closed and Phase 6 must not begin.
 
 ## Dependencies and external actions
 

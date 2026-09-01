@@ -25,6 +25,7 @@ Where to look, and what is still true.
 | [`PHASE_4_GATE.md`](PHASE_4_GATE.md) | Production Sheet Fault render, interaction, resilience, bundle and independent-revert evidence |
 | [`PHASE_5_BEATMIND_STORYBOARD.md`](PHASE_5_BEATMIND_STORYBOARD.md) | Selected Precision Descent treatment, conditional trace scenes, generated-machinery boundary and responsive storyboard gate |
 | [`PHASE_5_DATA_AUDIT.md`](PHASE_5_DATA_AUDIT.md) | Sanitized BeatMind export, isolated exporter branch, omitted trace, withheld audio and world-to-case-study route contract |
+| [`PHASE_5_GATE.md`](PHASE_5_GATE.md) | Full world route, responsive, data/privacy, fallback, lifecycle, transfer and independent-revert evidence; owner visual approval remains open |
 | [`CASE_STUDY_CONTRACT.md`](CASE_STUDY_CONTRACT.md) | Required evidence, media, accessibility and publication contract for every paper case study |
 | [`CASE_STUDY_BATCH_AUDIT.md`](CASE_STUDY_BATCH_AUDIT.md) | Source branches, commit boundaries, proof decisions, route matrix and gate evidence for the eight-project Phase 3 batch |
 | [`PHASE_2_BEATMIND_WORLD_STUDY.md`](PHASE_2_BEATMIND_WORLD_STUDY.md) | Approved Sound Foundry animatic, real BeatMind source lock, rendered evidence and production inputs still blocked |
@@ -85,10 +86,11 @@ remains open, so Phase 3 is not complete.
 The reusable reading order is locked in `CASE_STUDY_CONTRACT.md`. Follow-up Pudding and
 Awwwards research produced the separate continuous Sound Foundry.
 The owner approved its premise, nine-scene order and current five-stem product language on
-2026-08-30. A replacement standalone animatic now proves the continuous machine, separately
-composed phone view, fallback states and dark deep-dive handoff. It remains a
-review artifact, not an Astro route or Phase 5 implementation. The separate worlds-animation memo remains
-research only. The Notes hub and all twelve concise Errata routes now have final responsive,
+2026-08-30. A replacement standalone animatic proved the continuous machine, separately
+composed phone view, fallback states and dark deep-dive handoff. It remains the historical
+review artifact behind the production Phase 5 route, not the route itself. The separate
+worlds-animation memo remains research only. The Notes hub and all twelve concise Errata
+routes now have final responsive,
 no-JavaScript, accessibility, craft, transfer and scroll evidence in
 `PHASE_2_NOTES_REVIEW.md`. The About pilot now adds the real
 portrait, one typed education-and-work chronology, current-role detail and operating rules,
@@ -123,8 +125,7 @@ baseline, failures, limitations, licensing boundary and future gates. It does no
 the current plan's identity or speed goal is achieved. `VIVID_CASE_STUDY_AUDIT.md` is the
 source map and update procedure.
 
-**Last documentation truth audit:** 2026-09-01, the wide-screen SecondSelf title collision
-and its false-positive overflow gate were corrected. Ten published routes pass rendered
+**Last documentation truth audit:** 2026-09-02. Ten published paper routes pass rendered
 title-versus-proof collision checks at 390, 800, 1440 and 1920 pixels. Fraud Risk
 Intelligence and Oracle Auto Provision remain focused register entries with deferred routes.
 The following local Phase 3 ship pass links all ten published projects from Home, removes
@@ -152,4 +153,5 @@ with real source/five-stem envelopes, BPM, key, downbeats and sections. It omits
 uncorrelated failure/retry trace and emits no audio request. `npm run phase5:gate` passes the
 390, 800 and 1440 pixel animated renders plus static, reduced-motion, Canvas-failure, print,
 teardown and Back-restoration states. Owner visual approval and independent revert evidence
-remain open before Phase 5 can close.
+were the remaining closeout checks; the independent revert evidence now passes. Owner visual
+approval remains open before Phase 5 can close.

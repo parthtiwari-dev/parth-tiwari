@@ -47,4 +47,5 @@ resolver and static route independently. The subsequent Sound Foundry implementa
 `phase5:gate`: responsive animated composition, native scrolling, the 30fps ceiling,
 off-screen/hidden-page pauses, restoration, cleanup, no-JavaScript, reduced-motion,
 Canvas-failure and print fallbacks. Owner visual approval and the independent revert proof
-remain the final Phase 5 closeout conditions.
+were the final automated closeout conditions; the independent revert proof now passes.
+Owner visual approval remains open.

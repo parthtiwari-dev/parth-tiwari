@@ -623,7 +623,8 @@ Show the storyboard comparison, measurements and gate output, then stop.
 static-site and Phase 4 suites plus the BeatMind world suite. Phone, tablet and desktop have
 zero horizontal overflow. The world performs no runtime data or audio request; no-JavaScript,
 reduced-motion, forced-Canvas-failure and print states remain complete. Independent revert
-proof and owner visual approval remain open, so the Phase 5 gate is not yet closed.
+proof passes for both the BeatMind implementation and shared foundation. Owner visual
+approval remains open, so the Phase 5 gate is not yet closed.
 
 ### Phase 6: Remaining worlds, one reviewed story at a time
 
