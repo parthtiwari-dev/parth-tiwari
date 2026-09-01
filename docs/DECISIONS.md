@@ -86,6 +86,8 @@ in the same commit.
 | Storyboard approval precedes each implementation | Decided | The owner stays involved and narrative mistakes are cheaper to fix before code | One-shot world generation |
 | BeatMind is the pilot | Decided | It exercises audio, stages, measurement, failure, retry and render | Building shared infrastructure inside an arbitrary first world |
 | BeatMind's world is the **Sound Foundry** | Owner decided 2026-08-30 | One continuous precision machine keeps every effect attached to BeatMind's waveform, stems, analysis and run state | The first diagram-and-card study, a robot mascot, fantasy world or unrelated effects per scene |
+| BeatMind production uses **Precision Descent** | Owner approved Phase 5 plan 2026-09-01 | One persistent machine and vertical camera journey keep the product causality legible on phone, tablet and desktop | Foundry Conveyor weakens phone composition; Signal Autopsy loses too much of the immersive machine |
+| Missing BeatMind failure correlation omits failure and retry | Owner approved Phase 5 plan 2026-09-01 | An honest seven-stage product demonstration is stronger than an invented lifecycle trace | Blocking the entire world or inferring a trace from temporal proximity |
 | BeatMind follows the current five-stem product language | Owner decided 2026-08-30 | Current source defines vocals, backing vocals, drums, bass and other; the world should not preserve a stale four-stem specimen | The older four-stem storyboard |
 | Generated BeatMind machinery is decorative only | Decided | Atmosphere can be generated, but waveforms, analysis and traces must remain code-drawn from real project data | Generated product screenshots, invented data graphics or simulated evidence |
 | BeatMind uses vertical native scroll as its only required input | Owner decided 2026-08-30 | It preserves the continuous foundry descent and composes cleanly for phone without scroll capture | Horizontal traversal, drag, sound gate or mandatory controls |
@@ -270,7 +272,8 @@ authorized before the build-plan phase that owns it.
 
 ### Phase 5 and 6
 
-- Storyboard and media decisions for each world
+- BeatMind storyboard and machinery treatment are locked in
+  `PHASE_5_BEATMIND_STORYBOARD.md`; later worlds still require their own approval.
 - Whether any optional interaction teaches enough to justify its complexity
 
 ### Phase 7

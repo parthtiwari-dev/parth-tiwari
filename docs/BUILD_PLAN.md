@@ -584,10 +584,12 @@ explicit action opens the separate complete paper case study.
 
 **Owner review before work**
 
-- Approve the shared world grammar and BeatMind storyboard before code.
-- Review each BeatMind scene: ingest, separation, analysis, arrangement/mix, render,
+- [x] Approve the shared world grammar and BeatMind storyboard before code. The owner
+  approved the Phase 5 plan on 2026-09-01 and selected Precision Descent.
+- [x] Review each BeatMind scene: ingest, separation, analysis, arrangement/mix, render,
   failure and retry, measurement and boundary.
-- Decide which real audio excerpt may ship and its licence. Sound is always user-initiated.
+- [x] Decide which real audio excerpt may ship and its licence. No excerpt is currently
+  cleared, so BeatMind starts with audio withheld and no media element.
 
 **Do**
 
