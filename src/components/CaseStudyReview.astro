@@ -2,6 +2,7 @@
 import type { CollectionEntry } from 'astro:content'
 import { CONTACT_EMAIL_HREF } from '../config/site'
 import EvidenceRecord from './EvidenceRecord.astro'
+import SiteMeta from './SiteMeta.astro'
 import '../styles/case-study.css'
 
 interface Props {
@@ -59,10 +60,7 @@ const chapters = [
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content={`${project.data.title}: ${project.data.summary}`} />
-    <title>{project.data.title} case study | Parth Tiwari</title>
+    <SiteMeta title={`${project.data.title} case study | Parth Tiwari`} description={`${project.data.title}: ${project.data.summary}`} path={`/work/${project.id}/`} type="article" />
   </head>
   <body class="case-review-page">
     <a class="skip-link" href="#case-reading">Skip to the case study</a>
@@ -92,7 +90,7 @@ const chapters = [
         <section class="case-masthead" aria-labelledby="case-title">
           <div class="case-masthead-copy">
             <p class="case-kicker">Case {caseNumber} / {caseStudy.classification}</p>
-            <h1 id="case-title">{project.data.title}</h1>
+            <h1 id="case-title" tabindex="-1">{project.data.title}</h1>
             <p class="case-thesis">{caseStudy.thesis}</p>
             <div class="case-actions">
               <a class="case-primary-action" href="#product-demo">{productActionLabel} <span aria-hidden="true">↓</span></a>

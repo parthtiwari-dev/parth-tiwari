@@ -42,6 +42,7 @@ in the same commit.
 | Work may sort by qualitative build effort | Decided | `flagship`, `substantial` and `focused` communicate scope without inventing hours or money | A misleading cost control |
 | Work has no Personal/Company split | Owner decided 2026-08-29 | The owner's flexible employment context makes a binary register taxonomy reductive; projects should be compared by the work itself | Ownership filters and company badges on every row |
 | Verified employment context belongs inside a case study | Decided | Role, organization and contribution need project-specific explanation and publication permission | Inferring ownership from repository location or adding an unsourced global label |
+| Fraud Risk Intelligence and Oracle Auto Provision stay in the register as focused work | Owner confirmed after review 2026-09-01 | Fraud Risk shows the earlier reproducible modelling and explanation layer before UPI's operational alert-budget system; Oracle is a small self-use automation with safe retry and duplicate-guard lessons | Removing smaller work solely to shorten the register or presenting either as flagship work |
 
 ## Landing and paper
 
@@ -67,9 +68,13 @@ in the same commit.
 | Decision | Status | Reason | Rejected or bounded alternative |
 |---|---|---|---|
 | Entry preview uses the project's approved world still first | Decided | Fast, stable and truthful before animated worlds exist | Starting every canvas on page load |
+| Home and `/work` receive the same eventual preview-and-tear behavior | Owner decided 2026-09-01 | Both registers are doors into the same projects and should not teach two interaction grammars | Shipping the enhancement on only one register |
+| A real published proof may temporarily stand in when no approved world still exists | Owner decided 2026-09-01 | The fallback keeps the preview truthful while later worlds are still unbuilt; it must be visibly labelled as proof | Generated placeholder worlds, simulated screenshots or an empty black aperture |
 | Touch preview follows the centered entry during native scroll | Decided | It provides hover parity without adding a separate mobile interface | Tap-first hover emulation that traps the first tap |
 | Tear visualizes navigation to a real route | Decided | Refresh, deep links and accessibility remain correct | Overlay-only world state |
-| Production tear is chosen from motion studies | Owner review in Phase 4 | Material behavior needs visual comparison, not prose certainty | Copying the prototype timings and stock |
+| Production tear uses the Sheet Fault composition | Owner selected 2026-09-01 | The full-sheet opening makes the world-behind-paper idea clearest | Row Rip or Edge Peel as the final material story |
+| Sheet Fault production uses two transform-only paper panels plus inert clones of the selected rendered row | Implemented and measured 2026-09-01 | It preserves the approved composition at 16.7-16.8 ms p95 without a full-root snapshot | Shipping the study's janky full-page raster transition |
+| Pointer preview dwell is 180 ms and the tactile handoff is capped at 500 ms | Owner decided 2026-09-01 | The preview should feel intentional while navigation remains immediate enough to trust | Instant hover flicker or a decorative transition that delays the route |
 | Reduced motion skips the tear | Decided | The destination matters; the transition does not | A shorter but still disruptive tear |
 
 ## Worlds
@@ -127,6 +132,7 @@ The detailed evidence queue is `CONTENT_PROVENANCE.md`.
 | Remove analytics in Phase 0 | Decided | It conflicts with the one-dependency static baseline | Carrying half-configured analytics through the rewrite |
 | Reconsider analytics at cutover | Owner review in Phase 7 | Measurement may earn a bounded addition after the real site exists | Treating analytics as permanently forbidden |
 | Phase 3 deploys to a preview alias | Decided | The complete static multi-route site needs live review independently of the interim root release | Treating the root-only release as the Phase 3 preview gate |
+| Phase 4 may begin under an explicit owner exception while Phase 3 remains open | Owner decided 2026-09-01 | The owner deferred the remaining rendered review and asked to continue; the exception changes work order but does not turn unrun gates into evidence | Reporting Phase 3 as passed, deleting the deferred checks or treating Phase 4 output as their substitute |
 | An interim root-only landing may replace v1 during Phase 2 | Owner decided and deployed 2026-08-29 | The reviewed landing is useful now and `parth-tiwari-1.vercel.app` can collect feedback while the remaining route architecture is designed | Reporting Phase 2, Phase 3 or Phase 7 complete because one route is public |
 | Complete-site production cutover happens in Phase 7 | Decided with interim exception | Domain, redirects and every route move only after all full-site gates; the Phase 2 release is only the reviewed root landing | Conflating an interim landing with the complete launch |
 | Continue directly on local `redesign/v2` after Phase 0 | Owner decided 2026-08-28 | The owner prefers one visible local line of work; phase commits and gates still provide rollback | Creating a new `codex/*` branch for every phase by default |
@@ -255,8 +261,12 @@ authorized before the build-plan phase that owns it.
 
 ### Phase 4
 
-- Production tear study
-- Backlight strength, dwell and motion behavior
+- The owner selected Sheet Fault. Production backlight, centred-row touch behavior, real
+  routing, destination focus, Back restoration, reduced motion and failure fallback are
+  implemented and pass the automated gate at 390, 800 and 1440 pixels.
+- The independent revert gate passes. The owner explicitly waived personal inspection of the
+  final renders and directed Phase 4 to close on 2026-09-01. The waiver is not evidence that
+  a visual review occurred.
 
 ### Phase 5 and 6
 

@@ -1,0 +1,64 @@
+---
+import { CONTACT_EMAIL, OG_IMAGE_URL, OWNER_NAME, SITE_URL } from '../config/site'
+import { socialLinks } from '../data/socialLinks'
+
+interface Props {
+  title: string
+  description: string
+  path: string
+  type?: 'website' | 'article'
+  noindex?: boolean
+}
+
+const { title, description, path, type = 'website', noindex = false } = Astro.props
+const normalizedPath = path === '/' ? '/' : `/${path.replace(/^\/+|\/+$/g, '')}/`
+const canonicalUrl = `${SITE_URL}${normalizedPath}`
+const sameAs = socialLinks
+  .filter((link) => ['github', 'linkedin', 'x'].includes(link.kind))
+  .map((link) => link.href)
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': `${SITE_URL}/#person`,
+      name: OWNER_NAME,
+      url: `${SITE_URL}/`,
+      email: `mailto:${CONTACT_EMAIL}`,
+      jobTitle: 'AI engineer',
+      homeLocation: { '@type': 'Place', name: 'Bengaluru, India' },
+      sameAs,
+    },
+    {
+      '@type': 'WebPage',
+      '@id': `${canonicalUrl}#webpage`,
+      url: canonicalUrl,
+      name: title,
+      description,
+      about: { '@id': `${SITE_URL}/#person` },
+    },
+  ],
+}
+---
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<meta name="description" content={description} />
+<meta name="author" content={OWNER_NAME} />
+{noindex && <meta name="robots" content="noindex,follow" />}
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={OWNER_NAME} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={OG_IMAGE_URL} />
+<meta property="og:image:alt" content="Portrait of Parth Tiwari, an AI engineer in Bengaluru" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={OG_IMAGE_URL} />
+<link rel="canonical" href={canonicalUrl} />
+<link rel="icon" type="image/jpeg" href="/media/parth-portrait-sm.jpg" />
+<link rel="alternate" type="application/rss+xml" title="Parth Tiwari — Notes and Errata" href="/rss.xml" />
+<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+<title>{title}</title>

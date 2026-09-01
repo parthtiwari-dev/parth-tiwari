@@ -77,6 +77,22 @@ Run against the built Astro output on 2026-08-31:
   contact sheets for all three widths were inspected after the final shared mobile-title and
   proof-label refinements. Long mobile titles remain complete and readable.
 
+### Post-batch visual correction, 2026-09-01
+
+The owner's 1920-pixel SecondSelf screenshot exposed a false positive in the first batch
+gate: the title glyphs crossed into the proof panel while the document itself still reported
+zero horizontal overflow. The shared masthead now sizes display type from its actual grid
+column instead of the viewport. The capture gate measures the rendered title range against
+the proof-panel bounds and fails on a visual intersection. A 1920 by 1080 regression width
+now runs in addition to 390, 800 and 1440.
+
+All ten published routes passed the strengthened four-width gate with
+`titleCoverOverlap=false`, zero horizontal overflow, ten chapters, four proof surfaces and no
+browser errors. No-JavaScript, reduced-motion, keyboard-focus and print checks also passed.
+The inspected before-and-after comparison is
+`.shots/phase3-secondself-overlap-comparison.png`; the ten-route evidence is under
+`.shots/phase3-overlap-regression-<slug>/`.
+
 The eight pages are built and batch-gate checked. Owner visual approval, the two deferred
 case studies, the Phase 3 ten-second test, the complete static-site gate and deployment remain
 open. No push or deployment occurred in this batch.

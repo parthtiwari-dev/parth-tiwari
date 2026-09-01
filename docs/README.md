@@ -21,6 +21,8 @@ Where to look, and what is still true.
 | [`PHASE_2_RESUME_REVIEW.md`](PHASE_2_RESUME_REVIEW.md) | The HTML Resume structure, source PDF boundary, optional Drive configuration, responsive and print evidence |
 | [`PHASE_2_HIRE_REVIEW.md`](PHASE_2_HIRE_REVIEW.md) | The Hire route reference lock, service boundaries, four-step process, fit guidance and verified contact paths |
 | [`PHASE_2_GATE.md`](PHASE_2_GATE.md) | The completed route matrix, state checks, contrast results, font budget and owner-acceptance boundary |
+| [`PHASE_4_MOTION_STUDIES.md`](PHASE_4_MOTION_STUDIES.md) | Row Rip, Edge Peel and Sheet Fault comparison, owner selection, optimized production translation and responsive evidence |
+| [`PHASE_4_GATE.md`](PHASE_4_GATE.md) | Production Sheet Fault render, interaction, resilience, bundle and independent-revert evidence |
 | [`CASE_STUDY_CONTRACT.md`](CASE_STUDY_CONTRACT.md) | Required evidence, media, accessibility and publication contract for every paper case study |
 | [`CASE_STUDY_BATCH_AUDIT.md`](CASE_STUDY_BATCH_AUDIT.md) | Source branches, commit boundaries, proof decisions, route matrix and gate evidence for the eight-project Phase 3 batch |
 | [`PHASE_2_BEATMIND_WORLD_STUDY.md`](PHASE_2_BEATMIND_WORLD_STUDY.md) | Approved Sound Foundry animatic, real BeatMind source lock, rendered evidence and production inputs still blocked |
@@ -33,6 +35,7 @@ Where to look, and what is still true.
 | [`TEN_SECOND_TEST.md`](TEN_SECOND_TEST.md) | 🔴 The acceptance gate. **Still never run** |
 | [`TEN_SECOND_ARTIFACT.md`](TEN_SECOND_ARTIFACT.md) | The exact plain-text artifact for the Phase 1 human test |
 | [`PRD.md`](PRD.md) | Audience, route contracts, conversion, worlds and future publishing |
+| [`FULL_SITE_AUDIT_2026-09-01.md`](FULL_SITE_AUDIT_2026-09-01.md) | Owner-requested whole-site visual + strategic review: the 30-day commercial question, the type/space diagnosis, a prioritised bug list, the two worlds, the unroll intro, the Japanese direction and a four-track plan. Evidence in `.shots/full-audit-2026-09-01/` |
 
 ## Superseded — kept for the reasoning, not the instructions
 
@@ -60,8 +63,8 @@ experience, claim records and the text-only test artifact. Automated schema, pro
 Astro build checks pass. The owner deferred the unrun text-only human test without marking
 it passed. During Phase 2, the three initial landing directions were rejected and removed.
 The owner approved the overall full-width scroll direction and the refined landing
-checkpoint for an interim public release. The maintained landing stub is
-now at `/`; the obsolete `/review/phase-2/` route is removed. Its restraint pass, segmented
+checkpoint for an interim public release. The maintained Home route is at `/`; the obsolete
+`/review/phase-2/` route is removed. Its restraint pass, segmented
 fibre edges, directional folds and three bounded one-shot motion studies have rendered
 evidence at 390, 800 and 1440 pixels. The first viewport now identifies Parth in normal
 reading text and explicitly explains the `Paper → World → Case study` grammar. Its contained
@@ -118,6 +121,22 @@ baseline, failures, limitations, licensing boundary and future gates. It does no
 the current plan's identity or speed goal is achieved. `VIVID_CASE_STUDY_AUDIT.md` is the
 source map and update procedure.
 
-**Last documentation truth audit:** 2026-08-31, eight-project case-study batch, ten-route
-matrix, two deferred records, proof variants, source boundaries and current gate evidence
-recorded during Phase 3B.
+**Last documentation truth audit:** 2026-09-01, the wide-screen SecondSelf title collision
+and its false-positive overflow gate were corrected. Ten published routes pass rendered
+title-versus-proof collision checks at 390, 800, 1440 and 1920 pixels. Fraud Risk
+Intelligence and Oracle Auto Provision remain focused register entries with deferred routes.
+The following local Phase 3 ship pass links all ten published projects from Home, removes
+visitor-facing Phase 2 scaffolding, adds shared canonical/social/JSON-LD metadata, builds a
+real 404 and twelve-entry RSS feed, and generates a 28-route sitemap after every static build.
+`npm run phase3:static-gate` passes. The revised mobile arrival, complete visual batch,
+five-person comprehension test and preview deployment remain open, so Phase 3 is not closed.
+The owner nevertheless directed Phase 4 to begin under an explicit phase-order exception.
+Three transition studies compared Row Rip, Edge Peel and Sheet Fault using the real paper
+stock and approved BeatMind world still. The owner selected Sheet Fault. Its original
+full-root snapshot missed the performance budget, so production now recreates the approved
+composition with two transform-only paper panels and inert clones of the selected real row.
+Home and `/work` share the preview, touch-centred selection, real-route handoff, destination
+focus, Back restoration, reduced-motion and failure fallbacks. `npm run phase4:gate` passes at
+390, 800 and 1440 pixels with 16.7-16.8 ms p95 transition measurements. The isolated revert
+gate also passes. The owner explicitly waived personal render inspection and closed Phase 4
+on 2026-09-01; that waiver is not recorded as an inspection that occurred.

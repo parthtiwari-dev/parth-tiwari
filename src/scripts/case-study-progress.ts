@@ -3,6 +3,17 @@ const chapters = [...document.querySelectorAll<HTMLElement>('[data-case-chapter]
 const progressBars = [...document.querySelectorAll<HTMLProgressElement>('progress')]
 const currentChapter = document.querySelector<HTMLElement>('[data-current-chapter]')
 const chapterLinks = [...document.querySelectorAll<HTMLAnchorElement>('[data-chapter-link]')]
+const caseTitle = document.querySelector<HTMLElement>('#case-title')
+
+try {
+  const focusPath = sessionStorage.getItem('paper-world-focus-path')
+  if (focusPath === window.location.pathname && caseTitle) {
+    sessionStorage.removeItem('paper-world-focus-path')
+    window.requestAnimationFrame(() => caseTitle.focus({ preventScroll: true }))
+  }
+} catch {
+  // Storage can be unavailable in hardened browser contexts. Reading remains unaffected.
+}
 
 if (article && chapters.length) {
   document.documentElement.classList.add('case-enhanced')

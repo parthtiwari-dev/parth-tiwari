@@ -3,6 +3,7 @@ import type { CollectionEntry } from 'astro:content'
 import { CONTACT_EMAIL, CONTACT_EMAIL_HREF, WHATSAPP_NUMBER } from '../config/site'
 import { socialLinks } from '../data/socialLinks'
 import PaperRouteNav from './PaperRouteNav.astro'
+import SiteMeta from './SiteMeta.astro'
 import '../styles/profile-pages.css'
 
 interface Props {
@@ -35,10 +36,7 @@ const reviewedAt = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'sh
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Parth Tiwari's crawlable HTML resume: experience, selected AI product work, skills, education, and a PDF download." />
-    <title>Resume | Parth Tiwari</title>
+    <SiteMeta title="Resume | Parth Tiwari" description="Parth Tiwari's crawlable HTML resume: experience, selected AI product work, skills, education, and a PDF download." path="/resume/" />
   </head>
   <body class="profile-page resume-page">
     <a class="skip-link" href="#resume-document">Skip to the resume</a>

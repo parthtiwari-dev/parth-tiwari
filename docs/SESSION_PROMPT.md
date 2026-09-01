@@ -27,7 +27,8 @@ The maintained routes are /, /work/, ten validated /work/[slug]/ case studies, /
 /notes/[slug]/, /about/, /resume/ and /hire/. Fraud Risk Intelligence and Oracle Auto
 Provision remain visible deferred register entries without placeholder routes. The
 owner-approved BeatMind Sound Foundry remains a standalone research animatic, not a
-production world. There is still no production tear, backlight or canvas world in Astro.
+production world. Astro now has the Phase 4 static backlight and Sheet Fault route transition;
+there is still no canvas or animated project world.
 
 The Vivid Story Loom remains a standalone native-scroll study and the owner deferred its deep
 review. `/work/vivid/` is now a separate static paper case study generated through the shared
@@ -41,10 +42,19 @@ closed by `docs/CASE_STUDY_BATCH_AUDIT.md`. Its static, link, privacy, responsiv
 no-JavaScript, reduced-motion, keyboard-focus and print gates pass. Owner visual approval,
 Fraud Risk Intelligence, Oracle Auto Provision and the complete Phase 3 gate remain open.
 
-The next safe work stays inside Phase 3: run the owner batch review, audit one of the two
-deferred projects when requested, or complete the remaining static-site gate work. Do not
-move either Vivid or BeatMind world study into Astro yet. Production worlds remain Phases 5
-and 6.
+On 2026-09-01 the owner explicitly directed Phase 4 to begin without completing those Phase
+3 reviews. This is a work-order exception, not a Phase 3 pass. The owner then selected Sheet
+Fault from the three studies in `design/directions/phase-4-paper-transition.html`. Production
+does not ship that study's slow full-root snapshot. It uses two transform-only paper panels,
+the real selected row, approved stills or published proof fallbacks and real route navigation.
+`npm run phase4:gate` passes the six Home and `/work` viewport combinations plus focus, Back,
+touch, reduced-motion, no-JavaScript and failure-fallback checks. Evidence is in
+`.shots/phase4-production/` and `docs/PHASE_4_MOTION_STUDIES.md`.
+
+The independent revert check passes. The owner explicitly waived personal inspection of the
+final Phase 4 renders and directed the phase closed on 2026-09-01. The next planned phase is
+Phase 5, but do not start it without a new explicit instruction. BeatMind and Vivid production
+worlds remain Phases 5 and 6.
 
 Begin with git status and diff. Preserve all current work. Stop at the applicable gate.
 ```
@@ -54,7 +64,8 @@ Begin with git status and diff. Preserve all current work. Stop at the applicabl
 Stop the session if:
 
 - a public claim has no provenance record;
-- a later implementation phase begins before the current gate;
+- a later implementation phase begins before the current gate without a recorded owner
+  exception and its own required checkpoint;
 - exploratory Vivid imagery is presented as a real product output without evidence;
 - the Vivid world is planned from stale portfolio assumptions instead of the current
   `upgrade-flux` end-state plan;

@@ -18,6 +18,7 @@ const viewports = [
   { name: 'phone-390', width: 390, height: 844, touch: true },
   { name: 'tablet-800', width: 800, height: 1024, touch: true },
   { name: 'desktop-1440', width: 1440, height: 900, touch: false },
+  { name: 'wide-1920', width: 1920, height: 1080, touch: false },
 ]
 
 await mkdir(output, { recursive: true })
@@ -38,26 +39,41 @@ for (const viewport of viewports) {
   await page.evaluate(() => document.fonts.ready)
   await page.addStyleTag({ content: 'html { scroll-behavior: auto !important; } .skip-link { display: none !important; }' })
 
-  const state = await page.evaluate(() => ({
-    overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
-    h1: document.querySelector('h1')?.textContent?.trim(),
-    h1Count: document.querySelectorAll('h1').length,
-    chapters: document.querySelectorAll('[data-case-chapter]').length,
-    measurements: document.querySelectorAll('.measurement-ledger article').length,
-    videos: document.querySelectorAll('video source[type="video/webm"]').length,
-    proofs: document.querySelectorAll('[data-proof-surface]').length,
-    workflowSteps: document.querySelectorAll('[data-workflow-step]').length,
-    records: document.querySelectorAll('[data-evidence-record]').length,
-    videosWithoutPoster: document.querySelectorAll('video:not([poster])').length,
-    videosWithoutControls: document.querySelectorAll('video:not([controls])').length,
-    missingAlt: document.querySelectorAll('img:not([alt])').length,
-    unnamedControls: [...document.querySelectorAll('a[href],button')].filter((element) => {
-      const name = element.getAttribute('aria-label') || element.textContent || ''
-      return !name.trim()
-    }).length,
-    darkHero: document.querySelectorAll('.case-world').length,
-    paperSurface: document.querySelectorAll('.case-paper').length,
-  }))
+  const state = await page.evaluate(() => {
+    const title = document.querySelector('.case-masthead-copy h1')
+    const cover = document.querySelector('.case-cover')
+    const titleRange = document.createRange()
+    if (title) titleRange.selectNodeContents(title)
+    const titleRect = title ? titleRange.getBoundingClientRect() : null
+    const coverRect = cover?.getBoundingClientRect()
+    const titleCoverOverlap = Boolean(titleRect && coverRect
+      && titleRect.right > coverRect.left
+      && titleRect.left < coverRect.right
+      && titleRect.bottom > coverRect.top
+      && titleRect.top < coverRect.bottom)
+
+    return {
+      overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      h1: document.querySelector('h1')?.textContent?.trim(),
+      h1Count: document.querySelectorAll('h1').length,
+      titleCoverOverlap,
+      chapters: document.querySelectorAll('[data-case-chapter]').length,
+      measurements: document.querySelectorAll('.measurement-ledger article').length,
+      videos: document.querySelectorAll('video source[type="video/webm"]').length,
+      proofs: document.querySelectorAll('[data-proof-surface]').length,
+      workflowSteps: document.querySelectorAll('[data-workflow-step]').length,
+      records: document.querySelectorAll('[data-evidence-record]').length,
+      videosWithoutPoster: document.querySelectorAll('video:not([poster])').length,
+      videosWithoutControls: document.querySelectorAll('video:not([controls])').length,
+      missingAlt: document.querySelectorAll('img:not([alt])').length,
+      unnamedControls: [...document.querySelectorAll('a[href],button')].filter((element) => {
+        const name = element.getAttribute('aria-label') || element.textContent || ''
+        return !name.trim()
+      }).length,
+      darkHero: document.querySelectorAll('.case-world').length,
+      paperSurface: document.querySelectorAll('.case-paper').length,
+    }
+  })
 
   const captureViewport = async (selector, label) => {
     const offset = viewport.width <= 820 ? 145 : 100
@@ -83,12 +99,13 @@ for (const viewport of viewports) {
   await page.waitForTimeout(120)
   const progress = await page.locator('progress').first().evaluate((element) => element.value)
   const passed = response?.ok() && state.overflow <= 1 && state.h1 === expectedTitle
-    && state.h1Count === 1 && state.chapters === 10 && state.measurements >= 1
+    && state.h1Count === 1 && !state.titleCoverOverlap
+    && state.chapters === 10 && state.measurements >= 1
     && state.proofs === 4 && state.workflowSteps === 3 && state.missingAlt === 0
     && state.videosWithoutPoster === 0 && state.videosWithoutControls === 0
     && state.unnamedControls === 0 && state.darkHero === 0 && state.paperSurface === 1
     && progress > 0 && errors.length === 0
-  console.log(`${passed ? 'PASS' : 'FAIL'} ${viewport.name}: status=${response?.status() ?? 'none'} overflow=${state.overflow}px chapters=${state.chapters} measurements=${state.measurements} proofs=${state.proofs} records=${state.records} progress=${progress.toFixed(1)} errors=${errors.join(' | ')}`)
+  console.log(`${passed ? 'PASS' : 'FAIL'} ${viewport.name}: status=${response?.status() ?? 'none'} overflow=${state.overflow}px titleCoverOverlap=${state.titleCoverOverlap} chapters=${state.chapters} measurements=${state.measurements} proofs=${state.proofs} records=${state.records} progress=${progress.toFixed(1)} errors=${errors.join(' | ')}`)
   if (!passed) failures += 1
   await context.close()
 }

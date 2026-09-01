@@ -4,40 +4,9 @@
  * Everything that names or addresses this site lives here. `parthtiwari.com` is
  * planned, so swapping the domain must stay a one-line change (PRD.md 7.5).
  *
- * ---------------------------------------------------------------------------
- * index.html is NOT covered by this file and must be edited alongside it.
- * ---------------------------------------------------------------------------
- * index.html is static HTML served before any JS runs — crawlers and social
- * unfurlers read it without executing the bundle — so it cannot import TypeScript.
- * A build-time injection step was considered and rejected as over-engineering for
- * one constant. Instead: when SITE_URL or SITE_NAME changes, change these
- * index.html occurrences in the same commit. This is the complete list.
- *
- * SITE_URL — 13 occurrences, all now `https://parth-tiwari-1.vercel.app`.
- * Line numbers are as of this commit; the identifiers are what matters if they drift:
- *   L30  <meta property="og:url">              content="{SITE_URL}/"
- *   L31  <meta property="og:image">            content="{SITE_URL}/og.png"
- *   L41  <meta name="twitter:image">           content="{SITE_URL}/og.png"
- *   L42  <link rel="canonical">                href="{SITE_URL}/"
- *   L54  JSON-LD Person       @id              "{SITE_URL}/#person"
- *   L56  JSON-LD Person       url              "{SITE_URL}/"
- *   L80  JSON-LD WebSite      @id              "{SITE_URL}/#website"
- *   L81  JSON-LD WebSite      url              "{SITE_URL}/"
- *   L85  JSON-LD WebSite      publisher.@id    "{SITE_URL}/#person"
- *   L90  JSON-LD ProfilePage  @id              "{SITE_URL}/#profile"
- *   L91  JSON-LD ProfilePage  url              "{SITE_URL}/"
- *   L94  JSON-LD ProfilePage  about.@id        "{SITE_URL}/#person"
- *   L97  JSON-LD ProfilePage  isPartOf.@id     "{SITE_URL}/#website"
- *
- * SITE_NAME:
- *   <title>                               "... | {SITE_NAME}"
- *   <meta property="og:site_name">
- *   <meta property="og:image:alt">
- *   JSON-LD WebSite      name
- *   JSON-LD ProfilePage  name
- *
- * Outside index.html, `public/sitemap.xml` and `public/robots.txt` also carry the
- * absolute URL and must move with it. (Both are outside this file's ownership.)
+ * `SiteMeta.astro`, Astro's `site` setting, the generated sitemap and robots.txt
+ * all derive or repeat this origin. Change those four surfaces in the same commit
+ * when the verified public domain changes.
  */
 
 /**
@@ -61,13 +30,10 @@
  */
 export const SITE_URL = 'https://parth-tiwari-1.vercel.app'
 
-/** The site's name. `EVIDENCEBOUND` is retired (CLAUDE.md, PRD.md 10). */
-export const SITE_NAME = 'EPHEMERIS'
-
 export const OWNER_NAME = 'Parth Tiwari'
 
-/** Absolute URL of the Open Graph card. Kept absolute: unfurlers do not resolve relative paths. */
-export const OG_IMAGE_URL = `${SITE_URL}/og.png`
+/** A real, publication-cleared image. Kept absolute because unfurlers do not resolve relative paths reliably. */
+export const OG_IMAGE_URL = `${SITE_URL}/media/parth-portrait.jpg`
 
 /**
  * Booking link — the primary conversion channel (PRD.md 7.3).

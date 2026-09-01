@@ -1,0 +1,37 @@
+---
+import PaperRouteNav from '../components/PaperRouteNav.astro'
+import SiteMeta from '../components/SiteMeta.astro'
+import '../styles/profile-pages.css'
+import '../styles/not-found.css'
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <SiteMeta
+      title="Page not found | Parth Tiwari"
+      description="This page is not part of Parth Tiwari's current portfolio record."
+      path="/404/"
+      noindex
+    />
+  </head>
+  <body class="profile-page not-found-page">
+    <a class="skip-link" href="#missing-page">Skip to the message</a>
+    <main class="profile-sheet">
+      <div class="profile-paper">
+        <div class="profile-edge profile-edge-left" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="profile-edge profile-edge-right" aria-hidden="true"><i></i><i></i><i></i></div>
+        <PaperRouteNav />
+        <section id="missing-page" class="missing-page" aria-labelledby="missing-title">
+          <p class="profile-eyebrow">404 / The record ends here</p>
+          <h1 id="missing-title">This page is not on the sheet.</h1>
+          <p>The link may be old, or the case study may still be in development. The complete work register is the safest way back.</p>
+          <div class="missing-actions">
+            <a class="missing-primary" href="/work/">See the work</a>
+            <a href="/">Return home <span aria-hidden="true">→</span></a>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

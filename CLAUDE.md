@@ -28,7 +28,7 @@ quietly choosing one.
 - Playwright as development-only browser tooling
 
 There is no Vue application, SPA rewrite, Three.js scene, canvas, Tailwind layer, analytics
-runtime, or client-side router. The current Phase 2 root landing uses one small progressive
+runtime, or client-side router. The current root landing uses one small progressive
 enhancement script for post-hero navigation and bounded paper-motion states; its complete
 content remains static HTML.
 
@@ -71,6 +71,8 @@ content remains static HTML.
 - Launch Chromium through `scripts/browser.mjs`; do not call `chromium.launch()` with an
   ad hoc configuration.
 - Required review widths are 390, 800, and 1440 pixels.
+- Case-study mastheads also retain a 1920-pixel regression check for rendered title and proof
+  collisions after the SecondSelf false-positive overflow gate found on 2026-09-01.
 - Browser checks accept `--url`; run them against the built static output for gates.
 - Screenshots are evidence only when someone inspects them. A successful capture command
   does not prove the page looks correct.
@@ -82,9 +84,14 @@ content remains static HTML.
 - `npm run phase3:case-batch-gate` validates exactly ten published case studies, exactly two
   deferred records, the static build, proof variants, chapter contracts, internal links and
   private-path exclusions.
+- `npm run phase3:static-gate` extends that proof to shared metadata, the Home route links,
+  generated sitemap, RSS, 404 and removal of visitor-facing Phase 2 scaffolding copy.
+- `npm run phase4:study-capture` renders the three non-production paper-transition studies
+  at 390, 800 and 1440 pixels, checks overflow and browser errors, verifies reduced motion
+  and records comparative frame timing.
 - Phase 1 is complete under its owner-amended gate. The text-only human test was deferred,
   not passed, and may never be reported otherwise.
-- Phase 2 closed on 2026-08-31. The maintained landing stub is on `/`; its structure and interim public
+- Phase 2 closed on 2026-08-31. The maintained Home route is on `/`; its structure and interim public
   release were owner-approved on 2026-08-29 and are live at
   `https://parth-tiwari-1.vercel.app/`. `/work` architecture is approved. The single
   `/work/beatmind/` Phase 2 paper pilot now follows `docs/CASE_STUDY_CONTRACT.md`, uses
@@ -106,18 +113,30 @@ content remains static HTML.
   BeatMind's Sound Foundry
   storyboard and current five-stem language on 2026-08-30; its standalone verified animatic
   is a Phase 2 review artifact only. Its dark ending and explicit case-study CTA are locked;
-  no paper section appears below the world. Production route implementation remains Phase 3 and
-  production world implementation remains Phase 5.
+  no paper section appears below the world. The separate static paper route is present in
+  Phase 3; production world implementation remains Phase 5.
 - Do not treat Phase 2 review stubs as the complete Phase 3 static site. Production tear,
   backlight, canvas and animated-world implementation remain in their assigned later phases.
-- Phase 3B is active. `/work/[slug].astro` emits a static page for each project with a
+- Phase 3B implementation is present. `/work/[slug].astro` emits a static page for each project with a
   validated `caseStudy` object. BeatMind, Vivid and the approved eight-project batch satisfy
   that full paper contract. Fraud Risk Intelligence and Oracle Auto Provision remain
   explicitly deferred, non-clickable and route-less. `docs/CASE_STUDY_BATCH_AUDIT.md`
   records the batch source boundaries and current gate evidence.
+- All Phase 3 route implementation checklist items are now present locally. The local static
+  gate passes, but Phase 3 remains open until the revised mobile arrival and complete route
+  matrix receive rendered owner review, the real five-person test is run, and the complete
+  site is deployed to the verified preview alias.
   `docs/VIVID_CASE_STUDY_AUDIT.md` records the Vivid repository history, current
   proof, unachieved plan targets and update workflow. The Vivid source worktree is read-only
   portfolio evidence and its current Phase 4 changes must not be modified from this repository.
+- The owner directed Phase 4 to begin on 2026-09-01 without completing those Phase 3 checks.
+  This is a phase-order exception, not a Phase 3 pass. The owner selected Sheet Fault. The
+  production implementation replaces its slow full-root snapshot with two transform-only
+  paper panels and inert clones of the selected real row. Home and `/work` preview, route,
+  focus, Back, touch, reduced-motion, no-JavaScript and failure checks pass at 390, 800 and
+  1440 pixels. The isolated revert gate passes. The owner explicitly waived personal render
+  inspection and closed Phase 4 on 2026-09-01; do not report the waived inspection as having
+  occurred. Do not begin Phase 5 without a new explicit instruction.
 
 ## Dependencies and external actions
 

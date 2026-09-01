@@ -424,15 +424,15 @@ commit with the matching plan items ticked.
 
 #### 3A. Shell and home
 
-- [ ] Persistent navigation, contact action, footer, skip link and responsive shell.
-- [ ] Home flow: arrival and two doors, portrait and short introduction, every project
+- [x] Persistent navigation, contact action, footer, skip link and responsive shell.
+- [x] Home flow: arrival and two doors, portrait and short introduction, every project
   in an editorial paper index, verified proof, services, latest errata and contact.
 - [ ] Above the fold contains one sentence, two doors and no content that requires motion.
 
 #### 3B. Work register and case-study pages
 
-- [ ] `/work` lists every project without a hard-coded count in prose.
-- [ ] Sorting controls operate on real typed fields and preserve a meaningful default order.
+- [x] `/work` lists every project without a hard-coded count in prose.
+- [x] Sorting controls operate on real typed fields and preserve a meaningful default order.
 - [x] BeatMind and Vivid use one content-driven paper case-study component and validated
   project-specific evidence records.
 - [x] The shared proof contract accepts real video, real image and accessible evidence-record
@@ -466,28 +466,42 @@ commit with the matching plan items ticked.
 
 #### 3C. Notes and errata
 
-- [ ] `/notes` separates Errata and Posts without making either feel secondary.
-- [ ] `/notes/[slug]` renders complete articles, sources and related work.
-- [ ] RSS includes published notes only.
-- [ ] If Posts is empty, the approved “Coming soon” state ships while Errata remains live.
+- [x] `/notes` separates Errata and Posts without making either feel secondary.
+- [x] `/notes/[slug]` renders complete articles, sources and related work.
+- [x] RSS includes published notes only.
+- [x] If Posts is empty, the approved “Coming soon” state ships while Errata remains live.
 
 #### 3D. About and experience
 
-- [ ] Portrait and first-person introduction.
-- [ ] Work-experience and training timeline from one typed source.
-- [ ] Operating rules and working style, with no invented endorsements.
+- [x] Portrait and first-person introduction.
+- [x] Work-experience and training timeline from one typed source.
+- [x] Operating rules and working style, with no invented endorsements.
 
 #### 3E. Resume
 
-- [ ] Real semantic HTML suitable for crawlers and ATS parsing.
-- [ ] Verified PDF download, print styles, email and route metadata.
-- [ ] No Drive embed.
+- [x] Real semantic HTML suitable for crawlers and ATS parsing.
+- [x] Verified PDF download, print styles, email and route metadata.
+- [x] No Drive embed.
 
 #### 3F. Hire
 
-- [ ] Three kinds of work, scope boundaries, four-step process and a direct conversation path; no public price.
-- [ ] Booking, email and WhatsApp paths verified on phone and desktop.
-- [ ] No unsupported testimonial, client logo or urgency claim.
+- [x] Three kinds of work, scope boundaries, four-step process and a direct conversation path; no public price.
+- [x] Booking, email and WhatsApp paths verified on phone and desktop.
+- [x] No unsupported testimonial, client logo or urgency claim.
+
+**Local static closeout, 2026-09-01:** all Phase 3 route implementation items above except
+the rendered first-viewport assertion are present. `npm run phase3:static-gate` verifies the typed content, static build, case-study
+contracts, internal links, metadata, generated sitemap, RSS and 404 output. The gate below
+remains open because the revised mobile arrival still needs rendered owner review, the real
+five-person ten-second test remains deferred, and the complete site has not been deployed to
+the preview alias.
+
+**Owner-directed phase exception, 2026-09-01:** the owner chose to begin Phase 4 without
+performing the remaining Phase 3 rendered review. This does not pass or waive the Phase 3
+gate. The mobile arrival review, complete-route visual review, five-person test and verified
+preview deployment remain open and must be reported as deferred until they are actually run.
+Phase 4 may proceed only through its own owner-review checkpoints and must not be used as
+evidence that the underlying static-site gate passed.
 
 **Gate**
 
@@ -511,18 +525,41 @@ This phase perfects the transition between paper and world without making it nav
   coarse-pointer equivalent.
 - Get explicit approval for one study before production implementation.
 
+**Motion-study checkpoint, 2026-09-01:** `design/directions/phase-4-paper-transition.html`
+compares Row Rip, Edge Peel and Sheet Fault with the real paper stock and approved BeatMind
+world still. All three were captured at 390, 800 and 1440 pixels, including preview, mid-tear,
+final and reduced-motion states. The capture gate found zero overflow or browser errors and
+zero tear pieces under reduced motion. Fresh-page measurements keep Row Rip at 16.7-16.8 ms
+p95 at all three widths; Sheet Fault rises to 83.3 ms at 800 pixels and 166.7 ms at 1440
+pixels, so it is not a production candidate in its current form. Evidence and the comparison
+are recorded in `docs/PHASE_4_MOTION_STUDIES.md` and `.shots/phase4-motion-studies/`.
+The owner selected Sheet Fault on 2026-09-01. Its expensive full-root snapshot mechanism was
+rejected, not its visual idea. Production recreates the chosen full-sheet opening with two
+transform-only paper panels and sanitized clones of only the selected rendered row. The
+result retains the Sheet Fault composition while removing the source of the study's broad
+repaint cost.
+
 **Do**
 
-- [ ] Backlight an entry using that project's approved still frame by default.
-- [ ] Add low-cost motion only after it proves useful and remains within budget.
-- [ ] On coarse pointers, preview the entry nearest the viewport center without blocking
+- [x] Backlight an entry using that project's approved still frame by default.
+- [x] Add low-cost motion only after it proves useful and remains within budget.
+- [x] On coarse pointers, preview the entry nearest the viewport center without blocking
   normal scrolling.
-- [ ] Tear from the real rendered sheet or a faithful captured layer, not plain substitute
+- [x] Tear from the real rendered sheet or a faithful captured layer, not plain substitute
   stock.
-- [ ] Navigate to the real project URL. The visual transition never owns routing state.
-- [ ] Move focus to the destination heading and preserve a correct back-navigation target.
-- [ ] Skip the tear under reduced motion and when enhancement fails.
-- [ ] Keep all hidden controls out of the tab order and accessibility tree.
+- [x] Navigate to the real project URL. The visual transition never owns routing state.
+- [x] Move focus to the destination heading and preserve a correct back-navigation target.
+- [x] Skip the tear under reduced motion and when enhancement fails.
+- [x] Keep all hidden controls out of the tab order and accessibility tree.
+
+**Production checkpoint, 2026-09-01:** `npm run phase4:gate` passes the static-site gate and
+the Home plus `/work` enhancement at 390, 800 and 1440 pixels. All six transition paths
+measure 16.7-16.8 ms p95 with zero overflow or browser errors. Pointer, keyboard, centred-row
+touch, reduced motion, no-JavaScript, forced-failure, real-route focus and Back restoration
+checks pass. Responsive images are in `.shots/phase4-production/`. The shipped client cost is
+5,184 bytes of transition JavaScript and 5,950 bytes of transition CSS before compression;
+no runtime dependency was added. Reverting commit `9d195b0` in an isolated temporary worktree
+and rerunning `npm run phase3:static-gate` also passes, proving the Phase 3 rollback target.
 
 **Gate**
 
@@ -530,9 +567,13 @@ This phase perfects the transition between paper and world without making it nav
 - Reduced motion moves directly to the destination with a composed final frame.
 - A temporary-worktree `git revert` leaves the Phase 3 site fully functional.
 - Performance and screenshot checks pass with the enhancement enabled and disabled.
-- Owner approves the final paper, hover/backlight and tear behavior from rendered evidence.
+- Owner accepts the final paper, hover/backlight and tear behavior, or explicitly records a
+  waiver of personal render inspection.
 
-Show the evidence and stop.
+**Gate: passed and owner-closed 2026-09-01.** The automated, responsive, resilience and
+independent-revert evidence is recorded in `docs/PHASE_4_GATE.md`. The owner explicitly
+waived personal inspection of the final renders and directed promotion; do not describe that
+waiver as a render review that occurred. Stop before Phase 5.
 
 ### Phase 5: World foundation and BeatMind pilot
 
