@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content'
+import ProjectTransitionLayer from './ProjectTransitionLayer.astro'
 import SiteMeta from './SiteMeta.astro'
 import '../styles/work-register.css'
 
@@ -28,6 +29,7 @@ const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In prog
   </head>
   <body class="work-review-page">
     <a class="skip-link" href="#work-register">Skip to the work</a>
+    <ProjectTransitionLayer projects={orderedProjects} />
 
     <main class="work-sheet">
       <div class="work-paper">
@@ -111,7 +113,7 @@ const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In prog
                   data-tier={project.data.tier}
                 >
                   {isPublished
-                    ? <a href={`/work/${project.id}/`} aria-label={`Open the ${project.data.title} case study`}>{rowContent}</a>
+                    ? <a href={`/work/${project.id}/`} aria-label={`Open the ${project.data.title} case study`} data-paper-project data-project-slug={project.id}>{rowContent}</a>
                     : <div class="work-row-static" aria-label={`${project.data.title}. Case study in development.`}>{rowContent}</div>}
                 </li>
               )
@@ -130,6 +132,7 @@ const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In prog
 
     <script>
       import '../scripts/work-register'
+      import '../scripts/project-transition'
     </script>
   </body>
 </html>

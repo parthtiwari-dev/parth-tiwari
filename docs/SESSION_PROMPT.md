@@ -27,7 +27,8 @@ The maintained routes are /, /work/, ten validated /work/[slug]/ case studies, /
 /notes/[slug]/, /about/, /resume/ and /hire/. Fraud Risk Intelligence and Oracle Auto
 Provision remain visible deferred register entries without placeholder routes. The
 owner-approved BeatMind Sound Foundry remains a standalone research animatic, not a
-production world. There is still no production tear, backlight or canvas world in Astro.
+production world. Astro now has the Phase 4 static backlight and Sheet Fault route transition;
+there is still no canvas or animated project world.
 
 The Vivid Story Loom remains a standalone native-scroll study and the owner deferred its deep
 review. `/work/vivid/` is now a separate static paper case study generated through the shared
@@ -42,16 +43,16 @@ no-JavaScript, reduced-motion, keyboard-focus and print gates pass. Owner visual
 Fraud Risk Intelligence, Oracle Auto Provision and the complete Phase 3 gate remain open.
 
 On 2026-09-01 the owner explicitly directed Phase 4 to begin without completing those Phase
-3 reviews. This is a work-order exception, not a Phase 3 pass. Three non-production studies
-in `design/directions/phase-4-paper-transition.html` compare Row Rip, Edge Peel and Sheet
-Fault using the real paper stock and approved BeatMind still. Evidence is in
-`docs/PHASE_4_MOTION_STUDIES.md` and `.shots/phase4-motion-studies/`. Sheet Fault misses the
-performance budget and is not recommended.
+3 reviews. This is a work-order exception, not a Phase 3 pass. The owner then selected Sheet
+Fault from the three studies in `design/directions/phase-4-paper-transition.html`. Production
+does not ship that study's slow full-root snapshot. It uses two transform-only paper panels,
+the real selected row, approved stills or published proof fallbacks and real route navigation.
+`npm run phase4:gate` passes the six Home and `/work` viewport combinations plus focus, Back,
+touch, reduced-motion, no-JavaScript and failure-fallback checks. Evidence is in
+`.shots/phase4-production/` and `docs/PHASE_4_MOTION_STUDIES.md`.
 
-The next safe action is owner selection between Row Rip and Edge Peel. Do not implement
-production backlighting, tear navigation or route handoff until that selection is explicit.
-Do not tick a Phase 4 item from the studies alone. BeatMind and Vivid production worlds
-remain Phases 5 and 6.
+The next safe action is the independent revert check and owner review of the final rendered
+Phase 4 behavior. BeatMind and Vivid production worlds remain Phases 5 and 6.
 
 Begin with git status and diff. Preserve all current work. Stop at the applicable gate.
 ```

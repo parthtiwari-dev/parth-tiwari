@@ -72,7 +72,8 @@ in the same commit.
 | A real published proof may temporarily stand in when no approved world still exists | Owner decided 2026-09-01 | The fallback keeps the preview truthful while later worlds are still unbuilt; it must be visibly labelled as proof | Generated placeholder worlds, simulated screenshots or an empty black aperture |
 | Touch preview follows the centered entry during native scroll | Decided | It provides hover parity without adding a separate mobile interface | Tap-first hover emulation that traps the first tap |
 | Tear visualizes navigation to a real route | Decided | Refresh, deep links and accessibility remain correct | Overlay-only world state |
-| Production tear is chosen from motion studies | Owner review in Phase 4 | Material behavior needs visual comparison, not prose certainty | Copying the prototype timings and stock |
+| Production tear uses the Sheet Fault composition | Owner selected 2026-09-01 | The full-sheet opening makes the world-behind-paper idea clearest | Row Rip or Edge Peel as the final material story |
+| Sheet Fault production uses two transform-only paper panels plus inert clones of the selected rendered row | Implemented and measured 2026-09-01 | It preserves the approved composition at 16.7-16.8 ms p95 without a full-root snapshot | Shipping the study's janky full-page raster transition |
 | Pointer preview dwell is 180 ms and the tactile handoff is capped at 500 ms | Owner decided 2026-09-01 | The preview should feel intentional while navigation remains immediate enough to trust | Instant hover flicker or a decorative transition that delays the route |
 | Reduced motion skips the tear | Decided | The destination matters; the transition does not | A shorter but still disruptive tear |
 
@@ -260,11 +261,11 @@ authorized before the build-plan phase that owns it.
 
 ### Phase 4
 
-- Owner selection between rendered Row Rip and Edge Peel studies. Sheet Fault is not
-  recommended in its current form because the full-sheet animation misses the measured
-  performance budget at 800 and 1440 pixels.
-- Production backlight, coarse-pointer behavior, routing and focus restoration remain
-  unimplemented until that selection.
+- The owner selected Sheet Fault. Production backlight, centred-row touch behavior, real
+  routing, destination focus, Back restoration, reduced motion and failure fallback are
+  implemented and pass the automated gate at 390, 800 and 1440 pixels.
+- Final owner approval of the production renders and the independent revert check remain the
+  Phase 4 stop conditions.
 
 ### Phase 5 and 6
 

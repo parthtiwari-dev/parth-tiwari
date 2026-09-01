@@ -130,10 +130,12 @@ content remains static HTML.
   proof, unachieved plan targets and update workflow. The Vivid source worktree is read-only
   portfolio evidence and its current Phase 4 changes must not be modified from this repository.
 - The owner directed Phase 4 to begin on 2026-09-01 without completing those Phase 3 checks.
-  This is a phase-order exception, not a Phase 3 pass. Row Rip, Edge Peel and Sheet Fault now
-  exist only as standalone studies. Sheet Fault misses the performance budget at 800 and
-  1440 pixels. Production implementation must stop until the owner explicitly selects Row
-  Rip, Edge Peel or requests a bounded revision. No Phase 4 checklist item is complete.
+  This is a phase-order exception, not a Phase 3 pass. The owner selected Sheet Fault. The
+  production implementation replaces its slow full-root snapshot with two transform-only
+  paper panels and inert clones of the selected real row. Home and `/work` preview, route,
+  focus, Back, touch, reduced-motion, no-JavaScript and failure checks pass at 390, 800 and
+  1440 pixels. Stop for the independent revert check and owner review of final renders before
+  calling the Phase 4 gate complete.
 
 ## Dependencies and external actions
 

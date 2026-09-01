@@ -1,0 +1,65 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import '../styles/project-transition.css'
+
+interface Props {
+  projects: CollectionEntry<'work'>[]
+}
+
+const { projects } = Astro.props
+const publishedProjects = projects.filter((project) => project.data.caseStudy)
+
+const previews = publishedProjects.map((project) => {
+  const proof = project.data.caseStudy!.cover.proof
+  const approvedWorldStill = project.id === 'beatmind' ? '/media/beatmind-world-still.jpg' : undefined
+  const imageSource = approvedWorldStill
+    ?? (proof.kind === 'image' ? proof.src : proof.kind === 'video' ? proof.poster : undefined)
+
+  return {
+    project,
+    proof,
+    imageSource,
+    sourceLabel: approvedWorldStill ? 'Approved world still' : 'Published case-study proof',
+  }
+})
+---
+
+<div class="project-transition-stage" data-project-transition-stage aria-hidden="true" inert>
+  {previews.map(({ project, proof, imageSource, sourceLabel }) => (
+    <figure
+      class="project-world-preview"
+      data-project-preview={project.id}
+      data-preview-kind={imageSource ? 'image' : 'record'}
+    >
+      {imageSource
+        ? (
+            <img
+              src={imageSource}
+              alt=""
+              width={proof.kind === 'image' ? proof.width : 1440}
+              height={proof.kind === 'image' ? proof.height : 900}
+              loading={project.id === 'beatmind' ? 'eager' : 'lazy'}
+              decoding="async"
+              fetchpriority={project.id === 'beatmind' ? 'high' : 'auto'}
+              data-fit={proof.kind === 'image' ? proof.fit ?? 'cover' : 'cover'}
+            />
+          )
+        : proof.kind === 'record'
+          ? (
+              <div class="project-preview-record">
+                <p>{proof.label}</p>
+                <strong>{proof.title}</strong>
+                <dl>
+                  {proof.rows.slice(0, 4).map((row) => <div><dt>{row.label}</dt><dd>{row.value}</dd></div>)}
+                </dl>
+                <small>{proof.sourceLabel}</small>
+              </div>
+            )
+          : null}
+      <figcaption>
+        <span>{project.data.title} / {sourceLabel}</span>
+        <strong>{project.data.world.story}</strong>
+      </figcaption>
+    </figure>
+  ))}
+</div>

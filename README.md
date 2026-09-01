@@ -3,18 +3,18 @@
 This repository is rebuilding Parth Tiwari's portfolio as **Paper and Worlds**: a
 static, multi-page Astro site whose project case studies use each project's real data.
 
-The current code has completed Phases 1 and 2, has an open Phase 3 gate and is at the
-owner-selection checkpoint for Phase 4. It contains validated
+The current code has completed Phases 1 and 2, has an open Phase 3 gate and has the selected
+Phase 4 Sheet Fault implementation awaiting final owner review. It contains validated
 content collections, twelve base project records, twelve Errata entries, route copy,
 services, experience, and source-linked claims. The maintained Home route lives at `/`.
 `/work/` has its complete register, ten published `/work/[slug]/` routes use the shared paper
 case-study system, and Notes, About, Resume and Hire have static route implementations. The
 landing includes the approved full-width rag sheet, post-hero sticky
 paper fold, content-driven sections, stable fibre-edge segments, bounded one-shot paper
-motion and the current project-hover study. The rejected Phase 2 A/B/C directions were
-removed. There is still no production tear, backlight, canvas or animated world. Three
-standalone Phase 4 studies now compare Row Rip, Edge Peel and Sheet Fault with real paper and
-the approved BeatMind still. They are review artifacts, not production behavior. The current
+motion and the production project preview. The rejected Phase 2 A/B/C directions were
+removed. Home and `/work` now use the selected Sheet Fault route transition with static
+backlights, real paper panels, real-route navigation and accessibility fallbacks. There is
+still no canvas or animated project world. The current
 interim deployment still contains the earlier root-only release; the complete static site has
 not passed the Phase 3 preview gate or the Phase 7 production cutover.
 
@@ -84,6 +84,7 @@ implementation, and the shared render, state, contrast, font-budget and static-b
 pass. Further visual polish is deferred rather than reported as finished. Vivid production
 work has not begun. The owner directed Phase 4 to begin while the remaining Phase 3 render
 review, human test and preview deployment stay deferred. The Phase 4 motion studies are
-captured at 390, 800 and 1440 pixels; owner selection between Row Rip and Edge Peel is
-required before production implementation. Sheet Fault is not recommended because its
-full-sheet animation misses the measured performance budget.
+captured at 390, 800 and 1440 pixels; the owner selected Sheet Fault. Production replaces
+the study's slow full-root snapshot with two transform-only paper panels and measures
+16.7-16.8 ms p95 across Home and `/work`. Final rendered owner approval and the independent
+revert check remain open.

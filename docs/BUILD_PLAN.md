@@ -533,21 +533,32 @@ zero tear pieces under reduced motion. Fresh-page measurements keep Row Rip at 1
 p95 at all three widths; Sheet Fault rises to 83.3 ms at 800 pixels and 166.7 ms at 1440
 pixels, so it is not a production candidate in its current form. Evidence and the comparison
 are recorded in `docs/PHASE_4_MOTION_STUDIES.md` and `.shots/phase4-motion-studies/`.
-Owner selection is pending. No production checklist item below is ticked and implementation
-must stop at this checkpoint.
+The owner selected Sheet Fault on 2026-09-01. Its expensive full-root snapshot mechanism was
+rejected, not its visual idea. Production recreates the chosen full-sheet opening with two
+transform-only paper panels and sanitized clones of only the selected rendered row. The
+result retains the Sheet Fault composition while removing the source of the study's broad
+repaint cost.
 
 **Do**
 
-- [ ] Backlight an entry using that project's approved still frame by default.
-- [ ] Add low-cost motion only after it proves useful and remains within budget.
-- [ ] On coarse pointers, preview the entry nearest the viewport center without blocking
+- [x] Backlight an entry using that project's approved still frame by default.
+- [x] Add low-cost motion only after it proves useful and remains within budget.
+- [x] On coarse pointers, preview the entry nearest the viewport center without blocking
   normal scrolling.
-- [ ] Tear from the real rendered sheet or a faithful captured layer, not plain substitute
+- [x] Tear from the real rendered sheet or a faithful captured layer, not plain substitute
   stock.
-- [ ] Navigate to the real project URL. The visual transition never owns routing state.
-- [ ] Move focus to the destination heading and preserve a correct back-navigation target.
-- [ ] Skip the tear under reduced motion and when enhancement fails.
-- [ ] Keep all hidden controls out of the tab order and accessibility tree.
+- [x] Navigate to the real project URL. The visual transition never owns routing state.
+- [x] Move focus to the destination heading and preserve a correct back-navigation target.
+- [x] Skip the tear under reduced motion and when enhancement fails.
+- [x] Keep all hidden controls out of the tab order and accessibility tree.
+
+**Production checkpoint, 2026-09-01:** `npm run phase4:gate` passes the static-site gate and
+the Home plus `/work` enhancement at 390, 800 and 1440 pixels. All six transition paths
+measure 16.7-16.8 ms p95 with zero overflow or browser errors. Pointer, keyboard, centred-row
+touch, reduced motion, no-JavaScript, forced-failure, real-route focus and Back restoration
+checks pass. Responsive images are in `.shots/phase4-production/`. The shipped client cost is
+5,184 bytes of transition JavaScript and 5,950 bytes of transition CSS before compression;
+no runtime dependency was added.
 
 **Gate**
 

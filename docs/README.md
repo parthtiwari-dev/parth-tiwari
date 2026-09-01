@@ -21,7 +21,7 @@ Where to look, and what is still true.
 | [`PHASE_2_RESUME_REVIEW.md`](PHASE_2_RESUME_REVIEW.md) | The HTML Resume structure, source PDF boundary, optional Drive configuration, responsive and print evidence |
 | [`PHASE_2_HIRE_REVIEW.md`](PHASE_2_HIRE_REVIEW.md) | The Hire route reference lock, service boundaries, four-step process, fit guidance and verified contact paths |
 | [`PHASE_2_GATE.md`](PHASE_2_GATE.md) | The completed route matrix, state checks, contrast results, font budget and owner-acceptance boundary |
-| [`PHASE_4_MOTION_STUDIES.md`](PHASE_4_MOTION_STUDIES.md) | Row Rip, Edge Peel and rejected-for-performance Sheet Fault comparison, responsive evidence and the owner-selection stop |
+| [`PHASE_4_MOTION_STUDIES.md`](PHASE_4_MOTION_STUDIES.md) | Row Rip, Edge Peel and Sheet Fault comparison, owner selection, optimized production translation and responsive evidence |
 | [`CASE_STUDY_CONTRACT.md`](CASE_STUDY_CONTRACT.md) | Required evidence, media, accessibility and publication contract for every paper case study |
 | [`CASE_STUDY_BATCH_AUDIT.md`](CASE_STUDY_BATCH_AUDIT.md) | Source branches, commit boundaries, proof decisions, route matrix and gate evidence for the eight-project Phase 3 batch |
 | [`PHASE_2_BEATMIND_WORLD_STUDY.md`](PHASE_2_BEATMIND_WORLD_STUDY.md) | Approved Sound Foundry animatic, real BeatMind source lock, rendered evidence and production inputs still blocked |
@@ -130,8 +130,11 @@ real 404 and twelve-entry RSS feed, and generates a 28-route sitemap after every
 `npm run phase3:static-gate` passes. The revised mobile arrival, complete visual batch,
 five-person comprehension test and preview deployment remain open, so Phase 3 is not closed.
 The owner nevertheless directed Phase 4 to begin under an explicit phase-order exception.
-Three non-production transition studies now compare Row Rip, Edge Peel and Sheet Fault using
-the real paper stock and approved BeatMind world still. Responsive and reduced-motion
-captures pass; Sheet Fault misses the performance budget at 800 and 1440 pixels. Owner
-selection between Row Rip and Edge Peel is the next safe step. No production preview, tear or
-routing enhancement has been added to Astro.
+Three transition studies compared Row Rip, Edge Peel and Sheet Fault using the real paper
+stock and approved BeatMind world still. The owner selected Sheet Fault. Its original
+full-root snapshot missed the performance budget, so production now recreates the approved
+composition with two transform-only paper panels and inert clones of the selected real row.
+Home and `/work` share the preview, touch-centred selection, real-route handoff, destination
+focus, Back restoration, reduced-motion and failure fallbacks. `npm run phase4:gate` passes at
+390, 800 and 1440 pixels with 16.7-16.8 ms p95 transition measurements. Final rendered owner
+approval and the independent revert check remain open.

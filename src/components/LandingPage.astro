@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content'
 import { BOOKING_URL, CONTACT_EMAIL_HREF, WHATSAPP_URL } from '../config/site'
+import ProjectTransitionLayer from './ProjectTransitionLayer.astro'
 import SiteMeta from './SiteMeta.astro'
 import '../styles/landing.css'
 
@@ -38,6 +39,7 @@ const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In prog
   </head>
   <body class="paper-worlds-home">
     <a class="skip-link" href="#main-content">Skip to the portfolio</a>
+    <ProjectTransitionLayer projects={orderedProjects} />
 
     <div class="unfurl-intro" aria-hidden="true">
       <div class="unfurl-shadow"></div>
@@ -128,7 +130,7 @@ const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In prog
               return (
                 <li class="project-item">
                   {isPublished
-                    ? <a class:list={['project-row', project.data.tier === 'flagship' && 'is-flagship']} href={`/work/${project.id}/`} aria-label={`Read the ${project.data.title} case study`}>{rowContent}</a>
+                    ? <a class:list={['project-row', project.data.tier === 'flagship' && 'is-flagship']} href={`/work/${project.id}/`} aria-label={`Read the ${project.data.title} case study`} data-paper-project data-project-slug={project.id}>{rowContent}</a>
                     : <div class:list={['project-row', 'is-deferred', project.data.tier === 'flagship' && 'is-flagship']} aria-label={`${project.data.title}. Case study in development.`}>{rowContent}</div>}
                 </li>
               )
@@ -165,6 +167,7 @@ const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In prog
 
     <script>
       import '../scripts/landing-motion'
+      import '../scripts/project-transition'
     </script>
   </body>
 </html>

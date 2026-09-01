@@ -1,14 +1,15 @@
 # Phase 4 paper-transition motion studies
 
-Status: **owner selection required before production implementation**.
+Status: **Sheet Fault selected and implemented; final rendered owner approval remains open**.
 
 Date: 2026-09-01
 
 ## Boundary
 
-This checkpoint compares three non-production ways for a rendered project entry to leave
-the paper and reveal its approved world still. It does not add tear navigation, production
-backlighting or world motion to Astro. No Phase 4 checklist item is complete yet.
+The original checkpoint compared three non-production ways for a rendered project entry to
+leave the paper and reveal its approved world still. The comparison artifact itself still
+does not add production behavior to Astro; the later production translation and gate are
+recorded at the end of this document. Animated world motion remains outside Phase 4.
 
 The owner directed Phase 4 to begin before the remaining Phase 3 render review, human test
 and preview deployment. That is a recorded work-order exception, not a Phase 3 gate pass.
@@ -112,8 +113,27 @@ has convincing direction on tablet and desktop but becomes busier on phone. Shee
 visually legible at all three widths, yet its broad overlap and measured jank outweigh its
 drama. The review toolbar is artifact-only and will not ship.
 
-## Owner decision required
+## Owner selection and production translation
 
-Choose **A: Row Rip**, **B: Edge Peel**, or request a specific revision. **C: Sheet Fault is
-not recommended** unless its full-sheet animation is substantially redesigned and measured
-again. Production Phase 4 work must not begin before this selection.
+The owner selected **C: Sheet Fault** on 2026-09-01 because its material story was strongest,
+while explicitly accepting that its first study might need later optimization. The study's
+full-root browser snapshot was not carried into production: it was the source of the 83.3 ms
+and 166.7 ms p95 results above.
+
+Production keeps the selected visual argument with a cheaper mechanism:
+
+- the approved world still expands behind the page;
+- two fixed paper panels use the real paper stock and separate around the chosen row;
+- each panel carries a sanitized, inert clone of only that real rendered row;
+- panel movement is transform-only and completes in 440 milliseconds;
+- the real anchor remains the routing source of truth;
+- reduced motion, JavaScript absence and forced enhancement failure navigate directly.
+
+`npm run phase4:gate` captures the implementation at 390, 800 and 1440 pixels on both Home
+and `/work`. All six measured transition paths returned 16.7-16.8 ms p95 with zero overflow
+or browser errors. Keyboard, pointer, centred-row touch, destination focus, Back restoration,
+reduced motion, no-JavaScript navigation and forced-failure navigation pass. Evidence lives
+in `.shots/phase4-production/`.
+
+This closes the study-selection checkpoint. The remaining Phase 4 owner gate is approval of
+the final production renders, not another A/B/C selection.
