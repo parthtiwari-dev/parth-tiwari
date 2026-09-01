@@ -134,8 +134,9 @@ content remains static HTML.
   production implementation replaces its slow full-root snapshot with two transform-only
   paper panels and inert clones of the selected real row. Home and `/work` preview, route,
   focus, Back, touch, reduced-motion, no-JavaScript and failure checks pass at 390, 800 and
-  1440 pixels. The isolated revert gate passes. Stop for owner review of final renders before
-  calling the Phase 4 gate complete.
+  1440 pixels. The isolated revert gate passes. The owner explicitly waived personal render
+  inspection and closed Phase 4 on 2026-09-01; do not report the waived inspection as having
+  occurred. Do not begin Phase 5 without a new explicit instruction.
 
 ## Dependencies and external actions
 

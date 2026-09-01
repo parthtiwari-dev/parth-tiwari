@@ -138,4 +138,5 @@ composition with two transform-only paper panels and inert clones of the selecte
 Home and `/work` share the preview, touch-centred selection, real-route handoff, destination
 focus, Back restoration, reduced-motion and failure fallbacks. `npm run phase4:gate` passes at
 390, 800 and 1440 pixels with 16.7-16.8 ms p95 transition measurements. The isolated revert
-gate also passes. Final rendered owner approval remains open.
+gate also passes. The owner explicitly waived personal render inspection and closed Phase 4
+on 2026-09-01; that waiver is not recorded as an inspection that occurred.

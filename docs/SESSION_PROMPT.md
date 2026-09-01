@@ -51,8 +51,10 @@ the real selected row, approved stills or published proof fallbacks and real rou
 touch, reduced-motion, no-JavaScript and failure-fallback checks. Evidence is in
 `.shots/phase4-production/` and `docs/PHASE_4_MOTION_STUDIES.md`.
 
-The independent revert check passes. The next safe action is owner review of the final
-rendered Phase 4 behavior. BeatMind and Vivid production worlds remain Phases 5 and 6.
+The independent revert check passes. The owner explicitly waived personal inspection of the
+final Phase 4 renders and directed the phase closed on 2026-09-01. The next planned phase is
+Phase 5, but do not start it without a new explicit instruction. BeatMind and Vivid production
+worlds remain Phases 5 and 6.
 
 Begin with git status and diff. Preserve all current work. Stop at the applicable gate.
 ```

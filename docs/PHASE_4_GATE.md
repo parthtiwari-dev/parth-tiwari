@@ -1,6 +1,6 @@
 # Phase 4 gate: paper signature, backlight and Sheet Fault
 
-Status: **automated and revert gates passed; final rendered owner approval remains open**.
+Status: **passed and owner-closed**.
 
 Date: 2026-09-01
 
@@ -56,9 +56,11 @@ complete, two deferred projects remained route-less and all internal links and m
 checks passed. The temporary checkout and its local dependency junction were removed after
 the check. The Phase 3 site therefore remains a proven rollback target.
 
-## Open owner gate
+## Owner close
 
-The owner still needs to inspect the final production behavior on phone, tablet and desktop.
-Until that render approval is explicit, Phase 4 is implemented and gate-checked but not
-reported as closed. Phase 3's separately deferred review and deployment work also remains
-open.
+On 2026-09-01 the owner explicitly directed Phase 4 to close and approved promotion without
+performing a personal render inspection. That is recorded as an owner waiver of the remaining
+visual-review step, not as evidence that the inspection occurred. The automated responsive,
+interaction, resilience, performance and independent-revert gates above did run and pass.
+
+Phase 4 is closed. Phase 3's separately deferred review and deployment work remains open.

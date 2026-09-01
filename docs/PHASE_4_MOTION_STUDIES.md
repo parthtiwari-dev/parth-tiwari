@@ -1,6 +1,6 @@
 # Phase 4 paper-transition motion studies
 
-Status: **Sheet Fault selected and implemented; final rendered owner approval remains open**.
+Status: **Sheet Fault selected, implemented and owner-closed**.
 
 Date: 2026-09-01
 
@@ -135,6 +135,7 @@ or browser errors. Keyboard, pointer, centred-row touch, destination focus, Back
 reduced motion, no-JavaScript navigation and forced-failure navigation pass. Evidence lives
 in `.shots/phase4-production/`.
 
-This closes the study-selection checkpoint. The remaining Phase 4 owner gate is approval of
-the final production renders, not another A/B/C selection. The independent revert gate is
-recorded in `docs/PHASE_4_GATE.md` and passes.
+This closes the study-selection checkpoint. The independent revert gate is recorded in
+`docs/PHASE_4_GATE.md` and passes. The owner later waived personal inspection of the final
+renders and explicitly directed Phase 4 to close; the waiver is not represented as an
+inspection that occurred.

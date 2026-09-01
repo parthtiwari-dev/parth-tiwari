@@ -567,9 +567,13 @@ and rerunning `npm run phase3:static-gate` also passes, proving the Phase 3 roll
 - Reduced motion moves directly to the destination with a composed final frame.
 - A temporary-worktree `git revert` leaves the Phase 3 site fully functional.
 - Performance and screenshot checks pass with the enhancement enabled and disabled.
-- Owner approves the final paper, hover/backlight and tear behavior from rendered evidence.
+- Owner accepts the final paper, hover/backlight and tear behavior, or explicitly records a
+  waiver of personal render inspection.
 
-Show the evidence and stop.
+**Gate: passed and owner-closed 2026-09-01.** The automated, responsive, resilience and
+independent-revert evidence is recorded in `docs/PHASE_4_GATE.md`. The owner explicitly
+waived personal inspection of the final renders and directed promotion; do not describe that
+waiver as a render review that occurred. Stop before Phase 5.
 
 ### Phase 5: World foundation and BeatMind pilot
 
