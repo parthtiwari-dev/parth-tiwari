@@ -143,6 +143,21 @@ try {
       console.log(`${pass ? 'PASS' : 'FAIL'} ${viewport.name} ${routeName}: slug=${slug} focus=${JSON.stringify(focusState)} pointer=${JSON.stringify(pointerState)} stage=${transitionState.stage || 'none'} pieces=${transitionState.pieces} p95=${p95.toFixed(1)}ms max=${max.toFixed(1)}ms >33ms=${over33} overflow=${focusState.overflow}px errors=${errors.join(' | ') || 'none'}`)
       if (!pass) failures += 1
       results.push({ viewport: viewport.name, route, slug, p95, max, over33, pass })
+      const interruptedReset = await page.evaluate(() => {
+        window.__paperWorldTransition?.reset()
+        return {
+          rootStage: document.documentElement.dataset.paperWorldStage ?? null,
+          stageVisible: document.querySelector('[data-project-transition-stage]')?.hasAttribute('data-visible') ?? false,
+          activePreview: document.querySelector('[data-project-preview][data-active="true"]')?.getAttribute('data-project-preview') ?? null,
+          panels: document.querySelectorAll('.paper-fault-panel').length,
+        }
+      })
+      const interruptedPass = interruptedReset.rootStage === null
+        && interruptedReset.stageVisible === false
+        && interruptedReset.activePreview === null
+        && interruptedReset.panels === 0
+      console.log(`${interruptedPass ? 'PASS' : 'FAIL'} ${viewport.name} ${routeName} interrupted reset: ${JSON.stringify(interruptedReset)}`)
+      if (!interruptedPass) failures += 1
       await context.close()
 
       // A real navigation must focus the destination heading, and Back must restore the row.
@@ -153,6 +168,7 @@ try {
       const navigationLink = navigationPage.locator('[data-paper-project]').first()
       const navigationSlug = await navigationLink.getAttribute('data-project-slug')
       await navigationLink.scrollIntoViewIfNeeded()
+      const sourceScrollY = await navigationPage.evaluate(() => window.scrollY)
       await navigationLink.press('Enter', { noWaitAfter: true })
       await navigationPage.waitForURL(`**/work/${navigationSlug}/`)
       await navigationPage.waitForTimeout(60)
@@ -160,9 +176,24 @@ try {
       await navigationPage.goBack({ waitUntil: 'load' })
       if (route === '/') await navigationPage.waitForTimeout(1700)
       await navigationPage.waitForTimeout(60)
-      const returnFocus = await navigationPage.evaluate(() => document.activeElement?.getAttribute('data-project-slug'))
-      const navigationPass = destinationFocus === 'case-title' && returnFocus === navigationSlug
-      console.log(`${navigationPass ? 'PASS' : 'FAIL'} ${viewport.name} ${routeName} route: destinationFocus=${destinationFocus || 'none'} returnFocus=${returnFocus || 'none'}`)
+      const returnState = await navigationPage.evaluate(() => ({
+        focus: document.activeElement?.getAttribute('data-project-slug') ?? null,
+        scrollY: window.scrollY,
+        rootStage: document.documentElement.dataset.paperWorldStage ?? null,
+        stageVisible: document.querySelector('[data-project-transition-stage]')?.hasAttribute('data-visible') ?? false,
+        activePreview: document.querySelector('[data-project-preview][data-active="true"]')?.getAttribute('data-project-preview') ?? null,
+        panels: document.querySelectorAll('.paper-fault-panel').length,
+        overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      }))
+      const navigationPass = destinationFocus === 'case-title'
+        && returnState.focus === navigationSlug
+        && Math.abs(returnState.scrollY - sourceScrollY) <= 2
+        && returnState.rootStage === null
+        && returnState.stageVisible === false
+        && returnState.activePreview === null
+        && returnState.panels === 0
+        && returnState.overflow <= 1
+      console.log(`${navigationPass ? 'PASS' : 'FAIL'} ${viewport.name} ${routeName} route: destinationFocus=${destinationFocus || 'none'} sourceScroll=${sourceScrollY} return=${JSON.stringify(returnState)}`)
       if (!navigationPass) failures += 1
       await navigationContext.close()
 

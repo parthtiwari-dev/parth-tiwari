@@ -64,3 +64,15 @@ visual-review step, not as evidence that the inspection occurred. The automated 
 interaction, resilience, performance and independent-revert gates above did run and pass.
 
 Phase 4 is closed. Phase 3's separately deferred review and deployment work remains open.
+
+## Back-restoration repair
+
+On 2026-09-01 a production screenshot proved that Back navigation could restore the source
+page while leaving the dark preview stage visible. The original gate checked returned focus
+but did not inspect the preview, torn-panel or root state after restoration. The Phase 5
+opening repair now clears timers, animation frames, panels and preview state on `pagehide`
+and `pageshow`, while suppressing preview activation during focus restoration.
+
+The gate was extended and rerun at 390, 800 and 1440 pixels on both Home and `/work`.
+All six paths preserve the exact source scroll position and project-row focus with zero
+remaining panels, active previews, root world-stage attributes or horizontal overflow.
