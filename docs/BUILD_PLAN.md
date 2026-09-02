@@ -640,7 +640,7 @@ Follow the waves in `WORLDS.md`. Each world repeats this loop:
 6. Commit the world alone and tick its plan item in that commit.
 7. Run its revert and performance gates before starting another world.
 
-- [ ] Vivid — production implementation and automated gate are in progress; owner review remains required before this item closes.
+- [ ] Vivid — production implementation is committed. Browser-backed automated evidence and owner review remain required before this item closes.
 - [ ] Tathya
 - [ ] MedRAG
 - [ ] Order Supervisor

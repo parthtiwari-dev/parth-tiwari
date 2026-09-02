@@ -1,6 +1,6 @@
 # Phase 6A Vivid Story Loom audit
 
-Status: **implementation in progress; automated browser gate and owner review remain open.**
+Status: **implementation committed; automated browser gate and owner review remain open.**
 
 ## Production contract
 
@@ -31,7 +31,14 @@ seeds, run identifiers, user data and private paths.
 data patterns, route handoff, real-image alternative text, responsive animation, no-JavaScript,
 reduced-motion, Canvas failure, native scrolling, Back restoration and the 30fps/50ms budget.
 
+The content schema, content reference and static-build checks pass. The build emits 31 pages
+and a 30-route sitemap including `/work/vivid/world/`. The isolated revert proof then
+checked out Vivid commit `9d011c3`, built it, reverted that commit without committing, and
+built again. The reverted site emitted 30 pages and a 29-route sitemap, retained
+`/work/beatmind/world/`, and emitted no Vivid world route.
+
 The scripted browser portion is pending because the local browser process was blocked by the
 Codex usage limit on 2026-09-02. This is an environment limitation, not a passing gate. Run
-the command again when local Playwright execution is available, then review the generated
-`.shots/phase6-vivid-world/` renders at 390, 800 and 1440 pixels before closing Vivid.
+`npm run phase6:vivid-gate` again when local Playwright execution is available, then review
+the generated `.shots/phase6-vivid-world/` renders at 390, 800 and 1440 pixels before
+closing Vivid.
