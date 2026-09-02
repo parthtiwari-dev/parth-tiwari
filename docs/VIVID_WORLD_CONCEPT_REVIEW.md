@@ -1,9 +1,8 @@
 # Vivid world concept review
 
-Written 2026-08-31. Status: **Story Loom review animatic implemented; owner storyboard
-approval pending**. The owner authorized implementation after the three-board review. The
-result remains a standalone study, not an Astro world, and does not change the Vivid
-repository or move portfolio implementation ahead of `BUILD_PLAN.md`.
+Written 2026-08-31. Status: **Story Loom selected; original review record retained.** The
+owner later cleared the Kyoto pottery sequence for portfolio use and authorized the Phase 6A
+Astro implementation. It still does not change the Vivid repository or product deployment.
 
 ## Truth boundary
 
@@ -122,9 +121,7 @@ generation and does not imply that an exploratory concept board came from the pr
 6. Implement the chosen world only in the build-plan phase that owns project worlds, using
    the shared world engine proven by the flagship foundation.
 
-## Owner decision
+## Original owner decision
 
-Review the implemented Story Loom scroll and approve, revise or reject it as Vivid's
-storyboard direction. The implemented future-style chapter stays explicitly exploratory;
-production still requires real compatible outputs before any style becomes a capability
-claim.
+Story Loom was selected for production. Future-style chapters remain explicitly exploratory;
+no style becomes a capability claim without real compatible output, provenance and review.

@@ -43,8 +43,8 @@
   "world": {
     "story": "Native scroll moves from one track through five separated stems, analysis, arrangement, render, a dead worker, and a successful retry.",
     "dataSources": ["real exported stem envelopes", "analysis markers", "durable job trace"],
-    "storyboardStatus": "prototyped",
-    "motionDeferred": true
+    "storyboardStatus": "built",
+    "motionDeferred": false
   },
   "caseStudy": {
     "reviewedAt": "2026-08-31",

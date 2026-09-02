@@ -1,6 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content'
 import WorldFoundation from '../../../components/WorldFoundation.astro'
+import VividWorld from '../../../components/VividWorld.astro'
 import { loadValidatedWorldData } from '../../../lib/worlds'
 
 interface Props {
@@ -28,4 +29,6 @@ const { project, world, claims } = Astro.props as Props
 const data = loadValidatedWorldData(world)
 ---
 
-<WorldFoundation project={project} world={world} data={data} claims={claims} />
+{data.kind === 'beatmind'
+  ? <WorldFoundation project={project} world={world} data={data.data} claims={claims} />
+  : <VividWorld project={project} world={world} data={data.data} claims={claims} />}

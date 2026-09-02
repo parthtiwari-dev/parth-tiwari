@@ -85,8 +85,7 @@ remain visible, non-clickable deferred rows and emit no placeholder routes.
 
 Phase 2 closed on 2026-08-31. Every route family has an accepted-for-now review
 implementation, and the shared render, state, contrast, font-budget and static-boundary gates
-pass. Further visual polish is deferred rather than reported as finished. Vivid production
-work has not begun. The owner directed Phase 4 to begin while the remaining Phase 3 render
+pass. Further visual polish is deferred rather than reported as finished. The owner directed Phase 4 to begin while the remaining Phase 3 render
 review, human test and preview deployment stay deferred. The Phase 4 motion studies are
 captured at 390, 800 and 1440 pixels; the owner selected Sheet Fault. Production replaces
 the study's slow full-root snapshot with two transform-only paper panels and measures
@@ -98,4 +97,7 @@ pilot. Home and `/work` enter that world first; projects without a published wor
 to open their paper case studies. The world uses a sanitized, committed export of real
 source and five-stem envelopes plus analysis data. It omits the unverified failure/retry
 trace and emits no audio request. The complete automated and independent-revert gates pass;
-owner visual approval at 390, 800 and 1440 pixels remains open, so Phase 5 is not closed.
+the owner approved the rendered world on 2026-09-02, so Phase 5 is closed. Phase 3's
+deferred review remains a separate open item. Vivid's Story Loom is the sole Phase 6A world
+in implementation, using a cleared four-frame Kyoto evaluation sequence, a text-only
+missing-evidence boundary and an explicit unresolved commercial-model licence notice.

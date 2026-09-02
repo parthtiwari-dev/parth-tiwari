@@ -25,14 +25,15 @@ Where to look, and what is still true.
 | [`PHASE_4_GATE.md`](PHASE_4_GATE.md) | Production Sheet Fault render, interaction, resilience, bundle and independent-revert evidence |
 | [`PHASE_5_BEATMIND_STORYBOARD.md`](PHASE_5_BEATMIND_STORYBOARD.md) | Selected Precision Descent treatment, conditional trace scenes, generated-machinery boundary and responsive storyboard gate |
 | [`PHASE_5_DATA_AUDIT.md`](PHASE_5_DATA_AUDIT.md) | Sanitized BeatMind export, isolated exporter branch, omitted trace, withheld audio and world-to-case-study route contract |
-| [`PHASE_5_GATE.md`](PHASE_5_GATE.md) | Full world route, responsive, data/privacy, fallback, lifecycle, transfer and independent-revert evidence; owner visual approval remains open |
+| [`PHASE_5_GATE.md`](PHASE_5_GATE.md) | Closed BeatMind world route, responsive, data/privacy, fallback, lifecycle, transfer and independent-revert evidence |
+| [`PHASE_6_VIVID_AUDIT.md`](PHASE_6_VIVID_AUDIT.md) | Vivid Story Loom publication-only export, rights boundaries and pending production-gate evidence |
 | [`CASE_STUDY_CONTRACT.md`](CASE_STUDY_CONTRACT.md) | Required evidence, media, accessibility and publication contract for every paper case study |
 | [`CASE_STUDY_BATCH_AUDIT.md`](CASE_STUDY_BATCH_AUDIT.md) | Source branches, commit boundaries, proof decisions, route matrix and gate evidence for the eight-project Phase 3 batch |
 | [`PHASE_2_BEATMIND_WORLD_STUDY.md`](PHASE_2_BEATMIND_WORLD_STUDY.md) | Approved Sound Foundry animatic, real BeatMind source lock, rendered evidence and production inputs still blocked |
 | [`PHASE_2_BEATMIND_WORLD_RESEARCH.md`](PHASE_2_BEATMIND_WORLD_RESEARCH.md) | Pudding and 124-entry Awwwards research, approved Sound Foundry reference lock and implementation boundary |
 | [`PHASE_2_WORLDS_ANIMATION_MEMO.md`](PHASE_2_WORLDS_ANIMATION_MEMO.md) | Research-only candidate graphics and missing real-data sources for the seven specced worlds |
-| [`VIVID_WORLD_CONCEPT_REVIEW.md`](VIVID_WORLD_CONCEPT_REVIEW.md) | Current-product audit, three Vivid world directions, truthful data contract and pending owner choice |
-| [`VIVID_WORLD_STUDY.md`](VIVID_WORLD_STUDY.md) | Story Loom review animatic, real Vivid evidence boundary, responsive checks and production blockers |
+| [`VIVID_WORLD_CONCEPT_REVIEW.md`](VIVID_WORLD_CONCEPT_REVIEW.md) | Current-product audit, three Vivid world directions and the selected Story Loom basis |
+| [`VIVID_WORLD_STUDY.md`](VIVID_WORLD_STUDY.md) | Story Loom review animatic and the original evidence boundary that production preserves |
 | [`VIVID_CASE_STUDY_AUDIT.md`](VIVID_CASE_STUDY_AUDIT.md) | Main-to-upgrade-flux history audit, evidence map and durable update workflow for `/work/vivid/` |
 | [`REBUILD_BRIEF.md`](REBUILD_BRIEF.md) | Why v1 is being replaced. The guards that prevent a repeat |
 | [`TEN_SECOND_TEST.md`](TEN_SECOND_TEST.md) | 🔴 The acceptance gate. **Still never run** |
@@ -154,4 +155,7 @@ uncorrelated failure/retry trace and emits no audio request. `npm run phase5:gat
 390, 800 and 1440 pixel animated renders plus static, reduced-motion, Canvas-failure, print,
 teardown and Back-restoration states. Owner visual approval and independent revert evidence
 were the remaining closeout checks; the independent revert evidence now passes. Owner visual
-approval remains open before Phase 5 can close.
+approval was recorded on 2026-09-02, closing Phase 5. Phase 3's deferred review remains a
+separate open item. Vivid's Story Loom is the sole Phase 6A world now in implementation; it
+uses a cleared four-frame Kyoto evaluation sequence, a textual missing-evidence boundary and
+an explicit unresolved commercial-model licence notice.

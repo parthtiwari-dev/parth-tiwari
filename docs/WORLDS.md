@@ -137,7 +137,7 @@ storytelling demonstration, not a working mixer, and performs no runtime fetch.
 
 ---
 
-### 02 · Vivid (Stick and Dot) — *flagship · live · 🧪 prototyped*
+### 02 · Vivid (Stick and Dot) — *flagship · live · ⚙️ production route awaiting owner review*
 
 **The story.** A script becomes a shot-by-shot storyboard with one character who stays
 the same person across every frame. A project-specific LoRA adapter supports the generation
@@ -155,9 +155,9 @@ resolves each frame, consistency is checked, and the failed previous-frame condi
 experiment becomes the turn in the story. Reduced motion shows the resolved storyboard
 and the failed comparison side by side.
 
-**Accent.** The palette of the owner-approved publishable world sequence. Until that complete
-sequence is selected, the concept studies use darkroom black, indigo, pottery amber and one oxblood
-failure mark as exploratory colours rather than product evidence.
+**Accent.** The production Story Loom uses dark wood, pottery amber, pale neutral thread and
+one oxblood evidence-boundary mark. Colour is decorative; the real evaluation frames carry
+the product evidence.
 
 **Content.** The recorded completed LoRA run used 1,996 discovered images and finished
 2,500 steps. A separate 42-shot Turbo comparison was 5.90 times faster but was rejected
@@ -168,15 +168,11 @@ Vivid, but no durable count source is attached, so the number remains unpublishe
 previous frame's hand pose overrode the text prompt and later shots ran roughly four
 times slower.
 
-**Build notes.** Real local evaluation contact sheets now exist, including single-, two- and
-three-character sequences. Two unchanged single-character frames are now used as labelled
-product proof in the static `/work/vivid/` paper case study. That does not select or clear a
-complete production-world sequence. A generated image is still a shipped asset and its model provenance matters:
-current FLUX.2-dev self-hosting is non-commercial under the model licence. Before this world
-ships, choose one publishable run, export its real plan, character references, shot images,
-inference profile and evaluation/failure evidence at build time, and record the applicable
-rights. The prior empty-state capture is no longer the only available source, but it remains
-unsuitable.
+**Build notes.** The owner cleared one Kyoto pottery evaluation sequence for portfolio use:
+one neutral anchor and four ordered real frames. Its production Story Loom is a static Astro
+export with no runtime Vivid request. The decorative loom plate is not product output. A
+publishable pose-copying comparison is still unavailable, so that failure stays text-only.
+Vivid's commercial product-model licence is unresolved; the route states that boundary.
 
 ---
 

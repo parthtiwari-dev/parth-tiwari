@@ -282,6 +282,12 @@ authorized before the build-plan phase that owns it.
   and has not been pushed or deployed.
 - BeatMind ships no failure/retry scene without an explicitly correlated trace and no audio
   element without a cleared excerpt plus licence record.
+- BeatMind received owner visual approval on 2026-09-02 and Phase 5 is closed. Phase 3's
+  deferred owner review remains open and is not implied by this approval.
+- Vivid production uses **Story Loom**. Its decorative loom plate never represents product
+  output; one cleared Kyoto pottery evaluation anchor and four ordered real frames do. The
+  unavailable pose-copying visual pair stays a textual evidence boundary, and Vivid's
+  commercial product-model licence remains explicitly unresolved.
 - Whether any optional interaction teaches enough to justify its complexity
 
 ### Phase 7

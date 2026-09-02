@@ -1,6 +1,6 @@
 # Build-session prompt
 
-Use this prompt in a fresh session while the Phase 5 owner-review gate remains open.
+Use this prompt in a fresh session while the Vivid Phase 6A production gate remains open.
 
 ```text
 Read these in order before taking action:
@@ -47,10 +47,12 @@ data/privacy, no-JavaScript, reduced-motion, forced-Canvas-failure, lifecycle, t
 print and Back-restoration checks. The BeatMind and foundation commits also pass independent
 revert proofs. Evidence is in .shots/phase5-beatmind-world/ and docs/PHASE_5_GATE.md.
 
-Phase 5 is still open because the owner has not yet visually approved the rendered world at
-390, 800 and 1440 pixels. The next safe action is that owner review and any resulting bounded
-BeatMind refinement, followed by a fresh phase5:gate run. Do not begin Vivid or Phase 6. Do
-not push, merge or deploy without a separate explicit instruction.
+The owner approved BeatMind at 390, 800 and 1440 pixels on 2026-09-02, closing Phase 5.
+Phase 6A is limited to Vivid's Story Loom. It uses a cleared Kyoto pottery evaluation anchor
+and four frames, states its missing pose-comparison boundary in text, and explicitly retains
+the unresolved commercial model-licence boundary. Complete its fresh gate and owner review
+before beginning any other world. Do not push, merge or deploy without a separate explicit
+instruction.
 ```
 
 ## Drift checks
@@ -60,6 +62,6 @@ Stop the session if:
 - a public claim or animated value has no provenance record;
 - BeatMind product-branch work is proposed as required production application code;
 - an omitted trace or audio excerpt is replaced with invented data;
-- Phase 5 is described as closed before owner visual approval;
-- Phase 6 begins before the Phase 5 gate actually closes;
+- Phase 5 is described as open despite recorded owner visual approval;
+- another Phase 6 world begins before Vivid's gate and owner review;
 - a gate is described as passing without current output.

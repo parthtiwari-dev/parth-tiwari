@@ -1,7 +1,8 @@
 # Vivid Story Loom review study
 
-Implemented 2026-08-31. Status: **standalone owner-review animatic; not a production Astro
-route and not a completed project world**.
+Implemented 2026-08-31. Status: **standalone review animatic retained as research input.**
+Its selected Story Loom direction is now being implemented as the separate Phase 6A Astro
+world. The animatic itself remains non-production evidence.
 
 ## What was built
 
@@ -68,7 +69,7 @@ found and fixed by removing the redundant source readout below 820 px. The final
 has no open P0, P1 or P2 issue. The concept plate remains a large review PNG; production must
 derive responsive, licensed AVIF/WebP plates only after the direction and crops are approved.
 
-## What this does not authorize
+## What this animatic did not authorize
 
 - This study itself did not add `/work/vivid/`. A later Phase 3B change added the separate
   static paper case study through the shared case-study contract.
@@ -76,11 +77,12 @@ derive responsive, licensed AVIF/WebP plates only after the direction and crops 
 - It does not approve the current four-shot set as the complete world dataset. The paper case
   now uses two unchanged frames as explicitly labelled evaluation evidence; the full world
   sequence and model-licence boundary still require their own production review.
-- It does not move the portfolio from Phase 3 to the later project-world implementation
-  phase.
+- It did not by itself move the portfolio from Phase 3 to the later project-world
+  implementation phase. The owner subsequently approved Phase 5 closeout and Phase 6A Vivid
+  implementation under the recorded work-order exception.
 
 ## Owner review
 
-The owner should review the complete scroll, especially the frame-arrival, failure,
-future-style and ending chapters. Approval would lock Story Loom as Vivid's storyboard
-direction; it would not yet approve these evaluation images as the production dataset.
+Story Loom is now the selected production direction. The owner later cleared this one Kyoto
+sequence for portfolio use. The Phase 6A route still requires its own production gate and
+owner render review; this animatic is not that gate.

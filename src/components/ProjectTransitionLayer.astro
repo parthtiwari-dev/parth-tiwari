@@ -11,7 +11,10 @@ const publishedProjects = projects.filter((project) => project.data.caseStudy)
 
 const previews = publishedProjects.map((project) => {
   const proof = project.data.caseStudy!.cover.proof
-  const approvedWorldStill = project.id === 'beatmind' ? '/media/beatmind-world-still.jpg' : undefined
+  const approvedWorldStill = {
+    beatmind: '/media/beatmind-world-still.jpg',
+    vivid: '/media/vivid-story-loom-plate.png',
+  }[project.id]
   const imageSource = approvedWorldStill
     ?? (proof.kind === 'image' ? proof.src : proof.kind === 'video' ? proof.poster : undefined)
 

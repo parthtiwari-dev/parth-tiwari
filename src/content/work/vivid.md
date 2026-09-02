@@ -58,8 +58,8 @@
   "world": {
     "story": "A screenplay moves through a story loom: scene cards establish the world, character anchors bind the cast, contact sheets resolve into several visual treatments, and the rejected fast result is exposed beside the selected baseline.",
     "dataSources": ["generation evaluation JSON", "LoRA training log", "generated storyboard frames"],
-    "storyboardStatus": "prototyped",
-    "motionDeferred": true
+    "storyboardStatus": "built",
+    "motionDeferred": false
   },
   "caseStudy": {
     "reviewedAt": "2026-08-31",

@@ -94,6 +94,47 @@ export const beatMindWorldDataV1Schema = z.object({
   ]),
 })
 
+const vividFrameSchema = z.object({
+  src: z.string().startsWith('/'),
+  alt: z.string().min(24),
+  width: z.number().int().positive(),
+  height: z.number().int().positive(),
+  label: z.string().min(3),
+  continuityNote: z.string().min(12),
+})
+
+/**
+ * A deliberately small, publication-only export.  Prompts, seeds, run IDs,
+ * and raw evaluator material never belong in the portfolio build.
+ */
+export const vividWorldDataV1Schema = z.object({
+  version: z.literal(1),
+  project: z.literal('vivid'),
+  reviewedOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  sourceAudit: z.object({ repository: z.literal('Vivid'), commit: z.string().regex(/^[0-9a-f]{7,40}$/i) }),
+  portfolioUse: z.object({
+    ownerCleared: z.literal(true),
+    sequenceLabel: z.string().min(12),
+    commercialModelLicence: z.literal('unresolved'),
+    licenceBoundary: z.string().min(20),
+  }),
+  plan: z.array(z.object({
+    label: z.string().min(3),
+    detail: z.string().min(12),
+  })).min(3).max(6),
+  characterAnchor: vividFrameSchema,
+  frames: z.array(vividFrameSchema).length(4),
+  evaluation: z.object({
+    baselineClaim: z.string().min(3),
+    rejectedTurboClaim: z.string().min(3),
+    rejectedLabel: z.string().min(12),
+  }),
+  failureEvidence: z.object({
+    status: z.literal('visual-comparison-unavailable'),
+    explanation: z.string().min(24),
+  }),
+})
+
 export const claimSchema = z.object({
   wording: z.string().min(8),
   display: z.string().min(1),
@@ -271,8 +312,8 @@ export const workSchema = z.object({
   world: z.object({
     story: z.string().min(20),
     dataSources: z.array(z.string().min(3)).min(1),
-    storyboardStatus: z.enum(['specced', 'prototyped']),
-    motionDeferred: z.literal(true),
+    storyboardStatus: z.enum(['specced', 'prototyped', 'built']),
+    motionDeferred: z.boolean(),
   }),
   caseStudy: caseStudySchema.optional(),
   claimRefs: z.array(z.string().min(3)),
