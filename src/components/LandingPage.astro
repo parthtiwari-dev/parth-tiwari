@@ -3,6 +3,7 @@ import type { CollectionEntry } from 'astro:content'
 import { BOOKING_URL, CONTACT_EMAIL_HREF, WHATSAPP_URL } from '../config/site'
 import ProjectTransitionLayer from './ProjectTransitionLayer.astro'
 import SiteMeta from './SiteMeta.astro'
+import { projectDoorHref } from '../lib/worlds'
 import '../styles/landing.css'
 
 interface Props {
@@ -11,9 +12,10 @@ interface Props {
   notes: CollectionEntry<'notes'>[]
   services: CollectionEntry<'services'>[]
   siteCopy: CollectionEntry<'site'>['data']
+  worlds: CollectionEntry<'worlds'>[]
 }
 
-const { projects, claims, notes, services, siteCopy } = Astro.props
+const { projects, claims, notes, services, siteCopy, worlds } = Astro.props
 const orderedProjects = [...projects].sort((left, right) => left.data.order - right.data.order)
 const publishedNotes = notes
   .filter((entry) => entry.data.state === 'published')
@@ -26,6 +28,8 @@ const proofClaims = proofIds
   .filter((claim): claim is CollectionEntry<'claims'> => Boolean(claim?.data.publish))
 const effortLabels = { flagship: 'Flagship', substantial: 'Substantial', focused: 'Focused' }
 const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In progress', running: 'Running', 'take-home': 'Take-home' }
+const beatMindProject = orderedProjects.find((project) => project.id === 'beatmind')
+const beatMindHref = beatMindProject ? projectDoorHref(beatMindProject, worlds) : '/work/'
 ---
 
 <!doctype html>
@@ -80,7 +84,7 @@ const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In prog
                 <span><b>03</b> Read the record</span>
               </div>
             </div>
-            <figcaption><p>The case studies are open now. The interactive world layer is being built one project at a time.</p><a href="/work/beatmind/">Read BeatMind <span aria-hidden="true">↗</span></a></figcaption>
+            <figcaption><p>The case studies are open now. Published worlds open first, then hand off to the engineering record.</p><a href={beatMindHref}>Enter BeatMind <span aria-hidden="true">↗</span></a></figcaption>
           </figure>
 
           <div class="quiet-proof" aria-label="Three verified examples from the work">
@@ -119,6 +123,7 @@ const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In prog
           <ol class="project-register">
             {orderedProjects.map((project, index) => {
               const isPublished = Boolean(project.data.caseStudy)
+              const projectHref = projectDoorHref(project, worlds)
               const rowContent = (
                 <>
                   <span class="project-number">{String(index + 1).padStart(2, '0')}</span>
@@ -129,8 +134,8 @@ const statusLabels = { live: 'Live', shipped: 'Shipped', 'in-progress': 'In prog
 
               return (
                 <li class="project-item">
-                  {isPublished
-                    ? <a class:list={['project-row', project.data.tier === 'flagship' && 'is-flagship']} href={`/work/${project.id}/`} aria-label={`Read the ${project.data.title} case study`} data-paper-project data-project-slug={project.id}>{rowContent}</a>
+                  {projectHref
+                    ? <a class:list={['project-row', project.data.tier === 'flagship' && 'is-flagship']} href={projectHref} aria-label={`Open ${project.data.title}`} data-paper-project data-project-slug={project.id}>{rowContent}</a>
                     : <div class:list={['project-row', 'is-deferred', project.data.tier === 'flagship' && 'is-flagship']} aria-label={`${project.data.title}. Case study in development.`}>{rowContent}</div>}
                 </li>
               )

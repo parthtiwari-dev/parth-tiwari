@@ -584,21 +584,31 @@ explicit action opens the separate complete paper case study.
 
 **Owner review before work**
 
-- Approve the shared world grammar and BeatMind storyboard before code.
-- Review each BeatMind scene: ingest, separation, analysis, arrangement/mix, render,
+- [x] Approve the shared world grammar and BeatMind storyboard before code. The owner
+  approved the Phase 5 plan on 2026-09-01 and selected Precision Descent.
+- [x] Review each BeatMind scene: ingest, separation, analysis, arrangement/mix, render,
   failure and retry, measurement and boundary.
-- Decide which real audio excerpt may ship and its licence. Sound is always user-initiated.
+- [x] Decide which real audio excerpt may ship and its licence. No excerpt is currently
+  cleared, so BeatMind starts with audio withheld and no media element.
 
 **Do**
 
-- [ ] Build one shared world lifecycle: clock, visibility pause, resize, reduced motion,
-  static-frame fallback and cleanup.
-- [ ] Define a data contract that separates project facts from drawing code.
-- [ ] Implement BeatMind from real envelope and job-trace data.
-- [ ] Make scrolling demonstrate the product story without requiring interaction.
-- [ ] Offer listening only through an explicit labelled control; never autoplay audio.
-- [ ] Keep mixing and rendering as a narrative demonstration, not a fake production editor.
-- [ ] Record measured frame rate, bundle cost and teardown behavior.
+- [x] Build one shared world lifecycle: clock, visibility pause, resize, reduced motion,
+  static-frame fallback and cleanup. The BeatMind pilot exercises the lifecycle and its
+  teardown/restoration checks at all three target widths.
+- [x] Define a data contract that separates project facts from drawing code. The shared
+  world collection, versioned BeatMind data schema, build-time artifact loader and route
+  resolver passed the static build on 2026-09-02; the animated lifecycle is proven by the
+  automated world gate.
+- [x] Implement BeatMind from real source/five-stem envelopes and analysis data. Failure and
+  retry are omitted because no explicitly correlated publishable job trace exists.
+- [x] Make scrolling demonstrate the product story without requiring interaction. Native
+  vertical document scroll drives eight readable scenes without capture or snapping.
+- [x] Keep audio honest. No excerpt is cleared, so the world emits no audio element or media
+  request; the explicit-control requirement applies when a licensed excerpt exists.
+- [x] Keep mixing and rendering as a narrative demonstration, not a fake production editor.
+- [x] Record measured frame rate, bundle cost and teardown behavior. `phase5:gate` records a
+  30fps ceiling, renderer draw cost, transfer by asset class and lifecycle cleanup.
 
 **Gate**
 
@@ -609,6 +619,14 @@ explicit action opens the separate complete paper case study.
 - Owner approves the full scroll story on phone, tablet and desktop.
 
 Show the storyboard comparison, measurements and gate output, then stop.
+
+**Automated checkpoint, 2026-09-02:** `npm run phase5:gate` passes the earlier content,
+static-site and Phase 4 suites plus the BeatMind world suite. Phone, tablet and desktop have
+zero horizontal overflow. The world performs no runtime data or audio request; no-JavaScript,
+reduced-motion, forced-Canvas-failure and print states remain complete. Independent revert
+proof passes for both the BeatMind implementation and shared foundation. Owner visual
+approval was recorded on 2026-09-02, so Phase 5 is closed. Phase 3's deferred owner review
+remains separately open.
 
 ### Phase 6: Remaining worlds, one reviewed story at a time
 
@@ -622,7 +640,7 @@ Follow the waves in `WORLDS.md`. Each world repeats this loop:
 6. Commit the world alone and tick its plan item in that commit.
 7. Run its revert and performance gates before starting another world.
 
-- [ ] Vivid
+- [ ] Vivid — production implementation is committed. Browser-backed automated evidence and owner review remain required before this item closes.
 - [ ] Tathya
 - [ ] MedRAG
 - [ ] Order Supervisor

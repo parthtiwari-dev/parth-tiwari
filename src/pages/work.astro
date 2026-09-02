@@ -2,10 +2,11 @@
 import { getCollection } from 'astro:content'
 import WorkRegister from '../components/WorkRegister.astro'
 
-const [projects, claims, siteEntries] = await Promise.all([
+const [projects, claims, siteEntries, worlds] = await Promise.all([
   getCollection('work'),
   getCollection('claims'),
   getCollection('site'),
+  getCollection('worlds'),
 ])
 const workCopy = siteEntries[0]?.data.work
 if (!workCopy) throw new Error('The work register requires the validated site copy entry.')
@@ -18,4 +19,5 @@ if (!workCopy) throw new Error('The work register requires the validated site co
   intro={workCopy.intro}
   sortLabels={workCopy.sortLabels}
   activeFilterLabel={workCopy.activeFilterLabel}
+  worlds={worlds}
 />

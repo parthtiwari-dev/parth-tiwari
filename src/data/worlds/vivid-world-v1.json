@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "project": "vivid",
+  "reviewedOn": "2026-09-02",
+  "sourceAudit": { "repository": "Vivid", "commit": "852da6d" },
+  "portfolioUse": {
+    "ownerCleared": true,
+    "sequenceLabel": "Kyoto pottery fixed evaluation sequence",
+    "commercialModelLicence": "unresolved",
+    "licenceBoundary": "The sequence is cleared for this portfolio as evaluation evidence; Vivid's commercial product-model licence is still unresolved."
+  },
+  "plan": [
+    { "label": "Scene", "detail": "A ceramic artist works through one quiet workshop moment." },
+    { "label": "Character", "detail": "One neutral anchor defines the person who must persist." },
+    { "label": "Shots", "detail": "Four ordered beats change framing and action without treating any one image as enough." },
+    { "label": "Review", "detail": "The sequence is judged together before a profile can be promoted." }
+  ],
+  "characterAnchor": {
+    "src": "/media/vivid-character-anchor.jpg",
+    "alt": "Neutral reference portrait of the ceramic artist used to assess continuity across the Kyoto pottery sequence.",
+    "width": 640,
+    "height": 640,
+    "label": "Neutral character anchor",
+    "continuityNote": "The person to preserve, not a previous rendered pose."
+  },
+  "frames": [
+    {
+      "src": "/media/vivid-eval-shot-01.jpg",
+      "alt": "Real Vivid evaluation frame showing a ceramic artist seated in a wooden Kyoto workshop.",
+      "width": 1152,
+      "height": 640,
+      "label": "Shot 01 / establish",
+      "continuityNote": "Person, workshop, wardrobe and light enter the sequence."
+    },
+    {
+      "src": "/media/vivid-eval-shot-02.jpg",
+      "alt": "Real Vivid evaluation frame showing the same ceramic artist working at a pottery wheel in the Kyoto workshop.",
+      "width": 1152,
+      "height": 640,
+      "label": "Shot 02 / action",
+      "continuityNote": "The action changes while the character remains recognisable."
+    },
+    {
+      "src": "/media/vivid-eval-shot-03.jpg",
+      "alt": "Real Vivid evaluation frame showing the ceramic artist examining a blue bowl in the Kyoto workshop.",
+      "width": 1152,
+      "height": 640,
+      "label": "Shot 03 / detail",
+      "continuityNote": "A closer beat tests whether the same scene can advance."
+    },
+    {
+      "src": "/media/vivid-eval-shot-04.jpg",
+      "alt": "Real Vivid evaluation frame showing the ceramic artist holding a blue bowl in her workshop.",
+      "width": 1152,
+      "height": 640,
+      "label": "Shot 04 / resolve",
+      "continuityNote": "The contact sheet is the honest unit of judgement."
+    }
+  ],
+  "evaluation": {
+    "baselineClaim": "vivid-pre-rebuild-evaluation",
+    "rejectedTurboClaim": "vivid-turbo-evaluation",
+    "rejectedLabel": "Turbo was faster, then rejected rather than shipped."
+  },
+  "failureEvidence": {
+    "status": "visual-comparison-unavailable",
+    "explanation": "The verified pose-copying finding has no cleared visual comparison for this page, so it is stated here without an illustrated substitute."
+  }
+}

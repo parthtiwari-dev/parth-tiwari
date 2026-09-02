@@ -1,0 +1,29 @@
+{
+  "projectSlug": "vivid",
+  "published": true,
+  "reviewedAt": "2026-09-02",
+  "selectedTreatment": "Story Loom",
+  "staticFrame": {
+    "src": "/media/vivid-story-loom-plate.png",
+    "alt": "Decorative dark wooden loom with empty film rails, used as a non-evidentiary frame behind the real Vivid sequence.",
+    "width": 1536,
+    "height": 1024
+  },
+  "scenes": [
+    { "id": "scene", "label": "01 / Written scene", "heading": "A scene needs beats before it needs frames.", "narration": "Vivid begins by turning a written idea into a small ordered plan: world, person, action, and the next image that has to earn its place." },
+    { "id": "anchor", "label": "02 / Character anchor", "heading": "The person is the master pattern.", "narration": "A neutral reference gives the sequence a person to keep, without making an earlier rendered pose the rule for every following shot." },
+    { "id": "bindings", "label": "03 / Reference bindings", "heading": "The plan and anchor become the loom's threads.", "narration": "The visible threads stand for planned continuity bindings. They are decorative movement; the ordinary narration carries the real boundary." },
+    { "id": "frames", "label": "04 / Contact sheet", "heading": "Four frames make one question visible.", "narration": "These are real frames from the cleared Kyoto pottery evaluation sequence. Together they are more useful than one showcase image." },
+    { "id": "turbo", "label": "05 / Rejected speedup", "heading": "Faster was not good enough to ship.", "narration": "The faster Turbo profile stayed rejected after visual review found quality regressions. The baseline remained the production choice." },
+    { "id": "failure", "label": "06 / Evidence boundary", "heading": "A missing visual stays missing.", "narration": "The documented pose-copying finding is not reenacted here because the publishable before-and-after comparison is unavailable." },
+    { "id": "boundary", "label": "07 / Current boundary", "heading": "A promising sequence is not a solved product.", "narration": "The sequence is portfolio-cleared evidence. Commercial product-model licensing remains unresolved, and no claimed capability goes beyond the audited record." },
+    { "id": "handoff", "label": "08 / Deep-dive handoff", "heading": "The loom stops. The case study keeps the record.", "narration": "The paper case study carries the architecture, measured baseline, rejected Turbo result, failures, research and future work." }
+  ],
+  "accents": { "primary": "#c47a3a", "secondary": "#8fa7ab", "fault": "#b8241a" },
+  "dataArtifact": "vivid-world-v1.json",
+  "audio": { "status": "withheld", "explanation": "This visual evaluation world has no audio asset or audio interaction." },
+  "sourceAudit": [
+    { "label": "Vivid fixed Kyoto evaluation sequence", "revision": "852da6d" },
+    { "label": "Portfolio owner clearance record", "revision": "20260902" }
+  ]
+}

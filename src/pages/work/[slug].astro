@@ -7,13 +7,15 @@ interface Props {
   claims: CollectionEntry<'claims'>[]
   relatedNote?: CollectionEntry<'notes'>
   caseStudySlugs: string[]
+  worldHref?: string
 }
 
 export async function getStaticPaths() {
-  const [projects, claims, notes] = await Promise.all([
+  const [projects, claims, notes, worlds] = await Promise.all([
     getCollection('work'),
     getCollection('claims'),
     getCollection('notes'),
+    getCollection('worlds'),
   ])
   const caseStudies = projects.filter((entry) => Boolean(entry.data.caseStudy))
 
@@ -24,11 +26,12 @@ export async function getStaticPaths() {
       claims,
       relatedNote: notes.find((entry) => entry.id === project.data.whatBroke.noteSlug),
       caseStudySlugs: caseStudies.map((entry) => entry.id),
+      worldHref: worlds.find((entry) => entry.data.published && entry.data.projectSlug === project.id) ? `/work/${project.id}/world/` : undefined,
     },
   }))
 }
 
-const { project, claims, relatedNote, caseStudySlugs } = Astro.props as Props
+const { project, claims, relatedNote, caseStudySlugs, worldHref } = Astro.props as Props
 ---
 
-<CaseStudyReview project={project} claims={claims} relatedNote={relatedNote} caseStudySlugs={caseStudySlugs} />
+<CaseStudyReview project={project} claims={claims} relatedNote={relatedNote} caseStudySlugs={caseStudySlugs} worldHref={worldHref} />

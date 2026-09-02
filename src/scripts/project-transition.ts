@@ -22,6 +22,7 @@ if (stage && links.length && previews.length) {
   let scrollFrame = 0
   let navigating = false
   let faultOverlay: HTMLElement | undefined
+  let restoringReturnFocus = false
 
   const previewFor = (slug: string) => previews.find((preview) => preview.dataset.projectPreview === slug)
 
@@ -36,7 +37,7 @@ if (stage && links.length && previews.length) {
 
   const activate = (link: HTMLAnchorElement) => {
     const slug = link.dataset.projectSlug
-    if (!slug || navigating) return
+    if (!slug || navigating || restoringReturnFocus) return
     const preview = previewFor(slug)
     if (!preview) return
     const previewImage = preview.querySelector<HTMLImageElement>('img')
@@ -93,6 +94,10 @@ if (stage && links.length && previews.length) {
   }
 
   const reset = () => {
+    window.clearTimeout(hoverTimer)
+    hoverTimer = 0
+    if (scrollFrame) window.cancelAnimationFrame(scrollFrame)
+    scrollFrame = 0
     navigating = false
     faultOverlay?.remove()
     faultOverlay = undefined
@@ -230,12 +235,19 @@ if (stage && links.length && previews.length) {
     if (activeLink) positionStage(activeLink)
     requestCoarsePreview()
   }, { passive: true })
+  window.addEventListener('pagehide', reset)
   window.addEventListener('pageshow', () => {
+    reset()
     const returnSlug = history.state?.paperWorldReturn
     if (typeof returnSlug !== 'string') return
     const returnLink = links.find((link) => link.dataset.projectSlug === returnSlug)
     if (!returnLink) return
-    returnLink.focus({ preventScroll: true })
+    restoringReturnFocus = true
+    try {
+      returnLink.focus({ preventScroll: true })
+    } finally {
+      restoringReturnFocus = false
+    }
     const { paperWorldReturn: _removed, ...nextState } = history.state
     history.replaceState(nextState, '', window.location.href)
   })

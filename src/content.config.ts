@@ -9,6 +9,7 @@ import {
   serviceSchema,
   siteCopySchema,
   workSchema,
+  worldSchema,
 } from './content/schemas.mjs'
 
 const work = defineCollection({ loader: glob({ pattern: '**/*.md', base: './src/content/work' }), schema: workSchema })
@@ -19,5 +20,6 @@ const experience = defineCollection({ loader: glob({ pattern: '**/*.json', base:
 const resume = defineCollection({ loader: glob({ pattern: '**/*.json', base: './src/content/resume' }), schema: resumeSchema })
 const services = defineCollection({ loader: glob({ pattern: '**/*.json', base: './src/content/services' }), schema: serviceSchema })
 const site = defineCollection({ loader: glob({ pattern: '**/*.json', base: './src/content/site' }), schema: siteCopySchema })
+const worlds = defineCollection({ loader: glob({ pattern: '**/*.json', base: './src/content/worlds' }), schema: worldSchema })
 
-export const collections = { work, notes, claims, education, experience, resume, services, site }
+export const collections = { work, notes, claims, education, experience, resume, services, site, worlds }

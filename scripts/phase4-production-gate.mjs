@@ -143,6 +143,21 @@ try {
       console.log(`${pass ? 'PASS' : 'FAIL'} ${viewport.name} ${routeName}: slug=${slug} focus=${JSON.stringify(focusState)} pointer=${JSON.stringify(pointerState)} stage=${transitionState.stage || 'none'} pieces=${transitionState.pieces} p95=${p95.toFixed(1)}ms max=${max.toFixed(1)}ms >33ms=${over33} overflow=${focusState.overflow}px errors=${errors.join(' | ') || 'none'}`)
       if (!pass) failures += 1
       results.push({ viewport: viewport.name, route, slug, p95, max, over33, pass })
+      const interruptedReset = await page.evaluate(() => {
+        window.__paperWorldTransition?.reset()
+        return {
+          rootStage: document.documentElement.dataset.paperWorldStage ?? null,
+          stageVisible: document.querySelector('[data-project-transition-stage]')?.hasAttribute('data-visible') ?? false,
+          activePreview: document.querySelector('[data-project-preview][data-active="true"]')?.getAttribute('data-project-preview') ?? null,
+          panels: document.querySelectorAll('.paper-fault-panel').length,
+        }
+      })
+      const interruptedPass = interruptedReset.rootStage === null
+        && interruptedReset.stageVisible === false
+        && interruptedReset.activePreview === null
+        && interruptedReset.panels === 0
+      console.log(`${interruptedPass ? 'PASS' : 'FAIL'} ${viewport.name} ${routeName} interrupted reset: ${JSON.stringify(interruptedReset)}`)
+      if (!interruptedPass) failures += 1
       await context.close()
 
       // A real navigation must focus the destination heading, and Back must restore the row.
@@ -152,17 +167,34 @@ try {
       if (route === '/') await navigationPage.waitForTimeout(1700)
       const navigationLink = navigationPage.locator('[data-paper-project]').first()
       const navigationSlug = await navigationLink.getAttribute('data-project-slug')
+      const navigationHref = await navigationLink.getAttribute('href')
       await navigationLink.scrollIntoViewIfNeeded()
+      const sourceScrollY = await navigationPage.evaluate(() => window.scrollY)
       await navigationLink.press('Enter', { noWaitAfter: true })
-      await navigationPage.waitForURL(`**/work/${navigationSlug}/`)
+      await navigationPage.waitForURL(`**${navigationHref}`)
       await navigationPage.waitForTimeout(60)
       const destinationFocus = await navigationPage.evaluate(() => document.activeElement?.id)
       await navigationPage.goBack({ waitUntil: 'load' })
       if (route === '/') await navigationPage.waitForTimeout(1700)
       await navigationPage.waitForTimeout(60)
-      const returnFocus = await navigationPage.evaluate(() => document.activeElement?.getAttribute('data-project-slug'))
-      const navigationPass = destinationFocus === 'case-title' && returnFocus === navigationSlug
-      console.log(`${navigationPass ? 'PASS' : 'FAIL'} ${viewport.name} ${routeName} route: destinationFocus=${destinationFocus || 'none'} returnFocus=${returnFocus || 'none'}`)
+      const returnState = await navigationPage.evaluate(() => ({
+        focus: document.activeElement?.getAttribute('data-project-slug') ?? null,
+        scrollY: window.scrollY,
+        rootStage: document.documentElement.dataset.paperWorldStage ?? null,
+        stageVisible: document.querySelector('[data-project-transition-stage]')?.hasAttribute('data-visible') ?? false,
+        activePreview: document.querySelector('[data-project-preview][data-active="true"]')?.getAttribute('data-project-preview') ?? null,
+        panels: document.querySelectorAll('.paper-fault-panel').length,
+        overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      }))
+      const navigationPass = ['case-title', 'world-title'].includes(destinationFocus)
+        && returnState.focus === navigationSlug
+        && Math.abs(returnState.scrollY - sourceScrollY) <= 2
+        && returnState.rootStage === null
+        && returnState.stageVisible === false
+        && returnState.activePreview === null
+        && returnState.panels === 0
+        && returnState.overflow <= 1
+      console.log(`${navigationPass ? 'PASS' : 'FAIL'} ${viewport.name} ${routeName} route: destinationFocus=${destinationFocus || 'none'} sourceScroll=${sourceScrollY} return=${JSON.stringify(returnState)}`)
       if (!navigationPass) failures += 1
       await navigationContext.close()
 
@@ -186,10 +218,10 @@ try {
         }
       })
       const reducedLink = reducedPage.locator('[data-paper-project]').first()
-      const reducedSlug = await reducedLink.getAttribute('data-project-slug')
+      const reducedHref = await reducedLink.getAttribute('href')
       const reducedStarted = Date.now()
       await reducedLink.click({ noWaitAfter: true })
-      await reducedPage.waitForURL(`**/work/${reducedSlug}/`)
+      await reducedPage.waitForURL(`**${reducedHref}`)
       const reducedElapsed = Date.now() - reducedStarted
       // This times the complete local document navigation, not added decorative motion.
       // The behavioral contract is zero transition calls; 700ms avoids treating local I/O as animation.
@@ -207,11 +239,11 @@ try {
         Node.prototype.cloneNode = () => { throw new Error('__PHASE4_FORCED_CLONE_FAILURE__') }
       })
       const failureLink = failurePage.locator('[data-paper-project]').first()
-      const failureSlug = await failureLink.getAttribute('data-project-slug')
+      const failureHref = await failureLink.getAttribute('href')
       await failureLink.click({ noWaitAfter: true })
-      await failurePage.waitForURL(`**/work/${failureSlug}/`)
-      const failurePass = await failurePage.locator('#case-title').isVisible()
-      console.log(`${failurePass ? 'PASS' : 'FAIL'} ${viewport.name} ${routeName} forced failure: destination=/work/${failureSlug}/`)
+      await failurePage.waitForURL(`**${failureHref}`)
+      const failurePass = await failurePage.locator('#case-title,#world-title').isVisible()
+      console.log(`${failurePass ? 'PASS' : 'FAIL'} ${viewport.name} ${routeName} forced failure: destination=${failureHref}`)
       if (!failurePass) failures += 1
       await failureContext.close()
 
@@ -223,13 +255,13 @@ try {
       const noJsPage = await noJsContext.newPage()
       await noJsPage.goto(`${base}${route}`, { waitUntil: 'load' })
       const noJsLink = noJsPage.locator('[data-paper-project]').first()
-      const noJsSlug = await noJsLink.getAttribute('data-project-slug')
+      const noJsHref = await noJsLink.getAttribute('href')
       await Promise.all([
-        noJsPage.waitForURL(`**/work/${noJsSlug}/`),
+        noJsPage.waitForURL(`**${noJsHref}`),
         noJsLink.click(),
       ])
-      const noJsPass = await noJsPage.locator('#case-title').isVisible()
-      console.log(`${noJsPass ? 'PASS' : 'FAIL'} ${viewport.name} ${routeName} no-JS: destination=/work/${noJsSlug}/`)
+      const noJsPass = await noJsPage.locator('#case-title,#world-title').isVisible()
+      console.log(`${noJsPass ? 'PASS' : 'FAIL'} ${viewport.name} ${routeName} no-JS: destination=${noJsHref}`)
       if (!noJsPass) failures += 1
       await noJsContext.close()
     }

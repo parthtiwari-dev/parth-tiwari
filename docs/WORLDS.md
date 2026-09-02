@@ -85,12 +85,13 @@ must revert alone.
 
 ## 3. The twelve
 
-Status legend: **✅ prototyped** means the generator exists and has been seen running
-in an artifact. **📐 specced** means designed here, not yet built.
+Status legend: **✅ built** means the validated production route and fallbacks pass their
+automated gate. **🧪 prototyped** means the generator exists and has been seen running in an
+artifact. **📐 specced** means designed here, not yet built.
 
 ---
 
-### 01 · BeatMind — *flagship · live · ✅ prototyped*
+### 01 · BeatMind — *flagship · live · ✅ built*
 
 **The story.** A song goes in whole and comes back in parts. The interesting half is
 not the model, it is that the pipeline survives its own workers dying.
@@ -126,14 +127,17 @@ not prove that count, so it remains unpublished.
 
 **Build notes.** The owner approved the Sound Foundry and current five-stem language on
 2026-08-30. The Phase 2 animatic uses the owner-authored browser-synth score only to test
-camera continuity and legibility. Phase 5 must export a real envelope array, analysis
-markers and job trace to JSON at build time. Use a licensed or owner-created audio excerpt
-only after explicit approval. Listening is optional and user-initiated. The world is a
-storytelling demonstration, not a working mixer. No runtime fetch.
+camera continuity and legibility. The Phase 5 read-only export produced real source and
+five-stem envelope arrays plus analysis markers from BeatMind commit `ca55ad8`. No explicitly
+correlated publishable failure/retry trace exists, so those scenes are omitted. The exporter
+is isolated on BeatMind branch `codex/portfolio-world-export` at `30cab81`; it is not in the
+product branch and has not been pushed or deployed. Use a licensed or owner-created audio
+excerpt only after explicit approval. Audio is currently withheld. The world is a
+storytelling demonstration, not a working mixer, and performs no runtime fetch.
 
 ---
 
-### 02 · Vivid (Stick and Dot) — *flagship · live · ✅ prototyped*
+### 02 · Vivid (Stick and Dot) — *flagship · live · ⚙️ production route awaiting owner review*
 
 **The story.** A script becomes a shot-by-shot storyboard with one character who stays
 the same person across every frame. A project-specific LoRA adapter supports the generation
@@ -151,9 +155,9 @@ resolves each frame, consistency is checked, and the failed previous-frame condi
 experiment becomes the turn in the story. Reduced motion shows the resolved storyboard
 and the failed comparison side by side.
 
-**Accent.** The palette of the owner-approved publishable world sequence. Until that complete
-sequence is selected, the concept studies use darkroom black, indigo, pottery amber and one oxblood
-failure mark as exploratory colours rather than product evidence.
+**Accent.** The production Story Loom uses dark wood, pottery amber, pale neutral thread and
+one oxblood evidence-boundary mark. Colour is decorative; the real evaluation frames carry
+the product evidence.
 
 **Content.** The recorded completed LoRA run used 1,996 discovered images and finished
 2,500 steps. A separate 42-shot Turbo comparison was 5.90 times faster but was rejected
@@ -164,19 +168,15 @@ Vivid, but no durable count source is attached, so the number remains unpublishe
 previous frame's hand pose overrode the text prompt and later shots ran roughly four
 times slower.
 
-**Build notes.** Real local evaluation contact sheets now exist, including single-, two- and
-three-character sequences. Two unchanged single-character frames are now used as labelled
-product proof in the static `/work/vivid/` paper case study. That does not select or clear a
-complete production-world sequence. A generated image is still a shipped asset and its model provenance matters:
-current FLUX.2-dev self-hosting is non-commercial under the model licence. Before this world
-ships, choose one publishable run, export its real plan, character references, shot images,
-inference profile and evaluation/failure evidence at build time, and record the applicable
-rights. The prior empty-state capture is no longer the only available source, but it remains
-unsuitable.
+**Build notes.** The owner cleared one Kyoto pottery evaluation sequence for portfolio use:
+one neutral anchor and four ordered real frames. Its production Story Loom is a static Astro
+export with no runtime Vivid request. The decorative loom plate is not product output. A
+publishable pose-copying comparison is still unavailable, so that failure stays text-only.
+Vivid's commercial product-model licence is unresolved; the route states that boundary.
 
 ---
 
-### 03 · Tathya — *flagship · in progress · ✅ prototyped*
+### 03 · Tathya — *flagship · in progress · 🧪 prototyped*
 
 **The story.** An autonomous record of a government that issues no verdict. Every claim
 carries its source and the reader decides.
@@ -201,7 +201,7 @@ time, so the graphic's numbers are the real ones.
 
 ---
 
-### 04 · MedRAG — *major · shipped · ✅ prototyped*
+### 04 · MedRAG — *major · shipped · 🧪 prototyped*
 
 **The story.** A retrieval system whose feature is refusing to answer.
 
@@ -225,7 +225,7 @@ coordinates. Do not fake the geometry.
 
 ---
 
-### 05 · Order Supervisor — *minor · shipped · ✅ prototyped*
+### 05 · Order Supervisor — *minor · shipped · 🧪 prototyped*
 
 **The story.** An agent handles the conversation and never owns the order state.
 
