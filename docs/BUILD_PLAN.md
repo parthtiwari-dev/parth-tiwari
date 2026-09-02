@@ -598,7 +598,8 @@ explicit action opens the separate complete paper case study.
   teardown/restoration checks at all three target widths.
 - [x] Define a data contract that separates project facts from drawing code. The shared
   world collection, versioned BeatMind data schema, build-time artifact loader and route
-  resolver passed the static build on 2026-09-02; the animated lifecycle remains open.
+  resolver passed the static build on 2026-09-02; the animated lifecycle is proven by the
+  automated world gate.
 - [x] Implement BeatMind from real source/five-stem envelopes and analysis data. Failure and
   retry are omitted because no explicitly correlated publishable job trace exists.
 - [x] Make scrolling demonstrate the product story without requiring interaction. Native
@@ -624,7 +625,8 @@ static-site and Phase 4 suites plus the BeatMind world suite. Phone, tablet and 
 zero horizontal overflow. The world performs no runtime data or audio request; no-JavaScript,
 reduced-motion, forced-Canvas-failure and print states remain complete. Independent revert
 proof passes for both the BeatMind implementation and shared foundation. Owner visual
-approval remains open, so the Phase 5 gate is not yet closed.
+approval was recorded on 2026-09-02, so Phase 5 is closed. Phase 3's deferred owner review
+remains separately open.
 
 ### Phase 6: Remaining worlds, one reviewed story at a time
 
@@ -638,7 +640,7 @@ Follow the waves in `WORLDS.md`. Each world repeats this loop:
 6. Commit the world alone and tick its plan item in that commit.
 7. Run its revert and performance gates before starting another world.
 
-- [ ] Vivid
+- [ ] Vivid — production implementation and automated gate are in progress; owner review remains required before this item closes.
 - [ ] Tathya
 - [ ] MedRAG
 - [ ] Order Supervisor

@@ -105,6 +105,6 @@ The active checkout was not changed during the proof.
 
 Automated gate: **passed**.
 
-Owner visual review: **open** at 390, 800 and 1440 pixels. Until the owner approves the
-rendered world, Phase 5 remains open and Phase 6 must not begin. No push, merge or deployment
-occurred during this phase.
+Owner visual review: **approved** by the owner on 2026-09-02. Phase 5 is closed. Phase 3's
+deferred owner review remains independently open; the approval does not imply a production
+cutover. No push, merge or deployment occurred during this phase.

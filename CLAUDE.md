@@ -148,8 +148,9 @@ final frame and case-study handoff remain static HTML.
   paper case studies. The world uses a sanitized real BeatMind export with six 256-bin
   envelope series, real BPM, key, sections and downbeats. It omits failure/retry because no
   correlated publishable trace exists and emits no audio because no cleared excerpt exists.
-  `npm run phase5:gate` and both isolated revert proofs pass. Owner visual approval at 390,
-  800 and 1440 pixels remains open, so Phase 5 is not closed and Phase 6 must not begin.
+  `npm run phase5:gate` and both isolated revert proofs pass. The owner approved the rendered
+  BeatMind world on 2026-09-02, so Phase 5 is closed. Phase 3's deferred review remains open;
+  Phase 6 may proceed one owner-approved world at a time.
 
 ## Dependencies and external actions
 

@@ -36,7 +36,7 @@ The route resolver derives every project door from validated content:
 - a project without either record remains non-clickable;
 - the world ends with one explicit link to `/work/[slug]/` for the complete case study.
 
-At this checkpoint BeatMind is the only published world. Static build output confirms that
+At the Phase 5 closeout BeatMind is the only published world. Static build output confirms that
 Home and `/work` link BeatMind to `/work/beatmind/world/`, while the world and the BeatMind
 paper page link to each other. No placeholder world route is emitted for another project.
 
@@ -47,5 +47,5 @@ resolver and static route independently. The subsequent Sound Foundry implementa
 `phase5:gate`: responsive animated composition, native scrolling, the 30fps ceiling,
 off-screen/hidden-page pauses, restoration, cleanup, no-JavaScript, reduced-motion,
 Canvas-failure and print fallbacks. Owner visual approval and the independent revert proof
-were the final automated closeout conditions; the independent revert proof now passes.
-Owner visual approval remains open.
+were the final closeout conditions; both now pass. The owner approved the rendered BeatMind
+world on 2026-09-02. Phase 3's deferred review remains independently open.
