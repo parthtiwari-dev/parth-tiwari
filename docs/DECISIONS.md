@@ -288,6 +288,20 @@ authorized before the build-plan phase that owns it.
   output; one cleared Kyoto pottery evaluation anchor and four ordered real frames do. The
   unavailable pose-copying visual pair stays a textual evidence boundary, and Vivid's
   commercial product-model licence remains explicitly unresolved.
+- Tathya's world is **The Long Table** (chosen 2026-09-04): a dark archival table, slips
+  set down and corded home, a verdict slab that strikes the record and leaves no mark. The
+  Citation Field (abstract nodes and edges) and The Verdict That Isn't (a balance scale)
+  were rejected — the first reads as a diagram and a settled cluster reads as *solved*, the
+  second impersonates an adjudication instrument.
+- Tathya's world is **event-driven, not scroll-scrub**. Scroll selects the scene; a
+  per-scene millisecond clock fires snap-eased events that then hold still. Two earlier
+  scroll-scrub animatics were owner-rejected for crawling. The shared `world-lifecycle.ts`
+  gained one backward-compatible change for this: `draw` may return `true` to keep the loop
+  running after the scroll settles. BeatMind and Vivid return nothing and are unaffected.
+- Tathya's data artifact carries a required `provenance` literal (`committed-export` |
+  `placeholder`). The world route stays `published: false` and the gate refuses to pass
+  while it is `placeholder`. The real export must be produced read-only from the Tathya
+  repo at `bf4606f`, the way BeatMind's exporter was isolated on its own branch.
 - Whether any optional interaction teaches enough to justify its complexity
 
 ### Design refinement (nine-point pass, 2026-09-03)

@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1536 1024" role="img" aria-label="The Long Table, composed final frame: source slips in two open case files, corded to their origins, and a blank ledger line where a verdict would be written.">
+  <defs>
+    <linearGradient id="table" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0b0806"/>
+      <stop offset="1" stop-color="#241d15"/>
+    </linearGradient>
+    <radialGradient id="lamp" cx="0.42" cy="0.36" r="0.75">
+      <stop offset="0" stop-color="#f4e4be" stop-opacity="0.16"/>
+      <stop offset="0.55" stop-color="#f4e4be" stop-opacity="0.04"/>
+      <stop offset="1" stop-color="#f4e4be" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vig" cx="0.5" cy="0.46" r="0.8">
+      <stop offset="0" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.62"/>
+    </radialGradient>
+    <g id="slip">
+      <rect x="-31" y="-20" width="62" height="40" rx="3" fill="#d8c9a6" stroke="#241d13"/>
+      <line x1="-22" y1="-8" x2="18" y2="-8" stroke="#2c2417" stroke-opacity="0.4"/>
+      <line x1="-22" y1="0" x2="8" y2="0" stroke="#2c2417" stroke-opacity="0.4"/>
+    </g>
+  </defs>
+
+  <rect width="1536" height="1024" fill="#080605"/>
+  <polygon points="150,120 1386,120 1536,1024 0,1024" fill="url(#table)"/>
+  <g stroke="#e9d8b4" stroke-opacity="0.09">
+    <line x1="170" y1="300" x2="1366" y2="300"/>
+    <line x1="150" y1="470" x2="1386" y2="470"/>
+    <line x1="120" y1="660" x2="1416" y2="660"/>
+    <line x1="80" y1="880" x2="1456" y2="880"/>
+  </g>
+  <rect width="1536" height="1024" fill="url(#lamp)"/>
+
+  <!-- cords to the table edges -->
+  <g stroke="#b29e78" stroke-opacity="0.5" fill="none">
+    <path d="M150,360 Q400,300 560,430"/>
+    <path d="M150,520 Q420,470 600,500"/>
+    <path d="M1386,300 Q1050,320 720,450"/>
+    <path d="M1386,560 Q1150,600 980,700"/>
+    <path d="M760,120 Q740,300 690,470"/>
+  </g>
+
+  <!-- case file A (upper left), loosely bound -->
+  <g>
+    <path d="M470,360 C420,420 430,540 540,560 C660,580 760,540 740,430 C720,340 540,320 470,360 Z"
+          fill="none" stroke="#4fd39b" stroke-opacity="0.5" stroke-dasharray="6 6"/>
+    <use href="#slip" x="530" y="410" transform="rotate(-6 530 410)"/>
+    <use href="#slip" x="610" y="440" transform="rotate(4 610 440)"/>
+    <use href="#slip" x="560" y="500" transform="rotate(-3 560 500)"/>
+    <use href="#slip" x="660" y="500" transform="rotate(9 660 500)"/>
+    <use href="#slip" x="500" y="470" transform="rotate(2 500 470)"/>
+  </g>
+
+  <!-- shared source, between the files -->
+  <use href="#slip" x="720" y="450" transform="rotate(3 720 450)"/>
+
+  <!-- case file B (lower right), loosely bound -->
+  <g>
+    <path d="M960,620 C910,680 930,780 1040,800 C1150,820 1230,770 1210,670 C1190,590 1030,580 960,620 Z"
+          fill="none" stroke="#4fd39b" stroke-opacity="0.4" stroke-dasharray="6 6"/>
+    <use href="#slip" x="1010" y="670" transform="rotate(5 1010 670)"/>
+    <use href="#slip" x="1090" y="700" transform="rotate(-7 1090 700)"/>
+    <use href="#slip" x="1050" y="750" transform="rotate(2 1050 750)"/>
+    <use href="#slip" x="1150" y="730" transform="rotate(8 1150 730)"/>
+  </g>
+
+  <!-- the blank finding line, near the front, left empty -->
+  <g transform="translate(360,820)">
+    <rect x="-90" y="-58" width="180" height="116" rx="4" fill="#d8c9a6" stroke="#241d13"/>
+    <g stroke="#2c2417" stroke-opacity="0.35">
+      <line x1="-72" y1="-26" x2="72" y2="-26"/>
+      <line x1="-72" y1="-4" x2="72" y2="-4"/>
+      <line x1="-72" y1="18" x2="72" y2="18"/>
+      <line x1="-72" y1="40" x2="72" y2="40"/>
+    </g>
+    <text x="0" y="-84" fill="#cec1a6" font-family="'DM Mono', monospace" font-size="16" text-anchor="middle" letter-spacing="2">FINDING</text>
+    <text x="0" y="92" fill="#78bd97" font-family="'DM Mono', monospace" font-size="17" text-anchor="middle">left to the reader</text>
+  </g>
+
+  <rect width="1536" height="1024" fill="url(#vig)"/>
+  <text x="60" y="980" fill="#8d9895" font-family="'DM Mono', monospace" font-size="18" letter-spacing="1">THE LONG TABLE — THE RECORD STAYS OPEN. NO VERDICT, NO RANKING, NO SENTIMENT SCORE.</text>
+</svg>

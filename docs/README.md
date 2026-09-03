@@ -34,13 +34,14 @@ Where to look, and what is still true.
 | [`PHASE_2_WORLDS_ANIMATION_MEMO.md`](PHASE_2_WORLDS_ANIMATION_MEMO.md) | Research-only candidate graphics and missing real-data sources for the seven specced worlds |
 | [`VIVID_WORLD_CONCEPT_REVIEW.md`](VIVID_WORLD_CONCEPT_REVIEW.md) | Current-product audit, three Vivid world directions and the selected Story Loom basis |
 | [`VIVID_WORLD_STUDY.md`](VIVID_WORLD_STUDY.md) | Story Loom review animatic and the original evidence boundary that production preserves |
+| [`TATHYA_WORLD_STUDY.md`](TATHYA_WORLD_STUDY.md) | The Long Table: selected treatment, event-driven time model, scene contract, data contract and open decisions. Implementation in progress on `world/tathya`, route unpublished, blocked on the real export |
 | [`VIVID_CASE_STUDY_AUDIT.md`](VIVID_CASE_STUDY_AUDIT.md) | Main-to-upgrade-flux history audit, evidence map and durable update workflow for `/work/vivid/` |
 | [`REBUILD_BRIEF.md`](REBUILD_BRIEF.md) | Why v1 is being replaced. The guards that prevent a repeat |
 | [`TEN_SECOND_TEST.md`](TEN_SECOND_TEST.md) | 🔴 The acceptance gate. **Still never run** |
 | [`TEN_SECOND_ARTIFACT.md`](TEN_SECOND_ARTIFACT.md) | The exact plain-text artifact for the Phase 1 human test |
 | [`PRD.md`](PRD.md) | Audience, route contracts, conversion, worlds and future publishing |
 | [`FULL_SITE_AUDIT_2026-09-01.md`](FULL_SITE_AUDIT_2026-09-01.md) | Owner-requested whole-site visual + strategic review: the 30-day commercial question, the type/space diagnosis, a prioritised bug list, the two worlds, the unroll intro, the Japanese direction and a four-track plan. Evidence in `.shots/full-audit-2026-09-01/` |
-| [`DESIGN_REFINEMENT.md`](DESIGN_REFINEMENT.md) | The nine-point refinement pass (deferred Phase 2 polish + deferred Phase 3 review + one Phase 5 world bug), on branch `refine/design-system-9point`. Run 1 (foundations: black-flash fix, world-init resilience, token layer, quiet-ink contrast) and Run 2 (tokens wired into every component: billboard headings demoted, section rhythm, orphaned captions and wide-row dead zones, labels to 12px+, leads off the muted brown) are complete and gate-green; Run 3 (3a registers span the full width and ledger dead-space; 3b world crossfade hysteresis, landing reveal resilience, Vivid CTA copy-leak; 3c smooth-scroll retention and texture-perf descope) and Run 4 (mobile heading scale brought down to the demoted desktop scale) are complete and gate-green. All four runs done; `main` untouched, owner merges |
+| [`DESIGN_REFINEMENT.md`](DESIGN_REFINEMENT.md) | The nine-point refinement pass (deferred Phase 2 polish + deferred Phase 3 review + one Phase 5 world bug), on branch `refine/design-system-9point`. Run 1 (foundations: black-flash fix, world-init resilience, token layer, quiet-ink contrast) and Run 2 (tokens wired into every component: billboard headings demoted, section rhythm, orphaned captions and wide-row dead zones, labels to 12px+, leads off the muted brown) are complete and gate-green; Run 3 (3a registers span the full width and ledger dead-space; 3b world crossfade hysteresis, landing reveal resilience, Vivid CTA copy-leak; 3c smooth-scroll retention and texture-perf descope) and Run 4 (mobile heading scale brought down to the demoted desktop scale) are complete and gate-green. All four runs done, merged to `main` and pushed 2026-09-03 with owner go (prod deploy triggered) |
 
 ## Superseded — kept for the reasoning, not the instructions
 
@@ -127,8 +128,8 @@ baseline, failures, limitations, licensing boundary and future gates. It does no
 the current plan's identity or speed goal is achieved. `VIVID_CASE_STUDY_AUDIT.md` is the
 source map and update procedure.
 
-**Last documentation truth audit:** 2026-09-03. The deferred Phase 2 visual-polish pass has
-begun on branch `refine/design-system-9point` as a nine-point refinement (see
+**Last documentation truth audit:** 2026-09-04. The deferred Phase 2 visual-polish pass ran
+on branch `refine/design-system-9point` as a nine-point refinement (see
 `DESIGN_REFINEMENT.md`). Run 1 landed the paper-page black-flash fix, BeatMind/Vivid
 world-init resilience, an additive type/space/measure token layer and the `--ink-quiet`
 contrast lift (4.88:1 to 7.77:1). Run 2 wired those tokens into every stylesheet: page h1
@@ -150,7 +151,9 @@ mobile heading `font-size` override to match the demoted desktop scale (page h1
 `<=480` blocks into `<=760`; `/about` no longer renders its h1 at ~74px on a phone. Zero
 horizontal overflow across all routes at 320/360/390px.
 `npm run phase6:vivid-gate` (76 PASS), `npm run a11y`, `npm run perf:scroll` and
-`npm run phase2:gate` are green on that branch. `main` is untouched.
+`npm run phase2:gate` were green on that branch. It was merged to `main` (`--no-ff`) and
+pushed on 2026-09-03 with the owner's explicit instruction, which triggered the Vercel
+production deploy.
 
 Ten published paper routes pass rendered
 title-versus-proof collision checks at 390, 800, 1440 and 1920 pixels. Fraud Risk
@@ -182,6 +185,18 @@ uncorrelated failure/retry trace and emits no audio request. `npm run phase5:gat
 teardown and Back-restoration states. Owner visual approval and independent revert evidence
 were the remaining closeout checks; the independent revert evidence now passes. Owner visual
 approval was recorded on 2026-09-02, closing Phase 5. Phase 3's deferred review remains a
-separate open item. Vivid's Story Loom is the sole Phase 6A world now in implementation; it
-uses a cleared four-frame Kyoto evaluation sequence, a textual missing-evidence boundary and
-an explicit unresolved commercial-model licence notice.
+separate open item. Vivid's Story Loom is a Phase 6A world in implementation; it uses a
+cleared four-frame Kyoto evaluation sequence, a textual missing-evidence boundary and an
+explicit unresolved commercial-model licence notice.
+
+Phase 6 Tathya (The Long Table) implementation started 2026-09-04 on branch `world/tathya`
+with the route `published: false`. It is a dark archival-table world on the shared
+lifecycle, driven by per-scene millisecond clocks rather than scroll-scrub (two earlier
+scroll-scrub animatics were owner-rejected for crawling). `world-lifecycle.ts` gained a
+backward-compatible `draw` return so event-driven worlds keep animating after the scroll
+settles. `tathyaWorldDataV1Schema` has a `provenance` guard that prevents the placeholder
+export shipping as real. The world builds and passes the world-render metric checks
+(`data-world-ready`, one `h1`, eight scenes, no overflow, draw rate under 30fps, no runtime
+requests) at 390 and 1440 pixels. It is blocked on the read-only export from the Tathya
+repo at `bf4606f`, an owner render review, a `phase6:tathya-gate` and a revert proof before
+it can publish. Scope: `TATHYA_WORLD_STUDY.md`.

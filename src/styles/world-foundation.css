@@ -110,6 +110,20 @@ main { overflow: clip; }
 .vivid-missing-evidence p { margin: .55rem 0 0; font-size: var(--text-sm); line-height: var(--leading-body); }
 .vivid-claim-pair { grid-template-columns: 1fr 1fr; }
 
+/* Tathya — The Long Table. A warm archival table, fully procedural, no plate. */
+.tathya-experience[data-world-ready='true'] { min-height: 800svh; }
+.tathya-stage { background: radial-gradient(120% 90% at 42% 34%, #1b140d 0, #0b0806 58%, #050403 100%) !important; }
+.tathya-stage .world-progress i { background: #b6a585; }
+.tathya-world-page .world-static-frame img { background: #100c08; }
+.world-file-ledger {
+  max-width: 42rem; display: grid; gap: 1px; margin: 2rem 0 0; padding: 0;
+  color: #cdd0cc; background: rgb(244 244 239 / 14%); list-style: none;
+  text-align: left; text-shadow: none;
+}
+.world-file-ledger div { display: grid; gap: .3rem; padding: .85rem 1rem; background: rgb(6 8 9 / 92%); }
+.world-file-ledger dt { color: var(--world-primary); font: var(--text-2xs) var(--font-mono); letter-spacing: .1em; text-transform: uppercase; }
+.world-file-ledger dd { margin: 0; font-size: var(--text-sm); line-height: var(--leading-body); }
+
 @media (max-width: 800px) {
   .world-nav span { display: none; }
   .world-experience[data-world-ready='true'] { min-height: 800svh; }

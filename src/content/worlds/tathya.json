@@ -1,0 +1,76 @@
+{
+  "projectSlug": "tathya",
+  "published": false,
+  "reviewedAt": "2026-09-04",
+  "selectedTreatment": "The Long Table",
+  "staticFrame": {
+    "src": "/media/tathya-world-still.svg",
+    "alt": "A dark archival table seen from above. Source slips lie in open case files, each corded to its origin, and the ledger line where a verdict would be written is left blank.",
+    "width": 1536,
+    "height": 1024
+  },
+  "scenes": [
+    {
+      "id": "table",
+      "label": "01 / The record",
+      "heading": "A table, and a rule.",
+      "narration": "Everything that reaches Tathya is laid on one table and kept. The record organises what was said. It does not rule on whether it was true."
+    },
+    {
+      "id": "intake",
+      "label": "02 / Intake",
+      "heading": "Everything keeps its name.",
+      "narration": "Each source is set down tagged with its kind, official, media, or citizen, and a cord back to where it came from. It is never promoted to the truth."
+    },
+    {
+      "id": "identity",
+      "label": "03 / Identity",
+      "heading": "We have seen this subject before.",
+      "narration": "When a source matches a subject already on the table, it joins that file instead of starting a new pile. The stale copy is discarded rather than left to gather beside the current one."
+    },
+    {
+      "id": "citation",
+      "label": "04 / Citation",
+      "heading": "No claim without its cord.",
+      "narration": "A claim keeps the cord back to its source. A slip with no source stays on the table, uncited and visible, rather than quietly dropped."
+    },
+    {
+      "id": "file",
+      "label": "05 / The file",
+      "heading": "Kept together. Not fused.",
+      "narration": "Slips about one subject are bound under a loose cord that never cinches. The file carries its own count and the split across official, media, and citizen."
+    },
+    {
+      "id": "conflict",
+      "label": "06 / Conflict",
+      "heading": "Two accounts. Same light.",
+      "narration": "Conflicting sources are squared side by side at equal weight. The record does not rank them, average them, or let the verdict come down."
+    },
+    {
+      "id": "boundary",
+      "label": "07 / The boundary",
+      "heading": "What broke, and what it will not do.",
+      "narration": "A source whose collection failed is withdrawn in plain sight and marked as workflow state. The line held the whole way: no verdict, no ranking, no sentiment score."
+    },
+    {
+      "id": "handoff",
+      "label": "08 / Deep dive",
+      "heading": "The conclusion is yours.",
+      "narration": "The table runs on past where you stopped reading. The case study carries the ingestion, the identity model, the citation graph, and the failures still ahead."
+    }
+  ],
+  "accents": {
+    "primary": "#4fd39b",
+    "secondary": "#8d9895",
+    "fault": "#b23a25"
+  },
+  "dataArtifact": "tathya-world-v1.json",
+  "audio": {
+    "status": "withheld",
+    "explanation": "This world is a silent archival demonstration. It has no audio asset and makes no audio request."
+  },
+  "sourceAudit": [
+    { "label": "Tathya committed source boundary", "revision": "bf4606f" },
+    { "label": "Portfolio owner clearance record", "revision": "pending-clearance" }
+  ]
+}

@@ -160,10 +160,22 @@ final frame and case-study handoff remain static HTML.
   made the `/work` `/notes` and home registers span the full width and trimmed the
   About/Resume ledgers (3b world crossfade hysteresis, landing reveal resilience, Vivid CTA
   fix; 3c kept `scroll-behavior: smooth` and descoped the texture-perf work); Run 4 brought
-  the mobile heading scale down to match the demoted desktop scale. `main` is untouched;
-  the owner merges. Outstanding, non-blocking: deckle-PNG regeneration, the UPI chart
-  restyle, the wide-viewport paper-texture repaint cost. Scope and evidence:
+  the mobile heading scale down to match the demoted desktop scale. Merged to `main`
+  (`--no-ff`) and pushed on 2026-09-03 with the owner's explicit go, which triggered the
+  Vercel production deploy. Outstanding, non-blocking: deckle-PNG regeneration, the UPI
+  chart restyle, the wide-viewport paper-texture repaint cost. Scope and evidence:
   `docs/DESIGN_REFINEMENT.md`.
+- Phase 6 Tathya world implementation started 2026-09-04 on branch `world/tathya`, route
+  `published: false`. The selected treatment is **The Long Table**: a dark archival table,
+  slips set down and corded home, a verdict slab that strikes the record three times and
+  leaves no mark. Scroll selects the scene; a per-scene millisecond clock drives events
+  that snap and then hold still (the earlier scroll-scrub animatics were rejected for
+  crawling). The shared `world-lifecycle.ts` gained a backward-compatible `draw` return so
+  event-driven worlds keep animating after the scroll settles; BeatMind and Vivid are
+  unaffected. `tathyaWorldDataV1Schema` carries a `provenance` guard so the placeholder
+  export cannot ship as real. Blocked on the read-only export from the Tathya repo at
+  `bf4606f`, owner render review, a `phase6:tathya-gate` and a revert proof before publish.
+  Scope and choreography: `docs/TATHYA_WORLD_STUDY.md`. Phase 6 Vivid review is still open.
 
 ## Dependencies and external actions
 

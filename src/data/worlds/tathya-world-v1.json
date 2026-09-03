@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "project": "tathya",
+  "provenance": "placeholder",
+  "reviewedOn": "2026-09-04",
+  "sourceAudit": { "repository": "Tathya", "commit": "bf4606f" },
+  "snapshot": {
+    "takenAt": "pending",
+    "meaning": "Placeholder structure used to build the Tathya world. Not a real database read. A committed read-only export from the Tathya repository replaces this file, and the gate refuses to pass, before the world is published."
+  },
+  "sourceTypes": ["official", "media", "citizen"],
+  "caseFiles": [
+    {
+      "id": "file-a",
+      "label": "Subject A",
+      "sourceCount": 7,
+      "composition": { "official": 2, "media": 4, "citizen": 1 },
+      "claimCount": 5,
+      "citedClaimCount": 4,
+      "status": "open"
+    },
+    {
+      "id": "file-b",
+      "label": "Subject B",
+      "sourceCount": 5,
+      "composition": { "official": 1, "media": 3, "citizen": 1 },
+      "claimCount": 3,
+      "citedClaimCount": 3,
+      "status": "open"
+    }
+  ],
+  "sharedSources": [
+    { "sourceType": "official", "fileIds": ["file-a", "file-b"] }
+  ],
+  "conflicts": [
+    { "fileId": "file-a", "resolved": false }
+  ],
+  "silentFailure": {
+    "present": true,
+    "sourceLabel": "one configured official source",
+    "explanation": "Its collection jobs stopped returning useful errors and it dropped out of the visible record. Failure state is shown as workflow state, not hidden behind an eligibility flag."
+  },
+  "corpusBenchmark": {
+    "available": false,
+    "reason": "No repeatable corpus export with source, duplicate, freshness and unresolved-record denominators exists yet, so no corpus size or clustering score is shown anywhere in this world."
+  }
+}

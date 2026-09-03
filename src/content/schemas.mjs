@@ -135,6 +135,66 @@ export const vividWorldDataV1Schema = z.object({
   }),
 })
 
+/**
+ * Tathya reads one committed, sanitized snapshot of the record. `provenance`
+ * is the guard: a 'placeholder' artifact can be committed while the world is
+ * built, but the world entry stays `published: false` and the gate refuses to
+ * pass until a real 'committed-export' from the Tathya repo replaces it.
+ * Raw source URLs, publisher names and real subject text never belong here.
+ */
+const tathyaCaseFileSchema = z.object({
+  id: z.string().regex(/^[a-z0-9-]+$/),
+  label: z.string().min(2),
+  sourceCount: z.number().int().positive(),
+  composition: z.object({
+    official: z.number().int().nonnegative(),
+    media: z.number().int().nonnegative(),
+    citizen: z.number().int().nonnegative(),
+  }),
+  claimCount: z.number().int().nonnegative(),
+  citedClaimCount: z.number().int().nonnegative(),
+  status: z.literal('open'),
+}).superRefine((file, context) => {
+  const parts = file.composition.official + file.composition.media + file.composition.citizen
+  if (parts !== file.sourceCount) {
+    context.addIssue({ code: 'custom', message: `caseFile ${file.id} composition sums to ${parts}, not sourceCount ${file.sourceCount}.` })
+  }
+  if (file.citedClaimCount > file.claimCount) {
+    context.addIssue({ code: 'custom', message: `caseFile ${file.id} has more cited claims than claims.` })
+  }
+})
+
+export const tathyaWorldDataV1Schema = z.object({
+  version: z.literal(1),
+  project: z.literal('tathya'),
+  provenance: z.enum(['committed-export', 'placeholder']),
+  reviewedOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  sourceAudit: z.object({ repository: z.literal('Tathya'), commit: z.string().regex(/^[0-9a-f]{7,40}$/i) }),
+  snapshot: z.object({
+    takenAt: z.string().min(4),
+    meaning: z.string().min(20),
+  }),
+  sourceTypes: z.tuple([z.literal('official'), z.literal('media'), z.literal('citizen')]),
+  caseFiles: z.array(tathyaCaseFileSchema).min(2).max(8),
+  sharedSources: z.array(z.object({
+    sourceType: z.enum(['official', 'media', 'citizen']),
+    fileIds: z.array(z.string().min(1)).length(2),
+  })),
+  conflicts: z.array(z.object({
+    fileId: z.string().min(1),
+    resolved: z.literal(false),
+  })).min(1),
+  silentFailure: z.object({
+    present: z.literal(true),
+    sourceLabel: z.string().min(6),
+    explanation: z.string().min(20),
+  }),
+  corpusBenchmark: z.object({
+    available: z.literal(false),
+    reason: z.string().min(20),
+  }),
+})
+
 export const claimSchema = z.object({
   wording: z.string().min(8),
   display: z.string().min(1),
