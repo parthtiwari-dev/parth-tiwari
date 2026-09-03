@@ -77,12 +77,17 @@ export function mountWorldLifecycle(options: WorldLifecycleOptions): WorldLifecy
   // Chapter tracking runs off the scroll position directly, so the active scene and HUD
   // stay correct even where requestAnimationFrame is throttled to nothing. The canvas
   // still eases via currentProgress inside renderFrame.
+  const SWITCH_BAND = 0.16
   const syncActiveScene = () => {
-    const next = clamp(Math.round(targetProgress), 0, Math.max(0, sceneCount - 1))
-    if (next !== activeIndex) {
-      activeIndex = next
-      onActiveScene(activeIndex, targetProgress)
-    }
+    const maxIndex = Math.max(0, sceneCount - 1)
+    const rounded = clamp(Math.round(targetProgress), 0, maxIndex)
+    if (rounded === activeIndex) return
+    // Hysteresis: an active chapter holds until the scroll is clearly into the next
+    // one, so jitter near the midpoint cannot flip two narration blocks back and
+    // forth through half opacity.
+    if (activeIndex >= 0 && Math.abs(targetProgress - activeIndex) < 0.5 + SWITCH_BAND) return
+    activeIndex = rounded
+    onActiveScene(activeIndex, targetProgress)
   }
 
   const renderFrame = (now: number) => {

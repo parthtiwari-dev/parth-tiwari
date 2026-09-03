@@ -190,17 +190,45 @@ three widths. `npm run phase2:gate` exit 0. Sheet Fault row-clone transition ins
 `craft` still fails the pre-existing "at most one enhancement script" assertion (2 since
 Phase 4; not in any gate chain; fails on `main`).
 
-## Run 3b and Run 4 (pending)
+## Run 3b — world choreography, reveal resilience, CTA leak (this commit)
 
-Run 3b: world choreography (right-edge clip on right-aligned scene copy, crossfade
-hysteresis in `world-lifecycle.ts`, a scrim behind narration over the canvas), the landing
-`data-reveal` resting-opacity fix, the Vivid "Enter the Sound Foundry" CTA copy-leak fix,
-and — as a separate commit so a `perf:scroll` regression cannot force reverting the layout
-work — the paper-texture `content-visibility` pass bundled with removing
-`scroll-behavior: smooth`. Deckle-PNG regeneration and the UPI matplotlib chart restyle are
-**deferred**: they are asset-generation tasks nobody flagged in review and would consume the
-run. Run 4 is the mobile-width repeat of the review (tuning the steep `13-19vw` middle terms
-of the heading clamps, the register kicker/title stacking on phones).
+- **World crossfade.** `world-lifecycle.ts` `syncActiveScene` gained a 0.16 hysteresis band
+  around the midpoint: an active chapter holds until the scroll is clearly into the next
+  one, so scroll jitter near `x.5` can no longer flip two narration blocks back and forth.
+  All eight scenes still reach `.is-current` scrubbing forward and backward (verified).
+- **World legibility.** Non-current `.world-scene-copy` opacity while running dropped `.14`
+  -> `.09` (fainter ghosts during a transition); the crossfade transition sped `240ms` ->
+  `190ms`; the copy scrim `::before` deepened (`92%/64%` -> `95%/74%`, edge `74%` -> `79%`)
+  and `.world-narration` lightened `#d0d3d1` -> `#d7dad8`. `.world-scene-right
+  .world-scene-copy` gained `margin-inline-end: clamp(.5rem, 3vw, 2.75rem)` so right-aligned
+  headings keep clear of the viewport edge.
+- **Landing reveal resilience.** `landing-motion.ts` now: guards on
+  `typeof IntersectionObserver === 'function'` (a broken/absent constructor no longer sets
+  `.motion-ready` then dies with content at `opacity: .001`); reveals any target already
+  within 1.15 screens of the viewport synchronously; and runs a 2.6s backstop that reveals
+  anything still hidden. Verified with IO absent (all visible immediately) and with a
+  never-firing IO stub (visible after the backstop).
+- **Vivid CTA copy leak.** `CaseStudyReview.astro` hard-coded "Enter the Sound Foundry" for
+  any project with a world; the Vivid case study now reads "Enter the Vivid world" and
+  BeatMind "Enter the BeatMind world" (generic `Enter the {title} world`).
+
+Gate: `npm run phase6:vivid-gate` exit 0 (76 PASS). `npm run a11y` and `npm run perf:scroll`
+green at 390/800/1440 (p95 16.8ms). BeatMind and Vivid worlds re-inspected at 1440 for
+crossfade and right-edge clearance.
+
+## Run 3c and Run 4 (pending)
+
+Run 3c (separate commit so a `perf:scroll` regression cannot force reverting the layout
+work): the paper-texture scroll-perf pass (`content-visibility: auto` on offscreen
+sections) bundled with removing `scroll-behavior: smooth`. Deckle-PNG regeneration and the
+UPI matplotlib chart restyle stay **deferred** — asset-generation tasks nobody flagged in
+review. Run 4 is the mobile-width repeat of the review (tuning the steep `13-19vw` middle
+terms of the heading clamps, the register kicker/title stacking on phones).
+
+Prose left-clustering on article and case pages (heading, labels, evidence and the
+`--measure` prose column all left-aligned inside the 1640px container, leaving the right
+half open) is **by owner decision** (decision 3, narrow prose only). Recorded here as an
+observation to revisit in Run 4, not changed in Run 3.
 
 Prose left-clustering on article and case pages (heading, labels, evidence and the
 `--measure` prose column all left-aligned inside the 1640px container, leaving the right
