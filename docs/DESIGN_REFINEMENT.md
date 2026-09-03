@@ -216,19 +216,37 @@ Gate: `npm run phase6:vivid-gate` exit 0 (76 PASS). `npm run a11y` and `npm run 
 green at 390/800/1440 (p95 16.8ms). BeatMind and Vivid worlds re-inspected at 1440 for
 crossfade and right-edge clearance.
 
-## Run 3c and Run 4 (pending)
+## Run 3c — investigated and consciously descoped (this commit)
 
-Run 3c (separate commit so a `perf:scroll` regression cannot force reverting the layout
-work): the paper-texture scroll-perf pass (`content-visibility: auto` on offscreen
-sections) bundled with removing `scroll-behavior: smooth`. Deckle-PNG regeneration and the
-UPI matplotlib chart restyle stay **deferred** — asset-generation tasks nobody flagged in
-review. Run 4 is the mobile-width repeat of the review (tuning the steep `13-19vw` middle
-terms of the heading clamps, the register kicker/title stacking on phones).
+The Run 3 plan bundled removing `scroll-behavior: smooth` with a paper-texture scroll-perf
+pass, on the theory that the CSS property "violates the spirit" of DESIGN_LOCK section 8's
+"no smooth-scroll engine". On investigation both halves were dropped:
 
-Prose left-clustering on article and case pages (heading, labels, evidence and the
-`--measure` prose column all left-aligned inside the 1640px container, leaving the right
-half open) is **by owner decision** (decision 3, narrow prose only). Recorded here as an
-observation to revisit in Run 4, not changed in Run 3.
+- **`scroll-behavior: smooth` is kept.** It is native CSS that animates only anchor and
+  programmatic scrolls (the case-study reading-rail links), never wheel or touch input, so
+  it is not a scroll-hijacking engine. Removing it measurably regresses `perf:scroll` at
+  1440px (p95 16.8ms -> 33.4ms) because the test's per-frame `scrollTo` is no longer eased,
+  and it gives nothing back in real use.
+- **`content-visibility: auto` on offscreen sections was tried and reverted.** Under a
+  continuous full-page scroll it made `perf:scroll` *worse* at 800px (p95 16.8ms -> 33.4ms,
+  `>20ms` 9 -> 22): every section crossing the render boundary during the pan pays a
+  synchronous render+first-paint burst. It helps first load and scattered jumps, not a
+  smooth pan, which is what the metaphor's long pages actually do.
+- The paper-texture repaint at wide viewports (a bounded ~33ms worst-case frame at 1440px
+  during an aggressive synthetic scroll; `perf:scroll` p95 stays 16.8ms in normal motion)
+  is a real characteristic of the full-bleed `repeat-y` photo. A proper fix (a pre-scaled
+  texture tile at the real render width, or a re-architected single paper layer) is a
+  larger piece of work than this refinement pass should take on unprompted, and is left as
+  a noted follow-up rather than rushed here.
+- Comment at `paper-system.css` line 78 updated to record the deliberate retention.
+
+Deckle-PNG regeneration and the UPI matplotlib chart restyle stay **deferred** —
+asset-generation tasks nobody flagged in review.
+
+## Run 4 (pending)
+
+Run 4 is the mobile-width repeat of the review (tuning the steep `13-19vw` middle terms of
+the heading clamps, the register kicker/title stacking on phones).
 
 Prose left-clustering on article and case pages (heading, labels, evidence and the
 `--measure` prose column all left-aligned inside the 1640px container, leaving the right
