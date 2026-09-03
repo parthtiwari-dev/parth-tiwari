@@ -123,6 +123,13 @@ main { overflow: clip; }
 .world-file-ledger div { display: grid; gap: .3rem; padding: .85rem 1rem; background: rgb(6 8 9 / 92%); }
 .world-file-ledger dt { color: var(--world-primary); font: var(--text-2xs) var(--font-mono); letter-spacing: .1em; text-transform: uppercase; }
 .world-file-ledger dd { margin: 0; font-size: var(--text-sm); line-height: var(--leading-body); }
+.world-scene-copy > p.world-shared-source {
+  max-width: 40rem; margin: 1.6rem 0 0; padding: .95rem 1.15rem;
+  border-left: 2px solid var(--world-primary); color: #cdd0cc;
+  font: var(--text-sm)/var(--leading-body) var(--font-body); letter-spacing: normal;
+  text-transform: none; background: rgb(6 8 9 / 82%); text-align: left; text-shadow: none;
+}
+.tathya-experience .world-evidence-boundary { grid-template-columns: 1fr; max-width: 40rem; }
 
 @media (max-width: 800px) {
   .world-nav span { display: none; }

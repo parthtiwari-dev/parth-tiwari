@@ -50,9 +50,9 @@ const typeLabels: Record<string, string> = { official: 'Official', media: 'Media
             <span data-world-scene-label>{world.data.scenes[0].label}</span>
           </div>
           <div class="world-audit">
-            <span>Sourced record</span>
-            <strong>{data.caseFiles.length} open files</strong>
-            <small>{data.provenance === 'placeholder' ? 'Illustrative structure, export pending' : `Snapshot ${data.sourceAudit.commit}`}</small>
+            <span>Public record</span>
+            <strong>{data.caseFiles.length} of {data.feed.caseFileCount} files</strong>
+            <small>{data.provenance === 'placeholder' ? 'Illustrative structure, export pending' : `Dated read ${data.snapshot.takenAt}`}</small>
           </div>
           <div class="world-progress"><i data-world-progress></i></div>
         </div>
@@ -76,32 +76,44 @@ const typeLabels: Record<string, string> = { official: 'Official', media: 'Media
                       <div>
                         <dt>{file.label}</dt>
                         <dd>
-                          {file.sourceCount} sources &middot; {file.composition.official} {typeLabels.official.toLowerCase()} / {file.composition.media} {typeLabels.media.toLowerCase()} / {file.composition.citizen} {typeLabels.citizen.toLowerCase()} &middot; {file.citedClaimCount} of {file.claimCount} claims cited
+                          {file.sourceCount} sources &middot; {file.composition.official} {typeLabels.official.toLowerCase()} / {file.composition.media} {typeLabels.media.toLowerCase()} / {file.composition.citizen} {typeLabels.citizen.toLowerCase()} &middot; {file.claimCount} claims, each with its source &middot; {file.verifiableFacts ? 'verifiable facts logged' : file.openQuestion ? 'open question' : 'open'}
                         </dd>
                       </div>
                     ))}
+                    <div>
+                      <dt>The feed this day</dt>
+                      <dd>{data.feed.caseFileCount} files, none chosen by hand &middot; {data.feed.sourceCountHistogram.map((bin) => `${bin.files} with ${bin.sources}`).join(' / ')} sources</dd>
+                    </div>
                   </dl>
                 )}
 
                 {scene.id === 'boundary' && (
                   <div class="world-evidence-boundary">
                     <article>
-                      <strong>Withdrawn, not hidden</strong>
-                      <p>{data.silentFailure.explanation}</p>
-                      <small>{data.silentFailure.sourceLabel}</small>
+                      <strong>Open question</strong>
+                      <p>{data.openQuestions[0].statement}</p>
+                      <small>A status, not an accusation</small>
                     </article>
                     <article>
-                      <strong>No stable benchmark yet</strong>
-                      <p>{data.corpusBenchmark.reason}</p>
-                      <small>{project.data.boundary.refuses.join(' / ')}</small>
+                      <strong>Verifiable fact</strong>
+                      <p>Checked against primary government documents only. A confirmed record, not a stronger claim.</p>
+                      <small>History kept, never rewritten</small>
+                    </article>
+                    <article>
+                      <strong>The line that held</strong>
+                      <p>No verdict. No ranking. No sentiment score standing in for evidence.</p>
+                      <small>Removed from the product contract</small>
                     </article>
                   </div>
                 )}
 
                 {scene.id === 'handoff' && (
-                  <a class="world-deep-dive" href={`/work/${project.id}/`}>
-                    Read the full case study <span aria-hidden="true">&#8594;</span>
-                  </a>
+                  <>
+                    <a class="world-deep-dive" href={`/work/${project.id}/`}>
+                      Read the full case study <span aria-hidden="true">&#8594;</span>
+                    </a>
+                    <p class="world-shared-source">{data.corpusBenchmark.reason}</p>
+                  </>
                 )}
               </div>
             </section>

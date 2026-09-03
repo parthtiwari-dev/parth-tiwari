@@ -136,11 +136,14 @@ export const vividWorldDataV1Schema = z.object({
 })
 
 /**
- * Tathya reads one committed, sanitized snapshot of the record. `provenance`
- * is the guard: a 'placeholder' artifact can be committed while the world is
- * built, but the world entry stays `published: false` and the gate refuses to
- * pass until a real 'committed-export' from the Tathya repo replaces it.
- * Raw source URLs, publisher names and real subject text never belong here.
+ * The Tathya world reads one dated, sanitized snapshot of the public record.
+ * `provenance` is the guard: a 'placeholder' artifact can be committed while the
+ * world is built, but the world entry stays `published: false` and the gate
+ * refuses to pass until real data replaces it. Accepted real values are
+ * 'committed-export' (a read-only export from the Tathya repository) and
+ * 'public-snapshot' (a dated read of the deployed public record, the same class
+ * of evidence the paper case study cites). Raw ingested source URLs, publisher
+ * names and real subject text never belong here; case files are anonymised.
  */
 const tathyaCaseFileSchema = z.object({
   id: z.string().regex(/^[a-z0-9-]+$/),
@@ -151,48 +154,80 @@ const tathyaCaseFileSchema = z.object({
     media: z.number().int().nonnegative(),
     citizen: z.number().int().nonnegative(),
   }),
+  // Every claim row in the record carries its source, so claimCount doubles as
+  // the cited count. It is kept as its own field so the ledger scene can show it.
   claimCount: z.number().int().nonnegative(),
-  citedClaimCount: z.number().int().nonnegative(),
+  // The record's own three-tier state for a file.
+  verifiableFacts: z.boolean(),
+  openQuestion: z.boolean(),
   status: z.literal('open'),
 }).superRefine((file, context) => {
   const parts = file.composition.official + file.composition.media + file.composition.citizen
   if (parts !== file.sourceCount) {
     context.addIssue({ code: 'custom', message: `caseFile ${file.id} composition sums to ${parts}, not sourceCount ${file.sourceCount}.` })
   }
-  if (file.citedClaimCount > file.claimCount) {
-    context.addIssue({ code: 'custom', message: `caseFile ${file.id} has more cited claims than claims.` })
+  if (file.verifiableFacts && file.composition.official === 0) {
+    context.addIssue({ code: 'custom', message: `caseFile ${file.id} claims verifiable facts with no official source; the record checks facts against primary government documents only.` })
+  }
+  if (file.verifiableFacts && file.openQuestion) {
+    context.addIssue({ code: 'custom', message: `caseFile ${file.id} is both a confirmed record and an open question; the record shows one state at a time.` })
   }
 })
 
 export const tathyaWorldDataV1Schema = z.object({
   version: z.literal(1),
   project: z.literal('tathya'),
-  provenance: z.enum(['committed-export', 'placeholder']),
+  provenance: z.enum(['committed-export', 'placeholder', 'public-snapshot']),
   reviewedOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   sourceAudit: z.object({ repository: z.literal('Tathya'), commit: z.string().regex(/^[0-9a-f]{7,40}$/i) }),
   snapshot: z.object({
-    takenAt: z.string().min(4),
+    takenAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+    surface: z.string().url().refine((value) => value.startsWith('https://'), { message: 'The snapshot surface must be an HTTPS URL.' }),
     meaning: z.string().min(20),
   }),
   sourceTypes: z.tuple([z.literal('official'), z.literal('media'), z.literal('citizen')]),
+  feed: z.object({
+    caseFileCount: z.number().int().positive(),
+    handPickedCount: z.literal(0),
+    sourceCountHistogram: z.array(z.object({
+      sources: z.number().int().positive(),
+      files: z.number().int().positive(),
+    })).min(1),
+  }).superRefine((feed, context) => {
+    const total = feed.sourceCountHistogram.reduce((sum, bin) => sum + bin.files, 0)
+    if (total !== feed.caseFileCount) {
+      context.addIssue({ code: 'custom', message: `feed histogram sums to ${total} files, not caseFileCount ${feed.caseFileCount}.` })
+    }
+  }),
   caseFiles: z.array(tathyaCaseFileSchema).min(2).max(8),
-  sharedSources: z.array(z.object({
-    sourceType: z.enum(['official', 'media', 'citizen']),
-    fileIds: z.array(z.string().min(1)).length(2),
-  })),
-  conflicts: z.array(z.object({
-    fileId: z.string().min(1),
-    resolved: z.literal(false),
-  })).min(1),
-  silentFailure: z.object({
+  // The independent-media side of every inspected file traced to one publisher.
+  // The world shows the source count rather than a headline; it does not name it.
+  sharedMediaSource: z.object({
     present: z.literal(true),
-    sourceLabel: z.string().min(6),
-    explanation: z.string().min(20),
+    fileIds: z.array(z.string().min(1)).min(2),
+    note: z.string().min(20),
+  }),
+  openQuestions: z.array(z.object({
+    fileId: z.string().min(1),
+    statement: z.string().min(20),
+  })).min(1),
+  integrity: z.object({
+    historyNeverRewritten: z.literal(true),
+    extractionIssueReportable: z.literal(true),
+    note: z.string().min(20),
   }),
   corpusBenchmark: z.object({
     available: z.literal(false),
     reason: z.string().min(20),
   }),
+}).superRefine((data, context) => {
+  const ids = new Set(data.caseFiles.map((file) => file.id))
+  for (const id of data.sharedMediaSource.fileIds) {
+    if (!ids.has(id)) context.addIssue({ code: 'custom', message: `sharedMediaSource references unknown case file ${id}.` })
+  }
+  for (const question of data.openQuestions) {
+    if (!ids.has(question.fileId)) context.addIssue({ code: 'custom', message: `openQuestions references unknown case file ${question.fileId}.` })
+  }
 })
 
 export const claimSchema = z.object({

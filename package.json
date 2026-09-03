@@ -29,6 +29,7 @@
     "phase5:world-gate": "node scripts/phase5-world-gate.mjs",
     "phase5:gate": "npm run phase4:gate && npm run phase5:world-gate",
     "phase6:vivid-gate": "npm run phase5:gate && node scripts/phase6-vivid-world-gate.mjs",
+    "phase6:tathya-gate": "npm run phase6:vivid-gate && node scripts/phase6-tathya-world-gate.mjs",
     "preview": "astro preview --host 127.0.0.1",
     "shots": "node scripts/shots.mjs",
     "capture": "node scripts/capture-demos.mjs",

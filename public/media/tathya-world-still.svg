@@ -1,28 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1536 1024" role="img" aria-label="The Long Table, composed final frame: source slips in two open case files, corded to their origins, and a blank ledger line where a verdict would be written.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1536 1024" role="img" aria-label="The Long Table, composed final frame: source slips in three open case files, each corded to its origin at the table edge, one bright thread running through every media slip to a single publisher, and a blank ledger sheet where a verdict would be written.">
   <defs>
     <linearGradient id="table" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#0b0806"/>
-      <stop offset="1" stop-color="#241d15"/>
+      <stop offset="0" stop-color="#0e0b08"/>
+      <stop offset="0.55" stop-color="#241b12"/>
+      <stop offset="1" stop-color="#332818"/>
     </linearGradient>
-    <radialGradient id="lamp" cx="0.42" cy="0.36" r="0.75">
-      <stop offset="0" stop-color="#f4e4be" stop-opacity="0.16"/>
-      <stop offset="0.55" stop-color="#f4e4be" stop-opacity="0.04"/>
-      <stop offset="1" stop-color="#f4e4be" stop-opacity="0"/>
+    <radialGradient id="lamp" cx="0.42" cy="0.42" r="0.72">
+      <stop offset="0" stop-color="#fae8c4" stop-opacity="0.34"/>
+      <stop offset="0.34" stop-color="#fae8c4" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#fae8c4" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="vig" cx="0.5" cy="0.46" r="0.8">
       <stop offset="0" stop-color="#000" stop-opacity="0"/>
-      <stop offset="1" stop-color="#000" stop-opacity="0.62"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.56"/>
     </radialGradient>
-    <g id="slip">
-      <rect x="-31" y="-20" width="62" height="40" rx="3" fill="#d8c9a6" stroke="#241d13"/>
-      <line x1="-22" y1="-8" x2="18" y2="-8" stroke="#2c2417" stroke-opacity="0.4"/>
-      <line x1="-22" y1="0" x2="8" y2="0" stroke="#2c2417" stroke-opacity="0.4"/>
+    <g id="slip-media">
+      <rect x="-32" y="-21" width="64" height="42" rx="3" fill="#e4d3ac" stroke="#221b11"/>
+      <circle cx="-22" cy="-11" r="3" fill="none" stroke="#2a2216"/>
+      <line x1="-22" y1="-3" x2="18" y2="-3" stroke="#2a2216" stroke-opacity="0.42"/>
+      <line x1="-22" y1="5" x2="6" y2="5" stroke="#2a2216" stroke-opacity="0.42"/>
+    </g>
+    <g id="slip-official">
+      <rect x="-32" y="-21" width="64" height="42" rx="3" fill="#e4d3ac" stroke="#221b11"/>
+      <rect x="-25" y="-14" width="6" height="6" fill="#2a2216"/>
+      <line x1="-22" y1="-3" x2="18" y2="-3" stroke="#2a2216" stroke-opacity="0.42"/>
+      <line x1="-22" y1="5" x2="6" y2="5" stroke="#2a2216" stroke-opacity="0.42"/>
     </g>
   </defs>
 
-  <rect width="1536" height="1024" fill="#080605"/>
-  <polygon points="150,120 1386,120 1536,1024 0,1024" fill="url(#table)"/>
-  <g stroke="#e9d8b4" stroke-opacity="0.09">
+  <rect width="1536" height="1024" fill="#090705"/>
+  <polygon points="150,110 1386,110 1536,1024 0,1024" fill="url(#table)"/>
+  <g stroke="#e9d8b4" stroke-opacity="0.1">
     <line x1="170" y1="300" x2="1366" y2="300"/>
     <line x1="150" y1="470" x2="1386" y2="470"/>
     <line x1="120" y1="660" x2="1416" y2="660"/>
@@ -30,52 +38,61 @@
   </g>
   <rect width="1536" height="1024" fill="url(#lamp)"/>
 
-  <!-- cords to the table edges -->
-  <g stroke="#b29e78" stroke-opacity="0.5" fill="none">
-    <path d="M150,360 Q400,300 560,430"/>
-    <path d="M150,520 Q420,470 600,500"/>
-    <path d="M1386,300 Q1050,320 720,450"/>
-    <path d="M1386,560 Q1150,600 980,700"/>
-    <path d="M760,120 Q740,300 690,470"/>
+  <!-- cords to the table edges: official to the left rail, media to the right rail -->
+  <g stroke="#c4b086" stroke-opacity="0.5" fill="none">
+    <path d="M150,470 Q360,430 470,470"/>
+    <path d="M1386,540 Q1120,470 980,430"/>
+    <path d="M1386,540 Q1150,560 1010,470"/>
+    <path d="M1386,540 Q1180,700 1050,760"/>
+    <path d="M1386,540 Q1200,720 1120,780"/>
   </g>
 
-  <!-- case file A (upper left), loosely bound -->
+  <!-- one bright thread: every media slip back to a single publisher on the right rail -->
+  <path d="M1386,540 L980,430 L1010,470 L560,430 L620,470 L1050,760 L1120,780"
+        fill="none" stroke="#78d6a8" stroke-opacity="0.9" stroke-width="2"/>
+
+  <!-- case file C (centre-left, official + media), loosely bound -->
   <g>
-    <path d="M470,360 C420,420 430,540 540,560 C660,580 760,540 740,430 C720,340 540,320 470,360 Z"
+    <path d="M430,380 C380,450 400,560 520,580 C650,600 720,540 700,430 C685,350 500,340 430,380 Z"
           fill="none" stroke="#4fd39b" stroke-opacity="0.5" stroke-dasharray="6 6"/>
-    <use href="#slip" x="530" y="410" transform="rotate(-6 530 410)"/>
-    <use href="#slip" x="610" y="440" transform="rotate(4 610 440)"/>
-    <use href="#slip" x="560" y="500" transform="rotate(-3 560 500)"/>
-    <use href="#slip" x="660" y="500" transform="rotate(9 660 500)"/>
-    <use href="#slip" x="500" y="470" transform="rotate(2 500 470)"/>
+    <use href="#slip-official" x="0" y="0" transform="translate(470 430) rotate(-5)"/>
+    <use href="#slip-media" x="0" y="0" transform="translate(560 430) rotate(4)"/>
+    <use href="#slip-media" x="0" y="0" transform="translate(520 500) rotate(-2)"/>
   </g>
 
-  <!-- shared source, between the files -->
-  <use href="#slip" x="720" y="450" transform="rotate(3 720 450)"/>
-
-  <!-- case file B (lower right), loosely bound -->
+  <!-- case file A (upper right, two media), loosely bound -->
   <g>
-    <path d="M960,620 C910,680 930,780 1040,800 C1150,820 1230,770 1210,670 C1190,590 1030,580 960,620 Z"
-          fill="none" stroke="#4fd39b" stroke-opacity="0.4" stroke-dasharray="6 6"/>
-    <use href="#slip" x="1010" y="670" transform="rotate(5 1010 670)"/>
-    <use href="#slip" x="1090" y="700" transform="rotate(-7 1090 700)"/>
-    <use href="#slip" x="1050" y="750" transform="rotate(2 1050 750)"/>
-    <use href="#slip" x="1150" y="730" transform="rotate(8 1150 730)"/>
+    <path d="M910,360 C870,420 890,510 990,528 C1090,544 1150,500 1132,410 C1116,340 980,330 910,360 Z"
+          fill="none" stroke="#4fd39b" stroke-opacity="0.42" stroke-dasharray="6 6"/>
+    <use href="#slip-media" x="0" y="0" transform="translate(980 430) rotate(6)"/>
+    <use href="#slip-media" x="0" y="0" transform="translate(1010 470) rotate(-4)"/>
+    <rect x="948" y="372" width="64" height="18" rx="2" fill="#fae8c4" fill-opacity="0.14" stroke="#fae8c4" stroke-opacity="0.6"/>
+    <text x="980" y="366" fill="#cec1a6" font-family="'DM Mono', monospace" font-size="13" text-anchor="middle">open question</text>
   </g>
 
-  <!-- the blank finding line, near the front, left empty -->
+  <!-- case file B (lower right, two media), loosely bound -->
+  <g>
+    <path d="M980,700 C940,760 960,850 1060,868 C1160,884 1220,840 1202,750 C1186,680 1050,670 980,700 Z"
+          fill="none" stroke="#4fd39b" stroke-opacity="0.42" stroke-dasharray="6 6"/>
+    <use href="#slip-media" x="0" y="0" transform="translate(1050 760) rotate(5)"/>
+    <use href="#slip-media" x="0" y="0" transform="translate(1120 780) rotate(-6)"/>
+    <rect x="1018" y="712" width="64" height="18" rx="2" fill="#fae8c4" fill-opacity="0.14" stroke="#fae8c4" stroke-opacity="0.6"/>
+    <text x="1050" y="706" fill="#cec1a6" font-family="'DM Mono', monospace" font-size="13" text-anchor="middle">open question</text>
+  </g>
+
+  <!-- the blank finding sheet, near the front, left empty -->
   <g transform="translate(360,820)">
-    <rect x="-90" y="-58" width="180" height="116" rx="4" fill="#d8c9a6" stroke="#241d13"/>
-    <g stroke="#2c2417" stroke-opacity="0.35">
-      <line x1="-72" y1="-26" x2="72" y2="-26"/>
-      <line x1="-72" y1="-4" x2="72" y2="-4"/>
-      <line x1="-72" y1="18" x2="72" y2="18"/>
-      <line x1="-72" y1="40" x2="72" y2="40"/>
+    <rect x="-92" y="-60" width="184" height="120" rx="4" fill="#efe1c1" stroke="#221b11"/>
+    <g stroke="#2a2216" stroke-opacity="0.32">
+      <line x1="-74" y1="-28" x2="74" y2="-28"/>
+      <line x1="-74" y1="-6" x2="74" y2="-6"/>
+      <line x1="-74" y1="16" x2="74" y2="16"/>
+      <line x1="-74" y1="38" x2="74" y2="38"/>
     </g>
-    <text x="0" y="-84" fill="#cec1a6" font-family="'DM Mono', monospace" font-size="16" text-anchor="middle" letter-spacing="2">FINDING</text>
-    <text x="0" y="92" fill="#78bd97" font-family="'DM Mono', monospace" font-size="17" text-anchor="middle">left to the reader</text>
+    <text x="0" y="-86" fill="#cec1a6" font-family="'DM Mono', monospace" font-size="16" text-anchor="middle" letter-spacing="2">FINDING</text>
+    <text x="0" y="94" fill="#78d6a8" font-family="'DM Mono', monospace" font-size="17" text-anchor="middle">left to the reader</text>
   </g>
 
   <rect width="1536" height="1024" fill="url(#vig)"/>
-  <text x="60" y="980" fill="#8d9895" font-family="'DM Mono', monospace" font-size="18" letter-spacing="1">THE LONG TABLE — THE RECORD STAYS OPEN. NO VERDICT, NO RANKING, NO SENTIMENT SCORE.</text>
+  <text x="60" y="980" fill="#8d9895" font-family="'DM Mono', monospace" font-size="18" letter-spacing="1">THE LONG TABLE. THE RECORD STAYS OPEN. NO VERDICT, NO RANKING, NO SENTIMENT SCORE.</text>
 </svg>

@@ -1,62 +1,62 @@
 {
   "projectSlug": "tathya",
-  "published": false,
+  "published": true,
   "reviewedAt": "2026-09-04",
   "selectedTreatment": "The Long Table",
   "staticFrame": {
     "src": "/media/tathya-world-still.svg",
-    "alt": "A dark archival table seen from above. Source slips lie in open case files, each corded to its origin, and the ledger line where a verdict would be written is left blank.",
+    "alt": "A dark archival table seen from above. Source slips lie in three open case files, each corded to its origin at the table edge, and the ledger line where a verdict would be written is left blank.",
     "width": 1536,
     "height": 1024
   },
   "scenes": [
     {
-      "id": "table",
+      "id": "record",
       "label": "01 / The record",
-      "heading": "A table, and a rule.",
-      "narration": "Everything that reaches Tathya is laid on one table and kept. The record organises what was said. It does not rule on whether it was true."
+      "heading": "Nothing here was placed by hand.",
+      "narration": "Every file on this table is assembled from configured sources. No topic was picked, ordered, or framed by a person. The record organises what was said. It does not rule on whether it was true."
     },
     {
-      "id": "intake",
-      "label": "02 / Intake",
-      "heading": "Everything keeps its name.",
-      "narration": "Each source is set down tagged with its kind, official, media, or citizen, and a cord back to where it came from. It is never promoted to the truth."
+      "id": "sources",
+      "label": "02 / Sources",
+      "heading": "Each source keeps its kind and its cord.",
+      "narration": "A source is set down marked official, independent media, or citizen, with a cord back to where it came from. It is never promoted into the truth."
     },
     {
-      "id": "identity",
-      "label": "03 / Identity",
-      "heading": "We have seen this subject before.",
-      "narration": "When a source matches a subject already on the table, it joins that file instead of starting a new pile. The stale copy is discarded rather than left to gather beside the current one."
+      "id": "standing",
+      "label": "03 / Behind a file",
+      "heading": "The count is shown, so a reader can weigh it.",
+      "narration": "This file rests on two sources, both independent media. No official record and no citizen account has been logged against it. The gap is shown, not hidden."
     },
     {
-      "id": "citation",
-      "label": "04 / Citation",
-      "heading": "No claim without its cord.",
-      "narration": "A claim keeps the cord back to its source. A slip with no source stays on the table, uncited and visible, rather than quietly dropped."
+      "id": "ledger",
+      "label": "04 / Claims ledger",
+      "heading": "Who said it, and where.",
+      "narration": "Every claim keeps a cord to the source that made it. What each side said sits side by side, at equal weight. No verdict, only the citation."
     },
     {
       "id": "file",
       "label": "05 / The file",
       "heading": "Kept together. Not fused.",
-      "narration": "Slips about one subject are bound under a loose cord that never cinches. The file carries its own count and the split across official, media, and citizen."
+      "narration": "Related sources sit in one file under a loose cord that never cinches. The file carries its own source count and the split across official, media, and citizen."
     },
     {
-      "id": "conflict",
-      "label": "06 / Conflict",
-      "heading": "Two accounts. Same light.",
-      "narration": "Conflicting sources are squared side by side at equal weight. The record does not rank them, average them, or let the verdict come down."
+      "id": "one-voice",
+      "label": "06 / How many voices",
+      "heading": "One publisher ran through every file.",
+      "narration": "On this date the independent-media side of every file traced back to a single publisher. The record does not fold that into a headline. It shows the number of sources so the reader can see it."
     },
     {
       "id": "boundary",
       "label": "07 / The boundary",
-      "heading": "What broke, and what it will not do.",
-      "narration": "A source whose collection failed is withdrawn in plain sight and marked as workflow state. The line held the whole way: no verdict, no ranking, no sentiment score."
+      "heading": "Open questions stay open.",
+      "narration": "Where only one side has spoken, the file holds an open question. Not an accusation, a status. Where a primary government document confirms a claim, it is logged as a verifiable fact. The verdict slab comes down and leaves no mark."
     },
     {
       "id": "handoff",
       "label": "08 / Deep dive",
       "heading": "The conclusion is yours.",
-      "narration": "The table runs on past where you stopped reading. The case study carries the ingestion, the identity model, the citation graph, and the failures still ahead."
+      "narration": "The record runs past where you stopped reading. Every row can be challenged, and the history of corrections is kept and never rewritten. The case study carries the ingestion, the identity model, the citation graph, and why the verdict was removed from the contract."
     }
   ],
   "accents": {
@@ -70,7 +70,7 @@
     "explanation": "This world is a silent archival demonstration. It has no audio asset and makes no audio request."
   },
   "sourceAudit": [
-    { "label": "Tathya committed source boundary", "revision": "bf4606f" },
-    { "label": "Portfolio owner clearance record", "revision": "pending-clearance" }
+    { "label": "Tathya deployed public record, dated read", "revision": "2026-09-04" },
+    { "label": "Tathya committed source boundary", "revision": "bf4606f" }
   ]
 }

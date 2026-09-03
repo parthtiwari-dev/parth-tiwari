@@ -34,7 +34,7 @@ Where to look, and what is still true.
 | [`PHASE_2_WORLDS_ANIMATION_MEMO.md`](PHASE_2_WORLDS_ANIMATION_MEMO.md) | Research-only candidate graphics and missing real-data sources for the seven specced worlds |
 | [`VIVID_WORLD_CONCEPT_REVIEW.md`](VIVID_WORLD_CONCEPT_REVIEW.md) | Current-product audit, three Vivid world directions and the selected Story Loom basis |
 | [`VIVID_WORLD_STUDY.md`](VIVID_WORLD_STUDY.md) | Story Loom review animatic and the original evidence boundary that production preserves |
-| [`TATHYA_WORLD_STUDY.md`](TATHYA_WORLD_STUDY.md) | The Long Table: selected treatment, event-driven time model, scene contract, data contract and open decisions. Implementation in progress on `world/tathya`, route unpublished, blocked on the real export |
+| [`TATHYA_WORLD_STUDY.md`](TATHYA_WORLD_STUDY.md) | The Long Table: selected treatment, event-driven time model, scene contract, data contract and current proof. Built and `published: true` on `world/tathya`; `phase6:tathya-gate` green; owner rendered review still open |
 | [`VIVID_CASE_STUDY_AUDIT.md`](VIVID_CASE_STUDY_AUDIT.md) | Main-to-upgrade-flux history audit, evidence map and durable update workflow for `/work/vivid/` |
 | [`REBUILD_BRIEF.md`](REBUILD_BRIEF.md) | Why v1 is being replaced. The guards that prevent a repeat |
 | [`TEN_SECOND_TEST.md`](TEN_SECOND_TEST.md) | 🔴 The acceptance gate. **Still never run** |
@@ -189,14 +189,19 @@ separate open item. Vivid's Story Loom is a Phase 6A world in implementation; it
 cleared four-frame Kyoto evaluation sequence, a textual missing-evidence boundary and an
 explicit unresolved commercial-model licence notice.
 
-Phase 6 Tathya (The Long Table) implementation started 2026-09-04 on branch `world/tathya`
-with the route `published: false`. It is a dark archival-table world on the shared
-lifecycle, driven by per-scene millisecond clocks rather than scroll-scrub (two earlier
-scroll-scrub animatics were owner-rejected for crawling). `world-lifecycle.ts` gained a
-backward-compatible `draw` return so event-driven worlds keep animating after the scroll
-settles. `tathyaWorldDataV1Schema` has a `provenance` guard that prevents the placeholder
-export shipping as real. The world builds and passes the world-render metric checks
-(`data-world-ready`, one `h1`, eight scenes, no overflow, draw rate under 30fps, no runtime
-requests) at 390 and 1440 pixels. It is blocked on the read-only export from the Tathya
-repo at `bf4606f`, an owner render review, a `phase6:tathya-gate` and a revert proof before
-it can publish. Scope: `TATHYA_WORLD_STUDY.md`.
+Phase 6 Tathya (The Long Table) is built and `published: true` on branch `world/tathya`.
+It is a dark archival-table world on the shared lifecycle, driven by per-scene millisecond
+clocks rather than scroll-scrub (two earlier scroll-scrub animatics were owner-rejected for
+crawling), with a wordless canvas: every count and sentence is in the static HTML.
+`world-lifecycle.ts` gained a backward-compatible `draw` return so event-driven worlds keep
+animating after the scroll settles; the BeatMind and Vivid gates pass unchanged. The data
+is a dated public-record snapshot — `tathya-world-v1.json` `provenance: 'public-snapshot'`,
+`2026-09-04`, three anonymised case files carrying their real source compositions from
+`tathya-1.vercel.app`, feed `handPickedCount 0`, `corpusBenchmark.available false`. The
+`provenance` guard and `phase6:tathya-gate` refuse a `placeholder`. `npm run
+phase6:tathya-gate` is green (full Phase 1-5 static and world chain + Vivid + Tathya) and
+an isolated revert proof passes. The paper case study's `measurement.absence` is unchanged
+and its `claimRefs` stay empty by decision. The owner directed the merge to `main`; a
+separate rendered owner review of the animated world stays open and is not reported as
+done. Scope, scene contract and data contract: `TATHYA_WORLD_STUDY.md`; the
+`public-snapshot` rationale and the `claimRefs` decision: `DECISIONS.md`.
