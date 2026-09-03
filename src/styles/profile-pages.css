@@ -1,6 +1,6 @@
 @import './paper-system.css';
 
-.profile-page { background: var(--void); }
+.profile-page { background: var(--paper); }
 .profile-sheet { position: relative; width: 100%; min-height: 100vh; overflow-x: clip; }
 .profile-paper { position: relative; min-height: 100vh; background-color: var(--paper); background-image: linear-gradient(90deg, rgb(82 50 27 / 13%), transparent 2.8%, transparent 97.2%, rgb(82 50 27 / 13%)), linear-gradient(rgb(244 237 223 / 38%), rgb(233 225 210 / 26%)), url('/media/paper-stock.jpg'); background-repeat: repeat-y; background-size: 100% auto; }
 .profile-edge { position: absolute; z-index: 60; inset-block: 0; width: clamp(10px, 1.15vw, 17px); display: grid; grid-template-rows: 31% 36% 33%; pointer-events: none; }
@@ -14,7 +14,7 @@
 .profile-edge-right i:nth-child(2) { background-image: url('/media/paper-edge-fibre-a.png'); }
 .profile-edge-right i:nth-child(3) { background-image: url('/media/paper-edge-fibre-b.png'); }
 
-.profile-nav { position: sticky; z-index: 50; top: 0; min-height: 5rem; display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: clamp(1rem, 3vw, 3rem); padding: .8rem max(1.25rem, calc((100% - min(100% - clamp(2rem, 8vw, 10rem), 1640px)) / 2)); border-bottom: 1px solid rgb(24 20 17 / 34%); background-color: rgb(233 225 210 / 96%); background-image: linear-gradient(180deg, rgb(255 255 255 / 38%), transparent 46%, rgb(72 47 29 / 13%) 100%), url('/media/paper-stock.jpg'); background-size: auto, 100% auto; box-shadow: 0 .75rem 1.1rem -.65rem rgb(42 27 17 / 52%); }
+.profile-nav { position: sticky; z-index: 50; top: 0; min-height: 5rem; display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: clamp(1rem, 3vw, 3rem); padding: .8rem max(1.25rem, calc((100% - min(100% - clamp(2rem, 8vw, 10rem), 1640px)) / 2)); border-bottom: 1px solid rgb(24 20 17 / 34%); background-color: var(--paper); background-image: linear-gradient(180deg, rgb(255 255 255 / 38%), transparent 46%, rgb(72 47 29 / 13%) 100%), url('/media/paper-stock.jpg'); background-size: auto, 100% auto; box-shadow: 0 .75rem 1.1rem -.65rem rgb(42 27 17 / 52%); }
 .profile-wordmark { font: 700 1.1rem var(--font-display); text-decoration: none; }
 .profile-nav > nav { display: flex; gap: clamp(1rem, 2.5vw, 2rem); }
 .profile-nav > nav a { font-weight: 600; text-decoration: none; }

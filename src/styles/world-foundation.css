@@ -52,8 +52,12 @@ main { overflow: clip; }
 
 .world-experience[data-world-ready='true'] .world-scenes { margin-top: -100svh; }
 .world-experience[data-world-ready='true'] .world-scene { min-height: 100svh; display: grid; align-items: center; padding-block: 7rem 8rem; border: 0; pointer-events: none; }
-.world-experience[data-world-ready='true'] .world-scene-copy { position: relative; opacity: .08; transform: translateY(1.1rem); transition: opacity 240ms var(--ease-paper), transform 400ms var(--ease-paper); text-shadow: 0 .18rem 1rem #000, 0 .35rem 2.8rem #000; }
+/* Resting state stays readable: if the scroll engine stalls the narration is still
+   legible, never a blank chamber. The dramatic de-emphasis only applies once the engine
+   has confirmed a frame (data-world-running). */
+.world-experience[data-world-ready='true'] .world-scene-copy { position: relative; opacity: .6; transform: translateY(1.1rem); transition: opacity 240ms var(--ease-paper), transform 400ms var(--ease-paper); text-shadow: 0 .18rem 1rem #000, 0 .35rem 2.8rem #000; }
 .world-experience[data-world-ready='true'] .world-scene-copy::before { position: absolute; z-index: -1; inset: -4rem -7rem; background: radial-gradient(ellipse at center, rgb(3 4 5 / 92%) 0, rgb(3 4 5 / 64%) 43%, transparent 74%); content: ''; }
+.world-experience[data-world-running='true'] .world-scene:not(.is-current) .world-scene-copy { opacity: .14; }
 .world-experience[data-world-ready='true'] .world-scene.is-current .world-scene-copy { opacity: 1; transform: none; }
 
 .world-fact-grid { max-width: 39rem; display: grid; grid-template-columns: repeat(3, 1fr); margin: 2rem 0 0; border-top: 1px solid rgb(244 244 239 / 24%); border-bottom: 1px solid rgb(244 244 239 / 24%); text-shadow: none; }
@@ -155,7 +159,8 @@ main { overflow: clip; }
   .world-experience[data-world-ready='true'] .world-stage { display: none; }
   .world-experience[data-world-ready='true'] .world-scenes { margin-top: 0; }
   .world-experience[data-world-ready='true'] .world-scene { min-height: auto; padding-block: 4rem; pointer-events: auto; }
-  .world-experience[data-world-ready='true'] .world-scene-copy { opacity: 1; transform: none; text-shadow: none; }
+  .world-experience[data-world-ready='true'] .world-scene-copy,
+  .world-experience[data-world-running='true'] .world-scene:not(.is-current) .world-scene-copy { opacity: 1; transform: none; text-shadow: none; }
   .world-experience[data-world-ready='true'] .world-scene-copy::before { display: none; }
 }
 
@@ -165,7 +170,8 @@ main { overflow: clip; }
   .world-experience, .world-experience[data-world-ready='true'] { min-height: auto; color: #111; background: #fff; }
   .world-experience[data-world-ready='true'] .world-scenes { margin-top: 0; }
   .world-experience[data-world-ready='true'] .world-scene { min-height: auto; display: block; padding: 1rem 0; color: #111; border-bottom: 1px solid #bbb; break-inside: avoid; }
-  .world-experience[data-world-ready='true'] .world-scene-copy { opacity: 1; transform: none; text-shadow: none; }
+  .world-experience[data-world-ready='true'] .world-scene-copy,
+  .world-experience[data-world-running='true'] .world-scene:not(.is-current) .world-scene-copy { opacity: 1; transform: none; text-shadow: none; }
   .world-experience[data-world-ready='true'] .world-scene-copy::before { display: none; }
   .world-narration, .world-scene-copy > p { color: #222; }
   .world-deep-dive { color: #111; border-color: #111; background: transparent; }

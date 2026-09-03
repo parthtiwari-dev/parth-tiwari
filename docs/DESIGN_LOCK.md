@@ -115,8 +115,8 @@ actual stock.
 
 - Seeded deckle edges remain stable between loads.
 - Paper shadow is its own layer so transparency does not create a black hole.
-- Oxblood `#8E2116` is reserved for the primary action, focus-worthy emphasis and paper
-  bleed. It is not a general decoration color.
+- Oxblood is reserved for the primary action, focus-worthy emphasis and paper bleed. It is
+  not a general decoration color. The built value is `#942418` (see §8).
 - Type and stock are separate layers. The paper may become translucent; the copy does not.
 
 ## 5. The register and preview
@@ -193,20 +193,27 @@ receives an owner-approved storyboard before implementation.
 
 ## 8. Visual system
 
+The hex values below are the built palette in `src/styles/paper-system.css`, reconciled on
+2026-09-03 to what the Phase 2 gate actually accepted. The original 2026-08-27 draft values
+(paper `#EAE3D5`, ink `#1A1613`, secondary `#4E463C`, quiet `#6B6153`, oxblood `#8E2116`,
+void `#0B0C0E`, world rule `#262A2F`, world ink `#F2F3F0`, world secondary `#9AA0A2`) drifted
+during Phase 2 and were never brought back. Quiet ink was additionally darkened in the
+nine-point refinement pass to clear 7:1 on the real stock; see `DESIGN_REFINEMENT.md`.
+
 ### Paper
 
-- paper: `#EAE3D5`
-- ink: `#1A1613`
-- secondary ink: `#4E463C`
-- quiet ink: `#6B6153`
-- oxblood: `#8E2116`
+- paper: `#e9e1d2`
+- ink: `#181411` (14.1:1 on paper)
+- secondary ink: `#51493f` (6.8:1) — supporting body copy
+- quiet ink: `#4a4038` (7.8:1) — metadata, mono labels, captions only
+- oxblood: `#942418` (6.4:1; 8.3:1 white-on-oxblood)
 
 ### Worlds
 
-- void: `#0B0C0E`
-- rule: `#262A2F`
-- ink: `#F2F3F0`
-- secondary: `#9AA0A2`
+- void: `#08090a` (paper-route body ground; world pages use `#050607`)
+- rule: `#2c3032`
+- ink: `#f4f4ef`
+- secondary: `#9da2a1`
 - project accents come from the product's real interface or data
 
 ### Type

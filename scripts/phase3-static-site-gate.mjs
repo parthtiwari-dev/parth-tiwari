@@ -17,7 +17,16 @@ const publishedProjects = [
   'spur-chat',
 ]
 const deferredProjects = ['fraud-risk-intelligence', 'oracle-auto-provision']
-const publishedWorlds = new Set(['beatmind'])
+const worldsDir = join(root, 'src', 'content', 'worlds')
+const publishedWorlds = new Set(
+  (await Promise.all(
+    (await readdir(worldsDir))
+      .filter((name) => name.endsWith('.json'))
+      .map(async (name) => JSON.parse(await readFile(join(worldsDir, name), 'utf8'))),
+  ))
+    .filter((world) => world.published)
+    .map((world) => world.projectSlug),
+)
 
 const failures = []
 const assert = (condition, message) => {

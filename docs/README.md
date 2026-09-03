@@ -40,6 +40,7 @@ Where to look, and what is still true.
 | [`TEN_SECOND_ARTIFACT.md`](TEN_SECOND_ARTIFACT.md) | The exact plain-text artifact for the Phase 1 human test |
 | [`PRD.md`](PRD.md) | Audience, route contracts, conversion, worlds and future publishing |
 | [`FULL_SITE_AUDIT_2026-09-01.md`](FULL_SITE_AUDIT_2026-09-01.md) | Owner-requested whole-site visual + strategic review: the 30-day commercial question, the type/space diagnosis, a prioritised bug list, the two worlds, the unroll intro, the Japanese direction and a four-track plan. Evidence in `.shots/full-audit-2026-09-01/` |
+| [`DESIGN_REFINEMENT.md`](DESIGN_REFINEMENT.md) | The nine-point refinement pass (deferred Phase 2 polish + deferred Phase 3 review + one Phase 5 world bug), on branch `refine/design-system-9point`. Run 1 (foundations: black-flash fix, world-init resilience, token layer, quiet-ink contrast) is complete and gate-green; Runs 2-3 and a mobile-review run follow |
 
 ## Superseded — kept for the reasoning, not the instructions
 
@@ -126,7 +127,14 @@ baseline, failures, limitations, licensing boundary and future gates. It does no
 the current plan's identity or speed goal is achieved. `VIVID_CASE_STUDY_AUDIT.md` is the
 source map and update procedure.
 
-**Last documentation truth audit:** 2026-09-02. Ten published paper routes pass rendered
+**Last documentation truth audit:** 2026-09-03. The deferred Phase 2 visual-polish pass has
+begun on branch `refine/design-system-9point` as a nine-point refinement (see
+`DESIGN_REFINEMENT.md`). Run 1 landed the paper-page black-flash fix, BeatMind/Vivid
+world-init resilience, an additive type/space/measure token layer and the `--ink-quiet`
+contrast lift (4.88:1 to 7.77:1). `npm run phase6:vivid-gate`, `npm run a11y` and
+`npm run perf:scroll` are green on that branch. `main` is untouched.
+
+Ten published paper routes pass rendered
 title-versus-proof collision checks at 390, 800, 1440 and 1920 pixels. Fraud Risk
 Intelligence and Oracle Auto Provision remain focused register entries with deferred routes.
 The following local Phase 3 ship pass links all ten published projects from Home, removes

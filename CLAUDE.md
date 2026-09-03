@@ -151,6 +151,13 @@ final frame and case-study handoff remain static HTML.
   `npm run phase5:gate` and both isolated revert proofs pass. The owner approved the rendered
   BeatMind world on 2026-09-02, so Phase 5 is closed. Phase 3's deferred review remains open;
   Phase 6 may proceed one owner-approved world at a time.
+- The owner directed the deferred Phase 2 visual-polish pass to run as a nine-point
+  refinement on branch `refine/design-system-9point` (3 build runs + a mobile-review run).
+  It is permitted inside `docs/DESIGN_LOCK.md`. Run 1 (foundations) is complete and
+  gate-green: paper-page black-flash fix, BeatMind/Vivid world-init resilience, an additive
+  type/space/measure token layer, `--ink-quiet` contrast lifted to 7.77:1, and
+  `docs/DESIGN_LOCK.md` §8 reconciled to the built palette. `main` is untouched. Scope and
+  evidence: `docs/DESIGN_REFINEMENT.md`. Runs 2-4 await owner review, one at a time.
 
 ## Dependencies and external actions
 

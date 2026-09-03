@@ -290,6 +290,31 @@ authorized before the build-plan phase that owns it.
   commercial product-model licence remains explicitly unresolved.
 - Whether any optional interaction teaches enough to justify its complexity
 
+### Design refinement (nine-point pass, 2026-09-03)
+
+- The deferred Phase 2 visual-polish pass is now running on branch
+  `refine/design-system-9point`, in three reviewable runs plus a mobile-review run. It is
+  permitted inside `DESIGN_LOCK.md` (§direction: the lock does not prevent improving
+  spacing, hierarchy, motion, accessibility or world choreography). Scope and evidence:
+  `DESIGN_REFINEMENT.md`.
+- `--ink-quiet` darkened `#685e52` → `#4a4038` (4.88:1 → 7.77:1 on the real stock).
+  `DESIGN_LOCK.md` §8 reconciled to the built palette. Other drifted values kept as-is
+  because they passed the Phase 2 gate.
+- A fluid type scale, a mid-scale register, `--leading-*` / `--tracking-*` and `--measure`
+  tokens were added to `paper-system.css`. Run 1 defines them; Run 2 wires them in and
+  demotes the billboard headings (page h1 to ~44-88px, section h2 to ~38-62px).
+- World resilience: `[data-world-ready]` (sync) keeps the scroll layout;
+  `[data-world-running]` (after a confirmed canvas frame) gates the dramatic per-scene
+  de-emphasis. Resting narration opacity `.08` → `.6`. The active chapter is primed
+  synchronously and tracked from scroll events, and the RAF loop self-heals a stale
+  `IntersectionObserver`. Shared engine + CSS, so Vivid gets the same fix.
+- `scroll-behavior: smooth` is kept for Runs 1-2 and removed in Run 3 alongside the
+  paper-texture scroll-perf fix, because removing it alone trades an invisible black-flash
+  for visible wide-viewport jank the `perf:scroll` test had been masking.
+- `scripts/phase3-static-site-gate.mjs` no longer hard-codes `publishedWorlds`; it derives
+  the set from `src/content/worlds/*.json`. The stale set had blocked the gate since the
+  Vivid world shipped.
+
 ### Phase 7
 
 - Production domain
