@@ -79,7 +79,10 @@
    body colour. World pages override in world-foundation.css. scroll-behavior: smooth is
    kept deliberately: it only animates anchor and programmatic scrolls (the case-study rail
    links), never wheel or touch input, so it is not the "smooth-scroll engine" DESIGN_LOCK
-   section 8 rules out. See docs/DESIGN_REFINEMENT.md, Run 3c. */
+   section 8 rules out. Note: scripts/scroll-perf-check.mjs drives scrollTo per frame, so
+   this property shortens its per-frame delta and flatters the p95 -- the wide-viewport
+   texture-repaint cost it hides is real and still outstanding. See
+   docs/DESIGN_REFINEMENT.md, Run 3c. */
 html { overflow-x: clip; scroll-behavior: smooth; scroll-padding-top: 6rem; background: var(--paper); }
 body { overflow-x: clip; margin: 0; min-width: 320px; color: var(--ink); background: var(--paper); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
 a { color: inherit; }

@@ -222,23 +222,29 @@ The Run 3 plan bundled removing `scroll-behavior: smooth` with a paper-texture s
 pass, on the theory that the CSS property "violates the spirit" of DESIGN_LOCK section 8's
 "no smooth-scroll engine". On investigation both halves were dropped:
 
-- **`scroll-behavior: smooth` is kept.** It is native CSS that animates only anchor and
-  programmatic scrolls (the case-study reading-rail links), never wheel or touch input, so
-  it is not a scroll-hijacking engine. Removing it measurably regresses `perf:scroll` at
-  1440px (p95 16.8ms -> 33.4ms) because the test's per-frame `scrollTo` is no longer eased,
-  and it gives nothing back in real use.
+- **`scroll-behavior: smooth` is kept**, for one reason only: it is native CSS that
+  animates only anchor and programmatic scrolls (the case-study reading-rail links), never
+  wheel or touch input, so it is not a scroll-hijacking engine and does not conflict with
+  section 8. It is *not* kept for performance. `perf:scroll` drives `scrollTo` once per
+  frame, so the property shortens each frame's scroll delta and pulls the p95 down to
+  16.8ms; remove it and the same harness reports 33.4ms at 1440px. That 33.4ms is the true
+  fast-scroll paint cost of the full-bleed `repeat-y` texture, which Run 1's note already
+  recorded as real and merely hidden by the test. Retaining the property keeps the metric
+  green but does **not** resolve that cost.
 - **`content-visibility: auto` on offscreen sections was tried and reverted.** Under a
   continuous full-page scroll it made `perf:scroll` *worse* at 800px (p95 16.8ms -> 33.4ms,
   `>20ms` 9 -> 22): every section crossing the render boundary during the pan pays a
   synchronous render+first-paint burst. It helps first load and scattered jumps, not a
   smooth pan, which is what the metaphor's long pages actually do.
-- The paper-texture repaint at wide viewports (a bounded ~33ms worst-case frame at 1440px
-  during an aggressive synthetic scroll; `perf:scroll` p95 stays 16.8ms in normal motion)
-  is a real characteristic of the full-bleed `repeat-y` photo. A proper fix (a pre-scaled
-  texture tile at the real render width, or a re-architected single paper layer) is a
-  larger piece of work than this refinement pass should take on unprompted, and is left as
-  a noted follow-up rather than rushed here.
-- Comment at `paper-system.css` line 78 updated to record the deliberate retention.
+- **Outstanding:** the ~33ms fast-scroll paint frame at 1440px from the full-bleed
+  `repeat-y` texture. A proper fix (a pre-scaled texture tile at the real render width, or
+  a re-architected single paper layer) is a larger piece of work than this refinement pass
+  should take on unprompted, and is left as a noted follow-up rather than rushed here.
+- Comment at `paper-system.css` line 78 updated to record the deliberate retention and the
+  metric sensitivity, so it does not read against Run 1's note.
+
+- `.row-copy` / `.note-copy` / `.project-name` measure caps unified to `54rem` across the
+  three registers (were 56 / 52 / 52).
 
 Deckle-PNG regeneration and the UPI matplotlib chart restyle stay **deferred** —
 asset-generation tasks nobody flagged in review.

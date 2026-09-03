@@ -141,8 +141,10 @@ content width with no mid-row hole (the Run 2 `76rem` cap is gone), and trimmed 
 crossfade hysteresis band to the world scroll engine, made the landing reveal observer
 degrade safely (guarded constructor check plus a timed backstop), and fixed the Vivid case
 study showing BeatMind's "Sound Foundry" world CTA. Run 3c kept `scroll-behavior: smooth`
-(native anchor-only easing, not a scroll engine) after removal and `content-visibility: auto`
-both measurably regressed `perf:scroll`; a real texture-repaint fix is a noted follow-up.
+only because it is native anchor-only easing (not a scroll engine, no section 8 conflict);
+it is not a perf win, and the ~33ms fast-scroll texture-repaint frame at 1440px it hides
+from `perf:scroll` is a noted outstanding follow-up. `content-visibility: auto` on offscreen
+sections was tried and reverted (it regressed continuous-scroll paint).
 `npm run phase6:vivid-gate` (76 PASS), `npm run a11y`, `npm run perf:scroll` and
 `npm run phase2:gate` are green on that branch. `main` is untouched.
 

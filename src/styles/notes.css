@@ -55,7 +55,7 @@
 .note-row a::before { content: ''; position: absolute; z-index: -1; inset: 0 -1px; background: var(--ink); clip-path: polygon(0 8%, 4% 0, 22% 4%, 44% 0, 66% 4%, 85% 0, 100% 7%, 100% 92%, 84% 100%, 62% 96%, 40% 100%, 20% 96%, 3% 100%, 0 90%); transform: scaleX(0); transform-origin: left center; transition: transform 200ms var(--ease-paper); }
 .note-number, .note-project, .note-source { color: var(--ink-quiet); font: var(--text-2xs)/1.45 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; }
 .note-row a > .note-number { grid-column: 1; padding-top: .3rem; }
-.note-copy { grid-column: 2; min-width: 0; max-width: 52rem; display: grid; gap: .5rem; }
+.note-copy { grid-column: 2; min-width: 0; max-width: 54rem; display: grid; gap: .5rem; }
 .note-row a > .note-project { grid-column: 3; justify-self: end; padding-top: .35rem; text-align: right; white-space: nowrap; }
 .note-copy strong { font: 700 var(--text-xl)/1.1 var(--font-display); letter-spacing: var(--tracking-tight); }
 .note-summary { color: var(--ink-secondary); font-size: var(--text-sm); line-height: var(--leading-body); text-wrap: pretty; }
