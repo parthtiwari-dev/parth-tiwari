@@ -127,8 +127,12 @@ const beatMindHref = beatMindProject ? projectDoorHref(beatMindProject, worlds) 
               const rowContent = (
                 <>
                   <span class="project-number">{String(index + 1).padStart(2, '0')}</span>
-                  <div class="project-name"><strong>{project.data.title}</strong><p>{project.data.summary}</p></div>
-                  <span class="project-meta">{statusLabels[project.data.status]}</span><span class="project-meta effort">{effortLabels[project.data.effort]}</span><span class="project-arrow" aria-hidden="true">{isPublished ? '↗' : '—'}</span>
+                  <div class="project-name">
+                    <strong>{project.data.title}</strong>
+                    <p>{project.data.summary}</p>
+                  </div>
+                  <span class="project-kicker">{statusLabels[project.data.status]} &middot; {effortLabels[project.data.effort]}</span>
+                  <span class="project-arrow" aria-hidden="true">{isPublished ? '↗' : '—'}</span>
                 </>
               )
 

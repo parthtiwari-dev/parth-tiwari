@@ -358,6 +358,17 @@ is quiet ink at 4.88:1. Representative captures were inspected. Exact evidence a
 are in `docs/PHASE_2_GATE.md`. Phase 2 is complete; the acceptance does not claim that the
 deferred visual-polish pass is complete.
 
+**Deferred visual-polish pass, 2026-09-03:** the owner directed the deferred polish to run
+as a nine-point refinement on branch `refine/design-system-9point`, in three build runs
+plus a mobile-review run. It is permitted inside `DESIGN_LOCK.md`. All four runs are
+complete and gate-green (`phase6:vivid-gate` 76 PASS, `a11y`, `perf:scroll`), each an
+independently revertable commit: Run 1 foundations (black-flash, world-init resilience,
+token layer, `--ink-quiet` 7.77:1); Run 2 wired the tokens in; Run 3 made the registers
+span the full width and hardened the worlds and landing reveal; Run 4 brought the mobile
+heading scale down. Scope, decisions and evidence: `docs/DESIGN_REFINEMENT.md`.
+Outstanding, non-blocking: deckle-PNG regeneration, the UPI chart restyle, the
+wide-viewport paper-texture repaint cost. `main` is untouched until the owner merges.
+
 **Owner review before work**
 
 - Show a reference lock for the paper system, dark world system, editorial notes and

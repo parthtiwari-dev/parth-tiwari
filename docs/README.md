@@ -40,6 +40,7 @@ Where to look, and what is still true.
 | [`TEN_SECOND_ARTIFACT.md`](TEN_SECOND_ARTIFACT.md) | The exact plain-text artifact for the Phase 1 human test |
 | [`PRD.md`](PRD.md) | Audience, route contracts, conversion, worlds and future publishing |
 | [`FULL_SITE_AUDIT_2026-09-01.md`](FULL_SITE_AUDIT_2026-09-01.md) | Owner-requested whole-site visual + strategic review: the 30-day commercial question, the type/space diagnosis, a prioritised bug list, the two worlds, the unroll intro, the Japanese direction and a four-track plan. Evidence in `.shots/full-audit-2026-09-01/` |
+| [`DESIGN_REFINEMENT.md`](DESIGN_REFINEMENT.md) | The nine-point refinement pass (deferred Phase 2 polish + deferred Phase 3 review + one Phase 5 world bug), on branch `refine/design-system-9point`. Run 1 (foundations: black-flash fix, world-init resilience, token layer, quiet-ink contrast) and Run 2 (tokens wired into every component: billboard headings demoted, section rhythm, orphaned captions and wide-row dead zones, labels to 12px+, leads off the muted brown) are complete and gate-green; Run 3 (3a registers span the full width and ledger dead-space; 3b world crossfade hysteresis, landing reveal resilience, Vivid CTA copy-leak; 3c smooth-scroll retention and texture-perf descope) and Run 4 (mobile heading scale brought down to the demoted desktop scale) are complete and gate-green. All four runs done; `main` untouched, owner merges |
 
 ## Superseded — kept for the reasoning, not the instructions
 
@@ -126,7 +127,32 @@ baseline, failures, limitations, licensing boundary and future gates. It does no
 the current plan's identity or speed goal is achieved. `VIVID_CASE_STUDY_AUDIT.md` is the
 source map and update procedure.
 
-**Last documentation truth audit:** 2026-09-02. Ten published paper routes pass rendered
+**Last documentation truth audit:** 2026-09-03. The deferred Phase 2 visual-polish pass has
+begun on branch `refine/design-system-9point` as a nine-point refinement (see
+`DESIGN_REFINEMENT.md`). Run 1 landed the paper-page black-flash fix, BeatMind/Vivid
+world-init resilience, an additive type/space/measure token layer and the `--ink-quiet`
+contrast lift (4.88:1 to 7.77:1). Run 2 wired those tokens into every stylesheet: page h1
+demoted to ~44-88px and section h2 to ~38-62px, section rhythm brought into the token scale,
+the orphaned right-column captions removed, mono labels lifted to 12px+, leads moved off the
+muted brown, and the register dead zone reduced. Run 3a restructured the `/work`, `/notes`
+and landing register rows to `number | copy | kicker | arrow` so the tables span the full
+content width with no mid-row hole (the Run 2 `76rem` cap is gone), and trimmed unreachable
+`min-height` and orphaned trailing rules from the About/Resume ledgers. Run 3b added a
+crossfade hysteresis band to the world scroll engine, made the landing reveal observer
+degrade safely (guarded constructor check plus a timed backstop), and fixed the Vivid case
+study showing BeatMind's "Sound Foundry" world CTA. Run 3c kept `scroll-behavior: smooth`
+only because it is native anchor-only easing (not a scroll engine, no section 8 conflict);
+it is not a perf win, and the ~33ms fast-scroll texture-repaint frame at 1440px it hides
+from `perf:scroll` is a noted outstanding follow-up. `content-visibility: auto` on offscreen
+sections was tried and reverted (it regressed continuous-scroll paint). Run 4 rewrote every
+mobile heading `font-size` override to match the demoted desktop scale (page h1
+`clamp(2.4rem, 8.5vw, 4rem)`, section h2 `clamp(2rem, 7vw, 3.1rem)`), folding the redundant
+`<=480` blocks into `<=760`; `/about` no longer renders its h1 at ~74px on a phone. Zero
+horizontal overflow across all routes at 320/360/390px.
+`npm run phase6:vivid-gate` (76 PASS), `npm run a11y`, `npm run perf:scroll` and
+`npm run phase2:gate` are green on that branch. `main` is untouched.
+
+Ten published paper routes pass rendered
 title-versus-proof collision checks at 390, 800, 1440 and 1920 pixels. Fraud Risk
 Intelligence and Oracle Auto Provision remain focused register entries with deferred routes.
 The following local Phase 3 ship pass links all ten published projects from Home, removes

@@ -84,7 +84,7 @@ const archiveLabel = archiveDates.length === 1 && errata[0]?.data.publishedAt
             <p>Not victory laps. Corrections with the source boundary still attached.</p>
           </header>
 
-          <div class="notes-column-labels" aria-hidden="true"><span>Project</span><span>Correction</span><span>Evidence</span><span>Open</span></div>
+          <div class="notes-column-labels" aria-hidden="true"><span>Correction</span><span>Open</span></div>
           <ol class="notes-register" data-notes-list>
             {errata.map((note, index) => {
               const projectsForNote = note.data.relatedProjects.map((slug) => projectTitles.get(slug) ?? slug)
@@ -96,9 +96,12 @@ const archiveLabel = archiveDates.length === 1 && errata[0]?.data.publishedAt
                 <li class="note-row" data-note-entry data-note-type="erratum">
                   <a href={`/notes/${note.id}/`} aria-label={`Read ${note.data.title}`}>
                     <span class="note-number">{String(index + 1).padStart(2, '0')}</span>
+                    <span class="note-copy">
+                      <strong>{note.data.title}</strong>
+                      <span class="note-summary">{note.data.summary}</span>
+                      <span class="note-source">{sourceLabel}</span>
+                    </span>
                     <span class="note-project">{projectsForNote.join(', ')}</span>
-                    <span class="note-copy"><strong>{note.data.title}</strong><span>{note.data.summary}</span></span>
-                    <span class="note-source">{sourceLabel}</span>
                     <span class="note-open" aria-hidden="true">↗</span>
                   </a>
                 </li>

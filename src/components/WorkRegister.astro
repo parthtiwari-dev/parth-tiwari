@@ -82,7 +82,7 @@ const beatMindHref = beatMindProject ? projectDoorHref(beatMindProject, worlds) 
 
         <section id="work-register" class="register-section" aria-labelledby="register-title">
           <div class="register-heading">
-            <p id="register-title">Project</p><p>Status</p><p>Effort</p><p>Started</p><span aria-hidden="true">Open</span>
+            <p id="register-title">Project</p><span aria-hidden="true">Open</span>
           </div>
 
           <ol class="work-register" data-work-list>
@@ -101,9 +101,7 @@ const beatMindHref = beatMindProject ? projectDoorHref(beatMindProject, worlds) 
                     {evidence && <span class="row-evidence"><b>{evidence.data.display}</b>{evidence.data.denominator}</span>}
                     {!isPublished && <span class="row-availability">Case study in development</span>}
                   </span>
-                  <span class="row-meta row-status">{statusLabels[project.data.status]}</span>
-                  <span class="row-meta row-effort">{effortLabels[project.data.effort]}</span>
-                  <span class="row-meta row-started">{project.data.started ?? 'Not dated'}</span>
+                  <span class="row-kicker">{statusLabels[project.data.status]} &middot; {effortLabels[project.data.effort]} &middot; {project.data.started ?? 'Not dated'}</span>
                   <span class="row-arrow" aria-hidden="true">{isPublished ? '↗' : '—'}</span>
                 </>
               )

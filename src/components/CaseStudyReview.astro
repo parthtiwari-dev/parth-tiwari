@@ -94,7 +94,7 @@ const chapters = [
             <h1 id="case-title" tabindex="-1">{project.data.title}</h1>
             <p class="case-thesis">{caseStudy.thesis}</p>
             <div class="case-actions">
-              {worldHref && <a href={worldHref}>Enter the Sound Foundry <span aria-hidden="true">↗</span></a>}
+              {worldHref && <a href={worldHref}>Enter the {project.data.title} world <span aria-hidden="true">↗</span></a>}
               <a class="case-primary-action" href="#product-demo">{productActionLabel} <span aria-hidden="true">↓</span></a>
               {project.data.stackAndLinks.links.map((link) => (
                 <a href={link.url.toString()} rel="noreferrer">{link.label} <span aria-hidden="true">↗</span></a>
