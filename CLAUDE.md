@@ -93,6 +93,12 @@ final frame and case-study handoff remain static HTML.
 - `npm run phase5:gate` reruns all earlier static and Phase 4 checks, then verifies the
   BeatMind world at 390, 800 and 1440 pixels across animated, no-JavaScript, reduced-motion,
   Canvas-failure, print, lifecycle, Back-restoration, privacy and transfer states.
+- `npm run phase6:vivid-gate` runs `phase5:gate` then the Vivid Story Loom world gate.
+- `npm run phase6:tathya-gate` runs `phase6:vivid-gate` then the Tathya Long Table world
+  gate: the `provenance` guard (no `placeholder`), real case-file composition sums, feed
+  `handPickedCount 0`, absent corpus benchmark, no `Math.random`, no `<audio>`, no runtime
+  requests, animated / no-JavaScript / reduced-motion / Canvas-failure states, and the
+  `/work` route with Back restoration at 390, 800 and 1440 pixels.
 - Phase 1 is complete under its owner-amended gate. The text-only human test was deferred,
   not passed, and may never be reported otherwise.
 - Phase 2 closed on 2026-08-31. The maintained Home route is on `/`; its structure and interim public
@@ -160,10 +166,31 @@ final frame and case-study handoff remain static HTML.
   made the `/work` `/notes` and home registers span the full width and trimmed the
   About/Resume ledgers (3b world crossfade hysteresis, landing reveal resilience, Vivid CTA
   fix; 3c kept `scroll-behavior: smooth` and descoped the texture-perf work); Run 4 brought
-  the mobile heading scale down to match the demoted desktop scale. `main` is untouched;
-  the owner merges. Outstanding, non-blocking: deckle-PNG regeneration, the UPI chart
-  restyle, the wide-viewport paper-texture repaint cost. Scope and evidence:
+  the mobile heading scale down to match the demoted desktop scale. Merged to `main`
+  (`--no-ff`) and pushed on 2026-09-03 with the owner's explicit go, which triggered the
+  Vercel production deploy. Outstanding, non-blocking: deckle-PNG regeneration, the UPI
+  chart restyle, the wide-viewport paper-texture repaint cost. Scope and evidence:
   `docs/DESIGN_REFINEMENT.md`.
+- Phase 6 Tathya world (**The Long Table**) is built and `published: true` on branch
+  `world/tathya`. A dark archival table: source slips set down and corded to their origins,
+  files bound under a loose cord, a verdict slab that strikes the record three times and
+  leaves no mark. Scroll selects the scene; a per-scene millisecond clock drives events
+  that snap and then hold still (the earlier scroll-scrub animatics were rejected for
+  crawling). The canvas carries no words; every count and sentence is in the static HTML.
+  The shared `world-lifecycle.ts` gained a backward-compatible `draw` return so event-driven
+  worlds keep animating after the scroll settles; BeatMind and Vivid gates pass unchanged.
+  The data is a dated public-record snapshot: `tathya-world-v1.json`
+  `provenance: 'public-snapshot'`, `snapshot.takenAt 2026-09-04`, three anonymised case
+  files with their real source compositions read from `tathya-1.vercel.app`, feed
+  `handPickedCount 0`, `corpusBenchmark.available false`. `tathyaWorldDataV1Schema`'s
+  `provenance` guard and `phase6:tathya-gate` both refuse a `placeholder` artifact. The
+  paper case study's `measurement.absence` is unchanged and `claimRefs` stays empty
+  (wiring a claim there would delete the honest absence line; see `DECISIONS.md`).
+  `npm run phase6:tathya-gate` is green (full Phase 1-5 + Vivid + Tathya). An isolated
+  revert proof passes. The owner directed the merge to `main`; a separate rendered owner
+  review of the animated world is still open and is not reported as done. Scope, scene
+  contract and data contract: `docs/TATHYA_WORLD_STUDY.md`. Phase 6 Vivid review is still
+  open; Phase 3's deferred review remains open.
 
 ## Dependencies and external actions
 

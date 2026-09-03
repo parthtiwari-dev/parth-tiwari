@@ -1,0 +1,130 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import type { TathyaWorldDataV1 } from '../lib/worlds'
+import SiteMeta from './SiteMeta.astro'
+import '../styles/world-foundation.css'
+
+interface Props {
+  project: CollectionEntry<'work'>
+  world: CollectionEntry<'worlds'>
+  data: TathyaWorldDataV1
+  claims: CollectionEntry<'claims'>[]
+}
+
+const { project, world, data } = Astro.props as Props
+const serializedData = JSON.stringify(data).replaceAll('<', '\\u003c')
+const typeLabels: Record<string, string> = { official: 'Official', media: 'Media', citizen: 'Citizen' }
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <SiteMeta title="Tathya world | Parth Tiwari" description={world.data.scenes[0].narration} path="/work/tathya/world/" type="article" />
+  </head>
+  <body class="world-foundation-page tathya-world-page">
+    <a class="world-skip" href="#world-ending">Skip to the case-study handoff</a>
+    <header class="world-nav">
+      <a href="/work/">Back to work</a>
+      <span>Tathya / The Long Table</span>
+    </header>
+
+    <main id="world-story">
+      <section
+        class="world-experience tathya-experience"
+        data-world-root
+        data-scene-count={world.data.scenes.length}
+        style={`--world-primary:${world.data.accents.primary};--world-secondary:${world.data.accents.secondary};--world-fault:${world.data.accents.fault}`}
+        aria-labelledby="world-title"
+      >
+        <figure class="world-static-frame" data-world-static>
+          <img src={world.data.staticFrame.src} width={world.data.staticFrame.width} height={world.data.staticFrame.height} alt={world.data.staticFrame.alt} />
+          <figcaption>The Long Table, composed final frame. The complete record and its boundaries follow in ordinary HTML.</figcaption>
+        </figure>
+
+        <div class="world-stage tathya-stage" data-world-stage aria-hidden="true">
+          <canvas data-world-canvas aria-hidden="true"></canvas>
+          <div class="world-grid"></div>
+          <div class="world-vignette"></div>
+          <div class="world-readout">
+            <span data-world-scene-count>01 / {String(world.data.scenes.length).padStart(2, '0')}</span>
+            <span data-world-scene-label>{world.data.scenes[0].label}</span>
+          </div>
+          <div class="world-audit">
+            <span>Public record</span>
+            <strong>{data.caseFiles.length} of {data.feed.caseFileCount} files</strong>
+            <small>{data.provenance === 'placeholder' ? 'Illustrative structure, export pending' : `Dated read ${data.snapshot.takenAt}`}</small>
+          </div>
+          <div class="world-progress"><i data-world-progress></i></div>
+        </div>
+
+        <article class="world-scenes">
+          {world.data.scenes.map((scene, index) => (
+            <section
+              id={scene.id === 'handoff' ? 'world-ending' : scene.id}
+              class:list={['world-scene', index % 2 === 0 ? 'world-scene-left' : 'world-scene-right', scene.id === 'handoff' && 'world-scene-final', scene.id === 'boundary' && 'world-scene-fault']}
+              data-world-scene
+              data-scene-index={index}
+            >
+              <div class="world-scene-copy">
+                <p>{scene.label}</p>
+                {index === 0 ? <h1 id="world-title" tabindex="-1">{scene.heading}</h1> : <h2>{scene.heading}</h2>}
+                <div class="world-narration">{scene.narration}</div>
+
+                {scene.id === 'file' && (
+                  <dl class="world-file-ledger">
+                    {data.caseFiles.map((file) => (
+                      <div>
+                        <dt>{file.label}</dt>
+                        <dd>
+                          {file.sourceCount} sources &middot; {file.composition.official} {typeLabels.official.toLowerCase()} / {file.composition.media} {typeLabels.media.toLowerCase()} / {file.composition.citizen} {typeLabels.citizen.toLowerCase()} &middot; {file.claimCount} claims, each with its source &middot; {file.verifiableFacts ? 'verifiable facts logged' : file.openQuestion ? 'open question' : 'open'}
+                        </dd>
+                      </div>
+                    ))}
+                    <div>
+                      <dt>The feed this day</dt>
+                      <dd>{data.feed.caseFileCount} files, none chosen by hand &middot; {data.feed.sourceCountHistogram.map((bin) => `${bin.files} with ${bin.sources}`).join(' / ')} sources</dd>
+                    </div>
+                  </dl>
+                )}
+
+                {scene.id === 'boundary' && (
+                  <div class="world-evidence-boundary">
+                    <article>
+                      <strong>Open question</strong>
+                      <p>{data.openQuestions[0].statement}</p>
+                      <small>A status, not an accusation</small>
+                    </article>
+                    <article>
+                      <strong>Verifiable fact</strong>
+                      <p>Checked against primary government documents only. A confirmed record, not a stronger claim.</p>
+                      <small>History kept, never rewritten</small>
+                    </article>
+                    <article>
+                      <strong>The line that held</strong>
+                      <p>No verdict. No ranking. No sentiment score standing in for evidence.</p>
+                      <small>Removed from the product contract</small>
+                    </article>
+                  </div>
+                )}
+
+                {scene.id === 'handoff' && (
+                  <>
+                    <a class="world-deep-dive" href={`/work/${project.id}/`}>
+                      Read the full case study <span aria-hidden="true">&#8594;</span>
+                    </a>
+                    <p class="world-shared-source">{data.corpusBenchmark.reason}</p>
+                  </>
+                )}
+              </div>
+            </section>
+          ))}
+        </article>
+      </section>
+    </main>
+
+    <script id="tathya-world-data" type="application/json" set:html={serializedData}></script>
+    <script>
+      import '../scripts/tathya-world'
+    </script>
+  </body>
+</html>

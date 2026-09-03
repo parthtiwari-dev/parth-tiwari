@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "project": "tathya",
+  "provenance": "public-snapshot",
+  "reviewedOn": "2026-09-04",
+  "sourceAudit": { "repository": "Tathya", "commit": "bf4606f" },
+  "snapshot": {
+    "takenAt": "2026-09-04",
+    "surface": "https://tathya-1.vercel.app/",
+    "meaning": "A dated read of the deployed public record on 2026-09-04. The feed held thirteen case files, each assembled from configured sources with no hand picking. Three files are carried into this world with their real source counts, source-type splits and record state. Labels are anonymised; no subject, publisher or ingested URL is reproduced."
+  },
+  "sourceTypes": ["official", "media", "citizen"],
+  "feed": {
+    "caseFileCount": 13,
+    "handPickedCount": 0,
+    "sourceCountHistogram": [
+      { "sources": 1, "files": 4 },
+      { "sources": 2, "files": 7 },
+      { "sources": 3, "files": 2 }
+    ]
+  },
+  "caseFiles": [
+    {
+      "id": "file-a",
+      "label": "Subject A",
+      "sourceCount": 2,
+      "composition": { "official": 0, "media": 2, "citizen": 0 },
+      "claimCount": 7,
+      "verifiableFacts": false,
+      "openQuestion": true,
+      "status": "open"
+    },
+    {
+      "id": "file-b",
+      "label": "Subject B",
+      "sourceCount": 2,
+      "composition": { "official": 0, "media": 2, "citizen": 0 },
+      "claimCount": 3,
+      "verifiableFacts": false,
+      "openQuestion": true,
+      "status": "open"
+    },
+    {
+      "id": "file-c",
+      "label": "Subject C",
+      "sourceCount": 3,
+      "composition": { "official": 1, "media": 2, "citizen": 0 },
+      "claimCount": 8,
+      "verifiableFacts": true,
+      "openQuestion": false,
+      "status": "open"
+    }
+  ],
+  "sharedMediaSource": {
+    "present": true,
+    "fileIds": ["file-a", "file-b", "file-c"],
+    "note": "In every file read on this date the independent-media side traced back to a single publisher. The record does not fold that into a headline. It shows the source count and the split so a reader can weigh how many points of view stand behind a file."
+  },
+  "openQuestions": [
+    {
+      "fileId": "file-a",
+      "statement": "No official government statement on this has been recorded as a verifiable fact yet. Only media reporting exists so far."
+    },
+    {
+      "fileId": "file-b",
+      "statement": "No official government statement on this has been recorded as a verifiable fact yet. Only media reporting exists so far."
+    }
+  ],
+  "integrity": {
+    "historyNeverRewritten": true,
+    "extractionIssueReportable": true,
+    "note": "Every claim row carries a control to report an extraction issue, and the history of additions and corrections is kept and never rewritten. A source that fails is a visible workflow state, not a silent gap."
+  },
+  "corpusBenchmark": {
+    "available": false,
+    "reason": "Thirteen files on one day is a snapshot, not a denominator. No repeatable corpus export with source, duplicate, freshness and unresolved-record counts is published yet, so this world shows no corpus size, coverage or clustering score."
+  }
+}

@@ -288,6 +288,38 @@ authorized before the build-plan phase that owns it.
   output; one cleared Kyoto pottery evaluation anchor and four ordered real frames do. The
   unavailable pose-copying visual pair stays a textual evidence boundary, and Vivid's
   commercial product-model licence remains explicitly unresolved.
+- Tathya's world is **The Long Table** (chosen 2026-09-04): a dark archival table, slips
+  set down and corded home, a verdict slab that strikes the record and leaves no mark. The
+  Citation Field (abstract nodes and edges) and The Verdict That Isn't (a balance scale)
+  were rejected — the first reads as a diagram and a settled cluster reads as *solved*, the
+  second impersonates an adjudication instrument.
+- Tathya's world is **event-driven, not scroll-scrub**. Scroll selects the scene; a
+  per-scene millisecond clock fires snap-eased events that then hold still. Two earlier
+  scroll-scrub animatics were owner-rejected for crawling. The shared `world-lifecycle.ts`
+  gained one backward-compatible change for this: `draw` may return `true` to keep the loop
+  running after the scroll settles. BeatMind and Vivid return nothing and are unaffected.
+- Tathya's data artifact carries a required `provenance` literal. Real values are
+  `committed-export` (a read-only export from the Tathya repo) and `public-snapshot` (a
+  dated read of the deployed public record); `placeholder` cannot ship and both the schema
+  guard and `phase6:tathya-gate` enforce it.
+- Tathya's world shipped on **`provenance: 'public-snapshot'`** (2026-09-04), not the repo
+  export. `WORLDS.md` rule 7 allows a claim to be checked against the deployment, and a
+  dated read of `tathya-1.vercel.app` is the same class of evidence as BeatMind's "381
+  tests on 2026-08-28". The three case files carry their real source compositions read
+  directly from the public feed and topic pages; labels are anonymised (`Subject A/B/C`)
+  so the world's own copy never names a live subject, party or publisher. A repo export
+  from `bf4606f` can replace it later; it is not blocking.
+- Tathya's paper case study keeps `measurement.claimIds: []` and `claimRefs: []`, and
+  `measurement.absence` is unchanged. `phase1-content-check.mjs` requires
+  `measurement.claimIds` to equal `claimRefs`, and `CaseStudyReview.astro` renders the
+  absence block only when there are no measurements, so wiring a snapshot claim would have
+  deleted the honest "no stable public corpus count or quality benchmark" line. The world
+  states the dated snapshot in its own `snapshot`/`corpusBenchmark` fields instead; do not
+  re-add a `claimRef` here.
+- The Tathya world canvas carries **no text**. Every count, label and sentence is in the
+  static HTML beside it (scene narration, the case-file `<dl>`, the boundary block, the
+  corpus-absence note). Small faint monospace over a dark ground read as instrumentation;
+  moving it to the DOM also keeps the canvas free of required meaning per `RULES.md`.
 - Whether any optional interaction teaches enough to justify its complexity
 
 ### Design refinement (nine-point pass, 2026-09-03)

@@ -1,18 +1,22 @@
 import type { CollectionEntry } from 'astro:content'
-import { beatMindWorldDataV1Schema, vividWorldDataV1Schema } from '../content/schemas.mjs'
+import { beatMindWorldDataV1Schema, tathyaWorldDataV1Schema, vividWorldDataV1Schema } from '../content/schemas.mjs'
 import beatMindWorldDataSource from '../data/worlds/beatmind-world-v1.json'
+import tathyaWorldDataSource from '../data/worlds/tathya-world-v1.json'
 import vividWorldDataSource from '../data/worlds/vivid-world-v1.json'
 
 export type WorldEntry = CollectionEntry<'worlds'>
 export type BeatMindWorldDataV1 = ReturnType<typeof beatMindWorldDataV1Schema.parse>
 export type VividWorldDataV1 = ReturnType<typeof vividWorldDataV1Schema.parse>
+export type TathyaWorldDataV1 = ReturnType<typeof tathyaWorldDataV1Schema.parse>
 export type ValidatedWorldData =
   | { kind: 'beatmind'; data: BeatMindWorldDataV1 }
   | { kind: 'vivid'; data: VividWorldDataV1 }
+  | { kind: 'tathya'; data: TathyaWorldDataV1 }
 
 const worldDataByArtifact: Record<string, unknown> = {
   'beatmind-world-v1.json': beatMindWorldDataSource,
   'vivid-world-v1.json': vividWorldDataSource,
+  'tathya-world-v1.json': tathyaWorldDataSource,
 }
 
 export function publishedWorldHref(projectSlug: string, worlds: WorldEntry[]): string | undefined {
@@ -29,5 +33,6 @@ export function loadValidatedWorldData(world: WorldEntry): ValidatedWorldData {
   if (!source) throw new Error(`No build-time world artifact is registered for ${world.data.dataArtifact}.`)
   if (world.data.projectSlug === 'beatmind') return { kind: 'beatmind', data: beatMindWorldDataV1Schema.parse(source) }
   if (world.data.projectSlug === 'vivid') return { kind: 'vivid', data: vividWorldDataV1Schema.parse(source) }
+  if (world.data.projectSlug === 'tathya') return { kind: 'tathya', data: tathyaWorldDataV1Schema.parse(source) }
   throw new Error(`No versioned world-data schema exists for ${world.data.projectSlug}.`)
 }

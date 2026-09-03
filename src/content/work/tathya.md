@@ -29,7 +29,7 @@
   "stackAndLinks": {
     "stack": ["Python", "FastAPI", "PostgreSQL", "source ingestion", "citation graph"],
     "links": [
-      { "label": "Open Tathya", "kind": "live", "url": "https://tathya.vercel.app", "verifiedAt": "2026-08-28" },
+      { "label": "Open Tathya", "kind": "live", "url": "https://tathya-1.vercel.app", "verifiedAt": "2026-09-04" },
       { "label": "View repository", "kind": "repository", "url": "https://github.com/parthtiwari-dev/tathya", "verifiedAt": "2026-08-28" }
     ]
   },

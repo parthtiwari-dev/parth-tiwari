@@ -11,7 +11,11 @@ interface WorldLifecycleOptions {
   root: HTMLElement
   canvas: HTMLCanvasElement
   sceneCount: number
-  draw: (frame: WorldFrame) => void
+  // Return true to request another frame even when the scroll position has
+  // settled. Event-driven worlds (per-scene local clocks, camera cuts) use this
+  // to keep animating for a beat after the active chapter changes. Renderers
+  // that only react to scroll return nothing and the loop stays scroll-gated.
+  draw: (frame: WorldFrame) => boolean | void
   onActiveScene: (activeIndex: number, progress: number) => void
 }
 
@@ -105,7 +109,7 @@ export function mountWorldLifecycle(options: WorldLifecycleOptions): WorldLifecy
 
     readDimensions()
     const drawStarted = performance.now()
-    draw({ ...dimensions, progress: currentProgress, activeIndex, now })
+    const wantsMoreFrames = draw({ ...dimensions, progress: currentProgress, activeIndex, now }) === true
     maxDrawDuration = Math.max(maxDrawDuration, performance.now() - drawStarted)
     lastDraw = now
     drawCount += 1
@@ -116,7 +120,7 @@ export function mountWorldLifecycle(options: WorldLifecycleOptions): WorldLifecy
     root.dataset.worldMaxDraw = maxDrawDuration.toFixed(2)
     root.dataset.worldState = 'running'
 
-    if (Math.abs(targetProgress - currentProgress) >= 0.001) schedule()
+    if (wantsMoreFrames || Math.abs(targetProgress - currentProgress) >= 0.001) schedule()
   }
 
   const refresh = () => {

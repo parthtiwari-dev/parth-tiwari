@@ -174,3 +174,6 @@ inbox/refero/
 
 # derived from src/data/projects.ts by the design build scripts
 .projects.json
+
+# local world-dev capture helpers (not shipped)
+scripts/_*

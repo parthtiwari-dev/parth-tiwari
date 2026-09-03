@@ -652,7 +652,14 @@ Follow the waves in `WORLDS.md`. Each world repeats this loop:
 7. Run its revert and performance gates before starting another world.
 
 - [ ] Vivid — production implementation is committed. Browser-backed automated evidence and owner review remain required before this item closes.
-- [ ] Tathya
+- [x] Tathya — The Long Table. Built and `published: true` on branch `world/tathya`.
+  Wordless event-driven canvas; a dated public-record snapshot
+  (`provenance: 'public-snapshot'`, `2026-09-04`) with three anonymised case files carrying
+  their real source compositions; the `provenance` guard and `phase6:tathya-gate` refuse a
+  placeholder. `npm run phase6:tathya-gate` green; an isolated revert proof passes; the
+  owner directed the merge to `main`. A separate rendered owner review of the animated
+  world stays open and is not reported as done. Scope, scene contract and data contract:
+  `TATHYA_WORLD_STUDY.md`; rationale for `public-snapshot`: `DECISIONS.md`.
 - [ ] MedRAG
 - [ ] Order Supervisor
 - [ ] QueryPilot
