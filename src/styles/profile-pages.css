@@ -132,19 +132,20 @@
   .profile-contact { min-height: 2.35rem; padding: .55rem .7rem; font-size: .72rem; }
   .profile-mobile-menu { position: relative; display: block; }
   .profile-nav .paper-mobile-menu nav { display: grid; }
-  .about-hero { min-height: auto; grid-template-columns: 1fr; gap: 3.5rem; padding-block: 5rem 6rem; }
-  .about-hero h1 { font-size: clamp(4rem, 18vw, 6.5rem); }
+  .about-hero { min-height: auto; grid-template-columns: 1fr; gap: 3rem; padding-block: 4rem 4.5rem; }
+  .about-hero h1 { font-size: clamp(2.4rem, 8.5vw, 4rem); }
   .about-portrait { width: min(86%, 27rem); justify-self: end; }
-  .profile-section-heading { grid-template-columns: 1fr; gap: 2rem; }
-  .profile-section-heading h2 { font-size: clamp(3.8rem, 14vw, 6rem); }
+  .profile-section-heading { grid-template-columns: 1fr; gap: 1.5rem; }
+  .profile-section-heading h2 { font-size: clamp(2rem, 7vw, 3.1rem); }
+  .profile-close h2, .resume-identity h2 { font-size: clamp(2rem, 7vw, 3.1rem); }
   .path-ledger li { grid-template-columns: 2rem minmax(0, 1fr); gap: .5rem 1rem; padding: 1.75rem 0; }
   .path-index { grid-row: 1 / span 2; }
   .path-date, .path-ledger li > div { grid-column: 2; }
   .rules-ledger li { grid-template-columns: 2rem minmax(0, 1fr); gap: .75rem 1rem; padding: 1.75rem 0; }
   .rules-ledger li > span { grid-row: 1 / span 2; }
   .rules-ledger p { grid-column: 2; }
-  .resume-arrival { min-height: auto; grid-template-columns: 1fr; gap: 3rem; padding-block: 5rem; }
-  .resume-arrival h1 { font-size: clamp(4.5rem, 18vw, 7rem); }
+  .resume-arrival { min-height: auto; grid-template-columns: 1fr; gap: 3rem; padding-block: 4rem; }
+  .resume-arrival h1 { font-size: clamp(2.4rem, 8.5vw, 4rem); }
   .resume-actions { width: 100%; }
   .resume-identity { grid-template-columns: 1fr; gap: 2.5rem; }
   .resume-section, .resume-footnote { grid-template-columns: 1fr; gap: 2rem; }
@@ -155,13 +156,9 @@
 @media (max-width: 480px) {
   .profile-nav { padding-inline: 1.25rem; }
   .profile-wordmark { max-width: 6rem; line-height: 1; }
-  .about-hero h1 { font-size: clamp(3.8rem, 19vw, 5.4rem); }
   .about-introduction p { font-size: 1rem; }
   .about-portrait { width: 94%; }
-  .profile-section-heading h2 { font-size: clamp(3.4rem, 15vw, 4.8rem); }
   .work-lines li { grid-template-columns: 2rem minmax(0, 1fr); }
-  .profile-close h2 { font-size: clamp(3.1rem, 14vw, 4.6rem); }
-  .resume-identity h2 { font-size: clamp(3.5rem, 15vw, 5rem); }
   .resume-record > header { grid-template-columns: 1fr; gap: .6rem; }
   .resume-record header > p { text-align: left; }
   .resume-skills div { grid-template-columns: 1fr; gap: .6rem; }

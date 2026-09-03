@@ -135,9 +135,11 @@
   .notes-contact { min-height: 2.35rem; padding: .55rem .7rem; font-size: .72rem; }
   .notes-mobile-menu { position: relative; display: block; }
   .notes-nav .paper-mobile-menu nav { display: grid; }
-  .notes-intro { min-height: auto; grid-template-columns: 1fr; gap: 2.5rem; padding-block: 5rem 4rem; }
-  .notes-intro h1 { font-size: clamp(3.5rem, 13.5vw, 5.8rem); }
+  .notes-intro { min-height: auto; grid-template-columns: 1fr; gap: 2.5rem; padding-block: 4rem 3rem; }
+  .notes-intro h1 { font-size: clamp(2.4rem, 8.5vw, 4rem); }
   .notes-intro-copy { max-width: 36rem; }
+  .archive-heading h2, .writing-state h2, .notes-close h2 { font-size: clamp(2rem, 7vw, 3.1rem); }
+  .article-prose h2, .article-evidence h2, .article-sources h2 { font-size: clamp(2rem, 7vw, 3.1rem); }
   .notes-controls { padding: .85rem 0; }
   .notes-controls > div { flex-wrap: wrap; }
   .notes-controls button { padding-inline: .65rem; font-size: .76rem; }
@@ -151,8 +153,8 @@
   .note-open { display: none; }
   .writing-state { min-height: 34rem; grid-template-columns: 1fr; align-content: center; gap: 2.5rem; padding-block: 5rem; }
   .writing-state::after { right: 1.5rem; bottom: 2rem; font-size: clamp(3.5rem, 16vw, 7rem); }
-  .article-masthead { min-height: 0; padding-block: 6rem; }
-  .article-masthead h1 { font-size: clamp(3.8rem, 14vw, 6.4rem); }
+  .article-masthead { min-height: 0; padding-block: 4.5rem; }
+  .article-masthead h1 { font-size: clamp(2.4rem, 8.5vw, 4rem); }
   .article-body { grid-template-columns: 1fr; gap: 4rem; }
   .article-body > aside { position: static; }
   .article-evidence > header, .article-sources > header { grid-template-columns: 1fr; gap: 1rem; }
@@ -165,16 +167,12 @@
 @media (max-width: 480px) {
   .notes-nav { padding-inline: 1.25rem; }
   .notes-wordmark { max-width: 6rem; line-height: 1; }
-  .notes-intro h1 { font-size: clamp(3.2rem, 14vw, 4.4rem); }
   .notes-intro dl { grid-template-columns: 1fr; }
   .notes-intro dl div + div { padding-left: 0; border-top: 1px solid rgb(24 20 17 / 28%); border-left: 0; }
   .notes-controls { grid-template-columns: 1fr; gap: .5rem; }
   .notes-controls > p { justify-self: end; }
-  .archive-heading h2, .writing-state h2 { font-size: clamp(3.2rem, 14vw, 4.8rem); }
   .note-summary { font-size: .92rem; }
   .article-index { display: grid; gap: .6rem; }
-  .article-masthead h1 { font-size: clamp(3.4rem, 14vw, 4.8rem); }
-  .article-prose h2, .article-evidence h2, .article-sources h2 { font-size: clamp(3rem, 13vw, 4.5rem); }
   .article-sources li { grid-template-columns: 2rem 1fr; padding: 1.25rem 0; }
   .article-sources li p, .article-sources li a { grid-column: 2; }
   .article-close nav { grid-template-columns: 1fr; }

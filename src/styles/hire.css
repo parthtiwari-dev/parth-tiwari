@@ -338,16 +338,16 @@
     min-height: auto;
     grid-template-columns: 1fr;
     grid-template-areas: 'copy' 'note' 'actions';
-    gap: 3.5rem;
-    padding-block: 5rem 6rem;
+    gap: 3rem;
+    padding-block: 4rem 4.5rem;
   }
-  .hire-arrival h1 { font-size: clamp(4.2rem, 18vw, 6.6rem); }
+  .hire-arrival h1 { font-size: clamp(2.4rem, 8.5vw, 4rem); }
   .hire-first-note { width: min(88%, 29rem); justify-self: end; }
   .hire-arrival-actions { grid-template-columns: 1fr; }
   .hire-arrival-actions a { min-height: 4.6rem; border-right: 0; border-bottom: 1px solid var(--hire-rule); }
   .hire-arrival-actions a:last-child { border-bottom: 0; }
   .hire-section-heading { grid-template-columns: 1fr; gap: 2rem; }
-  .hire-section-heading h2 { font-size: clamp(3.7rem, 15vw, 5.8rem); }
+  .hire-section-heading h2 { font-size: clamp(2rem, 7vw, 3.1rem); }
   .hire-service-ledger > li { grid-template-columns: 2rem minmax(0, 1fr); gap: 1rem; padding: 2.5rem 0; }
   .hire-index { grid-row: 1 / span 3; }
   .hire-service-intro,
@@ -362,8 +362,8 @@
   .hire-fit-ledger > section:first-child,
   .hire-fit-ledger > section:last-child { padding: 3rem 0; }
   .hire-fit-ledger > section:last-child { border-top: 1px solid var(--ink); border-left: 0; }
-  .hire-close { min-height: auto; grid-template-columns: 1fr; gap: 4rem; padding-block: 7rem; }
-  .hire-close h2 { font-size: clamp(3.8rem, 15vw, 6rem); }
+  .hire-close { min-height: auto; grid-template-columns: 1fr; gap: 3.5rem; padding-block: 5rem; }
+  .hire-close h2 { font-size: clamp(2rem, 7vw, 3.1rem); }
 }
 
 @media (max-width: 480px) {

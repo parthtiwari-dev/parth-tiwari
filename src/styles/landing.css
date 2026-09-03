@@ -213,7 +213,7 @@
   .nav-action { min-height: 2.35rem; padding: .55rem .65rem; font-size: .72rem; }
   .mobile-menu { display: block; position: relative; }
   .wordmark { max-width: 6rem; line-height: 1; }
-  .section-pad { padding: 3.75rem 1.25rem; }
+  .section-pad { padding: 2.75rem 1.25rem; }
   .arrival { min-height: 100svh; gap: 3rem; padding-top: 3.5rem; }
   .arrival h1 { max-width: none; font-size: clamp(2.15rem, 8.5vw, 2.75rem); line-height: .96; }
   .hero-support { max-width: 34ch; margin-top: 1.35rem; font-size: .94rem; line-height: 1.45; }
@@ -223,13 +223,13 @@
   .featured-world { box-shadow: .55rem .55rem 0 var(--oxblood); }
   .world-heading { min-height: 4rem; }
   .world-heading strong { font-size: .9rem; }
-  .world-grammar { grid-template-columns: 1fr; width: min(12rem, 52%); margin-left: auto; border-left: 1px solid rgb(242 243 240 / 20%); }
-  .world-grammar span { min-height: 2.75rem; padding: .45rem .65rem; font-size: .55rem; }
+  .world-grammar { grid-template-columns: 1fr; width: min(14rem, 60%); margin-left: auto; border-left: 1px solid rgb(242 243 240 / 20%); }
+  .world-grammar span { min-height: 2.6rem; padding: .45rem .65rem; font-size: .64rem; }
   .world-grammar span + span { border-top: 1px solid rgb(242 243 240 / 16%); border-left: 0; }
   .featured-world figcaption { grid-template-columns: 1fr; align-items: start; }
   .quiet-proof article { min-height: auto; grid-template-columns: 1.8rem 1fr; padding: .85rem 0; }
   .quiet-proof p { display: none; }
-  .section-heading h2, .contact-section h2 { font-size: clamp(3rem, 14vw, 4.5rem); }
+  .section-heading h2, .contact-section h2 { font-size: clamp(2rem, 7vw, 3rem); }
   .about-beat { display: flex; flex-direction: column; align-items: stretch; }
   .portrait-frame { order: 2; }
   .intro-copy { order: 3; }

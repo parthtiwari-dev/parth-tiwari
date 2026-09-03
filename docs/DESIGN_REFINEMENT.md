@@ -249,12 +249,52 @@ pass, on the theory that the CSS property "violates the spirit" of DESIGN_LOCK s
 Deckle-PNG regeneration and the UPI matplotlib chart restyle stay **deferred** —
 asset-generation tasks nobody flagged in review.
 
-## Run 4 (pending)
+## Run 4 — mobile heading scale (this commit)
 
-Run 4 is the mobile-width repeat of the review (tuning the steep `13-19vw` middle terms of
-the heading clamps, the register kicker/title stacking on phones).
+A full rendered pass at 320 / 390 / 480 / 700 px found one systemic problem: every
+`@media (max-width: 760px)` and `@media (max-width: 480px)` heading `font-size` override
+still carried the pre-refinement billboard sizing (floors of 3.4-5rem, `vw` middle terms of
+13-19), so Runs 1-2's desktop demotion never reached phones. `/about` rendered "Hi, I am
+Parth." at ~74px on a 390px screen; a case-study chapter heading wrapped to six lines; the
+`/hire` h1 took four.
+
+- **Mobile heading clamps rewritten and consolidated.** Page h1 (`about-hero`,
+  `resume-arrival`, `hire-arrival`, `work-intro`, `notes-intro`, `article-masthead`,
+  `case-masthead-copy`) -> `clamp(2.4rem, 8.5vw, 4rem)`. Section / chapter / ending / close
+  h2 (`profile-section-heading`, `section-heading`, `contact-section`, `hire-section-heading`,
+  `case-chapter`, `case-ending`, `work-close`, `archive-heading`, `writing-state`,
+  `notes-close`, `article-prose/evidence/sources`, `resume-identity`, `profile-close`) ->
+  `clamp(2rem, 7vw, 3.1rem)`. World scene headings -> `clamp(2.4rem, 9vw, 3.8rem)`. The
+  evidence number `.measurement-ledger .is-primary strong` -> `clamp(2.3rem, 10vw, 3.6rem)`.
+  Every `@media (max-width: 480px)` heading override was folded into the `<=760/<=820` block
+  (one clamp per heading whose floor works at 320 and ceiling at the breakpoint) and the
+  `<=480` duplicates deleted, so there is no longer a pair of numbers to keep in sync and no
+  step where 390px reads fine but 340px does not. `--leading-snug` untouched (size, not
+  leading, was the multi-line cause). `.case-masthead-copy h1` keeps its
+  `overflow-wrap: anywhere` / `text-wrap: balance` (the 1920 masthead regression guard).
+- **Mobile section rhythm** trimmed: `.section-pad` `3.75rem` -> `2.75rem` block padding;
+  hero and `*-close` `padding-block` cut ~20-30%; `profile-section-heading` gap `2rem` ->
+  `1.5rem`. The landing is ~650px shorter at 390px.
+- **Landing world-plate grammar strip** widened (`min(12rem, 52%)` -> `min(14rem, 60%)`)
+  and its label lifted `.55rem` -> `.64rem`.
+- **`/work` and `/notes` mobile backlight** (`.project-world-preview figcaption`): the
+  `world.story` sentence relaxed to `line-height: 1.3` and its kicker label lifted
+  `.5rem` -> `.68rem` (the `@media 680` rule was already applying `.94rem`; verified by
+  computed style before touching it).
+
+Gate: `npm run phase6:vivid-gate` exit 0 (76 PASS). `npm run a11y` exit 0. Zero horizontal
+overflow across all 12 routes at 320 / 360 / 390 px. `npm run perf:scroll` 390/800 p95
+16.8ms, 1440 p95 33ms (pre-existing). Rendered review at 320 / 390 / 480 / 700 px.
 
 Prose left-clustering on article and case pages (heading, labels, evidence and the
 `--measure` prose column all left-aligned inside the 1640px container, leaving the right
-half open) is **by owner decision** (decision 3, narrow prose only). Recorded here as an
-observation to revisit in Run 4, not changed in Run 3.
+half open) remains **by owner decision** (decision 3, narrow prose only) — not a mobile
+issue, not changed.
+
+## After Run 4
+
+The nine-point pass is complete: Runs 1-4 on `refine/design-system-9point`, each an
+independently revertable commit, each gate-green. Deferred and outstanding, none blocking:
+deckle-PNG regeneration, the UPI matplotlib chart restyle, and the wide-viewport
+paper-texture repaint cost (Run 3c). Phase 6 worlds proceed one owner-approved storyboard
+at a time.

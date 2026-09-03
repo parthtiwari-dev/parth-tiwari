@@ -100,9 +100,10 @@
   .work-contact { min-height: 2.35rem; padding: .55rem .7rem; font-size: .72rem; }
   .work-mobile-menu { position: relative; display: block; }
   .work-nav .paper-mobile-menu nav { display: grid; }
-  .work-intro { min-height: auto; grid-template-columns: 1fr; gap: 2.5rem; padding-block: 5rem 3.5rem; }
-  .work-intro h1 { max-width: 10ch; font-size: clamp(3.4rem, 13vw, 5.6rem); }
+  .work-intro { min-height: auto; grid-template-columns: 1fr; gap: 2.5rem; padding-block: 4rem 3rem; }
+  .work-intro h1 { max-width: none; font-size: clamp(2.4rem, 8.5vw, 4rem); }
   .work-intro-copy { max-width: 34rem; }
+  .work-close h2 { font-size: clamp(2rem, 7vw, 3.1rem); }
   .work-controls { grid-template-columns: 1fr auto; gap: 1rem; padding: 1rem 0; }
   .order-controls { grid-column: 1 / -1; flex-wrap: wrap; }
   .work-count { justify-self: end; }
@@ -119,8 +120,7 @@
 @media (max-width: 480px) {
   .work-nav { padding-inline: 1.25rem; }
   .work-wordmark { max-width: 6rem; line-height: 1; }
-  .work-intro { padding-top: 4.5rem; }
-  .work-intro h1 { max-width: 9ch; font-size: clamp(3.15rem, 14vw, 4.2rem); }
+  .work-intro { padding-top: 4rem; }
   .work-intro dl { grid-template-columns: 1fr; }
   .work-intro dl div + div { padding-left: 0; border-top: 1px solid rgb(24 20 17 / 28%); border-left: 0; }
   .order-controls > span { flex-basis: 100%; }
@@ -130,7 +130,6 @@
   .row-copy { gap: .5rem; }
   .row-summary { font-size: .95rem; }
   .row-evidence { display: grid; gap: .2rem; }
-  .work-close h2 { font-size: clamp(3.1rem, 14vw, 4.5rem); }
 }
 
 @media (prefers-reduced-motion: reduce) {
