@@ -151,11 +151,58 @@ Gate: `npm run phase6:vivid-gate` exit 0 (76 PASS, 0 FAIL). `npm run a11y` green
 16.7-16.8ms at all three widths (Run 1's un-masked wide-viewport cost improved because the
 shorter sections repaint less); case study 16.7ms at all widths.
 
-## Run 3 and Run 4
+## Run 3a — registers span the width; ledger dead-space (this commit)
 
-Run 3: world choreography (right-edge clip, crossfade hysteresis, text-over-canvas scrim),
-deckle regeneration, the paper-texture scroll-perf fix bundled with removing
-`scroll-behavior: smooth`, the UPI matplotlib chart restyle, the Vivid CTA copy-leak fix,
-the landing `data-reveal` resting-opacity fix, and a narrower site-wide content container to
-finish the register dead-zone. Run 4 is the mobile-width repeat of the review (tuning the
-steep `13-19vw` middle terms of the heading clamps).
+Owner feedback on the Run 2 build: the `/work` and `/notes` register tables "should span in
+the horizontal viewport" and there was still wasted space beside them. The Run 2 mitigation
+(`max-width: 76rem` on the list plus a `1fr` copy column and right-aligned metadata columns)
+left the list left-aligned inside the 1640px section with a ~400px void on the right *and* a
+~190-650px hole between the summary and the metadata. No CSS-only rebalance closes that hole
+at 1640px width while the summary stays at a readable measure, so the rows were restructured.
+
+- **Register rows are now `number | copy | kicker | arrow`** on `/work`, `/notes` and the
+  landing register. The per-column metadata (status / effort / date on `/work`, the project
+  name on `/notes`, status / effort on the landing) collapses into one right-aligned
+  `.row-kicker` / `.note-project` / `.project-kicker` line at the top-right of the row. The
+  arrow is absolutely positioned at the row's right edge. `.row-copy` is capped at 52-56rem
+  so the title and summary keep a readable measure.
+- **The `max-width: 76rem` caps are gone.** `.work-register`, `.register-heading`,
+  `.notes-register`, `.notes-column-labels` now fill `--content`. Every row rule and the
+  header rule span the full width, content is anchored at both edges, and there is no
+  mid-row hole — the remaining whitespace reads as the gap between two columns of a wide
+  ledger.
+- The tabular column headers ("Status / Effort / Started", "Project / Correction /
+  Evidence") reduce to a single "Project"/"Correction" + "Open" pair, dropping the stale
+  `padding-left` alignment hack.
+- The `<=1000px` and `<=760px` register media queries were rewritten for the two/three-column
+  grid (they previously placed `.row-status` / `.row-effort` by explicit `grid-column` /
+  `grid-row` and hid `.row-started`). On phones the kicker sits above the title.
+- **Ledger vertical dead-space.** `.path-ledger`, `.work-lines` and `.rules-ledger` rows
+  carried `min-height: 6-7.5rem` that content never reached; cut to 3-3.5rem. The last row
+  of each ledger drops its bottom rule so it no longer floats orphaned above the next
+  section border. `.path-section` / `.current-work` / `.rules-section` moved from
+  `--section-y-loose` to `--section-y`.
+
+Gate: `npm run phase6:vivid-gate` exit 0 (76 PASS, 0 FAIL). `npm run a11y` green at
+390/800/1440, zero horizontal overflow. `npm run perf:scroll` landing p95 16.7-16.8ms at all
+three widths. `npm run phase2:gate` exit 0. Sheet Fault row-clone transition inspected at
+1440px (top panel carries the kicker and arrow, bottom panel the summary, fault line clean).
+`craft` still fails the pre-existing "at most one enhancement script" assertion (2 since
+Phase 4; not in any gate chain; fails on `main`).
+
+## Run 3b and Run 4 (pending)
+
+Run 3b: world choreography (right-edge clip on right-aligned scene copy, crossfade
+hysteresis in `world-lifecycle.ts`, a scrim behind narration over the canvas), the landing
+`data-reveal` resting-opacity fix, the Vivid "Enter the Sound Foundry" CTA copy-leak fix,
+and — as a separate commit so a `perf:scroll` regression cannot force reverting the layout
+work — the paper-texture `content-visibility` pass bundled with removing
+`scroll-behavior: smooth`. Deckle-PNG regeneration and the UPI matplotlib chart restyle are
+**deferred**: they are asset-generation tasks nobody flagged in review and would consume the
+run. Run 4 is the mobile-width repeat of the review (tuning the steep `13-19vw` middle terms
+of the heading clamps, the register kicker/title stacking on phones).
+
+Prose left-clustering on article and case pages (heading, labels, evidence and the
+`--measure` prose column all left-aligned inside the 1640px container, leaving the right
+half open) is **by owner decision** (decision 3, narrow prose only). Recorded here as an
+observation to revisit in Run 4, not changed in Run 3.

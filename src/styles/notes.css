@@ -47,18 +47,19 @@
 .archive-heading { display: grid; gap: 1rem; margin-bottom: clamp(2.5rem, 4vw, 4rem); }
 .archive-heading h2 { max-width: 16ch; margin: 0; font: 700 var(--display-2)/var(--leading-snug) var(--font-display); letter-spacing: var(--tracking-display); }
 .archive-heading > p { max-width: var(--measure); margin: .4rem 0 0; color: var(--ink); font-size: var(--text-lg); line-height: var(--leading-mid); }
-.notes-column-labels { display: grid; grid-template-columns: 11rem minmax(0, 1fr) 12rem 1.5rem; gap: 1rem 1.5rem; padding: 0 0 .9rem 4.25rem; border-bottom: 1px solid var(--ink); color: var(--ink-quiet); font: var(--text-2xs) var(--font-mono); letter-spacing: .1em; text-transform: uppercase; }
-.notes-column-labels { max-width: 76rem; }
-.notes-register { margin: 0; padding: 0; list-style: none; max-width: 76rem; }
+.notes-column-labels { display: flex; align-items: baseline; justify-content: space-between; gap: 1.5rem; padding: 0 0 .9rem; border-bottom: 1px solid var(--ink); color: var(--ink-quiet); font: var(--text-2xs) var(--font-mono); letter-spacing: .1em; text-transform: uppercase; }
+.notes-column-labels span { display: block; }
+.notes-register { margin: 0; padding: 0; list-style: none; }
 .note-row { position: relative; border-bottom: 1px solid rgb(24 20 17 / 34%); }
-.note-row a { position: relative; isolation: isolate; min-height: 7rem; display: grid; grid-template-columns: 2.75rem 11rem minmax(0, 1fr) 12rem 1.5rem; align-items: start; gap: .4rem 1.5rem; padding: 1.4rem 0; text-decoration: none; }
+.note-row a { position: relative; isolation: isolate; min-height: 7rem; display: grid; grid-template-columns: 2.75rem minmax(0, 1fr) auto; align-items: start; gap: .2rem 1.75rem; padding: 1.4rem 3.25rem 1.4rem 0; text-decoration: none; }
 .note-row a::before { content: ''; position: absolute; z-index: -1; inset: 0 -1px; background: var(--ink); clip-path: polygon(0 8%, 4% 0, 22% 4%, 44% 0, 66% 4%, 85% 0, 100% 7%, 100% 92%, 84% 100%, 62% 96%, 40% 100%, 20% 96%, 3% 100%, 0 90%); transform: scaleX(0); transform-origin: left center; transition: transform 200ms var(--ease-paper); }
 .note-number, .note-project, .note-source { color: var(--ink-quiet); font: var(--text-2xs)/1.45 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; }
-.note-row a > .note-number, .note-row a > .note-project, .note-row a > .note-source { padding-top: .3rem; }
-.note-copy { min-width: 0; display: grid; gap: .5rem; }
-.note-copy strong { max-width: 32ch; font: 700 var(--text-xl)/1.1 var(--font-display); letter-spacing: var(--tracking-tight); }
-.note-copy > span { max-width: 60ch; color: var(--ink-secondary); font-size: var(--text-sm); line-height: var(--leading-body); text-wrap: pretty; }
-.note-open { text-align: right; transition: transform var(--duration-fast) var(--ease-out); }
+.note-row a > .note-number { grid-column: 1; padding-top: .3rem; }
+.note-copy { grid-column: 2; min-width: 0; max-width: 52rem; display: grid; gap: .5rem; }
+.note-row a > .note-project { grid-column: 3; justify-self: end; padding-top: .35rem; text-align: right; white-space: nowrap; }
+.note-copy strong { font: 700 var(--text-xl)/1.1 var(--font-display); letter-spacing: var(--tracking-tight); }
+.note-summary { color: var(--ink-secondary); font-size: var(--text-sm); line-height: var(--leading-body); text-wrap: pretty; }
+.note-open { position: absolute; top: 1.5rem; right: 0; text-align: right; transition: transform var(--duration-fast) var(--ease-out); }
 .note-row a:hover, .note-row a:focus-visible { color: var(--paper-light); }
 .note-row a:hover::before, .note-row a:focus-visible::before { transform: scaleX(1); }
 .note-row a:hover .note-number, .note-row a:hover .note-project, .note-row a:hover .note-source, .note-row a:hover .note-copy > span, .note-row a:focus-visible .note-number, .note-row a:focus-visible .note-project, .note-row a:focus-visible .note-source, .note-row a:focus-visible .note-copy > span { color: #c9c3b8; }
@@ -124,9 +125,7 @@
 
 @media (max-width: 1000px) {
   .notes-intro { grid-template-columns: minmax(0, 1fr) minmax(16rem, .52fr); gap: 4rem; }
-  .notes-column-labels { grid-template-columns: 8rem minmax(0, 1fr) 9rem 2rem; }
-  .note-row a { grid-template-columns: 2.5rem 8rem minmax(0, 1fr) 9rem 2rem; }
-  .note-row a::after { right: 12rem; }
+  .note-row a { grid-template-columns: 2.5rem minmax(0, 1fr) auto; }
   .article-body { grid-template-columns: 12rem minmax(0, 1fr); gap: 5rem; }
 }
 
@@ -144,12 +143,12 @@
   .notes-controls button { padding-inline: .65rem; font-size: .76rem; }
   .archive-heading { grid-template-columns: 1fr; gap: 2rem; }
   .notes-column-labels { display: none; }
-  .note-row a { min-height: 10rem; grid-template-columns: 2rem minmax(0, 1fr); grid-template-rows: auto auto auto; gap: .45rem 1rem; padding: 1.5rem 0; }
-  .note-number { grid-row: 1 / -1; align-self: start; padding-top: .15rem; }
-  .note-project, .note-copy, .note-source { grid-column: 2; }
+  .note-row a { min-height: 9rem; grid-template-columns: 2rem minmax(0, 1fr); gap: .35rem 1rem; padding: 1.5rem 0; }
+  .note-row a > .note-number { grid-row: 1 / span 2; padding-top: .15rem; }
+  .note-row a > .note-project { grid-column: 2; grid-row: 1; justify-self: start; padding-top: 0; text-align: left; }
+  .note-copy { grid-column: 2; grid-row: 2; max-width: none; }
   .note-copy strong { font-size: clamp(1.5rem, 5vw, 2rem); }
   .note-open { display: none; }
-  .note-row a::after { right: 0; top: 1.5rem; }
   .writing-state { min-height: 34rem; grid-template-columns: 1fr; align-content: center; gap: 2.5rem; padding-block: 5rem; }
   .writing-state::after { right: 1.5rem; bottom: 2rem; font-size: clamp(3.5rem, 16vw, 7rem); }
   .article-masthead { min-height: 0; padding-block: 6rem; }
@@ -172,7 +171,7 @@
   .notes-controls { grid-template-columns: 1fr; gap: .5rem; }
   .notes-controls > p { justify-self: end; }
   .archive-heading h2, .writing-state h2 { font-size: clamp(3.2rem, 14vw, 4.8rem); }
-  .note-copy > span { font-size: .92rem; }
+  .note-summary { font-size: .92rem; }
   .article-index { display: grid; gap: .6rem; }
   .article-masthead h1 { font-size: clamp(3.4rem, 14vw, 4.8rem); }
   .article-prose h2, .article-evidence h2, .article-sources h2 { font-size: clamp(3rem, 13vw, 4.5rem); }
@@ -183,7 +182,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .note-row a::before, .note-row a::after, .note-open { transition: none; }
+  .note-row a::before, .note-open { transition: none; }
 }
 
 @media print {
