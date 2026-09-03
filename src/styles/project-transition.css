@@ -68,15 +68,15 @@
 
 .project-world-preview figcaption span {
   color: #b9bfbd;
-  font: .57rem/1.4 var(--font-mono);
-  letter-spacing: .09em;
+  font: var(--text-2xs)/1.4 var(--font-mono);
+  letter-spacing: .1em;
   text-transform: uppercase;
 }
 
 .project-world-preview figcaption strong {
   color: var(--world-ink);
-  font: 700 clamp(.95rem, 1.7vw, 1.45rem)/1.05 var(--font-display);
-  letter-spacing: -.025em;
+  font: 700 var(--text-lg)/1.05 var(--font-display);
+  letter-spacing: var(--tracking-tight);
   text-wrap: balance;
 }
 
@@ -95,16 +95,16 @@
 .project-preview-record p,
 .project-preview-record small {
   margin: 0;
-  color: #abb1af;
-  font: .58rem/1.4 var(--font-mono);
+  color: #b3b8b6;
+  font: var(--text-2xs)/1.4 var(--font-mono);
   letter-spacing: .08em;
   text-transform: uppercase;
 }
 
 .project-preview-record > strong {
   max-width: 21ch;
-  font: 700 clamp(1.4rem, 3.2vw, 3.1rem)/.95 var(--font-display);
-  letter-spacing: -.04em;
+  font: 700 var(--display-3)/1 var(--font-display);
+  letter-spacing: var(--tracking-tight);
 }
 
 .project-preview-record dl {
@@ -124,7 +124,7 @@
 .project-preview-record dt,
 .project-preview-record dd {
   margin: 0;
-  font: .62rem/1.35 var(--font-mono);
+  font: var(--text-2xs)/1.4 var(--font-mono);
 }
 
 .project-preview-record dt { color: #d6a29a; text-transform: uppercase; }

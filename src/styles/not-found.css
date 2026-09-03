@@ -5,26 +5,26 @@
   display: grid;
   align-content: center;
   justify-items: start;
-  gap: 1.5rem;
+  gap: 1.25rem;
   width: var(--content);
   margin: auto;
-  padding-block: clamp(5rem, 12vw, 10rem);
+  padding-block: var(--section-y-loose);
 }
 
 .missing-page h1 {
-  max-width: 10ch;
+  max-width: 14ch;
   margin: 0;
-  font: 700 clamp(3rem, 7vw, 7rem)/.92 var(--font-display);
-  letter-spacing: -.055em;
+  font: 700 var(--display-1)/var(--leading-snug) var(--font-display);
+  letter-spacing: var(--tracking-display);
   text-wrap: balance;
 }
 
 .missing-page > p:not(.profile-eyebrow) {
-  max-width: 46rem;
+  max-width: var(--measure-narrow);
   margin: 0;
-  color: var(--ink-secondary);
-  font-size: clamp(1rem, 1.4vw, 1.25rem);
-  line-height: 1.65;
+  color: var(--ink);
+  font-size: var(--text-md);
+  line-height: var(--leading-body);
 }
 
 .missing-actions {

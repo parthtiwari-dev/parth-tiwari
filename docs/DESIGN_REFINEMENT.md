@@ -108,13 +108,54 @@ values.
   under a fully RAF-throttled context shows readable `.6`-opacity narration with the primed
   chapter highlighted, never a blank page.
 
-## Run 2 and Run 3
+## Run 2 — apply the tokens; fix the layout offenders (this commit)
 
-See `~/.claude/plans/attach-federated-book.md`. Run 2 wires the type/space/measure tokens
-into every component, demotes the billboard headings, kills the orphaned captions and
-wide-row dead zones, fixes the `/work` hover, moves leads off the muted brown and lifts
-every label to ~12.5px+. Run 3 does world choreography (labels, edge clip, crossfade,
-text-over-canvas), the deckle regeneration, the paper-texture scroll-perf fix bundled with
-removing `scroll-behavior: smooth`, the UPI matplotlib chart restyle, the Vivid CTA
-copy-leak fix and the landing `data-reveal` resting-opacity fix. Run 4 is the mobile-width
-repeat of the review.
+Wired the type/space/measure tokens into every stylesheet (`landing`, `case-study`,
+`work-register`, `profile-pages`, `notes`, `hire`, `not-found`, `world-foundation`,
+`project-transition`):
+
+- **Headings demoted.** Every page h1 now uses `--display-1` (~44-88px, was 130-176px);
+  every section h2 uses `--display-2` (~38-62px, was 92-112px); world chapter headings use
+  the same. All display type moved to `--tracking-display` (-0.02em, was -0.055 to -0.075)
+  and `--leading-snug` (1.0 for multi-line, was 0.82-0.92).
+- **Section rhythm.** `.case-chapter`, `.path/current-work/rules-section`, `.section-pad`,
+  the `.hire-*` sections, `.article-*` and the mastheads moved from 104-192px padding to
+  `--section-y` / `--section-y-loose` (56-120px). Hero `min-height`s cut ~35%. Case-study
+  page height dropped ~9% (17.0k -> 15.6k px at 1440) with a much clearer hierarchy.
+- **Orphaned right-column captions removed.** `.project-heading`, `.profile-section-heading`,
+  `.archive-heading`, `.hire-section-heading`, `.case-heading-row` are now single-column:
+  the label sits above the headline, the gloss becomes a `--text-lg` standfirst under it.
+- **Wide-row dead zone reduced.** `/work` and `/notes` register rows keep a `1fr` copy
+  column with right-aligned metadata but the list is capped at 76rem and the summary at
+  ~60ch, so the mid-row gap shrank from ~600px to ~190px. The `/notes` project column
+  widened so long names wrap instead of colliding. Not fully eliminated: a narrower
+  site-wide container (which also touches the nav offset calcs) is a follow-up.
+- **`/work` hover.** The torn-paper `::before` on `.project-row` / `.work-row` / `.note-row`
+  is re-inset to `0 -1px` (full row coverage) with a cleaner seeded polygon and
+  `--ease-paper`. The stray `.note-row` hover glyph was removed.
+- **Leads off the muted brown.** `.case-thesis`, `.hero-support`, `.about-introduction p`,
+  the `.work/notes/hire/article` intros and every `> p` first-of-type in a chapter now use
+  `--ink`, not `--ink-secondary`. `--ink-quiet` is metadata/labels/captions only.
+- **Labels >= ~12.5px.** Every `--font-mono` label across all stylesheets moved from
+  .51-.68rem to `--text-2xs` / `--text-xs` (12-14px), including the world HUD (`.world-nav`,
+  `.world-readout`, `.world-audit`, `.world-stem-key`) and the 9.9px chapter labels.
+- **Page quick-hits.** Landing `.about-beat` gap 192px -> 32-64px and portrait max-height
+  42rem -> 28rem; `.quiet-proof` is now a compact three-number cue (context text hidden),
+  `.proof-section` keeps the full dated proof; `/notes` hero collapsed to two lines with no
+  right-column collision; `/resume` skill/stack lines get `text-wrap: pretty`; `/hire`
+  headline demoted and section spacing tightened; note articles switched from
+  `--section-y-loose` to `--section-y` and body leading 1.78 -> 1.55.
+
+Gate: `npm run phase6:vivid-gate` exit 0 (76 PASS, 0 FAIL). `npm run a11y` green at
+390/800/1440, zero horizontal overflow. `npm run perf:scroll` landing p95 back to
+16.7-16.8ms at all three widths (Run 1's un-masked wide-viewport cost improved because the
+shorter sections repaint less); case study 16.7ms at all widths.
+
+## Run 3 and Run 4
+
+Run 3: world choreography (right-edge clip, crossfade hysteresis, text-over-canvas scrim),
+deckle regeneration, the paper-texture scroll-perf fix bundled with removing
+`scroll-behavior: smooth`, the UPI matplotlib chart restyle, the Vivid CTA copy-leak fix,
+the landing `data-reveal` resting-opacity fix, and a narrower site-wide content container to
+finish the register dead-zone. Run 4 is the mobile-width repeat of the review (tuning the
+steep `13-19vw` middle terms of the heading clamps).
