@@ -1,5 +1,15 @@
 # WORLDS — the spec for what is behind each tear
 
+## Current checkpoint: 2026-09-08
+
+Phase 5 is closed. Phase 6 is on local `world/batch-1`. MedRAG and Order Supervisor
+standalone storyboards are built and browser checked, awaiting owner selection before
+production routes. The approved paired workflow supersedes older sequential instructions.
+Read `docs/WORLD_BATCH_1.md` (or `WORLD_BATCH_1.md` from this directory) and both study
+documents for the active contract. BeatMind, Vivid and Tathya have world routes; Vivid
+and Tathya owner review remains open. Older dated status below is historical where
+superseded by this checkpoint. No deployment was performed or verified here.
+
 Written 2026-08-27. Reads after [`DESIGN_LOCK.md`](DESIGN_LOCK.md), which settles the
 landing sheet. This file settles **what a world is**, and specifies all twelve.
 
@@ -11,6 +21,12 @@ It answers the question an employer or client is asking: *did this person build 
 thing, and can they explain what mattered.*
 
 ---
+
+The original per-world treatments below are historical briefs where superseded by current
+studies. MedRAG now uses recorded retrieved/cited counts, not invented embedding coordinates;
+the refusal record still retrieves eight chunks. Order Supervisor is a labelled source
+behavior demonstration. Tathya uses The Long Table and the dated 2026-09-04 public snapshot,
+not a live database or the older scatterplot proposal.
 
 ## 1. What every world has to do
 

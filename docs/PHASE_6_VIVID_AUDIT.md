@@ -1,6 +1,12 @@
 # Phase 6A Vivid Story Loom audit
 
-Status: **implementation committed; automated browser gate and owner review remain open.**
+Status, 2026-09-07: **implementation committed; automated browser gate passes;
+owner rendered review remains open.**
+
+The fresh `npm.cmd run phase6:tathya-gate` completed with exit 0 on 2026-09-07,
+including Vivid at 390/800/1440, static/failure states and Back restoration. The
+September 2 browser limitation below is historical, not a current blocker. The owner
+authorized paired world work alongside bounded Vivid/Tathya closeout in `WORLD_BATCH_1.md`.
 
 ## Production contract
 

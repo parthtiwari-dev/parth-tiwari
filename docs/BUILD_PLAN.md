@@ -1,6 +1,52 @@
 # BUILD PLAN: Paper and Worlds
 
+**2026-09-09 design checkpoint:** Owner approved illustrated MedRAG and SecondSelf. Preserve
+them. QueryPilot / The Cartographer’s Fold is the next local design. Complete remaining
+world designs before the later production integration pass. See WORLD_DESIGN_HANDOFF.md
+and QUERYPILOT_WORLD_STUDY.md; this supersedes historical finite-proof proposals below.
+
+**Current owner authorization, 2026-09-09:** Build both complete illustrated worlds,
+sequentially without agents. This supersedes the finite-proof proposal and historical
+pauses below. Active previews are MedRAG / The Theatre of an Answer and SecondSelf /
+A Little Further, Together. Versioned realistic alternatives are preserved. Read
+docs/ILLUSTRATED_WORLDS_DELIVERY.md (ILLUSTRATED_WORLDS_DELIVERY.md from docs) for implementation
+and verification. No production cutover is implied by local preview completion.
+
+
+**Latest creative steering:** The owner wants illustrated, anime-influenced realism and
+scroll choreography, and finds the current photo/zoom structures too similar. Preserve
+both current versions. Read docs/WORLD_CREATIVE_DIRECTION.md (from docs, omit docs/).
+The next recommendation is a small alternate MedRAG theatre motion proof, followed by a
+SecondSelf companion/search narrative if it improves the experience. This is a proposed
+experiment, not approval to replace all worlds or discard current alternatives.
+
+## Current checkpoint: generated animated worlds, 2026-09-08
+
+The owner authorized direct creative execution and original image generation for MedRAG,
+then SecondSelf. Both now have eight-chapter animated local studies, built sequentially
+without agents. MedRAG is The Uncarved Answer; SecondSelf is The room before send.
+Each has original generated environmental artwork, distinct scene choreography and local
+interactive controls grounded in the reviewed project records. Order Supervisor's revised
+ending remains preserved. See `MEDRAG_WORLD_STUDY.md`, `SECONDSELF_WORLD_STUDY.md` and
+`WORLD_GENERATED_ASSETS.md` in docs. Older premise-selection holds below are superseded.
+
+These are local visual studies, not newly registered public Astro world routes. No push,
+merge or deployment occurred. Production integration and the earlier Sheet Fault timing
+gate remain separate work. Current evidence lives in `.shots/cinematic-studies`.
+
+**Latest owner steering, 2026-09-08:** Work on Order Supervisor alone, without agents.
+MedRAG's current treatment was rejected and is paused. The watch premise is retained;
+Study II expands it into an eight-chapter mechanical journey with longer staged movement.
+This supersedes the earlier statement that both first drafts were ready for selection.
+See `ORDER_SUPERVISOR_WORLD_STUDY.md` in docs for the current revision and evidence.
+
 Revised 2026-08-29. This is the execution plan for the portfolio rebuild.
+
+**Current checkpoint, 2026-09-08:** Phase 6 now proceeds in owner-approved pairs.
+`WORLD_BATCH_1.md` records the accepted seven-world sequence and current checklist.
+MedRAG and Order Supervisor have browser-checked standalone storyboards awaiting owner selection.
+Tathya is merged to `main` at `a051c02`; fresh Vivid and Tathya browser gates pass,
+but their owner rendered reviews remain open. Older dated checkpoints below are history.
 
 The public brand is **Parth Tiwari**. **Paper and Worlds** is the internal name of the
 design system: one continuous sheet of real rag paper, a register of work printed on it,
@@ -639,9 +685,10 @@ proof passes for both the BeatMind implementation and shared foundation. Owner v
 approval was recorded on 2026-09-02, so Phase 5 is closed. Phase 3's deferred owner review
 remains separately open.
 
-### Phase 6: Remaining worlds, one reviewed story at a time
+### Phase 6: Remaining worlds, reviewed pairs
 
-Follow the waves in `WORLDS.md`. Each world repeats this loop:
+Follow the owner-approved batches in `WORLD_BATCH_1.md`. Each world repeats this loop;
+the two production builds may run in parallel after both storyboards are approved:
 
 1. Show the real-data inventory and unresolved claims.
 2. Present the scroll storyboard and static final frame.
@@ -649,9 +696,9 @@ Follow the waves in `WORLDS.md`. Each world repeats this loop:
 4. Build only after approval.
 5. Review phone, tablet, desktop, keyboard, reduced-motion and no-JavaScript output.
 6. Commit the world alone and tick its plan item in that commit.
-7. Run its revert and performance gates before starting another world.
+7. Run its revert and performance gates before starting the next batch.
 
-- [ ] Vivid — production implementation is committed. Browser-backed automated evidence and owner review remain required before this item closes.
+- [ ] Vivid — production implementation is committed. Fresh `phase6:tathya-gate` includes a passing Vivid browser gate on 2026-09-07; owner rendered review remains open.
 - [x] Tathya — The Long Table. Built and `published: true` on branch `world/tathya`.
   Wordless event-driven canvas; a dated public-record snapshot
   (`provenance: 'public-snapshot'`, `2026-09-04`) with three anonymised case files carrying
@@ -660,8 +707,8 @@ Follow the waves in `WORLDS.md`. Each world repeats this loop:
   owner directed the merge to `main`. A separate rendered owner review of the animated
   world stays open and is not reported as done. Scope, scene contract and data contract:
   `TATHYA_WORLD_STUDY.md`; rationale for `public-snapshot`: `DECISIONS.md`.
-- [ ] MedRAG
-- [ ] Order Supervisor
+- [ ] MedRAG — The Unwritten Answer standalone storyboard checkpoint in progress; no production world published.
+- [ ] Order Supervisor — The Night Watch standalone storyboard checkpoint in progress; no production world published.
 - [ ] QueryPilot
 - [ ] SecondSelf
 - [ ] OncoVerse

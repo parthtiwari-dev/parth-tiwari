@@ -3,21 +3,18 @@
 This repository is rebuilding Parth Tiwari's portfolio as **Paper and Worlds**: a
 static, multi-page Astro site whose project case studies use each project's real data.
 
-The current code has completed Phases 1, 2 and 4, has an open Phase 3 gate, and has a
-passing Phase 5 automated gate awaiting final owner visual review. It contains validated
-content collections, twelve base project records, twelve Errata entries, route copy,
-services, experience, and source-linked claims. The maintained Home route lives at `/`.
-`/work/` has its complete register, ten published `/work/[slug]/` routes use the shared paper
-case-study system, and Notes, About, Resume and Hire have static route implementations. The
-landing includes the approved full-width rag sheet, post-hero sticky
-paper fold, content-driven sections, stable fibre-edge segments, bounded one-shot paper
-motion and the production project preview. The rejected Phase 2 A/B/C directions were
-removed. Home and `/work` use the selected Sheet Fault route transition with static
-backlights, real paper panels, real-route navigation and accessibility fallbacks. BeatMind
-now has the first validated animated world at `/work/beatmind/world/`; its full paper case
-study remains at `/work/beatmind/`. The current
-interim deployment still contains the earlier root-only release; the complete static site has
-not passed the Phase 3 preview gate or the Phase 7 production cutover.
+Phases 1, 2, 4 and 5 are closed; Phase 3 owner and preview checks remain open.
+The site has paper case studies and the BeatMind, Vivid and Tathya world routes.
+
+The local `world/batch-1` branch adds animated visual studies for MedRAG, SecondSelf and
+Order Supervisor. MedRAG and SecondSelf include original generated environmental artwork
+and local interactions. See [the active batch](docs/WORLD_BATCH_1.md) and
+[asset prompts and paths](docs/WORLD_GENERATED_ASSETS.md). These are not new public routes.
+
+Run `node scripts/world-study-server.mjs` and open the studies under
+`http://127.0.0.1:4327/design/directions/`. Use `node scripts/cinematic-study-gate.mjs
+--slug=medrag` or `--slug=secondself` for the new studies. Order Supervisor uses the earlier
+study capture tool. No deployment was made or verified here; the note below is historical.
 
 **Live interim landing:** [parth-tiwari-1.vercel.app](https://parth-tiwari-1.vercel.app/).
 The Astro release replaced v1 from `main` on 2026-08-29 and passed live accessibility,

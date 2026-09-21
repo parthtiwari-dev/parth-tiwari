@@ -130,6 +130,13 @@ main { overflow: clip; }
   text-transform: none; background: rgb(6 8 9 / 82%); text-align: left; text-shadow: none;
 }
 .tathya-experience .world-evidence-boundary { grid-template-columns: 1fr; max-width: 40rem; }
+/* The record and moving slab must never compete with the readable account.
+   An opaque centre protects the whole copy block; the feather belongs outside it. */
+.tathya-experience[data-world-ready='true'] .world-scene-copy::before {
+  inset: -1rem;
+  background: #080605;
+  box-shadow: 0 0 2rem 1rem #080605;
+}
 
 @media (max-width: 800px) {
   .world-nav span { display: none; }
@@ -144,6 +151,7 @@ main { overflow: clip; }
   .world-scene-left .world-scene-copy, .world-scene-right .world-scene-copy { width: min(33rem, 92vw); text-align: left; }
   .world-scene-right .world-scene-copy h2, .world-scene-right .world-narration { margin-left: 0; }
   .world-experience[data-world-ready='true'] .world-scene-copy::before { inset: -3rem -3rem; background: radial-gradient(ellipse at 24% 56%, rgb(3 4 5 / 96%) 0, rgb(3 4 5 / 72%) 48%, transparent 80%); }
+  .tathya-experience[data-world-ready='true'] .world-scene-copy::before { inset: -1rem; background: #080605; }
   .world-scene-copy h1, .world-scene-copy h2 { font-size: clamp(2.4rem, 9vw, 3.8rem); }
   .world-evidence-boundary { grid-template-columns: 1fr; }
   .world-experience[data-world-active-scene='boundary'] .world-audit,

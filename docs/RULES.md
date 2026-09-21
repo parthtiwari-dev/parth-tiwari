@@ -37,6 +37,11 @@ and keep it out of public output. Never fill a gap with plausible-sounding conte
 
 ## 3. One phase at a time
 
+**Owner amendment, 2026-09-07:** Phase 6 may proceed in reviewed pairs under
+`WORLD_BATCH_1.md`. Approve both storyboards before parallel production implementation;
+integrate, gate, commit and review each world independently. The original sequential rule
+below still applies between batches and to other phases.
+
 - Follow `BUILD_PLAN.md` in order.
 - Open each phase by showing its scope, exclusions, expected files, and unresolved questions.
 - Obtain the owner decision required by that phase before implementation.
@@ -118,6 +123,10 @@ superseded status must remain unmistakable and their description in `docs/README
 true.
 
 ## 9. Commit and handoff
+
+**Current owner-selected isolation, 2026-09-07:** `world/batch-1`, with `world/medrag` and
+`world/order-supervisor` worktrees for the approved parallel pair. The `redesign/v2`
+instruction below records the earlier rebuild branch. `main` remains unchanged this batch.
 
 - Work directly on the owner-selected local branch. For this rebuild, that branch is
   `redesign/v2`. Create another feature or experiment branch only when the owner asks for it

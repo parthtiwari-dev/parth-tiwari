@@ -85,7 +85,12 @@ try {
     const sceneList = page.locator('[data-world-scene]')
     for (let index = 0; index < await sceneList.count(); index += 1) {
       await sceneList.nth(index).evaluate((element) => element.scrollIntoView({ block: 'center' }))
-      await page.waitForTimeout(220)
+      // Scroll chooses a scene; its events continue afterwards. Capture the
+      // actual strike and settled record, not only the first 220ms of arrival.
+      const strikeAt = { 2: 1280, 4: 1380, 6: 1630 }[index]
+      await page.waitForTimeout(strikeAt ?? 800)
+      if (strikeAt) await page.screenshot({ path: path.join(output, `${viewport.name}-scene-${String(index + 1).padStart(2, '0')}-strike.png`) })
+      await page.waitForTimeout(3000 - (strikeAt ?? 800))
       sceneStates.push(await page.evaluate(() => ({ active: document.querySelector('.world-scene.is-current')?.getAttribute('data-scene-index'), overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth })))
       await page.screenshot({ path: path.join(output, `${viewport.name}-scene-${String(index + 1).padStart(2, '0')}.png`) })
     }

@@ -165,6 +165,7 @@ vite.config.ts.timestamp-*
 inbox/refero/
 .shots/
 .frames/
+.worktrees/
 
 # `*-check.mjs` used to be ignored here, which meant the five behaviour gates
 # `package.json` calls — nav, labels, craft, a11y, perf — existed only on
