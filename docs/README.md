@@ -1,5 +1,29 @@
 # docs
 
+## Current checkpoint: generated animated worlds, 2026-09-08
+
+The owner authorized direct creative execution and original image generation for MedRAG,
+then SecondSelf. Both now have eight-chapter animated local studies, built sequentially
+without agents. MedRAG is The Uncarved Answer; SecondSelf is The room before send.
+Each has original generated environmental artwork, distinct scene choreography and local
+interactive controls grounded in the reviewed project records. Order Supervisor's revised
+ending remains preserved. See `MEDRAG_WORLD_STUDY.md`, `SECONDSELF_WORLD_STUDY.md` and
+`WORLD_GENERATED_ASSETS.md` in docs. Older premise-selection holds below are superseded.
+
+These are local visual studies, not newly registered public Astro world routes. No push,
+merge or deployment occurred. Production integration and the earlier Sheet Fault timing
+gate remain separate work. Current evidence lives in `.shots/cinematic-studies`.
+
+## Current checkpoint: 2026-09-08
+
+Phase 5 is closed. Phase 6 is on local `world/batch-1`. MedRAG and Order Supervisor
+first storyboards were built and browser checked. The owner rejected MedRAG and
+requested an expanded Order Supervisor revision alone; Study II is the active review. The approved paired workflow supersedes older sequential instructions.
+Read `docs/WORLD_BATCH_1.md` (or `WORLD_BATCH_1.md` from this directory) and both study
+documents for the active contract. BeatMind, Vivid and Tathya have world routes; Vivid
+and Tathya owner review remains open. Older dated status below is historical where
+superseded by this checkpoint. No deployment was performed or verified here.
+
 Where to look, and what is still true.
 
 ## Live — read these

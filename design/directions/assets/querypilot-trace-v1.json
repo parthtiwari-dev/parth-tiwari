@@ -1,0 +1,18 @@
+{
+  "id": "hard_001",
+  "question": "Find customers who have placed more orders than the average customer",
+  "sql": "WITH customer_order_counts AS (\n    SELECT customer_id, COUNT(order_id) AS order_count\n    FROM orders\n    GROUP BY customer_id\n),\naverage_order_count AS (\n    SELECT AVG(order_count) AS avg_count\n    FROM customer_order_counts\n)\nSELECT c.customer_id, c.name, c.email, c.created_at, c.country, c.lifetime_value\nFROM customers c\nJOIN customer_order_counts coc ON c.customer_id = coc.customer_id\nJOIN (SELECT AVG(order_count) AS avg_count FROM customer_order_counts) aoc ON coc.order_count > aoc.avg_count\nLIMIT 1000;",
+  "success": true,
+  "attempts": 3,
+  "first_attempt_success": false,
+  "schema_tables_used": [
+    "orders",
+    "customers",
+    "order_items",
+    "products"
+  ],
+  "correction_applied": true,
+  "commit": "1b7547649f9d883111c3020b46efde9a6bbe7e6c",
+  "recordedAt": "2026-02-25T21:34:00.029068",
+  "source": "backend/evaluation_results/day6_full_results.json"
+}

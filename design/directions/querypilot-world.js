@@ -1,0 +1,57 @@
+import {illustratedScroll} from './illustrated-scroll.js';
+
+const $=s=>document.querySelector(s),all=s=>[...document.querySelectorAll(s)];
+const clamp=x=>Math.max(0,Math.min(1,x));
+const ease=x=>{x=clamp(x);return x*x*(3-2*x)};
+const proposal=$('#proposal-route'),corrected=$('#corrected-route');
+const proposalLength=proposal.getTotalLength(),correctedLength=corrected.getTotalLength();
+proposal.style.strokeDasharray=proposalLength;corrected.style.strokeDasharray=correctedLength;
+let angle=0,attempt=3,intent='read',ledger='after';
+const captions=['A question waits at the edge.','hard_001 / a recorded question','Four names in the retrieved context.','A proposed route meets the checks.','First attempt: unsuccessful.','Three attempts. One recorded final statement.','The read-only boundary remains.','67 / 70 core executions.','Execution is not semantic accuracy.'];
+
+const refresh=illustratedScroll((i,p,reduced)=>{
+ const small=innerWidth<=900;
+ const scale=small?Math.min(innerWidth/1070,innerHeight*.41/760):Math.min(innerWidth*.7/960,innerHeight*.72/640);
+ const open=i===0?ease((p-.05)/.8):1;
+ const tilt=i===0?28-open*8:i===7?4:i===8?12:20;
+ const yaw=i===7?0:i===8?-4:-12+angle*.4;
+ const x=small?0:innerWidth*.17;
+ $('.atlas').style.transform=reduced?'translate(-50%,-50%)':`translate(-50%,-50%) translateX(${x}px) rotateX(${tilt}deg) rotateZ(${yaw}deg) scale(${scale})`;
+ $('.fold-west').style.transform=`rotateY(${-open*165}deg)`;
+ $('.fold-east').style.transform=`rotateY(${open*165}deg)`;
+ $('.fold-west').style.opacity=1-ease((open-.75)*4);
+ $('.fold-east').style.opacity=1-ease((open-.75)*4);
+ const rise=i<2?i===1?ease(p*1.7):0:1;
+ all('.district-rise').forEach((el,n)=>{const r=i===1?ease((p-n*.08)*1.7):rise;el.style.transform=`scaleY(${.04+r*.96})`;el.style.opacity=.18+r*.82});
+ all('.map-label').forEach(el=>el.style.opacity=i>=1?1:0);
+ $('.city').style.opacity=i>=7?0:1;
+ $('.survey').style.opacity=i>=7?.3:1;
+ $('.routes').style.opacity=i>=7?0:1;
+ let progress=i===2?ease(p)*.3:i===3?.3+ease(p)*.43:i===4?.73:i>=5?1:0;
+ let repaired=i===5?ease(p*1.7):i>=6?1:0;
+ if(i===5&&attempt!==3)repaired=attempt===1?0:.42;
+ proposal.style.strokeDashoffset=proposalLength*(1-progress);
+ proposal.style.opacity=i>=5?.15:1;
+ corrected.style.strokeDashoffset=correctedLength*(1-repaired);
+ $('.broken-gap').style.opacity=i>=4?1:0;
+ $('.fracture').style.opacity=i===4?ease(p*2):i===5&&attempt===1?1:0;
+ const path=i>=5?corrected:proposal,t=i>=5?repaired:progress;
+ const point=path.getPointAtLength(t*path.getTotalLength());
+ const previous=path.getPointAtLength(Math.max(0,t*path.getTotalLength()-2));
+ const heading=Math.atan2(point.y-previous.y,point.x-previous.x)*180/Math.PI;
+ $('.traveller').setAttribute('transform',`translate(${point.x},${point.y}) rotate(${heading})`);
+ $('.traveller').style.opacity=i>=2&&i<=6?1:0;
+ $('.gate-bar').style.opacity=i===6&&intent==='read'?.15:1;
+ $('.database-gate').style.opacity=i===6&&intent==='write'?1:.85;
+ $('.ledger-grid').style.opacity=i===7?1:0;
+ all('.ledger-tile').forEach((el,n)=>{const recovered=n>=63&&n<67;const filled=n<63||(ledger==='after'&&n<67);el.style.fill=filled?recovered?'#b8472c':'#315674':'none';el.style.stroke=filled?recovered?'#b8472c':'#315674':'#73818a';el.style.transform=i===7?`translateY(${(1-ease(p*2-n*.006))*40}px)`:'none'});
+ $('.arrival-stamp').style.opacity=i===8?ease(p*2):0;
+ const cap=i===5?attempt===3?'Attempt 3 / execution succeeded':attempt===1?'First attempt / unsuccessful':'Intermediate SQL not preserved':i===6?intent==='read'?'Read-only intent / remaining checks still apply':'Destructive intent / blocked in illustration':i===7?`${ledger==='after'?67:63} / 70 core executions`:captions[i];
+ $('#map-status').textContent=cap;
+});
+
+$('#atlas-angle').addEventListener('input',e=>{angle=Number(e.target.value);refresh()});
+all('[data-table]').forEach(button=>button.addEventListener('click',()=>{all('[data-table]').forEach(el=>el.setAttribute('aria-pressed',String(el===button)));all('.district').forEach(el=>el.classList.toggle('is-selected',el.dataset.district===button.dataset.table));$('.table-result').textContent=`${button.dataset.table}: present in the retrieved schema context for hard_001. Position and architecture are illustrative.`;refresh()}));
+all('[data-attempt]').forEach(button=>button.addEventListener('click',()=>{attempt=Number(button.dataset.attempt);all('[data-attempt]').forEach(el=>el.setAttribute('aria-pressed',String(el===button)));$('.attempt-result').textContent={1:'First attempt: unsuccessful. Its SQL and specific failure reason are not preserved in this Day 6 record.',2:'Three attempts are recorded, but intermediate SQL is not preserved. This is a record gap, not a reconstructed second attempt.',3:'Final attempt: execution succeeded. Three attempts recorded. The exact final SQL can be inspected below.'}[attempt];refresh()}));
+all('[data-intent]').forEach(button=>button.addEventListener('click',()=>{intent=button.dataset.intent;all('[data-intent]').forEach(el=>el.setAttribute('aria-pressed',String(el===button)));$('.guard-result').textContent=intent==='read'?'Illustration: read-only intent may proceed after the remaining checks. No database request is made.':'Illustration: destructive intent is blocked. Correction cannot grant write permission. No SQL was executed.';refresh()}));
+all('[data-ledger]').forEach(button=>button.addEventListener('click',()=>{ledger=button.dataset.ledger;all('[data-ledger]').forEach(el=>el.setAttribute('aria-pressed',String(el===button)));$('.ledger-result').textContent=ledger==='after'?'67 of 70 core queries executed successfully. Four recovered; three still unsuccessful.':'63 of 70 core queries executed successfully before correction. Seven were unsuccessful.';refresh()}));

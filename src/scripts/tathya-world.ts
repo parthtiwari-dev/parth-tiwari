@@ -455,10 +455,10 @@ const start = () => {
       })
     const total = ring.length
     const shown = Math.max(2, Math.floor(total * easeOutCubic(amount)) + 1)
-    ctx.strokeStyle = C.bound
+    ctx.strokeStyle = C.cord
     ctx.globalAlpha = alpha
-    ctx.lineWidth = 2
-    ctx.setLineDash([6, 6])
+    ctx.lineWidth = 2.5
+    ctx.setLineDash([8, 4])
     ctx.beginPath()
     for (let i = 0; i < shown; i += 1) {
       const curr = ring[i % total]

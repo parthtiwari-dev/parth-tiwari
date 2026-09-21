@@ -8,6 +8,17 @@ in the same commit.
 
 ## Status vocabulary
 
+### Phase 6 batch amendment, 2026-09-07
+
+The owner selected seven remaining worlds first, reimagined visual treatments, and paired
+implementation after storyboard approval. First pair: MedRAG (The Unwritten Answer) and
+Order Supervisor (The Night Watch), selected as storyboard bases, not yet approved rendered
+production targets. Vivid/Tathya get bounded closeout alongside the pair. Source-behavior
+demonstrations and safe committed fixtures are allowed with explicit labels; operational
+history and measurements cannot be invented. UPI's optional control is conditional on real
+sample/threshold data. `WORLD_BATCH_1.md` is the current execution checkpoint. Local work is
+isolated on `world/batch-1` with two per-world worktrees; no merge/push/deploy is included.
+
 - **Decided:** implementation may rely on it.
 - **Owner review:** a named choice is required before its phase proceeds.
 - **Evidence blocked:** the direction is known but publication needs proof.

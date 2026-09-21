@@ -140,5 +140,6 @@ the honest interim and does not block the world. Recorded in `DECISIONS.md`.
   not separately signed off.
 - A read-only export from the Tathya repo at `bf4606f` can later replace the dated
   snapshot (`provenance: 'committed-export'`); not blocking.
-- Deferred, non-blocking polish: the mobile strike briefly crosses the heading before the
-  scrim; the loose binding cords read faintly on the dark table.
+- Local closeout on 2026-09-08 protects narration with an opaque feathered scrim and
+  strengthens binding cords. The gate now captures strike and settled frames. The scrim
+  conceals more artwork behind dense mobile copy; owner rendered review remains open.

@@ -1,5 +1,15 @@
 # DESIGN LOCK: Paper and Worlds
 
+## Current checkpoint: 2026-09-08
+
+Phase 5 is closed. Phase 6 is on local `world/batch-1`. MedRAG and Order Supervisor
+standalone storyboards are built and browser checked, awaiting owner selection before
+production routes. The approved paired workflow supersedes older sequential instructions.
+Read `docs/WORLD_BATCH_1.md` (or `WORLD_BATCH_1.md` from this directory) and both study
+documents for the active contract. BeatMind, Vivid and Tathya have world routes; Vivid
+and Tathya owner review remains open. Older dated status below is historical where
+superseded by this checkpoint. No deployment was performed or verified here.
+
 Revised 2026-08-27. This is the visual and interaction direction that gets built.
 
 The public name is **Parth Tiwari**. **Paper and Worlds** is the design system name, not

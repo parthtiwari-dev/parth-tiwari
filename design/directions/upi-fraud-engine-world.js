@@ -1,0 +1,22 @@
+import {illustratedScroll} from './illustrated-scroll.js';
+const $=s=>document.querySelector(s),all=s=>[...document.querySelectorAll(s)];
+const data=JSON.parse($('#upi-record').textContent);let day=0,view='all';
+const captions=['The current continues.','Past information. Frozen transforms.','A 0.5% project review budget.','Held-out: 85,429 transactions.','Seven recorded days.','Replay: 22,071 transactions.','85 caught / 616 missed / 701 fraud.','A signal is a reason to review.'];
+const refresh=illustratedScroll((i,p,reduced)=>{
+ const t=reduced?0:i+p;
+ $('.currents').style.transform=`translate(${Math.sin(t*.9)*35}px,${t%1*15}px)`;
+ $('.tide-ring').style.transform=`rotate(${t*12}deg)`;
+ $('.light-beam').style.transform=`rotate(${Math.sin(t*.6)*16}deg)`;
+ $('.review-gate').style.transform=`rotate(${i>=2&&i<6?-34:0}deg)`;
+ $('.budget-label').style.opacity=i===2?1:0;
+ $('.budget-sub').style.opacity=i===2?1:0;
+ $('.signal-stream').style.opacity=i>=6?0:.7;
+ all('.current-light').forEach((el,n)=>{const x=((n*137+t*180)%1180),y=90+((n*83)%660)+Math.sin(x/170+n)*20;el.setAttribute('transform',`translate(${x},${y})`)});
+ $('.fraud-field').style.opacity=i===6?1:0;
+ all('.fraud-dot.missed').forEach(el=>el.style.opacity=view==='caught'?.12:.85);
+ $('.dial-hand').style.opacity=i===4?1:0;
+ $('.dial-hand').style.transform=`rotate(${day*360/7}deg)`;
+ $('#sea-status').textContent=i===4?`${data.daily[day].date} / ${data.daily[day].num_alerts} alerts`:captions[i];
+});
+all('[data-day]').forEach(button=>button.addEventListener('click',()=>{day=Number(button.dataset.day);const row=data.daily[day];all('[data-day]').forEach(el=>el.setAttribute('aria-pressed',String(el===button)));$('#day-date').textContent=row.date;$('#day-precision').textContent=`${(row.precision*100).toFixed(2)}%`;$('#day-recall').textContent=`${(row.recall*100).toFixed(2)}%`;$('#day-counts').textContent=`${row.num_alerts} alerts / ${row.num_transactions.toLocaleString('en-US')} transactions`;refresh()}));
+all('[data-view]').forEach(button=>button.addEventListener('click',()=>{view=button.dataset.view;all('[data-view]').forEach(el=>el.setAttribute('aria-pressed',String(el===button)));$('.reveal-result').textContent=view==='all'?'85 caught inside. 616 missed outside. Both remain part of the record.':'Focusing on the 85 caught. The 616 missed remain dimly visible; recall is still 12.13%.';refresh()}));
