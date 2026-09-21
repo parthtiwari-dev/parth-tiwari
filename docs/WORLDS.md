@@ -1,14 +1,17 @@
 # WORLDS — the spec for what is behind each tear
 
-## Current checkpoint: 2026-09-08
+## Current checkpoint: 2026-09-22
 
-Phase 5 is closed. Phase 6 is on local `world/batch-1`. MedRAG and Order Supervisor
-standalone storyboards are built and browser checked, awaiting owner selection before
-production routes. The approved paired workflow supersedes older sequential instructions.
-Read `docs/WORLD_BATCH_1.md` (or `WORLD_BATCH_1.md` from this directory) and both study
-documents for the active contract. BeatMind, Vivid and Tathya have world routes; Vivid
-and Tathya owner review remains open. Older dated status below is historical where
-superseded by this checkpoint. No deployment was performed or verified here.
+Status catch-up after a break; see `CLAUDE.md`. MedRAG (The Theatre of an Answer) and
+SecondSelf (A Little Further, Together) are complete illustrated local worlds, owner
+approved 2026-09-09; QueryPilot (The Cartographer's Fold) is a complete nine-chapter local
+world, gate-passed, owner design review still open; Order Supervisor's storyboard is built
+and browser checked, no formal review recorded. A first UPI Fraud Engine build (The Narrow
+Harbour) also exists but has no study doc, gate script, or verification evidence, and was
+built after the owner had already delegated that choice to QueryPilot. None of these five
+have a production route; all local work was committed and merged to `main` on 2026-09-22.
+BeatMind, Vivid and Tathya have production world routes; Vivid and Tathya owner review
+remains open. Older dated status below is historical where superseded by this checkpoint.
 
 Written 2026-08-27. Reads after [`DESIGN_LOCK.md`](DESIGN_LOCK.md), which settles the
 landing sheet. This file settles **what a world is**, and specifies all twelve.
@@ -237,7 +240,11 @@ and evaluation name rather than an unqualified “roughly 20%.”
 **Boundary.** The whole page is the boundary. Lead with it.
 
 **Build notes.** Project real embeddings to 2D once, at build time, and ship the
-coordinates. Do not fake the geometry.
+coordinates. Do not fake the geometry. The illustrated local world The Theatre of an
+Answer is built at `design/directions/medrag-world.html`; owner approved the design
+2026-09-09 ("I love them keep them"). Part of `illustrated-world-gate.mjs`, which passed
+all 18 configurations on 2026-09-09. Versioned realistic alternative preserved at
+`medrag-realistic-v2.*`. No production route yet. See `MEDRAG_WORLD_STUDY.md`.
 
 ---
 
@@ -258,9 +265,14 @@ the world does not depict one. Reduced motion parks the proposal at the authorit
 **Content.** Lifecycle authority stays outside the model, which is the shortest path
 not taken.
 
+**Build notes.** The standalone storyboard Inside the Night Watch is built at
+`design/directions/order-supervisor-world.html` and was browser checked on 2026-09-08.
+No formal owner review is recorded and no production route exists. See
+`ORDER_SUPERVISOR_WORLD_STUDY.md`.
+
 ---
 
-### 06 · QueryPilot — *major · shipped · 📐 specced*
+### 06 · QueryPilot — *major · shipped · 🧪 prototyped*
 
 **The story.** Natural language to SQL, with a critic that validates before the query
 touches the database and a correction loop when it fails.
@@ -278,13 +290,15 @@ motion shows the rejected and corrected queries together.
 core set. The 12 adversarial queries are reported separately. Do not describe the lift as
 being measured across all 82 unless later evidence proves that denominator.
 
-**Build notes.** 🔴 **The current capture is a Swagger docs page**, which proves an API
-exists rather than a product. Either re-shoot against a real client, or let the graphic
-carry the page and drop the capture.
+**Build notes.** The nine-chapter local world at `design/directions/querypilot-world.html`
+now carries the graphic itself rather than the earlier Swagger-page capture; it draws its
+failure/correction beat from a reviewed real Day 6 record (`hard_001`), not an invented
+trace. `scripts/querypilot-study-gate.mjs` passed all nine configurations on 2026-09-09.
+No production route yet; owner design review is open. See `QUERYPILOT_WORLD_STUDY.md`.
 
 ---
 
-### 07 · SecondSelf — *flagship · live · 📐 specced*
+### 07 · SecondSelf — *flagship · live · 🧪 prototyped*
 
 **The story.** A career system that gates every outbound action on evidence, and stops
 for a human before anything is sent.
@@ -300,8 +314,13 @@ as a distinct later event. Reduced motion holds at the review gate.
 
 **Content.** Human-gated apply mode, Telegram review queue.
 
-**Build notes.** No capture exists. The graphic carries this page entirely, which is
-fine and is the argument for generated worlds in the first place.
+**Build notes.** No capture exists; the graphic carries this page entirely, which is fine
+and is the argument for generated worlds in the first place. The illustrated local world
+A Little Further, Together is built at `design/directions/secondself-world.html`; owner
+approved the design 2026-09-09 alongside MedRAG. Part of `illustrated-world-gate.mjs`,
+which passed all 18 configurations on 2026-09-09. Versioned realistic alternative
+preserved at `secondself-realistic-v1.*`. No production route yet. See
+`SECONDSELF_WORLD_STUDY.md`.
 
 ---
 
@@ -325,7 +344,7 @@ building, not during.**
 
 ---
 
-### 09 · UPI Fraud Engine — *major · shipped · 📐 specced*
+### 09 · UPI Fraud Engine — *major · shipped · 🧪 prototyped, unverified*
 
 **The story.** Real-time fraud scoring under an alert budget, which is a constraint
 most demos pretend does not exist.
@@ -347,6 +366,14 @@ be useful, but their datasets and contexts must never be collapsed into one clai
 **Note.** This is the one world where a threshold control might genuinely teach the
 tradeoff. It may be proposed during storyboard review only if keyboard, touch and a
 non-interactive explanation remain complete. It is never required to read the result.
+
+**Build notes.** A first build, The Narrow Harbour, exists at
+`design/directions/upi-fraud-engine-world.html` (2026-09-09), generated by
+`scripts/build-upi-study.py` from real backtest data. Unlike MedRAG, SecondSelf and
+QueryPilot it has no study document, no gate script and no captured verification
+evidence, and it was built after the owner had already delegated the follow-on choice to
+QueryPilot (see `WORLD_DESIGN_HANDOFF.md`). Needs explicit owner direction before treating
+it as an active world.
 
 ---
 
@@ -408,10 +435,11 @@ shell, because a sourced world still can carry the arrival. It does block claimi
 product has been visually demonstrated when it has not. Each storyboard inventory states
 whether it relies on a capture, generated data graphic or both.
 
-Two existing captures remain unsuitable for their final worlds: Vivid's old empty state is
+One existing capture remains unsuitable for its final world: Vivid's old empty state is
 used only as workflow evidence in the paper case and still must be replaced by an
-owner-approved real generated sequence for the world, and QueryPilot's Swagger
-page must be replaced by a real correction trace.
+owner-approved real generated sequence for the world. QueryPilot's Swagger-page capture
+has been resolved: its local world now carries the graphic itself, drawn from a reviewed
+real correction trace (see `QUERYPILOT_WORLD_STUDY.md`).
 
 ## 5. Known gaps in the prototype, carried forward
 
