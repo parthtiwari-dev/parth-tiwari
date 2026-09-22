@@ -1,0 +1,99 @@
+---
+/**
+ * MedRAG / The Theatre of an Answer. A dedicated route (not /work/[slug]/world/) so this
+ * world's approved global styles never share a page with another world's.
+ * Ported from design/directions/medrag-world.html, owner-approved 2026-09-09.
+ */
+import SiteMeta from '../../../components/SiteMeta.astro'
+import Lines from '../../../worlds/shared/Lines.astro'
+import { dedicatedWorldPaths, requireClaim, type DedicatedWorldProps } from '../../../lib/worlds'
+import { dataSchema } from '../../../worlds/medrag/schema.mjs'
+import source from '../../../data/worlds/medrag-world-v1.json'
+import '../../../worlds/medrag/world.css'
+
+export const getStaticPaths = () => dedicatedWorldPaths('medrag')
+
+const { project, world, claims } = Astro.props as DedicatedWorldProps
+const data = dataSchema.parse(source)
+const claim = requireClaim(claims, data.evaluation.claimRef)
+if (claim.data.display !== `${data.evaluation.refused} of ${data.evaluation.questions} refused`) {
+  throw new Error('MedRAG world data disagrees with its verified refusal claim.')
+}
+const [answered, withheld] = data.queries
+const outcomes = requireClaim(claims, 'medrag-query-outcomes').data.wording
+if (!outcomes.includes(`query ${answered.id} retrieved ${answered.retrieved} chunks and cited ${answered.cited}`) || !outcomes.includes(`query ${withheld.id} also retrieved ${withheld.retrieved} chunks, cited none and was refused`)) {
+  throw new Error('MedRAG world queries disagree with the verified per-query claim.')
+}
+const scenes = world.data.scenes
+const pieceFills = ['#e9b988', '#7eaba6', '#d88470', '#a9b8b0']
+const pad = (value: number) => String(value).padStart(2, '0')
+const chapterName = (label: string) => label.replace(/^\d+\s*\/\s*/, '')
+const resultFor = (record: typeof answered) => `Query ${record.id}: ${record.retrieved} retrieved, ${record.cited} cited. ${record.refused ? 'Refused.' : 'Not refused.'}`
+const payload = JSON.stringify({ queries: data.queries, evaluation: { questions: data.evaluation.questions, refused: data.evaluation.refused } }).replaceAll('<', '\\u003c')
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <SiteMeta title="MedRAG world | Parth Tiwari" description={scenes[0].narration} path="/work/medrag/world/" type="article" />
+  </head>
+  <body data-scene="7">
+    <a class="skip" href="#story">Skip to the story</a>
+    <header><a href={`/work/${project.id}/`}>MedRAG ↗</a><span>{world.data.selectedTreatment.toUpperCase()}</span></header>
+    <figure class="world-stage theatre" data-world-stage aria-label="An illustrated theatre staging two recorded evaluation outcomes.">
+      <img data-world-static src="/media/worlds/medrag-theatre.webp" width="1536" height="1024" fetchpriority="high" decoding="async" alt="A hand-painted teal theatre opens onto a sea of clouds." /><div class="stage-light" aria-hidden="true"></div><svg viewBox="0 0 1200 800" aria-hidden="true"><g class="scenery">{Array.from({ length: answered.retrieved }, (_, index) => (
+        <g class="scenic-piece" data-piece={index}><path d="M-42 60V-34 Q-42-68 0-78 Q42-68 42-34V60Z" fill={pieceFills[index % pieceFills.length]} stroke="#31555a" stroke-width="2" /><path d="M-31 50V-28 Q0-70 31-28V50M-30 20H30" fill="none" stroke="#f5e7c7" stroke-width="2" /><path d="M0-78V-600" stroke="#4c655e" /><text y="44" text-anchor="middle" fill="#28464b" font-size="13" font-family="monospace">{pad(index + 1)}</text></g>
+      ))}</g><g class="answer-form"><path d="M490 590L520 410Q600 360 680 410L710 590Z" fill="#f9efd3" stroke="#af8851" stroke-width="3" /><path d="M600 400V570M527 435Q560 415 585 438M523 463Q560 443 585 466M615 437Q648 415 675 437M615 466Q648 443 678 465" fill="none" stroke="#bd9770" stroke-width="2" /><circle cx="538" cy="555" r="18" fill="#315e60" /><circle cx="600" cy="560" r="18" fill="#315e60" /><circle cx="662" cy="555" r="18" fill="#315e60" /><path d="M529 555l7 7 11-15M591 560l7 7 11-15M653 555l7 7 11-15" fill="none" stroke="#fff5d8" stroke-width="2" /></g><g class="citation-lines" fill="none" stroke="#b36d40" stroke-width="2"><path d="M250 370Q310 530 538 555" /><path d="M600 300V540" /><path d="M950 370Q890 530 662 555" /></g></svg><div class="curtain curtain-left" aria-hidden="true"></div><div class="curtain curtain-right" aria-hidden="true"></div><div class="scene-note" id="visual-state">The theatre of an answer</div><figcaption><span>MEDRAG · A PLAY IN EIGHT ACTS</span><span>SCENERY IS ILLUSTRATIVE · COUNTS ARE RECORDED</span></figcaption>
+    </figure>
+    <main id="story">
+      {scenes.map((scene, index) => (
+        <section id={scene.id} data-world-scene data-world-ending={index === scenes.length - 1 ? '' : undefined}>
+          <div class="copy">
+            <p class="eyebrow">{scene.label}</p>
+            {index === 0
+              ? <h1 id="world-title" tabindex="-1"><Lines text={scene.heading} /></h1>
+              : <h2><Lines text={scene.heading} /></h2>}
+            {scene.lead && <p class="lead"><Lines text={scene.lead} /></p>}
+            <p>{scene.narration}</p>
+            {scene.id === 'arrival' && <a class="enter" href={`#${scenes[1].id}`}>Raise the curtain <span>↓</span></a>}
+            {scene.id === 'comparison' && (
+              <>
+                <div class="compare" role="group" aria-label="Compare recorded queries">
+                  {data.queries.map((record, position) => (
+                    <button data-query={record.id} aria-pressed={String(position === 0)}>Query {record.id} · {record.refused ? 'refused' : 'cited'}</button>
+                  ))}
+                </div>
+                <p class="interaction-result" aria-live="polite">{resultFor(answered)}</p>
+                <noscript><p>{resultFor(withheld)} Both records remain readable below.</p></noscript>
+              </>
+            )}
+            {index === scenes.length - 1 && (
+              <>
+                <details>
+                  <summary>Read the two evaluation records</summary>
+                  <table>
+                    <caption>Committed evaluation · {data.source.revision}</caption>
+                    <thead><tr><th>Query</th><th>Retrieved</th><th>Cited</th><th>Refused</th></tr></thead>
+                    <tbody>
+                      {data.queries.map((record) => <tr><td>{record.id}</td><td>{record.retrieved}</td><td>{record.cited}</td><td>{record.refused ? 'Yes' : 'No'}</td></tr>)}
+                    </tbody>
+                  </table>
+                  <p>{data.boundary}</p>
+                </details>
+                <a class="case-link" href={`/work/${project.id}/`}>Read the MedRAG case study <span>↗</span></a>
+              </>
+            )}
+          </div>
+        </section>
+      ))}
+    </main>
+    <nav class="chapter-nav" aria-label="Story chapters">
+      {scenes.map((scene, index) => <a href={`#${scene.id}`} aria-label={`Chapter ${index + 1}: ${chapterName(scene.label)}`}>{pad(index + 1)}</a>)}
+    </nav>
+    <footer>MedRAG / An illustrated evaluation story. Original generated environment; no live inference.</footer>
+    <script id="medrag-world-data" type="application/json" set:html={payload}></script>
+    <script>
+      import '../../../worlds/medrag/world.ts'
+    </script>
+  </body>
+</html>
