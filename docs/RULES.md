@@ -127,8 +127,9 @@ true.
 **Current owner-selected isolation, 2026-09-23:** the approved world integration is on local
 branch `world/integration`, cut from `main` at `f1d479e`. `world/batch-1` is merged and its
 `world/medrag` and `world/order-supervisor` worktrees were removed on 2026-09-23 after their
-unique rejected drafts were archived under `.shots/world-batch-1/`. Merging to `main` and
-pushing (which deploys) need the owner's explicit go. The `redesign/v2` instruction below
+unique rejected drafts were archived under `.shots/world-batch-1/`. It was merged into `main`
+(`02b5669`) on the owner's direction on 2026-09-23. Pushing (which deploys) needs the owner's
+explicit go. The `redesign/v2` instruction below
 records the earlier rebuild branch.
 
 - Work directly on the owner-selected local branch. For this rebuild, that branch is

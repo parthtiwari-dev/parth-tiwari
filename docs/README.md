@@ -5,7 +5,7 @@
 Phase 6 continues. The owner reviewed every world in the browser, approved MedRAG,
 SecondSelf, QueryPilot, Order Supervisor and UPI Fraud Engine, and flagged Vivid and Tathya
 to revisit later. The five approved worlds are ported pixel for pixel to dedicated production
-routes on local branch `world/integration` (not merged, pushed or deployed). Start with
+routes on local branch `world/integration` (merged into `main` as `02b5669` on 2026-09-23, not yet pushed or deployed). Start with
 [`WORLD_INTEGRATION.md`](WORLD_INTEGRATION.md). Older checkpoints live in
 [`CHECKPOINT_HISTORY.md`](CHECKPOINT_HISTORY.md).
 

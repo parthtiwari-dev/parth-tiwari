@@ -6,9 +6,9 @@ Working instructions for the Paper and Worlds portfolio rebuild.
 
 Phase 5 is closed. Phase 6 continues. On 2026-09-23 the owner reviewed every world in the
 browser, approved all of them except Vivid and Tathya, and directed that the local previews
-be integrated into the real site "line by line, pixel by pixel". That integration is on
-local branch `world/integration` (from `main` at `f1d479e`), not merged, not pushed, not
-deployed. Record and evidence: `docs/WORLD_INTEGRATION.md`. Full checkpoint history:
+be integrated into the real site "line by line, pixel by pixel". The owner then directed the
+merge: `world/integration` is merged into `main` (`02b5669`) but **not yet pushed**, so the
+live site does not show the new worlds until the owner approves the push (it deploys). Record and evidence: `docs/WORLD_INTEGRATION.md`. Full checkpoint history:
 `docs/CHECKPOINT_HISTORY.md`.
 
 - **BeatMind** — production world, owner-approved.
@@ -17,14 +17,15 @@ deployed. Record and evidence: `docs/WORLD_INTEGRATION.md`. Full checkpoint hist
 - **MedRAG, SecondSelf, QueryPilot, Order Supervisor, UPI Fraud Engine** — ported to
   dedicated production routes at `/work/<slug>/world/`, one independently revertable
   commit each. Pixel parity with the approved studies: identical frames except two
-  mandatory em-dash copy fixes. `npm run phase6:worlds-gate` covers them. Owner review of
-  the production routes (rather than the studies) and the merge to `main` are still open.
+  mandatory em-dash copy fixes. `npm run phase6:worlds-gate` covers them. Merged on the owner's
+  direction; the owner notes "a lot of room to improve" later.
 - **OncoVerse, Spur Chat** — worlds not started. **Fraud Risk Intelligence, Oracle Auto
   Provision** — deferred, no case study.
 
-**Next:** owner reviews the five production routes on `world/integration`; on approval,
-merge to `main` (pushing triggers the Vercel production deploy, so ask first). Then design
-OncoVerse and Spur Chat, and revisit Vivid and Tathya.
+**Next:** push `main` when the owner approves (Vercel deploys it). Then the owner chooses
+between Phase 7 launch work (domain, social previews, analytics decision, live ten-second
+test), the two worlds not yet designed (OncoVerse, Spur Chat) and the improvement pass,
+including the Vivid and Tathya revisit. See `docs/SESSION_PROMPT.md`.
 
 **Environment:** a global npm package `node@22.5.1` installed on 2026-09-22 shadows the
 system Node 24.16.0 on PATH, and Astro 7 refuses to build under 22.5.1. Until the owner

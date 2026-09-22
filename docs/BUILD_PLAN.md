@@ -4,8 +4,8 @@
 MedRAG, SecondSelf, QueryPilot, Order Supervisor and UPI Fraud Engine, flagged Vivid and
 Tathya to revisit later, and directed pixel-faithful integration now. All five are on
 dedicated production routes on local branch `world/integration`, one revertable commit each,
-with `npm run phase6:worlds-gate` and a study-to-production pixel-parity record. Not merged,
-pushed or deployed. See WORLD_INTEGRATION.md; this supersedes the design-first checkpoint
+with `npm run phase6:worlds-gate` and a study-to-production pixel-parity record. Merged into
+`main` (`02b5669`) on the owner's direction the same day; not yet pushed or deployed. See WORLD_INTEGRATION.md; this supersedes the design-first checkpoint
 below.
 
 **2026-09-09 design checkpoint:** Owner approved illustrated MedRAG and SecondSelf. Preserve
@@ -723,27 +723,28 @@ its gate, and owner sign-off.
   and does not like it yet: flagged to revisit later. The tick records the route and gate,
   not an owner acceptance. Scope, scene contract and data contract:
   `TATHYA_WORLD_STUDY.md`; rationale for `public-snapshot`: `DECISIONS.md`.
-- [ ] MedRAG — The Theatre of an Answer. Owner approved the illustrated design 2026-09-09
+- [x] MedRAG — The Theatre of an Answer. Owner approved the illustrated design 2026-09-09
   and the integration 2026-09-23. Now a dedicated production route on `world/integration` (2026-09-23), gate-green in `phase6:worlds-gate`; 0 of 24 parity
-  frames differ from the study. Unticked until the owner reviews the production route and
-  it merges. See `WORLD_INTEGRATION.md` and `MEDRAG_WORLD_STUDY.md`.
-- [ ] Order Supervisor — Inside the Night Watch (Study II). Owner approved 2026-09-23. Now a
-  dedicated production route on `world/integration` (2026-09-23), gate-green in `phase6:worlds-gate`; 0 of 24 parity frames differ. Unticked until
-  the owner reviews the production route and it merges. See `WORLD_INTEGRATION.md`.
-- [ ] QueryPilot — The Cartographer's Fold. Owner approved 2026-09-23. Now a
+  frames differ from the study. Owner directed the merge 2026-09-23 (`02b5669`) and notes
+  room to improve later. See `WORLD_INTEGRATION.md` and `MEDRAG_WORLD_STUDY.md`.
+- [x] Order Supervisor — Inside the Night Watch (Study II). Owner approved 2026-09-23. Now a
+  dedicated production route on `world/integration` (2026-09-23), gate-green in `phase6:worlds-gate`; 0 of 24 parity frames differ. Owner directed the merge 2026-09-23 (`02b5669`) and notes
+  room to improve later. See `WORLD_INTEGRATION.md`.
+- [x] QueryPilot — The Cartographer's Fold. Owner approved 2026-09-23. Now a
   dedicated production route on `world/integration` (2026-09-23), gate-green in `phase6:worlds-gate`; 26 of 27 parity frames identical, the
-  last differing only by the required em-dash fix. Unticked until the owner reviews the
-  production route and it merges. See `WORLD_INTEGRATION.md`.
-- [ ] SecondSelf — A Little Further, Together. Owner approved 2026-09-09 and the integration
+  last differing only by the required em-dash fix. Owner directed the merge 2026-09-23 (`02b5669`) and notes
+  room to improve later. See `WORLD_INTEGRATION.md`.
+- [x] SecondSelf — A Little Further, Together. Owner approved 2026-09-09 and the integration
   2026-09-23. Now a dedicated production route on `world/integration` (2026-09-23), gate-green in `phase6:worlds-gate`; 0 of 24 parity frames
-  differ. Unticked until the owner reviews the production route and it merges. See
+  differ. Owner directed the merge 2026-09-23 (`02b5669`) and notes
+  room to improve later. See
   `WORLD_INTEGRATION.md`.
 - [ ] OncoVerse — not started.
-- [ ] UPI Fraud Engine — The Narrow Harbour. Owner approved 2026-09-23. Every figure was
+- [x] UPI Fraud Engine — The Narrow Harbour. Owner approved 2026-09-23. Every figure was
   verified against source for the first time (see `WORLD_INTEGRATION.md`). Now a
   dedicated production route on `world/integration` (2026-09-23), gate-green in `phase6:worlds-gate`; 23 of 24 parity frames identical, the last
-  differing only by the required em-dash fix. Unticked until the owner reviews the
-  production route and it merges.
+  differing only by the required em-dash fix. Owner directed the merge 2026-09-23 (`02b5669`) and notes
+  room to improve later.
 - [ ] Spur Chat — not started.
 - [ ] Fraud Risk Intelligence — not started.
 - [ ] Oracle Auto Provision — not started.

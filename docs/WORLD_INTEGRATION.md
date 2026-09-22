@@ -1,7 +1,8 @@
 # World integration
 
 2026-09-23. Phase 6. Local branch `world/integration`, cut from `main` at `f1d479e`.
-Not merged, not pushed, not deployed.
+Merged into `main` as `02b5669` on the owner's direction on 2026-09-23; not yet pushed or
+deployed.
 
 ## Owner decisions
 
