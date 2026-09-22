@@ -29,6 +29,7 @@ Where to look, and what is still true.
 | [`PHASE_2_ABOUT_REVIEW.md`](PHASE_2_ABOUT_REVIEW.md) | The About route reference lock, typed chronology, real portrait and responsive evidence |
 | [`PHASE_2_RESUME_REVIEW.md`](PHASE_2_RESUME_REVIEW.md) | The HTML Resume structure, source PDF boundary, optional Drive configuration, responsive and print evidence |
 | [`PHASE_2_HIRE_REVIEW.md`](PHASE_2_HIRE_REVIEW.md) | The Hire route reference lock, service boundaries, four-step process, fit guidance and verified contact paths |
+| [`PHASE_2_ROUTE_AUDIT.md`](PHASE_2_ROUTE_AUDIT.md) | The 2026-08-29 Home-to-Work route audit and its 2026-08-31 closeout; retained as the Phase 2 record |
 | [`PHASE_2_GATE.md`](PHASE_2_GATE.md) | The completed route matrix, state checks, contrast results, font budget and owner-acceptance boundary |
 | [`PHASE_4_MOTION_STUDIES.md`](PHASE_4_MOTION_STUDIES.md) | Row Rip, Edge Peel and Sheet Fault comparison, owner selection, optimized production translation and responsive evidence |
 | [`PHASE_4_GATE.md`](PHASE_4_GATE.md) | Production Sheet Fault render, interaction, resilience, bundle and independent-revert evidence |
@@ -63,7 +64,9 @@ Where to look, and what is still true.
 ## Superseded — kept for the reasoning, not the instructions
 
 `ARCHITECTURE.md`, `DESIGN.md`, `PLAN.md`, `PROGRESS_AUDIT.md`, `AUDIT.md`, `MEMORY.md`,
-`SESSION_HANDOFF.md`, `WORLD_BATCH_1.md` and `MEDRAG_WORLD_EXPLORATION.md`. They describe v1, preserve discovery evidence or
+`SESSION_HANDOFF.md`, `WORLD_BATCH_1.md`, `MEDRAG_WORLD_EXPLORATION.md`,
+`EVIDENCEBOUND_BUILD_ROADMAP.md`, `PORTFOLIO_DISCOVERY_AND_IDEAS.md`, `SKILL.md` and
+`skill-2.md`. They describe v1, preserve discovery evidence or
 carry an obsolete workflow. They are not build instructions. The superseded root
 `DESIGN_LOCK.md` and `DESIGN_REVIEW.md` were removed in Phase 0 and remain recoverable from
 Git history.

@@ -16,7 +16,8 @@ Order Supervisor (The Night Watch), selected as storyboard bases, not yet approv
 production targets. Vivid/Tathya get bounded closeout alongside the pair. Source-behavior
 demonstrations and safe committed fixtures are allowed with explicit labels; operational
 history and measurements cannot be invented. UPI's optional control is conditional on real
-sample/threshold data. `WORLD_BATCH_1.md` is the current execution checkpoint. Local work is
+sample/threshold data. `WORLD_BATCH_1.md` was the execution checkpoint (historical since 2026-09-23; see
+`WORLD_INTEGRATION.md`). Local work is
 isolated on `world/batch-1` with two per-world worktrees; no merge/push/deploy is included.
 
 ### Phase 6 world integration, 2026-09-23
