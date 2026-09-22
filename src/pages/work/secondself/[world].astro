@@ -1,0 +1,107 @@
+---
+/**
+ * SecondSelf / A Little Further, Together. A dedicated route so this world's approved
+ * global styles never share a page with another world's.
+ * Ported from design/directions/secondself-world.html, owner-approved 2026-09-09.
+ */
+import SiteMeta from '../../../components/SiteMeta.astro'
+import Lines from '../../../worlds/shared/Lines.astro'
+import { dedicatedWorldPaths, requireClaim, type DedicatedWorldProps } from '../../../lib/worlds'
+import { dataSchema } from '../../../worlds/secondself/schema.mjs'
+import source from '../../../data/worlds/secondself-world-v1.json'
+import '../../../worlds/secondself/world.css'
+
+export const getStaticPaths = () => dedicatedWorldPaths('secondself')
+
+const { project, world, claims } = Astro.props as DedicatedWorldProps
+const data = dataSchema.parse(source)
+const claim = requireClaim(claims, data.evaluation.claimRef)
+const recordScene = world.data.scenes[world.data.scenes.length - 1]
+const recordedOn = new Date(`${data.evaluation.recordedAt}T00:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
+if (
+  claim.data.display !== `${data.evaluation.faithfulness} faithfulness`
+  || claim.data.denominator !== `${data.evaluation.questions} evaluation questions`
+  || claim.data.asOf?.toISOString().slice(0, 10) !== data.evaluation.recordedAt
+  || !recordScene.narration.includes(`${data.evaluation.faithfulness} faithfulness on a ${data.evaluation.questions}-question internal RAGAS evaluation on ${recordedOn}`)
+) {
+  throw new Error('SecondSelf world copy or data disagrees with its verified RAGAS claim.')
+}
+const scenes = world.data.scenes
+const pad = (value: number) => String(value).padStart(2, '0')
+const chapterName = (label: string) => label.replace(/^\d+\s*\/\s*/, '')
+const pathLabels = { lexical: 'Exact terms', semantic: 'Related experience' }
+const evidenceLabels = { project: 'Project record', experience: 'Experience record', unsupported: 'Unsupported claim' }
+const reviewLabels = { approve: 'Approve', revise: 'Return for revision', reject: 'Reject' }
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <SiteMeta title="SecondSelf world | Parth Tiwari" description={scenes[0].narration} path="/work/secondself/world/" type="article" />
+  </head>
+  <body data-scene="7">
+    <a class="skip" href="#story">Skip to the story</a>
+    <header><a href={`/work/${project.id}/`}>SecondSelf ↗</a><span>{world.data.selectedTreatment.toUpperCase()}</span></header>
+    <figure class="world-stage coast" data-world-stage aria-label="An illustrated journey from a writing room, across a seaside town, and home for review.">
+      <img data-world-static class="landscape" src="/media/worlds/secondself-journey.webp" width="1536" height="1024" fetchpriority="high" decoding="async" alt="An illustrated writing room opens onto a coastal causeway at sunrise." /><img class="home-room" src="/media/worlds/secondself-room.webp" width="1536" height="1024" decoding="async" alt="The companion returns to an illustrated writing desk overlooking the sea." /><div class="dawn" aria-hidden="true"></div><svg viewBox="0 0 1200 800" aria-hidden="true"><path class="route-line" d="M110 610Q350 530 600 590T1100 470" fill="none" stroke="#ffdb93" stroke-width="3" stroke-dasharray="7 10" /><g class="owner-mark"><circle cy="-37" r="13" fill="#f9d2a7" /><path d="M-15-20Q0-30 15-20L23 27H-23Z" fill="#344a6d" stroke="#f4d3ad" stroke-width="2" /><path d="M-9 27L-15 51M9 27L15 51" stroke="#344a6d" stroke-width="7" /></g><g class="companion-mark"><path d="M0-40Q32-35 24-8L15 27 0 18-15 27-24-8Q-32-35 0-40" fill="#ffebbd" stroke="#bd7465" stroke-width="2" /><circle cx="-8" cy="-15" r="2" fill="#5b6577" /><circle cx="8" cy="-15" r="2" fill="#5b6577" /><path d="M-25 0L-46-15M25 0L46-15" stroke="#ffebbd" stroke-width="6" /></g><g class="evidence-leaf leaf-project"><path d="M-45-50H30L45-35V50H-45Z" fill="#fff0cc" stroke="#ab8068" stroke-width="2" /><path d="M-28-20H28M-28-5H18M-28 10H28" stroke="#688c8c" stroke-width="3" /><circle cy="30" r="9" fill="#719797" /></g><g class="evidence-leaf leaf-experience"><path d="M-45-50H30L45-35V50H-45Z" fill="#e0e9dd" stroke="#768f90" stroke-width="2" /><path d="M-28-20H28M-28-5H18M-28 10H28" stroke="#688c8c" stroke-width="3" /><circle cy="30" r="9" fill="#719797" /></g><g class="evidence-leaf leaf-unsupported"><path d="M-45-50H30L45-35V50H-45Z" fill="#e9b4ab" stroke="#ab8068" stroke-width="2" /><path d="M-20-15L20 25M20-15L-20 25" stroke="#a05251" stroke-width="3" /></g><g class="journey-envelope"><path d="M-85-50H85V55H-85Z" fill="#f6dfb5" stroke="#a98367" stroke-width="2" /><path d="M-85 55L0-5 85 55" fill="#ead0a5" stroke="#a98367" stroke-width="2" /><path class="letter-flap" d="M-85-50L0 15 85-50Z" fill="#fff0ce" stroke="#a98367" stroke-width="2" /><circle class="letter-seal" r="13" fill="#bf7064" /></g></svg><div class="scene-note" id="room-state">A companion for the search</div><figcaption><span>SECONDSELF · THERE AND BACK AGAIN</span><span>ILLUSTRATIVE JOURNEY · NO APPLICATIONS SENT</span></figcaption>
+    </figure>
+    <main id="story">
+      {scenes.map((scene, index) => (
+        <section id={scene.id} data-world-scene data-world-ending={index === scenes.length - 1 ? '' : undefined}>
+          <div class="copy">
+            <p class="eyebrow">{scene.label}</p>
+            {index === 0
+              ? <h1 id="world-title" tabindex="-1"><Lines text={scene.heading} /></h1>
+              : <h2><Lines text={scene.heading} /></h2>}
+            {scene.lead && <p class="lead"><Lines text={scene.lead} /></p>}
+            <p>{scene.narration}</p>
+            {scene.id === 'arrival' && <a class="enter" href={`#${scenes[1].id}`}>Leave the room <span>↓</span></a>}
+            {scene.id === 'retrieval' && (
+              <>
+                <div class="retrieval-controls interactive" role="group" aria-label="Inspect retrieval paths">
+                  {data.retrievalPaths.map((path, position) => <button data-path={path} aria-pressed={String(position === 0)}>{pathLabels[path]}</button>)}
+                </div>
+                <p class="path-result" aria-live="polite">Lexical search finds exact skills and project terms.</p>
+              </>
+            )}
+            {scene.id === 'filter' && (
+              <>
+                <div class="evidence-controls interactive" role="group" aria-label="Inspect illustrative evidence categories">
+                  {data.evidenceCategories.map((category) => <button data-evidence={category.id}>{evidenceLabels[category.id]}</button>)}
+                </div>
+                <p class="evidence-result" aria-live="polite">Supported records keep their provenance. Unsupported claims are removed before drafting.</p>
+              </>
+            )}
+            {scene.id === 'review' && (
+              <>
+                <div class="review-controls interactive" role="group" aria-label="Local review rehearsal">
+                  {data.reviewPaths.map((decision) => <button data-decision={decision}>{reviewLabels[decision]}</button>)}
+                </div>
+                <p class="review-result" aria-live="polite">Awaiting your decision in this illustration. Nothing has been sent.</p>
+                <button class="reset-review interactive" type="button">Reset the illustration ↺</button>
+                <noscript><p>The real review boundary has three paths: approve, revise, or reject. No action occurs in this static illustration.</p></noscript>
+              </>
+            )}
+            {index === scenes.length - 1 && (
+              <>
+                <details>
+                  <summary>What this world is based on</summary>
+                  <p>The published case-study record references committed safe evaluation and preparation fixtures at {data.source.fixtureRevision}. This illustration contains no private knowledge, applications, email or Telegram content.</p>
+                  <p>The real outbound review queue uses {data.reviewChannel}. The room and envelope are editorial metaphors, not a reproduction of that interface.</p>
+                </details>
+                <a class="case-link" href={`/work/${project.id}/`}>Read the SecondSelf case study <span>↗</span></a>
+              </>
+            )}
+          </div>
+        </section>
+      ))}
+    </main>
+    <nav class="chapter-nav" aria-label="Story chapters">
+      {scenes.map((scene, index) => <a href={`#${scene.id}`} aria-label={`Chapter ${index + 1}: ${chapterName(scene.label)}`}>{pad(index + 1)}</a>)}
+    </nav>
+    <footer>SecondSelf / Original generated environment. A source-behavior illustration, with no outbound actions.</footer>
+    <script>
+      import '../../../worlds/secondself/world.ts'
+    </script>
+  </body>
+</html>

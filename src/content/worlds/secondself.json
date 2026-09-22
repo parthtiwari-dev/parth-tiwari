@@ -1,0 +1,84 @@
+{
+  "projectSlug": "secondself",
+  "published": true,
+  "reviewedAt": "2026-09-09",
+  "selectedTreatment": "A Little Further, Together",
+  "staticFrame": {
+    "src": "/media/worlds/secondself-world-still.webp",
+    "alt": "An illustrated coastal causeway at sunrise. A small companion figure walks a dotted route carrying evidence slips, while the owner's mark waits by the writing room.",
+    "width": 1440,
+    "height": 900,
+    "preview": true
+  },
+  "scenes": [
+    {
+      "id": "arrival",
+      "label": "01 / SecondSelf",
+      "heading": "What if the search\nhad a second you?",
+      "lead": "A companion for the work of finding your next chapter.",
+      "narration": "I built SecondSelf with an ambition: search for jobs and prepare applications the way I would. The journey starts with what I have actually done."
+    },
+    {
+      "id": "memory",
+      "label": "02 / A place to begin",
+      "heading": "Start with\nwhat is true.",
+      "lead": "Experience is evidence, not raw material for invention.",
+      "narration": "SecondSelf retrieves verified project, skill and experience records. The companion and landscape are fictional; no private knowledge entries or personal applications appear here."
+    },
+    {
+      "id": "retrieval",
+      "label": "03 / Two ways to find it",
+      "heading": "Two paths.\nOne search.",
+      "lead": "Exact terms and related experience both matter.",
+      "narration": "Hybrid search combines lexical and semantic candidates. Gentle reranking changes their order without turning a weak match into a new fact."
+    },
+    {
+      "id": "filter",
+      "label": "04 / Before the draft",
+      "heading": "Plausible is\nnot enough.",
+      "lead": "Unsupported material has to leave.",
+      "narration": "The evidence check comes before drafting. Inspect these illustrative categories to see what can enter the packet and what cannot."
+    },
+    {
+      "id": "packet",
+      "label": "05 / The prepared work",
+      "heading": "Bring something\nworth reading.",
+      "lead": "Evidence becomes a reviewable application packet.",
+      "narration": "The draft keeps its provenance. Preparation is a stored process with an artifact to inspect, rather than a hidden browser step."
+    },
+    {
+      "id": "waiting",
+      "label": "06 / Durable human review",
+      "heading": "The way home\nis part of the work.",
+      "lead": "The pause belongs to the system.",
+      "narration": "The completed packet enters the human review queue. Waiting is durable state, so it can survive a restart or a long delay. The system does not send silently."
+    },
+    {
+      "id": "review",
+      "label": "07 / The decision is yours",
+      "heading": "This part\nneeds you.",
+      "lead": "Try a decision in this local illustration.",
+      "narration": "You can approve, return for revision, or reject the prepared work. These controls rehearse the review boundary; they never send an application or message."
+    },
+    {
+      "id": "record",
+      "label": "08 / Assistance with a boundary",
+      "heading": "Help that leaves\nyou in charge.",
+      "lead": "Preparation can be automated. Representation needs authority.",
+      "narration": "SecondSelf recorded 0.9753 faithfulness on a 20-question internal RAGAS evaluation on 14 May 2026. That measures the retrieval-answer path, not job outcomes."
+    }
+  ],
+  "accents": {
+    "primary": "#5a6280",
+    "secondary": "#a76e77",
+    "fault": "#a05251"
+  },
+  "dataArtifact": "secondself-world-v1.json",
+  "audio": {
+    "status": "withheld",
+    "explanation": "This world is a silent illustrated journey. It has no audio asset and makes no audio request."
+  },
+  "sourceAudit": [
+    { "label": "SecondSelf committed safe evaluation and preparation fixtures", "revision": "4a1447c" }
+  ]
+}
