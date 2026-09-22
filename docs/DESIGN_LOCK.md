@@ -5,7 +5,7 @@
 Phase 5 is closed; Phase 6 continues. The owner approved MedRAG, SecondSelf, QueryPilot,
 Order Supervisor and UPI Fraud Engine and flagged Vivid and Tathya to revisit. The five
 approved worlds are ported pixel for pixel to dedicated production routes on local branch
-`world/integration`, merged into `main` (`02b5669`) and not yet pushed or deployed. See `WORLD_INTEGRATION.md`. The
+`world/integration`, merged into `main` (`02b5669`) and live since 2026-09-23. See `WORLD_INTEGRATION.md`. The
 illustrated worlds keep their approved typography as an owner-directed exception to §8.
 Older dated status below is historical where superseded by this checkpoint.
 

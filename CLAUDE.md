@@ -9,17 +9,17 @@ One line per item; the stories live in `docs/CHECKPOINT_HISTORY.md` and
 
 - Phases 0-2, 4 and 5 are closed. Phase 3 is built with its final checks open. Phases 7 and 8
   have not started.
-- Worlds live on production: BeatMind, Vivid, Tathya. Merged into `main` (`02b5669`) but not
-  pushed: MedRAG, SecondSelf, QueryPilot, Order Supervisor, UPI Fraud Engine.
+- Worlds live on production: BeatMind, Vivid, Tathya, MedRAG, SecondSelf, QueryPilot, Order
+  Supervisor and UPI Fraud Engine. The last five went live when `4acbfe8` was pushed from this
+  machine on 2026-09-23; all five routes were verified live.
 - The owner does not like Vivid and Tathya yet (flagged to revisit) and sees "a lot of room to
   improve" across the worlds, deferred to a later pass.
 - No world yet: OncoVerse, Spur Chat. Deferred with no case study: Fraud Risk Intelligence,
   Oracle Auto Provision.
 
-**Next:** push `main` when the owner approves (Vercel deploys it). Then the owner chooses
-between Phase 7 launch work (domain, social previews, analytics decision, live ten-second
-test), the two worlds not yet designed (OncoVerse, Spur Chat) and the improvement pass,
-including the Vivid and Tathya revisit. See `docs/SESSION_PROMPT.md`.
+**Next:** the owner chooses between Phase 7 launch work (domain, social previews, analytics
+decision, live ten-second test), the two worlds not yet designed (OncoVerse, Spur Chat) and
+the improvement pass, including the Vivid and Tathya revisit. See `docs/SESSION_PROMPT.md`.
 
 **Environment:** a global npm package `node@22.5.1` installed on 2026-09-22 shadows the
 system Node 24.16.0 on PATH, and Astro 7 refuses to build under 22.5.1. Until the owner

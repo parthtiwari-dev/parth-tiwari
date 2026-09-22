@@ -16,10 +16,11 @@ shared-foundation commit and one self-contained commit per world. Each illustrat
 dedicated `src/pages/work/<slug>/[world].astro`, its own `src/worlds/<slug>/` styles, script and
 data schema, a record in `src/content/worlds/`, a data artifact in `src/data/worlds/` and a gate
 spec in `scripts/world-gates/`. `npm run phase6:worlds-gate` is the combined gate; `npm run
-worlds:parity` compares a production world with its approved study. `main` is not pushed yet.
+worlds:parity` compares a production world with its approved study. All eight worlds are live
+(the push of `4acbfe8` was made from this machine outside the session on 2026-09-23).
 
 ## Next safe step
-1. Push `main` only with the owner's explicit go: Vercel deploys it to production.
+1. Any push to `main` deploys to production: push only with the owner's explicit go.
 2. The owner chooses what follows. Open work, none started:
    - Phase 7 launch: buy and attach `parthtiwari.com` (`src/config/site.ts` is one line),
      per-page social previews (every page shares one portrait image today), the analytics

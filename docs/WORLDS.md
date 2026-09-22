@@ -5,7 +5,7 @@
 The owner reviewed every world in the browser on 2026-09-23. MedRAG, SecondSelf, QueryPilot,
 Order Supervisor and UPI Fraud Engine are approved and now ported, pixel for pixel, to
 dedicated production routes at `/work/<slug>/world/` on `world/integration`, merged into
-`main` (`02b5669`) on 2026-09-23 and not yet pushed or deployed. BeatMind is approved. Vivid and Tathya keep their
+`main` (`02b5669`) and live since 2026-09-23. BeatMind is approved. Vivid and Tathya keep their
 production routes but the owner does not like them yet; both are flagged to revisit.
 OncoVerse and Spur Chat have no world yet. Record and evidence: `WORLD_INTEGRATION.md`.
 The 2026-09-22 checkpoint and older dated status below are historical where superseded.

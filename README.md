@@ -7,7 +7,7 @@ Phases 1, 2, 4 and 5 are closed; Phase 3 owner and preview checks remain open.
 The site has ten paper case studies and eight project worlds. BeatMind, Vivid and Tathya
 render on the shared canvas route; MedRAG, SecondSelf, QueryPilot, Order Supervisor and UPI
 Fraud Engine are illustrated worlds ported pixel for pixel from their owner-approved studies,
-each on its own route. Those five were merged into `main` on 2026-09-23 and deploy with the next push. See [the integration record](docs/WORLD_INTEGRATION.md).
+each on its own route. Those five were merged into `main` and pushed from this machine at 04:54 IST on 2026-09-23 (`4acbfe8`) and verified live the same day. See [the integration record](docs/WORLD_INTEGRATION.md).
 
 The approved studies remain in `design/directions/`. Run `node scripts/world-study-server.mjs`
 and open `http://127.0.0.1:4327/` to compare them, or `npm run worlds:parity` to diff every

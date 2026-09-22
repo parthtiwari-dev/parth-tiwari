@@ -1,7 +1,7 @@
 # BUILD PLAN: Paper and Worlds
 
 **Current state, 2026-09-23:** Phases 0-2, 4 and 5 are closed; Phase 3's final checks are
-open; Phase 6 has eight of ten worlds live or merged (see its checklist); Phases 7 and 8 have
+open; Phase 6 has eight of ten worlds live (see its checklist); Phases 7 and 8 have
 not started. Dated checkpoints: [`BUILD_PLAN_HISTORY.md`](BUILD_PLAN_HISTORY.md); closed-phase detail:
 [`BUILD_PLAN_CLOSED_PHASES.md`](BUILD_PLAN_CLOSED_PHASES.md).
 World integration record: [`WORLD_INTEGRATION.md`](WORLD_INTEGRATION.md).

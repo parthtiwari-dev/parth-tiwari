@@ -1,8 +1,9 @@
 # World integration
 
 2026-09-23. Phase 6. Local branch `world/integration`, cut from `main` at `f1d479e`.
-Merged into `main` as `02b5669` on the owner's direction on 2026-09-23; not yet pushed or
-deployed.
+Merged into `main` as `02b5669` on the owner's direction on 2026-09-23, then pushed from this machine at 04:54 IST on 2026-09-23 (`4acbfe8`) and verified live the same day:
+all five world routes returned 200 with their titles and the live Home opens eight projects
+through their worlds. This session did not run the push.
 
 ## Owner decisions
 
