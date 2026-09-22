@@ -4,17 +4,15 @@ This repository is rebuilding Parth Tiwari's portfolio as **Paper and Worlds**: 
 static, multi-page Astro site whose project case studies use each project's real data.
 
 Phases 1, 2, 4 and 5 are closed; Phase 3 owner and preview checks remain open.
-The site has paper case studies and the BeatMind, Vivid and Tathya world routes.
+The site has ten paper case studies and eight project worlds. BeatMind, Vivid and Tathya
+render on the shared canvas route; MedRAG, SecondSelf, QueryPilot, Order Supervisor and UPI
+Fraud Engine are illustrated worlds ported pixel for pixel from their owner-approved studies,
+each on its own route. Those five are on local branch `world/integration` and are not merged
+or deployed yet. See [the integration record](docs/WORLD_INTEGRATION.md).
 
-The local `world/batch-1` branch adds animated visual studies for MedRAG, SecondSelf and
-Order Supervisor. MedRAG and SecondSelf include original generated environmental artwork
-and local interactions. See [the active batch](docs/WORLD_BATCH_1.md) and
-[asset prompts and paths](docs/WORLD_GENERATED_ASSETS.md). These are not new public routes.
-
-Run `node scripts/world-study-server.mjs` and open the studies under
-`http://127.0.0.1:4327/design/directions/`. Use `node scripts/cinematic-study-gate.mjs
---slug=medrag` or `--slug=secondself` for the new studies. Order Supervisor uses the earlier
-study capture tool. No deployment was made or verified here; the note below is historical.
+The approved studies remain in `design/directions/`. Run `node scripts/world-study-server.mjs`
+and open `http://127.0.0.1:4327/` to compare them, or `npm run worlds:parity` to diff every
+study against its production route.
 
 **Live interim landing:** [parth-tiwari-1.vercel.app](https://parth-tiwari-1.vercel.app/).
 The Astro release replaced v1 from `main` on 2026-08-29 and passed live accessibility,
@@ -55,6 +53,11 @@ npm run phase4:study-capture
 npm run phase4:gate
 npm run phase5:world-gate
 npm run phase5:gate
+npm run phase6:tathya-gate
+npm run phase6:worlds-gate
+npm run worlds:parity
+npm run worlds:media
+npm run worlds:stills
 npm run preview
 ```
 

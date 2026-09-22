@@ -1,0 +1,18 @@
+{
+  "wording": "In MedRAG's final recorded evaluation, query 1 retrieved 8 chunks and cited 3; query 7 also retrieved 8 chunks, cited none and was refused.",
+  "display": "8 retrieved: 3 cited, then 0 cited and refused",
+  "context": "Per-query metadata from the final RAGAS evaluation recorded on 2026-02-03 with vector-only retrieval. Counts only: no answer text, chunk identities, similarity scores or refusal mechanism are recorded.",
+  "denominator": "2 of 20 recorded evaluation queries",
+  "verifiedAt": "2026-09-23",
+  "asOf": "2026-02-03",
+  "status": "verified",
+  "publish": true,
+  "sources": [
+    {
+      "kind": "artifact",
+      "locator": "C:/great learning self paced/z Final Projects/Evidence-Bound-Drug-RAG/data/evaluation/ragas_results.json",
+      "revision": "a741897",
+      "public": false
+    }
+  ]
+}

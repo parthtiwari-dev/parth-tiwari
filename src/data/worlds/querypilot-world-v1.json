@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "project": "querypilot",
+  "provenance": "committed-export",
+  "source": {
+    "revision": "1b75476",
+    "artifact": "backend/evaluation_results/day6_full_results.json",
+    "recordedAt": "2026-02-25",
+    "verifiedOn": "2026-09-23"
+  },
+  "record": {
+    "id": "hard_001",
+    "question": "Find customers who have placed more orders than the average customer",
+    "sql": "WITH customer_order_counts AS (\n    SELECT customer_id, COUNT(order_id) AS order_count\n    FROM orders\n    GROUP BY customer_id\n),\naverage_order_count AS (\n    SELECT AVG(order_count) AS avg_count\n    FROM customer_order_counts\n)\nSELECT c.customer_id, c.name, c.email, c.created_at, c.country, c.lifetime_value\nFROM customers c\nJOIN customer_order_counts coc ON c.customer_id = coc.customer_id\nJOIN (SELECT AVG(order_count) AS avg_count FROM customer_order_counts) aoc ON coc.order_count > aoc.avg_count\nLIMIT 1000;",
+    "success": true,
+    "attempts": 3,
+    "firstAttemptSuccess": false,
+    "correctionApplied": true,
+    "schemaTables": [
+      "orders",
+      "customers",
+      "order_items",
+      "products"
+    ],
+    "intermediateAttempts": "not-preserved"
+  },
+  "ledger": {
+    "claimRef": "querypilot-correction",
+    "core": 70,
+    "beforeCorrection": 63,
+    "afterCorrection": 67,
+    "adversarial": 12
+  }
+}

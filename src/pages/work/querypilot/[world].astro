@@ -1,0 +1,132 @@
+---
+/**
+ * QueryPilot / The Cartographer's Fold. A dedicated route so this world's approved global
+ * styles never share a page with another world's.
+ * Ported from design/directions/querypilot-world.html (built 2026-09-09, approved 2026-09-23).
+ * The atlas drawing is extracted verbatim into src/worlds/querypilot/atlas.svg.
+ */
+import SiteMeta from '../../../components/SiteMeta.astro'
+import Lines from '../../../worlds/shared/Lines.astro'
+import { dedicatedWorldPaths, requireClaim, type DedicatedWorldProps } from '../../../lib/worlds'
+import { dataSchema } from '../../../worlds/querypilot/schema.mjs'
+import source from '../../../data/worlds/querypilot-world-v1.json'
+import atlas from '../../../worlds/querypilot/atlas.svg?raw'
+import '../../../worlds/querypilot/world.css'
+
+export const getStaticPaths = () => dedicatedWorldPaths('querypilot')
+
+const { project, world, claims } = Astro.props as DedicatedWorldProps
+const data = dataSchema.parse(source)
+const { record, ledger } = data
+const claim = requireClaim(claims, ledger.claimRef)
+if (claim.data.display !== `${ledger.beforeCorrection} to ${ledger.afterCorrection} of ${ledger.core}`) {
+  throw new Error('QueryPilot world ledger disagrees with its verified correction claim.')
+}
+if ((atlas.match(/class="ledger-tile"/g) ?? []).length !== ledger.core || !atlas.includes(`${ledger.core} CORE JOURNEYS`)) {
+  throw new Error('QueryPilot atlas ledger no longer matches the core benchmark count.')
+}
+const trace = requireClaim(claims, 'querypilot-hard-001').data
+if (trace.display !== `${record.attempts} attempts to execute` || !trace.wording.includes(`${record.id} query failed its first attempt`) || !trace.wording.includes(`with ${record.schemaTables.length === 4 ? 'four' : record.schemaTables.length} tables`)) {
+  throw new Error('QueryPilot world record disagrees with the verified hard_001 claim.')
+}
+const scenes = world.data.scenes
+const pad = (value: number, width = 2) => String(value).padStart(width, '0')
+const chapterName = (label: string) => label.replace(/^\d+\s*\/\s*/, '')
+// Narration may mark a committed identifier with backticks; it renders as code.
+const inline = (text: string) => text.split('`')
+const recordedOn = new Date(`${data.source.recordedAt}T00:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
+const attempts = [
+  { value: 1, label: 'First attempt' },
+  { value: 2, label: 'Between attempts' },
+  { value: record.attempts, label: `Final · attempt ${record.attempts}` },
+]
+const payload = JSON.stringify({ record: { id: record.id, attempts: record.attempts }, ledger }).replaceAll('<', '\\u003c')
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <SiteMeta title="QueryPilot world | Parth Tiwari" description={scenes[0].narration} path="/work/querypilot/world/" type="article" />
+  </head>
+  <body data-scene="0">
+    <a class="skip" href="#story">Skip to the story</a>
+    <header><a href={`/work/${project.id}/`}>QueryPilot <span>↗</span></a><span>FIELD GUIDE Nº 06</span><a href={`#${scenes[scenes.length - 1].id}`}>The edge of the map ↓</a></header>
+    <figure class="atlas-stage" data-world-stage><div class="coordinate coordinate-top">35° QUESTION / {ledger.core} CORE JOURNEYS</div><div class="atlas-camera"><div class="atlas"><img class="atlas-paper" data-world-static src="/media/worlds/querypilot-atlas.webp" width="1536" height="1024" fetchpriority="high" decoding="async" alt="Warm illustrated survey paper with blue coastlines and fold marks." /><Fragment set:html={atlas} /><div class="fold fold-west" aria-hidden="true"><span>QUERY<br />PILOT</span><i>AN ATLAS OF<br />BOUNDED CORRECTION</i></div><div class="fold fold-east" aria-hidden="true"><span>Q / P</span><i>UNFOLD<br />TO BEGIN ↗</i></div></div></div><figcaption><span id="map-status">A question waits at the edge.</span><span>EDITORIAL GEOMETRY / COMMITTED RECORD</span></figcaption><div class="coordinate coordinate-bottom">ATLAS / 001–{pad(ledger.core, 3)}</div></figure>
+    <main id="story">
+      {scenes.map((scene, index) => (
+        <section id={scene.id} data-world-scene data-world-ending={index === scenes.length - 1 ? '' : undefined}>
+          <div class="narration">
+            <p class="eyebrow">{scene.label}</p>
+            {index === 0
+              ? <h1 id="world-title" tabindex="-1"><Lines text={scene.heading} /></h1>
+              : <h2><Lines text={scene.heading} /></h2>}
+            {scene.lead && <p class="lead"><Lines text={scene.lead} /></p>}
+            <p class="body-copy">{inline(scene.narration).map((part, position) => position % 2 ? <code>{part}</code> : part)}</p>
+            {scene.id === 'fold' && <a class="begin-link" href={`#${scenes[1].id}`}>Unfold the atlas <span>↓</span></a>}
+            {scene.id === 'question' && <blockquote>{record.question}<cite>DAY 6 · {record.id.toUpperCase()}</cite></blockquote>}
+            {scene.id === 'schema' && (
+              <>
+                <label class="turn-control" for="atlas-angle">Turn the atlas <input id="atlas-angle" type="range" min="-25" max="25" value="0" /><span>Move the map. Keep the evidence.</span></label>
+                <div class="district-controls" role="group" aria-label="Inspect retrieved tables">
+                  {record.schemaTables.map((table) => <button type="button" data-table={table} aria-pressed="false">{table}</button>)}
+                </div>
+                <p class="table-result" aria-live="polite">Four table names recorded in the retrieved context.</p>
+              </>
+            )}
+            {scene.id === 'proposal' && <div class="margin-record"><span>SCHEMA → GENERATION</span><strong>Proposal, not permission.</strong></div>}
+            {scene.id === 'fracture' && <div class="failed-seal">FIRST ATTEMPT<br /><strong>UNSUCCESSFUL</strong></div>}
+            {scene.id === 'redraw' && (
+              <>
+                <div class="attempt-controls" role="group" aria-label="Inspect the recorded attempt boundary">
+                  {attempts.map((entry) => <button type="button" data-attempt={entry.value} aria-pressed={String(entry.value === record.attempts)}>{entry.label}</button>)}
+                </div>
+                <p class="attempt-result" aria-live="polite">Final attempt: execution succeeded. Three attempts recorded.</p>
+                <details class="sql-record">
+                  <summary>Unfold the exact final SQL</summary>
+                  <p>Committed Day 6 output · no SQL is executed here.</p>
+                  <pre tabindex="0"><code>{record.sql}</code></pre>
+                </details>
+              </>
+            )}
+            {scene.id === 'gate' && (
+              <>
+                <div class="guard-controls" role="group" aria-label="Illustrate read-only boundary">
+                  <button type="button" data-intent="read" aria-pressed="true">Read-only intent</button>
+                  <button type="button" data-intent="write" aria-pressed="false">Destructive intent</button>
+                </div>
+                <p class="guard-result" aria-live="polite">Illustration: read-only intent may proceed after the remaining checks. No database request is made.</p>
+              </>
+            )}
+            {scene.id === 'ledger' && (
+              <>
+                <div class="ledger-controls" role="group" aria-label="Compare core execution counts">
+                  <button type="button" data-ledger="before" aria-pressed="false">Before correction · {ledger.beforeCorrection}</button>
+                  <button type="button" data-ledger="after" aria-pressed="true">After correction · {ledger.afterCorrection}</button>
+                </div>
+                <p class="ledger-result" aria-live="polite">{ledger.afterCorrection} of {ledger.core} core queries executed successfully. Four recovered; three still unsuccessful.</p>
+              </>
+            )}
+            {index === scenes.length - 1 && (
+              <>
+                <a class="case-link" href={`/work/${project.id}/`}>Read the QueryPilot engineering story <span>↗</span></a>
+                <a class="restart" href={`#${scenes[0].id}`}>Fold back to the beginning ↑</a>
+                <details>
+                  <summary>Read the source boundary</summary>
+                  <p>Day 6 evaluation at repository commit {data.source.revision}, recorded {recordedOn}. Only the question, schema names, final SQL, attempt count and published aggregate are represented as evidence. No live inference, query execution or real database topology is shown.</p>
+                </details>
+              </>
+            )}
+          </div>
+        </section>
+      ))}
+    </main>
+    <nav class="chapter-nav" aria-label="Story chapters">
+      {scenes.map((scene, index) => <a href={`#${scene.id}`} aria-label={`Chapter ${index + 1}: ${chapterName(scene.label)}`}>{pad(index + 1)}</a>)}
+    </nav>
+    <footer><span>QueryPilot / {world.data.selectedTreatment}</span><a href={`/work/${project.id}/`}>Back to the paper case study ↗</a></footer>
+    <script id="querypilot-world-data" type="application/json" set:html={payload}></script>
+    <script>
+      import '../../../worlds/querypilot/world.ts'
+    </script>
+  </body>
+</html>

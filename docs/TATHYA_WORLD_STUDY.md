@@ -1,7 +1,8 @@
 # Tathya world — The Long Table
 
 Started 2026-09-04 on branch `world/tathya`. Status: **published; `phase6:tathya-gate`
-green; owner rendered review still open.**
+green.** **2026-09-23:** the owner reviewed the rendered world and does not like it yet;
+it is flagged to revisit later. The production route is unchanged meanwhile.
 
 Reads after `WORLDS.md` §03 and `DESIGN_LOCK.md` §7. This records the selected treatment,
 the choreography, the data contract and the current proof. `BUILD_PLAN.md` Phase 6 step 4

@@ -1,14 +1,13 @@
 # DESIGN LOCK: Paper and Worlds
 
-## Current checkpoint: 2026-09-08
+## Current checkpoint: 2026-09-23
 
-Phase 5 is closed. Phase 6 is on local `world/batch-1`. MedRAG and Order Supervisor
-standalone storyboards are built and browser checked, awaiting owner selection before
-production routes. The approved paired workflow supersedes older sequential instructions.
-Read `docs/WORLD_BATCH_1.md` (or `WORLD_BATCH_1.md` from this directory) and both study
-documents for the active contract. BeatMind, Vivid and Tathya have world routes; Vivid
-and Tathya owner review remains open. Older dated status below is historical where
-superseded by this checkpoint. No deployment was performed or verified here.
+Phase 5 is closed; Phase 6 continues. The owner approved MedRAG, SecondSelf, QueryPilot,
+Order Supervisor and UPI Fraud Engine and flagged Vivid and Tathya to revisit. The five
+approved worlds are ported pixel for pixel to dedicated production routes on local branch
+`world/integration`, not merged, pushed or deployed. See `WORLD_INTEGRATION.md`. The
+illustrated worlds keep their approved typography as an owner-directed exception to §8.
+Older dated status below is historical where superseded by this checkpoint.
 
 Revised 2026-08-27. This is the visual and interaction direction that gets built.
 
@@ -231,6 +230,11 @@ nine-point refinement pass to clear 7:1 on the real stock; see `DESIGN_REFINEMEN
 - Bricolage Grotesque: display
 - Archivo: body and interface
 - DM Mono: dates, numbers, labels, stack and provenance
+
+Owner-directed exception, 2026-09-23: the approved illustrated worlds MedRAG, SecondSelf and
+UPI Fraud Engine keep the Georgia display and generic monospace labels they were approved
+with, because the owner asked for a pixel-faithful port. The paper site and the other worlds
+are unchanged. The exception and its fallback caveat are recorded in `DECISIONS.md`.
 
 Fonts are self-hosted and subset. Their rendered roles and budget are approved in Phase 2.
 

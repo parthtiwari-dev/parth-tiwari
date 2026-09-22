@@ -1,5 +1,8 @@
 # Illustrated worlds — full rebuild
 
+**Production, 2026-09-23:** both worlds are ported to production routes; see
+`WORLD_INTEGRATION.md`. This file remains the study delivery record.
+
 2026-09-09. The owner authorized complete MedRAG and SecondSelf illustrated worlds,
 superseding the earlier finite motion-proof recommendation. Work remains sequential,
 without agents. The preserved realistic alternatives remain available unchanged.

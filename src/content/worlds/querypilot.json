@@ -1,0 +1,91 @@
+{
+  "projectSlug": "querypilot",
+  "published": true,
+  "reviewedAt": "2026-09-23",
+  "selectedTreatment": "The Cartographer’s Fold",
+  "staticFrame": {
+    "src": "/media/worlds/querypilot-world-still.webp",
+    "alt": "An illustrated survey atlas on warm paper. Four ink-blue schema districts rise beside a drawn route and a read-only gate at the edge of the map.",
+    "width": 1440,
+    "height": 900,
+    "preview": true
+  },
+  "scenes": [
+    {
+      "id": "fold",
+      "label": "01 / The cartographer’s fold",
+      "heading": "Every question\nneeds a way\n*through.*",
+      "lead": "A small atlas of mistakes, corrections,\nand the limits of arriving.",
+      "narration": "QueryPilot turns natural language into inspectable, read-only SQL. Unfold its world with your scroll."
+    },
+    {
+      "id": "question",
+      "label": "02 / A question sets out",
+      "heading": "Start with\na question.",
+      "lead": "One actual question. One recorded journey.",
+      "narration": "The map is a metaphor. The question and final SQL come from the committed `hard_001` evaluation record."
+    },
+    {
+      "id": "schema",
+      "label": "03 / Find the territory",
+      "heading": "You can’t cross\nan unknown city.",
+      "lead": "First, retrieve the relevant schema.",
+      "narration": "The recorded context contains orders, customers, order_items and products. Their architecture and positions are invented for this atlas; they are not a database plan."
+    },
+    {
+      "id": "proposal",
+      "label": "04 / A possible crossing",
+      "heading": "A route is\nonly a proposal.",
+      "lead": "The generator writes SQL. The checks get a say.",
+      "narration": "Static criticism, safety checks and database execution can reject a statement that looks convincing. A drawn line does not make a bridge."
+    },
+    {
+      "id": "fracture",
+      "label": "05 / The first attempt",
+      "heading": "Almost\nisn’t across.",
+      "lead": "The first attempt did not succeed.",
+      "narration": "The Day 6 record preserves that result and the final SQL. It does not preserve the SQL or failure reason for every intermediate attempt. The broken bridge illustrates failure; it does not diagnose it."
+    },
+    {
+      "id": "redraw",
+      "label": "06 / Bounded correction",
+      "heading": "Draw again.\nKnow when to stop.",
+      "lead": "This recorded query took three attempts.",
+      "narration": "Structured failure feedback can return to the correction path. The attempt budget is bounded; cosmetic rewrites do not earn endless retries."
+    },
+    {
+      "id": "gate",
+      "label": "07 / The read-only gate",
+      "heading": "A crossing isn’t\npermission.",
+      "lead": "Correction must not erase the guardrails.",
+      "narration": "Safety is checked again after correction. Database acceptance alone cannot authorize destructive or sensitive intent. Try the boundary in this illustration."
+    },
+    {
+      "id": "ledger",
+      "label": "08 / The honest ledger",
+      "heading": "Four more\nmade it through.",
+      "lead": "63 → 67 execution successes. Out of 70.",
+      "narration": "Correction recovered four of seven initial failures on the core benchmark. The 12 adversarial questions are a separate set, testing a different contract."
+    },
+    {
+      "id": "meaning",
+      "label": "09 / The edge of the map",
+      "heading": "It ran.\n*Did it answer?*",
+      "lead": "Arriving is not the same as being right.",
+      "narration": "Execution success does not establish whether the SQL answered the intended business question. That is the next evaluation boundary, and where this atlas stops."
+    }
+  ],
+  "accents": {
+    "primary": "#243d55",
+    "secondary": "#305a70",
+    "fault": "#b8472c"
+  },
+  "dataArtifact": "querypilot-world-v1.json",
+  "audio": {
+    "status": "withheld",
+    "explanation": "This world is a silent illustrated atlas. It has no audio asset and makes no audio request."
+  },
+  "sourceAudit": [
+    { "label": "QueryPilot committed Day 6 evaluation record", "revision": "1b75476" }
+  ]
+}

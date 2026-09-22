@@ -46,7 +46,20 @@ is [`PHASE_1_EVIDENCE_AUDIT.md`](PHASE_1_EVIDENCE_AUDIT.md).
 | Spur Chat deployment state | Verified 2026-08-31 | The frontend returned HTTP 200; the backend returned Service Suspended, so interaction remains explicitly unverified and the action says View the interface |
 | Portfolio interim deployment | Verified | `https://parth-tiwari-1.vercel.app/` returned the new Astro landing with HTTP 200 on 2026-08-29 after Vercel marked the `main` deployment successful |
 | Public pricing | Retired by owner decision | Do not display a price, price band, or cost estimate anywhere on the site |
+| MedRAG per-query outcomes | Verified 2026-09-23 | Publish as queries 1 and 7 of the named 20-query evaluation (8 retrieved each; 3 cited, then 0 cited and refused); counts only, no answer text or chunk identity |
+| QueryPilot hard_001 trace | Verified 2026-09-23 | Publish as one recorded query that executed on its third attempt with four retrieved tables; intermediate SQL and failure reasons stay "not preserved" |
+| UPI replay counts | Verified 2026-09-23 | Publish 113 alerts, 85 of 701 fraud caught, 616 missed, 28 false positives and the seven recorded daily rows, always as the replay, never as the held-out test |
 | Resume B project numbers | Retained only inside the unchanged source PDF | The HTML resume uses current verified claim records and identifies the supplied PDF as a separate source snapshot; do not copy its older `24 days`, `500 seconds`, `95.7%` or `1000 seconds` statements into site prose |
+
+## World routes, 2026-09-23
+
+The illustrated worlds show numbers from `medrag-refusals`, `medrag-query-outcomes`,
+`secondself-ragas`, `querypilot-correction`, `querypilot-hard-001`, `upi-heldout`,
+`upi-replay` and `upi-replay-counts`. Each world page reads its numbers from a versioned data
+artifact in `src/data/worlds/` and refuses to build if that artifact, its copy or its drawing
+counts disagree with the verified claim records. UPI's held-out evaluation and replay stay two
+separate claims on the page, as on the case study. Order Supervisor shows no numbers; its
+lifecycle facts are source behavior re-verified at `ba544e0`.
 
 ## Claims that do not ship
 

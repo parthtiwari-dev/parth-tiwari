@@ -1,0 +1,68 @@
+---
+/**
+ * Order Supervisor / Inside the Night Watch. A dedicated route so this world's approved
+ * global styles never share a page with another world's.
+ * Ported from design/directions/order-supervisor-world.html (Study II, approved 2026-09-23).
+ * The watch drawing is extracted verbatim into src/worlds/order-supervisor/watch.svg.
+ */
+import SiteMeta from '../../../components/SiteMeta.astro'
+import Lines from '../../../worlds/shared/Lines.astro'
+import { dedicatedWorldPaths, type DedicatedWorldProps } from '../../../lib/worlds'
+import { dataSchema } from '../../../worlds/order-supervisor/schema.mjs'
+import source from '../../../data/worlds/order-supervisor-world-v1.json'
+import watch from '../../../worlds/order-supervisor/watch.svg?raw'
+import '../../../worlds/order-supervisor/world.css'
+
+export const getStaticPaths = () => dedicatedWorldPaths('order-supervisor')
+
+const { project, world } = Astro.props as DedicatedWorldProps
+const data = dataSchema.parse(source)
+const scenes = world.data.scenes
+const terminal = scenes.find((scene) => scene.id === 'terminal')
+const spoken = data.lifecycle.terminalEvents.map((name) => name.replaceAll('_', ' '))
+if (!terminal || !terminal.narration.toLowerCase().startsWith(`${spoken[0]}, ${spoken[1]} or ${spoken[2]}:`)) {
+  throw new Error('Order Supervisor terminal-event copy disagrees with the committed source.')
+}
+const pad = (value: number) => String(value).padStart(2, '0')
+const chapterName = (label: string) => label.replace(/^\d+\s*\/\s*/, '')
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <SiteMeta title="Order Supervisor world | Parth Tiwari" description={scenes[0].narration} path="/work/order-supervisor/world/" type="article" />
+  </head>
+  <body data-scene="7">
+    <a class="skip" href="#story">Skip to the story</a>
+    <header class="mast"><a href={`/work/${project.id}/`}>Order Supervisor <span>↗</span></a><span>THE NIGHT WATCH <b> / II</b></span></header>
+    <figure data-world-stage class="stage" aria-labelledby="stage-description"><Fragment set:html={watch} /><figcaption id="stage-description"><span class="instrument-label">LIFECYCLE RECORD</span><span id="instrument-state">The workflow owns the ending.</span></figcaption></figure>
+    <main id="story">
+      {scenes.map((scene, index) => (
+        <section data-world-scene class="scene" id={scene.id} data-scene={index} data-world-ending={index === scenes.length - 1 ? '' : undefined}>
+          <div class="copy">
+            <p class="eyebrow">{scene.label}</p>
+            {index === 0
+              ? <h1 id="world-title" tabindex="-1"><Lines text={scene.heading} /></h1>
+              : <h2><Lines text={scene.heading} /></h2>}
+            {scene.lead && <p class="lead"><Lines text={scene.lead} /></p>}
+            <p>{scene.narration}</p>
+            {scene.note && <p class="source"><Lines text={scene.note} /></p>}
+            {index === scenes.length - 1 && (
+              <>
+                <a class="case-link" href={`/work/${project.id}/`}>Read the engineering story <span>↗</span></a>
+                <a class="replay" href={`#${scenes[0].id}`}>Return to the watch ↑</a>
+              </>
+            )}
+          </div>
+        </section>
+      ))}
+    </main>
+    <nav class="chapters" aria-label="Story chapters">
+      {scenes.map((scene, index) => <a href={`#${scene.id}`} aria-label={`Chapter ${index + 1}: ${chapterName(scene.label)}`}>{pad(index + 1)}</a>)}
+    </nav>
+    <footer>Order Supervisor / The Night Watch <span>Illustrated from committed source · {data.source.revision}</span></footer>
+    <script>
+      import '../../../worlds/order-supervisor/world.ts'
+    </script>
+  </body>
+</html>

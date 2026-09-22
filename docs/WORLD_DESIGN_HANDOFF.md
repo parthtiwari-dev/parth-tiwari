@@ -1,5 +1,13 @@
 # World design handoff
 
+## Owner decisions — 2026-09-23
+
+- Reviewed every world in the browser. Approved MedRAG, SecondSelf, QueryPilot, Order
+  Supervisor and UPI Fraud Engine. Vivid and Tathya are not liked yet: revisit later.
+- Integrate the approved previews now, pixel for pixel. This supersedes "finish designing
+  first" below. Done on local branch `world/integration`; see `WORLD_INTEGRATION.md`.
+- UPI Fraud Engine is an active world again; its figures are now verified against source.
+
 ## Owner decisions — 2026-09-09
 
 - MedRAG / The Theatre of an Answer: owner says "I love them keep them". Preserve the

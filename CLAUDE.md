@@ -2,33 +2,34 @@
 
 Working instructions for the Paper and Worlds portfolio rebuild.
 
-## Current state, 2026-09-22
+## Current state, 2026-09-23
 
-Phase 5 is closed. Phase 6 (remaining worlds) continues on `main`; `world/batch-1` has
-been merged in and carries no unique history of its own. Full checkpoint history:
+Phase 5 is closed. Phase 6 continues. On 2026-09-23 the owner reviewed every world in the
+browser, approved all of them except Vivid and Tathya, and directed that the local previews
+be integrated into the real site "line by line, pixel by pixel". That integration is on
+local branch `world/integration` (from `main` at `f1d479e`), not merged, not pushed, not
+deployed. Record and evidence: `docs/WORLD_INTEGRATION.md`. Full checkpoint history:
 `docs/CHECKPOINT_HISTORY.md`.
 
-- **BeatMind, Vivid, Tathya** — production world routes live. Vivid and Tathya owner
-  review still open.
-- **MedRAG** (*The Theatre of an Answer*) — owner-approved illustrated local preview,
-  gate-passed, no production route.
-- **SecondSelf** (*A Little Further, Together*) — owner-approved illustrated local
-  preview, gate-passed, no production route. Realistic alternatives for both are
-  preserved.
-- **QueryPilot** (*The Cartographer's Fold*) — built and gate-passed, owner design review
-  still open.
-- **Order Supervisor** (*Inside the Night Watch*) — storyboard built and browser-checked,
-  no formal review recorded.
-- **UPI Fraud Engine** (*The Narrow Harbour*) — first build exists but is unverified (no
-  study doc, gate, or evidence); needs explicit owner direction. See
-  `docs/WORLD_DESIGN_HANDOFF.md`.
-- **OncoVerse, Spur Chat, Fraud Risk Intelligence, Oracle Auto Provision** — not started.
+- **BeatMind** — production world, owner-approved.
+- **Vivid, Tathya** — production worlds, but the owner does not like them yet: both are
+  flagged to revisit later. Do not treat their open reviews as passes.
+- **MedRAG, SecondSelf, QueryPilot, Order Supervisor, UPI Fraud Engine** — ported to
+  dedicated production routes at `/work/<slug>/world/`, one independently revertable
+  commit each. Pixel parity with the approved studies: identical frames except two
+  mandatory em-dash copy fixes. `npm run phase6:worlds-gate` covers them. Owner review of
+  the production routes (rather than the studies) and the merge to `main` are still open.
+- **OncoVerse, Spur Chat** — worlds not started. **Fraud Risk Intelligence, Oracle Auto
+  Provision** — deferred, no case study.
 
-No agents or model switches during this creative world-design work, per standing owner
-preference.
+**Next:** owner reviews the five production routes on `world/integration`; on approval,
+merge to `main` (pushing triggers the Vercel production deploy, so ask first). Then design
+OncoVerse and Spur Chat, and revisit Vivid and Tathya.
 
-**Next:** finish designing the remaining worlds before any production integration pass,
-which the owner may later do with Terra or Sol.
+**Environment:** a global npm package `node@22.5.1` installed on 2026-09-22 shadows the
+system Node 24.16.0 on PATH, and Astro 7 refuses to build under 22.5.1. Until the owner
+removes it (`npm uninstall -g node`), run commands with `C:\Program Files\nodejs` first on
+PATH.
 
 ## Read first
 
@@ -58,8 +59,12 @@ quietly choosing one.
 There is no Vue application, SPA rewrite, Three.js scene, Tailwind layer, analytics runtime,
 or client-side router. The current root landing uses small progressive-enhancement scripts
 for post-hero navigation, bounded paper motion and the Sheet Fault route transition. The
-BeatMind world uses one dependency-free Canvas2D enhancement, while its complete narration,
-final frame and case-study handoff remain static HTML.
+BeatMind, Vivid and Tathya worlds use dependency-free Canvas2D on the shared
+`/work/[slug]/world/` route and `src/scripts/world-lifecycle.ts`. The illustrated DOM/SVG
+worlds (MedRAG, SecondSelf, QueryPilot, Order Supervisor, UPI Fraud Engine) each own a
+dedicated `src/pages/work/<slug>/[world].astro` so their approved global CSS never shares a
+page, and share `src/worlds/shared/lifecycle.ts`. Every world keeps its complete narration,
+composed final state and case-study handoff in static HTML.
 
 ## Phase protocol
 
@@ -105,6 +110,9 @@ final frame and case-study handoff remain static HTML.
 - Browser checks accept `--url`; run them against the built static output for gates.
 - Screenshots are evidence only when someone inspects them. A successful capture command
   does not prove the page looks correct.
+- `npm run worlds:parity [slug]` diffs an approved `design/directions` study against its
+  production world at every chapter and width, and writes diff images for any frame that
+  moved. Use it whenever a ported world changes.
 
 ## Current phase
 
@@ -127,6 +135,11 @@ final frame and case-study handoff remain static HTML.
   `handPickedCount 0`, absent corpus benchmark, no `Math.random`, no `<audio>`, no runtime
   requests, animated / no-JavaScript / reduced-motion / Canvas-failure states, and the
   `/work` route with Back restoration at 390, 800 and 1440 pixels.
+- `npm run phase6:worlds-gate` runs `phase6:tathya-gate` then every illustrated world spec in
+  `scripts/world-gates/`: record, routing and claim checks, no em dash, chapter activation,
+  controls, 30fps ceiling, idle stop, keyboard handoff, `world:destroy`, no-JavaScript,
+  reduced motion, print, focus on arrival, Back restoration and the 30 kB script budget.
+  With no published illustrated world it passes with nothing to prove, so each reverts alone.
 - Phase 1 is complete under its owner-amended gate. The text-only human test was deferred,
   not passed, and may never be reported otherwise.
 - Phase 2 closed on 2026-08-31. The maintained Home route is on `/`; its structure and interim public

@@ -3,7 +3,7 @@ import { getCollection, type CollectionEntry } from 'astro:content'
 import WorldFoundation from '../../../components/WorldFoundation.astro'
 import VividWorld from '../../../components/VividWorld.astro'
 import TathyaWorld from '../../../components/TathyaWorld.astro'
-import { loadValidatedWorldData } from '../../../lib/worlds'
+import { loadValidatedWorldData, sharedRouteWorldSlugs } from '../../../lib/worlds'
 
 interface Props {
   project: CollectionEntry<'work'>
@@ -18,7 +18,7 @@ export async function getStaticPaths() {
     getCollection('claims'),
   ])
   return worlds
-    .filter((entry) => entry.data.published)
+    .filter((entry) => entry.data.published && sharedRouteWorldSlugs.has(entry.data.projectSlug))
     .map((world) => {
       const project = projects.find((entry) => entry.id === world.data.projectSlug && entry.data.caseStudy)
       if (!project) throw new Error(`Published world ${world.id} has no published paper case study.`)

@@ -1,0 +1,84 @@
+{
+  "projectSlug": "medrag",
+  "published": true,
+  "reviewedAt": "2026-09-09",
+  "selectedTreatment": "The Theatre of an Answer",
+  "staticFrame": {
+    "src": "/media/worlds/medrag-world-still.webp",
+    "alt": "An illustrated teal theatre with its curtains drawn back. Eight numbered pieces of scenery hang above the stage and an answer form carries three citation marks.",
+    "width": 1440,
+    "height": 900,
+    "preview": true
+  },
+  "scenes": [
+    {
+      "id": "arrival",
+      "label": "01 / The theatre of an answer",
+      "heading": "Not every question\ngets an answer.",
+      "lead": "Sometimes, withholding one is the ending.",
+      "narration": "Eight sources can arrive. An answer still has to earn its place on the stage. Scroll to follow two recorded queries to two different endings."
+    },
+    {
+      "id": "boundary",
+      "label": "02 / Before the answer",
+      "heading": "A stage.\nA finite world.",
+      "lead": "This is a bounded collection of drug guidance.",
+      "narration": "MedRAG retrieves from that collection. This theatre is an editorial world; it is not a clinical interface, and it gives no medical advice."
+    },
+    {
+      "id": "retrieval",
+      "label": "03 / Recorded query 1",
+      "heading": "Eight pieces\narrive.",
+      "lead": "Retrieval brings material into reach.",
+      "narration": "The evaluation records eight retrieved chunks. Their positions here are composed for the story, not similarity scores or embedding coordinates."
+    },
+    {
+      "id": "citation",
+      "label": "04 / What travels with it",
+      "heading": "Three citations\nremain attached.",
+      "lead": "The answer does not travel alone.",
+      "narration": "Query 1 was not refused. Three chunks were cited. The evaluation preserves these counts, but not the answer wording or identities of the chunks."
+    },
+    {
+      "id": "comparison",
+      "label": "05 / Try the contrast",
+      "heading": "Same retrieval.\nDifferent ending.",
+      "lead": "Switch between the two recorded queries.",
+      "narration": "Watch the stage change between an answer with citations and a refusal. These are two existing evaluation records, not new model calls."
+    },
+    {
+      "id": "again",
+      "label": "06 / Recorded query 7",
+      "heading": "Again,\neight.",
+      "lead": "An empty answer does not mean an empty retrieval.",
+      "narration": "The second query also retrieved eight chunks. Finding material did not guarantee that an answer followed."
+    },
+    {
+      "id": "refusal",
+      "label": "07 / The empty stage",
+      "heading": "The most important\npart is missing.",
+      "lead": "Zero cited. Refusal recorded.",
+      "narration": "The scenery moves to the wings. We keep the absence visible. The metadata records the refusal; it does not tell us its causal reason."
+    },
+    {
+      "id": "record",
+      "label": "08 / The result in full",
+      "heading": "Restraint belongs\nin the result.",
+      "lead": "Four refusals in twenty recorded queries.",
+      "narration": "This is the final recorded RAGAS evaluation from 3 February 2026, using vector-only retrieval. It is an evaluation record, not evidence of clinical safety."
+    }
+  ],
+  "accents": {
+    "primary": "#24494b",
+    "secondary": "#b9734e",
+    "fault": "#9b4e4c"
+  },
+  "dataArtifact": "medrag-world-v1.json",
+  "audio": {
+    "status": "withheld",
+    "explanation": "This world is a silent illustrated evaluation story. It has no audio asset and makes no audio request."
+  },
+  "sourceAudit": [
+    { "label": "MedRAG committed RAGAS evaluation record", "revision": "a741897" }
+  ]
+}

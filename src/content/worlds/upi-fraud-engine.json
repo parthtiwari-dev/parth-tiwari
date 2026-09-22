@@ -1,0 +1,86 @@
+{
+  "projectSlug": "upi-fraud-engine",
+  "published": true,
+  "reviewedAt": "2026-09-23",
+  "selectedTreatment": "The Narrow Harbour",
+  "staticFrame": {
+    "src": "/media/worlds/upi-fraud-engine-world-still.webp",
+    "alt": "A night harbour drawn in vector. A narrow lit gate admits a few signals, while most points of light remain in the dark water outside it.",
+    "width": 1440,
+    "height": 900,
+    "preview": true
+  },
+  "scenes": [
+    {
+      "id": "arrival",
+      "label": "01 / The narrow harbour",
+      "heading": "The sea doesn’t stop.\n*The queue has to.*",
+      "lead": "UPI Fraud Engine",
+      "narration": "A story about the signals we can review, and the ones we miss. Scroll to enter the harbour."
+    },
+    {
+      "id": "current",
+      "label": "02 / Time moves one way",
+      "heading": "Only the past\ncan guide this light.",
+      "lead": "Transactions arrive with history, not hindsight.",
+      "narration": "Temporal and behavioural features use information available before the transaction. The frozen model returns a risk score. These moving lights are an illustration, not a transaction log."
+    },
+    {
+      "id": "gate",
+      "label": "03 / The review gate",
+      "heading": "The harbour\nhas a capacity.",
+      "lead": "A 0.5% alert budget is the project’s operating assumption.",
+      "narration": "The highest-risk fraction enters review. The opening is a visual metaphor, not a score threshold scale or evidence of a real team’s staffing. A risk score is not a fraud verdict.",
+      "note": "Budget limits the queue.\nIt does not make the sea safe."
+    },
+    {
+      "id": "heldout",
+      "label": "04 / One evaluation",
+      "heading": "A bright signal.\nA narrow reach.",
+      "lead": "Held-out evaluation · 85,429 transactions",
+      "narration": "Precision describes the flagged set. Recall describes the fraud that was caught. At this budget, most fraud is missed. Read both numbers together."
+    },
+    {
+      "id": "replay",
+      "label": "05 / Seven different tides",
+      "heading": "Now let\nthe days pass.",
+      "lead": "A separate replay · 1–7 June 2025",
+      "narration": "Choose a recorded day. The dial moves through real daily precision, recall and alert counts. It does not simulate an untested threshold."
+    },
+    {
+      "id": "separate",
+      "label": "06 / Two records, two questions",
+      "heading": "The second number\ngets its own story.",
+      "lead": "Replay · 22,071 transactions across seven days",
+      "narration": "The replay recorded 75.22% precision and 12.13% recall. It is not the held-out test. The replay reports zero budget violations under its policy; daily alert counts use whole transactions."
+    },
+    {
+      "id": "missed",
+      "label": "07 / Outside the light",
+      "heading": "Keep the darkness\nin the picture.",
+      "lead": "85 caught. 616 missed. Of 701 fraudulent transactions.",
+      "narration": "Each point here represents one fraudulent transaction counted in the replay. Positions are editorial. The 28 false positives are separate: 113 alerts included 85 true positives and 28 false positives."
+    },
+    {
+      "id": "record",
+      "label": "08 / A signal, not a verdict",
+      "heading": "Help someone\n*look closer.*",
+      "lead": "Prioritise a review. Leave the verdict to it.",
+      "narration": "UPI Fraud Engine’s useful contract is a bounded queue with its trade-offs visible. Longer replay and real review feedback remain future work, not claimed operational impact."
+    }
+  ],
+  "accents": {
+    "primary": "#edca89",
+    "secondary": "#afc2c1",
+    "fault": "#d69b9a"
+  },
+  "dataArtifact": "upi-fraud-engine-world-v1.json",
+  "audio": {
+    "status": "withheld",
+    "explanation": "This world is a silent illustrated harbour. It has no audio asset and makes no audio request."
+  },
+  "sourceAudit": [
+    { "label": "UPI Fraud Engine held-out production evaluation", "revision": "4ff41b6" },
+    { "label": "UPI Fraud Engine seven-day replay backtest", "revision": "dbc43ad" }
+  ]
+}
