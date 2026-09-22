@@ -4,10 +4,17 @@ import '../styles/project-transition.css'
 
 interface Props {
   projects: CollectionEntry<'work'>[]
+  worlds: CollectionEntry<'worlds'>[]
 }
 
-const { projects } = Astro.props
+const { projects, worlds } = Astro.props
 const publishedProjects = projects.filter((project) => project.data.caseStudy)
+// A published world opts its composed still into the paper preview with staticFrame.preview.
+const previewStills = new Map(
+  worlds
+    .filter((world) => world.data.published && world.data.staticFrame.preview)
+    .map((world) => [world.data.projectSlug, world.data.staticFrame.src]),
+)
 
 const previews = publishedProjects.map((project) => {
   const proof = project.data.caseStudy!.cover.proof
@@ -15,20 +22,24 @@ const previews = publishedProjects.map((project) => {
     beatmind: '/media/beatmind-world-still.jpg',
     vivid: '/media/vivid-story-loom-plate.png',
   }[project.id]
-  const imageSource = approvedWorldStill
+  const worldStill = approvedWorldStill ? undefined : previewStills.get(project.id)
+  const imageSource = approvedWorldStill ?? worldStill
     ?? (proof.kind === 'image' ? proof.src : proof.kind === 'video' ? proof.poster : undefined)
+  // World stills are 1440 x 900 composed frames; only case-study proof keeps its own fit.
+  const proofImage = proof.kind === 'image' && !worldStill ? proof : undefined
 
   return {
     project,
+    proofImage,
     proof,
     imageSource,
-    sourceLabel: approvedWorldStill ? 'Approved world still' : 'Published case-study proof',
+    sourceLabel: approvedWorldStill || worldStill ? 'Approved world still' : 'Published case-study proof',
   }
 })
 ---
 
 <div class="project-transition-stage" data-project-transition-stage aria-hidden="true" inert>
-  {previews.map(({ project, proof, imageSource, sourceLabel }) => (
+  {previews.map(({ project, proof, proofImage, imageSource, sourceLabel }) => (
     <figure
       class="project-world-preview"
       data-project-preview={project.id}
@@ -39,12 +50,12 @@ const previews = publishedProjects.map((project) => {
             <img
               src={imageSource}
               alt=""
-              width={proof.kind === 'image' ? proof.width : 1440}
-              height={proof.kind === 'image' ? proof.height : 900}
+              width={proofImage ? proofImage.width : 1440}
+              height={proofImage ? proofImage.height : 900}
               loading={project.id === 'beatmind' ? 'eager' : 'lazy'}
               decoding="async"
               fetchpriority={project.id === 'beatmind' ? 'high' : 'auto'}
-              data-fit={proof.kind === 'image' ? proof.fit ?? 'cover' : 'cover'}
+              data-fit={proofImage ? proofImage.fit ?? 'cover' : 'cover'}
             />
           )
         : proof.kind === 'record'

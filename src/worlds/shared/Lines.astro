@@ -1,0 +1,16 @@
+---
+/**
+ * Renders world-record copy: "\n" is a line break and a whole line wrapped in "*" is
+ * emphasis, which reproduces the approved study markup (`line<br><em>line</em>`).
+ */
+interface Props {
+  text: string
+}
+
+const lines = Astro.props.text.split('\n')
+---
+
+{lines.map((line, index) => {
+  const emphasis = /^\*(.+)\*$/.exec(line)
+  return <>{index > 0 && <br />}{emphasis ? <em>{emphasis[1]}</em> : line}</>
+})}

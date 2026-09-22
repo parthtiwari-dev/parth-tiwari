@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { readdir, readFile } from 'node:fs/promises'
 import path from 'node:path'
-import { claimSchema, educationSchema, experienceSchema, noteSchema, resumeSchema, serviceSchema, siteCopySchema, workSchema } from '../src/content/schemas.mjs'
+import { claimSchema, educationSchema, experienceSchema, noteSchema, resumeSchema, serviceSchema, siteCopySchema, workSchema, worldSchema } from '../src/content/schemas.mjs'
 
 const root = process.cwd()
 
@@ -33,6 +33,10 @@ const experience = await readJsonDirectory('src/content/experience', experienceS
 const resume = await readJsonDirectory('src/content/resume', resumeSchema)
 const services = await readJsonDirectory('src/content/services', serviceSchema)
 const site = await readJsonDirectory('src/content/site', siteCopySchema)
+const worlds = await readJsonDirectory('src/content/worlds', worldSchema)
+// World data artifacts are validated by their own versioned schemas at build time; their
+// strings still reach visitors, so they join the public-text checks.
+const worldData = await readJsonDirectory('src/data/worlds', { parse: (value) => value })
 
 assert.equal(work.length, 12, 'the register must contain all twelve projects')
 assert.equal(education.length, 2, 'the profile must contain both verified education records')
@@ -86,7 +90,12 @@ for (const service of services) {
 assert.equal(resume.length, 1, 'the HTML resume must have one validated profile')
 for (const projectId of resume[0].data.projectIds) assert(workIds.has(projectId), `resume references missing project ${projectId}`)
 
-const publicText = [...work, ...notes, ...education, ...experience, ...resume, ...services, ...site].map((entry) => entry.raw).join('\n')
+for (const entry of worlds) {
+  assert(workIds.has(entry.data.projectSlug), `${entry.id} world references missing project ${entry.data.projectSlug}`)
+  assert(worldData.some((artifact) => `${artifact.id}.json` === entry.data.dataArtifact), `${entry.id} world references missing data artifact ${entry.data.dataArtifact}`)
+}
+
+const publicText = [...work, ...notes, ...education, ...experience, ...resume, ...services, ...site, ...worlds, ...worldData].map((entry) => entry.raw).join('\n')
 assert.equal(publicText.includes('—'), false, 'user-facing content must not contain em dashes')
 
 const publishedClaims = claims.filter((entry) => entry.data.publish)
@@ -98,4 +107,4 @@ console.log(`PASS ${publishedClaims.length} public quantitative claims resolve t
 console.log(`PASS ${education.length} education, ${experience.length} experience and ${services.length} service records validate`)
 console.log(`PASS ${resume.length} resume profile references verified project records`)
 console.log('PASS project, note, next-project, and evidence references resolve')
-console.log('PASS user-facing content contains no em dash')
+console.log(`PASS user-facing content, including ${worlds.length} world records, contains no em dash`)

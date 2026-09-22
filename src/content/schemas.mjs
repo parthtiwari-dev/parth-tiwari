@@ -22,6 +22,12 @@ const worldAudioSchema = z.discriminatedUnion('status', [
   }),
 ])
 
+// World copy may carry "\n" line breaks; a whole line wrapped in "*" renders as emphasis.
+const worldLines = (minimum) => z.string().min(minimum).refine(
+  (value) => value.split('\n').every((line) => line.trim() === line && line.length > 0 && (!line.includes('*') || /^\*[^*]+\*$/.test(line))),
+  { message: 'World copy lines must be trimmed and use "*" only to wrap a whole emphasised line.' },
+)
+
 export const worldSchema = z.object({
   projectSlug: z.string().min(2),
   published: z.boolean(),
@@ -32,12 +38,16 @@ export const worldSchema = z.object({
     alt: z.string().min(24),
     width: z.number().int().positive(),
     height: z.number().int().positive(),
+    // true: Home and /work backlight this still as the project's approved world preview.
+    preview: z.boolean().optional(),
   }),
   scenes: z.array(z.object({
     id: z.string().regex(/^[a-z0-9-]+$/),
     label: z.string().min(3),
-    heading: z.string().min(8),
+    heading: worldLines(8),
     narration: z.string().min(20),
+    lead: worldLines(3).optional(),
+    note: worldLines(3).optional(),
   })).min(3),
   accents: z.object({
     primary: z.string().regex(/^#[0-9a-f]{6}$/i),
