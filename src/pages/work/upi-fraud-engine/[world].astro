@@ -1,0 +1,136 @@
+---
+/**
+ * UPI Fraud Engine / The Narrow Harbour. A dedicated route so this world's approved global
+ * styles never share a page with another world's.
+ * Ported from design/directions/upi-fraud-engine-world.html (built 2026-09-09, approved
+ * 2026-09-23). The harbour drawing is extracted verbatim into harbour.svg.
+ */
+import SiteMeta from '../../../components/SiteMeta.astro'
+import Lines from '../../../worlds/shared/Lines.astro'
+import { dedicatedWorldPaths, requireClaim, type DedicatedWorldProps } from '../../../lib/worlds'
+import { dataSchema } from '../../../worlds/upi-fraud-engine/schema.mjs'
+import source from '../../../data/worlds/upi-fraud-engine-world-v1.json'
+import harbour from '../../../worlds/upi-fraud-engine/harbour.svg?raw'
+import '../../../worlds/upi-fraud-engine/world.css'
+
+export const getStaticPaths = () => dedicatedWorldPaths('upi-fraud-engine')
+
+const { project, world, claims } = Astro.props as DedicatedWorldProps
+const data = dataSchema.parse(source)
+const { heldout, replay } = data
+const totals = replay.cumulative
+const pct = (value: number) => (value * 100).toFixed(2)
+const grouped = (value: number) => value.toLocaleString('en-US')
+const longDate = (iso: string) => new Date(`${iso}T00:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
+
+// The held-out evaluation and the replay are separate claims; each must match its record.
+const heldoutClaim = requireClaim(claims, heldout.claimRef)
+const replayClaim = requireClaim(claims, replay.claimRef)
+const expectations = [
+  heldoutClaim.data.wording.includes(`${grouped(heldout.rows)}-row`) && heldoutClaim.data.wording.includes(`${pct(heldout.precision)}% precision`) && heldoutClaim.data.wording.includes(`${pct(heldout.recall)}% recall`) && heldoutClaim.data.wording.includes(`${heldout.budget * 100}% alert budget`),
+  heldoutClaim.data.asOf?.toISOString().slice(0, 10) === heldout.recordedAt,
+  replayClaim.data.wording.includes(`${grouped(totals.total_transactions)}-transaction`) && replayClaim.data.wording.includes(`${pct(totals.overall_precision)}% precision`) && replayClaim.data.wording.includes(`${pct(totals.overall_recall)}% recall`) && replayClaim.data.wording.includes('no alert-budget violations') && replay.alertBudgetViolations === 0,
+  (harbour.match(/fraud-dot caught/g) ?? []).length === totals.total_caught && (harbour.match(/fraud-dot missed/g) ?? []).length === totals.total_missed,
+]
+const counts = requireClaim(claims, 'upi-replay-counts').data.wording
+expectations.push(counts.includes(`${totals.total_alerts} alerts caught ${totals.total_caught} of ${totals.total_fraud} fraudulent transactions; ${totals.total_missed} were missed and ${totals.total_false_positives} alerts were false positives`))
+const copy = Object.fromEntries(world.data.scenes.map((scene) => [scene.id, `${scene.lead ?? ''} ${scene.narration}`]))
+const copyFacts = [
+  [copy.gate, `${heldout.budget * 100}% alert budget`],
+  [copy.heldout, `${grouped(heldout.rows)} transactions`],
+  [copy.separate, `${grouped(totals.total_transactions)} transactions`],
+  [copy.separate, `${pct(totals.overall_precision)}% precision and ${pct(totals.overall_recall)}% recall`],
+  [copy.missed, `${totals.total_caught} caught. ${totals.total_missed} missed. Of ${totals.total_fraud} fraudulent transactions.`],
+  [copy.missed, `${totals.total_false_positives} false positives are separate: ${totals.total_alerts} alerts included ${totals.total_caught} true positives`],
+]
+if (expectations.includes(false) || copyFacts.some(([text, fact]) => !text.includes(fact))) {
+  throw new Error('UPI world copy or drawing disagrees with its verified held-out and replay records.')
+}
+
+const scenes = world.data.scenes
+const first = replay.daily[0]
+const pad = (value: number) => String(value).padStart(2, '0')
+const chapterName = (label: string) => label.replace(/^\d+\s*\/\s*/, '')
+const payload = JSON.stringify({ heldoutRows: heldout.rows, budget: heldout.budget, daily: replay.daily, cumulative: totals }).replaceAll('<', '\\u003c')
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <SiteMeta title="UPI Fraud Engine world | Parth Tiwari" description={scenes[0].narration} path="/work/upi-fraud-engine/world/" type="article" />
+  </head>
+  <body data-scene="0">
+    <a class="skip" href="#story">Skip to the story</a>
+    <header><a href={`/work/${project.id}/`}>UPI Fraud Engine ↗</a><span>{world.data.selectedTreatment.toUpperCase()}</span></header>
+    <figure class="sea" data-world-stage><Fragment set:html={harbour} /><figcaption><span id="sea-status">The current continues.</span><span>ILLUSTRATED SIGNALS / RECORDED EVIDENCE</span></figcaption></figure>
+    <main id="story">
+      {scenes.map((scene, index) => (
+        <section id={scene.id} data-world-scene data-world-ending={index === scenes.length - 1 ? '' : undefined}>
+          <div class="copy">
+            <p class="eyebrow">{scene.label}</p>
+            {index === 0
+              ? <h1 id="world-title" tabindex="-1"><Lines text={scene.heading} /></h1>
+              : <h2><Lines text={scene.heading} /></h2>}
+            {scene.lead && <p class="lead"><Lines text={scene.lead} /></p>}
+            <p>{scene.narration}</p>
+            {scene.note && <p class="side-note"><Lines text={scene.note} /></p>}
+            {scene.id === 'arrival' && <a class="enter" href={`#${scenes[1].id}`}>Follow the current ↓</a>}
+            {scene.id === 'heldout' && (
+              <>
+                <div class="metric-pair"><div><strong>{pct(heldout.precision)}<small>%</small></strong><span>PRECISION</span></div><div><strong>{pct(heldout.recall)}<small>%</small></strong><span>RECALL</span></div></div>
+                <p class="footnote">Production XGBoost evaluation · {longDate(heldout.recordedAt)}</p>
+              </>
+            )}
+            {scene.id === 'replay' && (
+              <>
+                <div class="day-controls" role="group" aria-label="Inspect a recorded replay day">
+                  {replay.daily.map((row, position) => (
+                    <button type="button" data-day={position} aria-pressed={String(position === 0)}><small>{new Date(`${row.date}T00:00:00Z`).toLocaleDateString('en-GB', { month: 'short', timeZone: 'UTC' }).toUpperCase()}</small>{row.date.slice(8)}</button>
+                  ))}
+                </div>
+                <div class="day-record" aria-live="polite"><span id="day-date">{longDate(first.date)}</span><div><strong id="day-precision">{pct(first.precision)}%</strong><span>PRECISION</span><strong id="day-recall">{pct(first.recall)}%</strong><span>RECALL</span></div><p id="day-counts">{first.num_alerts} alerts / {grouped(first.num_transactions)} transactions</p></div>
+              </>
+            )}
+            {scene.id === 'separate' && <div class="metric-pair"><div><strong>{pct(totals.overall_precision)}<small>%</small></strong><span>PRECISION</span></div><div><strong>{pct(totals.overall_recall)}<small>%</small></strong><span>RECALL</span></div></div>}
+            {scene.id === 'missed' && (
+              <>
+                <div class="reveal-controls" role="group" aria-label="Inspect replay fraud counts">
+                  <button type="button" data-view="all" aria-pressed="true">Show the whole picture</button>
+                  <button type="button" data-view="caught" aria-pressed="false">Focus on the {totals.total_caught} caught</button>
+                </div>
+                <p class="reveal-result" aria-live="polite">{totals.total_caught} caught inside. {totals.total_missed} missed outside. Both remain part of the record.</p>
+              </>
+            )}
+            {index === scenes.length - 1 && (
+              <>
+                <a class="case-link" href={`/work/${project.id}/`}>Read the engineering story <span>↗</span></a>
+                <a class="restart" href={`#${scenes[0].id}`}>Return to the current ↑</a>
+                <details>
+                  <summary>Inspect the seven-day record</summary>
+                  <div class="table-wrap">
+                    <table>
+                      <caption>Committed replay · {replay.revision}</caption>
+                      <thead><tr><th>Date</th><th>Rows</th><th>Alerts</th><th>Precision</th><th>Recall</th></tr></thead>
+                      <tbody>
+                        {replay.daily.map((row) => <tr><td>{row.date}</td><td>{grouped(row.num_transactions)}</td><td>{row.num_alerts}</td><td>{pct(row.precision)}%</td><td>{pct(row.recall)}%</td></tr>)}
+                      </tbody>
+                    </table>
+                  </div>
+                  <p>Held-out and replay records remain separate. No live transaction scoring occurs in this world.</p>
+                </details>
+              </>
+            )}
+          </div>
+        </section>
+      ))}
+    </main>
+    <nav class="chapter-nav" aria-label="Story chapters">
+      {scenes.map((scene, index) => <a href={`#${scene.id}`} aria-label={`Chapter ${index + 1}: ${chapterName(scene.label)}`}>{pad(index + 1)}</a>)}
+    </nav>
+    <footer>UPI Fraud Engine / A signal is a reason to review.</footer>
+    <script id="upi-fraud-engine-world-data" type="application/json" set:html={payload}></script>
+    <script>
+      import '../../../worlds/upi-fraud-engine/world.ts'
+    </script>
+  </body>
+</html>
