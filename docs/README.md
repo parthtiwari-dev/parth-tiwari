@@ -45,6 +45,7 @@ Where to look, and what is still true.
 | [`VIVID_WORLD_CONCEPT_REVIEW.md`](VIVID_WORLD_CONCEPT_REVIEW.md) | Current-product audit, three Vivid world directions and the selected Story Loom basis |
 | [`VIVID_WORLD_STUDY.md`](VIVID_WORLD_STUDY.md) | Story Loom review animatic and the original evidence boundary that production preserves |
 | [`WORLD_INTEGRATION.md`](WORLD_INTEGRATION.md) | **Current Phase 6 record.** Owner decisions of 2026-09-23, the dedicated-route architecture, per-world parity and gate evidence, deliberate deviations and open items for the five integrated worlds |
+| [`BUILD_PLAN_HISTORY.md`](BUILD_PLAN_HISTORY.md) and [`BUILD_PLAN_CLOSED_PHASES.md`](BUILD_PLAN_CLOSED_PHASES.md) | Frozen plan history: superseded checkpoints and notes, and the full text of closed Phases 0-2, 4 and 5 |
 | [`CHECKPOINT_HISTORY.md`](CHECKPOINT_HISTORY.md) | Frozen, dated checkpoints moved out of `CLAUDE.md`, newest first |
 | [`WORLD_DESIGN_HANDOFF.md`](WORLD_DESIGN_HANDOFF.md) | Owner world decisions in date order, from the 2026-09-09 approvals to the 2026-09-23 integration |
 | [`MEDRAG_WORLD_STUDY.md`](MEDRAG_WORLD_STUDY.md) | MedRAG evidence contract and study history; production route since 2026-09-23 |
@@ -83,151 +84,18 @@ None of it needs redoing.
 
 ## Current state
 
-Phase 0, Phase 1 and Phase 2 are complete on `redesign/v2`. Phase 1 produced twelve
-base project records, twelve Errata entries, typed content schemas, route copy, services,
-experience, claim records and the text-only test artifact. Automated schema, provenance and
-Astro build checks pass. The owner deferred the unrun text-only human test without marking
-it passed. During Phase 2, the three initial landing directions were rejected and removed.
-The owner approved the overall full-width scroll direction and the refined landing
-checkpoint for an interim public release. The maintained Home route is at `/`; the obsolete
-`/review/phase-2/` route is removed. Its restraint pass, segmented
-fibre edges, directional folds and three bounded one-shot motion studies have rendered
-evidence at 390, 800 and 1440 pixels. The first viewport now identifies Parth in normal
-reading text and explicitly explains the `Paper → World → Case study` grammar. Its contained
-BeatMind plate uses a lightweight static frame from the approved Sound Foundry animatic; it
-does not claim to be real separated-track evidence. The `/work` structure review now has a real-content
-register demo and responsive evidence; the owner rejected a Personal/Company filter, so
-verified employment context will be handled per case study. The shared `/work/[slug]`
-structure now has ten paper-first case studies: BeatMind, Vivid, Tathya, MedRAG, Order
-Supervisor, QueryPilot, SecondSelf, OncoVerse, UPI Fraud Engine and Spur Chat. Their proof
-surfaces use real video, real images or source-labelled accessible evidence records. Routes
-are generated from validated case-study content. Fraud Risk Intelligence and Oracle Auto
-Provision remain visible, non-clickable deferred rows and emit no placeholder routes. The
-ten-route batch passes static content, link, privacy, no-JavaScript, reduced-motion,
-keyboard-focus, print and responsive-render checks. Owner visual approval of the batch
-remains open, so Phase 3 is not complete.
-The reusable reading order is locked in `CASE_STUDY_CONTRACT.md`. Follow-up Pudding and
-Awwwards research produced the separate continuous Sound Foundry.
-The owner approved its premise, nine-scene order and current five-stem product language on
-2026-08-30. A replacement standalone animatic proved the continuous machine, separately
-composed phone view, fallback states and dark deep-dive handoff. It remains the historical
-review artifact behind the production Phase 5 route, not the route itself. The separate
-worlds-animation memo remains research only. The Notes hub and all twelve concise Errata
-routes now have final responsive,
-no-JavaScript, accessibility, craft, transfer and scroll evidence in
-`PHASE_2_NOTES_REVIEW.md`. The About pilot now adds the real
-portrait, one typed education-and-work chronology, current-role detail and operating rules,
-with final responsive and no-JavaScript evidence in `PHASE_2_ABOUT_REVIEW.md`. The Resume pilot now adds the semantic HTML CV, unchanged local Resume B
-download, verified selected-work claims, optional env-configured Drive link and inspected
-two-page print output; `PHASE_2_RESUME_REVIEW.md` records the final route evidence. The Hire pilot now adds the three typed work scopes, boundaries,
-four-step risk-reduction path, fit guidance and direct booking, email and WhatsApp; its
-final responsive and no-JavaScript evidence is in `PHASE_2_HIRE_REVIEW.md`. Every route
-family now has a Phase 2 review implementation. On 2026-08-31 the owner accepted these
-designs as the current baseline and deferred a later polish pass. The final 24-render route
-matrix plus no-JavaScript, reduced-motion, touch, keyboard, contrast, font and static-boundary
-checks passed. `PHASE_2_GATE.md` records the evidence and Phase 2 is closed.
-The approved interim root is live at
-`https://parth-tiwari-1.vercel.app/` and has passed live browser checks. A real
-five-person comprehension test remains mandatory on the Phase 3 static preview.
+- Phases 0-2, 4 and 5 are closed; their evidence is listed in the table above and summarised in
+  [`BUILD_PLAN.md`](BUILD_PLAN.md).
+- Phase 3 is built and gate-green locally; its owner review, five-person test and preview
+  deployment are still open.
+- Phase 6: eight of ten worlds are live or merged. The five illustrated worlds are recorded in
+  [`WORLD_INTEGRATION.md`](WORLD_INTEGRATION.md). Vivid and Tathya are flagged to revisit;
+  OncoVerse and Spur Chat have no world.
+- Phases 7 (launch) and 8 (publishing) have not started.
 
-After Phase 2 closed, the current Vivid `upgrade-flux` plan and real local evaluation outputs
-were audited for a world review. Three directions were generated: Continuity Darkroom, Story
-Loom and Latent Cinema. The owner authorized Story Loom implementation; a standalone
-native-scroll animatic now combines its decorative concept plate with unchanged real Vivid
-evaluation frames. It remains outside Astro and awaits owner storyboard approval. The audit
-also corrected the stale fixed 28-step assumption and the false implication that generated
-images have no model-licensing boundary. `VIVID_WORLD_CONCEPT_REVIEW.md` records the selection
-history and `VIVID_WORLD_STUDY.md` records implementation evidence and blockers.
+The dated narrative that used to live here is frozen in
+[`CHECKPOINT_HISTORY.md`](CHECKPOINT_HISTORY.md).
 
-The owner then deferred a deep Story Loom review and asked for the Vivid paper case study.
-The full `main` and `upgrade-flux` histories, current dirty Phase 4 source checkpoint, current
-plan, PRD, architecture, audit and accepted baselines were read without changing the Vivid
-repository. `/work/vivid/` now presents the current product, real browser workflow, real
-evaluation frames, contribution, research, architecture, rejected alternatives, measured
-baseline, failures, limitations, licensing boundary and future gates. It does not claim that
-the current plan's identity or speed goal is achieved. `VIVID_CASE_STUDY_AUDIT.md` is the
-source map and update procedure.
-
-**Last documentation truth audit:** 2026-09-23. Every live world document now states that
-MedRAG, SecondSelf, QueryPilot, Order Supervisor and UPI Fraud Engine are integrated on
-`world/integration`, that Vivid and Tathya are flagged to revisit, and that nothing from this
-pass is merged or deployed. `RULES.md` §9, `DESIGN_LOCK.md`, `SESSION_PROMPT.md` and the
-branch notes no longer name `world/batch-1` as the active line.
-
-**Previous truth audit:** 2026-09-04. The deferred Phase 2 visual-polish pass ran
-on branch `refine/design-system-9point` as a nine-point refinement (see
-`DESIGN_REFINEMENT.md`). Run 1 landed the paper-page black-flash fix, BeatMind/Vivid
-world-init resilience, an additive type/space/measure token layer and the `--ink-quiet`
-contrast lift (4.88:1 to 7.77:1). Run 2 wired those tokens into every stylesheet: page h1
-demoted to ~44-88px and section h2 to ~38-62px, section rhythm brought into the token scale,
-the orphaned right-column captions removed, mono labels lifted to 12px+, leads moved off the
-muted brown, and the register dead zone reduced. Run 3a restructured the `/work`, `/notes`
-and landing register rows to `number | copy | kicker | arrow` so the tables span the full
-content width with no mid-row hole (the Run 2 `76rem` cap is gone), and trimmed unreachable
-`min-height` and orphaned trailing rules from the About/Resume ledgers. Run 3b added a
-crossfade hysteresis band to the world scroll engine, made the landing reveal observer
-degrade safely (guarded constructor check plus a timed backstop), and fixed the Vivid case
-study showing BeatMind's "Sound Foundry" world CTA. Run 3c kept `scroll-behavior: smooth`
-only because it is native anchor-only easing (not a scroll engine, no section 8 conflict);
-it is not a perf win, and the ~33ms fast-scroll texture-repaint frame at 1440px it hides
-from `perf:scroll` is a noted outstanding follow-up. `content-visibility: auto` on offscreen
-sections was tried and reverted (it regressed continuous-scroll paint). Run 4 rewrote every
-mobile heading `font-size` override to match the demoted desktop scale (page h1
-`clamp(2.4rem, 8.5vw, 4rem)`, section h2 `clamp(2rem, 7vw, 3.1rem)`), folding the redundant
-`<=480` blocks into `<=760`; `/about` no longer renders its h1 at ~74px on a phone. Zero
-horizontal overflow across all routes at 320/360/390px.
-`npm run phase6:vivid-gate` (76 PASS), `npm run a11y`, `npm run perf:scroll` and
-`npm run phase2:gate` were green on that branch. It was merged to `main` (`--no-ff`) and
-pushed on 2026-09-03 with the owner's explicit instruction, which triggered the Vercel
-production deploy.
-
-Ten published paper routes pass rendered
-title-versus-proof collision checks at 390, 800, 1440 and 1920 pixels. Fraud Risk
-Intelligence and Oracle Auto Provision remain focused register entries with deferred routes.
-The following local Phase 3 ship pass links all ten published projects from Home, removes
-visitor-facing Phase 2 scaffolding, adds shared canonical/social/JSON-LD metadata, builds a
-real 404 and twelve-entry RSS feed, and generates a sitemap from every emitted public route
-after each static build. The shared Phase 5 foundation adds the first validated world route,
-bringing the current sitemap to 29 routes without freezing that count in the gate.
-`npm run phase3:static-gate` passes. The revised mobile arrival, complete visual batch,
-five-person comprehension test and preview deployment remain open, so Phase 3 is not closed.
-The owner nevertheless directed Phase 4 to begin under an explicit phase-order exception.
-Three transition studies compared Row Rip, Edge Peel and Sheet Fault using the real paper
-stock and approved BeatMind world still. The owner selected Sheet Fault. Its original
-full-root snapshot missed the performance budget, so production now recreates the approved
-composition with two transform-only paper panels and inert clones of the selected real row.
-Home and `/work` share the preview, touch-centred selection, real-route handoff, destination
-focus, Back restoration, reduced-motion and failure fallbacks. `npm run phase4:gate` passes at
-390, 800 and 1440 pixels with 16.7-16.8 ms p95 transition measurements. The isolated revert
-gate also passes. The owner explicitly waived personal render inspection and closed Phase 4
-on 2026-09-01; that waiver is not recorded as an inspection that occurred.
-
-Phase 5 now has an independent shared-world foundation and the BeatMind Precision Descent
-pilot at `/work/beatmind/world/`. Home and `/work` enter the world first; its only primary
-handoff opens the unchanged paper case study. The world uses one sanitized build artifact
-with real source/five-stem envelopes, BPM, key, downbeats and sections. It omits an
-uncorrelated failure/retry trace and emits no audio request. `npm run phase5:gate` passes the
-390, 800 and 1440 pixel animated renders plus static, reduced-motion, Canvas-failure, print,
-teardown and Back-restoration states. Owner visual approval and independent revert evidence
-were the remaining closeout checks; the independent revert evidence now passes. Owner visual
-approval was recorded on 2026-09-02, closing Phase 5. Phase 3's deferred review remains a
-separate open item. Vivid's Story Loom is a Phase 6A world in implementation; it uses a
-cleared four-frame Kyoto evaluation sequence, a textual missing-evidence boundary and an
-explicit unresolved commercial-model licence notice.
-
-Phase 6 Tathya (The Long Table) is built and `published: true` on branch `world/tathya`.
-It is a dark archival-table world on the shared lifecycle, driven by per-scene millisecond
-clocks rather than scroll-scrub (two earlier scroll-scrub animatics were owner-rejected for
-crawling), with a wordless canvas: every count and sentence is in the static HTML.
-`world-lifecycle.ts` gained a backward-compatible `draw` return so event-driven worlds keep
-animating after the scroll settles; the BeatMind and Vivid gates pass unchanged. The data
-is a dated public-record snapshot — `tathya-world-v1.json` `provenance: 'public-snapshot'`,
-`2026-09-04`, three anonymised case files carrying their real source compositions from
-`tathya-1.vercel.app`, feed `handPickedCount 0`, `corpusBenchmark.available false`. The
-`provenance` guard and `phase6:tathya-gate` refuse a `placeholder`. `npm run
-phase6:tathya-gate` is green (full Phase 1-5 static and world chain + Vivid + Tathya) and
-an isolated revert proof passes. The paper case study's `measurement.absence` is unchanged
-and its `claimRefs` stay empty by decision. The owner directed the merge to `main`; a
-separate rendered owner review of the animated world stays open and is not reported as
-done. Scope, scene contract and data contract: `TATHYA_WORLD_STUDY.md`; the
-`public-snapshot` rationale and the `claimRefs` decision: `DECISIONS.md`.
+**Last documentation truth audit:** 2026-09-23, followed by a doc-hygiene pass that moved
+accreted history out of `CLAUDE.md`, `BUILD_PLAN.md` and this index without changing any
+current fact.

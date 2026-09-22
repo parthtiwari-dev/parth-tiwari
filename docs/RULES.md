@@ -117,6 +117,12 @@ At the end of every material session or completed phase:
    state changes.
 10. Record any remaining uncertainty explicitly. Do not make a document look complete by
     deleting an unresolved question.
+11. Keep status sections short. The `CLAUDE.md` current state, the top of `BUILD_PLAN.md` and
+    the docs index's current state hold one short line per item plus a pointer. Write the dated
+    story straight into its record (`CHECKPOINT_HISTORY.md`, `BUILD_PLAN_HISTORY.md` or the
+    phase's own document) at the time it is written, and replace a superseded status line
+    rather than stacking a new block above it. This checkpoint stacking had to be cleaned up
+    twice (2026-09-22 and 2026-09-23).
 
 Historical documents do not need their old reasoning rewritten after every change. Their
 superseded status must remain unmistakable and their description in `docs/README.md` must stay

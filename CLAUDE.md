@@ -4,23 +4,17 @@ Working instructions for the Paper and Worlds portfolio rebuild.
 
 ## Current state, 2026-09-23
 
-Phase 5 is closed. Phase 6 continues. On 2026-09-23 the owner reviewed every world in the
-browser, approved all of them except Vivid and Tathya, and directed that the local previews
-be integrated into the real site "line by line, pixel by pixel". The owner then directed the
-merge: `world/integration` is merged into `main` (`02b5669`) but **not yet pushed**, so the
-live site does not show the new worlds until the owner approves the push (it deploys). Record and evidence: `docs/WORLD_INTEGRATION.md`. Full checkpoint history:
-`docs/CHECKPOINT_HISTORY.md`.
+One line per item; the stories live in `docs/CHECKPOINT_HISTORY.md` and
+`docs/WORLD_INTEGRATION.md`.
 
-- **BeatMind** — production world, owner-approved.
-- **Vivid, Tathya** — production worlds, but the owner does not like them yet: both are
-  flagged to revisit later. Do not treat their open reviews as passes.
-- **MedRAG, SecondSelf, QueryPilot, Order Supervisor, UPI Fraud Engine** — ported to
-  dedicated production routes at `/work/<slug>/world/`, one independently revertable
-  commit each. Pixel parity with the approved studies: identical frames except two
-  mandatory em-dash copy fixes. `npm run phase6:worlds-gate` covers them. Merged on the owner's
-  direction; the owner notes "a lot of room to improve" later.
-- **OncoVerse, Spur Chat** — worlds not started. **Fraud Risk Intelligence, Oracle Auto
-  Provision** — deferred, no case study.
+- Phases 0-2, 4 and 5 are closed. Phase 3 is built with its final checks open. Phases 7 and 8
+  have not started.
+- Worlds live on production: BeatMind, Vivid, Tathya. Merged into `main` (`02b5669`) but not
+  pushed: MedRAG, SecondSelf, QueryPilot, Order Supervisor, UPI Fraud Engine.
+- The owner does not like Vivid and Tathya yet (flagged to revisit) and sees "a lot of room to
+  improve" across the worlds, deferred to a later pass.
+- No world yet: OncoVerse, Spur Chat. Deferred with no case study: Fraud Risk Intelligence,
+  Oracle Auto Provision.
 
 **Next:** push `main` when the owner approves (Vercel deploys it). Then the owner chooses
 between Phase 7 launch work (domain, social previews, analytics decision, live ten-second
@@ -115,7 +109,7 @@ composed final state and case-study handoff in static HTML.
   production world at every chapter and width, and writes diff images for any frame that
   moved. Use it whenever a ported world changes.
 
-## Current phase
+## Gates
 
 - `npm run phase1:gate` runs negative schema tests, cross-content provenance checks and the
   static Astro build with telemetry disabled for restricted environments.
@@ -141,98 +135,23 @@ composed final state and case-study handoff in static HTML.
   controls, 30fps ceiling, idle stop, keyboard handoff, `world:destroy`, no-JavaScript,
   reduced motion, print, focus on arrival, Back restoration and the 30 kB script budget.
   With no published illustrated world it passes with nothing to prove, so each reverts alone.
-- Phase 1 is complete under its owner-amended gate. The text-only human test was deferred,
-  not passed, and may never be reported otherwise.
-- Phase 2 closed on 2026-08-31. The maintained Home route is on `/`; its structure and interim public
-  release were owner-approved on 2026-08-29 and are live at
-  `https://parth-tiwari-1.vercel.app/`. `/work` architecture is approved. The single
-  `/work/beatmind/` Phase 2 paper pilot now follows `docs/CASE_STUDY_CONTRACT.md`, uses
-  real product media and has final responsive, accessibility, craft, transfer and scroll
-  evidence. The owner approved it by starting Notes on 2026-08-30. `/notes` and all twelve
-  concise `/notes/[slug]` Errata now have final responsive, accessibility, craft, transfer,
-  no-JavaScript and scroll evidence. `/about/` now has its
-  real portrait, typed education-and-work chronology, current-role detail, operating rules
-  and final 390, 800, 1440 and no-JavaScript evidence, and
-  Resume followed as the next review slice. `/resume/` now has semantic HTML, the unchanged
-  local Resume B download, verified project claims, an optional env-configured Drive link,
-  final responsive/no-JavaScript evidence and an inspected two-page A4 print proof.
-  `/hire/` now has the three typed service scopes, boundaries, a four-step risk-reduction
-  path, fit guidance and direct booking, email and WhatsApp, with final 390, 800, 1440 and
-  no-JavaScript evidence. The owner accepted all current route designs as the Phase 2
-  baseline and explicitly deferred another polish pass. The 24-render route matrix plus
-  no-JavaScript, reduced-motion, touch, keyboard, contrast, font-budget and static-boundary
-  checks pass; `docs/PHASE_2_GATE.md` records the evidence. The owner approved
-  BeatMind's Sound Foundry storyboard and current five-stem language on 2026-08-30. Its
-  Phase 2 animatic remains a historical review artifact; the production Precision Descent
-  world now lives at `/work/beatmind/world/`. Its dark ending and explicit case-study CTA are
-  locked, and no paper section appears below the world. The separate complete paper case
-  study remains canonical at `/work/beatmind/`.
-- Do not treat Phase 2 review stubs as the complete Phase 3 static site. Phase 4 now owns the
-  production backlight and tear transition, and Phase 5 owns the shared world foundation and
-  BeatMind pilot. The remaining project worlds stay in Phase 6.
-- Phase 3B implementation is present. `/work/[slug].astro` emits a static page for each project with a
-  validated `caseStudy` object. BeatMind, Vivid and the approved eight-project batch satisfy
-  that full paper contract. Fraud Risk Intelligence and Oracle Auto Provision remain
-  explicitly deferred, non-clickable and route-less. `docs/CASE_STUDY_BATCH_AUDIT.md`
-  records the batch source boundaries and current gate evidence.
-- All Phase 3 route implementation checklist items are now present locally. The local static
-  gate passes, but Phase 3 remains open until the revised mobile arrival and complete route
-  matrix receive rendered owner review, the real five-person test is run, and the complete
-  site is deployed to the verified preview alias.
-  `docs/VIVID_CASE_STUDY_AUDIT.md` records the Vivid repository history, current
-  proof, unachieved plan targets and update workflow. The Vivid source worktree is read-only
-  portfolio evidence and its current Phase 4 changes must not be modified from this repository.
-- The owner directed Phase 4 to begin on 2026-09-01 without completing those Phase 3 checks.
-  This is a phase-order exception, not a Phase 3 pass. The owner selected Sheet Fault. The
-  production implementation replaces its slow full-root snapshot with two transform-only
-  paper panels and inert clones of the selected real row. Home and `/work` preview, route,
-  focus, Back, touch, reduced-motion, no-JavaScript and failure checks pass at 390, 800 and
-  1440 pixels. The isolated revert gate passes. The owner explicitly waived personal render
-  inspection and closed Phase 4 on 2026-09-01; do not report the waived inspection as having
-  occurred.
-- The owner explicitly authorized Phase 5 under the same recorded Phase 3 work-order
-  exception. Home and `/work` now route BeatMind to `/work/beatmind/world/`; the final world
-  action opens `/work/beatmind/`, and projects without published worlds still open their
-  paper case studies. The world uses a sanitized real BeatMind export with six 256-bin
-  envelope series, real BPM, key, sections and downbeats. It omits failure/retry because no
-  correlated publishable trace exists and emits no audio because no cleared excerpt exists.
-  `npm run phase5:gate` and both isolated revert proofs pass. The owner approved the rendered
-  BeatMind world on 2026-09-02, so Phase 5 is closed. Phase 3's deferred review remains open;
-  Phase 6 may proceed one owner-approved world at a time.
-- The owner directed the deferred Phase 2 visual-polish pass to run as a nine-point
-  refinement on branch `refine/design-system-9point` (3 build runs + a mobile-review run).
-  It is permitted inside `docs/DESIGN_LOCK.md`. All four runs are complete and gate-green
-  (`phase6:vivid-gate` 76 PASS, `a11y`, `perf:scroll`), each an independently revertable
-  commit: Run 1 foundations (black-flash, world-init resilience, token layer, `--ink-quiet`
-  7.77:1, `DESIGN_LOCK` §8 reconciled); Run 2 wired the tokens into every component; Run 3
-  made the `/work` `/notes` and home registers span the full width and trimmed the
-  About/Resume ledgers (3b world crossfade hysteresis, landing reveal resilience, Vivid CTA
-  fix; 3c kept `scroll-behavior: smooth` and descoped the texture-perf work); Run 4 brought
-  the mobile heading scale down to match the demoted desktop scale. Merged to `main`
-  (`--no-ff`) and pushed on 2026-09-03 with the owner's explicit go, which triggered the
-  Vercel production deploy. Outstanding, non-blocking: deckle-PNG regeneration, the UPI
-  chart restyle, the wide-viewport paper-texture repaint cost. Scope and evidence:
-  `docs/DESIGN_REFINEMENT.md`.
-- Phase 6 Tathya world (**The Long Table**) is built and `published: true` on branch
-  `world/tathya`. A dark archival table: source slips set down and corded to their origins,
-  files bound under a loose cord, a verdict slab that strikes the record three times and
-  leaves no mark. Scroll selects the scene; a per-scene millisecond clock drives events
-  that snap and then hold still (the earlier scroll-scrub animatics were rejected for
-  crawling). The canvas carries no words; every count and sentence is in the static HTML.
-  The shared `world-lifecycle.ts` gained a backward-compatible `draw` return so event-driven
-  worlds keep animating after the scroll settles; BeatMind and Vivid gates pass unchanged.
-  The data is a dated public-record snapshot: `tathya-world-v1.json`
-  `provenance: 'public-snapshot'`, `snapshot.takenAt 2026-09-04`, three anonymised case
-  files with their real source compositions read from `tathya-1.vercel.app`, feed
-  `handPickedCount 0`, `corpusBenchmark.available false`. `tathyaWorldDataV1Schema`'s
-  `provenance` guard and `phase6:tathya-gate` both refuse a `placeholder` artifact. The
-  paper case study's `measurement.absence` is unchanged and `claimRefs` stays empty
-  (wiring a claim there would delete the honest absence line; see `DECISIONS.md`).
-  `npm run phase6:tathya-gate` is green (full Phase 1-5 + Vivid + Tathya). An isolated
-  revert proof passes. The owner directed the merge to `main`; a separate rendered owner
-  review of the animated world is still open and is not reported as done. Scope, scene
-  contract and data contract: `docs/TATHYA_WORLD_STUDY.md`. Phase 6 Vivid review is still
-  open; Phase 3's deferred review remains open.
+
+## Rules carried from closed phases
+
+One line each; the dated narratives they came from are in `docs/CHECKPOINT_HISTORY.md`.
+
+- Phase 1's text-only human test was deferred, not passed, and may never be reported otherwise.
+- Phase 3 stays open until the owner reviews the rendered mobile arrival and route matrix, the
+  real five-person test runs and a verified preview deployment exists. Phases 4 onward ran under
+  an explicit owner exception; that is not a Phase 3 pass.
+- The owner waived personal render inspection of Phase 4; never report it as having occurred.
+- BeatMind's world keeps its dark ending and explicit case-study action; no paper section appears
+  below it, and `/work/beatmind/` stays the canonical case study.
+- The Vivid source worktree is read-only portfolio evidence; never modify it from this repository.
+- Tathya's paper case study keeps `claimRefs` empty and its `measurement.absence` line; its world
+  data may never ship with `provenance: 'placeholder'` (see `docs/DECISIONS.md`).
+- Non-blocking design leftovers: deckle-PNG regeneration, the UPI chart restyle and the
+  wide-viewport paper-texture repaint cost (`docs/DESIGN_REFINEMENT.md`).
 
 ## Dependencies and external actions
 
@@ -250,7 +169,9 @@ At the end of every material work session, follow `docs/RULES.md`:
 - update every affected live document;
 - keep historical documents explicitly marked superseded;
 - update `docs/README.md` and the active checklist;
-- report anything that remains unverified or intentionally deferred.
+- report anything that remains unverified or intentionally deferred;
+- keep "Current state" to one line per item and put the dated story in history
+  (`docs/RULES.md` §8, rule 11).
 
 Do not call work complete while the source, commands, checklist, and live documentation tell
 different stories.
