@@ -30,7 +30,12 @@ const mime = new Map([['.html', 'text/html; charset=utf-8'], ['.css', 'text/css;
 
 const specDirectory = path.join(root, 'scripts', 'world-gates')
 const specs = []
-for (const name of (await readdir(specDirectory)).filter((file) => file.endsWith('.mjs')).sort()) {
+// Git drops the directory once every world is reverted, so a missing directory means none.
+const specNames = await readdir(specDirectory).catch((error) => {
+  if (error.code === 'ENOENT') return []
+  throw error
+})
+for (const name of specNames.filter((file) => file.endsWith('.mjs')).sort()) {
   const spec = (await import(pathToFileURL(path.join(specDirectory, name)).href)).default
   if (!only || spec.slug === only) specs.push(spec)
 }
