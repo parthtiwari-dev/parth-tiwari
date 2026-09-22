@@ -5,6 +5,37 @@ dated checkpoint narratives that state used to accumulate inline. Each entry bel
 verbatim from a past `CLAUDE.md` and is never edited after the fact; a later checkpoint
 supersedes an earlier one by being a new entry, not by rewriting it. Newest first.
 
+## 2026-09-22 — state before the production integration pass
+
+Verbatim `CLAUDE.md` current state, superseded on 2026-09-23 when the owner approved
+integrating the five local worlds.
+
+Phase 5 is closed. Phase 6 (remaining worlds) continues on `main`; `world/batch-1` has
+been merged in and carries no unique history of its own. Full checkpoint history:
+`docs/CHECKPOINT_HISTORY.md`.
+
+- **BeatMind, Vivid, Tathya** — production world routes live. Vivid and Tathya owner
+  review still open.
+- **MedRAG** (*The Theatre of an Answer*) — owner-approved illustrated local preview,
+  gate-passed, no production route.
+- **SecondSelf** (*A Little Further, Together*) — owner-approved illustrated local
+  preview, gate-passed, no production route. Realistic alternatives for both are
+  preserved.
+- **QueryPilot** (*The Cartographer's Fold*) — built and gate-passed, owner design review
+  still open.
+- **Order Supervisor** (*Inside the Night Watch*) — storyboard built and browser-checked,
+  no formal review recorded.
+- **UPI Fraud Engine** (*The Narrow Harbour*) — first build exists but is unverified (no
+  study doc, gate, or evidence); needs explicit owner direction. See
+  `docs/WORLD_DESIGN_HANDOFF.md`.
+- **OncoVerse, Spur Chat, Fraud Risk Intelligence, Oracle Auto Provision** — not started.
+
+No agents or model switches during this creative world-design work, per standing owner
+preference.
+
+**Next:** finish designing the remaining worlds before any production integration pass,
+which the owner may later do with Terra or Sol.
+
 ## 2026-09-22 — status catch-up after a break
 
 Owner returned after a break and asked for a full repository audit. All uncommitted local

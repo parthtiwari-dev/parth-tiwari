@@ -19,6 +19,29 @@ history and measurements cannot be invented. UPI's optional control is condition
 sample/threshold data. `WORLD_BATCH_1.md` is the current execution checkpoint. Local work is
 isolated on `world/batch-1` with two per-world worktrees; no merge/push/deploy is included.
 
+### Phase 6 world integration, 2026-09-23
+
+The owner reviewed every world in the browser and approved MedRAG, SecondSelf, QueryPilot,
+Order Supervisor and UPI Fraud Engine, but not Vivid or Tathya ("something we pick on later").
+The owner then directed integration now, "line by line, pixel by pixel", superseding the
+2026-09-09 instruction to finish every world design before a production pass. Enhancements
+were invited but optional; this pass ships faithful ports and leaves improvements for a
+separately reviewed step. Record and evidence: `WORLD_INTEGRATION.md`.
+
+| Decision | Status | Reason | Rejected or bounded alternative |
+|---|---|---|---|
+| Vivid and Tathya are flagged to revisit | Owner decided 2026-09-23 | The owner does not like them as they stand; their production routes remain unchanged meanwhile | Treating their open reviews as passes, or redesigning them inside this pass |
+| Each illustrated world owns `src/pages/work/<slug>/[world].astro` | Implemented 2026-09-23 | A page receives the CSS of every component it imports; the approved studies style `header`, `section` and `h1` globally and must never meet on one page. The one-path route emits only while the world record is published | Registering every world in the shared dynamic route |
+| Illustrated DOM/SVG worlds share `src/worlds/shared/lifecycle.ts` | Implemented 2026-09-23 | Ports the approved study engines unchanged and adds the site contract: 30fps ceiling, hidden-tab pause, `pagehide`/`world:destroy` teardown, reduced-motion composition, arrival focus, cached chapter offsets | Forcing the studies through the canvas lifecycle, which would change their approved choreography |
+| MedRAG, SecondSelf and UPI keep their study typography (Georgia display, generic monospace labels) | Owner-directed exception 2026-09-23 | The owner approved these rendered designs and asked for pixel fidelity; `DESIGN_LOCK` §8 names Bricolage, Archivo and DM Mono. QueryPilot and Order Supervisor already use the locked faces. Georgia falls back to another serif where it is not installed (most Android devices) | Silently restyling approved worlds, or adding a new self-hosted serif without review |
+| Em dashes in study copy become commas (QueryPilot, UPI) | Decided 2026-09-23 | The standing no-em-dash rule for visitor copy outranks pixel fidelity; parity measures the change at 0.075% and one re-centred paragraph | Shipping the em dash |
+| Study scaffolding copy is removed from production | Decided 2026-09-23 | Order Supervisor's "Motion study II" footer date becomes the source revision; the UPI day readout keeps one date format after interaction | Carrying review-stage copy onto public routes |
+| Paintings ship as WebP quality 88 at original 1536x1024 | Decided 2026-09-23 | 7 to 12 times smaller (e.g. 2.3 MB to 268 KB); 36-39 dB PSNR and indistinguishable in a 1:1 crop. PNG originals stay in `design/directions/assets` | Near-lossless WebP (1.4-1.9 MB each) or AVIF, whose `<picture>` wrapper would break the studies' `.world-stage>img` selectors |
+| World scene records gain optional `lead` and `note`; `\n` is a line break and a whole `*line*` is emphasis | Implemented 2026-09-23 | Scene copy stays in validated content, where the em-dash and schema checks see it, while reproducing the studies' markup exactly | Hard-coding copy in each page |
+| `staticFrame.preview: true` opts a world's still into the Home and `/work` backlight | Implemented 2026-09-23 | Replaces adding another hard-coded path per world; BeatMind and Vivid keep their existing stills | Editing the preview map for every new world |
+| Every number a world shows is checked against its verified claim at build time | Implemented 2026-09-23 | MedRAG, SecondSelf, QueryPilot and UPI pages refuse to build if their data, copy, drawing counts and claim records disagree; UPI's replay rows must sum to its totals | Trusting prose numbers to stay in step with claims |
+| UPI Fraud Engine's figures are verified | Verified 2026-09-23 | Daily replay rows match `dbc43ad`; 85 caught, 616 missed and zero budget violations come from its replay summary; 85,429 rows at 92.06% / 12.81% come from the held-out production evaluation (`4ff41b6`, 22 January 2026) | Publishing the unverified first build |
+
 - **Decided:** implementation may rely on it.
 - **Owner review:** a named choice is required before its phase proceeds.
 - **Evidence blocked:** the direction is known but publication needs proof.

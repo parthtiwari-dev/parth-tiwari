@@ -1,5 +1,13 @@
 # BUILD PLAN: Paper and Worlds
 
+**2026-09-23 integration checkpoint:** The owner reviewed every world in the browser, approved
+MedRAG, SecondSelf, QueryPilot, Order Supervisor and UPI Fraud Engine, flagged Vivid and
+Tathya to revisit later, and directed pixel-faithful integration now. All five are on
+dedicated production routes on local branch `world/integration`, one revertable commit each,
+with `npm run phase6:worlds-gate` and a study-to-production pixel-parity record. Not merged,
+pushed or deployed. See WORLD_INTEGRATION.md; this supersedes the design-first checkpoint
+below.
+
 **2026-09-09 design checkpoint:** Owner approved illustrated MedRAG and SecondSelf. Preserve
 them. QueryPilot / The Cartographer’s Fold is the next local design. Complete remaining
 world designs before the later production integration pass. See WORLD_DESIGN_HANDOFF.md
@@ -705,43 +713,37 @@ production route; `design/directions/*` sits outside `src/` and `public/` and is
 of the built site. Checkboxes below stay unticked until a world has a production route,
 its gate, and owner sign-off.
 
-- [ ] Vivid — production implementation is committed. Fresh `phase6:tathya-gate` includes a passing Vivid browser gate on 2026-09-07; owner rendered review remains open.
+- [ ] Vivid — production implementation is committed. Fresh `phase6:tathya-gate` includes a passing Vivid browser gate on 2026-09-07. On 2026-09-23 the owner reviewed it and does not like it yet: flagged to revisit later.
 - [x] Tathya — The Long Table. Built and `published: true` on branch `world/tathya`.
   Wordless event-driven canvas; a dated public-record snapshot
   (`provenance: 'public-snapshot'`, `2026-09-04`) with three anonymised case files carrying
   their real source compositions; the `provenance` guard and `phase6:tathya-gate` refuse a
   placeholder. `npm run phase6:tathya-gate` green; an isolated revert proof passes; the
-  owner directed the merge to `main`. A separate rendered owner review of the animated
-  world stays open and is not reported as done. Scope, scene contract and data contract:
+  owner directed the merge to `main`. On 2026-09-23 the owner reviewed the rendered world
+  and does not like it yet: flagged to revisit later. The tick records the route and gate,
+  not an owner acceptance. Scope, scene contract and data contract:
   `TATHYA_WORLD_STUDY.md`; rationale for `public-snapshot`: `DECISIONS.md`.
-- [ ] MedRAG — The Theatre of an Answer. Illustrated local world built at
-  `design/directions/medrag-world.html`; owner approved the design 2026-09-09 ("I love
-  them keep them"). Part of `scripts/illustrated-world-gate.mjs`, which passed all 18
-  configurations (2 worlds x 3 widths x animated/reduced/no-JS) on 2026-09-09; evidence in
-  `.shots/illustrated-worlds`. Versioned realistic alternative preserved at
-  `medrag-realistic-v2.*`. No production route. See `MEDRAG_WORLD_STUDY.md`.
-- [ ] Order Supervisor — Inside the Night Watch standalone storyboard is built at
-  `design/directions/order-supervisor-world.html` and was browser-checked on 2026-09-08.
-  No formal owner review recorded and no production world published. See
-  `ORDER_SUPERVISOR_WORLD_STUDY.md`.
-- [ ] QueryPilot — The Cartographer's Fold. Nine-chapter local world built at
-  `design/directions/querypilot-world.html`. `scripts/querypilot-study-gate.mjs` exited 0
-  for all nine configurations on 2026-09-09; evidence in `.shots/querypilot-world`. Owner
-  selected this world over UPI Fraud Engine, but design review of the built result remains
-  open. No production route. See `QUERYPILOT_WORLD_STUDY.md`.
-- [ ] SecondSelf — A Little Further, Together. Illustrated local world built at
-  `design/directions/secondself-world.html`; owner approved the design 2026-09-09 alongside
-  MedRAG. Part of the same `illustrated-world-gate.mjs` 18/18 pass. Versioned realistic
-  alternative preserved at `secondself-realistic-v1.*`. No production route. See
-  `SECONDSELF_WORLD_STUDY.md`.
+- [ ] MedRAG — The Theatre of an Answer. Owner approved the illustrated design 2026-09-09
+  and the integration 2026-09-23. Now a dedicated production route on `world/integration` (2026-09-23), gate-green in `phase6:worlds-gate`; 0 of 24 parity
+  frames differ from the study. Unticked until the owner reviews the production route and
+  it merges. See `WORLD_INTEGRATION.md` and `MEDRAG_WORLD_STUDY.md`.
+- [ ] Order Supervisor — Inside the Night Watch (Study II). Owner approved 2026-09-23. Now a
+  dedicated production route on `world/integration` (2026-09-23), gate-green in `phase6:worlds-gate`; 0 of 24 parity frames differ. Unticked until
+  the owner reviews the production route and it merges. See `WORLD_INTEGRATION.md`.
+- [ ] QueryPilot — The Cartographer's Fold. Owner approved 2026-09-23. Now a
+  dedicated production route on `world/integration` (2026-09-23), gate-green in `phase6:worlds-gate`; 26 of 27 parity frames identical, the
+  last differing only by the required em-dash fix. Unticked until the owner reviews the
+  production route and it merges. See `WORLD_INTEGRATION.md`.
+- [ ] SecondSelf — A Little Further, Together. Owner approved 2026-09-09 and the integration
+  2026-09-23. Now a dedicated production route on `world/integration` (2026-09-23), gate-green in `phase6:worlds-gate`; 0 of 24 parity frames
+  differ. Unticked until the owner reviews the production route and it merges. See
+  `WORLD_INTEGRATION.md`.
 - [ ] OncoVerse — not started.
-- [ ] UPI Fraud Engine — The Narrow Harbour. A first build exists at
-  `design/directions/upi-fraud-engine-world.html` (2026-09-09), generated by
-  `scripts/build-upi-study.py` from real backtest data. Unlike the other four studies in
-  this batch, it has **no study document, no gate script, and no captured verification
-  evidence** — it was built after the owner had already delegated the MedRAG/SecondSelf
-  follow-on choice to QueryPilot (see `WORLD_DESIGN_HANDOFF.md`). Needs explicit owner
-  direction before treating it as an active world.
+- [ ] UPI Fraud Engine — The Narrow Harbour. Owner approved 2026-09-23. Every figure was
+  verified against source for the first time (see `WORLD_INTEGRATION.md`). Now a
+  dedicated production route on `world/integration` (2026-09-23), gate-green in `phase6:worlds-gate`; 23 of 24 parity frames identical, the last
+  differing only by the required em-dash fix. Unticked until the owner reviews the
+  production route and it merges.
 - [ ] Spur Chat — not started.
 - [ ] Fraud Risk Intelligence — not started.
 - [ ] Oracle Auto Provision — not started.

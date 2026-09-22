@@ -1,5 +1,9 @@
 # QueryPilot / The Cartographer's Fold
 
+**Production, 2026-09-23:** owner approved; ported to `/work/querypilot/world/` on
+`world/integration`. Evidence: `WORLD_INTEGRATION.md`. The study below remains the design
+record.
+
 ## Owner scope
 
 2026-09-09: owner approved MedRAG and SecondSelf's illustrated designs and delegated the

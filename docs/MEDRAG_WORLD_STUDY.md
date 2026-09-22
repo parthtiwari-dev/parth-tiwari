@@ -1,5 +1,9 @@
 # MedRAG: The Uncarved Answer
 
+**Production, 2026-09-23:** the approved illustrated world (The Theatre of an Answer) is
+ported to `/work/medrag/world/` on `world/integration`. Evidence: `WORLD_INTEGRATION.md`.
+The study below remains the design record.
+
 **Current owner authorization, 2026-09-09:** Build both complete illustrated worlds,
 sequentially without agents. This supersedes the finite-proof proposal and historical
 pauses below. Active previews are MedRAG / The Theatre of an Answer and SecondSelf /

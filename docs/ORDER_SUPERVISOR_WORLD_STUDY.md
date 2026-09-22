@@ -1,5 +1,9 @@
 # Order Supervisor: The Night Watch
 
+**Production, 2026-09-23:** owner approved Study II; ported to
+`/work/order-supervisor/world/` on `world/integration`. Evidence: `WORLD_INTEGRATION.md`.
+The study below remains the design record.
+
 ## Study II: Inside the mechanism, 2026-09-08
 
 The owner rejected the first study's short, insufficiently immersive execution, retained

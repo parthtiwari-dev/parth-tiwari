@@ -124,9 +124,12 @@ true.
 
 ## 9. Commit and handoff
 
-**Current owner-selected isolation, 2026-09-07:** `world/batch-1`, with `world/medrag` and
-`world/order-supervisor` worktrees for the approved parallel pair. The `redesign/v2`
-instruction below records the earlier rebuild branch. `main` remains unchanged this batch.
+**Current owner-selected isolation, 2026-09-23:** the approved world integration is on local
+branch `world/integration`, cut from `main` at `f1d479e`. `world/batch-1` is merged and its
+`world/medrag` and `world/order-supervisor` worktrees were removed on 2026-09-23 after their
+unique rejected drafts were archived under `.shots/world-batch-1/`. Merging to `main` and
+pushing (which deploys) need the owner's explicit go. The `redesign/v2` instruction below
+records the earlier rebuild branch.
 
 - Work directly on the owner-selected local branch. For this rebuild, that branch is
   `redesign/v2`. Create another feature or experiment branch only when the owner asks for it

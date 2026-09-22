@@ -1,5 +1,9 @@
 # Phase 6: first paired world batch
 
+**Historical, superseded 2026-09-23.** The batch is merged. The owner approved the five
+studies for production and they are integrated on `world/integration`; see
+`WORLD_INTEGRATION.md`. The checklist below records the earlier batch process.
+
 **Current owner authorization, 2026-09-09:** Build both complete illustrated worlds,
 sequentially without agents. This supersedes the finite-proof proposal and historical
 pauses below. Active previews are MedRAG / The Theatre of an Answer and SecondSelf /

@@ -1,28 +1,13 @@
 # docs
 
-## Current checkpoint: generated animated worlds, 2026-09-08
+## Current checkpoint: 2026-09-23
 
-The owner authorized direct creative execution and original image generation for MedRAG,
-then SecondSelf. Both now have eight-chapter animated local studies, built sequentially
-without agents. MedRAG is The Uncarved Answer; SecondSelf is The room before send.
-Each has original generated environmental artwork, distinct scene choreography and local
-interactive controls grounded in the reviewed project records. Order Supervisor's revised
-ending remains preserved. See `MEDRAG_WORLD_STUDY.md`, `SECONDSELF_WORLD_STUDY.md` and
-`WORLD_GENERATED_ASSETS.md` in docs. Older premise-selection holds below are superseded.
-
-These are local visual studies, not newly registered public Astro world routes. No push,
-merge or deployment occurred. Production integration and the earlier Sheet Fault timing
-gate remain separate work. Current evidence lives in `.shots/cinematic-studies`.
-
-## Current checkpoint: 2026-09-08
-
-Phase 5 is closed. Phase 6 is on local `world/batch-1`. MedRAG and Order Supervisor
-first storyboards were built and browser checked. The owner rejected MedRAG and
-requested an expanded Order Supervisor revision alone; Study II is the active review. The approved paired workflow supersedes older sequential instructions.
-Read `docs/WORLD_BATCH_1.md` (or `WORLD_BATCH_1.md` from this directory) and both study
-documents for the active contract. BeatMind, Vivid and Tathya have world routes; Vivid
-and Tathya owner review remains open. Older dated status below is historical where
-superseded by this checkpoint. No deployment was performed or verified here.
+Phase 6 continues. The owner reviewed every world in the browser, approved MedRAG,
+SecondSelf, QueryPilot, Order Supervisor and UPI Fraud Engine, and flagged Vivid and Tathya
+to revisit later. The five approved worlds are ported pixel for pixel to dedicated production
+routes on local branch `world/integration` (not merged, pushed or deployed). Start with
+[`WORLD_INTEGRATION.md`](WORLD_INTEGRATION.md). Older checkpoints live in
+[`CHECKPOINT_HISTORY.md`](CHECKPOINT_HISTORY.md).
 
 Where to look, and what is still true.
 
@@ -58,7 +43,15 @@ Where to look, and what is still true.
 | [`PHASE_2_WORLDS_ANIMATION_MEMO.md`](PHASE_2_WORLDS_ANIMATION_MEMO.md) | Research-only candidate graphics and missing real-data sources for the seven specced worlds |
 | [`VIVID_WORLD_CONCEPT_REVIEW.md`](VIVID_WORLD_CONCEPT_REVIEW.md) | Current-product audit, three Vivid world directions and the selected Story Loom basis |
 | [`VIVID_WORLD_STUDY.md`](VIVID_WORLD_STUDY.md) | Story Loom review animatic and the original evidence boundary that production preserves |
-| [`TATHYA_WORLD_STUDY.md`](TATHYA_WORLD_STUDY.md) | The Long Table: selected treatment, event-driven time model, scene contract, data contract and current proof. Built and `published: true` on `world/tathya`; `phase6:tathya-gate` green; owner rendered review still open |
+| [`WORLD_INTEGRATION.md`](WORLD_INTEGRATION.md) | **Current Phase 6 record.** Owner decisions of 2026-09-23, the dedicated-route architecture, per-world parity and gate evidence, deliberate deviations and open items for the five integrated worlds |
+| [`CHECKPOINT_HISTORY.md`](CHECKPOINT_HISTORY.md) | Frozen, dated checkpoints moved out of `CLAUDE.md`, newest first |
+| [`WORLD_DESIGN_HANDOFF.md`](WORLD_DESIGN_HANDOFF.md) | Owner world decisions in date order, from the 2026-09-09 approvals to the 2026-09-23 integration |
+| [`MEDRAG_WORLD_STUDY.md`](MEDRAG_WORLD_STUDY.md) | MedRAG evidence contract and study history; production route since 2026-09-23 |
+| [`SECONDSELF_WORLD_STUDY.md`](SECONDSELF_WORLD_STUDY.md) | SecondSelf evidence and privacy boundary; production route since 2026-09-23 |
+| [`QUERYPILOT_WORLD_STUDY.md`](QUERYPILOT_WORLD_STUDY.md) and [`QUERYPILOT_WORLD_ASSET.md`](QUERYPILOT_WORLD_ASSET.md) | QueryPilot evidence boundary and generated atlas asset; production route since 2026-09-23 |
+| [`ORDER_SUPERVISOR_WORLD_STUDY.md`](ORDER_SUPERVISOR_WORLD_STUDY.md) | Order Supervisor source truth and Study II; production route since 2026-09-23 |
+| [`ILLUSTRATED_WORLDS_DELIVERY.md`](ILLUSTRATED_WORLDS_DELIVERY.md), [`WORLD_CREATIVE_DIRECTION.md`](WORLD_CREATIVE_DIRECTION.md), [`WORLD_GENERATED_ASSETS.md`](WORLD_GENERATED_ASSETS.md) and [`WORLD_ILLUSTRATED_ASSETS.md`](WORLD_ILLUSTRATED_ASSETS.md) | The illustrated direction, its delivery record and the original generated-asset prompts |
+| [`TATHYA_WORLD_STUDY.md`](TATHYA_WORLD_STUDY.md) | The Long Table: selected treatment, event-driven time model, scene contract, data contract and current proof. Published; `phase6:tathya-gate` green; on 2026-09-23 the owner flagged it to revisit |
 | [`VIVID_CASE_STUDY_AUDIT.md`](VIVID_CASE_STUDY_AUDIT.md) | Main-to-upgrade-flux history audit, evidence map and durable update workflow for `/work/vivid/` |
 | [`REBUILD_BRIEF.md`](REBUILD_BRIEF.md) | Why v1 is being replaced. The guards that prevent a repeat |
 | [`TEN_SECOND_TEST.md`](TEN_SECOND_TEST.md) | 🔴 The acceptance gate. **Still never run** |
@@ -69,8 +62,8 @@ Where to look, and what is still true.
 
 ## Superseded — kept for the reasoning, not the instructions
 
-`ARCHITECTURE.md`, `DESIGN.md`, `PLAN.md`, `PROGRESS_AUDIT.md`, `AUDIT.md`, `MEMORY.md`
-and `SESSION_HANDOFF.md`. They describe v1, preserve discovery evidence or
+`ARCHITECTURE.md`, `DESIGN.md`, `PLAN.md`, `PROGRESS_AUDIT.md`, `AUDIT.md`, `MEMORY.md`,
+`SESSION_HANDOFF.md`, `WORLD_BATCH_1.md` and `MEDRAG_WORLD_EXPLORATION.md`. They describe v1, preserve discovery evidence or
 carry an obsolete workflow. They are not build instructions. The superseded root
 `DESIGN_LOCK.md` and `DESIGN_REVIEW.md` were removed in Phase 0 and remain recoverable from
 Git history.
@@ -152,7 +145,13 @@ baseline, failures, limitations, licensing boundary and future gates. It does no
 the current plan's identity or speed goal is achieved. `VIVID_CASE_STUDY_AUDIT.md` is the
 source map and update procedure.
 
-**Last documentation truth audit:** 2026-09-04. The deferred Phase 2 visual-polish pass ran
+**Last documentation truth audit:** 2026-09-23. Every live world document now states that
+MedRAG, SecondSelf, QueryPilot, Order Supervisor and UPI Fraud Engine are integrated on
+`world/integration`, that Vivid and Tathya are flagged to revisit, and that nothing from this
+pass is merged or deployed. `RULES.md` §9, `DESIGN_LOCK.md`, `SESSION_PROMPT.md` and the
+branch notes no longer name `world/batch-1` as the active line.
+
+**Previous truth audit:** 2026-09-04. The deferred Phase 2 visual-polish pass ran
 on branch `refine/design-system-9point` as a nine-point refinement (see
 `DESIGN_REFINEMENT.md`). Run 1 landed the paper-page black-flash fix, BeatMind/Vivid
 world-init resilience, an additive type/space/measure token layer and the `--ink-quiet`
