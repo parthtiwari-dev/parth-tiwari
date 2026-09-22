@@ -1,0 +1,92 @@
+{
+  "projectSlug": "order-supervisor",
+  "published": true,
+  "reviewedAt": "2026-09-23",
+  "selectedTreatment": "Inside the Night Watch",
+  "staticFrame": {
+    "src": "/media/worlds/order-supervisor-world-still.webp",
+    "alt": "A layered mechanical watch in a dark case. A pale order record runs through its gear train, and a red latch holds a completion proposal outside the record.",
+    "width": 1440,
+    "height": 900,
+    "preview": true
+  },
+  "scenes": [
+    {
+      "id": "record",
+      "label": "01 / The night watch",
+      "heading": "The Night\nWatch.",
+      "lead": "The model can sleep.\nThe order stays open.",
+      "narration": "A journey into the mechanism that decides when an order is finished.",
+      "note": "Scroll to enter the mechanism ↓"
+    },
+    {
+      "id": "open",
+      "label": "02 / Beneath the face",
+      "heading": "Open the\nwatch.",
+      "lead": "One order. One enduring workflow.",
+      "narration": "The outer face lifts away. Inside, the lifecycle holds the order while individual reasoning cycles come and go.",
+      "note": "The watch is a metaphor for the source behavior."
+    },
+    {
+      "id": "thread",
+      "label": "03 / The continuous record",
+      "heading": "Something\nhas to stay.",
+      "lead": "The record runs through the machinery.",
+      "narration": "A workflow instance supervises one order. It starts with an agent cycle, then waits for events or a scheduled timeout.",
+      "note": "The record marks are illustrative, not a customer order."
+    },
+    {
+      "id": "wake",
+      "label": "04 / A cycle of attention",
+      "heading": "The machinery\nwakes.",
+      "lead": "An event arrives. Reasoning resumes.",
+      "narration": "The next cycle receives the order context and pending events. The agent proposes what should happen next.",
+      "note": "Business actions write activity-log entries. No external messages are sent."
+    },
+    {
+      "id": "wait",
+      "label": "05 / Between cycles",
+      "heading": "Still on\nwatch.",
+      "lead": "The reasoning stops. Supervision does not.",
+      "narration": "When the cycle finishes, the workflow waits again. It does not need the model to think continuously to remain responsible for the order.",
+      "note": "Stillness is part of the lifecycle."
+    },
+    {
+      "id": "recommend",
+      "label": "06 / The authority boundary",
+      "heading": "A proposal.\nA hard stop.",
+      "lead": "“Complete” reaches the latch. It cannot pass.",
+      "narration": "The model’s recommendation cannot finish the workflow by itself. The lifecycle condition owns that decision.",
+      "note": "The agent advises. The workflow decides."
+    },
+    {
+      "id": "terminal",
+      "label": "07 / The release",
+      "heading": "An event turns\nthe key.",
+      "lead": "The completion path has its own rules.",
+      "narration": "Delivered, refund resolved or order cancelled: a terminal event is followed by the agent cycle, then completion. Manual termination and maximum age are separate paths.",
+      "note": "This is not a universal human-approval gate."
+    },
+    {
+      "id": "handoff",
+      "label": "08 / The final record",
+      "heading": "Closed.\nOn record.",
+      "lead": "The ending has a reason.",
+      "narration": "The workflow saves why the order ended and calls for its final summary. The model contributes reasoning; the lifecycle owns the close.",
+      "note": "Illustrated from source behavior, not a live order."
+    }
+  ],
+  "accents": {
+    "primary": "#f5f0e8",
+    "secondary": "#b1b8b5",
+    "fault": "#a43c2a"
+  },
+  "dataArtifact": "order-supervisor-world-v1.json",
+  "audio": {
+    "status": "withheld",
+    "explanation": "This world is a silent mechanical illustration. It has no audio asset and makes no audio request."
+  },
+  "sourceAudit": [
+    { "label": "Order Supervisor committed workflow and action source", "revision": "ba544e0" }
+  ]
+}
